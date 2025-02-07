@@ -1077,6 +1077,7 @@ fn des_encrypt_vec_with_padding_pkcs7()
 fn des_crypt_with_padding_iso_main()
 {
     des_encrypt_with_padding_iso();
+    des_encrypt_with_padding_iso_into_vec();
     des_decrypt_with_padding_iso();
     des_encrypt_str_with_padding_iso();
     des_encrypt_string_with_padding_iso();
@@ -1171,6 +1172,125 @@ fn des_encrypt_with_padding_iso()
     
     let mut decoded = Out { uu64: [0u64; 4] };
     let length = a_des.decrypt_with_padding_iso(unsafe { cipher.uu8.as_ptr() }, length, unsafe { decoded.uu8.as_mut_ptr() });
+    print!("D =\t");
+    for i in 0..length as usize
+        { print!("{:02X}", unsafe { decoded.uu8[i] }); }
+    println!();
+
+    let mut txt = String::new();
+    for i in 0..length as usize
+        { write!(&mut txt, "{:02X}", unsafe { decoded.uu8[i] }); }
+    assert_eq!(txt, "0123456789ABCDEF112233445566778899AABBCCDD");
+    println!("-------------------------------");
+}
+
+fn des_encrypt_with_padding_iso_into_vec()
+{
+    println!("des_encrypt_with_padding_iso_into_vec");
+    use std::fmt::Write;
+    use cryptocol::symmetric::DES;
+
+    union Out {
+        pub uu8: [u8; 32],
+        pub uu64: [u64; 4],
+    }
+    union Out2 {
+        pub uu8: [u8; 24],
+        pub uu64: [u64; 3],
+    }
+
+    let key = [0b00010011_u8, 0b00110100, 0b01010111, 0b01111001, 0b10011011, 0b10111100, 0b11011111, 0b11110001];
+    print!("K =\t");
+    for k in key
+        { print!("{:08b} ", k); }
+    println!();
+    
+    // Fit to block size
+    let message = [0x01_u8, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF, 0xA8];
+    print!("M =\t");
+    for val in message
+        { print!("{:02X}", val); }
+    println!();
+
+    let mut a_des = DES::new_with_key(key);
+    let mut cipher = Vec::<u8>::new();
+    let length = a_des.encrypt_with_padding_iso_into_vec(&message as *const u8, message.len() as u64, &mut cipher);
+
+    print!("C =\t");
+    for i in 0..length as usize
+        { print!("{:02X}", cipher[i]); }
+    println!();
+
+    let mut cipher2 = Out { uu64: [0u64; 4] };
+    let mut i = 0_usize;
+    for val in cipher.clone()
+    {
+        unsafe { cipher2.uu8[i] = val; }
+        i += 1;
+    }
+
+    let mut back = Out { uu64: [0u64; 4] };
+    a_des.decrypt_array_u64(unsafe { &cipher2.uu64 }, unsafe { &mut back.uu64 });
+    print!("B =\t");
+    for i in unsafe { 0..back.uu8.len() }
+        { print!("{:02X}", unsafe { back.uu8[i] }); }
+    println!();
+
+    let mut txt = String::new();
+    for i in unsafe { 0..back.uu8.len() }
+        { write!(&mut txt, "{:02X}", unsafe { back.uu8[i] }); }
+    assert_eq!(txt, "0123456789ABCDEF112233445566778899AABBCCDDEEFFA88000000000000000");
+    
+    let mut decoded = Out { uu64: [0u64; 4] };
+    let length = a_des.decrypt_with_padding_iso(unsafe { cipher.as_ptr() as *mut u8}, length, unsafe { decoded.uu8.as_mut_ptr() });
+    print!("D =\t");
+    for i in 0..length as usize
+        { print!("{:02X}", unsafe { decoded.uu8[i] }); }
+    println!();
+
+    let mut txt = String::new();
+    for i in 0..length as usize
+        { write!(&mut txt, "{:02X}", unsafe { decoded.uu8[i] }); }
+    assert_eq!(txt, "0123456789ABCDEF112233445566778899AABBCCDDEEFFA8");
+
+    // Not fit to block size
+    let message = [0x01_u8, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD];
+    print!("M =\t");
+    for val in message
+        { print!("{:02X}", val); }
+    println!();
+
+    let mut a_des = DES::new_with_key(key);
+    let mut cipher = Vec::<u8>::new();
+    let length = a_des.encrypt_with_padding_iso_into_vec(&message as *const u8, message.len() as u64, &mut cipher);
+
+    print!("C =\t");
+    for i in 0..length as usize
+        { print!("{:02X}", cipher[i]); }
+    println!();
+
+    let mut cipher2 = Out2 { uu64: [0u64; 3] };
+    let mut i = 0_usize;
+    for val in cipher.clone()
+    {
+        unsafe { cipher2.uu8[i] = val; }
+        i += 1;
+    }
+
+    let mut back = Out2 { uu64: [0u64; 3] };
+    a_des.decrypt_array_u64(unsafe { &cipher2.uu64 }, unsafe { &mut back.uu64 });
+    print!("B =\t");
+    for i in 0..length as usize
+        { print!("{:02X}", unsafe { back.uu8[i] }); }
+    println!();
+
+    let mut txt = String::new();
+    for i in 0..length as usize
+        { write!(&mut txt, "{:02X}", unsafe { back.uu8[i] }); }
+    assert_eq!(txt, "0123456789ABCDEF112233445566778899AABBCCDD800000");
+    
+    let mut decoded = Out { uu64: [0u64; 4] };
+    let length = a_des.decrypt_with_padding_iso(unsafe { cipher.as_ptr() as *const u8 }, length, unsafe { decoded.uu8.as_mut_ptr() });
     print!("D =\t");
     for i in 0..length as usize
         { print!("{:02X}", unsafe { decoded.uu8[i] }); }
