@@ -1422,6 +1422,93 @@ S756, S757, S758, S759, S760, S761, S762, S763
         // progress + 8
     }
 
+    #[inline]
+    pub fn encrypt_str_with_padding_pkcs7(&mut self, message: &str, cipher: *mut u8) -> u64
+    {
+        self.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher)
+    }
+
+    #[inline]
+    pub fn encrypt_str_with_padding_pkcs7_into_vec<T>(&mut self, message: &str, cipher: &mut Vec<T>) -> u64
+    where T: SmallUInt + Copy + Clone
+    {
+        self.encrypt_with_padding_pkcs7_into_vec(message.as_ptr(), message.len() as u64, cipher)
+    }
+
+    #[inline]
+    pub fn encrypt_str_with_padding_pkcs7_into_array<T, const N: usize>(&mut self, message: &str, cipher: &mut [u8; N]) -> u64
+    where T: SmallUInt + Copy + Clone
+    {
+        self.encrypt_with_padding_pkcs7_into_array(message.as_ptr(), message.len() as u64, cipher)
+    }
+
+    #[inline]
+    pub fn encrypt_string_with_padding_pkcs7(&mut self, message: &String, cipher: *mut u8) -> u64
+    {
+        self.encrypt_with_padding_pkcs7( message.as_ptr(), message.len() as u64, cipher)
+    }
+
+    #[inline]
+    pub fn encrypt_string_with_padding_pkcs7_into_vec<T>(&mut self, message: &String, cipher: &mut Vec<T>) -> u64
+    where T: SmallUInt + Copy + Clone
+    {
+        self.encrypt_with_padding_pkcs7_into_vec(message.as_ptr(), message.len() as u64, cipher)
+    }
+
+    #[inline]
+    pub fn encrypt_string_with_padding_pkcs7_into_array<T, const N: usize>(&mut self, message: &String, cipher: &mut [T; N]) -> u64
+    where T: SmallUInt + Copy + Clone
+    {
+        self.encrypt_with_padding_pkcs7_into_array(message.as_ptr(), message.len() as u64, cipher)
+    }
+
+    #[inline]
+    pub fn encrypt_vec_with_padding_pkcs7<T>(&mut self, message: &Vec<T>, cipher: *mut u8) -> u64
+    where T: SmallUInt + Copy + Clone
+    {
+        self.encrypt_with_padding_pkcs7( message.as_ptr() as *const u8, (message.len() * T::size_in_bytes()) as u64, cipher)
+    }
+
+    #[inline]
+    pub fn encrypt_vec_with_padding_pkcs7_into_vec<T, U>(&mut self, message: &Vec<T>, cipher: &mut Vec<U>) -> u64
+    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
+    {
+        self.encrypt_with_padding_pkcs7_into_vec(message.as_ptr() as *const u8, (message.len() * T::size_in_bytes()) as u64, cipher)
+    }
+
+    #[inline]
+    pub fn encrypt_vec_with_padding_pkcs7_into_array<T, U, const N: usize>(&mut self, message: &Vec<T>, cipher: &mut [U; N]) -> u64
+    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
+    {
+        self.encrypt_with_padding_pkcs7_into_array(message.as_ptr() as *const u8, (message.len() * T::size_in_bytes()) as u64, cipher)
+    }
+
+    #[inline]
+    pub fn encrypt_array_with_padding_pkcs7<T, const N: usize>(&mut self, message: &[T; N], cipher: *mut u8) -> u64
+    where T: SmallUInt + Copy + Clone
+    {
+        self.encrypt_with_padding_pkcs7(message.as_ptr() as *const u8, (N * T::size_in_bytes()) as u64, cipher)
+    }
+
+    #[inline]
+    pub fn encrypt_array_with_padding_pkcs7_into_vec<T, U, const N: usize>(&mut self, message: &[T; N], cipher: &mut Vec<U>) -> u64
+    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
+    {
+        self.encrypt_with_padding_pkcs7_into_vec(message.as_ptr() as *const u8, (N * T::size_in_bytes()) as u64, cipher)
+    }
+
+    #[inline]
+    pub fn encrypt_array_with_padding_pkcs7_into_array_u8<T, U, const N: usize, const M: usize>(&mut self, message: &[T; N], cipher: &mut [U; M]) -> u64
+    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
+    {
+        self.encrypt_with_padding_pkcs7_into_array(message.as_ptr() as *const u8, (M * T::size_in_bytes()) as u64, cipher)
+    }
+
+
+
+
+
+
     pub fn decrypt_with_padding_pkcs7(&mut self, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
     {
         let mut progress = 0_u64;
@@ -1607,85 +1694,93 @@ S756, S757, S758, S759, S760, S761, S762, S763
         return 0;
     }
 
-    pub fn decrypt_with_padding_iso_into_vec(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<u8>) -> u64
+    pub fn decrypt_with_padding_iso_into_vec<T>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<T>) -> u64
+    where T: SmallUInt + Copy + Clone
     {
-        let mut progress = 0_u64;
-        let mut decoded: u64;
-        let mut block: u64;
-        let mut decoded_union = LongUnion::new();
-        for i in 0..(length_in_bytes as usize / 8 - 1)
-        {
-            block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
-            decoded = self.decrypt_u64(block);
-            decoded_union.set(decoded);
-            for i in 0..8
-                { message.push(decoded_union.get_ubyte_(i)); }
-            progress += 8;
-        }
+        pre_decrypt_into_vec!(message, length_in_bytes, T);
+        self.decrypt_with_padding_iso(cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
 
-        block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
-        decoded = self.decrypt_u64(block);
-        decoded_union.set(decoded);
-        for i in 0..8_usize
-        {
-            if decoded_union.get_ubyte_(7-i) == 0
-                { continue; }
-            if decoded_union.get_ubyte_(7-i) == 0b_1000_0000_u8
-            {
-                let message_bytes = 7-i;
-                for j in 0..message_bytes
-                    { message.push(decoded_union.get_ubyte_(j)); }
-                return progress + message_bytes as u64
-            }
-            else
-            {
-                message.clear();
-                return 0;
-            }
-        }
-        return 0;
+        // let mut progress = 0_u64;
+        // let mut decoded: u64;
+        // let mut block: u64;
+        // let mut decoded_union = LongUnion::new();
+        // for i in 0..(length_in_bytes as usize / 8 - 1)
+        // {
+        //     block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
+        //     decoded = self.decrypt_u64(block);
+        //     decoded_union.set(decoded);
+        //     for i in 0..8
+        //         { message.push(decoded_union.get_ubyte_(i)); }
+        //     progress += 8;
+        // }
+
+        // block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
+        // decoded = self.decrypt_u64(block);
+        // decoded_union.set(decoded);
+        // for i in 0..8_usize
+        // {
+        //     if decoded_union.get_ubyte_(7-i) == 0
+        //         { continue; }
+        //     if decoded_union.get_ubyte_(7-i) == 0b_1000_0000_u8
+        //     {
+        //         let message_bytes = 7-i;
+        //         for j in 0..message_bytes
+        //             { message.push(decoded_union.get_ubyte_(j)); }
+        //         return progress + message_bytes as u64
+        //     }
+        //     else
+        //     {
+        //         message.clear();
+        //         return 0;
+        //     }
+        // }
+        // return 0;
     }
 
-    pub fn decrypt_with_padding_iso_into_array_u8<const M: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [u8; M]) -> u64
+    pub fn decrypt_with_padding_iso_into_array<T, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [T; N]) -> u64
+    where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes > M.next_multiple_of(8) as u64
-            { return 0; }
-        let mut progress = 0_u64;
-        let mut decoded: u64;
-        let mut block: u64;
-        let mut decoded_union = LongUnion::new();
-        for i in 0..(length_in_bytes as usize / 8 - 1)
-        {
-            block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
-            decoded = self.decrypt_u64(block);
-            decoded_union.set(decoded);
-            for i in 0..8
-                { message[progress as usize + i] = decoded_union.get_ubyte_(i); }
-            progress += 8;
-        }
+        pre_decrypt_into_array!(message, length_in_bytes, T);
+        self.decrypt_with_padding_iso(cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
 
-        block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
-        decoded = self.decrypt_u64(block);
-        decoded_union.set(decoded);
-        for i in 0..8_usize
-        {
-            if decoded_union.get_ubyte_(7-i) == 0
-                { continue; }
-            if decoded_union.get_ubyte_(7-i) == 0b_1000_0000_u8
-            {
-                let message_bytes = 7-i;
-                if M < progress as usize + message_bytes
-                    { return 0; }
-                for i in 0..message_bytes
-                    { message[progress as usize + i] = decoded_union.get_ubyte_(i); }
-                return progress + message_bytes as u64;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        return 0;
+        // if length_in_bytes > M.next_multiple_of(8) as u64
+        //     { return 0; }
+        // let mut progress = 0_u64;
+        // let mut decoded: u64;
+        // let mut block: u64;
+        // let mut decoded_union = LongUnion::new();
+        // for i in 0..(length_in_bytes as usize / 8 - 1)
+        // {
+        //     block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
+        //     decoded = self.decrypt_u64(block);
+        //     decoded_union.set(decoded);
+        //     for i in 0..8
+        //         { message[progress as usize + i] = decoded_union.get_ubyte_(i); }
+        //     progress += 8;
+        // }
+
+        // block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
+        // decoded = self.decrypt_u64(block);
+        // decoded_union.set(decoded);
+        // for i in 0..8_usize
+        // {
+        //     if decoded_union.get_ubyte_(7-i) == 0
+        //         { continue; }
+        //     if decoded_union.get_ubyte_(7-i) == 0b_1000_0000_u8
+        //     {
+        //         let message_bytes = 7-i;
+        //         if M < progress as usize + message_bytes
+        //             { return 0; }
+        //         for i in 0..message_bytes
+        //             { message[progress as usize + i] = decoded_union.get_ubyte_(i); }
+        //         return progress + message_bytes as u64;
+        //     }
+        //     else
+        //     {
+        //         return 0;
+        //     }
+        // }
+        // return 0;
     }
 
     pub fn decrypt_with_padding_iso_into_string(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
@@ -1693,25 +1788,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
         self.decrypt_with_padding_iso_into_vec(cipher, length_in_bytes, unsafe { message.as_mut_vec() })
     }
 
-    #[inline]
-    pub fn encrypt_str_with_padding_pkcs7(&mut self, message: &str, cipher: *mut u8) -> u64
-    {
-        self.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher)
-    }
 
-    #[inline]
-    pub fn encrypt_str_with_padding_pkcs7_into_vec<T>(&mut self, message: &str, cipher: &mut Vec<T>) -> u64
-    where T: SmallUInt + Copy + Clone
-    {
-        self.encrypt_with_padding_pkcs7_into_vec(message.as_ptr(), message.len() as u64, cipher)
-    }
 
-    #[inline]
-    pub fn encrypt_str_with_padding_pkcs7_into_array<T, const N: usize>(&mut self, message: &str, cipher: &mut [u8; N]) -> u64
-    where T: SmallUInt + Copy + Clone
-    {
-        self.encrypt_with_padding_pkcs7_into_array(message.as_ptr(), message.len() as u64, cipher)
-    }
+
+
 
     #[inline]
     pub fn encrypt_str_with_padding_iso(&mut self, message: &str, cipher: *mut u8) -> u64
@@ -1731,26 +1811,6 @@ S756, S757, S758, S759, S760, S761, S762, S763
     where T: SmallUInt + Copy + Clone
     {
         self.encrypt_with_padding_iso_into_array(message.as_ptr(), message.len() as u64, cipher)
-    }
-
-    #[inline]
-    pub fn encrypt_string_with_padding_pkcs7(&mut self, message: &String, cipher: *mut u8) -> u64
-    {
-        self.encrypt_with_padding_pkcs7( message.as_ptr(), message.len() as u64, cipher)
-    }
-
-    #[inline]
-    pub fn encrypt_string_with_padding_pkcs7_into_vec<T>(&mut self, message: &String, cipher: &mut Vec<T>) -> u64
-    where T: SmallUInt + Copy + Clone
-    {
-        self.encrypt_with_padding_pkcs7_into_vec(message.as_ptr(), message.len() as u64, cipher)
-    }
-
-    #[inline]
-    pub fn encrypt_string_with_padding_pkcs7_into_array<T, const N: usize>(&mut self, message: &String, cipher: &mut [T; N]) -> u64
-    where T: SmallUInt + Copy + Clone
-    {
-        self.encrypt_with_padding_pkcs7_into_array(message.as_ptr(), message.len() as u64, cipher)
     }
 
     #[inline]
@@ -1774,27 +1834,6 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
     #[inline]
-    pub fn encrypt_array_with_padding_pkcs7<T, const N: usize>(&mut self, message: &[T; N], cipher: *mut u8) -> u64
-    where T: SmallUInt + Copy + Clone
-    {
-        self.encrypt_with_padding_pkcs7(message.as_ptr() as *const u8, (N * T::size_in_bytes()) as u64, cipher)
-    }
-
-    #[inline]
-    pub fn encrypt_array_with_padding_pkcs7_into_vec<T, U, const N: usize>(&mut self, message: &[T; N], cipher: &mut Vec<U>) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
-    {
-        self.encrypt_with_padding_pkcs7_into_vec(message.as_ptr() as *const u8, (N * T::size_in_bytes()) as u64, cipher)
-    }
-
-    #[inline]
-    pub fn encrypt_array_with_padding_pkcs7_into_array_u8<T, U, const N: usize, const M: usize>(&mut self, message: &[T; N], cipher: &mut [U; M]) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
-    {
-        self.encrypt_with_padding_pkcs7_into_array(message.as_ptr() as *const u8, (M * T::size_in_bytes()) as u64, cipher)
-    }
-
-    #[inline]
     pub fn encrypt_array_with_padding_iso<T, const N: usize>(&mut self, message: &[T; N], cipher: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
@@ -1813,27 +1852,6 @@ S756, S757, S758, S759, S760, S761, S762, S763
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
         self.encrypt_with_padding_iso_into_array(message.as_ptr() as *const u8, (M * T::size_in_bytes()) as u64, cipher)
-    }
-
-    #[inline]
-    pub fn encrypt_vec_with_padding_pkcs7<T>(&mut self, message: &Vec<T>, cipher: *mut u8) -> u64
-    where T: SmallUInt + Copy + Clone
-    {
-        self.encrypt_with_padding_pkcs7( message.as_ptr() as *const u8, (message.len() * T::size_in_bytes()) as u64, cipher)
-    }
-
-    #[inline]
-    pub fn encrypt_vec_with_padding_pkcs7_into_vec<T, U>(&mut self, message: &Vec<T>, cipher: &mut Vec<U>) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
-    {
-        self.encrypt_with_padding_pkcs7_into_vec(message.as_ptr() as *const u8, (message.len() * T::size_in_bytes()) as u64, cipher)
-    }
-
-    #[inline]
-    pub fn encrypt_vec_with_padding_pkcs7_into_array<T, U, const N: usize>(&mut self, message: &Vec<T>, cipher: &mut [U; N]) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
-    {
-        self.encrypt_with_padding_pkcs7_into_array(message.as_ptr() as *const u8, (message.len() * T::size_in_bytes()) as u64, cipher)
     }
 
     #[inline]
@@ -1891,14 +1909,14 @@ S756, S757, S758, S759, S760, S761, S762, S763
         self.encrypt_with_padding_iso(message, length_in_bytes, cipher)
     }
 
-    pub fn encrypt_with_padding_iso_ecb_into_vec<T>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
+    pub fn encrypt_with_padding_iso_into_vec_ecb<T>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
         pre_encrypt_into_vec!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_iso_ecb(message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
-    pub fn encrypt_with_padding_iso_ecb_into_array<T, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
+    pub fn encrypt_with_padding_iso_into_array_ecb<T, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
         if length_in_bytes.next_multiple_of(8) > (T::size_in_bytes() * N) as u64 
