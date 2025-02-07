@@ -20680,7 +20680,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         {
             let diff = self.wrapping_rem_uint(rhs);
             self.reset_all_flags();
-            self.modular_add_assign_uint(rhs - diff, modulo);
+            if !diff.is_zero()
+                { self.modular_add_assign_uint(rhs - diff, modulo); }
             self.set_flag_bit(flags);
         }
         else    // if U::size_in_bytes() <= T::size_in_bytes() and modulo <= rhs
@@ -20688,7 +20689,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             let trhs = T::num(rhs);
             let diff = self.wrapping_rem_uint(trhs);
             self.reset_all_flags();
-            self.modular_add_assign_uint(trhs - diff, modulo);
+            if !diff.is_zero()
+                { self.modular_add_assign_uint(trhs - diff, modulo); }
             self.set_flag_bit(flags);
         }
     }
@@ -43223,7 +43225,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         else
             { mrhs = rhs.clone(); }
         let r = self.wrapping_rem(&mrhs);
-        self.modular_add_assign(&mrhs.wrapping_sub(&r), modulo);
+        if !r.is_zero()
+            { self.modular_add_assign(&mrhs.wrapping_sub(&r), modulo); }
         self.set_flag_bit(flags);
     }
 
