@@ -19882,7 +19882,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         {
             let trhs = T::num(rhs);
             let r = self.wrapping_rem_uint(trhs);
-            if r != T::zero()
+            if !r.is_zero()
                 { self.wrapping_add_assign_uint(trhs - r); }
         }
     }
@@ -42465,7 +42465,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     fn common_next_multiple_of_assign(&mut self, rhs: &Self)
     {
         let r = self.wrapping_rem(rhs);
-        self.wrapping_add_assign(&rhs.wrapping_sub(&r));
+        if !r.is_zero()
+            { self.wrapping_add_assign(&rhs.wrapping_sub(&r)); }
     }
 
     // pub fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
