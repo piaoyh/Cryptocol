@@ -1591,7 +1591,7 @@ fn biguint_is_msb_set()
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
     
-    let mut a_biguint = U256::from_uint(169743176821145534028236692093846345739_u128);
+    let a_biguint = U256::from_uint(169743176821145534028236692093846345739_u128);
     if a_biguint.is_msb_set()
         { println!("{} is greater than halfmax ({}).", a_biguint, U256::halfmax()); }
     else
@@ -1666,9 +1666,9 @@ fn biguint_leading_zeros()
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
-    let a_biguint = "100000000000000000000000000000000000000000000000000000000000000000000000000000".parse::<U256>().unwrap();
+    let a_biguint = "100000000000000000000000000000000000000000000000000000000000000000000000000".parse::<U256>().unwrap();
     println!("{} is {} in binary and has {} leading zeros in binary.", a_biguint, a_biguint.to_string_with_radix_and_stride(2, 10).unwrap(), a_biguint.leading_zeros());
-    assert_eq!(a_biguint.leading_zeros(), 0);
+    assert_eq!(a_biguint.leading_zeros(), 10);
     println!("---------------------------");
 }
 
@@ -2241,6 +2241,8 @@ fn biguint_carrying_add_uint()
     assert_eq!(sum.is_divided_by_zero(), false);
     assert_eq!(sum.is_infinity(), false);
     assert_eq!(sum.is_undefined(), false);
+    assert_eq!(sum.is_left_carry(), false);
+    assert_eq!(sum.is_right_carry(), false);
 
     let num_str1 = "FFEEDDBB_AA998877_66554433_221100FF_EEDDBBAA_99887766_55443322_1100FFEE";
     let num1 = UU32::from_str_radix(num_str1, 16).unwrap();
@@ -2255,6 +2257,8 @@ fn biguint_carrying_add_uint()
     assert_eq!(sum.is_divided_by_zero(), false);
     assert_eq!(sum.is_infinity(), false);
     assert_eq!(sum.is_undefined(), false);
+    assert_eq!(sum.is_left_carry(), false);
+    assert_eq!(sum.is_right_carry(), false);
 
     let num_str2 = "FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF";
     let num2 = UU32::from_str_radix(num_str2, 16).unwrap();
@@ -2269,6 +2273,8 @@ fn biguint_carrying_add_uint()
     assert_eq!(sum.is_divided_by_zero(), false);
     assert_eq!(sum.is_infinity(), false);
     assert_eq!(sum.is_undefined(), false);
+    assert_eq!(sum.is_left_carry(), false);
+    assert_eq!(sum.is_right_carry(), false);
 
     let num_str2 = "FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF";
     let num2 = UU32::from_str_radix(num_str2, 16).unwrap();
@@ -2283,6 +2289,8 @@ fn biguint_carrying_add_uint()
     assert_eq!(sum.is_divided_by_zero(), false);
     assert_eq!(sum.is_infinity(), false);
     assert_eq!(sum.is_undefined(), false);
+    assert_eq!(sum.is_left_carry(), false);
+    assert_eq!(sum.is_right_carry(), false);
     println!("---------------------------");
 }
 
@@ -2301,6 +2309,8 @@ fn biguint_carrying_add_assign_uint()
     assert_eq!(num1.is_divided_by_zero(), false);
     assert_eq!(num1.is_infinity(), false);
     assert_eq!(num1.is_undefined(), false);
+    assert_eq!(num1.is_left_carry(), false);
+    assert_eq!(num1.is_right_carry(), false);
 
     let carry = num1.carrying_add_assign_uint(num_uint, false);
     assert_eq!(num1.is_overflow(), false);
@@ -2308,6 +2318,8 @@ fn biguint_carrying_add_assign_uint()
     assert_eq!(num1.is_divided_by_zero(), false);
     assert_eq!(num1.is_infinity(), false);
     assert_eq!(num1.is_undefined(), false);
+    assert_eq!(num1.is_left_carry(), false);
+    assert_eq!(num1.is_right_carry(), false);
 
     println!("After num1 += {},\tnum1 = {}\tcarry = {}", num_uint, num1, carry);
     assert_eq!(num1.to_string(), "115761816335569101403435733562708448393642106212790284019692513725068324302573");
@@ -2317,6 +2329,8 @@ fn biguint_carrying_add_assign_uint()
     assert_eq!(num1.is_divided_by_zero(), false);
     assert_eq!(num1.is_infinity(), false);
     assert_eq!(num1.is_undefined(), false);
+    assert_eq!(num1.is_left_carry(), false);
+    assert_eq!(num1.is_right_carry(), false);
 
     let num_uint = 0x9900AABB_CCDDEEFF_u64;
     let num_str1 = "FFEEDDBB_AA998877_66554433_221100FF_EEDDBBAA_99887766_55443322_1100FFEE";
@@ -2327,6 +2341,8 @@ fn biguint_carrying_add_assign_uint()
     assert_eq!(num1.is_divided_by_zero(), false);
     assert_eq!(num1.is_infinity(), false);
     assert_eq!(num1.is_undefined(), false);
+    assert_eq!(num1.is_left_carry(), false);
+    assert_eq!(num1.is_right_carry(), false);
 
     let carry = num1.carrying_add_assign_uint(num_uint, true);
     println!("After num1 += {},\tnum1 = {}\tcarry = {}", num_uint, num1, carry);
@@ -2337,6 +2353,8 @@ fn biguint_carrying_add_assign_uint()
     assert_eq!(num1.is_divided_by_zero(), false);
     assert_eq!(num1.is_infinity(), false);
     assert_eq!(num1.is_undefined(), false);
+    assert_eq!(num1.is_left_carry(), false);
+    assert_eq!(num1.is_right_carry(), false);
 
     let num_uint = 0x9900AABB_CCDDEEFF_u64;
     let num_str2 = "FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF";
@@ -2347,6 +2365,8 @@ fn biguint_carrying_add_assign_uint()
     assert_eq!(num2.is_divided_by_zero(), false);
     assert_eq!(num2.is_infinity(), false);
     assert_eq!(num2.is_undefined(), false);
+    assert_eq!(num2.is_left_carry(), false);
+    assert_eq!(num2.is_right_carry(), false);
 
     let carry = num2.carrying_add_assign_uint(num_uint, false);
     println!("After num2 += {},\tnum2 = {}\tcarry = {}", num_uint, num2, carry);
@@ -2357,6 +2377,8 @@ fn biguint_carrying_add_assign_uint()
     assert_eq!(num2.is_divided_by_zero(), false);
     assert_eq!(num2.is_infinity(), false);
     assert_eq!(num2.is_undefined(), false);
+    assert_eq!(num2.is_left_carry(), false);
+    assert_eq!(num2.is_right_carry(), false);
 
     let num_uint = 0x9900AABB_CCDDEEFF_u64;
     let num_str2 = "FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF";
@@ -2367,6 +2389,8 @@ fn biguint_carrying_add_assign_uint()
     assert_eq!(num2.is_divided_by_zero(), false);
     assert_eq!(num2.is_infinity(), false);
     assert_eq!(num2.is_undefined(), false);
+    assert_eq!(num2.is_left_carry(), false);
+    assert_eq!(num2.is_right_carry(), false);
 
     let carry = num2.carrying_add_assign_uint(num_uint, true);
     println!("After num2 += {},\tnum2 = {}\tcarry = {}", num_uint, num2, carry);
@@ -2377,6 +2401,8 @@ fn biguint_carrying_add_assign_uint()
     assert_eq!(num2.is_divided_by_zero(), false);
     assert_eq!(num2.is_infinity(), false);
     assert_eq!(num2.is_undefined(), false);
+    assert_eq!(num2.is_left_carry(), false);
+    assert_eq!(num2.is_right_carry(), false);
     println!("---------------------------");
 }
 
@@ -2395,6 +2421,8 @@ fn biguint_wrapping_add_uint()
     assert_eq!(res.is_divided_by_zero(), false);
     assert_eq!(res.is_infinity(), false);
     assert_eq!(res.is_undefined(), false);
+    assert_eq!(res.is_left_carry(), false);
+    assert_eq!(res.is_right_carry(), false);
 
     let a_biguint = U512::max().wrapping_sub_uint(1_u8);
     let res = a_biguint.wrapping_add_uint(2_u8);
@@ -2405,6 +2433,8 @@ fn biguint_wrapping_add_uint()
     assert_eq!(res.is_divided_by_zero(), false);
     assert_eq!(res.is_infinity(), false);
     assert_eq!(res.is_undefined(), false);
+    assert_eq!(res.is_left_carry(), false);
+    assert_eq!(res.is_right_carry(), false);
 
     let a_biguint = U512::max().wrapping_sub_uint(1_u8);
     let res = a_biguint.wrapping_add_uint(3_u8);
@@ -2415,6 +2445,8 @@ fn biguint_wrapping_add_uint()
     assert_eq!(res.is_divided_by_zero(), false);
     assert_eq!(res.is_infinity(), false);
     assert_eq!(res.is_undefined(), false);
+    assert_eq!(res.is_left_carry(), false);
+    assert_eq!(res.is_right_carry(), false);
     println!("---------------------------");
 }
 
@@ -2432,6 +2464,8 @@ fn biguint_wrapping_add_assign_uint()
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     a_biguint.wrapping_add_assign_uint(1_u8);
     println!("After a_biguint.wrapping_add_assign_uint(1_u8), a_biguint = {}", a_biguint);
@@ -2441,6 +2475,8 @@ fn biguint_wrapping_add_assign_uint()
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
     
     let mut a_biguint = UU64::max();
     println!("Originally, a_biguint = {}", a_biguint);
@@ -2450,6 +2486,8 @@ fn biguint_wrapping_add_assign_uint()
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     a_biguint.wrapping_add_assign_uint(1_u8);
     println!("After a_biguint.wrapping_add_assign_uint(1_u8), a_biguint = {}", a_biguint);
@@ -2459,6 +2497,8 @@ fn biguint_wrapping_add_assign_uint()
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     a_biguint.wrapping_add_assign_uint(1_u8);
     println!("After a_biguint.wrapping_add_assign_uint(1_u8), a_biguint = {}", a_biguint);
@@ -2468,6 +2508,8 @@ fn biguint_wrapping_add_assign_uint()
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
     println!("---------------------------");
 }
 
@@ -2487,6 +2529,8 @@ fn biguint_overflowing_add_uint()
     assert_eq!(res.is_divided_by_zero(), false);
     assert_eq!(res.is_infinity(), false);
     assert_eq!(res.is_undefined(), false);
+    assert_eq!(res.is_left_carry(), false);
+    assert_eq!(res.is_right_carry(), false);
 
     let a_biguint = U512::max().wrapping_sub_uint(1_u8);
     let (res, overflow) = a_biguint.overflowing_add_uint(2_u8);
@@ -2498,6 +2542,8 @@ fn biguint_overflowing_add_uint()
     assert_eq!(res.is_divided_by_zero(), false);
     assert_eq!(res.is_infinity(), false);
     assert_eq!(res.is_undefined(), false);
+    assert_eq!(res.is_left_carry(), false);
+    assert_eq!(res.is_right_carry(), false);
 
     let a_biguint = U512::max().wrapping_sub_uint(1_u8);
     let (res, overflow) = a_biguint.overflowing_add_uint(3_u8);
@@ -2509,6 +2555,8 @@ fn biguint_overflowing_add_uint()
     assert_eq!(res.is_divided_by_zero(), false);
     assert_eq!(res.is_infinity(), false);
     assert_eq!(res.is_undefined(), false);
+    assert_eq!(res.is_left_carry(), false);
+    assert_eq!(res.is_right_carry(), false);
     println!("---------------------------");
 }
 
@@ -2525,6 +2573,8 @@ fn biguint_overflowing_add_assign_uint()
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let overflow = a_biguint.overflowing_add_assign_uint(1_u8);
     println!("After a_biguint.overflowing_add_assign_uint(1_u8), a_biguint = {}\noverflow = {}", a_biguint, overflow);
@@ -2535,6 +2585,8 @@ fn biguint_overflowing_add_assign_uint()
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let mut a_biguint = UU64::max().wrapping_sub_uint(1_u8);
     println!("Originally, a_biguint = {}", a_biguint);
@@ -2543,6 +2595,8 @@ fn biguint_overflowing_add_assign_uint()
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let mut overflow = a_biguint.overflowing_add_assign_uint(2_u8);
     println!("After a_biguint.overflowing_add_assign_uint(2_u8), a_biguint = {}\noverflow = {}", a_biguint, overflow);
@@ -2553,6 +2607,8 @@ fn biguint_overflowing_add_assign_uint()
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     overflow = a_biguint.overflowing_add_assign_uint(2_u8);
     println!("After a_biguint.overflowing_add_assign_uint(2_u8), a_biguint = {}\noverflow = {}", a_biguint, overflow);
@@ -2563,6 +2619,8 @@ fn biguint_overflowing_add_assign_uint()
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
     println!("---------------------------");
 }
 

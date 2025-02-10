@@ -1340,9 +1340,10 @@ macro_rules! calc_rotate_assign
 /// ```
 /// 
 /// # Big-endian issue
-/// It is just experimental for Big Endian CPUs. So, you are not encouraged
-/// to use it for Big Endian CPUs for serious purpose. Only use this crate
-/// for Big-endian CPUs with your own full responsibility.
+/// This struct BigUInt is just experimental for Big Endian CPUs.
+/// So, you are not encouraged to use this struct BigUInt for Big Endian CPUs
+/// for serious purpose. Only use this crate for Big-endian CPUs
+/// with your own full responsibility.
 #[derive(Debug, Clone)]
 pub struct BigUInt<T, const N: usize>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -1559,11 +1560,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(one.is_left_carry(), false);
     /// assert_eq!(one.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn one() -> Self
     {
         let mut me = Self::zero();
@@ -1872,75 +1868,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(b_u512_with_u8.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2 for the shorter length
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::number::*;
-    /// 
-    /// let mut a_u512_with_u8 = U512_with_u8::from_str("123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789").unwrap();
-    /// a_u512_with_u8.set_overflow();
-    /// a_u512_with_u8.set_underflow();
-    /// a_u512_with_u8.set_infinity();
-    /// a_u512_with_u8.set_divided_by_zero();
-    /// a_u512_with_u8.set_undefined();
-    /// a_u512_with_u8.set_left_carry();
-    /// a_u512_with_u8.set_right_carry();
-    /// assert_eq!(a_u512_with_u8.is_overflow(), true);
-    /// assert_eq!(a_u512_with_u8.is_underflow(), true);
-    /// assert_eq!(a_u512_with_u8.is_infinity(), true);
-    /// assert_eq!(a_u512_with_u8.is_divided_by_zero(), true);
-    /// assert_eq!(a_u512_with_u8.is_undefined(), true);
-    /// assert_eq!(a_u512_with_u8.is_left_carry(), true);
-    /// assert_eq!(a_u512_with_u8.is_right_carry(), true);
-    /// 
-    /// let b_u256_with_u8 = U256_with_u16::from_biguint(&a_u512_with_u8);
-    /// println!("a_u512_with_u8 = {}", a_u512_with_u8);
-    /// println!("b_u256_with_u8 = {}", b_u256_with_u8);
-    /// assert_eq!(a_u512_with_u8.to_string(), "123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789");
-    /// assert_eq!(b_u256_with_u8.to_string(), "98633800081229720571026865697976779988382011787853764870844783447569204535061");
-    /// assert_eq!(b_u256_with_u8.is_overflow(), false);
-    /// assert_eq!(b_u256_with_u8.is_underflow(), false);
-    /// assert_eq!(b_u256_with_u8.is_infinity(), false);
-    /// assert_eq!(b_u256_with_u8.is_divided_by_zero(), false);
-    /// assert_eq!(b_u256_with_u8.is_undefined(), false);
-    /// assert_eq!(b_u256_with_u8.is_left_carry(), false);
-    /// assert_eq!(b_u256_with_u8.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # Example 3 for the longer length
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::number::*;
-    /// 
-    /// let mut a_u512_with_u8 = U512_with_u8::from_str("123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789").unwrap();
-    /// a_u512_with_u8.set_overflow();
-    /// a_u512_with_u8.set_underflow();
-    /// a_u512_with_u8.set_infinity();
-    /// a_u512_with_u8.set_divided_by_zero();
-    /// a_u512_with_u8.set_undefined();
-    /// a_u512_with_u8.set_left_carry();
-    /// a_u512_with_u8.set_right_carry();
-    /// assert_eq!(a_u512_with_u8.is_overflow(), true);
-    /// assert_eq!(a_u512_with_u8.is_underflow(), true);
-    /// assert_eq!(a_u512_with_u8.is_infinity(), true);
-    /// assert_eq!(a_u512_with_u8.is_divided_by_zero(), true);
-    /// assert_eq!(a_u512_with_u8.is_undefined(), true);
-    /// assert_eq!(a_u512_with_u8.is_left_carry(), true);
-    /// assert_eq!(a_u512_with_u8.is_right_carry(), true);
-    /// 
-    /// let b_u1024_with_u8 = U1024_with_u16::from_biguint(&a_u512_with_u8);
-    /// println!("a_u512_with_u8 = {}", a_u512_with_u8);
-    /// println!("b_u1024_with_u8 = {}", b_u1024_with_u8);
-    /// assert_eq!(a_u512_with_u8.to_string(), "123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789");
-    /// assert_eq!(b_u1024_with_u8.to_string(), "123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789");
-    /// assert_eq!(b_u1024_with_u8.is_overflow(), false);
-    /// assert_eq!(b_u1024_with_u8.is_underflow(), false);
-    /// assert_eq!(b_u1024_with_u8.is_infinity(), false);
-    /// assert_eq!(b_u1024_with_u8.is_divided_by_zero(), false);
-    /// assert_eq!(b_u1024_with_u8.is_undefined(), false);
-    /// assert_eq!(b_u1024_with_u8.is_left_carry(), false);
-    /// assert_eq!(b_u1024_with_u8.is_right_carry(), false);
-    /// ```
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.from_biguint)
     #[inline]
     pub fn from_biguint<U, const M: usize>(biguint: &BigUInt<U, M>) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -2177,73 +2106,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// }
     /// ```
     /// 
-    /// # Example 2 for NumberErr::NotAlphaNumeric case
-    /// ```
-    /// use cryptocol::number::NumberErr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let b_contains_non_alphanumeric = U256::from_string("12345+67890");
-    /// match b_contains_non_alphanumeric
-    /// {
-    ///     Ok(n) =>  { println!("a_correct = {}", n); },
-    ///     Err(e) => {
-    ///         println!("Failed: {}", e);
-    ///         assert_eq!(e, NumberErr::NotAlphaNumeric);
-    ///     },
-    /// }
-    /// ```
-    /// 
-    /// # Example 3 for NumberErr::NotFitToRadix case
-    /// ```
-    /// use cryptocol::number::NumberErr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let c_constains_not_fit_to_radix = U256::from_string("1234567890a");
-    /// match c_constains_not_fit_to_radix
-    /// {
-    ///     Ok(n) =>  { println!("c_constains_not_fit_to_radix = {}", n); },
-    ///     Err(e) => {
-    ///         println!("Failed: {}", e);
-    ///         assert_eq!(e, NumberErr::NotFitToRadix);
-    ///     },
-    /// }
-    /// ```
-    /// 
-    /// # Example 4 for NumberErr::TooBigNumber case
-    /// ```
-    /// use cryptocol::number::NumberErr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let d_constains_too_big_number = U256::from_string("1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890");
-    /// match d_constains_too_big_number
-    /// {
-    ///     Ok(n) =>  { println!("c_constains_too_big_number = {}", n); },
-    ///     Err(e) => {
-    ///         println!("Failed: {}", e);
-    ///         assert_eq!(e, NumberErr::TooBigNumber);
-    ///     },
-    /// }
-    /// ```
-    /// 
-    /// # Example 5 for NumberErr::NotAlphaNumeric and NumberErr::NotFitToRadix case
-    /// ```
-    /// use cryptocol::number::NumberErr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let e_contains_non_alphanumeric_not_fit_to_radix = U256::from_string("F12345+67890");
-    /// match e_contains_non_alphanumeric_not_fit_to_radix
-    /// {
-    ///     Ok(n) =>  { println!("e_contains_non_alphanumeric_not_fit_to_radix = {}", n); },
-    ///     Err(e) => {
-    ///         println!("Failed: {}", e);
-    ///         assert_eq!(e, NumberErr::NotFitToRadix); // The first letter is 'F'.
-    ///     },
-    /// }
-    /// ```
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.from_string)
     #[inline]
     pub fn from_string(txt: &str) -> Result<Self, NumberErr>
     {
@@ -2508,57 +2372,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_0.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with_u32;
-    /// define_utypes_with_u32!();
-    /// 
-    /// let a_12 = U256::generate_check_bits(12).unwrap();
-    /// println!("a_12 = {:#b}", a_12);
-    /// assert_eq!(a_12.to_string_with_radix_and_stride(2, 10).unwrap(), "100_0000000000");
-    /// assert_eq!(a_12.is_overflow(), false);
-    /// assert_eq!(a_12.is_underflow(), false);
-    /// assert_eq!(a_12.is_infinity(), false);
-    /// assert_eq!(a_12.is_divided_by_zero(), false);
-    /// assert_eq!(a_12.is_undefined(), false);
-    /// assert_eq!(a_12.is_left_carry(), false);
-    /// assert_eq!(a_12.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with_u32;
-    /// define_utypes_with_u32!();
-    /// 
-    /// let a_255 = U256::generate_check_bits(255).unwrap();
-    /// println!("a_255 = {:#b}", a_255);
-    /// assert_eq!(a_255.to_string_with_radix_and_stride(2, 10).unwrap(), "100000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000");
-    /// assert_eq!(a_255.is_overflow(), false);
-    /// assert_eq!(a_255.is_underflow(), false);
-    /// assert_eq!(a_255.is_infinity(), false);
-    /// assert_eq!(a_255.is_divided_by_zero(), false);
-    /// assert_eq!(a_255.is_undefined(), false);
-    /// assert_eq!(a_255.is_left_carry(), false);
-    /// assert_eq!(a_255.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # Example 4
-    /// ```
-    /// use cryptocol::define_utypes_with_u32;
-    /// define_utypes_with_u32!();
-    /// 
-    /// let a_256 = U256::generate_check_bits(256);
-    /// match a_256
-    /// {
-    ///     Some(n) => { println!("a_256 = {:#b}", n); },
-    ///     None => { assert_eq!(a_256, None); },
-    /// }
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.generate_check_bits)
     pub fn generate_check_bits(bit_pos: usize) -> Option<Self>
     {
         if bit_pos < Self::size_in_bits()
@@ -2603,53 +2418,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_0.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with_u32;
-    /// define_utypes_with_u32!();
-    /// 
-    /// let a_12 = U256::generate_check_bits_(12);
-    /// println!("a_12 = {:#b}", a_12);
-    /// assert_eq!(a_12.to_string_with_radix_and_stride(2, 10).unwrap(), "100_0000000000");
-    /// assert_eq!(a_12.is_overflow(), false);
-    /// assert_eq!(a_12.is_underflow(), false);
-    /// assert_eq!(a_12.is_infinity(), false);
-    /// assert_eq!(a_12.is_divided_by_zero(), false);
-    /// assert_eq!(a_12.is_undefined(), false);
-    /// assert_eq!(a_12.is_left_carry(), false);
-    /// assert_eq!(a_12.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with_u32;
-    /// define_utypes_with_u32!();
-    /// 
-    /// let a_255 = U256::generate_check_bits_(255);
-    /// println!("a_255 = {:#b}", a_255);
-    /// assert_eq!(a_255.to_string_with_radix_and_stride(2, 10).unwrap(), "100000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000_0000000000");
-    /// assert_eq!(a_255.is_overflow(), false);
-    /// assert_eq!(a_255.is_underflow(), false);
-    /// assert_eq!(a_255.is_infinity(), false);
-    /// assert_eq!(a_255.is_divided_by_zero(), false);
-    /// assert_eq!(a_255.is_undefined(), false);
-    /// assert_eq!(a_255.is_left_carry(), false);
-    /// assert_eq!(a_255.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # Panic Examples
-    /// ```should_panic
-    /// use cryptocol::define_utypes_with_u32;
-    /// define_utypes_with_u32!();
-    /// 
-    /// // It will panic!
-    /// let a_256 = U256::generate_check_bits_(256);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.generate_check_bits_)
     pub fn generate_check_bits_(bit_pos: usize) -> Self
     {
         let mut check_bits = Self::zero();
@@ -2783,26 +2553,28 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// let mut a_biguint = U256::from_string("256487951236974125896345564889974258").unwrap();
     /// println!("a_biguint = {}", a_biguint.to_string_with_radix_and_stride(2, 8).unwrap());
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
     /// a_biguint.turn_check_bits(102);
     /// println!("a_biguint = {}", a_biguint.to_string_with_radix_and_stride(2, 8).unwrap());
     /// assert_eq!(a_biguint, U256::from_str_radix("1000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000", 2).unwrap());
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Panic Example
-    /// ```should_panic
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U256::from_string("256487951236974125896345564889974258").unwrap();
-    /// println!("a_biguint = {}", a_biguint.to_string_with_radix_and_stride(2, 8).unwrap());
-    /// // It will panic.
-    /// a_biguint.turn_check_bits(256);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.turn_check_bits)
     pub fn turn_check_bits(&mut self, bit_pos: usize)
     {
         let size_t_bits = T::size_in_bits();
@@ -2862,55 +2634,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// }
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let a_biguint = U256::from_string("12345678912345678912345678912345678912345678912345678912345678912345678912345").unwrap();
-    /// println!("a_biguint = {}_U256", a_biguint.to_string_with_radix_and_stride(2, 10).unwrap());
-    /// let res = a_biguint.is_bit_set(200);
-    /// match res
-    /// {
-    ///     Some(r) => {
-    ///         println!("The {}th bit is set: {}", 200, r);
-    ///         assert_eq!(a_biguint.is_bit_set_(200), false);
-    ///         assert_eq!(a_biguint.is_overflow(), false);
-    ///         assert_eq!(a_biguint.is_underflow(), false);
-    ///         assert_eq!(a_biguint.is_infinity(), false);
-    ///         assert_eq!(a_biguint.is_undefined(), false);
-    ///         assert_eq!(a_biguint.is_divided_by_zero(), false);
-    ///         assert_eq!(a_biguint.is_left_carry(), false);
-    ///         assert_eq!(a_biguint.is_right_carry(), false);
-    ///     },
-    ///     None => {
-    ///         println!("{}_U256 does not have the {}th bit.", a_biguint, 200);
-    ///     }
-    /// }
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let a_biguint = U256::from_string("12345678912345678912345678912345678912345678912345678912345678912345678912345").unwrap();
-    /// println!("a_biguint = {}_U256", a_biguint.to_string_with_radix_and_stride(2, 10).unwrap());
-    /// let res = a_biguint.is_bit_set(300);
-    /// match res
-    /// {
-    ///     Some(r) => { println!("The {}th bit is set: {}", 300, r); },
-    ///     None => {
-    ///         println!("{}_U256 does not have the {}th bit.", a_biguint, 300);
-    ///         assert_eq!(a_biguint.is_bit_set(300), None);
-    ///     }
-    /// }
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_bit_set)
     pub fn is_bit_set(&self, bit_pos: usize) -> Option<bool>
     {
         if (bit_pos / T::size_in_bits()) >= N
@@ -2958,30 +2683,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_bit_set_(151), true);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let a_biguint = U256::from_string("12345678912345678912345678912345678912345678912345678912345678912345678912345").unwrap();
-    /// println!("The {}th bit is set: {}", 200, a_biguint.is_bit_set_(200));
-    /// assert_eq!(a_biguint.is_bit_set_(200), false);
-    /// ```
-    /// 
-    /// # Panic Examples
-    /// ```should_panic
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let a_biguint = U256::from_string("12345678912345678912345678912345678912345678912345678912345678912345678912345").unwrap();
-    /// // It will panic!!!
-    /// println!("The {}th bit is set: {}", 300, a_biguint.is_bit_set_(300));
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_bit_set_)
     pub fn is_bit_set_(&self, bit_pos: usize) -> bool
     {
         let size_t_bits = T::size_in_bits();
@@ -3016,11 +2719,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("The 10-bit upper portion of {}_U256 is {}_U256", a_biguint.to_string_with_radix_and_stride(2, 10).unwrap(), b.to_string_with_radix_and_stride(2, 10).unwrap());
     /// assert_eq!(b.to_string_with_radix_and_stride(2, 10).unwrap(), "1101101001");
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn get_upper_portion(&self, portion: usize) -> Self
     {
         let leading = self.leading_zeros();
@@ -3058,11 +2756,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("The 10-bit lower portion of {}_U256 is {}_U256", a_biguint.to_string_with_radix_and_stride(2, 10).unwrap(), b.to_string_with_radix_and_stride(2, 10).unwrap());
     /// assert_eq!(b.to_string_with_radix_and_stride(2, 10).unwrap(), "1101010100");
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn get_lower_portion(&self, portion: usize) -> Self
     {
         let leading = self.leading_zeros();
@@ -3109,7 +2802,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// When you are sure that `i` < `N`, you may want to use its counterpart
     /// method [get_num_()](struct@BigUInt#method.get_num_) for performance.
     /// 
-    /// # Example
+    /// # Example 1
     /// ```
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
@@ -3125,24 +2818,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///         println!("There is no third element.");
     ///     },
     /// }
-    /// 
-    /// let f = a_biguint.get_num(8);
-    /// match f
-    /// {
-    ///     Some(num) => {
-    ///         println!("a_biguint.get_num(3).unwrap() = {}", num);
-    ///     },
-    ///     None => {
-    ///         println!("There is no third element.");
-    ///         assert_eq!(f, None);
-    ///     },
-    /// }
     /// ```
     /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.get_num)
     pub fn get_num(&self, i: usize) -> Option<T>
     {
         if i < N
@@ -3189,20 +2868,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(b, 30);
     /// ```
     /// 
-    /// # Panic Example
-    /// ```should_panic
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = U256::from([0_u32, 10, 20, 30, 40, 50, 60, 70]);
-    /// // It will panic.
-    /// let c = a_biguint.get_num_(8);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.get_num_)
     #[inline]
     pub fn get_num_(&self, i: usize) -> T
     {
@@ -3233,7 +2900,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// When you are sure that `i` < `N`, you may want to use its Counterpart
     /// method [set_num_()](struct@BigUInt#method.set_num_) for performance.
     /// 
-    /// # Example
+    /// # Example 1
     /// ```
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
@@ -3241,22 +2908,32 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// let mut a_biguint = U256::from([0_u64, 10, 20, 30]);
     /// let mut num = a_biguint.get_num_(3);
     /// println!("a_biguint.get_num(3).unwrap() = {}", num);
+    /// assert_eq!(a_biguint.get_num_(3), 30);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
     /// let b = a_biguint.set_num(3, 0);
-    /// assert!(b);
+    /// assert_eq!(b, true);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
     /// num = a_biguint.get_num_(3);
     /// println!("a_biguint.get_num(3).unwrap() = {}", num);
     /// assert_eq!(num, 0);
-    /// 
-    /// let c = a_biguint.set_num(4, 0);
-    /// if !b
-    ///     { println!("There is no fourth element."); }
-    /// assert!(!c);
     /// ```
     /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.set_num)
     pub fn set_num(&mut self, i: usize, val: T) -> bool
     {
         if i < N
@@ -3301,6 +2978,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// define_utypes_with!(u128);
     /// 
     /// let mut a_biguint = U256::from([10_u128, 20]);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
     /// let mut num = a_biguint.get_num_(1);
     /// println!("a_biguint.get_num_(1) = {}", num);
     /// assert_eq!(num, 20);
@@ -3309,17 +2994,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// num = a_biguint.get_num_(1);
     /// println!("a_biguint.get_num_(1) = {}", num);
     /// assert_eq!(num, 300);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Panic Examples
-    /// ```should_panic
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U256::from([10_u128, 20]);
-    /// // It will panic.
-    /// let c = a_biguint.set_num_(4, 0);
-    /// ```
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.set_num_)
     #[inline]
     pub fn set_num_(&mut self, i: usize, val: T)
     {
@@ -3372,12 +3057,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     assert_eq!(arr, &[169027903, 1302152522, 3897323189, 3259190507, 1179716839, 4196280276, 2015458651, 457926681]);
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// Only for big-endian compatible.
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for serious purpose. Only use this crate for Big-endian CPUs
-    /// with your own full responsibility.
     #[inline]
     #[cfg(target_endian = "big")]
     pub fn get_number_mut(&self) -> &mut [T; N]
@@ -3397,10 +3076,25 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// let mut a_biguint = U256::new();
     /// println!("arr = {:?}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
     /// let arr = [1_u16, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
     /// a_biguint.set_number(&arr);
     /// println!("arr = {:?}", a_biguint);
     /// assert_eq!(a_biguint.get_number(), &arr);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     #[inline]
     pub fn set_number(&mut self, val: &[T; N])
@@ -3479,9 +3173,24 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// let mut a_biguint = U256::new();
     /// a_biguint.set_number(&[1_u16, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
     /// println!("a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
     /// a_biguint.set_zero();
     /// println!("a_biguint = {}", a_biguint);
     /// assert_eq!(a_biguint, U256::zero());
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn set_zero(&mut self)
     {
@@ -3514,25 +3223,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// }
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U1024::zero();
-    /// let mut b_zero = a_biguint.is_zero();
-    /// a_biguint.set_one();
-    /// b_zero = a_biguint.is_zero();
-    /// if b_zero
-    /// {
-    ///     println!("a_biguint is Zero");
-    /// }
-    /// else
-    /// {
-    ///     println!("a_biguint is Not Zero");
-    ///     assert_eq!(b_zero, false);
-    /// }
-    /// ```
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_zero)
     pub fn is_zero(&self) -> bool
     {
         for i in 0..N
@@ -3554,15 +3246,25 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// let mut a_biguint = U256::new();
     /// a_biguint.set_number(&[1_u16, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
     /// println!("a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
     /// a_biguint.set_one();
     /// println!("a_biguint = {}", a_biguint);
     /// assert_eq!(a_biguint, U256::one());
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn set_one(&mut self)
     {
         self.set_zero();
@@ -3595,26 +3297,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// }
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U256::one();
-    /// let mut b_one = a_biguint.is_one();
-    /// 
-    /// a_biguint.set_max();
-    /// b_one = a_biguint.is_one();
-    /// if b_one
-    /// {
-    ///     println!("a_biguint is One");
-    /// }
-    /// else
-    /// {
-    ///     println!("a_biguint is Not One");
-    ///     assert_eq!(b_one, false);
-    /// }
-    /// ```
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_one)
     pub fn is_one(&self) -> bool
     {
         if self.get_num_(0) != T::one()
@@ -3654,44 +3338,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// }
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = U256::one();
-    /// println!("a_biguint = {}", a_biguint);
-    /// let b_zero_or_one = a_biguint.is_zero_or_one();
-    /// if b_zero_or_one
-    /// {
-    ///     println!("a_biguint is One or Zero.");
-    /// }
-    /// else
-    /// {
-    ///     println!("a_biguint is Neither One nor Zero.");
-    ///     assert_eq!(b_zero_or_one, true);
-    /// }
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let mut a_biguint = U256::one();
-    /// a_biguint.wrapping_add_assign_uint(1_u8);
-    /// println!("a_biguint = {}", a_biguint);
-    /// let b_zero_or_one = a_biguint.is_zero_or_one();
-    /// if b_zero_or_one
-    /// {
-    ///     println!("a_biguint is One or Zero.");
-    /// }
-    /// else
-    /// {
-    ///     println!("a_biguint is Neither One nor Zero.");
-    ///     assert_eq!(b_zero_or_one, false);
-    /// }
-    /// ```
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_zero_or_one)
     pub fn is_zero_or_one(&self) -> bool
     {
         if self.get_num_(0) > T::one()
@@ -3716,9 +3364,24 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// let mut a_biguint = U256::new();
     /// println!("a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
     /// a_biguint.set_max();
     /// println!("a_biguint = {}", a_biguint.to_string_with_radix_and_stride(16, 8).unwrap());
     /// assert_eq!(a_biguint.to_string_with_radix_and_stride(16, 8).unwrap(), "FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF");
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn set_max(&mut self)
     {
@@ -3742,9 +3405,24 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// let mut a_biguint = U256::new();
     /// println!("a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
     /// a_biguint.set_submax(200_usize);
     /// println!("a_biguint = {}", a_biguint.to_string_with_radix_and_stride(16, 8).unwrap());
     /// assert_eq!(a_biguint.to_string_with_radix_and_stride(16, 8).unwrap(), "FF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF");
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn set_submax(&mut self, size_in_bits: usize)
     {
@@ -3789,9 +3467,24 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// let mut a_biguint = U256::new();
     /// println!("a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
     /// a_biguint.set_halfmax();
     /// println!("a_biguint = {}", a_biguint.to_string_with_radix_and_stride(16, 8).unwrap());
     /// assert_eq!(a_biguint.to_string_with_radix_and_stride(16, 8).unwrap(), "FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF");
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     #[inline]
     pub fn set_halfmax(&mut self)
@@ -3816,20 +3509,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_max(), true);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let a_biguint = U256::max().wrapping_sub_uint(1_u8);
-    /// println!("Is {} the 256-bit maximum? - {}", a_biguint, a_biguint.is_max());
-    /// assert_eq!(a_biguint.is_max(), false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_max)
     pub fn is_max(&self) -> bool
     {
         for i in 0..N
@@ -3850,15 +3531,25 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// let mut a_biguint = U256::new();
     /// println!("a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
     /// a_biguint.set_msb();
     /// println!("a_biguint = {}", a_biguint);
     /// assert_eq!(a_biguint.to_string_with_radix_and_stride(2, 8).unwrap(), "10000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000");
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn set_msb(&mut self)
     {
         let highest = self.get_num_(N-1);
@@ -3876,15 +3567,25 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// let mut a_biguint = U256::new();
     /// println!("a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
     /// a_biguint.set_lsb();
     /// println!("a_biguint = {}", a_biguint);
     /// assert_eq!(a_biguint.to_string_with_radix_and_stride(2, 8).unwrap(), "1");
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn set_lsb(&mut self)
     {
         let lowest = self.get_num_(0);
@@ -3911,15 +3612,25 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// let mut a_biguint = U1024::new();
     /// println!("a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
     /// a_biguint.set_uint(340282366920938463453374607431768211455_u128);
     /// println!("a_biguint = {}", a_biguint);
     /// assert_eq!(a_biguint.to_string(), "340282366920938463453374607431768211455");
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn set_uint<U>(&mut self, val: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -3993,11 +3704,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_uint(51_u16), true);
     /// assert_eq!(a_biguint.is_uint(50_u16), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn is_uint<U>(&self, val: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4061,7 +3767,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Output
     /// It will return `true`, if it is odd. Otherwise, it will return `false`.
     /// 
-    /// # Examples
+    /// # Example 1
     /// ```
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
@@ -4073,14 +3779,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// else
     ///     { println!("{} is even", a_biguint); }
     /// assert_eq!(a_biguint.is_odd(), true);
-    /// 
-    /// a_biguint <<= 1;
-    /// if a_biguint.is_odd()
-    ///     { println!("{} is odd", a_biguint); }
-    /// else
-    ///     { println!("{} is even", a_biguint); }
-    /// assert_eq!(a_biguint.is_odd(), false);
     /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_odd)
     #[inline]
     pub fn is_odd(&self) -> bool
     {
@@ -4093,7 +3795,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Output
     /// It will return `true`, if it is even. Otherwise, it will return `false`.
     /// 
-    /// # Examples
+    /// # Example 1
     /// ```
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
@@ -4105,14 +3807,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// else
     ///     { println!("{} is odd", a_biguint); }
     /// assert_eq!(a_biguint.is_even(), false);
-    /// 
-    /// a_biguint <<= 1;
-    /// if a_biguint.is_even()
-    ///     { println!("{} is even", a_biguint); }
-    /// else
-    ///     { println!("{} is odd", a_biguint); }
-    /// assert_eq!(a_biguint.is_even(), true);
     /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_even)
     #[inline]
     pub fn is_even(&self) -> bool
     {
@@ -4132,7 +3830,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
-    /// let mut a_biguint = U256::from_uint(169743176821145534028236692093846345739_u128);
+    /// let a_biguint = U256::from_uint(169743176821145534028236692093846345739_u128);
     /// if a_biguint.is_msb_set()
     ///     { println!("{} is greater than halfmax ({}).", a_biguint, U256::halfmax()); }
     /// else
@@ -4140,19 +3838,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_msb_set(), false);
     /// ```
     /// 
-    /// # Example 1
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U256::from_uint(169743176821145534028236692093846345739_u128);
-    /// a_biguint.set_msb();
-    /// if a_biguint.is_msb_set()
-    ///     { println!("{} is greater than halfmax ({}).", a_biguint, U256::halfmax()); }
-    /// else
-    ///     { println!("{} is less than or equal to halfmax ({}).", a_biguint, U256::halfmax()); }
-    /// assert_eq!(a_biguint.is_msb_set(), true);
-    /// ```
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_msb_set)
     #[inline]
     pub fn is_msb_set(&self) -> bool
     {
@@ -4170,7 +3857,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Output
     /// It returns the total number of the bits that are set to be one.
     /// 
-    /// # Examples
+    /// # Example
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -4256,9 +3943,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let a_biguint = "100000000000000000000000000000000000000000000000000000000000000000000000000000".parse::<U256>().unwrap();
+    /// let a_biguint = "100000000000000000000000000000000000000000000000000000000000000000000000000".parse::<U256>().unwrap();
     /// println!("{} is {} in binary and has {} leading zeros in binary.", a_biguint, a_biguint.to_string_with_radix_and_stride(2, 10).unwrap(), a_biguint.leading_zeros());
-    /// assert_eq!(a_biguint.leading_zeros(), 0);
+    /// assert_eq!(a_biguint.leading_zeros(), 10);
     /// ```
     pub fn leading_zeros(&self) -> u32
     {
@@ -4282,7 +3969,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Output
     /// It returns the total number of the trailing bits that are set to be one.
     /// 
-    /// # Examples
+    /// # Example
     /// ```
     /// use cryptocol::define_utypes_with;
     /// use std::str::FromStr;
@@ -4354,7 +4041,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// that has all bits set to be one.
     /// Here, 'maximum element' means the element that has all bits to be one. 
     /// 
-    /// # Examples
+    /// # Example
     /// ```
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
@@ -4524,42 +4211,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res, Ordering::Greater);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use std::cmp::Ordering;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let res = UU32::from_uint(100_u8).partial_cmp_uint(110_u128).unwrap();
-    /// match res
-    /// {
-    ///     Ordering::Greater => { println!("100 > 110"); }
-    ///     Ordering::Less => { println!("100 < 110"); }
-    ///     Ordering::Equal => { println!("100 = 110"); }
-    /// }
-    /// assert_eq!(res, Ordering::Less);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use std::cmp::Ordering;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let res = UU32::from_uint(100_u8).partial_cmp_uint(100_u128).unwrap();
-    /// match res
-    /// {
-    ///     Ordering::Greater => { println!("100 > 100"); }
-    ///     Ordering::Less => { println!("100 < 100"); }
-    ///     Ordering::Equal => { println!("100 = 100"); }
-    /// }
-    /// assert_eq!(res, Ordering::Equal);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.partial_cmp_uint)
     pub fn partial_cmp_uint<U>(&self, other: U) -> Option<Ordering>
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4631,40 +4284,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res, false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let a_biguint = UU32::from_uint(100_u8);
-    /// let b_uint = 200_u8;
-    /// let res = a_biguint.lt_uint(b_uint);
-    /// if res
-    ///     { println!("{} < {}", a_biguint, b_uint); }
-    /// else
-    ///     { println!("{} >= {}", a_biguint, b_uint); }
-    /// assert_eq!(res, true);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let a_biguint = UU32::from_uint(100_u8);
-    /// let b_uint = 100_u8;
-    /// let res = a_biguint.lt_uint(b_uint);
-    /// if res
-    ///     { println!("{} < {}", a_biguint, b_uint); }
-    /// else
-    ///     { println!("{} >= {}", a_biguint, b_uint); }
-    /// assert_eq!(res, false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.lt_uint)
     #[inline]
     pub fn lt_uint<U>(&self, other: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -4710,40 +4331,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res, true);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = UU32::from_uint(100_u8);
-    /// let b_uint = 200_u8;
-    /// let res = a_biguint.gt_uint(b_uint);
-    /// if res
-    ///     { println!("{} > {}", a_biguint, b_uint); }
-    /// else
-    ///     { println!("{} <= {}", a_biguint, b_uint); }
-    /// assert_eq!(res, false);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = UU32::from_uint(100_u8);
-    /// let b_uint = 100_u8;
-    /// let res = a_biguint.gt_uint(b_uint);
-    /// if res
-    ///     { println!("{} > {}", a_biguint, b_uint); }
-    /// else
-    ///     { println!("{} <= {}", a_biguint, b_uint); }
-    /// assert_eq!(res, false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.gt_uint)
     #[inline]
     pub fn gt_uint<U>(&self, other: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -4789,40 +4378,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res, false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let a_biguint = UU32::from_uint(100_u8);
-    /// let b_uint = 200_u8;
-    /// let res = a_biguint.le_uint(b_uint);
-    /// if res
-    ///     { println!("{} <= {}", a_biguint, b_uint); }
-    /// else
-    ///     { println!("{} > {}", a_biguint, b_uint); }
-    /// assert_eq!(res, true);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let a_biguint = UU32::from_uint(100_u8);
-    /// let b_uint = 100_u8;
-    /// let res = a_biguint.le_uint(b_uint);
-    /// if res
-    ///     { println!("{} <= {}", a_biguint, b_uint); }
-    /// else
-    ///     { println!("{} > {}", a_biguint, b_uint); }
-    /// assert_eq!(res, true);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.le_uint)
     #[inline]
     pub fn le_uint<U>(&self, other: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -4868,40 +4425,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res, true);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let a_biguint = UU32::from_uint(100_u8);
-    /// let b_uint = 200_u8;
-    /// let res = a_biguint.ge_uint(b_uint);
-    /// if res
-    ///     { println!("{} >= {}", a_biguint, b_uint); }
-    /// else
-    ///     { println!("{} < {}", a_biguint, b_uint); }
-    /// assert_eq!(res, false);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let a_biguint = UU32::from_uint(100_u8);
-    /// let b_uint = 100_u8;
-    /// let res = a_biguint.ge_uint(b_uint);
-    /// if res
-    ///     { println!("{} >= {}", a_biguint, b_uint); }
-    /// else
-    ///     { println!("{} < {}", a_biguint, b_uint); }
-    /// assert_eq!(res, true);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.ge_uint)
     #[inline]
     pub fn ge_uint<U>(&self, other: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -4946,25 +4471,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res, true);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let a_biguint = UU32::from_uint(100_u8);
-    /// let b_uint = 200_u8;
-    /// let res = a_biguint.eq_uint(b_uint);
-    /// if res
-    ///     { println!("{} == {}", a_biguint, b_uint); }
-    /// else
-    ///     { println!("{} != {}", a_biguint, b_uint); }
-    /// assert_eq!(res, false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.eq_uint)
     #[inline]
     pub fn eq_uint<U>(&self, other: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -5022,48 +4530,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res, Ordering::Greater);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use std::cmp::Ordering;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let num_str1 = "70000000000000000000000000000000000000000000000000000000000000000000000000000";
-    /// let num_str3 = "80000000000000000000000000000000000000000000000000000000000000000000000000000";
-    /// let num1 = num_str1.parse::<UU32>().unwrap();
-    /// let num3 = num_str3.parse::<UU32>().unwrap();
-    /// let res = num1.partial_cmp(&num3).unwrap();
-    /// match res
-    /// {
-    ///     Ordering::Greater => { println!("{} > {}", num1, num3); }
-    ///     Ordering::Less => { println!("{} < {}", num1, num3); }
-    ///     Ordering::Equal => { println!("{} = {}", num1, num3); }
-    /// }
-    /// assert_eq!(res, Ordering::Less);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use std::cmp::Ordering;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let num_str1 = "70000000000000000000000000000000000000000000000000000000000000000000000000000";
-    /// let num1 = num_str1.parse::<UU32>().unwrap();
-    /// let res = num1.partial_cmp(&num1).unwrap();
-    /// match res
-    /// {
-    ///     Ordering::Greater => { println!("{0} > {0}", num1); }
-    ///     Ordering::Less => { println!("{0} < {0}", num1); }
-    ///     Ordering::Equal => { println!("{0} = {0}", num1); }
-    /// }
-    /// assert_eq!(res, Ordering::Equal);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.partial_cmp)
     #[cfg(target_endian = "little")]
     pub fn partial_cmp(&self, other: &Self) -> Option<Ordering>
     {
@@ -5111,42 +4579,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res, false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let num_str = "69743176821145534028236692093846345739169743176821145534028236692093846345739";
-    /// let a_biguint = UU32::from_uint(100_u8);
-    /// let b_biguint = UU32::from_string(num_str).unwrap();
-    /// let res = a_biguint.lt(&b_biguint);
-    /// if res
-    ///     { println!("{} < {}", a_biguint, b_biguint); }
-    /// else
-    ///     { println!("{} >= {}", a_biguint, b_biguint); }
-    /// assert_eq!(res, true);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let num_str = "69743176821145534028236692093846345739169743176821145534028236692093846345739";
-    /// let a_biguint = UU32::from_string(num_str).unwrap();
-    /// let b_biguint = UU32::from_string(num_str).unwrap();
-    /// let res = a_biguint.lt(&b_biguint);
-    /// if res
-    ///     { println!("{} < {}", a_biguint, b_biguint); }
-    /// else
-    ///     { println!("{} >= {}", a_biguint, b_biguint); }
-    /// assert_eq!(res, false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.lt)
     #[inline]
     pub fn lt(&self, other: &Self) -> bool
     {
@@ -5184,42 +4618,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res, true);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let num_str = "69743176821145534028236692093846345739169743176821145534028236692093846345739";
-    /// let a_biguint = UU32::from_uint(100_u8);
-    /// let b_biguint = UU32::from_string(num_str).unwrap();
-    /// let res = a_biguint.gt(&b_biguint);
-    /// if res
-    ///     { println!("{} > {}", a_biguint, b_biguint); }
-    /// else
-    ///     { println!("{} <= {}", a_biguint, b_biguint); }
-    /// assert_eq!(res, false);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let num_str = "69743176821145534028236692093846345739169743176821145534028236692093846345739";
-    /// let a_biguint = UU32::from_string(num_str).unwrap();
-    /// let b_biguint = UU32::from_string(num_str).unwrap();
-    /// let res = a_biguint.gt(&b_biguint);
-    /// if res
-    ///     { println!("{} > {}", a_biguint, b_biguint); }
-    /// else
-    ///     { println!("{} <= {}", a_biguint, b_biguint); }
-    /// assert_eq!(res, false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.gt)
     #[inline]
     pub fn gt(&self, other: &Self) -> bool
     {
@@ -5257,42 +4657,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res, false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let num_str = "69743176821145534028236692093846345739169743176821145534028236692093846345739";
-    /// let a_biguint = UU32::from_uint(100_u8);
-    /// let b_biguint = UU32::from_string(num_str).unwrap();
-    /// let res = a_biguint.le(&b_biguint);
-    /// if res
-    ///     { println!("{} <= {}", a_biguint, b_biguint); }
-    /// else
-    ///     { println!("{} > {}", a_biguint, b_biguint); }
-    /// assert_eq!(res, true);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let num_str = "69743176821145534028236692093846345739169743176821145534028236692093846345739";
-    /// let a_biguint = UU32::from_string(num_str).unwrap();
-    /// let b_biguint = UU32::from_string(num_str).unwrap();
-    /// let res = a_biguint.le(&b_biguint);
-    /// if res
-    ///     { println!("{} <= {}", a_biguint, b_biguint); }
-    /// else
-    ///     { println!("{} > {}", a_biguint, b_biguint); }
-    /// assert_eq!(res, true);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.le)
     #[inline]
     pub fn le(&self, other: &Self) -> bool
     {
@@ -5330,42 +4696,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res, true);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let num_str = "69743176821145534028236692093846345739169743176821145534028236692093846345739";
-    /// let a_biguint = UU32::from_uint(100_u8);
-    /// let b_biguint = UU32::from_string(num_str).unwrap();
-    /// let res = a_biguint.ge(&b_biguint);
-    /// if res
-    ///     { println!("{} >= {}", a_biguint, b_biguint); }
-    /// else
-    ///     { println!("{} < {}", a_biguint, b_biguint); }
-    /// assert_eq!(res, false);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let num_str = "69743176821145534028236692093846345739169743176821145534028236692093846345739";
-    /// let a_biguint = UU32::from_string(num_str).unwrap();
-    /// let b_biguint = UU32::from_string(num_str).unwrap();
-    /// let res = a_biguint.ge(&b_biguint);
-    /// if res
-    ///     { println!("{} >= {}", a_biguint, b_biguint); }
-    /// else
-    ///     { println!("{} < {}", a_biguint, b_biguint); }
-    /// assert_eq!(res, true);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.ge)
     #[inline]
     pub fn ge(&self, other: &Self) -> bool
     {
@@ -5402,26 +4734,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res, true);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let num_str = "69743176821145534028236692093846345739169743176821145534028236692093846345739";
-    /// let a_biguint = UU32::from_string(num_str).unwrap();
-    /// let b_biguint = UU32::from_uint(100_u8);
-    /// let res = a_biguint.eq(&b_biguint);
-    /// if res
-    ///     { println!("{} = {}", a_biguint, b_biguint); }
-    /// else
-    ///     { println!("{} != {}", a_biguint, b_biguint); }
-    /// assert_eq!(res, false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.eq)
     pub fn eq(&self, other: &Self) -> bool
     {
         for idx in 0..N
@@ -5495,72 +4809,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(sum.is_divided_by_zero(), false);
     /// assert_eq!(sum.is_infinity(), false);
     /// assert_eq!(sum.is_undefined(), false);
+    /// assert_eq!(sum.is_left_carry(), false);
+    /// assert_eq!(sum.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let num_str1 = "FFEEDDBB_AA998877_66554433_221100FF_EEDDBBAA_99887766_55443322_1100FFEE";
-    /// let num1 = UU32::from_str_radix(num_str1, 16).unwrap();
-    /// let num_uint = 0x11223344_55667788_9900AABB_CCDDEEFF_u128;
-    /// 
-    /// let (sum, carry) = num1.carrying_add_uint(num_uint, true);
-    /// println!("{} + {} = {}\ncarry = {}", num1, num_uint, sum, carry);
-    /// assert_eq!(sum.to_string(), "115761816335569101403435733562708448393664880666628652711615198738168793722606");
-    /// assert_eq!(carry, false);
-    /// assert_eq!(sum.is_overflow(), false);
-    /// assert_eq!(sum.is_underflow(), false);
-    /// assert_eq!(sum.is_divided_by_zero(), false);
-    /// assert_eq!(sum.is_infinity(), false);
-    /// assert_eq!(sum.is_undefined(), false);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let num_str2 = "FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF";
-    /// let num2 = UU32::from_str_radix(num_str2, 16).unwrap();
-    /// let num_uint = 0x11223344_55667788_9900AABB_CCDDEEFF_u128;
-    /// 
-    /// let (sum, carry) = num2.carrying_add_uint(num_uint, false);
-    /// println!("{} + {} = {}\ncarry = {}", num2, num_uint, sum, carry);
-    /// assert_eq!(sum.to_string(), "22774453838368691933710012711845097214");
-    /// assert_eq!(carry, true);
-    /// assert_eq!(sum.is_overflow(), true);
-    /// assert_eq!(sum.is_underflow(), false);
-    /// assert_eq!(sum.is_divided_by_zero(), false);
-    /// assert_eq!(sum.is_infinity(), false);
-    /// assert_eq!(sum.is_undefined(), false);
-    /// ```
-    /// 
-    /// # Example 4
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let num_str2 = "FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF";
-    /// let num2 = UU32::from_str_radix(num_str2, 16).unwrap();
-    /// let num_uint = 0x11223344_55667788_9900AABB_CCDDEEFF_u128;
-    /// 
-    /// let (sum, carry) = num2.carrying_add_uint(num_uint, true);
-    /// println!("{} + {} = {}\ncarry = {}", num2, num_uint, sum, carry);
-    /// assert_eq!(sum.to_string(), "22774453838368691933710012711845097215");
-    /// assert_eq!(carry, true);
-    /// assert_eq!(sum.is_overflow(), true);
-    /// assert_eq!(sum.is_underflow(), false);
-    /// assert_eq!(sum.is_divided_by_zero(), false);
-    /// assert_eq!(sum.is_infinity(), false);
-    /// assert_eq!(sum.is_undefined(), false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.carrying_add_uint)
     pub fn carrying_add_uint<U>(&self, rhs: U, carry: bool) -> (Self, bool)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5629,6 +4883,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(num1.is_divided_by_zero(), false);
     /// assert_eq!(num1.is_infinity(), false);
     /// assert_eq!(num1.is_undefined(), false);
+    /// assert_eq!(num1.is_left_carry(), false);
+    /// assert_eq!(num1.is_right_carry(), false);
     /// 
     /// println!("After num1 += {},\tnum1 = {}\tcarry = {}", num_uint, num1, carry);
     /// assert_eq!(num1.to_string(), "115761816335569101403435733562708448393642106212790284019692513725068324302573");
@@ -5638,90 +4894,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(num1.is_divided_by_zero(), false);
     /// assert_eq!(num1.is_infinity(), false);
     /// assert_eq!(num1.is_undefined(), false);
+    /// assert_eq!(num1.is_left_carry(), false);
+    /// assert_eq!(num1.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let num_uint = 0x9900AABB_CCDDEEFF_u64;
-    /// let num_str1 = "FFEEDDBB_AA998877_66554433_221100FF_EEDDBBAA_99887766_55443322_1100FFEE";
-    /// let mut num1 = U256::from_str_radix(num_str1, 16).unwrap();
-    /// println!("Originally, num1 = {}", num1);
-    /// let carry = num1.carrying_add_assign_uint(num_uint, true);
-    /// assert_eq!(num1.is_overflow(), false);
-    /// assert_eq!(num1.is_underflow(), false);
-    /// assert_eq!(num1.is_divided_by_zero(), false);
-    /// assert_eq!(num1.is_infinity(), false);
-    /// assert_eq!(num1.is_undefined(), false);
-    /// 
-    /// println!("After num1 += {},\tnum1 = {}\tcarry = {}", num_uint, num1, carry);
-    /// assert_eq!(num1.to_string(), "115761816335569101403435733562708448393642106212790284019692513725068324302574");
-    /// assert_eq!(carry, false);
-    /// assert_eq!(num1.is_overflow(), false);
-    /// assert_eq!(num1.is_underflow(), false);
-    /// assert_eq!(num1.is_divided_by_zero(), false);
-    /// assert_eq!(num1.is_infinity(), false);
-    /// assert_eq!(num1.is_undefined(), false);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let num_uint = 0x9900AABB_CCDDEEFF_u64;
-    /// let num_str2 = "FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF";
-    /// let mut num2 = U256::from_str_radix(num_str2, 16).unwrap();
-    /// println!("Originally, num2 = {}", num2);
-    /// assert_eq!(num2.is_overflow(), false);
-    /// assert_eq!(num2.is_underflow(), false);
-    /// assert_eq!(num2.is_divided_by_zero(), false);
-    /// assert_eq!(num2.is_infinity(), false);
-    /// assert_eq!(num2.is_undefined(), false);
-    /// 
-    /// let carry = num2.carrying_add_assign_uint(num_uint, false);
-    /// println!("After num2 += {},\tnum2 = {}\tcarry = {}", num_uint, num2, carry);
-    /// assert_eq!(num2.to_string(), "11024999611375677182");
-    /// assert_eq!(carry, true);
-    /// assert_eq!(num2.is_overflow(), true);
-    /// assert_eq!(num2.is_underflow(), false);
-    /// assert_eq!(num2.is_divided_by_zero(), false);
-    /// assert_eq!(num2.is_infinity(), false);
-    /// assert_eq!(num2.is_undefined(), false);
-    /// ```
-    /// 
-    /// # Example 4
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let num_uint = 0x9900AABB_CCDDEEFF_u64;
-    /// let num_str2 = "FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF";
-    /// let mut num2 = U256::from_str_radix(num_str2, 16).unwrap();
-    /// println!("Originally, num2 = {}", num2);
-    /// assert_eq!(num2.is_overflow(), false);
-    /// assert_eq!(num2.is_underflow(), false);
-    /// assert_eq!(num2.is_divided_by_zero(), false);
-    /// assert_eq!(num2.is_infinity(), false);
-    /// assert_eq!(num2.is_undefined(), false);
-    /// 
-    /// let carry = num2.carrying_add_assign_uint(num_uint, true);
-    /// println!("After num2 += {},\tnum2 = {}\tcarry = {}", num_uint, num2, carry);
-    /// assert_eq!(num2.to_string(), "11024999611375677183");
-    /// assert_eq!(carry, true);
-    /// assert_eq!(num2.is_overflow(), true);
-    /// assert_eq!(num2.is_underflow(), false);
-    /// assert_eq!(num2.is_divided_by_zero(), false);
-    /// assert_eq!(num2.is_infinity(), false);
-    /// assert_eq!(num2.is_undefined(), false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.carrying_add_assign_uint)
     pub fn carrying_add_assign_uint<U>(&mut self, rhs: U, carry: bool) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5799,44 +4977,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = U512::max().wrapping_sub_uint(1_u8);
-    /// let res = a_biguint.wrapping_add_uint(2_u8);
-    /// println!("{} + 2 = {}", a_biguint, res);
-    /// assert_eq!(res.to_string(), "0");
-    /// assert_eq!(res.is_overflow(), true);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = U512::max().wrapping_sub_uint(1_u8);
-    /// let res = a_biguint.wrapping_add_uint(3_u8);
-    /// println!("{} + 3 = {}", a_biguint, res);
-    /// assert_eq!(res.to_string(), "1");
-    /// assert_eq!(res.is_overflow(), true);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_add_uint)
     pub fn wrapping_add_uint<U>(&self, rhs: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5898,6 +5044,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.wrapping_add_assign_uint(1_u8);
     /// println!("After a_biguint.wrapping_add_assign_uint(1_u8), a_biguint = {}", a_biguint);
@@ -5907,44 +5055,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let mut a_biguint = UU64::max();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// 
-    /// a_biguint.wrapping_add_assign_uint(1_u8);
-    /// println!("After a_biguint.wrapping_add_assign_uint(1_u8), a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "0");
-    /// assert_eq!(a_biguint.is_overflow(), true);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// 
-    /// a_biguint.wrapping_add_assign_uint(1_u8);
-    /// println!("After a_biguint.wrapping_add_assign_uint(1_u8), a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "1");
-    /// assert_eq!(a_biguint.is_overflow(), true);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_add_assign_uint)
     #[inline]
     pub fn wrapping_add_assign_uint<U>(&mut self, rhs: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -6005,46 +5121,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let a_biguint = U512::max().wrapping_sub_uint(1_u8);
-    /// let (res, overflow) = a_biguint.overflowing_add_uint(2_u8);
-    /// println!("{} + 2 = {}\noverflow = {}", a_biguint, res, overflow);
-    /// assert_eq!(res.to_string(), "0");
-    /// assert_eq!(overflow, true);
-    /// assert_eq!(res.is_overflow(), true);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let a_biguint = U512::max().wrapping_sub_uint(1_u8);
-    /// let (res, overflow) = a_biguint.overflowing_add_uint(3_u8);
-    /// println!("{} + 3 = {}\noverflow = {}", a_biguint, res, overflow);
-    /// assert_eq!(res.to_string(), "1");
-    /// assert_eq!(overflow, true);
-    /// assert_eq!(res.is_overflow(), true);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_add_uint)
     pub fn overflowing_add_uint<U>(&self, rhs: U) -> (Self, bool)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -6106,6 +5188,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let overflow = a_biguint.overflowing_add_assign_uint(1_u8);
     /// println!("After a_biguint.overflowing_add_assign_uint(1_u8), a_biguint = {}\noverflow = {}", a_biguint, overflow);
@@ -6116,46 +5200,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let mut a_biguint = UU64::max().wrapping_sub_uint(1_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// 
-    /// let mut overflow = a_biguint.overflowing_add_assign_uint(2_u8);
-    /// println!("After a_biguint.overflowing_add_assign_uint(2_u8), a_biguint = {}\noverflow = {}", a_biguint, overflow);
-    /// assert_eq!(overflow, true);
-    /// assert_eq!(a_biguint.to_string(), "0");
-    /// assert_eq!(a_biguint.is_overflow(), true);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// 
-    /// overflow = a_biguint.overflowing_add_assign_uint(2_u8);
-    /// println!("After a_biguint.overflowing_add_assign_uint(2_u8), a_biguint = {}\noverflow = {}", a_biguint, overflow);
-    /// assert_eq!(overflow, false);
-    /// assert_eq!(a_biguint.to_string(), "2");
-    /// assert_eq!(a_biguint.is_overflow(), true);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_add_assign_uint)
     pub fn overflowing_add_assign_uint<U>(&mut self, rhs: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -6168,7 +5218,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         overflowing_calc_assign!(self, Self::wrapping_add_assign_uint, rhs);
     }
-
+/////////////////////////
     // pub fn checked_add_uint<U>(&self, rhs: U) -> Option<Self>
     /// Calculates `self` + `rhs`,
     /// and returns an addition result `self` + `rhs`
