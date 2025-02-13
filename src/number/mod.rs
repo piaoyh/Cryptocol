@@ -1,4 +1,4 @@
-// Copyright 2023, 2024 PARK Youngho.
+// Copyright 2023, 2024, 2025 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -136,7 +136,7 @@
 
 pub mod small_uint;
 pub mod small_sint;
-// pub mod trait_arithmetic;
+// pub mod trait_expanded;
 pub mod short_union;
 pub mod int_union;
 pub mod long_union;
@@ -164,14 +164,14 @@ pub mod trait_small_uint_for_integer_unions_impl;
 /// Implementaion of various traits for BigUInt
 pub mod traits_for_big_uint_impl;
 
-// /// Implementaion of arithmetic trait for BigUInt
-// pub mod trait_arithmetic_for_big_uint_impl;
+// /// Implementaion of Expanded trait for BigUInt
+// pub mod trait_expanded_for_biguint_impl;
 
 
 
 pub use small_uint::*;
 pub use small_sint::*;
-// pub use trait_arithmetic::*;
+// pub use trait_expanded::*;
 pub use short_union::*;
 pub use int_union::*;
 pub use long_union::*;
