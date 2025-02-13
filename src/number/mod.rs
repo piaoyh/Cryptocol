@@ -136,7 +136,7 @@
 
 pub mod small_uint;
 pub mod small_sint;
-// pub mod trait_expanded;
+pub mod trait_big_uint_more;
 pub mod short_union;
 pub mod int_union;
 pub mod long_union;
@@ -164,14 +164,14 @@ pub mod trait_small_uint_for_integer_unions_impl;
 /// Implementaion of various traits for BigUInt
 pub mod traits_for_big_uint_impl;
 
-// /// Implementaion of Expanded trait for BigUInt
-// pub mod trait_expanded_for_biguint_impl;
+/// Implementaion of BigUInt_More trait for BigUInt
+pub mod trait_big_uint_more_impl;
 
 
 
 pub use small_uint::*;
 pub use small_sint::*;
-// pub use trait_expanded::*;
+pub use trait_big_uint_more::*;
 pub use short_union::*;
 pub use int_union::*;
 pub use long_union::*;

@@ -22,19 +22,27 @@ incremental = false
 cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]
 
 [[example]]
+name = "small_uint_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "unions_examples"
+doc-scrape-examples = false
+
+[[example]]
 name = "biguint_examples"
 doc-scrape-examples = false
 
 [[example]]
-name = "des_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "hash_app"
+name = "performance_test_biguint"
 doc-scrape-examples = false
 
 [[example]]
 name = "hash_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "hash_app"
 doc-scrape-examples = false
 
 [[example]]
@@ -43,14 +51,6 @@ doc-scrape-examples = false
 
 [[example]]
 name = "md5_app"
-doc-scrape-examples = false
-
-[[example]]
-name = "performance_test_biguint"
-doc-scrape-examples = false
-
-[[example]]
-name = "random_examples"
 doc-scrape-examples = false
 
 [[example]]
@@ -70,9 +70,9 @@ name = "sha2_512_app"
 doc-scrape-examples = false
 
 [[example]]
-name = "small_uint_examples"
+name = "des_examples"
 doc-scrape-examples = false
 
 [[example]]
-name = "unions_examples"
+name = "random_examples"
 doc-scrape-examples = false
