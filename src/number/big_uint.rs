@@ -6020,6 +6020,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     //     safe_calc_assign!(self, Self::wrapping_add_assign_uint, Self::overflowing_add_assign_uint, rhs);
     // }
 
+    
     /*** SUBTRACTION ***/
 
     // pub fn borrowing_sub_uint<U>(&self, rhs: U, borrow: bool) -> (Self, bool)
