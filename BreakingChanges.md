@@ -1,5 +1,34 @@
 # Breaking Changes
 
+## Breaking changes from ver. 0.9.3 to ver. 0.9.4
+
+| Methods                                                                                 |
+|-----------------------------------------------------------------------------------------|
+| fn next_multiple_of_uint<U>(&self, rhs: U) -> Self                                      |
+| fn next_multiple_of_assign_uint<U>(&mut self, rhs: U)                                   |
+| fn panic_free_next_multiple_of_uint<U>(&self, rhs: U) -> Self                           |
+| fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)                        |
+| fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self               |
+| fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)            |
+| fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self    |
+| fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self) |
+| fn is_multiple_of_uint<U>(&self, rhs: U) -> bool                                        |
+| fn next_multiple_of(&self, rhs: &Self) -> Self                                          |
+| fn next_multiple_of_assign(&mut self, rhs: &Self)                                       |
+| fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self                               |
+| fn panic_free_next_multiple_of_assign(&mut self, rhs: &Self)                            |
+| fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self                   |
+| fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)                |
+| fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self        |
+| fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)     |
+| fn is_multiple_of(&self, rhs: &Self) -> bool                                            |
+| fn midpoint_uint<U>(&self, rhs: U) -> Self                                              |
+| fn midpoint_assign_uint<U>(&mut self, rhs: U)                                           |
+| fn midpoint_uint<U>(&self, rhs: &Self) -> Self                                          |
+| fn midpoint_assign_uint<U>(&mut self, rhs: &Self)                                       |
+
+- The methods above have been moved from struct BigUInt to trait BigUInt_More because docs.rs failed in generating struct.bigUInt.html.
+
 ## Breaking changes from ver. 0.9.2 to ver. 0.9.3
 
 | Methods                                               |

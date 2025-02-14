@@ -3303,4 +3303,1487 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// # For more examples,
         /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_rem_assign)
         fn saturating_rem_assign(&mut self, rhs: &Self);
+
+
+
+        /*** MULTIPLE UINT ***/
+        
+        // fn next_multiple_of_uint<U>(&self, rhs: U) -> Self
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, and returns the result.
+        /// 
+        /// # Arguments
+        /// `rhs` is the base of multiple, and is a primitive unsigned integer
+        /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - This function will panic if `rhs` is zero.
+        /// 
+        /// # Output
+        /// It returns the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`.
+        /// However, if overflow occurs, it returns the value wrapped around.
+        /// 
+        /// # Features
+        /// The result will be the smallest value greater than or equal to self,
+        /// which is a multiple of `rhs`. However, if overflow occurs,
+        /// the result will be the value wrapped around.
+        /// 
+        /// # Counterpart Method
+        /// If `rhs` is bigger than `u128`, the method
+        /// [next_multiple_of()](struct@BigUInt#method.next_multiple_of)
+        /// is proper rather than this method `next_multiple_of_uint()`.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u32);
+        /// 
+        /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
+        /// let num = 586478_u32;
+        /// let multiple = a_biguint.next_multiple_of_uint(num);
+        /// println!("The next multiple of {} is {}", a_biguint, multiple);
+        /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123697594");
+        /// assert_eq!(multiple.is_overflow(), false);
+        /// assert_eq!(multiple.is_underflow(), false);
+        /// assert_eq!(multiple.is_infinity(), false);
+        /// assert_eq!(multiple.is_divided_by_zero(), false);
+        /// assert_eq!(multiple.is_undefined(), false);
+        /// assert_eq!(multiple.is_left_carry(), false);
+        /// assert_eq!(multiple.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.next_multiple_of_uint)
+        fn next_multiple_of_uint<U>(&self, rhs: U) -> Self
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+        // fn next_multiple_of_assign_uint<U>(&mut self, rhs: U)
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, and assigns the result to `self` back.
+        /// 
+        /// # Arguments
+        /// `rhs` is the base of multiple, and is a primitive unsigned integer
+        /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - This function will panic if `rhs` is zero.
+        /// 
+        /// # Features
+        /// - `self` will be the smallest value greater than or equal to `self`,
+        ///   which is is a multiple of `rhs`.
+        ///   However, if overflow occurs, `self` will be the value wrapped around.
+        /// - All the flags are historical, which means, for example, if an
+        ///   overflow occurred even once before this current operation or
+        ///   `OVERFLOW` flag is already set before this current operation,
+        ///   the `OVERFLOW` flag is not changed even if this current operation
+        ///   does not cause overflow.
+        /// 
+        /// # Counterpart Method
+        /// If `rhs` is bigger than `u128`, the method
+        /// [next_multiple_of_assign()](struct@BigUInt#method.next_multiple_of_assign)
+        /// is proper rather than this method `next_multiple_of_assign_uint()`.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u64);
+        /// 
+        /// let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
+        /// let num = 586478_u32;
+        /// println!("Originally, a_biguint = {}", a_biguint);
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// 
+        /// a_biguint.next_multiple_of_assign_uint(num);
+        /// println!("After a_biguint.next_multiple_of_assign_uint({}), a_biguint = {}", num, a_biguint);
+        /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123697594");
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.next_multiple_of_assign_uint)
+        fn next_multiple_of_assign_uint<U>(&mut self, rhs: U)
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+        // fn panic_free_next_multiple_of_uint<U>(&self, rhs: U) -> Self
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, and returns the result.
+        /// 
+        /// # Arguments
+        /// `rhs` is the base of multiple, and is a primitive unsigned integer
+        /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Output
+        /// - It returns the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`.
+        ///   However, if overflow occurs, it returns the value wrapped around.
+        /// - If `rhs` is zero, the `UNDEFINED` flag will be set and it returns
+        ///   `zero`.
+        /// 
+        /// # Features
+        /// - The result will be the smallest value greater than or equal to self,
+        ///   which is a multiple of `rhs`. However, if overflow occurs,
+        ///   the result will be the value wrapped around.
+        /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
+        ///   of the return value will be set.
+        /// 
+        /// # Counterpart Method
+        /// If `rhs` is bigger than `u128`, the method
+        /// [panic_free_next_multiple_of()](struct@BigUInt#method.panic_free_next_multiple_of)
+        /// is proper rather than this method `panic_free_next_multiple_of_uint()`.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u128);
+        /// 
+        /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
+        /// let num = 586478_u32;
+        /// let multiple = a_biguint.next_multiple_of_uint(num);
+        /// println!("The next multiple of {} is {}", a_biguint, multiple);
+        /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123697594");
+        /// assert_eq!(multiple.is_overflow(), false);
+        /// assert_eq!(multiple.is_underflow(), false);
+        /// assert_eq!(multiple.is_infinity(), false);
+        /// assert_eq!(multiple.is_divided_by_zero(), false);
+        /// assert_eq!(multiple.is_undefined(), false);
+        /// assert_eq!(multiple.is_left_carry(), false);
+        /// assert_eq!(multiple.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.panic_free_next_multiple_of_uint)
+        fn panic_free_next_multiple_of_uint<U>(&self, rhs: U) -> Self
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+        // fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, and assigns the result to `self` back.
+        /// 
+        /// # Arguments
+        /// `rhs` is the base of multiple, and is a primitive unsigned integer
+        /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Features
+        /// - `self` will be the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`.
+        ///   However, if overflow occurs, `self` will be the value wrapped around.
+        /// - If `rhs` is zero, the `UNDEFINED` flag will be set and `self`
+        ///   will be `zero`.
+        /// - All the flags are historical, which means, for example, if an
+        ///   overflow occurred even once before this current operation or
+        ///   `OVERFLOW` flag is already set before this current operation,
+        ///   the `OVERFLOW` flag is not changed even if this current operation
+        ///   does not cause overflow.
+        /// 
+        /// # Counterpart Method
+        /// If `rhs` is bigger than `u128`, the method
+        /// [panic_free_next_multiple_of_assign()](struct@BigUInt#method.panic_free_next_multiple_of_assign)
+        /// is proper rather than this method `panic_free_next_multiple_of_assign_uint()`.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u32);
+        /// 
+        /// let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
+        /// let num = 586478_u32;
+        /// println!("Originally, a_biguint = {}", a_biguint);
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// 
+        /// a_biguint.next_multiple_of_assign_uint(num);
+        /// println!("After a_biguint.next_multiple_of_assign_uint({}), a_biguint = {}", num, a_biguint);
+        /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123697594");
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.panic_free_next_multiple_of_assign_uint)
+        fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+        // fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, wrapping around at `modulo`,
+        /// and returns the result.
+        /// 
+        /// # Arguments
+        /// - `rhs` is the base of multiple, and is a primitive unsigned integer
+        ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        /// - `modulo` is the divisor to divide the result of the calculation of
+        ///   the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - This function will panic if `rhs` is `zero`.
+        /// - This function will panic if `modulo` is either `zero` or `one`.
+        /// 
+        /// # Output
+        /// It returns the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, wrapping around at `modulo`. So,
+        /// if overflow occurs, it returns the value wrapped around at `modulo`.
+        /// 
+        /// # Feature
+        /// - Wrapping (modular) arround at `modulo`.
+        /// - The differences between this method `modular_next_multiple_of_uint()`
+        ///   and the method `next_multiple_of_uint()` are, first, where wrapping
+        ///   around happens, and, second, when `OVERFLOW` flag is set. First, this
+        ///   method wraps around at `modulo` while the method
+        ///   `next_multiple_of_uint()` wraps around at `maximum value + 1`.
+        ///   Second, this method set `OVERFLOW` flag when wrapping around happens
+        ///   at `modulo` while the method `next_multiple_of_uint()` sets the
+        ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
+        /// 
+        /// # Counterpart Method
+        /// If `rhs` is bigger than `u128`, the method
+        /// [modular_next_multiple_of()](struct@BigUInt#method.modular_next_multiple_of)
+        /// is proper rather than this method `modular_next_multiple_of_uint()`.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u8);
+        /// 
+        /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
+        /// let num = 100_u8;
+        /// let modulo = a_biguint.wrapping_add_uint(200_u8);
+        /// let multiple = a_biguint.modular_next_multiple_of_uint(num, &modulo);
+        /// println!("The next multiple of {} is {}", a_biguint, multiple);
+        /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123456800");
+        /// assert_eq!(multiple.is_overflow(), false);
+        /// assert_eq!(multiple.is_underflow(), false);
+        /// assert_eq!(multiple.is_infinity(), false);
+        /// assert_eq!(multiple.is_divided_by_zero(), false);
+        /// assert_eq!(multiple.is_undefined(), false);
+        /// assert_eq!(multiple.is_left_carry(), false);
+        /// assert_eq!(multiple.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.modular_next_multiple_of_uint)
+        fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+    
+        // fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, wrapping around at `modulo`,
+        /// and assigns the result to `self` back.
+        /// 
+        /// # Arguments
+        /// - `rhs` is the base of multiple, and is a primitive unsigned integer
+        ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        /// - `modulo` is the divisor to divide the result of the calculation of
+        ///   the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - This function will panic if `rhs` is `zero`.
+        /// - This function will panic if `modulo` is either `zero` or `one`.
+        /// 
+        /// # Features
+        /// - Wrapping (modular) arround at `modulo`.
+        /// - `self` will be the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`, wrapping around at `modulo`. So, if
+        ///   overflow occurs, `self` will be the value wrapped around at `modulo`.
+        /// - The differences between this method
+        ///   `modular_next_multiple_of_assign_uint()`
+        ///   and the method `next_multiple_of_assign_uint()` are, first, where
+        ///   wrapping around happens, and, second, when `OVERFLOW` flag is set.
+        ///   First, this method wraps araound at `modulo` while the method
+        ///   `next_multiple_of_assign_uint()` wraps araound at `maximum value + 1`.
+        ///   Second, this method set `OVERFLOW` flag when wrapping around happens
+        ///   at `modulo` while the method `next_multiple_of_assign_uint()` sets the
+        ///   `OVERFLOW` flag when wrapping around happens.
+        /// - All the flags are historical, which means, for example, if an
+        ///   overflow occurred even once before this current operation or
+        ///   `OVERFLOW` flag is already set before this current operation,
+        ///   the `OVERFLOW` flag is not changed even if this current operation
+        ///   does not cause overflow.
+        /// 
+        /// # Counterpart Method
+        /// If `rhs` is bigger than `u128`, the method
+        /// [next_multiple_of_assign()](struct@BigUInt#method.next_multiple_of_assign)
+        /// is proper rather than this method `next_multiple_of_assign_uint()`.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u16);
+        /// 
+        /// let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
+        /// println!("Originally, a_biguint = {}", a_biguint);
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// 
+        /// let num = 100_u8;
+        /// let modulo = a_biguint.wrapping_add_uint(200_u8);
+        /// a_biguint.modular_next_multiple_of_assign_uint(num, &modulo);
+        /// println!("After a_biguint.modular_next_multiple_of_assign_uint({}), a_biguint = {}", num, a_biguint);
+        /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123456800");
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.modular_next_multiple_of_assign_uint)
+        fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+    
+        // fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, wrapping around at `modulo`,
+        /// and returns the result.
+        /// 
+        /// # Arguments
+        /// - `rhs` is the base of multiple, and is a primitive unsigned integer
+        ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        /// - `modulo` is the divisor to divide the result of the calculation of
+        ///   the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Output
+        /// - It returns the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`, wrapping around at `modulo`. So,
+        ///   if overflow occurs, it returns the value wrapped around at `modulo`.
+        /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
+        ///   of the return value will be set.
+        /// - If `modulo` is either `zero` or `one`, it returns `zero` and
+        ///   the `UNDEFINED` flag of the return value will be set.
+        /// 
+        /// # Features
+        /// - Wrapping (modular) arround at `modulo`.
+        /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
+        ///   of the return value will be set.
+        /// - If `modulo` is either `zero` or `one`, it returns `zero` and
+        ///   the `UNDEFINED` flag of the return value will be set.
+        /// - The differences between this method
+        ///   `panic_free_modular_next_multiple_of_uint()`
+        ///   and the method `panic_free_next_multiple_of_uint()` are, first,
+        ///   where wrapping around happens, and, second, when `OVERFLOW` flag is
+        ///   set. First, this method wraps araound at `modulo` while the method
+        ///   `panic_free_next_multiple_of_uint()` wraps araound at `maximum
+        ///   value + 1`. Second, this method set `OVERFLOW` flag when wrapping
+        ///   around happens at `modulo` while the method
+        ///   `panic_free_next_multiple_of_uint()` sets the `OVERFLOW` flag
+        ///   when wrapping around happens.
+        /// 
+        /// # Counterpart Method
+        /// If `rhs` is bigger than `u128`, the method
+        /// [next_multiple_of()](struct@BigUInt#method.next_multiple_of)
+        /// is proper rather than this method `next_multiple_of_uint()`.
+        /// 
+        /// # Example 1 for normal case
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u8);
+        /// 
+        /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
+        /// let num = 100_u8;
+        /// let modulo = a_biguint.wrapping_add_uint(200_u8);
+        /// let multiple = a_biguint.panic_free_modular_next_multiple_of_uint(num, &modulo);
+        /// println!("The next multiple of {} is {}", a_biguint, multiple);
+        /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123456800");
+        /// assert_eq!(multiple.is_overflow(), false);
+        /// assert_eq!(multiple.is_underflow(), false);
+        /// assert_eq!(multiple.is_infinity(), false);
+        /// assert_eq!(multiple.is_divided_by_zero(), false);
+        /// assert_eq!(multiple.is_undefined(), false);
+        /// assert_eq!(multiple.is_left_carry(), false);
+        /// assert_eq!(multiple.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.panic_free_modular_next_multiple_of_uint)
+        fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+    
+        // fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, wrapping around at `modulo`,
+        /// and assigns the result to `self` back.
+        /// 
+        /// # Arguments
+        /// - `rhs` is the base of multiple, and is a primitive unsigned integer
+        ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        /// - `modulo` is the divisor to divide the result of the calculation of
+        ///   the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Features
+        /// - Wrapping (modular) arround at `modulo`.
+        /// - `self` will be the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`, wrapping around at `modulo`. So, if
+        ///   overflow occurs, `self` will be the value wrapped around at `modulo`.
+        /// - If `rhs` is zero, it assigns `zero` to `self` back
+        ///   and the `UNDEFINED` flag of `self` will be set.
+        /// - If `modulo` is either `zero` or `one`, it assigns `zero`
+        ///   to `self` back and the `UNDEFINED` flag of `self` will be set.
+        /// - The differences between this method
+        ///   `panic_free_modular_next_multiple_of_assign_uint()`
+        ///   and the method `panic_free_next_multiple_of_assign_uint()` are, first,
+        ///   where wrapping around happens, and, second, when `OVERFLOW` flag is
+        ///   set. First, this method wraps araound at `modulo` while the method
+        ///   `panic_free_next_multiple_of_assign_uint()` wraps araound at `maximum
+        ///   value + 1`. Second, this method set `OVERFLOW` flag when wrapping
+        ///   around happens at `modulo` while the method
+        ///   `panic_free_next_multiple_of_assign_uint()` sets the `OVERFLOW` flag
+        ///   when wrapping around happens.
+        /// - All the flags are historical, which means, for example, if an
+        ///   overflow occurred even once before this current operation or
+        ///   `OVERFLOW` flag is already set before this current operation,
+        ///   the `OVERFLOW` flag is not changed even if this current operation
+        ///   does not cause overflow.
+        /// 
+        /// # Counterpart Method
+        /// If `rhs` is bigger than `u128`, the method
+        /// [panic_free_modular_next_multiple_of_assign()](struct@BigUInt#method.panic_free_modular_next_multiple_of_assign)
+        /// is proper rather than this method `panic_free_modular_next_multiple_of_assign_uint()`.
+        /// 
+        /// # Example 1 for normal case
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u16);
+        /// 
+        /// let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
+        /// println!("Originally, a_biguint = {}", a_biguint);
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// 
+        /// let num = 100_u8;
+        /// let modulo = a_biguint.wrapping_add_uint(200_u8);
+        /// a_biguint.panic_free_modular_next_multiple_of_assign_uint(num, &modulo);
+        /// println!("After a_biguint.modular_next_multiple_of_assign_uint({}), a_biguint = {}", num, a_biguint);
+        /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123456800");
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.panic_free_modular_next_multiple_of_assign_uint)
+        fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+        // fn is_multiple_of_uint<U>(&self, rhs: U) -> bool
+        /// Returns `true` if `self` is a multiple of `rhs`, and `false` otherwise.
+        /// 
+        /// # Arguments
+        /// `rhs` is the base of multiple, and is a primitive unsigned integer
+        /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Output
+        /// - If `self` is a multiple of `rhs`, it returns `true`, and
+        ///   otherwise, it returns `false`.
+        /// - If both `self` and `rhs` are `zero`, it returns `true`.
+        /// - If `self` is not `zero` and `rhs` is `zero`, it returns `false`.
+        /// 
+        /// # Features
+        /// - This function is equivalent to `self` % rhs == 0,
+        ///   except that it will not panic for `rhs` == 0.
+        /// - If `rhs` is `zero` and `self` is `zero`, it returns `true`.
+        /// - If `rhs` is `zero` and `self` is not `zero`, it returns `false`.
+        /// 
+        /// # Counterpart Method
+        /// If `rhs` is bigger than `u128`, the method
+        /// [is_multiple_of()](struct@BigUInt#method.is_multiple_of)
+        /// is proper rather than this method `is_multiple_of_uint()`.
+        /// 
+        /// # Example 1 for normal case
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u32);
+        /// 
+        /// let a_biguint = U256::from_str("12345678901234567890123456789012345678900").unwrap();
+        /// let rhs = 100_u8;
+        /// let ans = a_biguint.is_multiple_of_uint(rhs);
+        /// println!("Is {} the multiple of {}? -> {}", a_biguint, rhs, ans);
+        /// assert_eq!(ans, true);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.is_multiple_of_uint)
+        fn is_multiple_of_uint<U>(&self, rhs: U) -> bool
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+
+
+        /*** MULTIPLE BIGUINT ***/
+
+        // fn next_multiple_of(&self, rhs: &Self) -> Self
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, and returns the result.
+        /// 
+        /// # Arguments
+        /// `rhs` is the base of multiple, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - This function will panic if `rhs` is zero.
+        /// 
+        /// # Output
+        /// It returns the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`.
+        /// However, if overflow occurs, it returns the value wrapped around.
+        /// 
+        /// # Features
+        /// The result will be the smallest value greater than or equal to self,
+        /// which is a multiple of `rhs`. However, if overflow occurs,
+        /// the result will be the value wrapped around.
+        /// 
+        /// # Counterpart Method
+        /// The method
+        /// [next_multiple_of_uint()](struct@BigUInt#method.next_multiple_of_uint)
+        /// is a bit faster than this method `next_multiple_of()`.
+        /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+        /// u32, u64, and u128, use the method
+        /// [next_multiple_of_uint()](struct@BigUInt#method.next_multiple_of_uint).
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u8);
+        /// 
+        /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
+        /// let num = U256::from(586478_u32);
+        /// let multiple = a_biguint.next_multiple_of(&num);
+        /// println!("The next multiple of {} is {}", a_biguint, multiple);
+        /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123697594");
+        /// assert_eq!(multiple.is_overflow(), false);
+        /// assert_eq!(multiple.is_underflow(), false);
+        /// assert_eq!(multiple.is_infinity(), false);
+        /// assert_eq!(multiple.is_divided_by_zero(), false);
+        /// assert_eq!(multiple.is_undefined(), false);
+        /// assert_eq!(multiple.is_left_carry(), false);
+        /// assert_eq!(multiple.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.next_multiple_of)
+        fn next_multiple_of(&self, rhs: &Self) -> Self;
+
+        // fn next_multiple_of_assign(&mut self, rhs: &Self)
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, and assigns the result to `self` back.
+        /// 
+        /// # Arguments
+        /// `rhs` is the base of multiple, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - This function will panic if rhs is zero.
+        /// 
+        /// # Features
+        /// - `self` will be the smallest value greater than or equal to `self`,
+        ///   which is is a multiple of `rhs`.
+        ///   However, if overflow occurs, `self` will be the value wrapped around.
+        /// - All the flags are historical, which means, for example, if an
+        ///   overflow occurred even once before this current operation or
+        ///   `OVERFLOW` flag is already set before this current operation,
+        ///   the `OVERFLOW` flag is not changed even if this current operation
+        ///   does not cause overflow.
+        /// 
+        /// # Counterpart Method
+        /// The method
+        /// [next_multiple_of_assign_uint()](struct@BigUInt#method.next_multiple_of_assign_uint)
+        /// is a bit faster than this method `next_multiple_of_assign()`.
+        /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+        /// u32, u64, and u128, use the method
+        /// [next_multiple_of_assign_uint()](struct@BigUInt#method.next_multiple_of_assign_uint).
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u16);
+        /// 
+        /// let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
+        /// println!("Originally, a_biguint = {}", a_biguint);
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// 
+        /// let num = UU32::from(586478_u32);
+        /// a_biguint.next_multiple_of_assign(&num);
+        /// println!("After a_biguint.next_multiple_of_assign({}), a_biguint = {}", num, a_biguint);
+        /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123697594");
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.next_multiple_of_assign)
+        fn next_multiple_of_assign(&mut self, rhs: &Self);
+
+        // fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, and returns the result.
+        /// 
+        /// # Arguments
+        /// `rhs` is the base of multiple, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Output
+        /// - It returns the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`.
+        ///   However, if overflow occurs, it returns the value wrapped around.
+        /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
+        ///   of the return value will be set.
+        /// 
+        /// # Features
+        /// - The result will be the smallest value greater than or equal to self,
+        ///   which is a multiple of `rhs`. However, if overflow occurs,
+        ///   the result will be the value wrapped around.
+        /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
+        ///   of the return value will be set.
+        /// 
+        /// # Counterpart Method
+        /// The method
+        /// [panic_free_next_multiple_of_uint()](struct@BigUInt#method.panic_free_next_multiple_of_uint)
+        /// is a bit faster than this method `panic_free_next_multiple_of()`.
+        /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+        /// u32, u64, and u128, use the method
+        /// [panic_free_next_multiple_of_uint()](struct@BigUInt#method.panic_free_next_multiple_of_uint).
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u32);
+        /// 
+        /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
+        /// let num = U256::from(586478_u32);
+        /// let multiple = a_biguint.panic_free_next_multiple_of(&num);
+        /// println!("The next multiple of {} is {}", a_biguint, multiple);
+        /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123697594");
+        /// assert_eq!(multiple.is_overflow(), false);
+        /// assert_eq!(multiple.is_underflow(), false);
+        /// assert_eq!(multiple.is_infinity(), false);
+        /// assert_eq!(multiple.is_divided_by_zero(), false);
+        /// assert_eq!(multiple.is_undefined(), false);
+        /// assert_eq!(multiple.is_left_carry(), false);
+        /// assert_eq!(multiple.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_next_multiple_of)
+        fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self;
+
+        // fn panic_free_next_multiple_of_assign(&mut self, rhs: &Self)
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, and assigns the result to `self` back.
+        /// 
+        /// # Arguments
+        /// `rhs` is the base of multiple, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Features
+        /// - `self` will be the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`.
+        ///   However, if overflow occurs, `self` will be the value wrapped around.
+        /// - If `rhs` is zero, the `UNDEFINED` flag will be set and `self`
+        ///   will be `zero`.
+        /// - All the flags are historical, which means, for example, if an
+        ///   overflow occurred even once before this current operation or
+        ///   `OVERFLOW` flag is already set before this current operation,
+        ///   the `OVERFLOW` flag is not changed even if this current operation
+        ///   does not cause overflow.
+        /// 
+        /// # Counterpart Method
+        /// The method
+        /// [panic_free_next_multiple_of_assign_uint()](struct@BigUInt#method.panic_free_next_multiple_of_assign_uint)
+        /// is a bit faster than this method `panic_free_next_multiple_of_assign()`.
+        /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+        /// u32, u64, and u128, use the method
+        /// [panic_free_next_multiple_of_assign_uint()](struct@BigUInt#method.panic_free_next_multiple_of_assign_uint).
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u64);
+        /// 
+        /// let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
+        /// let num = UU32::from(586478_u32);
+        /// println!("Originally, a_biguint = {}", a_biguint);
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// 
+        /// a_biguint.panic_free_next_multiple_of_assign(&num);
+        /// println!("After a_biguint.next_multiple_of_assign({}), a_biguint = {}", num, a_biguint);
+        /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123697594");
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_next_multiple_of_assign)
+        fn panic_free_next_multiple_of_assign(&mut self, rhs: &Self);
+
+        // fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, wrapping around at `modulo`,
+        /// and returns the result.
+        /// 
+        /// # Arguments
+        /// - `rhs` is the base of multiple, and is of `&Self` type.
+        /// - `modulo` is the divisor to divide the result of the calculation of
+        ///   the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - This function will panic if `rhs` is `zero`.
+        /// - This function will panic if `modulo` is either `zero` or `one`.
+        /// 
+        /// # Output
+        /// It returns the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, wrapping around at `modulo`. So,
+        /// if overflow occurs, it returns the value wrapped around at `modulo`.
+        /// 
+        /// # Feature
+        /// - Wrapping (modular) arround at `modulo`.
+        /// - The differences between this method `modular_next_multiple_of()` and
+        ///   the method `next_multiple_of()` are, first, where wrapping around
+        ///   happens, and, second, when `OVERFLOW` flag is set.
+        ///   First, this method wraps around at `modulo` while the method
+        ///   `next_multiple_of()` wraps around at `maximum value + 1`.
+        ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
+        ///   at `modulo` while the method `next_multiple_of()` sets `OVERFLOW`
+        ///   flag when wrapping around happens at `maximum value + 1`.
+        /// 
+        /// # Counterpart Method
+        /// The method
+        /// [modular_next_multiple_of_uint()](struct@BigUInt#method.modular_next_multiple_of_uint)
+        /// is a bit faster than this method `modular_next_multiple_of()`.
+        /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+        /// u32, u64, and u128, use the method
+        /// [modular_next_multiple_of_uint()](struct@BigUInt#method.modular_next_multiple_of_uint).
+        /// 
+        /// # Example 1 for Normal case
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u128);
+        /// 
+        /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
+        /// let num = U256::from(100_u8);
+        /// let modulo = a_biguint.wrapping_add_uint(200_u8);
+        /// let multiple = a_biguint.modular_next_multiple_of(&num, &modulo);
+        /// println!("The next multiple of {} is {}", a_biguint, multiple);
+        /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123456800");
+        /// assert_eq!(multiple.is_overflow(), false);
+        /// assert_eq!(multiple.is_underflow(), false);
+        /// assert_eq!(multiple.is_infinity(), false);
+        /// assert_eq!(multiple.is_divided_by_zero(), false);
+        /// assert_eq!(multiple.is_undefined(), false);
+        /// assert_eq!(multiple.is_left_carry(), false);
+        /// assert_eq!(multiple.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_next_multiple_of)
+        fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self;
+
+        // fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, wrapping around at `modulo`,
+        /// and assigns the result to `self` back.
+        /// 
+        /// # Arguments
+        /// - `rhs` is the base of multiple, and is of `&Self` type.
+        /// - `modulo` is the divisor to divide the result of the calculation of
+        ///   the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - This function will panic if `rhs` is `zero`.
+        /// - This function will panic if `modulo` is either `zero` or `one`.
+        /// 
+        /// # Features
+        /// - Wrapping (modular) arround at `modulo`.
+        /// - `self` will be the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`, wrapping around at `modulo`. So, if
+        ///   overflow occurs, `self` will be the value wrapped around at `modulo`.
+        /// - The differences between this method
+        ///   `modular_next_multiple_of_assign()` and method
+        ///   `next_multiple_of_assign()` are, first, where wrapping around
+        ///   happens, and, second, when `OVERFLOW` flag is set.
+        ///   First, this method wraps around at `modulo` while the method
+        ///   `next_multiple_of_assign()` wraps around at `maximum value + 1`.
+        ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
+        ///   at `modulo` while the method `next_multiple_of_assign()` sets
+        ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
+        /// - All the flags are historical, which means, for example, if an
+        ///   overflow occurred even once before this current operation or
+        ///   `OVERFLOW` flag is already set before this current operation,
+        ///   the `OVERFLOW` flag is not changed even if this current operation
+        ///   does not cause overflow.
+        /// 
+        /// # Counterpart Method
+        /// The method
+        /// [modular_next_multiple_of_assign_uint()](struct@BigUInt#method.modular_next_multiple_of_assign_uint)
+        /// is a bit faster than this method `modular_next_multiple_of_assign()`.
+        /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+        /// u32, u64, and u128, use the method
+        /// [modular_next_multiple_of_assign_uint()](struct@BigUInt#method.modular_next_multiple_of_assign_uint).
+        /// 
+        /// # Example 1 for Normal case
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u8);
+        /// 
+        /// let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
+        /// println!("Originally, a_biguint = {}", a_biguint);
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// 
+        /// let num = UU32::from(100_u8);
+        /// let modulo = a_biguint.wrapping_add_uint(200_u8);
+        /// a_biguint.modular_next_multiple_of_assign(&num, &modulo);
+        /// println!("After a_biguint.modular_next_multiple_of_assign({}), a_biguint = {}", num, a_biguint);
+        /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123456800");
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_next_multiple_of_assign)
+        fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self);
+
+        // fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, wrapping around at `modulo`,
+        /// and returns the result.
+        /// 
+        /// # Arguments
+        /// - `rhs` is the base of multiple, and is of `&Self` type.
+        /// - `modulo` is the divisor to divide the result of the calculation of
+        ///   the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Output
+        /// - It returns the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`, wrapping around at `modulo`. So,
+        ///   if overflow occurs, it returns the value wrapped around at `modulo`.
+        /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
+        ///   of the return value will be set.
+        /// - If `modulo` is either `zero` or `one`, it returns `zero` and
+        ///   the `UNDEFINED` flag of the return value will be set.
+        /// 
+        /// # Feature
+        /// - Wrapping (modular) arround at `modulo`.
+        /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
+        ///   of the return value will be set.
+        /// - If `modulo` is either `zero` or `one`, it returns `zero` and
+        ///   the `UNDEFINED` flag of the return value will be set.
+        /// - The differences between this method
+        ///   `panic_free_modular_next_multiple_of()` and the method
+        ///   `panic_free_next_multiple_of()` are, first, where wrapping around
+        ///   happens, and, second, when `OVERFLOW` flag is set.
+        ///   First, this method wraps around at `modulo` while the method
+        ///   `panic_free_next_multiple_of()` wraps around at `maximum value + 1`.
+        ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
+        ///   at `modulo` while the method `panic_free_next_multiple_of()` sets
+        ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
+        /// 
+        /// # Counterpart Method
+        /// The method
+        /// [panic_free_modular_next_multiple_of_uint()](struct@BigUInt#method.panic_free_modular_next_multiple_of_uint)
+        /// is a bit faster than this method `panic_free_modular_next_multiple_of()`.
+        /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+        /// u32, u64, and u128, use the method
+        /// [panic_free_modular_next_multiple_of_uint()](struct@BigUInt#method.panic_free_modular_next_multiple_of_uint).
+        /// 
+        /// # Example 1 for Normal case
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u16);
+        /// 
+        /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
+        /// let num = U256::from(100_u8);
+        /// let modulo = a_biguint.wrapping_add_uint(200_u8);
+        /// let multiple = a_biguint.panic_free_modular_next_multiple_of(&num, &modulo);
+        /// println!("The next multiple of {} is {}", a_biguint, multiple);
+        /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123456800");
+        /// assert_eq!(multiple.is_overflow(), false);
+        /// assert_eq!(multiple.is_underflow(), false);
+        /// assert_eq!(multiple.is_infinity(), false);
+        /// assert_eq!(multiple.is_divided_by_zero(), false);
+        /// assert_eq!(multiple.is_undefined(), false);
+        /// assert_eq!(multiple.is_left_carry(), false);
+        /// assert_eq!(multiple.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_modular_next_multiple_of)
+        fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self;
+
+        // fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)
+        /// Calculates the smallest value greater than or equal to `self`,
+        /// which is a multiple of `rhs`, wrapping around at `modulo`,
+        /// and assigns the result to `self` back.
+        /// 
+        /// # Arguments
+        /// - `rhs` is the base of multiple, and is of `&Self` type.
+        /// - `modulo` is the divisor to divide the result of the calculation of
+        ///   the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Features
+        /// - Wrapping (modular) arround at `modulo`.
+        /// - `self` will be the smallest value greater than or equal to `self`,
+        ///   which is a multiple of `rhs`, wrapping around at `modulo`. So, if
+        ///   overflow occurs, `self` will be the value wrapped around at `modulo`.
+        /// - If `rhs` is zero, it assigns `zero` to `self` back
+        ///   and the `UNDEFINED` flag of `self` will be set.
+        /// - If `modulo` is either `zero` or `one`, it assigns `zero`
+        ///   to `self` back and the `UNDEFINED` flag of `self` will be set.
+        /// - The differences between this method
+        ///   `panic_free_modular_next_multiple_of_assign()`
+        ///   and the method `panic_free_next_multiple_of_assign()` are, first,
+        ///   where wrapping around happens, and, second, when `OVERFLOW` flag is
+        ///   set. First, this method wraps araound at `modulo` while the method
+        ///   `panic_free_next_multiple_of_assign()` wraps araound at `maximum
+        ///   value + 1`. Second, this method set `OVERFLOW` flag when wrapping
+        ///   around happens at `modulo` while the method
+        ///   `panic_free_next_multiple_of_assign()` sets the `OVERFLOW` flag
+        ///   when wrapping around happens.
+        /// - All the flags are historical, which means, for example, if an
+        ///   overflow occurred even once before this current operation or
+        ///   `OVERFLOW` flag is already set before this current operation,
+        ///   the `OVERFLOW` flag is not changed even if this current operation
+        ///   does not cause overflow.
+        /// 
+        /// # Counterpart Method
+        /// The method
+        /// [panic_free_modular_next_multiple_of_assign_uint()](struct@BigUInt#method.panic_free_modular_next_multiple_of_assign_uint)
+        /// is a bit faster than this method `panic_free_modular_next_multiple_of_assign()`.
+        /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+        /// u32, u64, and u128, use the method
+        /// [panic_free_modular_next_multiple_of_assign_uint()](struct@BigUInt#method.panic_free_modular_next_multiple_of_assign_uint).
+        /// 
+        /// # Example 1 for Normal case
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u32);
+        /// 
+        /// let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
+        /// println!("Originally, a_biguint = {}", a_biguint);
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// 
+        /// let num = UU32::from(100_u8);
+        /// let modulo = a_biguint.wrapping_add_uint(200_u8);
+        /// a_biguint.panic_free_modular_next_multiple_of_assign(&num, &modulo);
+        /// println!("After a_biguint.modular_next_multiple_of_assign({}), a_biguint = {}", num, a_biguint);
+        /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123456800");
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_modular_next_multiple_of_assign)
+        fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self);
+
+        // fn is_multiple_of(&self, rhs: &Self) -> bool
+        /// Returns `true` if `self` is a multiple of `rhs`, and `false` otherwise.
+        /// 
+        /// # Arguments
+        /// `rhs` is the base of multiple, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Output
+        /// - If `self` is a multiple of `rhs`, it returns `true`, and
+        ///   otherwise, it returns `false`.
+        /// - If both `self` and `rhs` are `zero`, it returns `true`.
+        /// - If `self` is not `zero` and `rhs` is `zero`, it returns `false`.
+        /// 
+        /// # Features
+        /// - This function is equivalent to `self` % rhs == 0,
+        ///   except that it will not panic for `rhs` == 0.
+        /// - If `rhs` is `zero` and `self` is `zero`, it returns `true`.
+        /// - If `rhs` is `zero` and `self` is not `zero`, it returns `false`.
+        /// 
+        /// # Counterpart Method
+        /// The method
+        /// [is_next_multiple_of_uint()](struct@BigUInt#method.is_next_multiple_of_uint)
+        /// is a bit faster than this method `is_next_multiple_of()`.
+        /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+        /// u32, u64, and u128, use the method
+        /// [is_next_multiple_of_uint()](struct@BigUInt#method.is_next_multiple_of_uint).
+        /// 
+        /// # Example 1 for Normal case
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u64);
+        /// 
+        /// let a_biguint = U256::from_str("12345678901234567890123456789012345678900").unwrap();
+        /// let rhs = U256::from(100_u8);
+        /// let ans = a_biguint.is_multiple_of(&rhs);
+        /// println!("Is {} the multiple of {}? -> {}", a_biguint, rhs, ans);
+        /// assert_eq!(ans, true);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.is_multiple_of)
+        fn is_multiple_of(&self, rhs: &Self) -> bool;
+
+
+
+        /*** MIDDLE POINT ****/
+
+        // fn midpoint_uint<U>(&self, rhs: U) -> Self
+        /// Calculates the middle point of `self` and `rhs`,
+        /// and returns the result value.
+        /// 
+        /// # Arguments
+        /// `rhs` is another point to get the middle point, and is a primitive
+        /// unsigned integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Output
+        /// It returns (`self` + `rhs`) / 2
+        /// in a sufficiently-large signed integral type.
+        /// 
+        /// # Features
+        /// - a.midpoint(&b) works as if (a + b) / 2 in
+        ///   a sufficiently-large signed integral type.
+        /// - This implies that the result is always rounded towards 0,
+        ///   and that no overflow will ever occur.
+        /// 
+        /// # Counterpart Method
+        /// If `rhs` is bigger than `u128`, the method
+        /// [midpoint()](struct@BigUInt#method.midpoint)
+        /// is proper rather than this method `midpoint_uint()`.
+        /// 
+        /// # Example 1 for normal case
+        /// ```
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u8);
+        /// 
+        /// let a_biguint = U256::from_string("8888866666444442222233333444445555566666777778888899999").unwrap();
+        /// let b_biguint = 77777666665555544444333332222211111_u128;
+        /// let c_biguint = a_biguint.midpoint_uint(b_biguint);
+        /// println!("The middle point of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
+        /// assert_eq!(c_biguint.to_string(), "4444433333222221111155555555555555555555555555555555555");
+        /// assert_eq!(c_biguint.is_overflow(), false);
+        /// assert_eq!(c_biguint.is_underflow(), false);
+        /// assert_eq!(c_biguint.is_infinity(), false);
+        /// assert_eq!(c_biguint.is_undefined(), false);
+        /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(c_biguint.is_left_carry(), false);
+        /// assert_eq!(c_biguint.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.midpoint_uint)
+        fn midpoint_uint<U>(&self, rhs: U) -> Self
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+        // fn midpoint_assign_uint<U>(&mut self, rhs: U)
+        /// Calculates the middle point of `self` and `rhs`,
+        /// and assigns the result value to `self`.
+        /// 
+        /// # Arguments
+        /// `rhs` is another point to get the middle point, and is a primitive
+        /// unsigned integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Features
+        /// - a.midpoint_assign_uint(&b) works as if a = (a + b) / 2 in
+        ///   a sufficiently-large signed integral type.
+        /// - This implies that the result is always rounded towards 0,
+        ///   and that no overflow will ever occur.
+        /// 
+        /// # Counterpart Method
+        /// If `rhs` is bigger than `u128`, the method
+        /// [midpoint_assign()](struct@BigUInt#method.midpoint_assign)
+        /// is proper rather than this method `midpoint_assign_uint()`.
+        /// 
+        /// # Example 1 for normal case
+        /// ```
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u16);
+        /// 
+        /// let mut a_biguint = U256::from_string("8888866666444442222233333444445555566666777778888899999").unwrap();
+        /// println!("Originally, a_biguint = {}", a_biguint);
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// 
+        /// let b_biguint = 77777666665555544444333332222211111_u128;
+        /// a_biguint.midpoint_assign_uint(b_biguint);
+        /// println!("After a_biguint.midpoint_assign_uint(), a_biguint = {}.", a_biguint);
+        /// assert_eq!(a_biguint.to_string(), "4444433333222221111155555555555555555555555555555555555");
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.midpoint_assign_uint)
+        fn midpoint_assign_uint<U>(&mut self, rhs: U)
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+        // fn midpoint(&self, rhs: &Self) -> Self
+        /// Calculates the middle point of `self` and `rhs`,
+        /// and returns the result value.
+        /// 
+        /// # Arguments
+        /// `rhs` is another point to get the middle point, and is of `Self` type.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Output
+        /// It returns (`self` + `rhs`) / 2
+        /// in a sufficiently-large signed integral type.
+        /// 
+        /// # Features
+        /// - a.midpoint(&b) works as if (a + b) / 2 in
+        ///   a sufficiently-large signed integral type.
+        /// - This implies that the result is always rounded towards 0,
+        ///   and that no overflow will ever occur.
+        /// 
+        /// # Counterpart Method
+        /// The method [midpoint_uint()](struct@BigUInt#method.midpoint_uint)
+        /// is more efficient than this method `midpoint()`
+        /// when the exponent `exp` is primitive unsigned integral data type
+        /// such as u8, u16, u32, u64, and u128.
+        /// If `rhs` is the primitive unsigned integral data type number,
+        /// use the method [midpoint_uint()](struct@BigUInt#method.midpoint_uint).
+        /// 
+        /// # Example 1 for normal case
+        /// ```
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u8);
+        /// 
+        /// let a_biguint = U256::from_string("88888666664444422222111112222233333444445555566666777778888899999").unwrap();
+        /// let b_biguint = U256::from_string("999998888877777666665555544444333332222211111").unwrap();
+        /// let c_biguint = a_biguint.midpoint(&b_biguint);
+        /// println!("The middle point of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
+        /// assert_eq!(c_biguint.to_string(), "44444333332222211111555555555555555555555555555555555555555555555");
+        /// assert_eq!(c_biguint.is_overflow(), false);
+        /// assert_eq!(c_biguint.is_underflow(), false);
+        /// assert_eq!(c_biguint.is_infinity(), false);
+        /// assert_eq!(c_biguint.is_undefined(), false);
+        /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(c_biguint.is_left_carry(), false);
+        /// assert_eq!(c_biguint.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.midpoint)
+        fn midpoint(&self, rhs: &Self) -> Self;
+
+        // pub fn midpoint_assign(&mut self, rhs: &Self)
+        /// Calculates the middle point of `self` and `rhs`,
+        /// and assigns the result value to `self`.
+        /// 
+        /// # Arguments
+        /// `rhs` is another point to get the middle point, and is of `Self` type.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Features
+        /// - a.midpoint_assign(&b) works as if a = (a + b) / 2 in
+        ///   a sufficiently-large signed integral type.
+        /// - This implies that the result is always rounded towards 0,
+        ///   and that no overflow will ever occur.
+        /// 
+        /// # Counterpart Method
+        /// The method [midpoint_assign_uint()](struct@BigUInt#method.midpoint_assign_uint)
+        /// is more efficient than this method `midpoint_assign()`
+        /// when the exponent `exp` is primitive unsigned integral data type
+        /// such as u8, u16, u32, u64, and u128.
+        /// If `rhs` is the primitive unsigned integral data type number,
+        /// use the method [midpoint_assign_uint()](struct@BigUInt#method.midpoint_assign_uint).
+        /// 
+        /// # Example 1 for normal case
+        /// ```
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u16);
+        /// 
+        /// let mut a_biguint = U256::from_string("88888666664444422222111112222233333444445555566666777778888899999").unwrap();
+        /// println!("Originally, a_biguint = {}", a_biguint);
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// 
+        /// let b_biguint = U256::from_string("999998888877777666665555544444333332222211111").unwrap();
+        /// a_biguint.midpoint_assign(&b_biguint);
+        /// println!("After a_biguint.midpoint_assign(), a_biguint = {}.", a_biguint);
+        /// assert_eq!(a_biguint.to_string(), "44444333332222211111555555555555555555555555555555555555555555555");
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.midpoint_assign)
+        fn midpoint_assign(&mut self, rhs: &Self);
 }

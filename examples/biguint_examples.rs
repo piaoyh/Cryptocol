@@ -2409,7 +2409,6 @@ fn biguint_carrying_add_assign_uint()
 fn biguint_wrapping_add_uint()
 {
     println!("biguint_wrapping_add_uint");
-    use cryptocol::number::BigUint_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -2454,7 +2453,6 @@ fn biguint_wrapping_add_uint()
 fn biguint_wrapping_add_assign_uint()
 {
     println!("biguint_wrapping_add_assign_uint");
-    use cryptocol::number::BigUint_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -2629,7 +2627,7 @@ fn biguint_overflowing_add_assign_uint()
 fn biguint_checked_add_uint()
 {
     println!("biguint_checked_add_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -2684,7 +2682,7 @@ fn biguint_checked_add_uint()
 fn biguint_unchecked_add_uint()
 {
     println!("biguint_unchecked_add_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -2709,7 +2707,7 @@ fn biguint_unchecked_add_uint()
 #[should_panic]
 fn biguint_should_panic_unchecked_add_uint()
 {
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -2720,7 +2718,7 @@ fn biguint_should_panic_unchecked_add_uint()
 fn biguint_saturating_add_uint()
 {
     println!("biguint_saturating_add_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
@@ -2765,7 +2763,7 @@ fn biguint_saturating_add_uint()
 fn biguint_saturating_add_assign_uint()
 {
     println!("biguint_saturating_add_assign_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
@@ -3938,7 +3936,7 @@ fn biguint_panic_free_modular_add_assign_uint()
 fn biguint_safe_add_uint()
 {
     println!("biguint_safe_add_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
@@ -3992,7 +3990,7 @@ fn biguint_should_panic_safe_add_uint()
 {
     #[cfg(debug_assertions)]
     {
-        use cryptocol::number::BigUint_More;
+        use cryptocol::number::BigUInt_More;
         use cryptocol::define_utypes_with;
         define_utypes_with!(u128);
     
@@ -4005,7 +4003,7 @@ fn biguint_should_panic_safe_add_uint()
 fn biguint_safe_add_assign_uint()
 {
     println!("biguint_safe_add_assign_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -4078,7 +4076,7 @@ fn biguint_should_panic_safe_add_assign_uint()
 {
     #[cfg(debug_assertions)]
     {
-        use cryptocol::number::BigUint_More;
+        use cryptocol::number::BigUInt_More;
         use cryptocol::define_utypes_with;
         define_utypes_with!(u8);
     
@@ -4554,7 +4552,7 @@ fn biguint_overflowing_sub_assign_uint()
 fn biguint_checked_sub_uint()
 {
     println!("biguint_checked_sub_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -4609,7 +4607,7 @@ fn biguint_checked_sub_uint()
 fn biguint_unchecked_sub_uint()
 {
     println!("biguint_unchecked_sub_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -4627,7 +4625,7 @@ fn biguint_unchecked_sub_uint()
 #[should_panic]
 fn biguint_should_panic_unchecked_sub_uint()
 {
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -4638,7 +4636,7 @@ fn biguint_should_panic_unchecked_sub_uint()
 fn biguint_saturating_sub_uint()
 {
     println!("biguint_saturating_sub_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
     
@@ -4683,7 +4681,7 @@ fn biguint_saturating_sub_uint()
 fn biguint_saturating_sub_assign_uint()
 {
     println!("biguint_saturating_sub_assign_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
@@ -5884,7 +5882,7 @@ fn biguint_abs_diff_uint()
 fn biguint_safe_sub_uint()
 {
     println!("biguint_wrapping_sub_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -5938,7 +5936,7 @@ fn biguint_should_panic_safe_sub_uint()
 {
     #[cfg(not(debug_assertions))]
     {
-        use cryptocol::number::BigUint_More;
+        use cryptocol::number::BigUInt_More;
         use cryptocol::define_utypes_with;
         define_utypes_with!(u8);
 
@@ -5955,7 +5953,7 @@ fn biguint_should_panic_safe_sub_uint()
 fn biguint_safe_sub_assign_uint()
 {
     println!("biguint_safe_sub_assign_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -6050,7 +6048,7 @@ fn biguint_should_panic_safe_sub_assign_uint()
 {
     #[cfg(debug_assertions)]
     {
-        use cryptocol::number::BigUint_More;
+        use cryptocol::number::BigUInt_More;
         use cryptocol::define_utypes_with;
         define_utypes_with!(u16);
 
@@ -6616,7 +6614,7 @@ fn biguint_overflowing_mul_assign_uint()
 fn biguint_checked_mul_uint()
 {
     println!("biguint_checked_mul_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -6655,7 +6653,7 @@ fn biguint_checked_mul_uint()
 fn biguint_unchecked_mul_uint()
 {
     println!("biguint_unchecked_mul_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -6680,7 +6678,7 @@ fn biguint_unchecked_mul_uint()
 #[should_panic]
 fn biguint_should_panic_unchecked_mul_uint()
 {
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -6691,7 +6689,7 @@ fn biguint_should_panic_unchecked_mul_uint()
 fn biguint_saturating_mul_uint()
 {
     println!("biguint_saturating_mul_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -6724,7 +6722,7 @@ fn biguint_saturating_mul_uint()
 fn biguint_saturating_mul_assign_uint()
 {
     println!("biguint_saturating_mul_assign_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -7799,7 +7797,7 @@ fn biguint_panic_free_modular_mul_assign_uint()
 fn biguint_safe_mul_uint()
 {
     println!("biguint_safe_mul_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -7843,7 +7841,7 @@ fn biguint_should_panic_safe_mul_3uint()
 {
     #[cfg(debug_assertions)]
     {
-        use cryptocol::number::BigUint_More;
+        use cryptocol::number::BigUInt_More;
         use cryptocol::define_utypes_with;
         define_utypes_with!(u16);
     
@@ -7856,7 +7854,7 @@ fn biguint_should_panic_safe_mul_3uint()
 fn biguint_safe_mul_assign_uint()
 {
     println!("biguint_safe_mul_assign_uint");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -7920,7 +7918,7 @@ fn biguint_should_panic_safe_mul_assign_uint()
 {
     #[cfg(debug_assertions)]
     {
-        use cryptocol::number::BigUint_More;
+        use cryptocol::number::BigUInt_More;
         use cryptocol::define_utypes_with;
         define_utypes_with!(u32);
 
@@ -8395,7 +8393,7 @@ fn biguint_checked_div_uint()
 {
     println!("biguint_checked_div_uint");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -8471,7 +8469,7 @@ fn biguint_unchecked_div_uint()
 {
     println!("biguint_unchecked_div_uint");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -8511,7 +8509,7 @@ fn biguint_unchecked_div_uint()
 fn biguint_should_panic_unchecked_div_uint()
 {
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -8528,7 +8526,7 @@ fn biguint_saturating_div_uint()
 {
     println!("biguint_saturating_div_uint");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
@@ -8569,7 +8567,7 @@ fn biguint_should_panic_saturating_div_uint()
 {
     println!("biguint_saturating_div_uint");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
@@ -8587,7 +8585,7 @@ fn biguint_saturating_div_assign_uint()
 {
     println!("biguint_saturating_div_assign_uint");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
@@ -8645,7 +8643,7 @@ fn biguint_saturating_div_assign_uint()
 fn biguint_should_panic_saturating_div_assign_uint()
 {
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
@@ -9992,7 +9990,7 @@ fn biguint_checked_rem_uint()
 {
     println!("biguint_checked_rem_uint");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
@@ -10054,7 +10052,7 @@ fn biguint_unchecked_rem_uint()
 {
     println!("biguint_unchecked_rem_uint");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -10080,7 +10078,7 @@ fn biguint_unchecked_rem_uint()
 fn biguint_should_panic_unchecked_rem_uint()
 {
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -10097,7 +10095,7 @@ fn biguint_saturating_rem_uint()
 {
     println!("biguint_saturating_rem_uint");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -10123,7 +10121,7 @@ fn biguint_saturating_rem_uint()
 fn biguint_should_panic_saturating_rem_uint()
 {
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
     
@@ -10140,7 +10138,7 @@ fn biguint_saturating_rem_assign_uint()
 {
     println!("biguint_saturating_rem_assign_uint");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -10198,7 +10196,7 @@ fn biguint_saturating_rem_assign_uint()
 fn biguint_should_panic_saturating_rem_assign_uint()
 {
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -11288,7 +11286,7 @@ fn biguint_next_multiple_uint()
     biguint_panic_free_modular_next_multiple_of_assign_uint();
     biguint_is_multiple_of_uint();
 }
-///////////////////////////////
+
 fn biguint_next_multiple_of_uint()
 {
     println!("biguint_next_multiple_of_uint");
@@ -11333,6 +11331,7 @@ fn biguint_next_multiple_of_uint()
 fn biguint_should_panic_next_multiple_of_uint()
 {
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -11345,6 +11344,7 @@ fn biguint_next_multiple_of_assign_uint()
 {
     println!("biguint_next_multiple_of_assign_uint");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
@@ -11403,6 +11403,7 @@ fn biguint_panic_free_next_multiple_of_uint()
 {
     println!("biguint_panic_free_next_multiple_of_uint");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
@@ -11451,6 +11452,7 @@ fn biguint_panic_free_next_multiple_of_assign_uint()
 {
     println!("biguint_panic_free_next_multiple_of_assign_uint");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -11526,6 +11528,7 @@ fn biguint_modular_next_multiple_of_uint()
 {
     println!("biguint_modular_next_multiple_of_uint");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -11593,6 +11596,7 @@ fn biguint_modular_next_multiple_of_assign_uint()
 {
     println!("biguint_modular_next_multiple_of_assign_uint");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -11678,6 +11682,7 @@ fn biguint_panic_free_modular_next_multiple_of_uint()
 {
     println!("biguint_panic_free_modular_next_multiple_of_uint");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -11807,6 +11812,7 @@ fn biguint_panic_free_modular_next_multiple_of_assign_uint()
 {
     println!("biguint_panic_free_modular_next_multiple_of_assign_uint");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -11938,6 +11944,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign_uint()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let num = 100_u8;
     let modulo = U256::one();
@@ -12006,6 +12014,7 @@ fn biguint_is_multiple_of_uint()
 {
     println!("biguint_is_multiple_of_uint");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -15640,6 +15649,7 @@ fn biguint_miscellaneous_arithmatic_operation_uint_main()
 fn biguint_midpoint_uint()
 {
     println!("biguint_midpoint_uint()");
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -15718,6 +15728,7 @@ fn biguint_midpoint_uint()
 fn biguint_midpoint_assign_uint()
 {
     println!("biguint_midpoint_uint()");
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -17721,7 +17732,7 @@ fn biguint_overflowing_add_assign()
 fn biguint_checked_add()
 {
     println!("biguint_checked_add");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -17761,7 +17772,7 @@ fn biguint_checked_add()
 fn biguint_unchecked_add()
 {
     println!("biguint_unchecked_add()");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -17788,7 +17799,7 @@ fn biguint_unchecked_add()
 fn biguint_saturating_add()
 {
     println!("biguint_saturating_add");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
@@ -17823,7 +17834,7 @@ fn biguint_saturating_add()
 fn biguint_saturating_add_assign()
 {
     println!("biguint_saturating_add_assign");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
@@ -18973,7 +18984,7 @@ fn biguint_panic_free_modular_add_assign()
 fn biguint_safe_add()
 {
     println!("biguint_safe_add");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
@@ -19030,7 +19041,7 @@ fn biguint_should_panic_safe_add()
 {
     #[cfg(debug_assertions)]
     {
-        use cryptocol::number::BigUint_More;
+        use cryptocol::number::BigUInt_More;
         use cryptocol::define_utypes_with;
         define_utypes_with!(u128);
 
@@ -19043,7 +19054,7 @@ fn biguint_should_panic_safe_add()
 fn biguint_safe_add_assign()
 {
     println!("biguint_safe_add_assign");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -19116,7 +19127,7 @@ fn biguint_should_panic_safe_add_assign()
 {
     #[cfg(debug_assertions)]
     {
-        use cryptocol::number::BigUint_More;
+        use cryptocol::number::BigUInt_More;
         use cryptocol::define_utypes_with;
         define_utypes_with!(u8);
     
@@ -19517,7 +19528,7 @@ fn biguint_overflowing_sub_assign()
 fn biguint_checked_sub()
 {
     println!("biguint_checked_sub");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -19555,7 +19566,7 @@ fn biguint_checked_sub()
 fn biguint_unchecked_sub()
 {
     println!("biguint_unchecked_sub");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -19580,7 +19591,7 @@ fn biguint_unchecked_sub()
 fn biguint_saturating_sub()
 {
     println!("biguint_saturating_sub");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
@@ -19628,7 +19639,7 @@ fn biguint_saturating_sub()
 fn biguint_saturating_sub_assign()
 {
     println!("biguint_saturating_sub_assign");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
@@ -20834,7 +20845,7 @@ fn biguint_abs_diff()
 fn biguint_safe_sub()
 {
     println!("biguint_safe_sub");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
@@ -20891,7 +20902,7 @@ fn biguint_should_panic_safe_sub()
 {
     #[cfg(debug_assertions)]
     {
-        use cryptocol::number::BigUint_More;
+        use cryptocol::number::BigUInt_More;
         use cryptocol::define_utypes_with;
         define_utypes_with!(u128);
     
@@ -20904,7 +20915,7 @@ fn biguint_should_panic_safe_sub()
 fn biguint_safe_sub_assign()
 {
     println!("biguint_safe_sub_assign");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -20988,7 +20999,7 @@ fn biguint_should_panic_safe_sub_assign()
 {
     #[cfg(debug_assertions)]
     {
-        use cryptocol::number::BigUint_More;
+        use cryptocol::number::BigUInt_More;
         use cryptocol::define_utypes_with;
         define_utypes_with!(u8);
 
@@ -21491,7 +21502,7 @@ fn biguint_overflowing_mul_assign()
 fn biguint_checked_mul()
 {
     println!("biguint_checked_mul");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
@@ -21531,7 +21542,7 @@ fn biguint_checked_mul()
 fn biguint_unchecked_mul()
 {
     println!("biguint_unchecked_mul");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
@@ -21556,7 +21567,7 @@ fn biguint_unchecked_mul()
 fn biguint_saturating_mul()
 {
     println!("biguint_saturating_mul");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -21586,7 +21597,7 @@ fn biguint_saturating_mul()
 fn biguint_saturating_mul_assign()
 {
     println!("biguint_saturating_mul_assign");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -22541,7 +22552,7 @@ fn biguint_panic_free_modular_mul_assign()
 fn biguint_safe_mul()
 {
     println!("biguint_safe_mul");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -22585,7 +22596,7 @@ fn biguint_should_panic_safe_mul()
 {
     #[cfg(debug_assertions)]
     {
-        use cryptocol::number::BigUint_More;
+        use cryptocol::number::BigUInt_More;
         use cryptocol::define_utypes_with;
         define_utypes_with!(u16);
         
@@ -22598,7 +22609,7 @@ fn biguint_should_panic_safe_mul()
 fn biguint_safe_mul_assign()
 {
     println!("biguint_safe_mul_assign");
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -22660,7 +22671,7 @@ fn biguint_should_panic_safe_mul_assign()
 {
     #[cfg(debug_assertions)]
     {
-        use cryptocol::number::BigUint_More;
+        use cryptocol::number::BigUInt_More;
         use cryptocol::define_utypes_with;
         define_utypes_with!(u32);
 
@@ -23027,7 +23038,7 @@ fn biguint_checked_div()
 {
     println!("biguint_checked_div");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -23099,7 +23110,7 @@ fn biguint_unchecked_div()
 {
     println!("biguint_unchecked_div");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -23141,7 +23152,7 @@ fn biguint_saturating_div()
 {
     println!("biguint_saturating_div");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
@@ -23183,7 +23194,7 @@ fn biguint_saturating_div_assign()
 {
     println!("biguint_saturating_div_assign");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
@@ -24385,7 +24396,7 @@ fn biguint_checked_rem()
 {
     println!("biguint_checked_rem");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -24457,7 +24468,7 @@ fn biguint_unchecked_rem()
 {
     println!("biguint_unchecked_rem");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -24499,7 +24510,7 @@ fn biguint_saturating_rem()
 {
     println!("biguint_saturating_rem");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -24541,7 +24552,7 @@ fn biguint_saturating_rem_assign()
 {
     println!("biguint_saturating_rem_assign");
     use std::str::FromStr;
-    use cryptocol::number::BigUint_More;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
@@ -25542,6 +25553,7 @@ fn biguint_next_multiple_of()
 {
     println!("biguint_next_multiple_of");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -25555,6 +25567,8 @@ fn biguint_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), false);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
 
     let a_biguint = U256::max();
     let num = U256::from(586478_u32);
@@ -25566,6 +25580,8 @@ fn biguint_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), false);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
 
     let _a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
     let _num = U256::zero();
@@ -25578,6 +25594,7 @@ fn biguint_next_multiple_of_assign()
 {
     println!("biguint_next_multiple_of_assign");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -25588,6 +25605,8 @@ fn biguint_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let num = UU32::from(586478_u32);
     a_biguint.next_multiple_of_assign(&num);
@@ -25598,6 +25617,8 @@ fn biguint_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let mut a_biguint = UU32::max();
     println!("Originally, a_biguint = {}", a_biguint);
@@ -25606,6 +25627,8 @@ fn biguint_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let num = UU32::from(586478_u32);
     a_biguint.next_multiple_of_assign(&num);
@@ -25616,6 +25639,8 @@ fn biguint_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let _a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
     let _num = UU32::zero();
@@ -25628,6 +25653,7 @@ fn biguint_panic_free_next_multiple_of()
 {
     println!("biguint_panic_free_next_multiple_of");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -25641,6 +25667,8 @@ fn biguint_panic_free_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), false);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
 
     let a_biguint = U256::max();
     let num = U256::from(586478_u32);
@@ -25652,6 +25680,8 @@ fn biguint_panic_free_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), false);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
 
     let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
     let num = U256::zero();
@@ -25663,6 +25693,8 @@ fn biguint_panic_free_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), true);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
     println!("---------------------------");
 }
 
@@ -25670,6 +25702,7 @@ fn biguint_panic_free_next_multiple_of_assign()
 {
     println!("biguint_panic_free_next_multiple_of_assign");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
@@ -25681,6 +25714,8 @@ fn biguint_panic_free_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     a_biguint.panic_free_next_multiple_of_assign(&num);
     println!("After a_biguint.next_multiple_of_assign({}), a_biguint = {}", num, a_biguint);
@@ -25690,6 +25725,8 @@ fn biguint_panic_free_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let mut a_biguint = UU32::max();
     let num = UU32::from(586478_u32);
@@ -25699,6 +25736,8 @@ fn biguint_panic_free_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     a_biguint.panic_free_next_multiple_of_assign(&num);
     println!("After a_biguint.next_multiple_of_assign({}), a_biguint = {}", num, a_biguint);
@@ -25708,6 +25747,8 @@ fn biguint_panic_free_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
     let num = UU32::zero();
@@ -25717,6 +25758,8 @@ fn biguint_panic_free_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     a_biguint.panic_free_next_multiple_of_assign(&num);
     println!("After a_biguint.next_multiple_of_assign({}), a_biguint = {}", num, a_biguint);
@@ -25726,6 +25769,8 @@ fn biguint_panic_free_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), true);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
     println!("---------------------------");
 }
 
@@ -25733,6 +25778,7 @@ fn biguint_modular_next_multiple_of()
 {
     println!("biguint_modular_next_multiple_of");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
@@ -25748,6 +25794,8 @@ fn biguint_modular_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), false);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
 
     // Normal case 2
     let a_biguint = U256::max();
@@ -25761,6 +25809,8 @@ fn biguint_modular_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), false);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
 
     // rhs == 0
     let _a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -25796,6 +25846,7 @@ fn biguint_modular_next_multiple_of_assign()
 {
     println!("biguint_modular_next_multiple_of_assign");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -25807,6 +25858,8 @@ fn biguint_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let num = UU32::from(100_u8);
     let modulo = a_biguint.wrapping_add_uint(200_u8);
@@ -25818,6 +25871,8 @@ fn biguint_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     // Normal case 2
     let mut a_biguint = UU32::max();
@@ -25827,6 +25882,8 @@ fn biguint_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let num = UU32::from(100_u8);
     let modulo = a_biguint.wrapping_add_uint(200_u8);
@@ -25838,6 +25895,8 @@ fn biguint_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     // rhs == 0
     let mut _a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
@@ -25873,6 +25932,7 @@ fn biguint_panic_free_modular_next_multiple_of()
 {
     println!("biguint_panic_free_modular_next_multiple_of");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -25888,6 +25948,8 @@ fn biguint_panic_free_modular_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), false);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
 
     // Normal case 2
     let a_biguint = U256::max();
@@ -25901,6 +25963,8 @@ fn biguint_panic_free_modular_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), false);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
 
     // rhs == 0
     let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -25914,6 +25978,8 @@ fn biguint_panic_free_modular_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), true);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
 
     // rhs == multiple of modulo
     let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -25927,6 +25993,8 @@ fn biguint_panic_free_modular_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), true);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
 
     // modulo == 0
     let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -25940,6 +26008,8 @@ fn biguint_panic_free_modular_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), true);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
 
     // modulo == 1
     let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -25953,6 +26023,8 @@ fn biguint_panic_free_modular_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), true);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
 
     // rhs == 0 and modulo == 0
     let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -25966,6 +26038,8 @@ fn biguint_panic_free_modular_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), true);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
 
     // rhs == 0 and modulo == 1
     let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -25979,6 +26053,8 @@ fn biguint_panic_free_modular_next_multiple_of()
     assert_eq!(multiple.is_infinity(), false);
     assert_eq!(multiple.is_divided_by_zero(), false);
     assert_eq!(multiple.is_undefined(), true);
+    assert_eq!(multiple.is_left_carry(), false);
+    assert_eq!(multiple.is_right_carry(), false);
     println!("---------------------------");
 }
 
@@ -25986,6 +26062,7 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
 {
     println!("biguint_panic_free_modular_next_multiple_of_assign");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
@@ -25997,6 +26074,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let num = UU32::from(100_u8);
     let modulo = a_biguint.wrapping_add_uint(200_u8);
@@ -26008,6 +26087,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     // Normal case 2
     let mut a_biguint = UU32::from_str_radix("FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF", 16).unwrap();
@@ -26017,6 +26098,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let num = UU32::from(100_u8);
     let modulo = a_biguint.wrapping_add_uint(200_u8);
@@ -26028,6 +26111,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     // rhs == 0
     let mut a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -26037,6 +26122,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let num = U256::zero();
     let modulo = a_biguint.wrapping_add_uint(200_u8);
@@ -26048,6 +26135,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), true);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     // rhs == multiple of modulo
     let mut a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -26057,6 +26146,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let num = U256::from(200_u8);
     let modulo = U256::from(100_u8);
@@ -26068,6 +26159,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), true);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     // modulo == 0
     let mut a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -26077,6 +26170,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let num = U256::from(100_u8);
     let modulo = U256::zero();
@@ -26088,6 +26183,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), true);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     // modulo == 1
     let mut a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -26097,6 +26194,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let num = U256::from(100_u8);
     let modulo = U256::one();
@@ -26108,6 +26207,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), true);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     // rhs == 0 and modulo == 0
     let mut a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -26117,6 +26218,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let num = U256::zero();
     let modulo = U256::zero();
@@ -26128,6 +26231,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), true);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     // rhs == 0 and modulo == 1
     let mut a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -26137,6 +26242,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let num = U256::zero();
     let modulo = U256::one();
@@ -26148,6 +26255,8 @@ fn biguint_panic_free_modular_next_multiple_of_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), true);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
     println!("---------------------------");
 }
 
@@ -26155,6 +26264,7 @@ fn biguint_is_multiple_of()
 {
     println!("biguint_is_multiple_of()");
     use std::str::FromStr;
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
@@ -30291,6 +30401,7 @@ fn biguint_miscellaneous_arithmatic_operation_main()
 fn biguint_midpoint()
 {
     println!("biguint_midpoint()");
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
@@ -30305,6 +30416,8 @@ fn biguint_midpoint()
     assert_eq!(c_biguint.is_infinity(), false);
     assert_eq!(c_biguint.is_undefined(), false);
     assert_eq!(c_biguint.is_divided_by_zero(), false);
+    assert_eq!(c_biguint.is_left_carry(), false);
+    assert_eq!(c_biguint.is_right_carry(), false);
 
     // case that self is even number and rhs is even number
     let a_biguint = U256::from_string("888886666644444222221111122222333334444455555666667777788888").unwrap();
@@ -30317,6 +30430,8 @@ fn biguint_midpoint()
     assert_eq!(c_biguint.is_infinity(), false);
     assert_eq!(c_biguint.is_undefined(), false);
     assert_eq!(c_biguint.is_divided_by_zero(), false);
+    assert_eq!(c_biguint.is_left_carry(), false);
+    assert_eq!(c_biguint.is_right_carry(), false);
 
     // case that self is even number and rhs is odd number
     let a_biguint = U256::from_string("888886666644444222221111122222333334444455555666667777788888").unwrap();
@@ -30329,6 +30444,8 @@ fn biguint_midpoint()
     assert_eq!(c_biguint.is_infinity(), false);
     assert_eq!(c_biguint.is_undefined(), false);
     assert_eq!(c_biguint.is_divided_by_zero(), false);
+    assert_eq!(c_biguint.is_left_carry(), false);
+    assert_eq!(c_biguint.is_right_carry(), false);
 
     // case that self is odd number and rhs is even number
     let a_biguint = U256::from_string("88888666664444422222111112222233333444445555566666777778888899999").unwrap();
@@ -30341,6 +30458,8 @@ fn biguint_midpoint()
     assert_eq!(c_biguint.is_infinity(), false);
     assert_eq!(c_biguint.is_undefined(), false);
     assert_eq!(c_biguint.is_divided_by_zero(), false);
+    assert_eq!(c_biguint.is_left_carry(), false);
+    assert_eq!(c_biguint.is_right_carry(), false);
 
     // case that self is odd number and rhs is odd number
     let a_biguint = U256::from_string("88888666664444422222111112222233333444445555566666777778888899999").unwrap();
@@ -30353,12 +30472,15 @@ fn biguint_midpoint()
     assert_eq!(c_biguint.is_infinity(), false);
     assert_eq!(c_biguint.is_undefined(), false);
     assert_eq!(c_biguint.is_divided_by_zero(), false);
+    assert_eq!(c_biguint.is_left_carry(), false);
+    assert_eq!(c_biguint.is_right_carry(), false);
     println!("---------------------------");
 }
 
 fn biguint_midpoint_assign()
 {
     println!("biguint_midpoint()");
+    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
@@ -30370,6 +30492,8 @@ fn biguint_midpoint_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let b_biguint = U256::from_string("999998888877777666665555544444333332222211111").unwrap();
     a_biguint.midpoint_assign(&b_biguint);
@@ -30380,6 +30504,8 @@ fn biguint_midpoint_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     // case that self is even number and rhs is even number
     let mut a_biguint = U256::from_string("888886666644444222221111122222333334444455555666667777788888").unwrap();
@@ -30389,6 +30515,8 @@ fn biguint_midpoint_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let b_biguint = U256::from_string("888887777766666555554444433333222221111100000").unwrap();
     a_biguint.midpoint_assign(&b_biguint);
@@ -30399,6 +30527,8 @@ fn biguint_midpoint_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     // case that self is even number and rhs is odd number
     let mut a_biguint = U256::from_string("888886666644444222221111122222333334444455555666667777788888").unwrap();
@@ -30408,6 +30538,8 @@ fn biguint_midpoint_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let b_biguint = U256::from_string("888887777766666555554444433333222221111100001").unwrap();
     a_biguint.midpoint_assign(&b_biguint);
@@ -30418,6 +30550,8 @@ fn biguint_midpoint_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     // case that self is odd number and rhs is even number
     let mut a_biguint = U256::from_string("88888666664444422222111112222233333444445555566666777778888899999").unwrap();
@@ -30427,6 +30561,8 @@ fn biguint_midpoint_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let b_biguint = U256::from_string("99999888887777766666555554444433333222221111100000").unwrap();
     a_biguint.midpoint_assign(&b_biguint);
@@ -30437,6 +30573,8 @@ fn biguint_midpoint_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     // case that self is odd number and rhs is odd number
     let mut a_biguint = U256::from_string("88888666664444422222111112222233333444445555566666777778888899999").unwrap();
@@ -30446,6 +30584,8 @@ fn biguint_midpoint_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let b_biguint = U256::from_string("22222444446666688888999998888877777666665555544444333332222211111").unwrap();
     a_biguint.midpoint_assign(&b_biguint);
@@ -30456,6 +30596,8 @@ fn biguint_midpoint_assign()
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
     assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
     println!("---------------------------");
 }
 

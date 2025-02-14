@@ -204,6 +204,139 @@ macro_rules! safe_calc_assign {
 }
 
 
+macro_rules! modular_calc_assign
+{
+    ($me:expr, $func:expr, $rhs:expr, $modulo:expr) => {
+        if $modulo.is_zero_or_one()
+            { panic!(); }
+        $func($me, $rhs, $modulo);
+    }
+    // modular_calc_assign!(self, common_modular_add_assign_uint, rhs, modulo);
+    //
+    // if modulo.is_zero_or_one()
+    //     { panic!(); }
+    // common_modular_add_assign_uint(self, rhs, modulo);
+}
+
+
+
+fn common_next_multiple_of_assign_uint<T, U, const N: usize>(me: &mut BigUInt<T, N>, rhs: U)
+where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+        + Rem<Output=T> + RemAssign
+        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+        + PartialEq + PartialOrd,
+    U: SmallUInt + Copy + Clone + Display + Debug + ToString
+        + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+        + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+        + Rem<Output=U> + RemAssign
+        + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+        + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+        + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+        + PartialEq + PartialOrd
+{
+    if U::size_in_bytes() > T::size_in_bytes()
+    {
+        me.next_multiple_of_assign(&BigUInt::from_uint(rhs));
+    }
+    else    // if U::size_in_bytes() <= T::size_in_bytes()
+    {
+        let trhs = T::num(rhs);
+        let r = me.wrapping_rem_uint(trhs);
+        if !r.is_zero()
+            { me.wrapping_add_assign_uint(trhs - r); }
+    }
+}
+
+fn common_modular_next_multiple_of_assign_uint<T, U, const N: usize>(me: &mut BigUInt<T, N>, rhs: U, modulo: &BigUInt<T, N>)
+where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+        + Rem<Output=T> + RemAssign
+        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+        + PartialEq + PartialOrd,
+    U: SmallUInt + Copy + Clone + Display + Debug + ToString
+        + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+        + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+        + Rem<Output=U> + RemAssign
+        + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+        + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+        + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+        + PartialEq + PartialOrd
+{
+    let flags = me.get_all_flags();
+    if *me >= *modulo
+        { me.wrapping_rem_assign(modulo); }
+
+    if U::size_in_bytes() > T::size_in_bytes()
+    {
+        common_next_multiple_of_assign(me, &BigUInt::from_uint(rhs));
+    }
+    else if modulo.gt_uint(rhs)
+    {
+        let diff = me.wrapping_rem_uint(rhs);
+        me.reset_all_flags();
+        if !diff.is_zero()
+            { me.modular_add_assign_uint(rhs - diff, modulo); }
+        me.set_all_flags(flags);
+    }
+    else    // if U::size_in_bytes() <= T::size_in_bytes() and modulo <= rhs
+    {
+        let trhs = T::num(rhs);
+        let diff = me.wrapping_rem_uint(trhs);
+        me.reset_all_flags();
+        if !diff.is_zero()
+            { me.modular_add_assign_uint(trhs - diff, modulo); }
+        me.set_all_flags(flags);
+    }
+}
+
+fn common_next_multiple_of_assign<T, const N: usize>(me: &mut BigUInt<T, N>, rhs: &BigUInt<T, N>)
+where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+        + Rem<Output=T> + RemAssign
+        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+        + PartialEq + PartialOrd
+{
+    let flags = me.get_all_flags();
+    let r = me.wrapping_rem(rhs);
+    if !r.is_zero()
+        { me.wrapping_add_assign(&rhs.wrapping_sub(&r)); }
+    me.set_all_flags(flags);
+}
+
+fn common_modular_next_multiple_of_assign<T, const N: usize>(me: &mut BigUInt<T, N>, rhs: &BigUInt<T, N>, modulo: &BigUInt<T, N>)
+where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+        + Rem<Output=T> + RemAssign
+        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+        + PartialEq + PartialOrd
+{
+    let flags = me.get_all_flags();
+    me.wrapping_rem_assign(modulo);
+    let mrhs;
+    if rhs.ge(modulo)
+        { mrhs = rhs.wrapping_rem(modulo); }
+    else
+        { mrhs = rhs.clone(); }
+    let r = me.wrapping_rem(&mrhs);
+    if !r.is_zero()
+        { me.modular_add_assign(&mrhs.wrapping_sub(&r), modulo); }
+    me.set_all_flags(flags);
+}
+
+
 
 impl<T, const N: usize> BigUInt_More<T, N> for BigUInt<T, N>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -729,5 +862,269 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     fn saturating_rem_assign(&mut self, rhs: &Self)
     {
         self.wrapping_rem_assign(rhs)
+    }
+
+
+
+    /*** MULTIPLE UINT ***/
+    
+    fn next_multiple_of_uint<U>(&self, rhs: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        calc_assign_to_calc!(self, Self::next_multiple_of_assign_uint, rhs);
+    }
+
+    fn next_multiple_of_assign_uint<U>(&mut self, rhs: U)
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        if rhs == U::zero()
+            { panic!(); }
+        common_next_multiple_of_assign_uint(self, rhs);
+    }
+
+    fn panic_free_next_multiple_of_uint<U>(&self, rhs: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        calc_assign_to_calc!(self, Self::panic_free_next_multiple_of_assign_uint, rhs);
+    }
+
+    fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        if rhs == U::zero()
+        {
+            self.set_zero();
+            self.set_undefined();
+        }
+        else
+        {
+            common_next_multiple_of_assign_uint(self, rhs);
+        }
+    }
+
+    fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        calc_assign_to_calc!(self, Self::modular_next_multiple_of_assign_uint, rhs, modulo);
+    }
+
+    fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        modular_calc_assign!(self, common_modular_next_multiple_of_assign_uint, rhs, modulo);
+    }
+
+    fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        calc_assign_to_calc!(self, Self::panic_free_modular_next_multiple_of_assign_uint, rhs, modulo);
+    }
+
+    fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        if modulo.is_zero_or_one() || rhs.is_zero()
+        {
+            self.set_zero();
+            self.set_undefined();
+            return;
+        }
+        else if modulo.le_uint(rhs)
+        {
+            let modu = modulo.into_uint::<U>();
+            if rhs.wrapping_rem(modu).is_zero()
+            {
+                self.set_zero();
+                self.set_undefined();
+                return;
+            }
+        }
+        common_modular_next_multiple_of_assign_uint(self, rhs, modulo);
+    }
+
+    fn is_multiple_of_uint<U>(&self, rhs: U) -> bool
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        if rhs.is_zero()
+            { self.is_zero() }
+        else
+            { self.wrapping_rem_uint(rhs).is_zero() }
+    }
+
+    fn next_multiple_of(&self, rhs: &Self) -> Self
+    {
+        calc_assign_to_calc!(self, Self::next_multiple_of_assign, rhs);
+    }
+
+    fn next_multiple_of_assign(&mut self, rhs: &Self)
+    {
+        if rhs.is_zero()
+            { panic!(); }
+        common_next_multiple_of_assign(self, rhs);
+    }
+
+    fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self
+    {
+        calc_assign_to_calc!(self, Self::panic_free_next_multiple_of_assign, rhs);
+    }
+
+    fn panic_free_next_multiple_of_assign(&mut self, rhs: &Self)
+    {
+        if rhs.is_zero()
+        {
+            self.set_zero();
+            self.set_undefined();
+            return;
+        }
+        common_next_multiple_of_assign(self, rhs);
+    }
+
+    fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
+    {
+        calc_assign_to_calc!(self, Self::modular_next_multiple_of_assign, rhs, modulo);
+    }
+
+    fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)
+    {
+        modular_calc_assign!(self, common_modular_next_multiple_of_assign, rhs, modulo);
+    }
+
+    fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
+    {
+        calc_assign_to_calc!(self, Self::panic_free_modular_next_multiple_of_assign, rhs, modulo);
+    }
+
+    fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)
+    {
+        if modulo.is_zero_or_one() || rhs.is_zero() || rhs.wrapping_rem(modulo).is_zero()
+        {
+            self.set_zero();
+            self.set_undefined();
+            return;
+        }
+        common_modular_next_multiple_of_assign(self, rhs, modulo);
+    }
+
+    fn is_multiple_of(&self, rhs: &Self) -> bool
+    {
+        if rhs.is_zero()
+            { self.is_zero() }
+        else
+            { self.wrapping_rem(rhs).is_zero() }
+    }
+
+    fn midpoint_uint<U>(&self, rhs: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        calc_assign_to_calc!(self, Self::midpoint_assign_uint, rhs);
+    }
+    
+    fn midpoint_assign_uint<U>(&mut self, rhs: U)
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        if self.is_uint(rhs)
+            { return; }
+        let flags = self.get_all_flags();
+        let b = self.is_odd() && rhs.is_odd();
+        self.shift_right_assign(1_u8);
+        self.wrapping_add_assign_uint(rhs >> U::one());
+        if b
+            { self.wrapping_add_assign_uint(1_u8); }
+        self.set_all_flags(flags);
+    }
+
+    fn midpoint(&self, rhs: &Self) -> Self
+    {
+        calc_assign_to_calc!(self, Self::midpoint_assign, rhs);
+    }
+
+    fn midpoint_assign(&mut self, rhs: &Self)
+    {
+        if *self == *rhs
+            { return; }
+        let flags = self.get_all_flags();
+        let b = self.is_odd() && rhs.is_odd();
+        self.shift_right_assign(1_u8);
+        self.wrapping_add_assign(&(rhs.shift_right(1_u8)));
+        if b
+            { self.wrapping_add_assign_uint(1_u8); }
+        self.set_all_flags(flags);
     }
 }
