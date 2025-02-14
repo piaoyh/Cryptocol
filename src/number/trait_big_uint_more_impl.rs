@@ -22,7 +22,8 @@ use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, 
                 Add, AddAssign, Sub, SubAssign, Mul, MulAssign,
                 Div, DivAssign, Rem, RemAssign };
 
-use crate::number::{ SmallUInt, BigUInt, BigUInt_More, NumberErr };
+use crate::number::{ SmallUInt, BigUInt, NumberErr };
+use crate::number::trait_big_uint_more::BigUInt_More;
 
 
 
@@ -743,7 +744,7 @@ macro_rules! calc_rotate_assign
 
 
 
-impl<T, const N: usize> BigUInt_More for BigUInt<T, N>
+impl<T, const N: usize> BigUInt_More<T, N> for BigUInt<T, N>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
@@ -753,5 +754,519 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
         + PartialEq + PartialOrd
 {
+    /*** ADDITION UINT ***/
 
+    fn checked_add_uint<U>(&self, rhs: U) -> Option<Self>
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        if rhs.length_in_bytes() > T::size_in_bytes()
+            { self.checked_add(&Self::from_uint(rhs)) }
+        else    // if rhs.length_in_bytes() <= T::size_in_bytes()
+            { checked_calc!(self, Self::overflowing_add_uint, rhs); }
+    }
+
+    #[inline]
+    fn unchecked_add_uint<U>(&self, rhs: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        self.checked_add_uint(rhs).unwrap()
+    }
+
+    fn saturating_add_uint<U>(&self, rhs: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        calc_assign_to_calc!(self, Self::saturating_add_assign_uint, rhs);
+    }
+
+    fn saturating_add_assign_uint<U>(&mut self, rhs: U)
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        saturating_calc_assign!(self, Self::overflowing_add_assign_uint, rhs);
+    }
+
+    fn safe_add_uint<U>(&self, rhs: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        safe_calc!(self, Self::wrapping_add_uint, Self::unchecked_add_uint, rhs);
+    }
+
+    fn safe_add_assign_uint<U>(&mut self, rhs: U)
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        safe_calc_assign!(self, Self::wrapping_add_assign_uint, Self::overflowing_add_assign_uint, rhs);
+    }
+    
+
+
+    /*** SUBTRACTION UINT ***/
+
+    fn checked_sub_uint<U>(&self, rhs: U) -> Option<Self>
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        if rhs.length_in_bytes() > T::size_in_bytes()
+            { self.checked_sub(&Self::from_uint(rhs)) }
+        else
+            { checked_calc!(self, Self::overflowing_sub_uint, rhs); }
+    }
+
+    #[inline]
+    fn unchecked_sub_uint<U>(&self, rhs: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        self.checked_sub_uint(rhs).unwrap()
+    }
+
+    fn saturating_sub_uint<U>(&self, rhs: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        calc_assign_to_calc!(self, Self::saturating_sub_assign_uint, rhs);
+    }
+
+    fn saturating_sub_assign_uint<U>(&mut self, rhs: U)
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        saturating_calc_sub_assign!(self, Self::overflowing_sub_assign_uint, rhs);
+    }
+
+    fn safe_sub_uint<U>(&self, rhs: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        safe_calc!(self, Self::wrapping_sub_uint, Self::unchecked_sub_uint, rhs);
+    }
+
+    fn safe_sub_assign_uint<U>(&mut self, rhs: U)
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        safe_calc_assign!(self, Self::wrapping_sub_assign_uint, Self::overflowing_sub_assign_uint, rhs);
+    }
+
+
+
+    /*** MULTIPLICATION UINT ***/
+
+    fn checked_mul_uint<U>(&self, rhs: U) -> Option<Self>
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        if rhs.length_in_bytes() > T::size_in_bytes()
+            { self.checked_mul(&Self::from_uint(rhs)) }
+        else
+            { checked_calc!(self, Self::overflowing_mul_uint, rhs); }
+    }
+    
+    #[inline]
+    fn unchecked_mul_uint<U>(&self, rhs: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        self.checked_mul_uint(rhs).unwrap()
+    }
+
+    fn saturating_mul_uint<U>(&self, rhs: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        calc_assign_to_calc!(self, Self::saturating_mul_assign_uint, rhs);
+    }
+
+    fn saturating_mul_assign_uint<U>(&mut self, rhs: U)
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        saturating_calc_assign!(self, Self::overflowing_mul_assign_uint, rhs);
+    }
+
+    fn safe_mul_uint<U>(&self, rhs: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        safe_calc!(self, Self::wrapping_mul_uint, Self::unchecked_mul_uint, rhs);
+    }
+
+    fn safe_mul_assign_uint<U>(&mut self, rhs: U)
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        safe_calc_assign!(self, Self::wrapping_mul_assign_uint, Self::overflowing_mul_assign_uint, rhs);
+    }
+
+
+
+    /*** DIVISION BIGUINT ***/
+
+    fn checked_div_uint<U>(&self, rhs: U) -> Option<Self>
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        checked_calc!(self, Self::wrapping_div_uint, rhs, rhs.is_zero());
+    }
+
+    #[inline]
+    fn unchecked_div_uint<U>(&self, rhs: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        self.checked_div_uint(rhs).unwrap()
+    }
+
+    #[inline]
+    fn saturating_div_uint<U>(&self, rhs: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        self.wrapping_div_uint(rhs)
+    }
+
+    #[inline]
+    fn saturating_div_assign_uint<U>(&mut self, rhs: U)
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        self.wrapping_div_assign_uint(rhs)
+    }
+
+    fn checked_rem_uint<U>(&self, rhs: U) -> Option<U>
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+            checked_calc!(self, Self::wrapping_rem_uint, rhs, rhs.is_zero());
+    }
+
+    #[inline]
+    fn unchecked_rem_uint<U>(&self, rhs: U) -> U
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+            self.checked_rem_uint(rhs).unwrap()
+    }
+
+    #[inline]
+    fn saturating_rem_uint<U>(&self, rhs: U) -> U
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        self.wrapping_rem_uint(rhs)
+    }
+
+    #[inline]
+    fn saturating_rem_assign_uint<U>(&mut self, rhs: U)
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        self.wrapping_rem_assign_uint(rhs)
+    }
+
+
+
+    /*** ADDITION BIGUINT ***/
+
+    fn checked_add(&self, rhs: &Self) -> Option<Self>
+    {
+        checked_calc!(self, Self::overflowing_add, rhs);
+    }
+
+    #[inline]
+    fn unchecked_add(&self, rhs: &Self) -> Self
+    {
+        self.checked_add(rhs).unwrap()
+    }
+
+    fn saturating_add(&self, rhs: &Self) -> Self
+    {
+        calc_assign_to_calc!(self, Self::saturating_add_assign, rhs);
+    }
+
+    fn saturating_add_assign(&mut self, rhs: &Self)
+    {
+        saturating_calc_assign!(self, Self::overflowing_add_assign, rhs);
+    }
+
+    fn safe_add(&self, rhs: &Self) -> Self
+    {
+        safe_calc!(self, Self::wrapping_add, Self::unchecked_add, rhs);
+    }
+
+    fn safe_add_assign(&mut self, rhs: &Self)
+    {
+        safe_calc_assign!(self, Self::wrapping_add_assign, Self::overflowing_add_assign, rhs);
+    }
+
+
+
+    /*** SUBTRACTION BIGUINT ***/
+
+    fn checked_sub(&self, rhs: &Self) -> Option<Self>
+    {
+        checked_calc!(self, Self::overflowing_sub, rhs);
+    }
+
+    #[inline]
+    fn unchecked_sub(&self, rhs: &Self) -> Self
+    {
+        self.checked_sub(rhs).unwrap()
+    }
+
+    fn saturating_sub(&self, rhs: &Self) -> Self
+    {
+        calc_assign_to_calc!(self, Self::saturating_sub_assign, rhs);
+    }
+
+    fn saturating_sub_assign(&mut self, rhs: &Self)
+    {
+        saturating_calc_sub_assign!(self, Self::overflowing_sub_assign, rhs);
+    }
+
+    fn safe_sub(&self, rhs: &Self) -> Self
+    {
+        safe_calc!(self, Self::wrapping_sub, Self::unchecked_sub, rhs);
+    }
+
+    fn safe_sub_assign(&mut self, rhs: &Self)
+    {
+        safe_calc_assign!(self, Self::wrapping_sub_assign, Self::overflowing_sub_assign, rhs);
+    }
+
+
+
+    /*** MULTIPLICATION BIGUINT ***/
+
+    fn checked_mul(&self, rhs: &Self) -> Option<Self>
+    {
+        checked_calc!(self, Self::overflowing_mul, rhs);
+    }
+
+    fn saturating_mul(&self, rhs: &Self) -> Self
+    {
+        calc_assign_to_calc!(self, Self::saturating_mul_assign, rhs);
+    }
+
+    fn saturating_mul_assign(&mut self, rhs: &Self)
+    {
+        saturating_calc_assign!(self, Self::overflowing_mul_assign, rhs);
+    }
+
+    fn safe_mul(&self, rhs: &Self) -> Self
+    {
+        safe_calc!(self, Self::wrapping_mul, Self::unchecked_mul, rhs);
+    }
+
+    fn safe_mul_assign(&mut self, rhs: &Self)
+    {
+        safe_calc_assign!(self, Self::wrapping_mul_assign, Self::overflowing_mul_assign, rhs);
+    }
+
+
+
+    /*** DIVISION BIGUINT ***/
+        
+    fn checked_div(&self, rhs: &Self) -> Option<Self>
+    {
+        checked_calc!(self, Self::wrapping_div, rhs, rhs.is_zero());
+    }
+
+    #[inline]
+    fn unchecked_div(&self, rhs: &Self) -> Self
+    {
+        self.checked_div(rhs).unwrap()
+    }
+
+    fn saturating_div(&self, rhs: &Self) -> Self
+    {
+        calc_assign_to_calc_div!(self, Self::divide_fully, rhs);
+    }
+
+    fn saturating_div_assign(&mut self, rhs: &Self)
+    {
+        self.wrapping_div_assign(rhs)
+    }
+
+    fn checked_rem(&self, rhs: &Self) -> Option<Self>
+    {
+        checked_calc!(self, Self::wrapping_rem, rhs, rhs.is_zero());
+    }
+
+    #[inline]
+    fn unchecked_rem(&self, rhs: &Self) -> Self
+    {
+        self.checked_rem(rhs).unwrap()
+    }
+
+    fn saturating_rem(&self, rhs: &Self) -> Self
+    {
+        calc_assign_to_calc_rem!(self, Self::divide_fully, rhs);
+    }
+
+    #[inline]
+    fn saturating_rem_assign(&mut self, rhs: &Self)
+    {
+        self.wrapping_rem_assign(rhs)
+    }
 }

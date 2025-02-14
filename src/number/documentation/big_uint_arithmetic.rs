@@ -826,6 +826,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -851,6 +852,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -902,6 +904,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -921,6 +924,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Panic Examples
     /// ```should_panic
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -965,6 +969,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -983,6 +988,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -1033,6 +1039,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -1061,6 +1068,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -1089,6 +1097,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -2716,6 +2725,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -2735,6 +2745,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -2757,6 +2768,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -2778,6 +2790,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```should_panic
     /// #[cfg(debug_assertions)]
     /// {
+    ///     use cryptocol::number::BigUint_More;
     ///     use cryptocol::define_utypes_with;
     ///     define_utypes_with!(u128);
     /// 
@@ -2834,6 +2847,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -2862,6 +2876,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -2906,6 +2921,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```should_panic
     /// #[cfg(debug_assertions)]
     /// {
+    ///     use cryptocol::number::BigUint_More;
     ///     use cryptocol::define_utypes_with;
     ///     define_utypes_with!(u8);
     /// 
@@ -2975,10 +2991,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// let b_biguint_lo = U256::from_str_radix("FDB9_7531_0ECA_8642_2468_ACE0_1357_9BDF_FDB9_7531_0ECA_8642_2468_ACE0_1357_9BDF", 16).unwrap();
     /// 
     /// let (c_biguint_lo, borrow) = a_biguint_lo.borrowing_sub(&b_biguint_lo, false);
-    /// let (c_biguint_hi, unerflow) = a_biguint_hi.borrowing_sub(&b_biguint_hi, borrow);
+    /// let (c_biguint_hi, underflow) = a_biguint_hi.borrowing_sub(&b_biguint_hi, borrow);
     /// 
     /// println!("{}:{} - {}:{} = {}:{}", a_biguint_hi.to_string_with_radix_and_stride(16, 4).unwrap(), a_biguint_lo.to_string_with_radix_and_stride(16, 4).unwrap(), b_biguint_hi.to_string_with_radix_and_stride(16, 4).unwrap(), b_biguint_lo.to_string_with_radix_and_stride(16, 4).unwrap(), c_biguint_hi.to_string_with_radix_and_stride(16, 4).unwrap(), c_biguint_lo.to_string_with_radix_and_stride(16, 4).unwrap());
-    /// println!("borrow = {}, overflow = {}", borrow, unerflow);
+    /// println!("borrow = {}, overflow = {}", borrow, underflow);
     /// assert_eq!(c_biguint_hi.to_string_with_radix_and_stride(16, 4).unwrap(), "1234_5678_9ABC_DEF0_FEDC_BA98_7654_3210_1234_5678_9ABC_DEF0_FEDC_BA98_7654_3210");
     /// assert_eq!(c_biguint_lo.to_string_with_radix_and_stride(16, 4).unwrap(), "1357_9BDF_0246_8ACE_ECA8_6420_FDB9_7531_1357_9BDF_0246_8ACE_ECA8_6420_FDB9_7531");
     /// assert_eq!(borrow, true);
@@ -2990,7 +3006,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint_lo.is_left_carry(), false);
     /// assert_eq!(c_biguint_lo.is_right_carry(), false);
     /// 
-    /// assert_eq!(unerflow, false);
+    /// assert_eq!(underflow, false);
     /// assert_eq!(c_biguint_hi.is_underflow(), false);
     /// assert_eq!(c_biguint_hi.is_overflow(), false);
     /// assert_eq!(c_biguint_hi.is_divided_by_zero(), false);
@@ -3593,6 +3609,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -3617,6 +3634,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -3667,6 +3685,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -3685,6 +3704,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Panic Examples
     /// ```should_panic
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -3728,6 +3748,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -3747,6 +3768,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -3766,6 +3788,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -3817,6 +3840,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -3845,6 +3869,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -3872,6 +3897,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -5534,6 +5560,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -5553,6 +5580,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -5575,6 +5603,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -5596,6 +5625,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```should_panic
     /// #[cfg(debug_assertions)]
     /// {
+    ///     use cryptocol::number::BigUint_More;
     ///     use cryptocol::define_utypes_with;
     ///     define_utypes_with!(u128);
     /// 
@@ -5652,6 +5682,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -5680,6 +5711,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -5711,6 +5743,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -5741,6 +5774,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```should_panic
     /// #[cfg(debug_assertions)]
     /// {
+    ///     use cryptocol::number::BigUint_More;
     ///     use cryptocol::define_utypes_with;
     ///     define_utypes_with!(u8);
     /// 
@@ -5903,11 +5937,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res_biguint_low.is_infinity(), false);
     /// assert_eq!(res_biguint_low.is_undefined(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn carrying_mul(&self, _rhs: &Self, _carry: Self) -> (Self, Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -6067,11 +6096,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint_low.is_infinity(), false);
     /// assert_eq!(a_biguint_low.is_undefined(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn carrying_mul_assign(&mut self, _rhs: &Self, _carry: Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -6167,11 +6191,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res_biguint_low.is_infinity(), false);
     /// assert_eq!(res_biguint_low.is_undefined(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn widening_mul(&self, _rhs: &Self) -> (Self, Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -6276,11 +6295,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res_biguint_high.is_infinity(), false);
     /// assert_eq!(res_biguint_high.is_undefined(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn widening_mul_assign(&mut self, _rhs: &Self) -> Self
     {
@@ -6349,11 +6363,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn wrapping_mul(&self, _rhs: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -6435,11 +6444,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn wrapping_mul_assign(&mut self, _rhs: &Self)
     {
@@ -6515,11 +6519,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn overflowing_mul(&self, _rhs: &Self) -> (Self, bool)
     {
         unimplemented!(); // Dummy code for documentation
@@ -6614,11 +6613,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn overflowing_mul_assign(&mut self, _rhs: &Self) -> bool
     {
         unimplemented!(); // Dummy code for documentation
@@ -6655,6 +6649,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -6679,6 +6674,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -6695,11 +6691,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///         },
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn checked_mul(&self, _rhs: &Self) -> Option<Self>
     {
         unimplemented!(); // Dummy code for documentation
@@ -6736,6 +6727,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -6753,6 +6745,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Panic Examples
     /// ```should_panic
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -6761,11 +6754,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic.
     /// let res = _a_biguint.unchecked_mul(&_b_biguint);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn unchecked_mul(&self, _rhs: &Self) -> Self
     {
@@ -6803,6 +6791,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -6820,6 +6809,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -6834,11 +6824,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn saturating_mul(&self, _rhs: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -6874,6 +6859,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -6898,6 +6884,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -6919,11 +6906,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn saturating_mul_assign(&mut self, _rhs: &Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -7184,11 +7166,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// let res = _a_biguint.modular_mul(&_mul_biguint, &_m);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn modular_mul(&self, _rhs: &Self, _modulo: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -7542,11 +7519,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// _a_biguint.modular_mul_assign(&_mul_biguint, &_m);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn modular_mul_assign(&mut self, _rhs: &Self, _modulo: &Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -7855,11 +7827,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     }
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn panic_free_modular_mul(&self, _rhs: &Self, _modulo: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -8271,11 +8238,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     }
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn panic_free_modular_mul_assign(&mut self, _rhs: &Self, _modulo: &Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -8324,6 +8286,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -8343,6 +8306,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -8367,6 +8331,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```should_panic
     /// #[cfg(debug_assertions)]
     /// {
+    ///     use cryptocol::number::BigUint_More;
     ///     use cryptocol::define_utypes_with;
     ///     define_utypes_with!(u16);
     ///     
@@ -8375,11 +8340,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     let _res = _a_biguint.safe_mul(&_b_biguint);
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn safe_mul(&self, _rhs: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -8428,6 +8388,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -8456,6 +8417,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -8489,6 +8451,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```should_panic
     /// #[cfg(debug_assertions)]
     /// {
+    ///     use cryptocol::number::BigUint_More;
     ///     use cryptocol::define_utypes_with;
     ///     define_utypes_with!(u32);
     /// 
@@ -8497,11 +8460,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     _a_biguint.safe_mul_assign(&_b_biguint);
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn safe_mul_assign(&mut self, _rhs: &Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -8557,12 +8515,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
+    /// 
     /// assert_eq!(remainder.to_string(), "8");
     /// assert_eq!(remainder.is_overflow(), false);
     /// assert_eq!(remainder.is_underflow(), false);
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -8581,12 +8544,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
+    /// 
     /// assert_eq!(remainder.to_string(), "0");
     /// assert_eq!(remainder.is_overflow(), false);
     /// assert_eq!(remainder.is_underflow(), false);
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -8605,11 +8573,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// let (quotient, remainder) = _dividend.divide_fully(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn divide_fully(&self, _rhs: &Self) -> (Self, Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -8680,11 +8643,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
+    /// 
     /// assert_eq!(remainder.is_overflow(), false);
     /// assert_eq!(remainder.is_underflow(), false);
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for a normal case
@@ -8704,11 +8672,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
+    /// 
     /// assert_eq!(remainder.is_overflow(), false);
     /// assert_eq!(remainder.is_underflow(), false);
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for dividend != 0 and divisor == 0
@@ -8728,11 +8701,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), true);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), true);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
+    /// 
     /// assert_eq!(remainder.is_overflow(), false);
     /// assert_eq!(remainder.is_underflow(), false);
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), true);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for dividend == 0 and divisor == 0
@@ -8752,17 +8730,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), true);
     /// assert_eq!(quotient.is_divided_by_zero(), true);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
+    /// 
     /// assert_eq!(remainder.is_overflow(), false);
     /// assert_eq!(remainder.is_underflow(), false);
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), true);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn panic_free_divide_fully(&self, _rhs: &Self) -> (Self, Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -8814,6 +8792,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -8832,6 +8812,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -8850,11 +8832,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// let quotient = _dividend.wrapping_div(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn wrapping_div(&self, _rhs: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -8905,6 +8882,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.wrapping_div_assign(&divisor);
     /// println!("After a_biguint.wrapping_div_assign(&divisor),\na_biguint = {}", a_biguint);
@@ -8914,6 +8893,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -8930,6 +8911,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.wrapping_div_assign(&divisor);
     /// println!("After a_biguint.wrapping_div_assign(&divisor),\na_biguint = {}", a_biguint);
@@ -8939,6 +8922,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -8959,11 +8944,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// _a_biguint.wrapping_div_assign(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn wrapping_div_assign(&mut self, _rhs: &Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -9019,6 +8999,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -9038,6 +9020,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -9056,11 +9040,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// let (quotient, overflow) = _dividend.overflowing_div(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn overflowing_div(&self, _rhs: &Self) -> (Self, bool)
     {
         unimplemented!(); // Dummy code for documentation
@@ -9118,6 +9097,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let overflow = a_biguint.overflowing_div_assign(&divisor);
     /// println!("After a_biguint.overflowing_div_assign({}), a_biguint = {}", divisor, a_biguint);
@@ -9128,6 +9109,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -9144,6 +9127,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let overflow = a_biguint.overflowing_div_assign(&divisor);
     /// println!("After a_biguint.overflowing_div_assign({}), a_biguint = {}", divisor, a_biguint);
@@ -9154,6 +9139,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -9172,11 +9159,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// let overflow = _a_biguint.overflowing_div_assign(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn overflowing_div_assign(&mut self, _rhs: &Self) -> bool
     {
         unimplemented!(); // Dummy code for documentation
@@ -9214,6 +9196,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -9231,6 +9214,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(q.is_infinity(), false);
     ///             assert_eq!(q.is_undefined(), false);
     ///             assert_eq!(q.is_divided_by_zero(), false);
+    ///             assert_eq!(q.is_left_carry(), false);
+    ///             assert_eq!(q.is_right_carry(), false);
     ///         },
     ///     None => { println!("Divided By Zero"); },
     /// }
@@ -9239,6 +9224,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     ///
@@ -9256,6 +9242,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(q.is_infinity(), false);
     ///             assert_eq!(q.is_undefined(), false);
     ///             assert_eq!(q.is_divided_by_zero(), false);
+    ///             assert_eq!(q.is_left_carry(), false);
+    ///             assert_eq!(q.is_right_carry(), false);
     ///         },
     ///     None => { println!("Divided By Zero"); },
     /// }
@@ -9264,6 +9252,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 3
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -9284,6 +9273,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 4
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -9300,11 +9290,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///         },
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn checked_div(&self, _rhs: &Self) -> Option<Self>
     {
         unimplemented!(); // Dummy code for documentation
@@ -9339,6 +9324,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -9352,11 +9338,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -9370,11 +9359,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
     /// ```should_panic
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -9388,11 +9380,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic.
     /// let quotient = _dividend.unchecked_div(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn unchecked_div(&self, _rhs: &Self) -> Self
     {
@@ -9431,6 +9418,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -9444,11 +9432,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -9462,11 +9453,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
     /// ```should_panic
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -9480,11 +9474,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// let quotient = _dividend.saturating_div(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn saturating_div(&self, _rhs: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -9522,6 +9511,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -9533,6 +9523,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.saturating_div_assign(&divisor);
     /// println!("After a_biguint.saturating_div_assign({}), a_biguint = {}", divisor, a_biguint);
@@ -9542,11 +9534,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -9558,6 +9553,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.saturating_div_assign(&divisor);
     /// println!("After a_biguint.saturating_div_assign({}), a_biguint = {}", divisor, a_biguint);
@@ -9567,11 +9564,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
     /// ```should_panic
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -9587,11 +9587,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// _a_biguint.saturating_div_assign(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn saturating_div_assign(&mut self, _rhs: &Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -9653,6 +9648,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for a normal case
@@ -9671,6 +9668,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for dividend != 0 and divisor = 0
@@ -9689,6 +9688,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), true);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), true);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for dividend == 0 and divisor = 0
@@ -9707,12 +9708,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), true);
     /// assert_eq!(quotient.is_divided_by_zero(), true);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn panic_free_div(&self, _rhs: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -9773,6 +9771,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(87_u8);
     /// a_biguint.panic_free_div_assign(&divisor);
@@ -9783,6 +9783,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -9798,6 +9800,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(87_u8);
     /// a_biguint.panic_free_div_assign(&divisor);
@@ -9808,6 +9812,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -9823,6 +9829,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::zero();
     /// a_biguint.panic_free_div_assign(&divisor);
@@ -9833,6 +9841,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), true);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4
@@ -9848,6 +9858,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::zero();
     /// a_biguint.panic_free_div_assign(&divisor);
@@ -9858,12 +9870,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn panic_free_div_assign(&mut self, _rhs: &Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -9918,6 +9927,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for dividend == 0
@@ -9937,6 +9948,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for dividend == multiple of modulo
@@ -9956,6 +9969,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -10018,10 +10033,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// let quotient = _dividend.modular_div(&_divisor, &_modulo);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
     pub fn modular_div(&self, _rhs: &Self, _modulo: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -10073,6 +10084,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
     /// let modulo = UU32::from_uint(100_u8);
@@ -10084,6 +10097,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for dividend == 0
@@ -10099,6 +10114,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(3_u8);
     /// let modulo = U256::from_uint(250_u8);
@@ -10110,6 +10127,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for dividend == multiple of modulo
@@ -10125,6 +10144,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let modulo = U256::from_uint(250_u8);
     /// let divisor = U256::from_uint(3_u8);
@@ -10136,6 +10157,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -10208,11 +10231,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// _a_biguint.modular_div_assign(&_divisor, &_modulo);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn modular_div_assign(&mut self, _rhs: &Self, _modulo: &Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -10289,6 +10307,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for modulo >= 2 and dividend == 0 and divisor != 0
@@ -10308,6 +10328,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for modulo >= 2 and dividend == multiple of modulo and divisor != 0
@@ -10327,6 +10349,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for modulo >= 2 and divisor == 0 and dividend != 0
@@ -10346,6 +10370,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), true);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), true);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for modulo >= 2 and divisor == multiple of modulo and dividend != 0
@@ -10365,6 +10391,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), true);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), true);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for modulo >= 2 and divisor == 0 and dividend == 0
@@ -10384,6 +10412,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), true);
     /// assert_eq!(quotient.is_divided_by_zero(), true);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7 for modulo >= 2 and divisor == 0 and dividend == multiple of modulo
@@ -10403,6 +10433,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), true);
     /// assert_eq!(quotient.is_divided_by_zero(), true);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 8 for modulo >= 2 and divisor == multiple of modulo and dividend == 0
@@ -10422,6 +10454,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), true);
     /// assert_eq!(quotient.is_divided_by_zero(), true);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 9 for modulo >= 2 and divisor == multiple of modulo and dividend == multiple of modulo
@@ -10441,6 +10475,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), true);
     /// assert_eq!(quotient.is_divided_by_zero(), true);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 10 for modulo == 0 and divisor != 0 and dividend != 0
@@ -10460,6 +10496,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), true);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 11 for modulo == 1 and divisor != 0 and dividend != 0
@@ -10479,6 +10517,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), true);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 12 for modulo == 0 and divisor == 0 and dividend == 0
@@ -10498,6 +10538,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), true);
     /// assert_eq!(quotient.is_divided_by_zero(), true);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 13 for modulo == 1 and divisor == 0 and dividend == 0
@@ -10517,6 +10559,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), true);
     /// assert_eq!(quotient.is_divided_by_zero(), true);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
     /// # Collective Examples
@@ -10537,6 +10581,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     assert_eq!(res.is_divided_by_zero(), true);
     ///     assert_eq!(res.is_infinity(), false);
     ///     assert_eq!(res.is_undefined(), true);
+///         assert_eq!(quotient.is_left_carry(), false);
+///         assert_eq!(quotient.is_right_carry(), false);
     ///     
     ///     for dividend in [U256::from_string("76801874298166903427690031858186486050853753882811946569946433649006").unwrap(), U256::from_uint(50_u8)]
     ///     {
@@ -10549,6 +10595,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///         assert_eq!(res.is_divided_by_zero(), true);
     ///         assert_eq!(res.is_infinity(), true);
     ///         assert_eq!(res.is_undefined(), true);
+    ///         assert_eq!(res.is_left_carry(), false);
+    ///         assert_eq!(res.is_right_carry(), false);
     /// 
     ///         for divisor in [U256::from_uint(3_u8), U256::from_uint(50_u8)]
     ///         {
@@ -10560,15 +10608,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(res.is_divided_by_zero(), false);
     ///             assert_eq!(res.is_infinity(), false);
     ///             assert_eq!(res.is_undefined(), true);
+    ///             assert_eq!(res.is_left_carry(), false);
+    ///             assert_eq!(res.is_right_carry(), false);
     ///         }
     ///     }
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn panic_free_modular_div(&self, _rhs: &Self, _modulo: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -10644,6 +10689,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
     /// let modulo = UU32::from_uint(100_u8);
@@ -10655,6 +10702,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for Normal case for modulo >= 2 and self == 0 and divisor != 0
@@ -10670,6 +10719,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
     /// let modulo = UU32::from_uint(100_u8);
@@ -10681,6 +10732,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for Normal case for modulo >= 2 and self == multiple of modulo and divisor != 0
@@ -10696,6 +10749,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
     /// let modulo = UU32::from_uint(100_u8);
@@ -10707,6 +10762,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for modulo >= 2 and self != 0 and divisor == 0
@@ -10722,6 +10779,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
     /// let modulo = U256::from_uint(100_u8);
@@ -10733,6 +10792,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), true);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for modulo >= 2 and self != 0 and divisor == multiple of modulo
@@ -10748,6 +10809,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
     /// let modulo = U256::from_uint(100_u8);
@@ -10759,6 +10822,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), true);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for modulo >= 2 and self == 0 and divisor == 0
@@ -10774,6 +10839,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
     /// let modulo = U256::from_uint(100_u8);
@@ -10785,6 +10852,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7 for modulo >= 2 and self == 0 and divisor == multiple of modulo
@@ -10800,6 +10869,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(200_u8);
     /// let modulo = U256::from_uint(100_u8);
@@ -10811,6 +10882,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 8 for modulo >= 2 and self == multiple of modulo and divisor == 0
@@ -10826,6 +10899,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
     /// let modulo = U256::from_uint(100_u8);
@@ -10837,6 +10912,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 9 for modulo >= 2 and self == multiple of modulo and divisor == multiple of modulo
@@ -10852,6 +10929,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(200_u8);
     /// let modulo = U256::from_uint(100_u8);
@@ -10863,6 +10942,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 10 for modulo == 0 and divisor != 0 and dividend != 0
@@ -10878,6 +10959,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(128_u8);
     /// let modulo = U256::zero();
@@ -10889,6 +10972,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 11 for modulo == 1 and divisor != 0 and dividend != 0
@@ -10904,6 +10989,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(128_u8);
     /// let modulo = U256::one();
@@ -10915,6 +11002,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 12 for modulo == 0 and divisor == 0 and dividend == 0
@@ -10930,6 +11019,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
     /// let modulo = U256::zero();
@@ -10941,6 +11032,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 13 for modulo == 1 and divisor == 0 and dividend == 0
@@ -10956,6 +11049,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
     /// let modulo = U256::one();
@@ -10967,6 +11062,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Collective Examples
@@ -10984,6 +11081,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     assert_eq!(dividend.is_infinity(), false);
     ///     assert_eq!(dividend.is_undefined(), false);
     ///     assert_eq!(dividend.is_divided_by_zero(), false);
+    ///     assert_eq!(dividend.is_left_carry(), false);
+    ///     assert_eq!(dividend.is_right_carry(), false);
     /// 
     ///     let divisor = U256::zero();
     ///     dividend.panic_free_modular_div_assign(&divisor, &modulo);
@@ -10994,6 +11093,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     assert_eq!(dividend.is_divided_by_zero(), true);
     ///     assert_eq!(dividend.is_infinity(), false);
     ///     assert_eq!(dividend.is_undefined(), true);
+    ///     assert_eq!(dividend.is_left_carry(), false);
+    ///     assert_eq!(dividend.is_right_carry(), false);
     ///     
     ///     for op in [U256::from_string("76801874298166903427690031858186486050853753882811946569946433649006").unwrap(), U256::from_uint(50_u8)]
     ///     {
@@ -11004,6 +11105,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///         assert_eq!(dividend.is_infinity(), false);
     ///         assert_eq!(dividend.is_undefined(), false);
     ///         assert_eq!(dividend.is_divided_by_zero(), false);
+    ///         assert_eq!(dividend.is_left_carry(), false);
+    ///         assert_eq!(dividend.is_right_carry(), false);
     /// 
     ///         let divisor = U256::zero();
     ///         dividend.panic_free_modular_div_assign(&divisor, &modulo);
@@ -11014,6 +11117,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///         assert_eq!(dividend.is_divided_by_zero(), true);
     ///         assert_eq!(dividend.is_infinity(), true);
     ///         assert_eq!(dividend.is_undefined(), true);
+    ///         assert_eq!(dividend.is_left_carry(), false);
+    ///         assert_eq!(dividend.is_right_carry(), false);
     /// 
     ///         for divisor in [U256::from_uint(3_u8), U256::from_uint(50_u8)]
     ///         {
@@ -11024,6 +11129,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(dividend.is_infinity(), false);
     ///             assert_eq!(dividend.is_undefined(), false);
     ///             assert_eq!(dividend.is_divided_by_zero(), false);
+    ///             assert_eq!(dividend.is_left_carry(), false);
+    ///             assert_eq!(dividend.is_right_carry(), false);
     /// 
     ///             dividend.panic_free_modular_div_assign(&divisor, &modulo);
     ///             println!("After dividend.panic_free_modular_div_assign({}, {}), dividend = {}", divisor, modulo, dividend);
@@ -11033,15 +11140,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(dividend.is_divided_by_zero(), false);
     ///             assert_eq!(dividend.is_infinity(), false);
     ///             assert_eq!(dividend.is_undefined(), true);
+    ///             assert_eq!(dividend.is_left_carry(), false);
+    ///             assert_eq!(dividend.is_right_carry(), false);
     ///         }
     ///     }
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn panic_free_modular_div_assign(&mut self, _rhs: &Self, _modulo: &Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -11093,6 +11197,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -11111,6 +11217,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -11129,11 +11237,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// let remainder = _dividend.wrapping_rem(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn wrapping_rem(&self, _rhs: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -11183,6 +11286,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(87_u8);
     /// a_biguint.wrapping_rem_assign(&divisor);
@@ -11193,6 +11298,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -11208,6 +11315,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(87_u8);
     /// a_biguint.wrapping_rem_assign(&divisor);
@@ -11218,6 +11327,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -11238,11 +11349,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// _a_biguint.wrapping_rem_assign(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn wrapping_rem_assign(&mut self, _rhs: &Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -11298,6 +11404,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -11317,6 +11425,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -11335,11 +11445,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// let (remainder, overflow) = _dividend.overflowing_rem(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn overflowing_rem(&self, _rhs: &Self) -> (Self, bool)
     {
         unimplemented!(); // Dummy code for documentation
@@ -11396,6 +11501,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(87_u8);
     /// let overflow = a_biguint.overflowing_rem_assign(&divisor);
@@ -11407,6 +11514,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -11422,6 +11531,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(87_u8);
     /// let overflow = a_biguint.overflowing_rem_assign(&divisor);
@@ -11433,6 +11544,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -11453,11 +11566,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// let overflow = _a_biguint.overflowing_rem_assign(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn overflowing_rem_assign(&mut self, _rhs: &Self) -> bool
     {
         unimplemented!(); // Dummy code for documentation
@@ -11495,6 +11603,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -11512,6 +11621,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_undefined(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Divided By Zero"); },
     /// }
@@ -11520,6 +11631,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -11537,6 +11649,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_undefined(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Divided By Zero"); },
     /// }
@@ -11545,6 +11659,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 3
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -11565,6 +11680,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 4
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -11581,11 +11697,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///         },
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn checked_rem(&self, _rhs: &Self) -> Option<Self>
     {
         unimplemented!(); // Dummy code for documentation
@@ -11620,6 +11731,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -11633,11 +11745,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -11651,11 +11766,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
     /// ```should_panic
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -11669,11 +11787,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic.
     /// let remainder = _dividend.unchecked_rem(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn unchecked_rem(&self, _rhs: &Self) -> Self
     {
@@ -11712,6 +11825,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -11725,11 +11839,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -11743,11 +11860,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
     /// ```should_panic
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -11761,11 +11881,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// let remainder = _dividend.saturating_rem(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn saturating_rem(&self, _rhs: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -11803,6 +11918,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -11813,6 +11929,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(87_u8);
     /// a_biguint.saturating_rem_assign(&divisor);
@@ -11823,11 +11941,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -11838,6 +11959,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(87_u8);
     /// a_biguint.saturating_rem_assign(&divisor);
@@ -11848,11 +11971,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
     /// ```should_panic
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -11868,11 +11994,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// _a_biguint.saturating_rem_assign(&_divisor);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn saturating_rem_assign(&mut self, _rhs: &Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -11929,6 +12050,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
     /// assert_eq!(remainder.is_undefined(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for Normal case
@@ -11947,6 +12070,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
     /// assert_eq!(remainder.is_undefined(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for dividend != 0 and divisor == 0
@@ -11965,6 +12090,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), true);
     /// assert_eq!(remainder.is_undefined(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for dividend == 0 and divisor == 0
@@ -11983,12 +12110,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), true);
     /// assert_eq!(remainder.is_undefined(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn panic_free_rem(&self, _rhs: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -12044,6 +12168,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(87_u8);
     /// a_biguint.panic_free_rem_assign(&divisor);
@@ -12054,6 +12180,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for Normal case
@@ -12069,6 +12197,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(87_u8);
     /// a_biguint.panic_free_rem_assign(&divisor);
@@ -12079,6 +12209,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for dividend != 0 and divisor == 0
@@ -12094,6 +12226,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
     /// a_biguint.panic_free_rem_assign(&divisor);
@@ -12104,6 +12238,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for dividend == 0 and divisor == 0
@@ -12119,6 +12255,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
     /// a_biguint.panic_free_rem_assign(&divisor);
@@ -12129,12 +12267,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn panic_free_rem_assign(&mut self, _rhs: &Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -12189,6 +12324,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
     /// assert_eq!(remainder.is_undefined(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for modulo >= 2 and dividend == 0 and divisor != 0
@@ -12208,6 +12345,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
     /// assert_eq!(remainder.is_undefined(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for modulo >= 2 and dividend == multiple of modulo and divisor != 0
@@ -12227,6 +12366,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
     /// assert_eq!(remainder.is_undefined(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -12291,11 +12432,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// let quotient = _dividend.modular_rem(&_divisor, &_modulo);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn modular_rem(&self, _rhs: &Self, _modulo: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -12347,6 +12483,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
     /// let modulo = UU32::from_uint(100_u8);
@@ -12358,6 +12496,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for modulo >= 2 and dividend == 0 and divisor != 0
@@ -12373,6 +12513,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
     /// let modulo = UU32::from_uint(100_u8);
@@ -12384,6 +12526,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for modulo >= 2 and dividend == multiple of modulo and divisor != 0
@@ -12399,6 +12543,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
     /// let modulo = UU32::from_uint(100_u8);
@@ -12410,6 +12556,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -12482,11 +12630,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// _a_biguint.modular_rem_assign(&_divisor, &_modulo);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn modular_rem_assign(&mut self, _rhs: &Self, _modulo: &Self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -12558,6 +12701,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for modulo >= 2 and dividend == 0 and divisor != 0
@@ -12577,6 +12722,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for modulo >= 2 and dividend == multiple of modulo and divisor != 0
@@ -12596,6 +12743,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for modulo >= 2 and dividend != 0 and divisor == 0
@@ -12615,6 +12764,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), true);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for modulo >= 2 and dividend != 0 and divisor == multiple of modulo
@@ -12634,6 +12785,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), true);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for modulo >= 2 and divisor == 0 and dividend == 0
@@ -12653,6 +12806,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), true);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7 for modulo >= 2 and dividend == 0 and divisor == multiple of modulo
@@ -12672,6 +12827,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), true);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 8 for modulo >= 2 and dividend == multiple of modulo and divisor == 0
@@ -12691,6 +12848,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), true);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 9 for modulo >= 2 and dividend == multiple of modulo and divisor == multiple of modulo
@@ -12710,6 +12869,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), true);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 10 for modulo == 0 and divisor == 0 and dividend == 0
@@ -12729,6 +12890,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), true);
     /// assert_eq!(remainder.is_divided_by_zero(), true);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 11 for modulo == 1 and divisor == 0 and dividend == 0
@@ -12748,6 +12911,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), true);
     /// assert_eq!(remainder.is_divided_by_zero(), true);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 12 for modulo == 0 and divisor != 0 and divisor != 0
@@ -12767,6 +12932,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), true);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 13 for modulo == 1 and divisor != 0 and divisor != 0
@@ -12786,6 +12953,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), true);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
     /// # Collective Examples
@@ -12806,6 +12975,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     assert_eq!(res.is_divided_by_zero(), true);
     ///     assert_eq!(res.is_infinity(), false);
     ///     assert_eq!(res.is_undefined(), true);
+    ///     assert_eq!(res.is_left_carry(), false);
+    ///     assert_eq!(res.is_right_carry(), false);
     ///     
     ///     for dividend in [U256::from_string("76801874298166903427690031858186486050853753882811946569946433649006").unwrap(), U256::from_uint(50_u8)]
     ///     {
@@ -12818,6 +12989,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///         assert_eq!(res.is_divided_by_zero(), true);
     ///         assert_eq!(res.is_infinity(), false);
     ///         assert_eq!(res.is_undefined(), true);
+    ///         assert_eq!(res.is_left_carry(), false);
+    ///         assert_eq!(res.is_right_carry(), false);
     /// 
     ///         for divisor in [U256::from_uint(3_u8), U256::from_uint(50_u8)]
     ///         {
@@ -12829,15 +13002,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(res.is_divided_by_zero(), false);
     ///             assert_eq!(res.is_infinity(), false);
     ///             assert_eq!(res.is_undefined(), true);
+    ///             assert_eq!(res.is_left_carry(), false);
+    ///             assert_eq!(res.is_right_carry(), false);
     ///         }
     ///     }
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn panic_free_modular_rem(&self, _rhs: &Self, _modulo: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -12908,6 +13078,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
     /// let modulo = UU32::from_uint(100_u8);
@@ -12919,6 +13091,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for modulo >= 2 and self == 0 and divisor != 0
@@ -12934,6 +13108,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
     /// let modulo = UU32::from_uint(100_u8);
@@ -12945,6 +13121,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for modulo >= 2 and self == multiple of modulo and divisor != 0
@@ -12960,6 +13138,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(128_u8);
     /// let modulo = U256::from_uint(100_u8);
@@ -12971,6 +13151,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for modulo >= 2 and self != 0 and divisor == 0
@@ -12986,6 +13168,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
     /// let modulo = U256::from_uint(100_u8);
@@ -12997,6 +13181,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for modulo >= 2 and self != 0 and divisor == multiple of modulo
@@ -13012,6 +13198,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(200_u8);
     /// let modulo = U256::from_uint(100_u8);
@@ -13023,6 +13211,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for modulo >= 2 and self == 0 and divisor == 0
@@ -13038,6 +13228,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
     /// let modulo = U256::from_uint(100_u8);
@@ -13049,6 +13241,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7 for modulo >= 2 and self == 0 and divisor == multiple of modulo
@@ -13064,6 +13258,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(200_u8);
     /// let modulo = U256::from_uint(100_u8);
@@ -13075,6 +13271,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 8 for modulo >= 2 and self == multiple of modulo and divisor == 0
@@ -13090,6 +13288,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
     /// let modulo = U256::from_uint(100_u8);
@@ -13101,6 +13301,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 9 for modulo >= 2 and self == multiple of modulo and divisor == multiple of modulo
@@ -13116,6 +13318,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(200_u8);
     /// let modulo = U256::from_uint(100_u8);
@@ -13127,6 +13331,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 10 for modulo == 0 and self != 0 and divisor != 0
@@ -13142,6 +13348,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(128_u8);
     /// let modulo = U256::zero();
@@ -13153,6 +13361,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 11 for modulo == 1 and self != 0 and divisor != 0
@@ -13168,6 +13378,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(128_u8);
     /// let modulo = U256::one();
@@ -13179,6 +13391,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 12 for modulo == 0 and divisor == 0 and self == 0
@@ -13194,6 +13408,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
     /// let modulo = U256::zero();
@@ -13205,6 +13421,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 12 for modulo == 1 and divisor == 0 and self == 0
@@ -13220,6 +13438,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
     /// let modulo = U256::one();
@@ -13231,6 +13451,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), true);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Collective Examples
@@ -13248,6 +13470,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     assert_eq!(dividend.is_infinity(), false);
     ///     assert_eq!(dividend.is_undefined(), false);
     ///     assert_eq!(dividend.is_divided_by_zero(), false);
+    ///     assert_eq!(dividend.is_left_carry(), false);
+    ///     assert_eq!(dividend.is_right_carry(), false);
     /// 
     ///     let divisor = U256::zero();
     ///     dividend.panic_free_modular_rem_assign(&divisor, &modulo);
@@ -13258,6 +13482,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     assert_eq!(dividend.is_divided_by_zero(), true);
     ///     assert_eq!(dividend.is_infinity(), false);
     ///     assert_eq!(dividend.is_undefined(), true);
+    ///     assert_eq!(dividend.is_left_carry(), false);
+    ///     assert_eq!(dividend.is_right_carry(), false);
     ///     
     ///     for op in [U256::from_string("76801874298166903427690031858186486050853753882811946569946433649006").unwrap(), U256::from_uint(50_u8)]
     ///     {
@@ -13268,6 +13494,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///         assert_eq!(dividend.is_infinity(), false);
     ///         assert_eq!(dividend.is_undefined(), false);
     ///         assert_eq!(dividend.is_divided_by_zero(), false);
+    ///         assert_eq!(dividend.is_left_carry(), false);
+    ///         assert_eq!(dividend.is_right_carry(), false);
     /// 
     ///         let divisor = U256::zero();
     ///         dividend.panic_free_modular_rem_assign(&divisor, &modulo);
@@ -13278,6 +13506,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///         assert_eq!(dividend.is_divided_by_zero(), true);
     ///         assert_eq!(dividend.is_infinity(), false);
     ///         assert_eq!(dividend.is_undefined(), true);
+    ///         assert_eq!(dividend.is_left_carry(), false);
+    ///         assert_eq!(dividend.is_right_carry(), false);
     /// 
     ///         for divisor in [U256::from_uint(3_u8), U256::from_uint(50_u8)]
     ///         {
@@ -13288,6 +13518,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(dividend.is_infinity(), false);
     ///             assert_eq!(dividend.is_undefined(), false);
     ///             assert_eq!(dividend.is_divided_by_zero(), false);
+    ///             assert_eq!(dividend.is_left_carry(), false);
+    ///             assert_eq!(dividend.is_right_carry(), false);
     /// 
     ///             dividend.panic_free_modular_rem_assign(&divisor, &modulo);
     ///             println!("After dividend.panic_free_modular_rem_assign({}, {}), dividend = {}", divisor, modulo, dividend);
@@ -13297,15 +13529,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(dividend.is_divided_by_zero(), false);
     ///             assert_eq!(dividend.is_infinity(), false);
     ///             assert_eq!(dividend.is_undefined(), true);
+    ///             assert_eq!(dividend.is_left_carry(), false);
+    ///             assert_eq!(dividend.is_right_carry(), false);
     ///         }
     ///     }
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn panic_free_modular_rem_assign(&mut self, _rhs: &Self, _modulo: &Self)
     {
         unimplemented!(); // Dummy code for documentation

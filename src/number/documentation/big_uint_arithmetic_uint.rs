@@ -808,6 +808,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -834,6 +835,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -853,6 +855,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -911,6 +914,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -929,6 +933,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Panic Examples
     /// ```should_panic
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -978,6 +983,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -996,6 +1002,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -1014,6 +1021,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -1070,6 +1078,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -1098,6 +1107,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -1126,6 +1136,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -2699,6 +2710,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -2717,6 +2729,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -2738,6 +2751,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -2823,6 +2837,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -2851,6 +2866,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -2884,6 +2900,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```should_panic
     /// #[cfg(debug_assertions)]
     /// {
+    ///     use cryptocol::number::BigUint_More;
     ///     use cryptocol::define_utypes_with;
     ///     define_utypes_with!(u8);
     /// 
@@ -3727,6 +3744,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -3753,6 +3771,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -3772,6 +3791,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -3830,6 +3850,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -3848,6 +3869,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Panic Examples
     /// ```should_panic
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -3897,6 +3919,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -3915,6 +3938,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -3933,6 +3957,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -3989,6 +4014,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -4017,6 +4043,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -4045,6 +4072,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -5728,6 +5756,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -5746,6 +5775,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -5781,6 +5811,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```should_panic
     /// #[cfg(not(debug_assertions))]
     /// {
+    ///     use cryptocol::number::BigUint_More;
     ///     use cryptocol::define_utypes_with;
     ///     define_utypes_with!(u8);
     /// 
@@ -5847,6 +5878,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -5875,6 +5907,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -5906,6 +5939,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -5950,6 +5984,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```should_panic
     /// #[cfg(debug_assertions)]
     /// {
+    ///     use cryptocol::number::BigUint_More;
     ///     use cryptocol::define_utypes_with;
     ///     define_utypes_with!(u16);
     /// 
@@ -6952,6 +6987,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -6977,6 +7013,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -7034,6 +7071,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -7052,6 +7090,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Panic Examples
     /// ```should_panic
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -7102,6 +7141,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -7120,6 +7160,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -7177,6 +7218,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -7204,6 +7246,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -8737,6 +8780,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -8756,6 +8800,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -8778,11 +8823,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Panic Examples
     /// ```should_panic
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
     /// #[cfg(debug_assertions)]
     /// {
+    ///     use cryptocol::number::BigUint_More;
     ///     use cryptocol::define_utypes_with;
     ///     define_utypes_with!(u16);
     /// 
@@ -8845,6 +8888,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -8874,6 +8918,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -8908,6 +8953,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```should_panic
     /// #[cfg(debug_assertions)]
     /// {
+    ///     use cryptocol::number::BigUint_More;
     ///     use cryptocol::define_utypes_with;
     ///     define_utypes_with!(u32);
     /// 
@@ -9696,6 +9742,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -9723,6 +9770,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -9750,6 +9798,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 3
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -9770,6 +9819,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 4
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -9825,6 +9875,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -9845,6 +9896,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -9865,6 +9917,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Panic Examples
     /// ```should_panic
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -9922,6 +9975,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -9942,6 +9996,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -9962,6 +10017,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Panic Examples
     /// ```should_panic
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -10018,6 +10074,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -10047,6 +10104,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -10076,6 +10134,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Panic Examples
     /// ```should_panic
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -12152,6 +12211,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -12172,6 +12232,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -12192,6 +12253,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 3
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -12212,6 +12274,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 4
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -12268,6 +12331,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -12281,6 +12345,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -12294,6 +12359,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Panic Examples
     /// ```should_panic
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -12351,6 +12417,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -12364,6 +12431,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -12377,6 +12445,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Panic Examples
     /// ```should_panic
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -12433,6 +12502,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -12462,6 +12532,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -12491,6 +12562,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Panic Examples
     /// ```should_panic
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 

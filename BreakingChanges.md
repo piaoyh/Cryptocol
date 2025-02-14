@@ -1,5 +1,64 @@
 # Breaking Changes
 
+## Breaking changes from ver. 0.9.2 to ver. 0.9.3
+
+| Methods                                               |
+|-------------------------------------------------------|
+| fn checked_add_uint<U>(&self, rhs: U) -> Option<Self> |
+| fn unchecked_add_uint<U>(&self, rhs: U) -> Self       |
+| fn saturating_add_uint<U>(&self, rhs: U) -> Self      |
+| fn saturating_add_assign_uint<U>(&mut self, rhs: U)   |
+| fn safe_add_uint<U>(&self, rhs: U) -> Self            |
+| fn safe_add_assign_uint<U>(&mut self, rhs: U)         |
+| fn checked_sub_uint<U>(&self, rhs: U) -> Option<Self> |
+| fn unchecked_sub_uint<U>(&self, rhs: U) -> Self       |
+| fn saturating_sub_uint<U>(&self, rhs: U) -> Self      |
+| fn saturating_sub_assign_uint<U>(&mut self, rhs: U)   |
+| fn safe_sub_uint<U>(&self, rhs: U) -> Self            |
+| fn safe_sub_assign_uint<U>(&mut self, rhs: U)         |
+| fn checked_mul_uint<U>(&self, rhs: U) -> Option<Self> |
+| fn unchecked_mul_uint<U>(&self, rhs: U) -> Self       |
+| fn saturating_mul_uint<U>(&self, rhs: U) -> Self      |
+| fn saturating_mul_assign_uint<U>(&mut self, rhs: U)   |
+| fn safe_mul_uint<U>(&self, rhs: U) -> Self            |
+| fn safe_mul_assign_uint<U>(&mut self, rhs: U)         |
+| fn checked_div_uint<U>(&self, rhs: U) -> Option<Self> |
+| fn unchecked_div_uint<U>(&self, rhs: U) -> Self       |
+| fn saturating_div_uint<U>(&self, rhs: U) -> Self      |
+| fn saturating_div_assign_uint<U>(&mut self, rhs: U)   |
+| fn checked_rem_uint<U>(&self, rhs: U) -> Option<Self> |
+| fn unchecked_rem_uint<U>(&self, rhs: U) -> Self       |
+| fn saturating_rem_uint<U>(&self, rhs: U) -> Self      |
+| fn saturating_rem_assign_uint<U>(&mut self, rhs: U)   |
+| fn checked_add<U>(&self, rhs: U) -> Option<Self>      |
+| fn unchecked_add<U>(&self, rhs: U) -> Self            |
+| fn saturating_add<U>(&self, rhs: U) -> Self           |
+| fn saturating_add_assign<U>(&mut self, rhs: U)        |
+| fn safe_add<U>(&self, rhs: U) -> Self                 |
+| fn safe_add_assign<U>(&mut self, rhs: U)              |
+| fn checked_sub<U>(&self, rhs: U) -> Option<Self>      |
+| fn unchecked_sub<U>(&self, rhs: U) -> Self            |
+| fn saturating_sub<U>(&self, rhs: U) -> Self           |
+| fn saturating_sub_assign<U>(&mut self, rhs: U)        |
+| fn safe_sub<U>(&self, rhs: U) -> Self                 |
+| fn safe_sub_assign<U>(&mut self, rhs: U)              |
+| fn checked_mul<U>(&self, rhs: U) -> Option<Self>      |
+| fn unchecked_mul<U>(&self, rhs: U) -> Self            |
+| fn saturating_mul<U>(&self, rhs: U) -> Self           |
+| fn saturating_mul_assign<U>(&mut self, rhs: U)        |
+| fn safe_mul<U>(&self, rhs: U) -> Self                 |
+| fn safe_mul_assign<U>(&mut self, rhs: U)              |
+| fn checked_div<U>(&self, rhs: U) -> Option<Self>      |
+| fn unchecked_div<U>(&self, rhs: U) -> Self            |
+| fn saturating_div<U>(&self, rhs: U) -> Self           |
+| fn saturating_div_assign<U>(&mut self, rhs: U)        |
+| fn checked_rem<U>(&self, rhs: U) -> Option<Self>      |
+| fn unchecked_rem<U>(&self, rhs: U) -> Self            |
+| fn saturating_rem<U>(&self, rhs: U) -> Self           |
+| fn saturating_rem_assign<U>(&mut self, rhs: U)        |
+
+- The methods above have been moved from struct BigUInt to trait BigUInt_More because docs.rs failed in generating struct.bigUInt.html.
+
 ## Breaking changes from ver. 0.9.0 to ver. 0.9.1
 
 | Ver. 0.9.0                                            | Ver. 0.9.1 |
