@@ -21339,6 +21339,8 @@ fn biguint_wrapping_mul()
     assert_eq!(res.is_divided_by_zero(), false);
     assert_eq!(res.is_infinity(), false);
     assert_eq!(res.is_undefined(), false);
+    assert_eq!(res.is_left_carry(), false);
+    assert_eq!(res.is_right_carry(), false);
 
     let a_biguint = U256::from_string("876801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
     let b_biguint = U256::from_uint(248_u8);
@@ -21350,6 +21352,8 @@ fn biguint_wrapping_mul()
     assert_eq!(res.is_divided_by_zero(), false);
     assert_eq!(res.is_infinity(), false);
     assert_eq!(res.is_undefined(), false);
+    assert_eq!(res.is_left_carry(), false);
+    assert_eq!(res.is_right_carry(), false);
     println!("---------------------------");
 }
 
@@ -21367,6 +21371,8 @@ fn biguint_wrapping_mul_assign()
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     a_biguint.wrapping_mul_assign(&b_biguint);
     println!("After a_biguint.wrapping_mul_assign(&b_biguint), a_biguint = {}", a_biguint);
@@ -21376,6 +21382,8 @@ fn biguint_wrapping_mul_assign()
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     let mut a_biguint = UU32::from_string("876801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
     let b_biguint = U256::from_uint(248_u8);
@@ -21385,6 +21393,8 @@ fn biguint_wrapping_mul_assign()
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
 
     a_biguint.wrapping_mul_assign(&b_biguint);
     println!("After c_biguint.wrapping_mul_assign(&b_biguint), a_biguint = {}", a_biguint);
@@ -21394,6 +21404,8 @@ fn biguint_wrapping_mul_assign()
     assert_eq!(a_biguint.is_divided_by_zero(), false);
     assert_eq!(a_biguint.is_infinity(), false);
     assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
     println!("---------------------------");
 }
 

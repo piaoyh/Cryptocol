@@ -136,7 +136,6 @@
 
 pub mod small_uint;
 pub mod small_sint;
-pub mod trait_big_uint_more;
 pub mod short_union;
 pub mod int_union;
 pub mod long_union;
@@ -145,6 +144,9 @@ pub mod size_union;
 pub mod shared_values;
 pub mod shared_arrays;
 pub mod big_uint;
+
+/// Additional methods for BigUInt
+pub mod trait_big_uint_more;
 pub mod number_errors;
 pub mod macros_for_types;
 pub mod macros_for_integer_unions;

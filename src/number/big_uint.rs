@@ -519,38 +519,6 @@ macro_rules! panic_free_calc_div_rem_assign
     // self.set_flag_bit(res.get_all_flags());
 }
 
-
-macro_rules! safe_calc {
-    ($me:expr, $func_release:expr, $func_debug:expr, $rhs:expr) => {
-        #[cfg(debug_assertions)]        return $func_debug($me, $rhs);
-        #[cfg(not(debug_assertions))]   return $func_release($me, $rhs);
-    };
-    // safe_calc!(self, Self::wrapping_add, Self::unchecked_add, rhs);
-    // 
-    // #[cfg(debug_assertions)]        return self.unchecked_add(rhs);
-    // #[cfg(not(debug_assertions))]   return self.wrapping_add(rhs);
-}
-
-
-macro_rules! safe_calc_assign {
-    ($me:expr, $func_release:expr, $func_debug:expr, $rhs:expr) => {
-        #[cfg(debug_assertions)]
-        {
-            if $func_debug($me, $rhs)
-                { panic!(); }
-        }
-        #[cfg(not(debug_assertions))]   $func_release($me, $rhs);
-    };
-    // safe_calc_assign!(self, Self::wrapping_add_assign_uint, Self::overflowing_add_assign_uint, rhs);
-    // 
-    // #[cfg(debug_assertions)]
-    // {
-    //     if self.overflowing_add_assign_uint(rhs)
-    //         { panic!(); }
-    // }
-    // #[cfg(not(debug_assertions))]   self.wrapping_add_assign_uint(rhs);
-}
-
 macro_rules! if_rhs_is_zero
 {
     ($me:expr, $rhs:expr) => {
@@ -4967,8 +4935,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [checked_add_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_add_uint),
     ///   [unchecked_add_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_add_uint),
     ///   [saturating_add_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_add_uint), and
-    ///   [safe_add_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_add_uint)
-    ///   you need to import (use) the trait `number/BigUInt_More`.
+    ///   [safe_add_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_add_uint),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -5039,8 +5007,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   is proper rather than this method.
     /// - You may be interested in extra addition methods. In order to use any one of 
     ///   [saturating_add_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_add_assign_uint), and
-    ///   [safe_add_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_add_assign_uint)
-    ///   you need to import (use) the trait `number/BigUInt_More`.
+    ///   [safe_add_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_add_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -5839,8 +5807,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [checked_sub_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_sub_uint),
     ///   [unchecked_sub_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_sub_uint),
     ///   [saturating_sub_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_sub_uint), and
-    ///   [safe_sub_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_sub_uint)
-    ///   you need to import (use) the trait `number/BigUInt_More`.
+    ///   [safe_sub_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_sub_uint),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -5911,8 +5879,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - You may be interested in extra subtraction methods.
     ///   In order to use any one of 
     ///   [saturating_sub_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_sub_assign_uint), and
-    ///   [safe_sub_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_sub_assign_uint)
-    ///   you need to import (use) the trait `number/BigUInt_More`.
+    ///   [safe_sub_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_sub_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -7082,8 +7050,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [checked_mul_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_mul_uint),
     ///   [unchecked_mul_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_mul_uint),
     ///   [saturating_mul_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_mul_uint), and
-    ///   [safe_mul_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_mul_uint)
-    ///   you need to import (use) the trait `number/BigUInt_More`.
+    ///   [safe_mul_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_mul_uint),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -7148,8 +7116,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - You may be interested in extra multiplication methods
     ///   In order to use any one of 
     ///   [saturating_mul_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_mul_assign_uint), and
-    ///   [safe_mul_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_mul_assign_uint)
-    ///   you need to import (use) the trait `number/BigUInt_More`.
+    ///   [safe_mul_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_mul_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -8066,9 +8034,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   in the wrapping operations.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [wrapping_div()](struct@BigUInt#method.wrapping_div)
-    /// is proper rather than this method `wrapping_div_uint()`.
+    /// - If `rhs` is bigger than `u128`, the method
+    ///   [wrapping_div()](struct@BigUInt#method.wrapping_div)
+    ///   is proper rather than this method `wrapping_div_uint()`.
+    /// - You may be interested in extra division methods,
+    ///   In order to use any one of 
+    ///   [checked_div_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_div_uint),
+    ///   [unchecked_div_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_div_uint), and
+    ///   [saturating_div_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_div_uint),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -8130,9 +8104,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause divided_by_zero.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [wrapping_div_assign()](struct@BigUInt#method.wrapping_div_assign)
-    /// is proper rather than this method `wrapping_div_assign_uint()`.
+    /// - If `rhs` is bigger than `u128`, the method
+    ///   [wrapping_div_assign()](struct@BigUInt#method.wrapping_div_assign)
+    ///   is proper rather than this method `wrapping_div_assign_uint()`.
+    /// - You may be interested in extra division methods
+    ///   In order to use
+    ///   [saturating_div_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_div_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -8930,9 +8908,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   in the wrapping operations.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [wrapping_rem()](struct@BigUInt#method.wrapping_rem)
-    /// is proper rather than this method `wrapping_rem_uint()`.
+    /// - If `rhs` is bigger than `u128`, the method
+    ///   [wrapping_rem()](struct@BigUInt#method.wrapping_rem)
+    ///   is proper rather than this method `wrapping_rem_uint()`.
+    /// - You may be interested in extra division methods,
+    ///   In order to use any one of 
+    ///   [checked_rem_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_rem_uint),
+    ///   [unchecked_rem_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_rem_uint), and
+    ///   [saturating_rem_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_rem_uint),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -8987,9 +8971,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause divided_by_zero.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [wrapping_rem_assign()](struct@BigUInt#method.wrapping_rem_assign)
-    /// is proper rather than this method `wrapping_rem_assign_uint()`.
+    /// - If `rhs` is bigger than `u128`, the method
+    ///   [wrapping_rem_assign()](struct@BigUInt#method.wrapping_rem_assign)
+    ///   is proper rather than this method `wrapping_rem_assign_uint()`.
+    /// - You may be interested in extra division methods
+    ///   In order to use any one of 
+    ///   [saturating_rem_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_rem_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -13719,12 +13707,19 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   will be set.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [wrapping_add_uint()](struct@BigUInt#method.wrapping_add_uint)
-    /// is a bit faster than this method `wrapping_add()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [wrapping_add_uint()](struct@BigUInt#method.wrapping_add_uint).
+    /// - The method
+    ///   [wrapping_add_uint()](struct@BigUInt#method.wrapping_add_uint)
+    ///   is a bit faster than this method `wrapping_add()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [wrapping_add_uint()](struct@BigUInt#method.wrapping_add_uint).
+    /// - You may be interested in extra addition methods,
+    ///   In order to use any one of 
+    ///   [checked_add()](../trait_big_more/trait.BigUInt_More.html#tymethod.checked_add),
+    ///   [unchecked_add()](../trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_add),
+    ///   [saturating_add()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_add), and
+    ///   [safe_add()](../trait_big_more/trait.BigUInt_More.html#tymethod.safe_add),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -13775,12 +13770,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause overflow.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [wrapping_add_assign_uint()](struct@BigUInt#method.wrapping_add_assign_uint)
-    /// is a bit faster than this method `wrapping_add_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [wrapping_add_assign_uint()](struct@BigUInt#method.wrapping_add_assign_uint).
+    /// - The method
+    ///   [wrapping_add_assign_uint()](struct@BigUInt#method.wrapping_add_assign_uint)
+    ///   is a bit faster than this method `wrapping_add_assign()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [wrapping_add_assign_uint()](struct@BigUInt#method.wrapping_add_assign_uint).
+    /// - You may be interested in extra addition methods
+    ///   In order to use any one of 
+    ///   [saturating_add_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_add_assign), and
+    ///   [safe_add_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.safe_add_assign),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -14496,12 +14496,19 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   will be set.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [wrapping_sub_uint()](struct@BigUInt#method.wrapping_sub_uint)
-    /// is a bit faster than this method `wrapping_sub()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [wrapping_sub_uint()](struct@BigUInt#method.wrapping_sub_uint).
+    /// - The method
+    ///   [wrapping_sub_uint()](struct@BigUInt#method.wrapping_sub_uint)
+    ///   is a bit faster than this method `wrapping_sub()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [wrapping_sub_uint()](struct@BigUInt#method.wrapping_sub_uint).
+    /// - You may be interested in extra subtraction methods,
+    ///   In order to use any one of 
+    ///   [checked_sub()](../trait_big_more/trait.BigUInt_More.html#tymethod.checked_sub),
+    ///   [unchecked_sub()](../trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_sub),
+    ///   [saturating_sub()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_sub), and
+    ///   [safe_sub()](../trait_big_more/trait.BigUInt_More.html#tymethod.safe_sub),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -14550,12 +14557,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   is not changed even if this current operation does not cause underflow.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [wrapping_sub_assign_uint()](struct@BigUInt#method.wrapping_sub_assign_uint)
-    /// is a bit faster than this method `wrapping_sub_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [wrapping_sub_assign_uint()](struct@BigUInt#method.wrapping_sub_assign_uint).
+    /// - The method
+    ///   [wrapping_sub_assign_uint()](struct@BigUInt#method.wrapping_sub_assign_uint)
+    ///   is a bit faster than this method `wrapping_sub_assign()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [wrapping_sub_assign_uint()](struct@BigUInt#method.wrapping_sub_assign_uint).
+    /// - You may be interested in extra subtraction methods
+    ///   In order to use any one of 
+    ///   [saturating_sub_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_sub_assign), and
+    ///   [safe_sub_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.safe_sub_assign),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -16021,12 +16033,19 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   will be set.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [wrapping_mul_uint()](struct@BigUInt#method.wrapping_mul_uint)
-    /// is a bit faster than this method `wrapping_mul()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [wrapping_mul_uint()](struct@BigUInt#method.wrapping_mul_uint).
+    /// - The method
+    ///   [wrapping_mul_uint()](struct@BigUInt#method.wrapping_mul_uint)
+    ///   is a bit faster than this method `wrapping_mul()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [wrapping_mul_uint()](struct@BigUInt#method.wrapping_mul_uint).
+    /// - You may be interested in extra multiplication methods,
+    ///   In order to use any one of 
+    ///   [checked_mul()](../trait_big_more/trait.BigUInt_More.html#tymethod.checked_mul),
+    ///   [unchecked_mul()](../trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_mul),
+    ///   [saturating_mul()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_mul), and
+    ///   [safe_mul()](../trait_big_more/trait.BigUInt_More.html#tymethod.safe_mul),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -16043,29 +16062,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let a_biguint = U256::from_string("876801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let b_biguint = U256::from_uint(248_u8);
-    /// let res = a_biguint.wrapping_mul(&b_biguint);
-    /// println!("{} X {} = {}", a_biguint, b_biguint, res);
-    /// assert_eq!(res.to_string(), "101654775588629196626496142892142340687341746297296798709889131537040379215376");
-    /// assert_eq!(res.is_overflow(), true);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_mul)
     pub fn wrapping_mul(&self, rhs: &Self) -> Self
     {
         calc_assign_to_calc!(self, Self::wrapping_mul_assign, rhs);
@@ -16093,12 +16095,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause overflow.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [wrapping_mul_assign_uint()](struct@BigUInt#method.wrapping_mul_assign_uint)
-    /// is a bit faster than this method `wrapping_mul_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [wrapping_mul_assign_uint()](struct@BigUInt#method.wrapping_mul_assign_uint).
+    /// - The method
+    ///   [wrapping_mul_assign_uint()](struct@BigUInt#method.wrapping_mul_assign_uint)
+    ///   is a bit faster than this method `wrapping_mul_assign()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [wrapping_mul_assign_uint()](struct@BigUInt#method.wrapping_mul_assign_uint).
+    /// - You may be interested in extra multiplication methods
+    ///   In order to use any one of 
+    ///   [saturating_mul_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_mul_assign), and
+    ///   [safe_mul_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.safe_mul_assign),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -16113,6 +16120,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.wrapping_mul_assign(&b_biguint);
     /// println!("After a_biguint.wrapping_mul_assign(&b_biguint), a_biguint = {}", a_biguint);
@@ -16122,36 +16131,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let mut a_biguint = UU32::from_string("876801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let b_biguint = U256::from_uint(248_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// 
-    /// a_biguint.wrapping_mul_assign(&b_biguint);
-    /// println!("After c_biguint.wrapping_mul_assign(&b_biguint), a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "101654775588629196626496142892142340687341746297296798709889131537040379215376");
-    /// assert_eq!(a_biguint.is_overflow(), true);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_mul_assign)
     #[inline]
     pub fn wrapping_mul_assign(&mut self, rhs: &Self)
     {
@@ -18155,12 +18140,18 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   in the wrapping operations.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [wrapping_div_uint()](struct@BigUInt#method.wrapping_div_uint)
-    /// is a bit faster than this method `wrapping_div()`.
-    /// If `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [wrapping_div_uint()](struct@BigUInt#method.wrapping_div_uint).
+    /// - The method
+    ///   [wrapping_div_uint()](struct@BigUInt#method.wrapping_div_uint)
+    ///   is a bit faster than this method `wrapping_div()`.
+    ///   If `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [wrapping_div_uint()](struct@BigUInt#method.wrapping_div_uint).
+    /// - You may be interested in extra division methods,
+    ///   In order to use any one of 
+    ///   [checked_div()](../trait_big_more/trait.BigUInt_More.html#tymethod.checked_div),
+    ///   [unchecked_div()](../trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_div), and
+    ///   [saturating_div()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_div),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -18178,47 +18169,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(quotient.is_infinity(), false);
     /// assert_eq!(quotient.is_undefined(), false);
     /// assert_eq!(quotient.is_divided_by_zero(), false);
+    /// assert_eq!(quotient.is_left_carry(), false);
+    /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let dividend = U256::zero();
-    /// let divisor = U256::from_uint(87_u8);
-    /// let quotient = dividend.wrapping_div(&divisor);
-    /// println!("{} / {} = {}", dividend, divisor, quotient);
-    /// assert_eq!(quotient.to_string(), "0");
-    /// assert_eq!(quotient.is_overflow(), false);
-    /// assert_eq!(quotient.is_underflow(), false);
-    /// assert_eq!(quotient.is_infinity(), false);
-    /// assert_eq!(quotient.is_undefined(), false);
-    /// assert_eq!(quotient.is_divided_by_zero(), false);
-    /// ```
-    /// 
-    /// # Panic Examples
-    /// ```should_panic
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let _dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let _divisor = U256::zero();
-    /// // It will panic!
-    /// let quotient = _dividend.wrapping_div(&_divisor);
-    /// 
-    /// let _dividend = U256::zero();
-    /// let _divisor = U256::zero();
-    /// // It will panic!
-    /// let quotient = _dividend.wrapping_div(&_divisor);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_div)
     pub fn wrapping_div(&self, rhs: &Self) -> Self
     {
         calc_assign_to_calc_div!(self, Self::divide_fully, rhs);
@@ -18248,12 +18204,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause divided_by_zero.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [wrapping_div_assign_uint()](struct@BigUInt#method.wrapping_div_assign_uint)
-    /// is a bit faster than this method `wrapping_div_assign()`.
-    /// If `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [wrapping_div_assign_uint()](struct@BigUInt#method.wrapping_div_assign_uint).
+    /// - The method
+    ///   [wrapping_div_assign_uint()](struct@BigUInt#method.wrapping_div_assign_uint)
+    ///   is a bit faster than this method `wrapping_div_assign()`.
+    ///   If `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [wrapping_div_assign_uint()](struct@BigUInt#method.wrapping_div_assign_uint).
+    /// - You may be interested in extra division methods
+    ///   In order to use 
+    ///   [saturating_div_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_div_assign),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -18278,56 +18238,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = UU32::zero();
-    /// let divisor = UU32::from_uint(87_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// 
-    /// a_biguint.wrapping_div_assign(&divisor);
-    /// println!("After a_biguint.wrapping_div_assign(&divisor),\na_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "0");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// ```
-    /// 
-    /// # Panic Examples
-    /// ```should_panic
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut _a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let _divisor = UU32::zero();
-    /// println!("Originally,\n_a_biguint = {}", _a_biguint);
-    /// // It will panic!
-    /// _a_biguint.wrapping_div_assign(&_divisor);
-    /// 
-    /// let mut _a_biguint = UU32::zero();
-    /// let _divisor = UU32::zero();
-    /// println!("Originally,\n_a_biguint = {}", _a_biguint);
-    /// // It will panic!
-    /// _a_biguint.wrapping_div_assign(&_divisor);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_div_assign)
     pub fn wrapping_div_assign(&mut self, rhs: &Self)
     {
         calc_to_calc_assign!(self, Self::wrapping_div, rhs);
@@ -20058,12 +19974,18 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   in the wrapping operations.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [wrapping_rem_uint()](struct@BigUInt#method.wrapping_rem_uint)
-    /// is a bit faster than this method `wrapping_rem()`.
-    /// If `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [wrapping_rem_uint()](struct@BigUInt#method.wrapping_rem_uint).
+    /// - The method
+    ///   [wrapping_rem_uint()](struct@BigUInt#method.wrapping_rem_uint)
+    ///   is a bit faster than this method `wrapping_rem()`.
+    ///   If `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [wrapping_rem_uint()](struct@BigUInt#method.wrapping_rem_uint).
+    /// - You may be interested in extra division methods,
+    ///   In order to use any one of 
+    ///   [checked_rem()](../trait_big_more/trait.BigUInt_More.html#tymethod.checked_rem),
+    ///   [unchecked_rem()](../trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_rem), and
+    ///   [saturating_rem()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_rem),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -20081,47 +20003,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(remainder.is_infinity(), false);
     /// assert_eq!(remainder.is_undefined(), false);
     /// assert_eq!(remainder.is_divided_by_zero(), false);
+    /// assert_eq!(remainder.is_left_carry(), false);
+    /// assert_eq!(remainder.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let dividend = UU32::zero();
-    /// let divisor = UU32::from_uint(87_u8);
-    /// let remainder = dividend.wrapping_rem(&divisor);
-    /// println!("{} % {} = {}", dividend, divisor, remainder);
-    /// assert_eq!(remainder.to_string(), "0");
-    /// assert_eq!(remainder.is_overflow(), false);
-    /// assert_eq!(remainder.is_underflow(), false);
-    /// assert_eq!(remainder.is_infinity(), false);
-    /// assert_eq!(remainder.is_undefined(), false);
-    /// assert_eq!(remainder.is_divided_by_zero(), false);
-    /// ```
-    /// 
-    /// # Panic Examples
-    /// ```should_panic
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let _dividend = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let _divisor = UU32::zero();
-    /// // It will panic!
-    /// let remainder = _dividend.wrapping_rem(&_divisor);
-    /// 
-    /// let _dividend = UU32::zero();
-    /// let _divisor = UU32::zero();
-    /// // It will panic!
-    /// let remainder = _dividend.wrapping_rem(&_divisor);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_rem)
     pub fn wrapping_rem(&self, rhs: &Self) -> Self
     {
         calc_assign_to_calc_rem!(self, Self::divide_fully, rhs);
@@ -20151,12 +20038,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause divided_by_zero.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [wrapping_rem_assign_uint()](struct@BigUInt#method.wrapping_rem_assign_uint)
-    /// is a bit faster than this method `wrapping_rem_assign()`.
-    /// If `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [wrapping_rem_assign_uint()](struct@BigUInt#method.wrapping_rem_assign_uint).
+    /// - The method
+    ///   [wrapping_rem_assign_uint()](struct@BigUInt#method.wrapping_rem_assign_uint)
+    ///   is a bit faster than this method `wrapping_rem_assign()`.
+    ///   If `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [wrapping_rem_assign_uint()](struct@BigUInt#method.wrapping_rem_assign_uint).
+    /// - You may be interested in extra division methods
+    ///   In order to use
+    ///   [saturating_rem_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_rem_assign),
+    ///   you need to import (use) the trait `BigUInt_More`.
     /// 
     /// # Example 1
     /// ```
@@ -20171,6 +20062,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(87_u8);
     /// a_biguint.wrapping_rem_assign(&divisor);
@@ -20181,56 +20074,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let mut a_biguint = U256::zero();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// 
-    /// let divisor = U256::from_uint(87_u8);
-    /// a_biguint.wrapping_rem_assign(&divisor);
-    /// println!("After a_biguint.wrapping_rem_assign({}), a_biguint = {}", divisor, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "0");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// ```
-    /// 
-    /// # Panic Examples
-    /// ```should_panic
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let mut _a_biguint = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let _divisor = U256::zero();
-    /// println!("Originally, a_biguint = {}", _a_biguint);
-    /// // It will panic!
-    /// _a_biguint.wrapping_rem_assign(&_divisor);
-    /// 
-    /// let mut _a_biguint = U256::zero();
-    /// let _divisor = U256::zero();
-    /// println!("Originally, a_biguint = {}", _a_biguint);
-    /// // It will panic!
-    /// _a_biguint.wrapping_rem_assign(&_divisor);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_rem_assign)
     pub fn wrapping_rem_assign(&mut self, rhs: &Self)
     {
         calc_to_calc_assign!(self, Self::wrapping_rem, rhs);

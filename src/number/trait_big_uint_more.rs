@@ -12,16 +12,13 @@
 // #![allow(rustdoc::missing_doc_code_examples)]
 
 
-use std::mem::size_of;
-use std::convert::From;
-use std::str::FromStr;
 use std::fmt::{ Display, Debug };
-use std::cmp::{ PartialEq, PartialOrd, Ordering };
+use std::cmp::{ PartialEq, PartialOrd };
 use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
-                Shl, ShlAssign, Shr, ShrAssign, RangeBounds };
+                Shl, ShlAssign, Shr, ShrAssign };
 
-use crate::number::{ SmallUInt, LongerUnion, SharedValues, SharedArrays, BigUInt, NumberErr };
+use crate::number::SmallUInt;
 
 
 
@@ -82,7 +79,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [checked_add()](struct@BigUInt#method.checked_add)
+        /// [checked_add()](#tymethod.checked_add)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -148,7 +145,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [unchecked_add()](struct@BigUInt#method.unchecked_add)
+        /// [unchecked_add()](#tymethod.unchecked_add)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -205,7 +202,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [saturating_add()](struct@BigUInt#method.saturating_add)
+        /// [saturating_add()](#tymethod.saturating_add)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -262,7 +259,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [saturating_add_assign()](struct@BigUInt#method.saturating_add_assign)
+        /// [saturating_add_assign()](#tymethod.saturating_add_assign)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -340,7 +337,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `u128`, the method
-        /// [safe_add()](struct@BigUInt#method.safe_add)
+        /// [safe_add()](#tymethod.safe_add)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -410,7 +407,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `u128`, the method
-        /// [safe_add_assign()](struct@BigUInt#method.safe_add_assign)
+        /// [safe_add_assign()](#tymethod.safe_add_assign)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -482,7 +479,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [checked_sub()](struct@BigUInt#method.checked_sub)
+        /// [checked_sub()](#tymethod.checked_sub)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -548,7 +545,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [unchecked_sub()](struct@BigUInt#method.unchecked_sub)
+        /// [unchecked_sub()](#tymethod.unchecked_sub)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -605,7 +602,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [saturating_sub()](struct@BigUInt#method.saturating_sub)
+        /// [saturating_sub()](#tymethod.saturating_sub)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -662,7 +659,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [saturating_sub_assign()](struct@BigUInt#method.saturating_sub_assign)
+        /// [saturating_sub_assign()](#tymethod.saturating_sub_assign)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -742,7 +739,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `u128`, the method
-        /// [safe_sub()](struct@BigUInt#method.safe_sub)
+        /// [safe_sub()](#tymethod.safe_sub)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -812,7 +809,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `u128`, the method
-        /// [safe_sub_assign()](struct@BigUInt#method.safe_sub_assign)
+        /// [safe_sub_assign()](#tymethod.safe_sub_assign)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -884,7 +881,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [checked_mul()](struct@BigUInt#method.checked_mul)
+        /// [checked_mul()](#tymethod.checked_mul)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -949,7 +946,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [unchecked_mul()](struct@BigUInt#method.unchecked_mul)
+        /// [unchecked_mul()](#tymethod.unchecked_mul)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -1007,7 +1004,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [saturating_mul()](struct@BigUInt#method.saturating_mul)
+        /// [saturating_mul()](#tymethod.saturating_mul)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -1064,7 +1061,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [saturating_mul_assign()](struct@BigUInt#method.saturating_mul_assign)
+        /// [saturating_mul_assign()](#tymethod.saturating_mul_assign)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -1143,7 +1140,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `u128`, the method
-        /// [safe_mul()](struct@BigUInt#method.safe_mul)
+        /// [safe_mul()](#tymethod.safe_mul)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -1214,7 +1211,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `u128`, the method
-        /// [safe_mul_assign()](struct@BigUInt#method.safe_mul_assign)
+        /// [safe_mul_assign()](#tymethod.safe_mul_assign)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -1287,7 +1284,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [checked_div()](struct@BigUInt#method.checked_div)
+        /// [checked_div()](#tymethod.checked_div)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -1351,7 +1348,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger than `u128`, the method
-        /// [unchecked_div()](struct@BigUInt#method.unchecked_div)
+        /// [unchecked_div()](#tymethod.unchecked_div)
         /// is proper rather than this method `unchecked_div_uint()`.
         /// 
         /// # Example 1
@@ -1414,7 +1411,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [saturating_div()](struct@BigUInt#method.saturating_div)
+        /// [saturating_div()](#tymethod.saturating_div)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -1474,7 +1471,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [saturating_div_assign()](struct@BigUInt#method.saturating_div_assign)
+        /// [saturating_div_assign()](#tymethod.saturating_div_assign)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -1543,7 +1540,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [checked_rem()](struct@BigUInt#method.checked_rem)
+        /// [checked_rem()](#tymethod.checked_rem)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -1600,7 +1597,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger than `u128`, the method
-        /// [unchecked_rem()](struct@BigUInt#method.unchecked_rem)
+        /// [unchecked_rem()](#tymethod.unchecked_rem)
         /// is proper rather than this method `unchecked_rem_uint()`.
         /// 
         /// # Example 1
@@ -1653,7 +1650,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [saturating_rem()](struct@BigUInt#method.saturating_rem)
+        /// [saturating_rem()](#tymethod.saturating_rem)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -1706,7 +1703,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger tham `ui128`, the method
-        /// [saturating_rem_assign()](struct@BigUInt#method.saturating_rem_assign)
+        /// [saturating_rem_assign()](#tymethod.saturating_rem_assign)
         /// is proper rather than this method.
         /// 
         /// # Example 1
@@ -1778,11 +1775,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [checked_add_uint()](struct@BigUInt#method.checked_add_uint)
+        /// [checked_add_uint()](#tymethod.checked_add_uint)
         /// is a bit faster than this method `checked_add()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [checked_add_uint()](struct@BigUInt#method.checked_add_uint).
+        /// [checked_add_uint()](#tymethod.checked_add_uint).
         /// 
         /// # Example 1
         /// ```
@@ -1837,11 +1834,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [unchecked_add_uint()](struct@BigUInt#method.unchecked_add_uint)
+        /// [unchecked_add_uint()](#tymethod.unchecked_add_uint)
         /// is a bit faster than this method `unchecked_add()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [unchecked_add_uint()](struct@BigUInt#method.unchecked_add_uint).
+        /// [unchecked_add_uint()](#tymethod.unchecked_add_uint).
         /// 
         /// # Example 1
         /// ```
@@ -1889,11 +1886,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [saturating_add_uint()](struct@BigUInt#method.saturating_add_uint)
+        /// [saturating_add_uint()](#tymethod.saturating_add_uint)
         /// is a bit faster than this method `saturating_add()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [saturating_add_uint()](struct@BigUInt#method.saturating_add_uint).
+        /// [saturating_add_uint()](#tymethod.saturating_add_uint).
         /// 
         /// # Example 1
         /// ```
@@ -1940,11 +1937,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [saturating_add_assign_uint()](struct@BigUInt#method.saturating_add_assign_uint)
+        /// [saturating_add_assign_uint()](#tymethod.saturating_add_assign_uint)
         /// is a bit faster than this method `saturating_add_assign()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [saturating_add_assign_uint()](struct@BigUInt#method.saturating_add_assign_uint).
+        /// [saturating_add_assign_uint()](#tymethod.saturating_add_assign_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2012,11 +2009,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [safe_add_uint()](struct@BigUInt#method.safe_add_uint)
+        /// [safe_add_uint()](#tymethod.safe_add_uint)
         /// is a bit faster than this method `safe_add()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [safe_add_uint()](struct@BigUInt#method.safe_add_uint).
+        /// [safe_add_uint()](#tymethod.safe_add_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2077,11 +2074,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [safe_add_assign_uint()](struct@BigUInt#method.safe_add_assign_uint)
+        /// [safe_add_assign_uint()](#tymethod.safe_add_assign_uint)
         /// is a bit faster than this method `safe_add_assign()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [safe_add_assign()](struct@BigUInt#method.safe_add_assign).
+        /// [safe_add_assign()](#tymethod.safe_add_assign).
         /// 
         /// # Example 1
         /// ```
@@ -2143,11 +2140,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [checked_sub_uint()](struct@BigUInt#method.checked_sub_uint)
+        /// [checked_sub_uint()](#tymethod.checked_sub_uint)
         /// is a bit faster than this method `checked_sub()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [checked_sub_uint()](struct@BigUInt#method.checked_sub_uint).
+        /// [checked_sub_uint()](#tymethod.checked_sub_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2201,11 +2198,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [unchecked_sub_uint()](struct@BigUInt#method.unchecked_sub_uint)
+        /// [unchecked_sub_uint()](#tymethod.unchecked_sub_uint)
         /// is a bit faster than this method `unchecked_sub()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [unchecked_sub_uint()](struct@BigUInt#method.unchecked_sub_uint).
+        /// [unchecked_sub_uint()](#tymethod.unchecked_sub_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2252,11 +2249,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [saturating_sub_uint()](struct@BigUInt#method.saturating_sub_uint)
+        /// [saturating_sub_uint()](#tymethod.saturating_sub_uint)
         /// is a bit faster than this method `saturating_sub()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [saturating_sub_uint()](struct@BigUInt#method.saturating_sub_uint).
+        /// [saturating_sub_uint()](#tymethod.saturating_sub_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2304,11 +2301,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [saturating_sub_assign_uint()](struct@BigUInt#method.saturating_sub_assign_uint)
+        /// [saturating_sub_assign_uint()](#tymethod.saturating_sub_assign_uint)
         /// is a bit faster than this method `saturating_sub_assign()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [saturating_sub_assign_uint()](struct@BigUInt#method.saturating_sub_assign_uint).
+        /// [saturating_sub_assign_uint()](#tymethod.saturating_sub_assign_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2378,11 +2375,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [safe_sub_uint()](struct@BigUInt#method.safe_sub_uint)
+        /// [safe_sub_uint()](#tymethod.safe_sub_uint)
         /// is a bit faster than this method `safe_sub()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [safe_sub_uint()](struct@BigUInt#method.safe_sub_uint).
+        /// [safe_sub_uint()](#tymethod.safe_sub_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2443,11 +2440,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [safe_sub_assign_uint()](struct@BigUInt#method.safe_sub_assign_uint)
+        /// [safe_sub_assign_uint()](#tymethod.safe_sub_assign_uint)
         /// is a bit faster than this method `safe_sub_assign()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [safe_sub_assign_uint()](struct@BigUInt#method.safe_sub_assign_uint).
+        /// [safe_sub_assign_uint()](#tymethod.safe_sub_assign_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2509,11 +2506,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [checked_mul_uint()](struct@BigUInt#method.checked_mul_uint)
+        /// [checked_mul_uint()](#tymethod.checked_mul_uint)
         /// is a bit faster than this method `checked_mul()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [checked_mul_uint()](struct@BigUInt#method.checked_mul_uint).
+        /// [checked_mul_uint()](#tymethod.checked_mul_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2567,11 +2564,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [unchecked_mul_uint()](struct@BigUInt#method.unchecked_mul_uint)
+        /// [unchecked_mul_uint()](#tymethod.unchecked_mul_uint)
         /// is a bit faster than this method `unchecked_mul()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [unchecked_mul_uint()](struct@BigUInt#method.unchecked_mul_uint).
+        /// [unchecked_mul_uint()](#tymethod.unchecked_mul_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2621,11 +2618,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [saturating_mul_uint()](struct@BigUInt#method.saturating_mul_uint)
+        /// [saturating_mul_uint()](#tymethod.saturating_mul_uint)
         /// is a bit faster than this method `saturating_mul()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [saturating_mul_uint()](struct@BigUInt#method.saturating_mul_uint).
+        /// [saturating_mul_uint()](#tymethod.saturating_mul_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2671,11 +2668,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [saturating_mul_assign_uint()](struct@BigUInt#method.saturating_mul_assign_uint)
+        /// [saturating_mul_assign_uint()](#tymethod.saturating_mul_assign_uint)
         /// is a bit faster than this method `saturating_mul_assign()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [saturating_mul_assign_uint()](struct@BigUInt#method.saturating_mul_assign_uint).
+        /// [saturating_mul_assign_uint()](#tymethod.saturating_mul_assign_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2741,11 +2738,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [safe_add_uint()](struct@BigUInt#method.safe_add_uint)
+        /// [safe_add_uint()](#tymethod.safe_add_uint)
         /// is a bit faster than this method `safe_add()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [safe_add_uint()](struct@BigUInt#method.safe_add_uint).
+        /// [safe_add_uint()](#tymethod.safe_add_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2806,11 +2803,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [safe_add_uint()](struct@BigUInt#method.safe_add_uint)
+        /// [safe_add_uint()](#tymethod.safe_add_uint)
         /// is a bit faster than this method `safe_add()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [safe_add_uint()](struct@BigUInt#method.safe_add_uint).
+        /// [safe_add_uint()](#tymethod.safe_add_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2872,11 +2869,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [checked_div_uint()](struct@BigUInt#method.checked_div_uint)
+        /// [checked_div_uint()](#tymethod.checked_div_uint)
         /// is a bit faster than this method `checked_div()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [checked_div_uint()](struct@BigUInt#method.checked_div_uint).
+        /// [checked_div_uint()](#tymethod.checked_div_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2930,11 +2927,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [unchecked_div_uint()](struct@BigUInt#method.unchecked_div_uint)
+        /// [unchecked_div_uint()](#tymethod.unchecked_div_uint)
         /// is a bit faster than this method `unchecked_div()`.
         /// If `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [unchecked_div_uint()](struct@BigUInt#method.unchecked_div_uint).
+        /// [unchecked_div_uint()](#tymethod.unchecked_div_uint).
         /// 
         /// # Example 1
         /// ```
@@ -2984,11 +2981,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [saturating_div_uint()](struct@BigUInt#method.saturating_div_uint)
+        /// [saturating_div_uint()](#tymethod.saturating_div_uint)
         /// is a bit faster than this method `saturating_div()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [saturating_div_uint()](struct@BigUInt#method.saturating_div_uint).
+        /// [saturating_div_uint()](#tymethod.saturating_div_uint).
         /// 
         /// # Example 1
         /// ```
@@ -3038,11 +3035,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [saturating_div_assign_uint()](struct@BigUInt#method.saturating_div_assign_uint)
+        /// [saturating_div_assign_uint()](#tymethod.saturating_div_assign_uint)
         /// is a bit faster than this method `saturating_div_assign()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [saturating_div_assign_uint()](struct@BigUInt#method.saturating_div_assign_uint).
+        /// [saturating_div_assign_uint()](#tymethod.saturating_div_assign_uint).
         /// 
         /// # Example 1
         /// ```
@@ -3101,11 +3098,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [checked_rem_uint()](struct@BigUInt#method.checked_rem_uint)
+        /// [checked_rem_uint()](#tymethod.checked_rem_uint)
         /// is a bit faster than this method `checked_rem()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [checked_rem_uint()](struct@BigUInt#method.checked_rem_uint).
+        /// [checked_rem_uint()](#tymethod.checked_rem_uint).
         /// 
         /// # Example 1
         /// ```
@@ -3159,11 +3156,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [unchecked_rem_uint()](struct@BigUInt#method.unchecked_rem_uint)
+        /// [unchecked_rem_uint()](#tymethod.unchecked_rem_uint)
         /// is a bit faster than this method `unchecked_rem()`.
         /// If `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [unchecked_rem_uint()](struct@BigUInt#method.unchecked_rem_uint).
+        /// [unchecked_rem_uint()](#tymethod.unchecked_rem_uint).
         /// 
         /// # Example 1
         /// ```
@@ -3213,11 +3210,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [saturating_rem_uint()](struct@BigUInt#method.saturating_rem_uint)
+        /// [saturating_rem_uint()](#tymethod.saturating_rem_uint)
         /// is a bit faster than this method `saturating_rem()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [saturating_rem_uint()](struct@BigUInt#method.saturating_rem_uint).
+        /// [saturating_rem_uint()](#tymethod.saturating_rem_uint).
         /// 
         /// # Example 1
         /// ```
@@ -3267,11 +3264,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [saturating_rem_assign_uint()](struct@BigUInt#method.saturating_rem_assign_uint)
+        /// [saturating_rem_assign_uint()](#tymethod.saturating_rem_assign_uint)
         /// is a bit faster than this method `saturating_rem_assign()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [saturating_rem_assign_uint()](struct@BigUInt#method.saturating_rem_assign_uint).
+        /// [saturating_rem_assign_uint()](#tymethod.saturating_rem_assign_uint).
         /// 
         /// # Example 1
         /// ```
