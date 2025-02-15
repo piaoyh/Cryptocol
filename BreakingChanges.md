@@ -24,8 +24,8 @@
 | fn is_multiple_of(&self, rhs: &Self) -> bool                                            |
 | fn midpoint_uint<U>(&self, rhs: U) -> Self                                              |
 | fn midpoint_assign_uint<U>(&mut self, rhs: U)                                           |
-| fn midpoint_uint<U>(&self, rhs: &Self) -> Self                                          |
-| fn midpoint_assign_uint<U>(&mut self, rhs: &Self)                                       |
+| fn midpoint(&self, rhs: &Self) -> Self                                                  |
+| fn midpoint_assign(&mut self, rhs: &Self)                                               |
 | fn checked_pow_uint<U>(&self, exp: U) -> Option<Self>                                   |
 | fn unchecked_pow_uint<U>(&self, exp: U) -> Self                                         |
 | fn saturating_pow_uint<U>(&self, exp: U) -> Self                                        |
@@ -34,6 +34,22 @@
 | fn unchecked_pow(&self, exp: &Self) -> Self                                             |
 | fn saturating_pow(&self, exp: &Self) -> Self                                            |
 | fn saturating_pow_assign(&mut self, exp: &Self)                                         |
+| fn checked_iroot_uint<U>(&self, exp: U) -> Option<Self>                                 |
+| fn unchecked_iroot_uint<U>(&self, exp: U) -> Self                                       |
+| fn checked_ilog_uint<U>(&self, base: U) -> Option<Self>                                 |
+| fn unchecked_ilog_uint<U>(&self, base: U) -> Self                                       |
+| fn checked_iroot(&self, exp: &Self) -> Option<Self>                                     |
+| fn unchecked_iroot(&self, exp: &Self) -> Self                                           |
+| fn checked_ilog(&self, base: &Self) -> Self                                             |
+| fn unchecked_ilog(&self, base: &Self) -> Self                                           |
+| fn checked_ilog2(&self) -> Option<Self>                                                 |
+| fn unchecked_ilog2(&self) -> Self                                                       |
+| fn checked_ilog10(&self) -> Option<Self>                                                |
+| fn unchecked_ilog10(&self) -> Self                                                      |
+| fn checked_shift_left<U>(&self, n: U) -> Option<Self>                                   |
+| fn unchecked_shift_left<U>(&self, n: U) -> Self                                         |
+| fn checked_shift_right<U>(&self, n: U) -> Option<Self>                                  |
+| fn unchecked_shift_right<U>(&self, n: U) -> Self                                        |
 
 - The methods above have been moved from struct BigUInt to trait BigUInt_More because docs.rs failed in generating struct.bigUInt.html.
 

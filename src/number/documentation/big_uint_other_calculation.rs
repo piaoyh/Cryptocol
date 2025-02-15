@@ -3823,6 +3823,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for Noraml case
@@ -3841,6 +3843,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for self != 0 and exp == 0 and modulo != 0
@@ -3859,6 +3863,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for self != 0 and exp == multiple of modulo and modulo != 0
@@ -3877,6 +3883,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for self == 0 and exp != 0 and modulo != 0
@@ -3895,6 +3903,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for self == multiple of modulo and exp != 0 and modulo != 0
@@ -3913,6 +3923,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -4023,6 +4035,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(30_u8);
     /// let modulo = U256::halfmax();
@@ -4034,6 +4048,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for Noraml case
@@ -4048,6 +4064,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(100_u8);
     /// let modulo = U256::halfmax();
@@ -4059,6 +4077,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for self != 0 and exp == 0 and modulo != 0
@@ -4073,6 +4093,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::zero();
     /// let modulo = U256::halfmax();
@@ -4084,6 +4106,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for self != 0 and exp == multiple of modulo and modulo != 0
@@ -4098,6 +4122,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(200_u8);
     /// let modulo = U256::from_uint(100_u8);
@@ -4109,6 +4135,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for self == 0 and exp != 0 and modulo != 0
@@ -4123,6 +4151,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(30_u8);
     /// let modulo = U256::halfmax();
@@ -4134,6 +4164,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for self == multiple of modulo and exp != 0 and modulo != 0
@@ -4148,6 +4180,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(30_u8);
     /// let modulo = U256::from_uint(100_u8);
@@ -4159,6 +4193,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -4933,6 +4969,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -4951,6 +4989,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -4969,6 +5009,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4
@@ -4987,6 +5029,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5
@@ -5005,6 +5049,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6
@@ -5022,6 +5068,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -5097,6 +5145,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(8_u8);
     /// a_biguint.iroot_assign(&exp);
@@ -5107,6 +5157,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -5122,6 +5174,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(65_u8);
     /// a_biguint.iroot_assign(&exp);
@@ -5132,6 +5186,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -5146,6 +5202,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(212_u8);
     /// a_biguint.iroot_assign(&exp);
@@ -5156,6 +5214,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4
@@ -5170,6 +5230,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(213_u8);
     /// a_biguint.iroot_assign(&exp);
@@ -5180,6 +5242,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5
@@ -5194,6 +5258,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(u128::MAX).wrapping_add_uint(1_u8);
     /// a_biguint.iroot_assign(&exp);
@@ -5204,6 +5270,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6
@@ -5218,6 +5286,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(6_u8);
     /// a_biguint.iroot_assign(&exp);
@@ -5228,6 +5298,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -5315,6 +5387,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -5333,6 +5407,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -5351,6 +5427,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4
@@ -5369,6 +5447,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5
@@ -5387,6 +5467,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6
@@ -5404,6 +5486,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7
@@ -5422,6 +5506,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), true);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 8
@@ -5439,6 +5525,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 9
@@ -5456,6 +5544,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn panic_free_iroot(&self, _exp: &Self) -> Self
     {
@@ -5519,6 +5609,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(8_u8);
     /// a_biguint.panic_free_iroot_assign(&exp);
@@ -5529,6 +5621,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -5544,6 +5638,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(65_u8);
     /// a_biguint.panic_free_iroot_assign(&exp);
@@ -5554,6 +5650,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -5568,6 +5666,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(212_u8);
     /// a_biguint.panic_free_iroot_assign(&exp);
@@ -5578,6 +5678,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4
@@ -5592,6 +5694,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(213_u8);
     /// a_biguint.panic_free_iroot_assign(&exp);
@@ -5602,6 +5706,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5
@@ -5616,6 +5722,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(u128::MAX).wrapping_add_uint(1_u8);
     /// a_biguint.panic_free_iroot_assign(&exp);
@@ -5626,6 +5734,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6
@@ -5641,6 +5751,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(6_u8);
     /// a_biguint.panic_free_iroot_assign(&exp);
@@ -5651,6 +5763,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7
@@ -5665,6 +5779,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::zero();
     /// a_biguint.panic_free_iroot_assign(&exp);
@@ -5675,6 +5791,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), true);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7
@@ -5688,6 +5806,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::zero();
     /// a_biguint.panic_free_iroot_assign(&exp);
@@ -5698,6 +5818,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 8
@@ -5711,6 +5833,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::zero();
     /// a_biguint.panic_free_iroot_assign(&exp);
@@ -5721,6 +5845,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn panic_free_iroot_assign(&mut self, _exp: &Self)
     {
@@ -5760,6 +5886,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -5776,6 +5903,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_undefined(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); }
     /// }
@@ -5784,6 +5913,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -5800,6 +5930,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_undefined(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); }
     /// }
@@ -5808,6 +5940,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 3
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -5824,6 +5957,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_undefined(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); }
     /// }
@@ -5832,6 +5967,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 4
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -5848,6 +5984,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_undefined(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); }
     /// }
@@ -5856,6 +5994,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 5
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -5872,6 +6011,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_undefined(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); }
     /// }
@@ -5879,6 +6020,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 6
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -5895,6 +6037,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_undefined(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); },
     /// }
@@ -5903,6 +6047,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 7
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -5921,6 +6066,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 8
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -5939,6 +6085,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 9
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
@@ -5993,6 +6140,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -6006,11 +6154,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -6024,11 +6175,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -6042,11 +6196,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -6060,11 +6217,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -6078,10 +6238,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -6095,11 +6258,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
     /// ```should_panic
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -6156,6 +6322,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -6172,6 +6340,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn isqrt(&self) -> Self
     {
@@ -6213,6 +6383,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.isqrt_assign();
     /// println!("After a_biguint.isqrt_assign(), a_biguint = {}.", a_biguint);
@@ -6222,6 +6394,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -6236,6 +6410,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.isqrt_assign();
     /// println!("After a_biguint.isqrt_assign(), a_biguint = {}.", a_biguint);
@@ -6245,6 +6421,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn isqrt_assign(&mut self)
     {
@@ -6292,6 +6470,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -6310,6 +6490,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -6327,6 +6509,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -6409,6 +6593,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let base = U256::from_uint(1_0000_0000_0000_0000_0000_0000_0000_0000_u128);
     /// a_biguint.ilog_assign(&base);
@@ -6419,6 +6605,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -6434,6 +6622,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let base = U256::from_uint(10_u8);
     /// a_biguint.ilog_assign(&base);
@@ -6444,6 +6634,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -6458,6 +6650,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let base = U256::from_uint(6_u8);
     /// a_biguint.ilog_assign(&base);
@@ -6468,6 +6662,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -6579,6 +6775,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -6597,6 +6795,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -6614,6 +6814,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4
@@ -6632,6 +6834,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), true);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5
@@ -6650,6 +6854,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), true);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6
@@ -6667,6 +6873,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7
@@ -6684,6 +6892,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 8
@@ -6701,6 +6911,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn panic_free_ilog(&self, _base: &Self) -> Self
     {
@@ -6755,6 +6967,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let base = U256::from_uint(1_0000_0000_0000_0000_0000_0000_0000_0000_u128);
     /// a_biguint.panic_free_ilog_assign(&base);
@@ -6765,6 +6979,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -6780,6 +6996,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let base = U256::from_uint(10_u8);
     /// a_biguint.panic_free_ilog_assign(&base);
@@ -6790,6 +7008,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -6804,6 +7024,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let base = U256::from_uint(6_u8);
     /// a_biguint.panic_free_ilog_assign(&base);
@@ -6814,6 +7036,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4
@@ -6829,6 +7053,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let base = U256::zero();
     /// a_biguint.panic_free_ilog_assign(&base);
@@ -6839,6 +7065,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), true);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5
@@ -6854,6 +7082,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let base = U256::one();
     /// a_biguint.panic_free_ilog_assign(&base);
@@ -6864,6 +7094,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), true);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6
@@ -6878,6 +7110,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let base = U256::from_uint(6_u8);
     /// a_biguint.panic_free_ilog_assign(&base);
@@ -6888,6 +7122,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7
@@ -6902,6 +7138,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let base = U256::zero();
     /// a_biguint.panic_free_ilog_assign(&base);
@@ -6912,6 +7150,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 8
@@ -6926,6 +7166,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let base = U256::one();
     /// a_biguint.panic_free_ilog_assign(&base);
@@ -6936,6 +7178,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn panic_free_ilog_assign(&mut self, _base: &Self)
     {
@@ -6962,14 +7206,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///
     /// # Counterpart Methods
     /// This method might not be optimized owing to implementation details.
-    /// [checked_ilog2()](struct@BigUInt#method.checked_ilog2) can produce
+    /// [checked_ilog2()](#tymethod.checked_ilog2) can produce
     /// results more efficiently for base 2, and
-    /// [checked_ilog10()](struct@BigUInt#method.checked_ilog10) can produce
+    /// [checked_ilog10()](#tymethod.checked_ilog10) can produce
     /// results more efficiently for base 10.
     /// 
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -6986,6 +7231,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_undefined(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); },
     /// }
@@ -6994,6 +7241,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -7010,6 +7258,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_undefined(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); },
     /// }
@@ -7017,6 +7267,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -7033,6 +7284,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_undefined(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); },
     /// }
@@ -7041,6 +7294,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 4
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -7060,6 +7314,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 5
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -7078,6 +7333,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 6
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -7096,6 +7352,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 7
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -7114,6 +7371,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 7
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -7154,14 +7412,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///
     /// # Counterpart Methods
     /// This method might not be optimized owing to implementation details.
-    /// [unchecked_ilog2()](struct@BigUInt#method.unchecked_ilog2)
+    /// [unchecked_ilog2()](#tymethod.unchecked_ilog2)
     /// can produce results more efficiently for base 2, and
-    /// [unchecked_ilog10()](struct@BigUInt#method.unchecked_ilog10)
+    /// [unchecked_ilog10()](#tymethod.unchecked_ilog10)
     /// can produce results more efficiently for base 10.
     /// 
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -7175,11 +7434,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
     /// ```
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -7193,10 +7455,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -7210,11 +7475,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
     /// ```should_panic
     /// use std::str::FromStr;
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -7280,6 +7548,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -7296,6 +7566,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -7312,6 +7584,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -7356,6 +7630,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.ilog2_assign();
     /// println!("After a_biguint.ilog2_assign(),\na_biguint = {}.", a_biguint);
@@ -7365,6 +7641,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -7379,6 +7657,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.ilog2_assign();
     /// println!("After a_biguint.ilog2_assign(),\na_biguint = {}.", a_biguint);
@@ -7388,6 +7668,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -7402,6 +7684,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.ilog2_assign();
     /// println!("After a_biguint.ilog2_assign(),\na_biguint = {}.", a_biguint);
@@ -7411,6 +7695,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -7462,6 +7748,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -7478,6 +7766,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -7494,6 +7784,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4
@@ -7510,6 +7802,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn panic_free_ilog2(&self) -> Self
     {
@@ -7547,6 +7841,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.ilog2_assign();
     /// println!("After a_biguint.ilog2_assign(),\na_biguint = {}.", a_biguint);
@@ -7556,6 +7852,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -7570,6 +7868,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.ilog2_assign();
     /// println!("After a_biguint.ilog2_assign(),\na_biguint = {}.", a_biguint);
@@ -7579,6 +7879,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -7593,6 +7895,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.ilog2_assign();
     /// println!("After a_biguint.ilog2_assign(),\na_biguint = {}.", a_biguint);
@@ -7602,6 +7906,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4
@@ -7616,6 +7922,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.panic_free_ilog2_assign();
     /// println!("After a_biguint.panic_free_ilog2_assign(),\na_biguint = {}.", a_biguint);
@@ -7625,6 +7933,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn panic_free_ilog2_assign(&mut self)
     {
@@ -7645,13 +7955,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Methods
     /// This method is optimized for base 2;
-    /// [checked_ilog_uint()](struct@BigUInt#method.checked_ilog_uint)
+    /// [checked_ilog_uint()](#tymethod.checked_ilog_uint)
     /// can produce results of the base other than 2, and
-    /// [checked_ilog10()](struct@BigUInt#method.checked_ilog10)
+    /// [checked_ilog10()](#tymethod.checked_ilog10)
     /// can produce results more efficiently for base 10.
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -7667,6 +7978,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
     ///             assert_eq!(r.is_undefined(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); },
     /// }
@@ -7674,6 +7987,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -7689,6 +8003,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
     ///             assert_eq!(r.is_undefined(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); },
     /// }
@@ -7696,6 +8012,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -7711,6 +8028,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
     ///             assert_eq!(r.is_undefined(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); },
     /// }
@@ -7718,6 +8037,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 4
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -7751,13 +8071,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Methods
     /// This method is optimized for base 2;
-    /// [unchecked_ilog_uint()](struct@BigUInt#method.unchecked_ilog_uint)
+    /// [unchecked_ilog_uint()](#tymethod.unchecked_ilog_uint)
     /// can produce results of the base other than 2, and
-    /// [unchecked_ilog10()](struct@BigUInt#method.unchecked_ilog10)
+    /// [unchecked_ilog10()](#tymethod.unchecked_ilog10)
     /// can produce results more efficiently for base 10.
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -7770,10 +8091,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -7786,10 +8110,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     ///
@@ -7802,10 +8129,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
     /// ```should_panic
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -7850,6 +8180,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -7866,6 +8198,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -7882,6 +8216,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -7927,6 +8263,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.ilog10_assign();
     /// println!("After a_biguint.ilog10_assign(),\na_biguint = {}.", a_biguint);
@@ -7936,6 +8274,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -7950,6 +8290,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.ilog10_assign();
     /// println!("After a_biguint.ilog10_assign(),\na_biguint = {}.", a_biguint);
@@ -7959,6 +8301,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -7973,6 +8317,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.ilog10_assign();
     /// println!("After a_biguint.ilog10_assign(),\na_biguint = {}.", a_biguint);
@@ -7982,6 +8328,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -8033,6 +8381,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -8049,6 +8399,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -8065,6 +8417,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4
@@ -8081,6 +8435,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn panic_free_ilog10(&self) -> Self
     {
@@ -8119,6 +8475,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.panic_free_ilog10_assign();
     /// println!("After a_biguint.panic_free_ilog10_assign(),\na_biguint = {}.", a_biguint);
@@ -8128,6 +8486,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
@@ -8142,6 +8502,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.panic_free_ilog10_assign();
     /// println!("After a_biguint.panic_free_ilog10_assign(),\na_biguint = {}.", a_biguint);
@@ -8151,6 +8513,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
@@ -8165,6 +8529,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.panic_free_ilog10_assign();
     /// println!("After a_biguint.panic_free_ilog10_assign(),\na_biguint = {}.", a_biguint);
@@ -8174,6 +8540,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4
@@ -8188,6 +8556,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// a_biguint.panic_free_ilog10_assign();
     /// println!("After a_biguint.panic_free_ilog10_assign(),\na_biguint = {}.", a_biguint);
@@ -8197,6 +8567,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn panic_free_ilog10_assign(&mut self)
     {
@@ -8218,13 +8590,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Counterpart Methods
     /// This method is not optimized for base 10 but provides convenience
     /// for base 10;
-    /// [checked_ilog_uint()](struct@BigUInt#method.checked_ilog_uint)
+    /// [checked_ilog_uint()](#tymethod.checked_ilog_uint)
     /// can produce results of the base other than 10, and
-    /// [checked_ilog2()](struct@BigUInt#method.checked_ilog2)
+    /// [checked_ilog2()](#tymethod.checked_ilog2)
     /// can produce results more efficiently for base 2.
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -8240,6 +8613,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
     ///             assert_eq!(r.is_undefined(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); },
     /// }
@@ -8247,6 +8622,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -8262,6 +8638,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
     ///             assert_eq!(r.is_undefined(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); },
     /// }
@@ -8269,6 +8647,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -8284,6 +8663,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_divided_by_zero(), false);
     ///             assert_eq!(r.is_undefined(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Error"); },
     /// }
@@ -8291,6 +8672,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 4
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -8325,13 +8707,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Counterpart Methods
     /// This method is not optimized for base 10 but provides convenience
     /// for base 10;
-    /// [unchecked_ilog_uint()](struct@BigUInt#method.unchecked_ilog_uint)
+    /// [unchecked_ilog_uint()](#tymethod.unchecked_ilog_uint)
     /// can produce results of the base other than 10, and
-    /// [unchecked_ilog2()](struct@BigUInt#method.unchecked_ilog2)
+    /// [unchecked_ilog2()](#tymethod.unchecked_ilog2)
     /// can produce results more efficiently for base 2.
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -8344,10 +8727,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -8360,10 +8746,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     ///
@@ -8376,10 +8765,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Example
     /// ```should_panic
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 

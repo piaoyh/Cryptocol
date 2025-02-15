@@ -24,7 +24,7 @@ use crate::number::SmallUInt;
 
 
 /// # Introduction
-/// Trait `BigUInt_More` is for BigUInt
+/// Trait `BigInt_More` is for BigUInt
 ///
 /// # Quick start
 /// In order to use this trait, you have to import (use)
@@ -43,7 +43,7 @@ use crate::number::SmallUInt;
 /// // to do
 /// ```
 #[allow(non_camel_case_types)]
-pub trait BigUInt_More<T, const N: usize> : Clone + Sized //+ Display + + ToString
+pub trait BigInt_More<T, const N: usize> : Clone + Sized //+ Display + + ToString
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
@@ -5057,6 +5057,263 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + BitXor<Output=U> + BitXorAssign + Not<Output=U>
                 + PartialEq + PartialOrd;
 
+        // fn checked_iroot_uint<U>(&self, exp: U) -> Option<Self>
+        /// Calculates the `exp`-th root of `self`, rounded down,
+        /// and returns the result value, wrapped by `Some` of enum `Option`.
+        ///
+        /// # Arguments
+        /// `exp` is the power of the root of `self` and is a primitive
+        /// unsigned integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Output
+        /// If the exact value of `exp`-th root of `self` can be expressed with
+        /// `Self`-typed unsigned integer, it will be returned wrapped by `Some`
+        /// of enum `Option`.
+        /// Otherwise, the `Self`-typed biggest unsigned integer that is
+        /// less than the exact value of `exp`-th root of `self` will be returned
+        /// wrapped by `Some` of enum `Option`.
+        /// 
+        /// # Features
+        /// - If `exp` is greater than zero and `self` is greater than 1,
+        ///   the result of this method is never greater than `self`.
+        ///   So, this method never causes overflow.
+        /// - If `exp` is `0`, this method returns `None`.
+        /// 
+        /// # Counterpart Method
+        /// If `exp` is bigger than `u128`, the method
+        /// [checked_iroot()](#tymethod.checked_iroot)
+        /// is proper rather than this method.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u128);
+        /// 
+        /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
+        /// let exp = 8_u8;
+        /// let res = a_biguint.checked_iroot_uint(exp);
+        /// match res
+        /// {
+        ///     Some(r) => {
+        ///             println!("The third root of {} is {}.", a_biguint, r);
+        ///             assert_eq!(r.to_string(), "100000000");
+        ///             assert_eq!(r.is_overflow(), false);
+        ///             assert_eq!(r.is_underflow(), false);
+        ///             assert_eq!(r.is_infinity(), false);
+        ///             assert_eq!(r.is_undefined(), false);
+        ///             assert_eq!(r.is_divided_by_zero(), false);
+        ///             assert_eq!(r.is_left_carry(), false);
+        ///             assert_eq!(r.is_right_carry(), false);
+        ///         },
+        ///     None => { println!("Error"); }
+        /// }
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.checked_iroot_uint)
+        fn checked_iroot_uint<U>(&self, exp: U) -> Option<Self>
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+        // fn unchecked_iroot_uint<U>(&self, exp: U) -> Self
+        /// Calculates the `exp`-th root of `self`, rounded down,
+        /// and returns the result value.
+        ///
+        /// # Arguments
+        /// `exp` is the power of the root of `self` and is a primitive
+        /// unsigned integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - If `exp` is `0`, it will panic.
+        /// 
+        /// # Output
+        /// If the exact value of `exp`-th root of `self` can be expressed with
+        /// `Self`-typed unsigned integer, it will be returned.
+        /// Otherwise, the `Self`-typed biggest unsigned integer that is
+        /// less than the exact value of `exp`-th root of `self` will be returned.
+        ///
+        /// # Features
+        /// If `exp` is greater than zero and `self` is greater than 1,
+        /// the result of this method is never greater than `self`.
+        /// So, this method never causes overflow.
+        /// 
+        /// # Counterpart Method
+        /// If `exp` is bigger than `u128`, the method
+        /// [unchecked_root()](#tymethod.unchecked_root)
+        /// is proper rather than this method.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u8);
+        /// 
+        /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
+        /// let exp = 8_u8;
+        /// let res = a_biguint.unchecked_iroot_uint(exp);
+        /// println!("The third root of {} is {}.", a_biguint, res);
+        /// assert_eq!(res.to_string(), "100000000");
+        /// assert_eq!(res.is_overflow(), false);
+        /// assert_eq!(res.is_underflow(), false);
+        /// assert_eq!(res.is_infinity(), false);
+        /// assert_eq!(res.is_undefined(), false);
+        /// assert_eq!(res.is_divided_by_zero(), false);
+        /// assert_eq!(res.is_left_carry(), false);
+        /// assert_eq!(res.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.unchecked_iroot_uint)
+        fn unchecked_iroot_uint<U>(&self, exp: U) -> Self
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+        // fn checked_ilog_uint<U>(&self, base: U) -> Option<Self>
+        /// Calculates the logarithm of the number with respect to `base`, rounded
+        /// down, and returns the result wrapped with enum `Some` of `Option`.
+        ///
+        /// # Arguments
+        /// `base` is the base of logarithm of `self`, and is a primitive unsigned
+        /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        /// `base` should be greater than 1.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Output
+        /// - It returns the logarithm of the number with respect to `base`,
+        ///   rounded down, wrapped with enum `Some` of `Option`.
+        /// - It returns `None` if `self` is zero.
+        /// - It returns `None` if `base` is either `0` or `1`.
+        /// 
+        /// # Counterpart Methods
+        /// This method might not be optimized owing to implementation details.
+        /// [checked_ilog2()](#tymethod.checked_ilog2)
+        /// can produce results more efficiently for base 2, and
+        /// [checked_ilog10()](#tymethod.checked_ilog10)
+        /// can produce results more efficiently for base 10.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u8);
+        /// 
+        /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
+        /// let base = 1_0000_0000_0000_0000_0000_0000_0000_0000_u128;
+        /// let res = a_biguint.checked_ilog_uint(base);
+        /// match res
+        /// {
+        ///     Some(r) => {
+        ///             println!("The logarithm of {} with respect to {} is {}.", a_biguint, base, r);
+        ///             assert_eq!(r.to_string(), "2");
+        ///             assert_eq!(r.is_overflow(), false);
+        ///             assert_eq!(r.is_underflow(), false);
+        ///             assert_eq!(r.is_infinity(), false);
+        ///             assert_eq!(r.is_undefined(), false);
+        ///             assert_eq!(r.is_divided_by_zero(), false);
+        ///             assert_eq!(r.is_left_carry(), false);
+        ///             assert_eq!(r.is_right_carry(), false);
+        ///         },
+        ///     None => { println!("Error"); },
+        /// }
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.checked_ilog_uint)
+        fn checked_ilog_uint<U>(&self, base: U) -> Option<Self>
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+        
+        // fn unchecked_ilog_uint<U>(&self, base: U) -> Self
+        /// Calculates the logarithm of the number with respect to `base`,
+        /// rounded down, and returns the result.
+        ///
+        /// # Arguments
+        /// `base` is the base of logarithm of `self`, and is a primitive unsigned
+        /// integer such as `u8`, `u16`, `u32`, `u64`,and `u128`.
+        /// `base` should be greater than 1.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - This function will panic if `self` is zero.
+        /// - This function will panic if `base` is zero or one.
+        /// 
+        /// # Output
+        /// It returns the logarithm of the number with respect to `base`,
+        /// rounded down.
+        /// 
+        /// # Counterpart Methods
+        /// This method might not be optimized owing to implementation details.
+        /// [unchecked_ilog2()](#tymethod.unchecked_ilog2)
+        /// can produce results more efficiently for base 2, and
+        /// [unchecked_ilog10()](#tymethod.unchecked_ilog10)
+        /// can produce results more efficiently for base 10.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u16);
+        /// 
+        /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
+        /// let base = 1_0000_0000_0000_0000_0000_0000_0000_0000_u128;
+        /// let res = a_biguint.unchecked_ilog_uint(base);
+        /// println!("The logarithm of {} with respect to {} is {}.", a_biguint, base, res);
+        /// assert_eq!(res.to_string(), "2");
+        /// assert_eq!(res.is_overflow(), false);
+        /// assert_eq!(res.is_underflow(), false);
+        /// assert_eq!(res.is_infinity(), false);
+        /// assert_eq!(res.is_undefined(), false);
+        /// assert_eq!(res.is_divided_by_zero(), false);
+        /// assert_eq!(res.is_left_carry(), false);
+        /// assert_eq!(res.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.unchecked_ilog_uint)
+        fn unchecked_ilog_uint<U>(&self, base: U) -> Self
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+
 
         /*** EXPONENTIATION AND LOGARITHM BIGUINT ***/
 
@@ -5292,5 +5549,656 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// assert_eq!(a_biguint.is_left_carry(), false);
         /// assert_eq!(a_biguint.is_right_carry(), false);
         /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.saturating_pow_assign)
         fn saturating_pow_assign(&mut self, exp: &Self);
+        
+        // fn checked_iroot(&self, exp: &Self) -> Option<Self>
+        /// Calculates the `exp`-th root of `self`, rounded down,
+        /// and returns the result value, wrapped by `Some` of enum `Option`.
+        ///
+        /// # Arguments
+        /// `exp` is the power of the root of `self`, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Output
+        /// If the exact value of `exp`-th root of `self` can be expressed with
+        /// `Self`-typed unsigned integer, it will be returned wrapped by `Some`
+        /// of enum `Option`.
+        /// Otherwise, the `Self`-typed biggest unsigned integer that is
+        /// less than the exact value of `exp`-th root of `self` will be returned
+        /// wrapped by `Some` of enum `Option`.
+        /// 
+        /// # Features
+        /// - If `exp` is greater than zero and `self` is greater than 1,
+        ///   the result of this method is never greater than `self`.
+        ///   So, this method never causes overflow.
+        /// - If `exp` is `0`, this method returns `None`.
+        /// 
+        /// # Counterpart Method
+        /// If `exp` is bigger than `u128`, the method
+        /// [checked_iroot_uint()](#tymethod.checked_iroot_uint)
+        /// is proper rather than this method.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigInt_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u128);
+        /// 
+        /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
+        /// let exp = U256::from_uint(8_u8);
+        /// let res = a_biguint.checked_iroot(&exp);
+        /// match res
+        /// {
+        ///     Some(r) => {
+        ///             println!("The {}-th root of {} is {}.", exp, a_biguint, r);
+        ///             assert_eq!(r.to_string(), "100000000");
+        ///             assert_eq!(r.is_overflow(), false);
+        ///             assert_eq!(r.is_underflow(), false);
+        ///             assert_eq!(r.is_infinity(), false);
+        ///             assert_eq!(r.is_undefined(), false);
+        ///             assert_eq!(r.is_divided_by_zero(), false);
+        ///             assert_eq!(r.is_left_carry(), false);
+        ///             assert_eq!(r.is_right_carry(), false);
+        ///         },
+        ///     None => { println!("Error"); }
+        /// }
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_iroot)
+        fn checked_iroot(&self, exp: &Self) -> Option<Self>;
+
+        // fn unchecked_iroot(&self, exp: &Self) -> Self
+        /// Calculates the `exp`-th root of `self`, rounded down,
+        /// and returns the result value.
+        ///
+        /// # Arguments
+        /// `exp` is the power of the root of `self`, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - If `exp` is `0`, it will panic.
+        /// 
+        /// # Output
+        /// If the exact value of `exp`-th root of `self` can be expressed with
+        /// `Self`-typed unsigned integer, it will be returned.
+        /// Otherwise, the `Self`-typed biggest unsigned integer that is
+        /// less than the exact value of `exp`-th root of `self` will be returned.
+        /// 
+        /// # Features
+        /// If `exp` is greater than zero and `self` is greater than 1,
+        /// the result of this method is never greater than `self`.
+        /// So, this method never causes overflow.
+        /// 
+        /// # Counterpart Method
+        /// The method
+        /// [unchecked_iroot_uint()](#tymethod.unchecked_iroot_uint)
+        /// is a bit faster than this method `unchecked_iroot()`.
+        /// So, if `rhs` is primitive unsigned integral data type
+        /// such as u8, u16, u32, u64, and u128, use the method
+        /// [unchecked_iroot_uint()](#tymethod.unchecked_iroot_uint).
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigInt_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u8);
+        /// 
+        /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
+        /// let exp = U256::from_uint(8_u8);
+        /// let res = a_biguint.unchecked_iroot(&exp);
+        /// println!("The {}-th root of {} is {}.", exp, a_biguint, res);
+        /// assert_eq!(res.to_string(), "100000000");
+        /// assert_eq!(res.is_overflow(), false);
+        /// assert_eq!(res.is_underflow(), false);
+        /// assert_eq!(res.is_infinity(), false);
+        /// assert_eq!(res.is_undefined(), false);
+        /// assert_eq!(res.is_divided_by_zero(), false);
+        /// assert_eq!(res.is_left_carry(), false);
+        /// assert_eq!(res.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.unchecked_iroot)
+        fn unchecked_iroot(&self, exp: &Self) -> Self;
+
+        // fn checked_ilog(&self, base: &Self) -> Self
+        /// Calculates the logarithm of the number with respect to `base`, rounded
+        /// down, and returns the result wrapped with enum `Some` of `Option`.
+        ///
+        /// # Arguments
+        /// `base` is the base of logarithm of `self`, and is of `Self` type.
+        /// `base` should be greater than 1.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        ///
+        /// # Output
+        /// - It returns the logarithm of the number with respect to `base`,
+        ///   rounded down, wrapped with enum `Some` of `Option`.
+        /// - It returns `None` if `self` is zero.
+        /// - It returns `None` if `base` is either `0` or `1`.
+        ///
+        /// # Counterpart Methods
+        /// This method might not be optimized owing to implementation details.
+        /// [checked_ilog2()](#tymethod.checked_ilog2) can produce
+        /// results more efficiently for base 2, and
+        /// [checked_ilog10()](#tymethod.checked_ilog10) can produce
+        /// results more efficiently for base 10.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigInt_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u8);
+        /// 
+        /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
+        /// let base = U256::from_uint(1_0000_0000_0000_0000_0000_0000_0000_0000_u128);
+        /// let res = a_biguint.checked_ilog(&base);
+        /// match res
+        /// {
+        ///     Some(r) => {
+        ///             println!("The logarithm of {} with respect to {} is {}.", a_biguint, base, r);
+        ///             assert_eq!(r.to_string(), "2");
+        ///             assert_eq!(r.is_overflow(), false);
+        ///             assert_eq!(r.is_underflow(), false);
+        ///             assert_eq!(r.is_infinity(), false);
+        ///             assert_eq!(r.is_undefined(), false);
+        ///             assert_eq!(r.is_divided_by_zero(), false);
+        ///             assert_eq!(r.is_left_carry(), false);
+        ///             assert_eq!(r.is_right_carry(), false);
+        ///         },
+        ///     None => { println!("Error"); },
+        /// }
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_ilog)
+        fn checked_ilog(&self, base: &Self) -> Option<Self>;
+
+        // fn unchecked_ilog(&self, base: &Self) -> Self
+        /// Calculates the logarithm of the number with respect to `base`,
+        /// rounded down, and returns the result.
+        ///
+        /// # Arguments
+        /// `base` is the base of logarithm of `self`, and is of `Self` type.
+        /// `base` should be greater than 1.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - This function will panic if `self` is zero.
+        /// - This function will panic if `base` is zero or one.
+        ///
+        /// # Output
+        /// It returns the logarithm of the number with respect to `base`,
+        /// rounded down.
+        ///
+        /// # Counterpart Methods
+        /// This method might not be optimized owing to implementation details.
+        /// [unchecked_ilog2()](#tymethod.unchecked_ilog2)
+        /// can produce results more efficiently for base 2, and
+        /// [unchecked_ilog10()](#tymethod.unchecked_ilog10)
+        /// can produce results more efficiently for base 10.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use std::str::FromStr;
+        /// use cryptocol::number::BigInt_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u16);
+        /// 
+        /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
+        /// let base = U256::from_uint(1_0000_0000_0000_0000_0000_0000_0000_0000_u128);
+        /// let res = a_biguint.unchecked_ilog(&base);
+        /// println!("The logarithm of {} with respect to {} is {}.", a_biguint, base, res);
+        /// assert_eq!(res.to_string(), "2");
+        /// assert_eq!(res.is_overflow(), false);
+        /// assert_eq!(res.is_underflow(), false);
+        /// assert_eq!(res.is_infinity(), false);
+        /// assert_eq!(res.is_undefined(), false);
+        /// assert_eq!(res.is_divided_by_zero(), false);
+        /// assert_eq!(res.is_left_carry(), false);
+        /// assert_eq!(res.is_right_carry(), false);
+        /// ```
+        fn unchecked_ilog(&self, base: &Self) -> Self;
+
+        // fn checked_ilog2(&self) -> Option<Self>
+        /// Calculates the base 2 logarithm of the number.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Output
+        /// It returns the base 2 logarithm of the number, rounded down,
+        /// wrapped by `Some` of enum `Option` if `self` is not zero.
+        /// It returns `None` if `self` is zero.
+        /// 
+        /// # Counterpart Methods
+        /// This method is optimized for base 2;
+        /// [checked_ilog_uint()](#tymethod.checked_ilog_uint)
+        /// can produce results of the base other than 2, and
+        /// [checked_ilog10()](#tymethod.checked_ilog10)
+        /// can produce results more efficiently for base 10.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use cryptocol::number::BigInt_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u16);
+        /// 
+        /// let a_biguint = U256::from_uint(64_u8);
+        /// let res = a_biguint.checked_ilog2();
+        /// match res
+        /// {
+        ///     Some(r) => {
+        ///             println!("The base 2 logarithm of {} is {}.", a_biguint, r);
+        ///             assert_eq!(r.to_string(), "6");
+        ///             assert_eq!(r.is_overflow(), false);
+        ///             assert_eq!(r.is_underflow(), false);
+        ///             assert_eq!(r.is_infinity(), false);
+        ///             assert_eq!(r.is_divided_by_zero(), false);
+        ///             assert_eq!(r.is_undefined(), false);
+        ///             assert_eq!(r.is_left_carry(), false);
+        ///             assert_eq!(r.is_right_carry(), false);
+        ///         },
+        ///     None => { println!("Error"); },
+        /// }
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_ilog2)
+        fn checked_ilog2(&self) -> Option<Self>;
+
+        // fn unchecked_ilog2(&self) -> Self
+        /// Returns the base 2 logarithm of the number, rounded down.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// - This function will panic if `self` is zero.
+        /// 
+        /// # Output
+        /// It returns the base 2 logarithm of the number, rounded down.
+        /// 
+        /// # Counterpart Methods
+        /// This method is optimized for base 2;
+        /// [unchecked_ilog_uint()](#tymethod.unchecked_ilog_uint)
+        /// can produce results of the base other than 2, and
+        /// [unchecked_ilog10()](#tymethod.unchecked_ilog10)
+        /// can produce results more efficiently for base 10.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use cryptocol::number::BigInt_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u32);
+        /// 
+        /// let a_biguint = U256::from_uint(64_u8);
+        /// let res = a_biguint.unchecked_ilog2();
+        /// println!("The base 2 logarithm of {} is {}.", a_biguint, res);
+        /// assert_eq!(res.to_string(), "6");
+        /// assert_eq!(res.is_overflow(), false);
+        /// assert_eq!(res.is_underflow(), false);
+        /// assert_eq!(res.is_infinity(), false);
+        /// assert_eq!(res.is_divided_by_zero(), false);
+        /// assert_eq!(res.is_undefined(), false);
+        /// assert_eq!(res.is_left_carry(), false);
+        /// assert_eq!(res.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.unchecked_ilog2)
+        fn unchecked_ilog2(&self) -> Self;
+
+        // fn checked_ilog10(&self) -> Option<Self>
+        /// Calculates the base 10 logarithm of the number.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Output
+        /// It returns the base 10 logarithm of the number, rounded down,
+        /// wrapped by `Some` of enum `Option` if `self` is not zero.
+        /// It returns `None` if `self` is zero.
+        /// 
+        /// # Counterpart Methods
+        /// This method is not optimized for base 10 but provides convenience
+        /// for base 10;
+        /// [checked_ilog_uint()](#tymethod.checked_ilog_uint)
+        /// can produce results of the base other than 10, and
+        /// [checked_ilog2()](#tymethod.checked_ilog2)
+        /// can produce results more efficiently for base 2.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use cryptocol::number::BigInt_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u32);
+        /// 
+        /// let a_biguint = U256::from_uint(10000_u32);
+        /// let res = a_biguint.checked_ilog10();
+        /// match res
+        /// {
+        ///     Some(r) => {
+        ///             println!("The base 10 logarithm of {} is {}.", a_biguint, r);
+        ///             assert_eq!(r.to_string(), "4");
+        ///             assert_eq!(r.is_overflow(), false);
+        ///             assert_eq!(r.is_underflow(), false);
+        ///             assert_eq!(r.is_infinity(), false);
+        ///             assert_eq!(r.is_divided_by_zero(), false);
+        ///             assert_eq!(r.is_undefined(), false);
+        ///             assert_eq!(r.is_left_carry(), false);
+        ///             assert_eq!(r.is_right_carry(), false);
+        ///         },
+        ///     None => { println!("Error"); },
+        /// }
+        /// ```
+        fn checked_ilog10(&self) -> Option<Self>;
+
+        // fn unchecked_ilog10(&self) -> Self
+        /// Returns the base 10 logarithm of the number, rounded down.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - This function will panic if `self` is zero.
+        /// 
+        /// # Output
+        /// It returns the base 10 logarithm of the number, rounded down.
+        /// 
+        /// # Counterpart Methods
+        /// This method is not optimized for base 10 but provides convenience
+        /// for base 10;
+        /// [unchecked_ilog_uint()](#tymethod.unchecked_ilog_uint)
+        /// can produce results of the base other than 10, and
+        /// [unchecked_ilog2()](#tymethod.unchecked_ilog2)
+        /// can produce results more efficiently for base 2.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use cryptocol::number::BigInt_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u64);
+        /// 
+        /// let a_biguint = U256::from_uint(10000_u32);
+        /// let res = a_biguint.unchecked_ilog10();
+        /// println!("The base 10 logarithm of {} is {}.", a_biguint, res);
+        /// assert_eq!(res.to_string(), "4");
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// ```
+        fn unchecked_ilog10(&self) -> Self;
+
+        // fn checked_shift_left<U>(&self, n: U) -> Option<Self>
+        /// Shift left the field `number: [T;N]` to the left by `n`,
+        /// and returns the result, wrapped by `some` of enum `Option`.
+        /// 
+        /// # Arguments
+        /// `n` indicates how many bits this method shift `self` left by,
+        /// and is a primitive unsigned integer such as `u8`, `u16`, `u32`,
+        /// `u64`, and `u128`.
+        /// 
+        /// # Features
+        /// 'Shift left' means 'move left all bits'. So, if `10011010` is shifted
+        /// left by 2, it will be `01101000`, for example.
+        /// 
+        /// # Output
+        /// - If n is less than the size of the type `T` * N * 8,
+        ///   it returns the left-shifted version of `self`, which is shifted to the
+        ///   left by `n` bits, wrapped by `some` of enum `Option`.
+        /// - If `n` is greater than or equal to the size of the type `T` * N * 8,
+        ///   all bits will be gone. So, it returns `None`.
+        /// 
+        /// # Left Carry
+        /// 'A left-carry occurs' means that a bit `1` is pushed out
+        /// during shift-left operation.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use cryptocol::number::BigInt_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u32);
+        /// 
+        /// let a_biguint = U256::from_str_radix("11111111_00000000_11110000_00001111_11001100_00110011_10101010_01010101_11111111_00000000_11110000_00001111_11001100_00110011_10101010_01010101_11111111_00000000_11110000_00001111_11001100_00110011_10101010_01010101_11111111_00000000_11110000_00001111_11001100_00110011_10101010_01010101", 2).unwrap();
+        /// let n = 3_u8;
+        /// let res = a_biguint.checked_shift_left(n);
+        /// match res
+        /// {
+        ///     Some(r) => {
+        ///             println!("{} << {} = {}", r.to_string_with_radix_and_stride(2, 8).unwrap(), n, r.to_string_with_radix_and_stride(2, 8).unwrap());
+        ///             assert_eq!(r.to_string_with_radix_and_stride(2, 8).unwrap(), "11111000_00000111_10000000_01111110_01100001_10011101_01010010_10101111_11111000_00000111_10000000_01111110_01100001_10011101_01010010_10101111_11111000_00000111_10000000_01111110_01100001_10011101_01010010_10101111_11111000_00000111_10000000_01111110_01100001_10011101_01010010_10101000");
+        ///             assert_eq!(r.is_overflow(), false);
+        ///             assert_eq!(r.is_underflow(), false);
+        ///             assert_eq!(r.is_infinity(), false);
+        ///             assert_eq!(r.is_undefined(), false);
+        ///             assert_eq!(r.is_divided_by_zero(), false);
+        ///             assert_eq!(r.is_left_carry(), true);
+        ///             assert_eq!(r.is_right_carry(), false);
+        ///         },
+        ///     None => {
+        ///             println!("All bits are gone!");
+        ///         }
+        /// }
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.checked_shift_left)
+        fn checked_shift_left<U>(&self, n: U) -> Option<Self>
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+        // fn unchecked_shift_left<U>(&self, n: U) -> Self
+        /// Shift left the field `number: [T;N]` to the left by `n`,
+        /// and returns the result.
+        /// 
+        /// # Arguments
+        /// `n` indicates how many bits this method shift `self` left by,
+        /// and is a primitive unsigned integer such as `u8`, `u16`, `u32`,
+        /// `u64`, and `u128`.
+        /// 
+        /// # Features
+        /// 'Shift left' means 'move left all bits'. So, if `10011010` is shifted
+        /// left by 2, it will be `01101000`, for example.
+        /// 
+        /// # Output
+        /// It returns the left-shifted version of `self`, which is shifted to the
+        /// left by `n` bits.
+        /// 
+        /// # Left Carry
+        /// 'A left-carry occurs' means that a bit `1` is pushed out
+        /// during shift-left operation.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - If `n` is greater than or equal to the size of the type `T` * N * 8,
+        ///   all bits will be gone. So, it will panic.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use cryptocol::number::BigInt_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u64);
+        /// 
+        /// let a_biguint = U256::from_str_radix("11111111_00000000_11110000_00001111_11001100_00110011_10101010_01010101_11111111_00000000_11110000_00001111_11001100_00110011_10101010_01010101_11111111_00000000_11110000_00001111_11001100_00110011_10101010_01010101_11111111_00000000_11110000_00001111_11001100_00110011_10101010_01010101", 2).unwrap();
+        /// let n = 3_u8;
+        /// let res = a_biguint.unchecked_shift_left(n);
+        /// println!("{} << {} = {}", a_biguint.to_string_with_radix_and_stride(2, 8).unwrap(), n, res.to_string_with_radix_and_stride(2, 8).unwrap());
+        /// assert_eq!(res.to_string_with_radix_and_stride(2, 8).unwrap(), "11111000_00000111_10000000_01111110_01100001_10011101_01010010_10101111_11111000_00000111_10000000_01111110_01100001_10011101_01010010_10101111_11111000_00000111_10000000_01111110_01100001_10011101_01010010_10101111_11111000_00000111_10000000_01111110_01100001_10011101_01010010_10101000");
+        /// assert_eq!(res.is_overflow(), false);
+        /// assert_eq!(res.is_underflow(), false);
+        /// assert_eq!(res.is_infinity(), false);
+        /// assert_eq!(res.is_undefined(), false);
+        /// assert_eq!(res.is_divided_by_zero(), false);
+        /// assert_eq!(res.is_left_carry(), true);
+        /// assert_eq!(res.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.unchecked_shift_left)
+        fn unchecked_shift_left<U>(&self, n: U) -> Self
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+        // fn checked_shift_right<U>(&self, n: U) -> Option<Self>
+        /// Shift right the field `number: [T;N]` to the right by `n`,
+        /// and returns the result, wrapped by `some` of enum `Option`.
+        /// 
+        /// # Arguments
+        /// `n` indicates how many bits this method shift `self` left by,
+        /// and is a primitive unsigned integer such as `u8`, `u16`, `u32`,
+        /// `u64`, and `u128`.
+        /// 
+        /// # Features
+        /// 'Shift right' means 'move right all bits'. So, if `10011010` is shifted
+        /// right by 2, it will be `00100110`, for example.
+        /// 
+        /// # Output
+        /// It returns the right-shifted version of `self`. which is shifted to the
+        /// right by `n` bits, wrapped by `some` of enum `Option`.
+        /// If n is greater than or equal to the size of the type `T` * N * 8,
+        /// all bits will be gone. So, it returns `None`.
+        /// 
+        /// # Right Carry
+        /// 'A right-carry occurs' means that a bit `1` is pushed out
+        /// during shift-right operation.
+        ///
+        /// # Panics
+        /// If `size_of::<T>() * N` <= `128`, this method may panic
+        /// or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use cryptocol::number::BigInt_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u16);
+        /// 
+        /// let a_biguint = U256::from_str_radix("11111111_00000000_11110000_00001111_11001100_00110011_10101010_01010101_11111111_00000000_11110000_00001111_11001100_00110011_10101010_01010101_11111111_00000000_11110000_00001111_11001100_00110011_10101010_01010101_11111111_00000000_11110000_00001111_11001100_00110011_00000000_11111111", 2).unwrap();
+        /// let n = 3_u8;
+        /// let res = a_biguint.checked_shift_right(n);
+        /// match res
+        /// {
+        ///     Some(r) => {
+        ///             println!("{} >> {} = {}", r.to_string_with_radix_and_stride(2, 8).unwrap(), n, r.to_string_with_radix_and_stride(2, 8).unwrap());
+        ///             assert_eq!(r.to_string_with_radix_and_stride(2, 8).unwrap(), "11111_11100000_00011110_00000001_11111001_10000110_01110101_01001010_10111111_11100000_00011110_00000001_11111001_10000110_01110101_01001010_10111111_11100000_00011110_00000001_11111001_10000110_01110101_01001010_10111111_11100000_00011110_00000001_11111001_10000110_01100000_00011111");
+        ///             assert_eq!(r.is_overflow(), false);
+        ///             assert_eq!(r.is_underflow(), false);
+        ///             assert_eq!(r.is_infinity(), false);
+        ///             assert_eq!(r.is_undefined(), false);
+        ///             assert_eq!(r.is_divided_by_zero(), false);
+        ///             assert_eq!(r.is_left_carry(), false);
+        ///             assert_eq!(r.is_right_carry(), true);
+        ///         },
+        ///     None => {
+        ///             println!("All bits are gone!");
+        ///         }
+        /// }
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.checked_shift_right)
+        fn checked_shift_right<U>(&self, n: U) -> Option<Self>
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+        // fn unchecked_shift_right<U>(&self, n: U) -> Self
+        /// shifts the field `number: [T;N]` to the right by `n`,
+        /// and returns the result.
+        /// 
+        /// # Arguments
+        /// `n` indicates how many bits this method shift `self` left by,
+        /// and is a primitive unsigned integer such as `u8`, `u16`, `u32`,
+        /// `u64`, and `u128`.
+        /// 
+        /// # Features
+        /// 'Shift right' means 'move right all bits'. So, if `10011010` is shifted
+        /// right by 2, it will be `00100110`, for example.
+        /// 
+        /// # Output
+        /// It returns the right-shifted version of `self`. which is shifted to the
+        /// right by `n` bits.
+        /// 
+        /// # Right Carry
+        /// 'A right-carry occurs' means that a bit `1` is pushed out
+        /// during shift-right operation.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - If n is greater than or equal to the size of the type `T` * N * 8,
+        ///   all bits will be gone. So, it will panic.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use cryptocol::number::BigInt_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u32);
+        /// 
+        /// let a_biguint = U256::from_str_radix("11111111_00000000_11110000_00001111_11001100_00110011_10101010_01010101_11111111_00000000_11110000_00001111_11001100_00110011_10101010_01010101_11111111_00000000_11110000_00001111_11001100_00110011_10101010_01010101_11111111_00000000_11110000_00001111_11001100_00110011_00000000_11111111", 2).unwrap();
+        /// let n = 3_u8;
+        /// let res = a_biguint.unchecked_shift_right(n);
+        /// println!("{} >> {} = {}", a_biguint.to_string_with_radix_and_stride(2, 8).unwrap(), n, res.to_string_with_radix_and_stride(2, 8).unwrap());
+        /// assert_eq!(res.to_string_with_radix_and_stride(2, 8).unwrap(), "11111_11100000_00011110_00000001_11111001_10000110_01110101_01001010_10111111_11100000_00011110_00000001_11111001_10000110_01110101_01001010_10111111_11100000_00011110_00000001_11111001_10000110_01110101_01001010_10111111_11100000_00011110_00000001_11111001_10000110_01100000_00011111");
+        /// assert_eq!(res.is_overflow(), false);
+        /// assert_eq!(res.is_underflow(), false);
+        /// assert_eq!(res.is_infinity(), false);
+        /// assert_eq!(res.is_undefined(), false);
+        /// assert_eq!(res.is_divided_by_zero(), false);
+        /// assert_eq!(res.is_left_carry(), false);
+        /// assert_eq!(res.is_right_carry(), true);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.unchecked_shift_right)
+        fn unchecked_shift_right<U>(&self, n: U) -> Self
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
 }

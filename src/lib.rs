@@ -48,6 +48,8 @@
 //! ## Big Numbers: meaningful as itself and also the foundation for Asymmetric-Key Algorithms
 //! - [X] Fixed Sized Big Unsigned Integer Operation ---
 //!     [`BigUInt`](number/big_uint/struct.BigUInt.html#struct.BigUInt)
+//! - [X] Auxiliary Fixed Sized Big Unsigned Integer Operation ---
+//!     [`BigInt_More`](number/trait_big_int_more/trait.BigInt_More.html#trait.BigInt_More)
 // ! - [ ] Fixed Sized Big Signed Integer Operation --- BigSInt
 // !    _--> Thinking about postponing to Roadmap for ver. 2.0_
 // ! - [ ] Variable Sized Big Signed Integer Operation --- LargeInt
@@ -123,7 +125,7 @@
 //! the version number 1.0.0.0 will be given. After that whenever another
 //! functionality is added to this crate, the version number will get higher
 //! beyond 1.0.0.0. Before the version number 1.0.0.0, the maximum version
-//! number will be 0.25.x.x since there are all twenty-five functionalities
+//! number will be 0.26.x.x since there are all twenty-five functionalities
 //! listed above. So, for example, even if the version number is 0.5.0.0,
 //! it does not mean that 50% of all functionalities are implemented.
 

@@ -3730,11 +3730,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_left_carry(), true);
     /// assert_eq!(res.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn shift_left<U>(&self, _n: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -3908,11 +3903,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_left_carry(), true);
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn shift_left_assign<U>(&mut self, _n: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -3956,6 +3946,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -3983,6 +3974,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -4010,6 +4002,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -4037,6 +4030,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 4
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -4057,6 +4051,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 5
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -4074,11 +4069,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///         }
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn checked_shift_left<U>(&self, _n: U) -> Option<Self>
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4121,6 +4111,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -4140,6 +4131,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -4159,6 +4151,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -4178,6 +4171,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Panic Examples
     /// ```should_panic
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
@@ -4191,11 +4185,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// let _res = _a_biguint.unchecked_shift_left(_n);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn unchecked_shift_left<U>(&self, _n: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -4329,11 +4318,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_left_carry(), false);
     /// assert_eq!(res.is_right_carry(), true);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn shift_right<U>(&self, _n: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4507,11 +4491,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_left_carry(), false);
     /// assert_eq!(a_biguint.is_right_carry(), true);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn shift_right_assign<U>(&mut self, _n: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4554,6 +4533,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -4581,6 +4561,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -4608,6 +4589,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -4635,6 +4617,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 4
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -4655,6 +4638,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 5
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
@@ -4672,11 +4656,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///         }
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn checked_shift_right<U>(&self, _n: U) -> Option<Self>
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4719,6 +4698,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 1
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -4738,6 +4718,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 2
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -4757,6 +4738,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Example 3
     /// ```
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -4776,6 +4758,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Panic Examples
     /// ```should_panic
+    /// use cryptocol::number::BigInt_More;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
@@ -4789,11 +4772,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// // It will panic!
     /// let res = _a_biguint.unchecked_shift_right(_n);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn unchecked_shift_right<U>(&self, _n: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -4920,11 +4898,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_left_carry(), false);
     /// assert_eq!(res.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn rotate_left<U>(&self, _n: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -5097,11 +5070,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_left_carry(), false);
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn rotate_left_assign<U>(&mut self, _n: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -5233,11 +5201,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_left_carry(), false);
     /// assert_eq!(res.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn rotate_right<U>(&self, _n: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -5410,11 +5373,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_left_carry(), false);
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn rotate_right_assign<U>(&mut self, _n: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -6128,11 +6086,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn reverse_bits(&self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -6218,11 +6171,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn reverse_bits_assign(&mut self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -6291,11 +6239,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn swap_bytes(&self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -6381,11 +6324,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn swap_bytes_assign(&mut self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -6542,11 +6480,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     Err(_) =>   { panic!("Error"); },
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn into_biguint<U, const M: usize>(&self) -> BigUInt<U, M>
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -6629,11 +6562,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(b_u16, 65280_u16);
     /// assert_eq!(b_u8, 0_u8);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn into_uint<U>(&self) -> U
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -6692,11 +6620,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("u128 of {} = {}", a_biguint, b_u128);
     /// assert_eq!(b_u128, 340282346638528863123979975818481827584_u128);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn into_u128(&self) -> u128
     {
         unimplemented!(); // Dummy code for documentation
@@ -6745,11 +6668,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("u64 of {} = {}", a_biguint, b_u64);
     /// assert_eq!(b_u64, 10308603139955162880_u64);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn into_u64(&self) -> u64
     {
         unimplemented!(); // Dummy code for documentation
@@ -6798,11 +6716,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("u32 of {} = {}", a_biguint, b_u32);
     /// assert_eq!(b_u32, 1065418496_u32);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn into_u32(&self) -> u32
     {
         unimplemented!(); // Dummy code for documentation
@@ -6851,11 +6764,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("u16 of {} = {}", a_biguint, b_u16);
     /// assert_eq!(b_u16, 65280_u16);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn into_u16(&self) -> u16
     {
         unimplemented!(); // Dummy code for documentation
@@ -6904,11 +6812,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("u8 of {} = {}", a_biguint, b_u8);
     /// assert_eq!(b_u8, 0_u8);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn into_u8(&self) -> u8
     {
@@ -6960,11 +6863,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// #[cfg(target_pointer_width = "32")] assert_eq!(b_usize, 1065418496_usize);
     /// #[cfg(target_pointer_width = "16")] assert_eq!(b_usize, 65280_usize);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn into_usize(&self) -> usize
     {
@@ -7035,11 +6933,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn to_be(&self) -> Self
     {
@@ -7127,11 +7020,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn to_be_assign(&mut self)
     {
@@ -7207,11 +7095,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     Err(_) => { panic!("Error"); },
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn to_be_bytes(&self) -> [T; N]
     {
@@ -7282,11 +7165,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn to_le(&self) -> Self
     {
@@ -7373,11 +7251,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn to_le_assign(&mut self)
     {
@@ -7449,11 +7322,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     Err(_) => { panic!("Error"); },
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     #[inline]
     pub fn to_le_bytes(&self) -> [T; N]
     {
@@ -7602,11 +7470,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     Err(e) => { assert_eq!(e, NumberErr::OutOfValidRadixRange) },
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn to_string_with_radix_and_stride_and_delimiter(&self, _radix: usize, _stride: usize, _delimiter: &str) -> Result<String, NumberErr>
     {
         unimplemented!(); // Dummy code for documentation
@@ -7748,11 +7611,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     Err(e) => { assert_eq!(e, NumberErr::OutOfValidRadixRange) },
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn to_string_with_radix_and_stride(&self, _radix: usize, _stride: usize) -> Result<String, NumberErr>
     {
         unimplemented!(); // Dummy code for documentation
@@ -7882,11 +7740,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///     Err(e) => { assert_eq!(e, NumberErr::OutOfValidRadixRange) },
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
     pub fn to_string_with_radix(&self, _radix: usize) -> Result<String, NumberErr>
     {
         unimplemented!(); // Dummy code for documentation

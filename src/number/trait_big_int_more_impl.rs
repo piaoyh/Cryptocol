@@ -18,7 +18,7 @@ use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, 
                 Add, AddAssign, Sub, SubAssign, Mul, MulAssign,
                 Div, DivAssign, Rem, RemAssign };
 
-use crate::number::{ SmallUInt, BigUInt, BigUInt_More };
+use crate::number::{ SmallUInt, BigUInt, BigInt_More };
 use crate::number::{ biguint_calc_assign_to_calc, biguint_checked_calc,
                      biguint_calc_assign_to_calc_div, biguint_calc_assign_to_calc_rem,
                      biguint_saturating_calc_assign, biguint_modular_calc_assign };
@@ -187,7 +187,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
 
 
-impl<T, const N: usize> BigUInt_More<T, N> for BigUInt<T, N>
+impl<T, const N: usize> BigInt_More<T, N> for BigUInt<T, N>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
@@ -1035,6 +1035,60 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         biguint_saturating_calc_assign!(self, Self::overflowing_pow_assign_uint, exp);
     }
 
+    fn checked_iroot_uint<U>(&self, exp: U) -> Option<Self>
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        biguint_checked_calc!(self, Self::iroot_uint, exp, exp.is_zero());
+    }
+
+    #[inline]
+    fn unchecked_iroot_uint<U>(&self, exp: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        self.iroot_uint(exp)
+    }
+
+    fn checked_ilog_uint<U>(&self, base: U) -> Option<Self>
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        biguint_checked_calc!(self, Self::ilog_uint, base, self.is_zero() || (base.is_zero_or_one()));
+    }
+
+    #[inline]
+    fn unchecked_ilog_uint<U>(&self, base: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        self.ilog_uint(base)
+    }
+
     fn checked_pow(&self, exp: &Self) -> Option<Self>
     {
         if self.is_zero() && exp.is_zero()
@@ -1056,5 +1110,103 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     fn saturating_pow_assign(&mut self, exp: &Self)
     {
         biguint_saturating_calc_assign!(self, Self::overflowing_pow_assign, exp);
+    }
+
+    fn checked_iroot(&self, exp: &Self) -> Option<Self>
+    {
+        biguint_checked_calc!(self, Self::iroot, exp, exp.is_zero());
+    }
+
+    #[inline]
+    fn unchecked_iroot(&self, exp: &Self) -> Self
+    {
+        self.iroot(exp)
+    }
+
+    fn checked_ilog(&self, base: &Self) -> Option<Self>
+    {
+        biguint_checked_calc!(self, Self::ilog, base, self.is_zero() || (base.is_zero_or_one()));
+    }
+
+    #[inline]
+    fn unchecked_ilog(&self, base: &Self) -> Self
+    {
+        self.ilog(base)
+    }
+
+    fn checked_ilog2(&self) -> Option<Self>
+    {
+        biguint_checked_calc!(self, Self::ilog2);
+    }
+
+    #[inline]
+    fn unchecked_ilog2(&self) -> Self
+    {
+        self.ilog2()
+    }
+
+    fn checked_ilog10(&self) -> Option<Self>
+    {
+        self.checked_ilog_uint(10_u8)
+    }
+
+    #[inline]
+    fn unchecked_ilog10(&self) -> Self
+    {
+        self.unchecked_ilog_uint(10_u8)
+    }
+
+    fn checked_shift_left<U>(&self, n: U) -> Option<Self>
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        biguint_checked_calc!(self, Self::shift_left, n, Self::size_in_bits().into_u128() <= n.into_u128());
+    }
+
+    #[inline]
+    fn unchecked_shift_left<U>(&self, n: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        self.checked_shift_left(n).unwrap()
+    }
+
+    fn checked_shift_right<U>(&self, n: U) -> Option<Self>
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        biguint_checked_calc!(self, Self::shift_right, n, Self::size_in_bits().into_u128() <= n.into_u128());
+    }
+
+    #[inline]
+    fn unchecked_shift_right<U>(&self, n: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        self.checked_shift_right(n).unwrap()
     }
 }
