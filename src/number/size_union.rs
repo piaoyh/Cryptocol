@@ -24,7 +24,7 @@ use std::fmt::{ self, Alignment, Error, Formatter, Display, Debug, Pointer,
                 Binary, Octal, LowerHex, UpperHex, LowerExp, UpperExp };
 
 use crate::number::{ SmallUInt, ShortUnion, IntUnion, LongUnion, LongerUnion };
-use crate::number::{ calc_assign_to_calc, fmt_with_radix, fmt_with_exponent };
+use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_with_exponent };
 
 /// # Introduction
 /// This union `SizeUnion` is for slicing `usize` into two `u64`s, two `i64`s,

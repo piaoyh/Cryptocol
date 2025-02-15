@@ -7004,8 +7004,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(r.is_divided_by_zero(), false);
     ///             assert_eq!(r.is_infinity(), false);
     ///             assert_eq!(r.is_undefined(), false);
-    ///             assert_eq!(res.is_left_carry(), false);
-    ///             assert_eq!(res.is_right_carry(), false);
+    ///             assert_eq!(r.is_left_carry(), false);
+    ///             assert_eq!(r.is_right_carry(), false);
     ///         },
     ///     None => { println!("Overflow happend!"); },
     /// }

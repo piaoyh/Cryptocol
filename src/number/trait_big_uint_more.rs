@@ -903,8 +903,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         ///             assert_eq!(r.is_divided_by_zero(), false);
         ///             assert_eq!(r.is_infinity(), false);
         ///             assert_eq!(r.is_undefined(), false);
-        ///             assert_eq!(res.is_left_carry(), false);
-        ///             assert_eq!(res.is_right_carry(), false);
+        ///             assert_eq!(r.is_left_carry(), false);
+        ///             assert_eq!(r.is_right_carry(), false);
         ///         },
         ///     None => { println!("Overflow happend!"); },
         /// }
@@ -3333,7 +3333,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger than `u128`, the method
-        /// [next_multiple_of()](struct@BigUInt#method.next_multiple_of)
+        /// [next_multiple_of()](#tymethod.next_multiple_of)
         /// is proper rather than this method `next_multiple_of_uint()`.
         /// 
         /// # Example 1
@@ -3394,7 +3394,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger than `u128`, the method
-        /// [next_multiple_of_assign()](struct@BigUInt#method.next_multiple_of_assign)
+        /// [next_multiple_of_assign()](#tymethod.next_multiple_of_assign)
         /// is proper rather than this method `next_multiple_of_assign_uint()`.
         /// 
         /// # Example 1
@@ -3467,7 +3467,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger than `u128`, the method
-        /// [panic_free_next_multiple_of()](struct@BigUInt#method.panic_free_next_multiple_of)
+        /// [panic_free_next_multiple_of()](#tymethod.panic_free_next_multiple_of)
         /// is proper rather than this method `panic_free_next_multiple_of_uint()`.
         /// 
         /// # Example 1
@@ -3529,7 +3529,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger than `u128`, the method
-        /// [panic_free_next_multiple_of_assign()](struct@BigUInt#method.panic_free_next_multiple_of_assign)
+        /// [panic_free_next_multiple_of_assign()](#tymethod.panic_free_next_multiple_of_assign)
         /// is proper rather than this method `panic_free_next_multiple_of_assign_uint()`.
         /// 
         /// # Example 1
@@ -3610,7 +3610,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger than `u128`, the method
-        /// [modular_next_multiple_of()](struct@BigUInt#method.modular_next_multiple_of)
+        /// [modular_next_multiple_of()](#tymethod.modular_next_multiple_of)
         /// is proper rather than this method `modular_next_multiple_of_uint()`.
         /// 
         /// # Example 1
@@ -3687,7 +3687,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger than `u128`, the method
-        /// [next_multiple_of_assign()](struct@BigUInt#method.next_multiple_of_assign)
+        /// [next_multiple_of_assign()](#tymethod.next_multiple_of_assign)
         /// is proper rather than this method `next_multiple_of_assign_uint()`.
         /// 
         /// # Example 1
@@ -3777,7 +3777,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger than `u128`, the method
-        /// [next_multiple_of()](struct@BigUInt#method.next_multiple_of)
+        /// [next_multiple_of()](#tymethod.next_multiple_of)
         /// is proper rather than this method `next_multiple_of_uint()`.
         /// 
         /// # Example 1 for normal case
@@ -3857,7 +3857,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger than `u128`, the method
-        /// [panic_free_modular_next_multiple_of_assign()](struct@BigUInt#method.panic_free_modular_next_multiple_of_assign)
+        /// [panic_free_modular_next_multiple_of_assign()](#tymethod.panic_free_modular_next_multiple_of_assign)
         /// is proper rather than this method `panic_free_modular_next_multiple_of_assign_uint()`.
         /// 
         /// # Example 1 for normal case
@@ -3928,7 +3928,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger than `u128`, the method
-        /// [is_multiple_of()](struct@BigUInt#method.is_multiple_of)
+        /// [is_multiple_of()](#tymethod.is_multiple_of)
         /// is proper rather than this method `is_multiple_of_uint()`.
         /// 
         /// # Example 1 for normal case
@@ -3985,11 +3985,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [next_multiple_of_uint()](struct@BigUInt#method.next_multiple_of_uint)
+        /// [next_multiple_of_uint()](#tymethod.next_multiple_of_uint)
         /// is a bit faster than this method `next_multiple_of()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [next_multiple_of_uint()](struct@BigUInt#method.next_multiple_of_uint).
+        /// [next_multiple_of_uint()](#tymethod.next_multiple_of_uint).
         /// 
         /// # Example 1
         /// ```
@@ -4040,11 +4040,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [next_multiple_of_assign_uint()](struct@BigUInt#method.next_multiple_of_assign_uint)
+        /// [next_multiple_of_assign_uint()](#tymethod.next_multiple_of_assign_uint)
         /// is a bit faster than this method `next_multiple_of_assign()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [next_multiple_of_assign_uint()](struct@BigUInt#method.next_multiple_of_assign_uint).
+        /// [next_multiple_of_assign_uint()](#tymethod.next_multiple_of_assign_uint).
         /// 
         /// # Example 1
         /// ```
@@ -4107,11 +4107,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [panic_free_next_multiple_of_uint()](struct@BigUInt#method.panic_free_next_multiple_of_uint)
+        /// [panic_free_next_multiple_of_uint()](#tymethod.panic_free_next_multiple_of_uint)
         /// is a bit faster than this method `panic_free_next_multiple_of()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [panic_free_next_multiple_of_uint()](struct@BigUInt#method.panic_free_next_multiple_of_uint).
+        /// [panic_free_next_multiple_of_uint()](#tymethod.panic_free_next_multiple_of_uint).
         /// 
         /// # Example 1
         /// ```
@@ -4163,11 +4163,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [panic_free_next_multiple_of_assign_uint()](struct@BigUInt#method.panic_free_next_multiple_of_assign_uint)
+        /// [panic_free_next_multiple_of_assign_uint()](#tymethod.panic_free_next_multiple_of_assign_uint)
         /// is a bit faster than this method `panic_free_next_multiple_of_assign()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [panic_free_next_multiple_of_assign_uint()](struct@BigUInt#method.panic_free_next_multiple_of_assign_uint).
+        /// [panic_free_next_multiple_of_assign_uint()](#tymethod.panic_free_next_multiple_of_assign_uint).
         /// 
         /// # Example 1
         /// ```
@@ -4238,11 +4238,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [modular_next_multiple_of_uint()](struct@BigUInt#method.modular_next_multiple_of_uint)
+        /// [modular_next_multiple_of_uint()](#tymethod.modular_next_multiple_of_uint)
         /// is a bit faster than this method `modular_next_multiple_of()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [modular_next_multiple_of_uint()](struct@BigUInt#method.modular_next_multiple_of_uint).
+        /// [modular_next_multiple_of_uint()](#tymethod.modular_next_multiple_of_uint).
         /// 
         /// # Example 1 for Normal case
         /// ```
@@ -4309,11 +4309,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [modular_next_multiple_of_assign_uint()](struct@BigUInt#method.modular_next_multiple_of_assign_uint)
+        /// [modular_next_multiple_of_assign_uint()](#tymethod.modular_next_multiple_of_assign_uint)
         /// is a bit faster than this method `modular_next_multiple_of_assign()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [modular_next_multiple_of_assign_uint()](struct@BigUInt#method.modular_next_multiple_of_assign_uint).
+        /// [modular_next_multiple_of_assign_uint()](#tymethod.modular_next_multiple_of_assign_uint).
         /// 
         /// # Example 1 for Normal case
         /// ```
@@ -4390,11 +4390,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [panic_free_modular_next_multiple_of_uint()](struct@BigUInt#method.panic_free_modular_next_multiple_of_uint)
+        /// [panic_free_modular_next_multiple_of_uint()](#tymethod.panic_free_modular_next_multiple_of_uint)
         /// is a bit faster than this method `panic_free_modular_next_multiple_of()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [panic_free_modular_next_multiple_of_uint()](struct@BigUInt#method.panic_free_modular_next_multiple_of_uint).
+        /// [panic_free_modular_next_multiple_of_uint()](#tymethod.panic_free_modular_next_multiple_of_uint).
         /// 
         /// # Example 1 for Normal case
         /// ```
@@ -4464,11 +4464,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [panic_free_modular_next_multiple_of_assign_uint()](struct@BigUInt#method.panic_free_modular_next_multiple_of_assign_uint)
+        /// [panic_free_modular_next_multiple_of_assign_uint()](#tymethod.panic_free_modular_next_multiple_of_assign_uint)
         /// is a bit faster than this method `panic_free_modular_next_multiple_of_assign()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [panic_free_modular_next_multiple_of_assign_uint()](struct@BigUInt#method.panic_free_modular_next_multiple_of_assign_uint).
+        /// [panic_free_modular_next_multiple_of_assign_uint()](#tymethod.panic_free_modular_next_multiple_of_assign_uint).
         /// 
         /// # Example 1 for Normal case
         /// ```
@@ -4525,11 +4525,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// The method
-        /// [is_next_multiple_of_uint()](struct@BigUInt#method.is_next_multiple_of_uint)
+        /// [is_next_multiple_of_uint()](#tymethod.is_next_multiple_of_uint)
         /// is a bit faster than this method `is_next_multiple_of()`.
         /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
         /// u32, u64, and u128, use the method
-        /// [is_next_multiple_of_uint()](struct@BigUInt#method.is_next_multiple_of_uint).
+        /// [is_next_multiple_of_uint()](#tymethod.is_next_multiple_of_uint).
         /// 
         /// # Example 1 for Normal case
         /// ```
@@ -4577,7 +4577,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger than `u128`, the method
-        /// [midpoint()](struct@BigUInt#method.midpoint)
+        /// [midpoint()](#tymethod.midpoint)
         /// is proper rather than this method `midpoint_uint()`.
         /// 
         /// # Example 1 for normal case
@@ -4632,7 +4632,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// 
         /// # Counterpart Method
         /// If `rhs` is bigger than `u128`, the method
-        /// [midpoint_assign()](struct@BigUInt#method.midpoint_assign)
+        /// [midpoint_assign()](#tymethod.midpoint_assign)
         /// is proper rather than this method `midpoint_assign_uint()`.
         /// 
         /// # Example 1 for normal case
@@ -4698,12 +4698,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         ///   and that no overflow will ever occur.
         /// 
         /// # Counterpart Method
-        /// The method [midpoint_uint()](struct@BigUInt#method.midpoint_uint)
+        /// The method [midpoint_uint()](#tymethod.midpoint_uint)
         /// is more efficient than this method `midpoint()`
         /// when the exponent `exp` is primitive unsigned integral data type
         /// such as u8, u16, u32, u64, and u128.
         /// If `rhs` is the primitive unsigned integral data type number,
-        /// use the method [midpoint_uint()](struct@BigUInt#method.midpoint_uint).
+        /// use the method [midpoint_uint()](#tymethod.midpoint_uint).
         /// 
         /// # Example 1 for normal case
         /// ```
@@ -4747,12 +4747,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         ///   and that no overflow will ever occur.
         /// 
         /// # Counterpart Method
-        /// The method [midpoint_assign_uint()](struct@BigUInt#method.midpoint_assign_uint)
+        /// The method [midpoint_assign_uint()](#tymethod.midpoint_assign_uint)
         /// is more efficient than this method `midpoint_assign()`
         /// when the exponent `exp` is primitive unsigned integral data type
         /// such as u8, u16, u32, u64, and u128.
         /// If `rhs` is the primitive unsigned integral data type number,
-        /// use the method [midpoint_assign_uint()](struct@BigUInt#method.midpoint_assign_uint).
+        /// use the method [midpoint_assign_uint()](#tymethod.midpoint_assign_uint).
         /// 
         /// # Example 1 for normal case
         /// ```
@@ -4786,4 +4786,511 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// # For more examples,
         /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.midpoint_assign)
         fn midpoint_assign(&mut self, rhs: &Self);
+
+
+        
+        /*** EXPONENTIATION AND LOGARITHM UINT ***/
+
+        // fn checked_pow_uint<U>(&self, exp: U) -> Option<Self>
+        /// Raises `BigUInt` type number to the power of `exp`, using
+        /// exponentiation of type `BigUInt` by squaring,
+        /// wrapping around at the boundary of the type `Self`,
+        /// and returns the result wrapped by `Some` of enum `Option`.
+        /// The type `U` has the trait `SmallUInt`.
+        /// 
+        /// # Arguments
+        /// `exp` is the power to raise `self` to, and is a primitive unsigned
+        /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// 
+        /// # Output
+        /// - It returns the result of `self` raised to the power of `exp`, using
+        ///   exponentiation of type `BigUInt` by squaring,
+        ///   wrapping around at the boundary of the type `Self`,
+        ///   wrapped by `Some` of enum `Option` if overflow does not occur.
+        /// - If overflow occurs, it returns `None` of enum `Option`.
+        /// - If both `self` and `rhs` are zero, the result is mathematically
+        ///   undefined so this method returns `None`.
+        /// 
+        /// # Features
+        /// - Checked wrapping (modular) exponentiation. 
+        /// - If overflowing happens, it returns `None` of enum `Option`.
+        /// 
+        /// # Counterpart Method
+        /// If `exp` is bigger than `u128`, the method
+        /// [checked_pow()](#tymethod.checked_pow)
+        /// is proper rather than this method `checked_pow_uint()`.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u64);
+        /// 
+        /// let a_biguint = UU32::from_uint(10_u8);
+        /// let exp = 30_u8;
+        /// let res = a_biguint.checked_pow_uint(exp);
+        /// match res
+        /// {
+        ///     Some(raised) => {
+        ///             println!("{} ** {} = {}", a_biguint, exp, raised);
+        ///             assert_eq!(raised.to_string(), "1000000000000000000000000000000");
+        ///             assert_eq!(raised.is_overflow(), false);
+        ///             assert_eq!(raised.is_underflow(), false);
+        ///             assert_eq!(raised.is_infinity(), false);
+        ///             assert_eq!(raised.is_divided_by_zero(), false);
+        ///             assert_eq!(raised.is_undefined(), false);
+        ///             assert_eq!(raised.is_left_carry(), false);
+        ///             assert_eq!(raised.is_right_carry(), false);
+        ///         },
+        ///     None => { println!("Overflow"); }
+        /// }
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_pow_uint)
+        fn checked_pow_uint<U>(&self, exp: U) -> Option<Self>
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+        
+        // fn unchecked_pow_uint<U>(&self, exp: U) -> Self
+        /// Raises `BigUInt` type number to the power of `exp`, using
+        /// exponentiation of type `BigUInt` by squaring,
+        /// wrapping around at the boundary of the type `Self`,
+        /// and returns the result. The type `U` has the trait `SmallUInt`.
+        /// 
+        /// # Arguments
+        /// `exp` is the power to raise `self` to, and is a primitive unsigned
+        /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - If overflow occurs, it will panic.
+        /// - If both `self` and `exp` are zero, the result is mathematically
+        ///   undefined, so this method will panic.
+        /// 
+        /// # Output
+        /// It returns the result of `self` raised to the power of `exp`
+        /// if overflow does not occur. If overflow occurs, it will panic.
+        /// 
+        /// # Features
+        /// - Wrapping (modular) exponentiation.
+        /// - If overflowing happens, this method will panic.
+        /// 
+        /// # Counterpart Method
+        /// If `exp` is bigger than `u128`, the method
+        /// [unchecked_pow()](#tymethod.unchecked_pow)
+        /// is proper rather than this method `unchecked_pow_uint()`.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u128);
+        /// 
+        /// let a_biguint = UU32::from_uint(10_u8);
+        /// let mut exp = 30_u8;
+        /// let mut res = a_biguint.unchecked_pow_uint(exp);
+        /// println!("{} ** {} = {}", a_biguint, exp, res);
+        /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
+        /// assert_eq!(res.is_overflow(), false);
+        /// assert_eq!(res.is_underflow(), false);
+        /// assert_eq!(res.is_infinity(), false);
+        /// assert_eq!(res.is_divided_by_zero(), false);
+        /// assert_eq!(res.is_undefined(), false);
+        /// assert_eq!(res.is_left_carry(), false);
+        /// assert_eq!(res.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.unchecked_pow_uint)
+        fn unchecked_pow_uint<U>(&self, exp: U) -> Self
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+        // fn saturating_pow_uint<U>(&self, exp: U) -> Self
+        /// Raises `BigUInt` type number to the power of `exp`, using
+        /// exponentiation of type `BigUInt` by squaring,
+        /// saturating at the numeric bounds instead of overflowing,
+        /// and returns the result. The type `U` has the trait `SmallUInt`.
+        /// 
+        /// # Arguments
+        /// `exp` is the power to raise `self` to, and is a primitive unsigned
+        /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - If both `self` and `exp` are zero, the result is mathematically
+        ///   undefined, so this method will panic.
+        /// 
+        /// # Output
+        /// It returns the result of `self` raised to the power of `exp`.
+        /// It returns the maximum value instead of overflowing.
+        /// 
+        /// # Features
+        /// - Wrapping (modular) exponentiation.
+        /// - Overflowing never happens.
+        /// - This method saturates when it reaches maximum value.
+        /// - It does not set `OVERFLOW` flag of the return value.
+        /// 
+        /// # Counterpart Method
+        /// If `exp` is bigger than `u128`, the method
+        /// [saturating_pow()](#tymethod.saturating_pow)
+        /// is proper rather than this method `saturating_pow_uint()`.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u8);
+        /// 
+        /// let a_biguint = U256::from_uint(10_u8);
+        /// let mut exp = 30_u8;
+        /// let mut res = a_biguint.saturating_pow_uint(exp);
+        /// println!("{} ** {} = {}", a_biguint, exp, res);
+        /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
+        /// assert_eq!(res.is_overflow(), false);
+        /// assert_eq!(res.is_underflow(), false);
+        /// assert_eq!(res.is_infinity(), false);
+        /// assert_eq!(res.is_divided_by_zero(), false);
+        /// assert_eq!(res.is_undefined(), false);
+        /// assert_eq!(res.is_left_carry(), false);
+        /// assert_eq!(res.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.saturating_pow_uint)
+        fn saturating_pow_uint<U>(&self, exp: U) -> Self
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+        // fn saturating_pow_assign_uint<U>(&self, exp: U)
+        /// Raises `BigUInt` type number to the power of `exp`, using
+        /// exponentiation of type `BigUInt` by squaring,
+        /// saturating at the numeric bounds instead of overflowing,
+        /// and assign the result to `self` back.
+        /// The type `U` has the trait `SmallUInt`.
+        /// 
+        /// # Arguments
+        /// `exp` is the power to raise `self` to, and is a primitive unsigned
+        /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - If both `self` and `exp` are zero, the result is mathematically
+        ///   undefined, so this method will panic.
+        /// 
+        /// # Features
+        /// - Wrapping (modular) exponentiation.
+        /// - Overflowing never happens.
+        /// - `self` will be the maximum value instead of overflowing.
+        /// - This method saturates when it reaches maximum value.
+        /// - It does not set `OVERFLOW` flag.
+        /// 
+        /// # Counterpart Method
+        /// If `exp` is bigger than `u128`, the method
+        /// [saturating_pow_assign()](#tymethod.saturating_pow_assign)
+        /// is proper rather than this method `saturating_pow_assign_uint()`.
+        /// 
+        /// # Example 1
+        /// ```
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u16);
+        /// 
+        /// let mut a_biguint = UU32::from_uint(10_u8);
+        /// println!("Originally, a_biguint = {}", a_biguint);
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// 
+        /// let exp = 30_u8;
+        /// a_biguint.saturating_pow_assign_uint(exp);
+        /// println!("After a_biguint.saturating_pow_assign_uint({}), a_biguint = {}", exp, a_biguint);
+        /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.saturating_pow_assign_uint)
+        fn saturating_pow_assign_uint<U>(&mut self, exp: U)
+        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+                + Rem<Output=U> + RemAssign
+                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+                + PartialEq + PartialOrd;
+
+
+        /*** EXPONENTIATION AND LOGARITHM BIGUINT ***/
+
+        // fn checked_pow(&self, exp: &Self) -> Option<Self>
+        /// Raises `BigUInt` type number to the power of `exp`, using
+        /// exponentiation of type `BigUInt` by squaring,
+        /// wrapping around at the boundary of the type `Self`,
+        /// and returns the result wrapped by `Some` of enum `Option`.
+        /// 
+        /// # Arguments
+        /// `exp` is the power to raise `self` to, and is of `&Self` type.
+        /// 
+        /// # Output
+        /// - It returns the result of `self` raised to the power of `exp`, using
+        ///   exponentiation of type `BigUInt` by squaring,
+        ///   wrapping around at the boundary of the type `Self`,
+        ///   wrapped by `Some` of enum `Option` if overflow does not occur.
+        /// - If overflow occurs, it returns `None` of enum `Option`.
+        /// - If both `self` and `rhs` are zero, the result is mathematically
+        ///   undefined so this method returns `None`.
+        /// 
+        /// # Features
+        /// - Checked wrapping (modular) exponentiation. 
+        /// - If overflowing happens, it returns `None` of enum `Option`.
+        /// - If both `self` and `rhs` are zero, the result is mathematically
+        ///   undefined so this method returns `None`.
+        /// 
+        /// # Counterpart Method
+        /// The method
+        /// [checked_pow_uint()](#tymethod.checked_pow_uint) is a bit
+        /// faster than this method `checked_pow()` when the exponent `exp` is
+        /// primitive unsigned integral data type such as u8, u16, u32, u64, and
+        /// u128. If `exp` is the primitive unsigned integral data type number,
+        /// use the method
+        /// [checked_pow_uint()](#tymethod.checked_pow_uint).
+        /// 
+        /// # Example 1
+        /// ```
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u16);
+        /// 
+        /// let a_biguint = UU32::from_uint(10_u8);
+        /// let exp = UU32::from_uint(30_u8);
+        /// let res = a_biguint.checked_pow(&exp);
+        /// match res
+        /// {
+        ///     Some(raised) => {
+        ///             println!("{} ** {} = {}", a_biguint, exp, raised);
+        ///             assert_eq!(raised.to_string(), "1000000000000000000000000000000");
+        ///             assert_eq!(raised.is_overflow(), false);
+        ///             assert_eq!(raised.is_underflow(), false);
+        ///             assert_eq!(raised.is_infinity(), false);
+        ///             assert_eq!(raised.is_divided_by_zero(), false);
+        ///             assert_eq!(raised.is_undefined(), false);
+        ///             assert_eq!(raised.is_left_carry(), false);
+        ///             assert_eq!(raised.is_right_carry(), false);
+        ///         },
+        ///     None => { println!("Overflow"); }
+        /// }
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_pow)
+        fn checked_pow(&self, exp: &Self) -> Option<Self>;
+
+        // fn unchecked_pow(&self, exp: &Self) -> Self
+        /// Raises `BigUInt` type number to the power of `exp`, using
+        /// exponentiation of type `BigUInt` by squaring,
+        /// wrapping around at the boundary of the type `Self`,
+        /// and returns the result.
+        /// 
+        /// # Arguments
+        /// `exp` is the power to raise `self` to, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - If overflow occurs, it will panic.
+        /// - If both `self` and `exp` are zero, the result is mathematically
+        ///   undefined, so this method will panic.
+        /// 
+        /// # Output
+        /// It returns the result of `self` raised to the power of `exp`.
+        /// 
+        /// # Features
+        /// - Wrapping (modular) exponentiation.
+        /// - If overflowing happens, this method will panic.
+        /// 
+        /// # Counterpart Method
+        /// The method [pow_uint()](#tymethod.pow_uint) is more
+        /// efficient than this method `pow()` when the exponent `exp` is primitive
+        /// unsigned integral data type such as u8, u16, u32, u64, and u128.
+        /// If `rhs` is the primitive unsigned integral data type number,
+        /// use the method [pow_uint()](#tymethod.pow_uint).
+        /// 
+        /// # Example 1 for normal exponentiation
+        /// ```
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u32);
+        /// 
+        /// let a_biguint = U256::from_uint(10_u8);
+        /// let exp = U256::from_uint(30_u8);
+        /// let res = a_biguint.unchecked_pow(&exp);
+        /// println!("{} ** {} = {}", a_biguint, exp, res);
+        /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
+        /// assert_eq!(res.is_overflow(), false);
+        /// assert_eq!(res.is_underflow(), false);
+        /// assert_eq!(res.is_infinity(), false);
+        /// assert_eq!(res.is_undefined(), false);
+        /// assert_eq!(res.is_divided_by_zero(), false);
+        /// assert_eq!(res.is_left_carry(), false);
+        /// assert_eq!(res.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.unchecked_pow)
+        fn unchecked_pow(&self, exp: &Self) -> Self;
+
+        // fn saturating_pow(&self, exp: &Self) -> Self
+        /// Raises `BigUInt` type number to the power of `exp`, using
+        /// exponentiation of type `BigUInt` by squaring,
+        /// saturating at the numeric bounds instead of overflowing,
+        /// and returns the result.
+        /// 
+        /// # Arguments
+        /// `exp` is the power to raise `self` to, and is of `&Self` type.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - If both `self` and `exp` are zero, the result is mathematically
+        ///   undefined, so this method will panic.
+        /// 
+        /// # Output
+        /// It returns the result of `self` raised to the power of `exp`.
+        /// 
+        /// # Features
+        /// - Wrapping (modular) exponentiation.
+        /// - Overflowing never happens.
+        /// - This method saturates when it reaches maximum value.
+        /// - It does not set `OVERFLOW` flag of the return value.
+        /// 
+        /// # Counterpart Method
+        /// The method [saturating_pow_uint()](#tymethod.saturating_pow_uint)
+        /// is more efficient than this method `saturating_pow()` when the exponent
+        /// `exp` is primitive unsigned integral data type
+        /// such as u8, u16, u32, u64, and u128.
+        /// If `exp` is the primitive unsigned integral data type number,
+        /// use the method [pow_uint()](#tymethod.pow_uint).
+        /// 
+        /// # Example 1 for normal exponentiation
+        /// ```
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u64);
+        /// 
+        /// let a_biguint = UU32::from_uint(10_u8);
+        /// let exp = UU32::from_uint(30_u8);
+        /// let res = a_biguint.saturating_pow(&exp);
+        /// println!("{} ** {} = {}", a_biguint, exp, res);
+        /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
+        /// assert_eq!(res.is_overflow(), false);
+        /// assert_eq!(res.is_underflow(), false);
+        /// assert_eq!(res.is_infinity(), false);
+        /// assert_eq!(res.is_undefined(), false);
+        /// assert_eq!(res.is_divided_by_zero(), false);
+        /// assert_eq!(res.is_left_carry(), false);
+        /// assert_eq!(res.is_right_carry(), false);
+        /// ```
+        /// 
+        /// # For more examples,
+        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.saturating_pow)
+        fn saturating_pow(&self, exp: &Self) -> Self;
+
+        // fn saturating_pow_assign(&mut self, exp: &Self)
+        /// Raises `BigUInt` type number to the power of `exp`, using
+        /// exponentiation of type `BigUInt` by squaring,
+        /// saturating at the numeric bounds instead of overflowing,
+        /// and assign the result to `self` back.
+        /// 
+        /// # Arguments
+        /// `exp` is the power to raise `self` to, and is a primitive unsigned
+        /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+        ///
+        /// # Panics
+        /// - If `size_of::<T>() * N` <= `128`, this method may panic
+        ///   or its behavior may be undefined though it may not panic.
+        /// - If both `self` and `exp` are zero, the result is mathematically
+        ///   undefined, so this method will panic.
+        /// 
+        /// # Features
+        /// - Wrapping (modular) exponentiation.
+        /// - Overflowing never happens.
+        /// - `self` will be the maximum value instead of overflowing.
+        /// - This method saturates when it reaches maximum value.
+        /// - It does not set `OVERFLOW` flag.
+        /// 
+        /// # Counterpart Method
+        /// The method [saturating_pow_assign_uint()](#tymethod.saturating_pow_uint)
+        /// is more efficient than this method `saturating_pow_assign()` when the exponent
+        /// `exp` is primitive unsigned integral data type
+        /// such as u8, u16, u32, u64, and u128.
+        /// If `exp` is the primitive unsigned integral data type number,
+        /// use the method [saturating_pow_assign_uint()](#tymethod.saturating_pow_assign_uint).
+        /// 
+        /// # Example 1 for normal exponentiation
+        /// ```
+        /// use cryptocol::number::BigUint_More;
+        /// use cryptocol::define_utypes_with;
+        /// define_utypes_with!(u128);
+        /// 
+        /// let mut a_biguint = U256::from_uint(10_u8);
+        /// println!("Originally, a_biguint = {}", a_biguint);
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// 
+        /// let exp = U256::from_uint(30_u8);
+        /// a_biguint.saturating_pow_assign(&exp);
+        /// println!("After a_biguint.wrapping_pow_assign({}), a_biguint = {}", exp, a_biguint);
+        /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
+        /// assert_eq!(a_biguint.is_overflow(), false);
+        /// assert_eq!(a_biguint.is_underflow(), false);
+        /// assert_eq!(a_biguint.is_infinity(), false);
+        /// assert_eq!(a_biguint.is_undefined(), false);
+        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+        /// assert_eq!(a_biguint.is_left_carry(), false);
+        /// assert_eq!(a_biguint.is_right_carry(), false);
+        /// ```
+        fn saturating_pow_assign(&mut self, exp: &Self);
 }

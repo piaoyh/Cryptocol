@@ -15,33 +15,22 @@
 // #![allow(missing_docs)]
 // #![allow(rustdoc::missing_doc_code_examples)]
 
-macro_rules! calc_assign_to_calc
+macro_rules! union_calc_assign_to_calc
 {
     ($me:expr, $op:tt, $rhs: expr) => {
         let mut res = $me.clone();
         res $op $rhs;
         return res;
     };
-    // calc_assign_to_calc!(self, &=, rhs);
+    // union_calc_assign_to_calc!(self, &=, rhs);
     //
     // let mut res = self.clone();
     // res &= rhs;
     // res
-
-    // ($me:expr, $func:expr, $rhs:expr, $modulo:expr) => {
-    //     let mut res = Self::from_array(Self::get_number($me).clone());
-    //     $func(&mut res, $rhs, $modulo);
-    //     return res;
-    // }
-    // calc_assign_to_calc!(self, Self::modular_add_assign_uint, rhs, modulo);
-    //
-    // let mut res = Self::from_array(self.get_number().clone());
-    // res.modular_add_assign_uint(rhs, modulo);
-    // res
 }
-pub(super) use calc_assign_to_calc;
+pub(super) use union_calc_assign_to_calc;
 
-macro_rules! fmt_with_radix
+macro_rules! union_fmt_with_radix
 {
     ($me:expr, $f:expr, $radix:expr, $prefix:expr, $lowerhex:expr, $pointer:expr) => {
         let txt = match $radix
@@ -119,7 +108,7 @@ macro_rules! fmt_with_radix
             }
         };
     };
-    // fmt_with_radix!(self, f, 16, "0X", false, false);
+    // union_fmt_with_radix!(self, f, 16, "0X", false, false);
     // 
     // let txt = match $radix
     // {
@@ -196,19 +185,19 @@ macro_rules! fmt_with_radix
     // };
 
     ($me:expr, $f:expr, $radix:expr, $prefix:expr, $lowerhex:expr) => {
-        fmt_with_radix!($me, $f, $radix, $prefix, $lowerhex, false);
+        union_fmt_with_radix!($me, $f, $radix, $prefix, $lowerhex, false);
     };
     ($me:expr, $f:expr, $radix:expr, $prefix:expr) => {
-        fmt_with_radix!($me, $f, $radix, $prefix, false, false);
+        union_fmt_with_radix!($me, $f, $radix, $prefix, false, false);
     };
     ($me:expr, $f:expr) => {
-        fmt_with_radix!($me, $f, 16, "0x", true, true);
+        union_fmt_with_radix!($me, $f, 16, "0x", true, true);
     };
 }
-pub(super) use fmt_with_radix;
+pub(super) use union_fmt_with_radix;
 
 
-macro_rules! fmt_with_exponent
+macro_rules! union_fmt_with_exponent
 {
     ($me:expr, $f:expr, $exponent:expr) => {
         let mut txt = format!("{}", $me.get());
@@ -293,7 +282,7 @@ macro_rules! fmt_with_exponent
             }
         };
     };
-    // fmt_with_exponent!(self, f, 'e');
+    // union_fmt_with_exponent!(self, f, 'e');
     // 
     // let mut txt = format!("{}", $me.get());
     // let exp = txt.len() - 1;
@@ -377,7 +366,7 @@ macro_rules! fmt_with_exponent
     //     };
     // };
 }
-pub(super) use fmt_with_exponent;
+pub(super) use union_fmt_with_exponent;
 
 
 
@@ -16111,7 +16100,7 @@ macro_rules! operators_for_integer_unions_impl {
             #[inline]
             fn bitand(self, rhs: Self) -> Self
             {
-                calc_assign_to_calc!(self, &=, rhs);
+                union_calc_assign_to_calc!(self, &=, rhs);
             }
         }
 
@@ -16520,7 +16509,7 @@ macro_rules! operators_for_integer_unions_impl {
             /// ```
             fn bitor(self, rhs: Self) -> Self
             {
-                calc_assign_to_calc!(self, |=, rhs);
+                union_calc_assign_to_calc!(self, |=, rhs);
             }
         }
 
@@ -16929,7 +16918,7 @@ macro_rules! operators_for_integer_unions_impl {
             /// ```
             fn bitxor(self, rhs: Self) -> Self
             {
-                calc_assign_to_calc!(self, ^=, rhs);
+                union_calc_assign_to_calc!(self, ^=, rhs);
             }
         }
 
@@ -22309,7 +22298,7 @@ macro_rules! format_for_integer_unions_impl {
             /// ```
             fn fmt(&self, f: &mut Formatter) -> Result<(), Error>
             {
-                fmt_with_radix!(self, f, 10, "");
+                union_fmt_with_radix!(self, f, 10, "");
             }
         }
 
@@ -22662,7 +22651,7 @@ macro_rules! format_for_integer_unions_impl {
             /// ```
             fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error>
             {
-                fmt_with_radix!(self, f, 16, "0X");
+                union_fmt_with_radix!(self, f, 16, "0X");
             }
         }
         
@@ -23015,7 +23004,7 @@ macro_rules! format_for_integer_unions_impl {
             /// ```
             fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error>
             {
-                fmt_with_radix!(self, f, 16, "0x", true);
+                union_fmt_with_radix!(self, f, 16, "0x", true);
             }
         }
 
@@ -23367,7 +23356,7 @@ macro_rules! format_for_integer_unions_impl {
             /// ```
             fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error>
             {
-                fmt_with_radix!(self, f, 2, "0b");
+                union_fmt_with_radix!(self, f, 2, "0b");
             }
         }
 
@@ -23719,7 +23708,7 @@ macro_rules! format_for_integer_unions_impl {
             /// ```
             fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error>
             {
-                fmt_with_radix!(self, f, 8, "0o");
+                union_fmt_with_radix!(self, f, 8, "0o");
             }
         }
 
@@ -24117,7 +24106,7 @@ macro_rules! format_for_integer_unions_impl {
             /// ```
             fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error>
             {
-                fmt_with_exponent!(self, f, 'E');
+                union_fmt_with_exponent!(self, f, 'E');
             }
         }
         
@@ -24515,7 +24504,7 @@ macro_rules! format_for_integer_unions_impl {
             /// ```
             fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error>
             {
-                fmt_with_exponent!(self, f, 'e');
+                union_fmt_with_exponent!(self, f, 'e');
             }
         }
         
@@ -24726,7 +24715,7 @@ macro_rules! format_for_integer_unions_impl {
             {
                 use crate::number::SizeUnion;
                 let ptr = SizeUnion::new_with(self as *const Self as usize);
-                fmt_with_radix!(ptr, f);
+                union_fmt_with_radix!(ptr, f);
             }
         }
     }

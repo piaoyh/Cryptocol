@@ -26,6 +26,14 @@
 | fn midpoint_assign_uint<U>(&mut self, rhs: U)                                           |
 | fn midpoint_uint<U>(&self, rhs: &Self) -> Self                                          |
 | fn midpoint_assign_uint<U>(&mut self, rhs: &Self)                                       |
+| fn checked_pow_uint<U>(&self, exp: U) -> Option<Self>                                   |
+| fn unchecked_pow_uint<U>(&self, exp: U) -> Self                                         |
+| fn saturating_pow_uint<U>(&self, exp: U) -> Self                                        |
+| fn saturating_pow_assign_uint<U>(&mut self, exp: U)                                     |
+| fn checked_pow(&self, exp: &Self) -> Option<Self>                                       |
+| fn unchecked_pow(&self, exp: &Self) -> Self                                             |
+| fn saturating_pow(&self, exp: &Self) -> Self                                            |
+| fn saturating_pow_assign(&mut self, exp: &Self)                                         |
 
 - The methods above have been moved from struct BigUInt to trait BigUInt_More because docs.rs failed in generating struct.bigUInt.html.
 

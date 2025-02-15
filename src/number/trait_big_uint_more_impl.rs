@@ -18,92 +18,11 @@ use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, 
                 Add, AddAssign, Sub, SubAssign, Mul, MulAssign,
                 Div, DivAssign, Rem, RemAssign };
 
-use crate::number::{ SmallUInt, BigUInt };
-use crate::number::trait_big_uint_more::BigUInt_More;
+use crate::number::{ SmallUInt, BigUInt, BigUInt_More };
+use crate::number::{ biguint_calc_assign_to_calc, biguint_checked_calc,
+                     biguint_calc_assign_to_calc_div, biguint_calc_assign_to_calc_rem,
+                     biguint_saturating_calc_assign, biguint_modular_calc_assign };
 
-
-
-macro_rules! calc_assign_to_calc
-{
-    ($me:expr, $func:expr) => {
-        let mut res = Self::from_array($me.get_number().clone());
-        $func(&mut res);
-        return res;
-    };
-    // calc_assign_to_calc!(self, Self::next_power_of_two_assign);
-    //
-    // let mut res = Self::from_array(self.get_number().clone());
-    // res.next_power_of_two_assign();
-    // res
-
-    ($me:expr, $func:expr, $rhs:expr) => {
-        let mut res = Self::from_array($me.get_number().clone());
-        $func(&mut res, $rhs);
-        return res;
-    };
-    // calc_assign_to_calc!(self, Self::saturating_add_assign_uint, rhs);
-    //
-    // let mut res = Self::from_array(self.get_number().clone());
-    // res.saturating_add_assign_uint(rhs);
-    // res
-
-    ($me:expr, $func:expr, $rhs:expr, $modulo:expr) => {
-        let mut res = Self::from_array($me.get_number().clone());
-        $func(&mut res, $rhs, $modulo);
-        return res;
-    }
-    // calc_assign_to_calc!(self, Self::modular_add_assign_uint, rhs, modulo);
-    //
-    // let mut res = Self::from_array(self.get_number().clone());
-    // res.modular_add_assign_uint(rhs, modulo);
-    // res
-}
-
-macro_rules! calc_assign_to_calc_div
-{
-    ($me:expr, $func:expr, $rhs:expr) => {
-        let (quotient, _) = $func($me, $rhs);
-        return quotient;
-    }
-    // calc_assign_to_calc_div!(self, Self::divide_fully_uint, rhs);
-    //
-    // let (quotient, _) = self.divide_fully_uint(rhs);
-    // quotient
-}
-
-macro_rules! calc_assign_to_calc_rem
-{
-    ($me:expr, $func:expr, $rhs:expr) => {
-        let (_, remainder) = $func($me, $rhs);
-        return remainder;
-    }
-    // calc_assign_to_calc_rem!(self, Self::divide_fully_uint, rhs);
-    //
-    // let (_, remainder) = self.divide_fully_uint(rhs);
-    // remainder
-}
-
-macro_rules! saturating_calc_assign
-{
-    ($me:expr, $func:expr, $rhs:expr) => {
-        let overflow = $me.is_overflow();
-        if $func($me, $rhs)
-        {
-            $me.set_max();
-            if !overflow
-                { $me.reset_overflow(); }
-        }
-    }
-    // saturating_calc_assign!(self, Self::overflowing_add_assign_uint, rhs);
-    //
-    // let overflow = self.is_overflow();
-    // if self.overflowing_add_assign_uint(rhs)
-    // {
-    //     self.set_max();
-    //     if !overflow
-    //         { self.reset_overflow(); }
-    // }
-}
 
 macro_rules! saturating_calc_sub_assign
 {
@@ -127,51 +46,6 @@ macro_rules! saturating_calc_sub_assign
     // }
 }
 
-macro_rules! checked_calc
-{
-    ($me:expr, $func:expr) => {
-        return  if $me.is_zero()
-                    { None }
-                else
-                    { Some($func($me)) };
-    };
-    // checked_calc!(self, Self::ilog2);
-    //
-    //  if self.is_zero()
-    //      { None }
-    //  else
-    //      { Some(self.ilog2()) }
-
-    ($me:expr, $func:expr, $rhs:expr) => {
-        let (res, overflow) = $func($me, $rhs);
-        return  if overflow
-                    { None }
-                else
-                    { Some(res) };
-    };
-    // checked_calc!(self, Self::overflowing_add_uint, rhs);
-    //
-    // let (res, overflow) = self.overflowing_add_uint(rhs);
-    // if overflow
-    //     { None }
-    // else
-    //     { Some(res) }
-
-    ($me:expr, $func:expr, $rhs:expr, $cond:expr) => {
-        return  if $cond
-                    { None }
-                else
-                    { Some($func($me, $rhs)) };
-    };
-    // checked_calc!(self, Self::ilog_uint, base, self.is_zero() || (base.is_zero_or_one()));
-    //
-    // if self.is_zero() || (base.is_zero_or_one())
-    //     { None }
-    // else
-    //     { Some(self.ilog_uint(base)) }
-}
-
-
 macro_rules! safe_calc {
     ($me:expr, $func_release:expr, $func_debug:expr, $rhs:expr) => {
         #[cfg(debug_assertions)]        return $func_debug($me, $rhs);
@@ -182,7 +56,6 @@ macro_rules! safe_calc {
     // #[cfg(debug_assertions)]        return self.unchecked_add(rhs);
     // #[cfg(not(debug_assertions))]   return self.wrapping_add(rhs);
 }
-
 
 macro_rules! safe_calc_assign {
     ($me:expr, $func_release:expr, $func_debug:expr, $rhs:expr) => {
@@ -201,21 +74,6 @@ macro_rules! safe_calc_assign {
     //         { panic!(); }
     // }
     // #[cfg(not(debug_assertions))]   self.wrapping_add_assign_uint(rhs);
-}
-
-
-macro_rules! modular_calc_assign
-{
-    ($me:expr, $func:expr, $rhs:expr, $modulo:expr) => {
-        if $modulo.is_zero_or_one()
-            { panic!(); }
-        $func($me, $rhs, $modulo);
-    }
-    // modular_calc_assign!(self, common_modular_add_assign_uint, rhs, modulo);
-    //
-    // if modulo.is_zero_or_one()
-    //     { panic!(); }
-    // common_modular_add_assign_uint(self, rhs, modulo);
 }
 
 
@@ -269,7 +127,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitXor<Output=U> + BitXorAssign + Not<Output=U>
         + PartialEq + PartialOrd
 {
-    let flags = me.get_all_flags();
     if *me >= *modulo
         { me.wrapping_rem_assign(modulo); }
 
@@ -280,19 +137,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     else if modulo.gt_uint(rhs)
     {
         let diff = me.wrapping_rem_uint(rhs);
-        me.reset_all_flags();
         if !diff.is_zero()
             { me.modular_add_assign_uint(rhs - diff, modulo); }
-        me.set_all_flags(flags);
     }
     else    // if U::size_in_bytes() <= T::size_in_bytes() and modulo <= rhs
     {
         let trhs = T::num(rhs);
         let diff = me.wrapping_rem_uint(trhs);
-        me.reset_all_flags();
         if !diff.is_zero()
             { me.modular_add_assign_uint(trhs - diff, modulo); }
-        me.set_all_flags(flags);
     }
 }
 
@@ -306,11 +159,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
         + PartialEq + PartialOrd
 {
-    let flags = me.get_all_flags();
     let r = me.wrapping_rem(rhs);
     if !r.is_zero()
         { me.wrapping_add_assign(&rhs.wrapping_sub(&r)); }
-    me.set_all_flags(flags);
 }
 
 fn common_modular_next_multiple_of_assign<T, const N: usize>(me: &mut BigUInt<T, N>, rhs: &BigUInt<T, N>, modulo: &BigUInt<T, N>)
@@ -323,7 +174,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
         + PartialEq + PartialOrd
 {
-    let flags = me.get_all_flags();
     me.wrapping_rem_assign(modulo);
     let mrhs;
     if rhs.ge(modulo)
@@ -333,7 +183,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     let r = me.wrapping_rem(&mrhs);
     if !r.is_zero()
         { me.modular_add_assign(&mrhs.wrapping_sub(&r), modulo); }
-    me.set_all_flags(flags);
 }
 
 
@@ -363,7 +212,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         if rhs.length_in_bytes() > T::size_in_bytes()
             { self.checked_add(&Self::from_uint(rhs)) }
         else    // if rhs.length_in_bytes() <= T::size_in_bytes()
-            { checked_calc!(self, Self::overflowing_add_uint, rhs); }
+            { biguint_checked_calc!(self, Self::overflowing_add_uint, rhs); }
     }
 
     #[inline]
@@ -390,7 +239,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        calc_assign_to_calc!(self, Self::saturating_add_assign_uint, rhs);
+        biguint_calc_assign_to_calc!(self, Self::saturating_add_assign_uint, rhs);
     }
 
     fn saturating_add_assign_uint<U>(&mut self, rhs: U)
@@ -403,7 +252,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        saturating_calc_assign!(self, Self::overflowing_add_assign_uint, rhs);
+        biguint_saturating_calc_assign!(self, Self::overflowing_add_assign_uint, rhs);
     }
 
     fn safe_add_uint<U>(&self, rhs: U) -> Self
@@ -449,7 +298,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         if rhs.length_in_bytes() > T::size_in_bytes()
             { self.checked_sub(&Self::from_uint(rhs)) }
         else
-            { checked_calc!(self, Self::overflowing_sub_uint, rhs); }
+            { biguint_checked_calc!(self, Self::overflowing_sub_uint, rhs); }
     }
 
     #[inline]
@@ -476,7 +325,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        calc_assign_to_calc!(self, Self::saturating_sub_assign_uint, rhs);
+        biguint_calc_assign_to_calc!(self, Self::saturating_sub_assign_uint, rhs);
     }
 
     fn saturating_sub_assign_uint<U>(&mut self, rhs: U)
@@ -535,7 +384,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         if rhs.length_in_bytes() > T::size_in_bytes()
             { self.checked_mul(&Self::from_uint(rhs)) }
         else
-            { checked_calc!(self, Self::overflowing_mul_uint, rhs); }
+            { biguint_checked_calc!(self, Self::overflowing_mul_uint, rhs); }
     }
     
     #[inline]
@@ -562,7 +411,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        calc_assign_to_calc!(self, Self::saturating_mul_assign_uint, rhs);
+        biguint_calc_assign_to_calc!(self, Self::saturating_mul_assign_uint, rhs);
     }
 
     fn saturating_mul_assign_uint<U>(&mut self, rhs: U)
@@ -575,7 +424,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        saturating_calc_assign!(self, Self::overflowing_mul_assign_uint, rhs);
+        biguint_saturating_calc_assign!(self, Self::overflowing_mul_assign_uint, rhs);
     }
 
     fn safe_mul_uint<U>(&self, rhs: U) -> Self
@@ -618,7 +467,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        checked_calc!(self, Self::wrapping_div_uint, rhs, rhs.is_zero());
+        biguint_checked_calc!(self, Self::wrapping_div_uint, rhs, rhs.is_zero());
     }
 
     #[inline]
@@ -673,7 +522,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-            checked_calc!(self, Self::wrapping_rem_uint, rhs, rhs.is_zero());
+            biguint_checked_calc!(self, Self::wrapping_rem_uint, rhs, rhs.is_zero());
     }
 
     #[inline]
@@ -724,7 +573,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn checked_add(&self, rhs: &Self) -> Option<Self>
     {
-        checked_calc!(self, Self::overflowing_add, rhs);
+        biguint_checked_calc!(self, Self::overflowing_add, rhs);
     }
 
     #[inline]
@@ -735,12 +584,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn saturating_add(&self, rhs: &Self) -> Self
     {
-        calc_assign_to_calc!(self, Self::saturating_add_assign, rhs);
+        biguint_calc_assign_to_calc!(self, Self::saturating_add_assign, rhs);
     }
 
     fn saturating_add_assign(&mut self, rhs: &Self)
     {
-        saturating_calc_assign!(self, Self::overflowing_add_assign, rhs);
+        biguint_saturating_calc_assign!(self, Self::overflowing_add_assign, rhs);
     }
 
     fn safe_add(&self, rhs: &Self) -> Self
@@ -759,7 +608,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn checked_sub(&self, rhs: &Self) -> Option<Self>
     {
-        checked_calc!(self, Self::overflowing_sub, rhs);
+        biguint_checked_calc!(self, Self::overflowing_sub, rhs);
     }
 
     #[inline]
@@ -770,7 +619,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn saturating_sub(&self, rhs: &Self) -> Self
     {
-        calc_assign_to_calc!(self, Self::saturating_sub_assign, rhs);
+        biguint_calc_assign_to_calc!(self, Self::saturating_sub_assign, rhs);
     }
 
     fn saturating_sub_assign(&mut self, rhs: &Self)
@@ -794,17 +643,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn checked_mul(&self, rhs: &Self) -> Option<Self>
     {
-        checked_calc!(self, Self::overflowing_mul, rhs);
+        biguint_checked_calc!(self, Self::overflowing_mul, rhs);
     }
 
     fn saturating_mul(&self, rhs: &Self) -> Self
     {
-        calc_assign_to_calc!(self, Self::saturating_mul_assign, rhs);
+        biguint_calc_assign_to_calc!(self, Self::saturating_mul_assign, rhs);
     }
 
     fn saturating_mul_assign(&mut self, rhs: &Self)
     {
-        saturating_calc_assign!(self, Self::overflowing_mul_assign, rhs);
+        biguint_saturating_calc_assign!(self, Self::overflowing_mul_assign, rhs);
     }
 
     fn safe_mul(&self, rhs: &Self) -> Self
@@ -823,7 +672,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         
     fn checked_div(&self, rhs: &Self) -> Option<Self>
     {
-        checked_calc!(self, Self::wrapping_div, rhs, rhs.is_zero());
+        biguint_checked_calc!(self, Self::wrapping_div, rhs, rhs.is_zero());
     }
 
     #[inline]
@@ -834,7 +683,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn saturating_div(&self, rhs: &Self) -> Self
     {
-        calc_assign_to_calc_div!(self, Self::divide_fully, rhs);
+        biguint_calc_assign_to_calc_div!(self, Self::divide_fully, rhs);
     }
 
     fn saturating_div_assign(&mut self, rhs: &Self)
@@ -844,7 +693,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn checked_rem(&self, rhs: &Self) -> Option<Self>
     {
-        checked_calc!(self, Self::wrapping_rem, rhs, rhs.is_zero());
+        biguint_checked_calc!(self, Self::wrapping_rem, rhs, rhs.is_zero());
     }
 
     #[inline]
@@ -855,7 +704,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn saturating_rem(&self, rhs: &Self) -> Self
     {
-        calc_assign_to_calc_rem!(self, Self::divide_fully, rhs);
+        biguint_calc_assign_to_calc_rem!(self, Self::divide_fully, rhs);
     }
 
     #[inline]
@@ -878,7 +727,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        calc_assign_to_calc!(self, Self::next_multiple_of_assign_uint, rhs);
+        biguint_calc_assign_to_calc!(self, Self::next_multiple_of_assign_uint, rhs);
     }
 
     fn next_multiple_of_assign_uint<U>(&mut self, rhs: U)
@@ -906,7 +755,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        calc_assign_to_calc!(self, Self::panic_free_next_multiple_of_assign_uint, rhs);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_next_multiple_of_assign_uint, rhs);
     }
 
     fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
@@ -940,7 +789,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        calc_assign_to_calc!(self, Self::modular_next_multiple_of_assign_uint, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::modular_next_multiple_of_assign_uint, rhs, modulo);
     }
 
     fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
@@ -953,7 +802,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        modular_calc_assign!(self, common_modular_next_multiple_of_assign_uint, rhs, modulo);
+        biguint_modular_calc_assign!(self, common_modular_next_multiple_of_assign_uint, rhs, modulo);
     }
 
     fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
@@ -966,7 +815,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        calc_assign_to_calc!(self, Self::panic_free_modular_next_multiple_of_assign_uint, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_next_multiple_of_assign_uint, rhs, modulo);
     }
 
     fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
@@ -1016,7 +865,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn next_multiple_of(&self, rhs: &Self) -> Self
     {
-        calc_assign_to_calc!(self, Self::next_multiple_of_assign, rhs);
+        biguint_calc_assign_to_calc!(self, Self::next_multiple_of_assign, rhs);
     }
 
     fn next_multiple_of_assign(&mut self, rhs: &Self)
@@ -1028,7 +877,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self
     {
-        calc_assign_to_calc!(self, Self::panic_free_next_multiple_of_assign, rhs);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_next_multiple_of_assign, rhs);
     }
 
     fn panic_free_next_multiple_of_assign(&mut self, rhs: &Self)
@@ -1044,17 +893,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
     {
-        calc_assign_to_calc!(self, Self::modular_next_multiple_of_assign, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::modular_next_multiple_of_assign, rhs, modulo);
     }
 
     fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)
     {
-        modular_calc_assign!(self, common_modular_next_multiple_of_assign, rhs, modulo);
+        biguint_modular_calc_assign!(self, common_modular_next_multiple_of_assign, rhs, modulo);
     }
 
     fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
     {
-        calc_assign_to_calc!(self, Self::panic_free_modular_next_multiple_of_assign, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_next_multiple_of_assign, rhs, modulo);
     }
 
     fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)
@@ -1086,7 +935,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        calc_assign_to_calc!(self, Self::midpoint_assign_uint, rhs);
+        biguint_calc_assign_to_calc!(self, Self::midpoint_assign_uint, rhs);
     }
     
     fn midpoint_assign_uint<U>(&mut self, rhs: U)
@@ -1101,30 +950,111 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         if self.is_uint(rhs)
             { return; }
-        let flags = self.get_all_flags();
         let b = self.is_odd() && rhs.is_odd();
+        let right_carry = self.is_right_carry();
+        let overflow = self.is_overflow();
         self.shift_right_assign(1_u8);
         self.wrapping_add_assign_uint(rhs >> U::one());
         if b
             { self.wrapping_add_assign_uint(1_u8); }
-        self.set_all_flags(flags);
+        if !right_carry  { self.reset_right_carry(); }
+        if !overflow     { self.reset_overflow(); }
     }
 
     fn midpoint(&self, rhs: &Self) -> Self
     {
-        calc_assign_to_calc!(self, Self::midpoint_assign, rhs);
+        biguint_calc_assign_to_calc!(self, Self::midpoint_assign, rhs);
     }
 
     fn midpoint_assign(&mut self, rhs: &Self)
     {
         if *self == *rhs
             { return; }
-        let flags = self.get_all_flags();
         let b = self.is_odd() && rhs.is_odd();
+        let right_carry = self.is_right_carry();
+        let overflow = self.is_overflow();
         self.shift_right_assign(1_u8);
         self.wrapping_add_assign(&(rhs.shift_right(1_u8)));
         if b
             { self.wrapping_add_assign_uint(1_u8); }
-        self.set_all_flags(flags);
+        if !right_carry  { self.reset_right_carry(); }
+        if !overflow     { self.reset_overflow(); }
+    }
+
+    fn checked_pow_uint<U>(&self, exp: U) -> Option<Self>
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        if self.is_zero() && exp.is_zero()
+            { return None; }
+        biguint_checked_calc!(self, Self::overflowing_pow_uint, exp);
+    }
+
+    fn unchecked_pow_uint<U>(&self, exp: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        self.checked_pow_uint(exp).unwrap()
+    }
+
+    fn saturating_pow_uint<U>(&self, exp: U) -> Self
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        biguint_calc_assign_to_calc!(self, Self::saturating_pow_assign_uint, exp);
+    }
+
+    fn saturating_pow_assign_uint<U>(&mut self, exp: U)
+    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
+            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
+            + Rem<Output=U> + RemAssign
+            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
+            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
+            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
+            + PartialEq + PartialOrd
+    {
+        biguint_saturating_calc_assign!(self, Self::overflowing_pow_assign_uint, exp);
+    }
+
+    fn checked_pow(&self, exp: &Self) -> Option<Self>
+    {
+        if self.is_zero() && exp.is_zero()
+            { return None; }
+        biguint_checked_calc!(self, Self::overflowing_pow, exp);
+    }
+
+    #[inline]
+    fn unchecked_pow(&self, exp: &Self) -> Self
+    {
+        self.checked_pow(&exp).unwrap()
+    }
+
+    fn saturating_pow(&self, exp: &Self) -> Self
+    {
+        biguint_calc_assign_to_calc!(self, Self::saturating_pow_assign, exp);
+    }
+
+    fn saturating_pow_assign(&mut self, exp: &Self)
+    {
+        biguint_saturating_calc_assign!(self, Self::overflowing_pow_assign, exp);
     }
 }
