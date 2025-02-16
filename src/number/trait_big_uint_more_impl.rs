@@ -18,7 +18,7 @@ use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, 
                 Add, AddAssign, Sub, SubAssign, Mul, MulAssign,
                 Div, DivAssign, Rem, RemAssign };
 
-use crate::number::{ SmallUInt, BigUInt, BigInt_More };
+use crate::number::{ SmallUInt, BigUInt, BigUInt_More };
 use crate::number::{ biguint_calc_assign_to_calc, biguint_checked_calc,
                      biguint_calc_assign_to_calc_div, biguint_calc_assign_to_calc_rem,
                      biguint_saturating_calc_assign, biguint_modular_calc_assign };
@@ -187,7 +187,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
 
 
-impl<T, const N: usize> BigInt_More<T, N> for BigUInt<T, N>
+impl<T, const N: usize> BigUInt_More<T, N> for BigUInt<T, N>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign

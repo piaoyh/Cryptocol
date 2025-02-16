@@ -43,7 +43,7 @@ use crate::number::SmallUInt;
 /// // to do
 /// ```
 #[allow(non_camel_case_types)]
-pub trait BigInt_More<T, const N: usize> : Clone + Sized //+ Display + + ToString
+pub trait BigUInt_More<T, const N: usize> : Clone + Sized //+ Display + + ToString
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign

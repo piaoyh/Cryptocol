@@ -39,8 +39,8 @@ The checked items have already been implemented including documentation __at lea
 
 ### Big Numbers: meaningful as itself and also the foundation for Asymmetric-Key Algorithms
 
-- [X] Fixed Sized Big Unsigned Integer Operation --- [`BigUInt`](https://docs.rs/cryptocol/latest/cryptocol/number/big_uint/struct.BigUInt.html#struct.BigUInt)
-- [X] Auxiliary Fixed Sized Big Unsigned Integer Operation --- [`BigInt_More`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_int_more/trait.BigInt_More.html#trait.BigInt_More)
+- [X] Fixed Sized Big Unsigned Integer Operation --- You can find most of the methods you need for big integer calculation at [`BigUInt`](https://docs.rs/cryptocol/latest/cryptocol/number/big_uint/struct.BigUInt.html#struct.BigUInt).
+- [X] Auxiliary Fixed Sized Big Unsigned Integer Operation --- If you don't find what you need at [`BigUInt`](https://docs.rs/cryptocol/latest/cryptocol/number/big_uint/struct.BigUInt.html#struct.BigUInt), you may find it at [`BigUInt_More`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_more/trait.BigUInt_More.html#trait.BigUInt_More).
 <!--
 - [ ] Fixed Sized Big Signed Integer Operation --- BigSInt
     ===> Moved to Roadmap for ver. 2.0

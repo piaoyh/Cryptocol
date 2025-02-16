@@ -4323,6 +4323,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for Noraml case
@@ -4341,6 +4343,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for self != 0 and exp == 0 and modulo != 0
@@ -4359,6 +4363,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for self != 0 and exp == multiple of modulo and modulo != 0
@@ -4377,6 +4383,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for self == 0 and exp != 0 and modulo != 0
@@ -4395,6 +4403,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for self == multiple of modulo and exp != 0 and modulo != 0
@@ -4413,6 +4423,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7 for self == 0 and exp == 0 and modulo != 0
@@ -4431,6 +4443,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 8 for self == 0 and exp == multiple of modulo and modulo != 0
@@ -4449,6 +4463,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 9 for self == multiple of modulo and exp == 0 and modulo != 0
@@ -4467,6 +4483,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 10 for self == multiple of modulo and exp == multiple of modulo and modulo != 0
@@ -4485,6 +4503,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 11 for self != 0 and exp != 0 and modulo == 0
@@ -4503,6 +4523,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 12 for self != 0 and exp != 0 and modulo == 1
@@ -4521,6 +4543,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 13 for self == 0 and exp == 0 and modulo == 0
@@ -4539,6 +4563,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_infinity(), false);
     /// assert_eq!(res.is_undefined(), true);
     /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
     /// ```
     /// 
     /// # Ccollective Examples
@@ -4560,6 +4586,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(res.is_divided_by_zero(), false);
     ///             assert_eq!(res.is_infinity(), false);
     ///             assert_eq!(res.is_undefined(), true);
+    ///             assert_eq!(res.is_left_carry(), false);
+    ///             assert_eq!(res.is_right_carry(), false);
     ///         }
     ///     }
     /// }
@@ -4569,72 +4597,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         unimplemented!(); // Dummy code for documentation
     }
 
-    // pub fn panic_free_modular_pow_assign(&mut self, exp: &Self, modulo: &Self)
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
-    /// and assign the result to `self` back.
-    /// 
-    /// # Arguments
-    /// - `exp` is the power to raise `self` to, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
-    ///    and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - If both `self` and `exp` are `zero`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `modulo` | `self` | `exp` | result value | flags       |
-    /// |----------|--------|-------|--------------|-------------|
-    /// | 0 or 1   | >= 0   | >= 0  | 0            | `UNDEFINED` |
-    /// | > 1      | 0      | 0     | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// The method [panic_free_modular_pow_assign_uint()](struct@BigUInt#method.panic_free_modular_pow_assign_uint)
-    /// is more efficient than this method `panic_free_modular_pow_assign()`
-    /// when the exponent `exp` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `exp` is the primitive unsigned integral data type number,
-    /// use the method [panic_free_modular_pow_assign_uint()](struct@BigUInt#method.panic_free_modular_pow_assign_uint).
-    /// 
-    /// # Example 1 for Noraml case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U256::from_uint(10_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// 
-    /// let exp = U256::from_uint(30_u8);
-    /// let modulo = U256::halfmax();
-    /// a_biguint.panic_free_modular_pow_assign(&exp, &modulo);
-    /// println!("After a_biguint.panic_free_modular_pow_assign({}, {}), a_biguint = {}", exp, modulo, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// ```
+    
     /// 
     /// # Example 2 for Noraml case
     /// ```
@@ -4648,6 +4611,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(100_u8);
     /// let modulo = U256::halfmax();
@@ -4659,6 +4624,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for self != 0 and exp == 0 and modulo != 0
@@ -4673,6 +4640,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::zero();
     /// let modulo = U256::halfmax();
@@ -4684,6 +4653,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for self != 0 and exp == multiple of modulo and modulo != 0
@@ -4698,6 +4669,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(200_u8);
     /// let modulo = U256::from_uint(100_u8);
@@ -4709,6 +4682,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for self == 0 and exp != 0 and modulo != 0
@@ -4723,6 +4698,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(30_u8);
     /// let modulo = U256::halfmax();
@@ -4734,6 +4711,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for self == multiple of modulo and exp != 0 and modulo != 0
@@ -4748,6 +4727,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(30_u8);
     /// let modulo = U256::from_uint(100_u8);
@@ -4759,6 +4740,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7 for self == 0 and exp == 0 and modulo != 0
@@ -4773,6 +4756,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::zero();
     /// let modulo = U256::halfmax();
@@ -4784,6 +4769,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 8 for self == multiple of modulo and exp == multiple of modulo and modulo != 0
@@ -4798,6 +4785,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(150_u8);
     /// let modulo = U256::from_uint(50_u8);
@@ -4809,6 +4798,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 9 for self != 0 and exp != 0 and modulo == 0
@@ -4823,6 +4814,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(100_u8);
     /// let modulo = U256::zero();
@@ -4834,6 +4827,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 10 for self != 0 and exp != 0 and modulo == 1
@@ -4848,6 +4843,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(100_u8);
     /// let modulo = U256::one();
@@ -4859,6 +4856,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 11 for self == 0 and exp == 0 and modulo == 0
@@ -4873,6 +4872,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::zero();
     /// let modulo = U256::zero();
@@ -4884,6 +4885,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Ccollective Examples
@@ -4904,6 +4907,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(lhs.is_infinity(), false);
     ///             assert_eq!(lhs.is_undefined(), false);
     ///             assert_eq!(lhs.is_divided_by_zero(), false);
+    ///             assert_eq!(lhs.is_left_carry(), false);
+    ///             assert_eq!(lhs.is_right_carry(), false);
     /// 
     ///             lhs.panic_free_modular_pow_assign(&rhs, &modulo);
     ///             println!("After lhs.panic_free_modular_pow_assign({}, {}), lhs = {}", rhs, modulo, lhs);
@@ -4913,6 +4918,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///             assert_eq!(lhs.is_infinity(), false);
     ///             assert_eq!(lhs.is_undefined(), true);
     ///             assert_eq!(lhs.is_divided_by_zero(), false);
+    ///             assert_eq!(lhs.is_left_carry(), false);
+    ///             assert_eq!(lhs.is_right_carry(), false);
     ///         }
     ///     }
     /// }
@@ -8787,7 +8794,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     
     /***** METHODS FOR MISCELLANEOUS ARITHMETIC OPERATIONS *****/
-
+////////////////////
     // pub fn gcd(&self, other: &Self) -> Self
     /// Calculates the greatest common divisor of `self` and `other`,
     /// and returns the result.
@@ -8835,6 +8842,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for Two prime numbers
@@ -8852,6 +8861,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for the case self is a prime number and other is a composite number
@@ -8869,6 +8880,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for the case self is a composite number and another is prime number
@@ -8886,6 +8899,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for Same numbers
@@ -8903,6 +8918,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for one prime number and its multiple
@@ -8920,6 +8937,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7 for two relatively prime numbers
@@ -8939,6 +8958,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -9007,6 +9028,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::from_string("99999888887777766666555554444433333222221111100000123456789").unwrap();
     /// a_biguint.gcd_assign(&b_biguint);
@@ -9017,6 +9040,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for Two prime numbers
@@ -9030,6 +9055,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("8438991675438218095037710712144663668370976580551057770447200309276357957168036900503577855298223571234349459464291898319535238059076166186474530555556137").unwrap();
     /// a_biguint.gcd_assign(&b_biguint);
@@ -9040,6 +9067,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for the case self is a prime number and other is a composite number
@@ -9053,6 +9082,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("111112222233333444445555566666777778888899999000001111122222333334444455555666667777788888999990000011111222223333344444555556666677777888889999900000").unwrap();
     /// a_biguint.gcd_assign(&b_biguint);
@@ -9063,6 +9094,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for the case self is a composite number and another is prime number
@@ -9076,6 +9109,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("8438991675438218095037710712144663668370976580551057770447200309276357957168036900503577855298223571234349459464291898319535238059076166186474530555556137").unwrap();
     /// a_biguint.gcd_assign(&b_biguint);
@@ -9086,6 +9121,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for Same numbers
@@ -9099,6 +9136,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::from_string("111112222233333444445555566666777778888899999111112222233333444445555566666").unwrap();
     /// a_biguint.gcd_assign(&b_biguint);
@@ -9109,6 +9148,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for one prime number and its multiple
@@ -9122,6 +9163,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = a_biguint.wrapping_mul_uint(3_u8);
     /// a_biguint.gcd_assign(&b_biguint);
@@ -9132,6 +9175,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7 for two relatively prime numbers
@@ -9146,6 +9191,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::from_string("1461470517451445635247458978672662721125232940494242939166724681854248046875").unwrap();
     /// // let b_biguint = U256::from_uint(3_u8).pow_uint(72_u8).wrapping_mul(&U256::from_uint(5_u8).pow_uint(42_u8)).wrapping_mul(&U256::from_uint(11_u8).pow_uint(11_u8));
@@ -9157,6 +9204,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -9241,6 +9290,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for Two prime numbers
@@ -9258,6 +9309,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for the case self is a prime number and other is a composite number
@@ -9275,6 +9328,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for the case self is a composite number and another is prime number
@@ -9292,6 +9347,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for Same numbers
@@ -9309,6 +9366,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for one prime number and its multiple
@@ -9326,6 +9385,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7 for two relatively prime numbers
@@ -9345,6 +9406,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 8 for zero and non-zero
@@ -9362,6 +9425,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), true);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 9 for non-zero and zero
@@ -9379,6 +9444,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), true);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 10 for zero and zero
@@ -9396,6 +9463,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), true);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     pub fn panic_free_gcd(&self, _other: &Self) -> Self
     {
@@ -9453,6 +9522,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::from_string("99999888887777766666555554444433333222221111100000123456789").unwrap();
     /// a_biguint.panic_free_gcd_assign(&b_biguint);
@@ -9463,6 +9534,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for Two prime numbers
@@ -9476,6 +9549,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("8438991675438218095037710712144663668370976580551057770447200309276357957168036900503577855298223571234349459464291898319535238059076166186474530555556137").unwrap();
     /// a_biguint.panic_free_gcd_assign(&b_biguint);
@@ -9486,6 +9561,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for the case self is a prime number and other is a composite number
@@ -9499,6 +9576,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("111112222233333444445555566666777778888899999000001111122222333334444455555666667777788888999990000011111222223333344444555556666677777888889999900000").unwrap();
     /// a_biguint.panic_free_gcd_assign(&b_biguint);
@@ -9509,6 +9588,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for the case self is a composite number and another is prime number
@@ -9522,6 +9603,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("8438991675438218095037710712144663668370976580551057770447200309276357957168036900503577855298223571234349459464291898319535238059076166186474530555556137").unwrap();
     /// a_biguint.panic_free_gcd_assign(&b_biguint);
@@ -9532,6 +9615,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for Same numbers
@@ -9545,6 +9630,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::from_string("111112222233333444445555566666777778888899999111112222233333444445555566666").unwrap();
     /// a_biguint.panic_free_gcd_assign(&b_biguint);
@@ -9555,6 +9642,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for one prime number and its multiple
@@ -9568,6 +9657,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = a_biguint.wrapping_mul_uint(3_u8);
     /// a_biguint.panic_free_gcd_assign(&b_biguint);
@@ -9578,6 +9669,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7 for two relatively prime numbers
@@ -9592,6 +9685,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::from_string("1461470517451445635247458978672662721125232940494242939166724681854248046875").unwrap();
     /// // let b_biguint = U256::from_uint(3_u8).pow_uint(72_u8).wrapping_mul(&U256::from_uint(5_u8).pow_uint(42_u8)).wrapping_mul(&U256::from_uint(11_u8).pow_uint(11_u8));
@@ -9603,6 +9698,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 8 for zero and non-zero
@@ -9617,6 +9714,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::from_string("1461470517451445635247458978672662721125232940494242939166724681854248046875").unwrap();
     /// a_biguint.panic_free_gcd_assign(&b_biguint);
@@ -9627,6 +9726,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 9 for non-zero and zero
@@ -9641,6 +9742,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::zero();
     /// a_biguint.panic_free_gcd_assign(&b_biguint);
@@ -9651,6 +9754,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 10 for zero and zero
@@ -9665,6 +9770,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::zero();
     /// a_biguint.panic_free_gcd_assign(&b_biguint);
@@ -9675,6 +9782,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn panic_free_gcd_assign(&mut self, _other: &Self)
     {
@@ -9728,6 +9837,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for Two prime numbers
@@ -9745,6 +9856,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for the case self is a prime number and other is a composite number
@@ -9762,6 +9875,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for the case self is a composite number and another is prime number
@@ -9779,6 +9894,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for Same numbers
@@ -9796,6 +9913,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for one prime number and its multiple
@@ -9814,6 +9933,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7 for two relatively prime numbers
@@ -9833,6 +9954,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -9901,6 +10024,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::from_string("77777666665555544444333332222211111").unwrap();
     /// a_biguint.lcm_assign(&b_biguint);
@@ -9911,6 +10036,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for Two prime numbers
@@ -9924,6 +10051,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("6670387054797362513395707836449423967156351509862541368962968031208086533377").unwrap();
     /// a_biguint.lcm_assign(&b_biguint);
@@ -9934,6 +10063,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for the case self is a prime number and other is a composite number
@@ -9947,6 +10078,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("111112222233333444445555566666777778888899999").unwrap();
     /// a_biguint.lcm_assign(&b_biguint);
@@ -9957,6 +10090,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for the case self is a composite number and another is prime number
@@ -9970,6 +10105,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("6670387054797362513395707836449423967156351509862541368962968031208086533377").unwrap();
     /// a_biguint.lcm_assign(&b_biguint);
@@ -9980,6 +10117,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for Same numbers
@@ -9993,6 +10132,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::from_string("111112222233333444445555566666777778888899999").unwrap();
     /// a_biguint.lcm_assign(&b_biguint);
@@ -10003,6 +10144,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for one prime number and its multiple
@@ -10016,6 +10159,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("787760672551329645078144948052076751441184301699551191526778039880634535788587808079267450124018727724292049968038896231261583765900085599798828035839807").unwrap();
     /// // let b_biguint = a_biguint.wrapping_mul_uint(3_u8);
@@ -10027,6 +10172,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7 for two relatively prime numbers
@@ -10041,6 +10188,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("4502551836747118353130482137203216552734375").unwrap();
     /// // let b_biguint = U512::from_uint(3_u8).pow_uint(36_u8).wrapping_mul(&U512::from_uint(5_u8).pow_uint(29_u8)).wrapping_mul(&U512::from_uint(11_u8).pow_uint(5_u8));
@@ -10052,6 +10201,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Panic Examples
@@ -10136,6 +10287,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for Two prime numbers
@@ -10153,6 +10306,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for the case self is a prime number and other is a composite number
@@ -10170,6 +10325,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for the case self is a composite number and another is prime number
@@ -10187,6 +10344,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for Same numbers
@@ -10204,6 +10363,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for one prime number and its multiple
@@ -10222,6 +10383,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7 for two relatively prime numbers
@@ -10241,6 +10404,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), false);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 8 for zero and non-zero
@@ -10258,6 +10423,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), true);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 9 for non-zero and zero
@@ -10275,6 +10442,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), true);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 10 for zero and zero
@@ -10292,6 +10461,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(c_biguint.is_infinity(), false);
     /// assert_eq!(c_biguint.is_undefined(), true);
     /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
     /// ```
     pub fn panic_free_lcm(&self, _other: &Self) -> Self
     {
@@ -10349,6 +10520,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::from_string("77777666665555544444333332222211111").unwrap();
     /// a_biguint.panic_free_lcm_assign(&b_biguint);
@@ -10359,6 +10532,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 2 for Two prime numbers
@@ -10372,6 +10547,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("6670387054797362513395707836449423967156351509862541368962968031208086533377").unwrap();
     /// a_biguint.panic_free_lcm_assign(&b_biguint);
@@ -10382,6 +10559,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 3 for the case self is a prime number and other is a composite number
@@ -10395,6 +10574,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("111112222233333444445555566666777778888899999").unwrap();
     /// a_biguint.panic_free_lcm_assign(&b_biguint);
@@ -10405,6 +10586,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 4 for the case self is a composite number and another is prime number
@@ -10418,6 +10601,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("6670387054797362513395707836449423967156351509862541368962968031208086533377").unwrap();
     /// a_biguint.panic_free_lcm_assign(&b_biguint);
@@ -10428,6 +10613,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 5 for Same numbers
@@ -10441,6 +10628,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::from_string("111112222233333444445555566666777778888899999").unwrap();
     /// a_biguint.panic_free_lcm_assign(&b_biguint);
@@ -10451,6 +10640,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 6 for one prime number and its multiple
@@ -10464,6 +10655,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("787760672551329645078144948052076751441184301699551191526778039880634535788587808079267450124018727724292049968038896231261583765900085599798828035839807").unwrap();
     /// // let b_biguint = a_biguint.wrapping_mul_uint(3_u8);
@@ -10475,6 +10668,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 7 for two relatively prime numbers
@@ -10489,6 +10684,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U512::from_string("4502551836747118353130482137203216552734375").unwrap();
     /// // let b_biguint = U512::from_uint(3_u8).pow_uint(36_u8).wrapping_mul(&U512::from_uint(5_u8).pow_uint(29_u8)).wrapping_mul(&U512::from_uint(11_u8).pow_uint(5_u8));
@@ -10500,6 +10697,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 8 for zero and non-zero
@@ -10514,6 +10713,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::from_string("1461470517451445635247458978672662721125232940494242939166724681854248046875").unwrap();
     /// a_biguint.panic_free_lcm_assign(&b_biguint);
@@ -10524,6 +10725,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 9 for non-zero and zero
@@ -10538,6 +10741,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::zero();
     /// a_biguint.panic_free_lcm_assign(&b_biguint);
@@ -10548,6 +10753,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
     /// # Example 10 for zero and zero
@@ -10562,6 +10769,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let b_biguint = U256::zero();
     /// a_biguint.panic_free_lcm_assign(&b_biguint);
@@ -10572,6 +10781,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_infinity(), false);
     /// assert_eq!(a_biguint.is_undefined(), true);
     /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn panic_free_lcm_assign(&mut self, _other: &Self)
     {

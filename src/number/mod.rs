@@ -106,7 +106,9 @@
 //! This module provides three kinds of long bit integers: BigUInt, BigInt,
 //! and LargeInt.
 //! - `BigUInt` --- a big-sized _unsigned_ integer with user-defined _fixed_ size.
-//! [Read more](struct@BigUInt)
+//!   [Read more](struct@BigUInt)
+//! - `BigUInt_More` --- an auxiliary big-sized _unsigned_ integer with
+//!   user-defined _fixed_ size. [Read more](trait@BigUInt_More)
 //! - `BigSInt` --- a big-sized _signed_ integer with user-defined _fixed_ size.
 //! - `LargeInt` --- a big-sized _signed_ integer with _variable_ size.
 //! 
@@ -146,7 +148,7 @@ pub mod shared_arrays;
 pub mod big_uint;
 
 /// Additional methods for BigUInt
-pub mod trait_big_int_more;
+pub mod trait_big_uint_more;
 pub mod number_errors;
 pub mod macros_for_types;
 pub mod macros_for_integer_unions;
@@ -167,13 +169,13 @@ pub mod trait_small_uint_for_integer_unions_impl;
 pub mod traits_for_big_uint_impl;
 
 /// Implementaion of BigUInt_More trait for BigUInt
-pub mod trait_big_int_more_impl;
+pub mod trait_big_uint_more_impl;
 
 
 
 pub use small_uint::*;
 pub use small_sint::*;
-pub use trait_big_int_more::*;
+pub use trait_big_uint_more::*;
 pub use short_union::*;
 pub use int_union::*;
 pub use long_union::*;
