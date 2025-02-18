@@ -120,7 +120,7 @@ The checked items have already been implemented including documentation __at lea
 - [ ] AES symmetric-key encryption/decryption algorithm
     --- Includes AES and its expanded versions. `AES_Generic`
 - [ ] NAES symmetric-key encryption/decryption algorithm
-    --- Includes 2DES, 3DES, 4AES, etc., and their expanded versions. `NAES_Generic`
+    --- Includes 2AES, 3AES, 4AES, etc., and their expanded versions. `NAES_Generic`
 
 <!--
 - [ ] SEED symmetric-key encryption/decryption algorithm

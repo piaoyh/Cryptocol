@@ -360,6 +360,275 @@ macro_rules! copy_append {
 
 
 
+/// You have freedom of changing EP01 ~ EP48, TP01 ~ TP32, and S000 ~ S763.
+/// You can change the DES algorithm by simply changing the generic parameters
+/// - EP01 ~ EP48: Expansion permutation constants. They are 1-based. For
+///   example, `EP01 = 28` means that the 28th bit of data is moved to the first
+///   bit of the data which is MSB at expansion permutation. They expand the
+///   32-bit right-half data from the Feistel structure of the corresponding
+///   round into 48 bits in order to perform XOR (exclusive OR) with the
+///   corresponding 48-bit round key. When you change these constants, you have
+///   to remember that you should included all the bits. You cannot drop any
+///   bit. Your dropping any bit will surely kill the whole DES
+///   encryption/decryption algorithm.
+/// - TP01 ~ TP32: Translation permutation constans.  They are 1-based. For
+///   example, `TP01 = 16` means that the 16th bit of data is moved to the
+///   first bit of the data which is MSB at translation permutation. You can
+///   change translation permutation wire by changing these constants. The
+///   change of these constants does not change the security strength. However,
+///   when you change these constants, you have to remember that you should
+///   included all the bits. You cannot drop any bit. Your dropping any bit will
+///   surely kill the whole DES encryption/decryption algorithm.
+/// - S000 ~ S763: S-Box constants. Its index such as 000, 212, etc. is
+///   0-based. S0XX means S-Box 0, S1XX means S-Box 1, and so on. S000 is the
+///   first element of S-Box 0.
+///   According to [the document](https://page.math.tu-berlin.de/~kant/teaching/hess/krypto-ws2006/des.htm),
+///   the input six bits determines the output of S-Box. The first and the last
+///   bit of the six bits represent in base 2 a number in the decimal range 0 to
+///   3 (or binary 00 to 11) which is row number. The rest middle four bits
+///   represent in base 2 a number in the decimal range 0 to 15 (binary 0000 to
+///   1111) which is column number. It is considered that the DES designers
+///   explained the S-box structure _unnecessarily too complicated_. The
+///   above-described S-box indexing way looks two dimensional, but actually is
+///   one dimensional. So, in this crate, S-boxes are implemented to be
+///   two-dimensional array which is an array of S-boxes. Each S-box is an array
+///   of 64 four-bit numbers. The input six-bit number is used as the index of
+///   the one-dimensional array of these 64 four-bit numbers. So, the S-box
+///   tables have been rearranged to be the one-dimensional array. You can cange
+///   S-Box by changing these constants. However, you have know that *the change
+///   of these constants may hurt the security a lot*. And the principle of
+///   S-box has been unknown so far.
+#[allow(non_camel_case_types)]
+pub type DES_F<
+    const EP01: u8 = 32, const EP02: u8 = 01, const EP03: u8 = 02, const EP04: u8 = 03,
+    const EP05: u8 = 04, const EP06: u8 = 05, const EP07: u8 = 04, const EP08: u8 = 05,
+    const EP09: u8 = 06, const EP10: u8 = 07, const EP11: u8 = 08, const EP12: u8 = 09,
+    const EP13: u8 = 08, const EP14: u8 = 09, const EP15: u8 = 10, const EP16: u8 = 11,
+    const EP17: u8 = 12, const EP18: u8 = 13, const EP19: u8 = 12, const EP20: u8 = 13,
+    const EP21: u8 = 14, const EP22: u8 = 15, const EP23: u8 = 16, const EP24: u8 = 17,
+    const EP25: u8 = 16, const EP26: u8 = 17, const EP27: u8 = 18, const EP28: u8 = 19,
+    const EP29: u8 = 20, const EP30: u8 = 21, const EP31: u8 = 20, const EP32: u8 = 21,
+    const EP33: u8 = 22, const EP34: u8 = 23, const EP35: u8 = 24, const EP36: u8 = 25,
+    const EP37: u8 = 24, const EP38: u8 = 25, const EP39: u8 = 26, const EP40: u8 = 27,
+    const EP41: u8 = 28, const EP42: u8 = 29, const EP43: u8 = 28, const EP44: u8 = 29,
+    const EP45: u8 = 30, const EP46: u8 = 31, const EP47: u8 = 32, const EP48: u8 = 01,
+    const TP01: u8 = 16, const TP02: u8 = 07, const TP03: u8 = 20, const TP04: u8 = 21,
+    const TP05: u8 = 29, const TP06: u8 = 12, const TP07: u8 = 28, const TP08: u8 = 17,
+    const TP09: u8 = 01, const TP10: u8 = 15, const TP11: u8 = 23, const TP12: u8 = 26,
+    const TP13: u8 = 05, const TP14: u8 = 18, const TP15: u8 = 31, const TP16: u8 = 10,
+    const TP17: u8 = 02, const TP18: u8 = 08, const TP19: u8 = 24, const TP20: u8 = 14,
+    const TP21: u8 = 32, const TP22: u8 = 27, const TP23: u8 = 03, const TP24: u8 = 09,
+    const TP25: u8 = 19, const TP26: u8 = 13, const TP27: u8 = 30, const TP28: u8 = 06,
+    const TP29: u8 = 22, const TP30: u8 = 11, const TP31: u8 = 04, const TP32: u8 = 25,
+    const S000: u8 = 0xe, const S001: u8 = 0x0, const S002: u8 = 0x4, const S003: u8 = 0xf,
+    const S004: u8 = 0xd, const S005: u8 = 0x7, const S006: u8 = 0x1, const S007: u8 = 0x4,
+    const S008: u8 = 0x2, const S009: u8 = 0xe, const S010: u8 = 0xf, const S011: u8 = 0x2,
+    const S012: u8 = 0xb, const S013: u8 = 0xd, const S014: u8 = 0x8, const S015: u8 = 0x1,
+    const S016: u8 = 0x3, const S017: u8 = 0xa, const S018: u8 = 0xa, const S019: u8 = 0x6,
+    const S020: u8 = 0x6, const S021: u8 = 0xc, const S022: u8 = 0xc, const S023: u8 = 0xb,
+    const S024: u8 = 0x5, const S025: u8 = 0x9, const S026: u8 = 0x9, const S027: u8 = 0x5,
+    const S028: u8 = 0x0, const S029: u8 = 0x3, const S030: u8 = 0x7, const S031: u8 = 0x8,
+    const S032: u8 = 0x4, const S033: u8 = 0xf, const S034: u8 = 0x1, const S035: u8 = 0xc,
+    const S036: u8 = 0xe, const S037: u8 = 0x8, const S038: u8 = 0x8, const S039: u8 = 0x2,
+    const S040: u8 = 0xd, const S041: u8 = 0x4, const S042: u8 = 0x6, const S043: u8 = 0x9,
+    const S044: u8 = 0x2, const S045: u8 = 0x1, const S046: u8 = 0xb, const S047: u8 = 0x7,
+    const S048: u8 = 0xf, const S049: u8 = 0x5, const S050: u8 = 0xc, const S051: u8 = 0xb,
+    const S052: u8 = 0x9, const S053: u8 = 0x3, const S054: u8 = 0x7, const S055: u8 = 0xe,
+    const S056: u8 = 0x3, const S057: u8 = 0xa, const S058: u8 = 0xa, const S059: u8 = 0x0,
+    const S060: u8 = 0x5, const S061: u8 = 0x6, const S062: u8 = 0x0, const S063: u8 = 0xd,
+    const S100: u8 = 0xf, const S101: u8 = 0x3, const S102: u8 = 0x1, const S103: u8 = 0xd,
+    const S104: u8 = 0x8, const S105: u8 = 0x4, const S106: u8 = 0xe, const S107: u8 = 0x7,
+    const S108: u8 = 0x6, const S109: u8 = 0xf, const S110: u8 = 0xb, const S111: u8 = 0x2,
+    const S112: u8 = 0x3, const S113: u8 = 0x8, const S114: u8 = 0x4, const S115: u8 = 0xe,
+    const S116: u8 = 0x9, const S117: u8 = 0xc, const S118: u8 = 0x7, const S119: u8 = 0x0,
+    const S120: u8 = 0x2, const S121: u8 = 0x1, const S122: u8 = 0xd, const S123: u8 = 0xa,
+    const S124: u8 = 0xc, const S125: u8 = 0x6, const S126: u8 = 0x0, const S127: u8 = 0x9,
+    const S128: u8 = 0x5, const S129: u8 = 0xb, const S130: u8 = 0xa, const S131: u8 = 0x5,
+    const S132: u8 = 0x0, const S133: u8 = 0xd, const S134: u8 = 0xe, const S135: u8 = 0x8,
+    const S136: u8 = 0x7, const S137: u8 = 0xa, const S138: u8 = 0xb, const S139: u8 = 0x1,
+    const S140: u8 = 0xa, const S141: u8 = 0x3, const S142: u8 = 0x4, const S143: u8 = 0xf,
+    const S144: u8 = 0xd, const S145: u8 = 0x4, const S146: u8 = 0x1, const S147: u8 = 0x2,
+    const S148: u8 = 0x5, const S149: u8 = 0xb, const S150: u8 = 0x8, const S151: u8 = 0x6,
+    const S152: u8 = 0xc, const S153: u8 = 0x7, const S154: u8 = 0x6, const S155: u8 = 0xc,
+    const S156: u8 = 0x9, const S157: u8 = 0x0, const S158: u8 = 0x3, const S159: u8 = 0x5,
+    const S160: u8 = 0x2, const S161: u8 = 0xe, const S162: u8 = 0xf, const S163: u8 = 0x9,
+    const S200: u8 = 0xa, const S201: u8 = 0xd, const S202: u8 = 0x0, const S203: u8 = 0x7,
+    const S204: u8 = 0x9, const S205: u8 = 0x0, const S206: u8 = 0xe, const S207: u8 = 0x9,
+    const S208: u8 = 0x6, const S209: u8 = 0x3, const S210: u8 = 0x3, const S211: u8 = 0x4,
+    const S212: u8 = 0xf, const S213: u8 = 0x6, const S214: u8 = 0x5, const S215: u8 = 0xa,
+    const S216: u8 = 0x1, const S217: u8 = 0x2, const S218: u8 = 0xd, const S219: u8 = 0x8,
+    const S220: u8 = 0xc, const S221: u8 = 0x5, const S222: u8 = 0x7, const S223: u8 = 0xe,
+    const S224: u8 = 0xb, const S225: u8 = 0xc, const S226: u8 = 0x4, const S227: u8 = 0xb,
+    const S228: u8 = 0x2, const S229: u8 = 0xf, const S230: u8 = 0x8, const S231: u8 = 0x1,
+    const S232: u8 = 0xd, const S233: u8 = 0x1, const S234: u8 = 0x6, const S235: u8 = 0xa,
+    const S236: u8 = 0x4, const S237: u8 = 0xd, const S238: u8 = 0x9, const S239: u8 = 0x0,
+    const S240: u8 = 0x8, const S241: u8 = 0x6, const S242: u8 = 0xf, const S243: u8 = 0x9,
+    const S244: u8 = 0x3, const S245: u8 = 0x8, const S246: u8 = 0x0, const S247: u8 = 0x7,
+    const S248: u8 = 0xb, const S249: u8 = 0x4, const S250: u8 = 0x1, const S251: u8 = 0xf,
+    const S252: u8 = 0x2, const S253: u8 = 0xe, const S254: u8 = 0xc, const S255: u8 = 0x3,
+    const S256: u8 = 0x5, const S257: u8 = 0xb, const S258: u8 = 0xa, const S259: u8 = 0x5,
+    const S260: u8 = 0xe, const S261: u8 = 0x2, const S262: u8 = 0x7, const S263: u8 = 0xc,
+    const S300: u8 = 0x7, const S301: u8 = 0xd, const S302: u8 = 0xd, const S303: u8 = 0x8,
+    const S304: u8 = 0xe, const S305: u8 = 0xb, const S306: u8 = 0x3, const S307: u8 = 0x5,
+    const S308: u8 = 0x0, const S309: u8 = 0x6, const S310: u8 = 0x6, const S311: u8 = 0xf,
+    const S312: u8 = 0x9, const S313: u8 = 0x0, const S314: u8 = 0xa, const S315: u8 = 0x3,
+    const S316: u8 = 0x1, const S317: u8 = 0x4, const S318: u8 = 0x2, const S319: u8 = 0x7,
+    const S320: u8 = 0x8, const S321: u8 = 0x2, const S322: u8 = 0x5, const S323: u8 = 0xc,
+    const S324: u8 = 0xb, const S325: u8 = 0x1, const S326: u8 = 0xc, const S327: u8 = 0xa,
+    const S328: u8 = 0x4, const S329: u8 = 0xe, const S330: u8 = 0xf, const S331: u8 = 0x9,
+    const S332: u8 = 0xa, const S333: u8 = 0x3, const S334: u8 = 0x6, const S335: u8 = 0xf,
+    const S336: u8 = 0x9, const S337: u8 = 0x0, const S338: u8 = 0x0, const S339: u8 = 0x6,
+    const S340: u8 = 0xc, const S341: u8 = 0xa, const S342: u8 = 0xb, const S343: u8 = 0x1,
+    const S344: u8 = 0x7, const S345: u8 = 0xd, const S346: u8 = 0xd, const S347: u8 = 0x8,
+    const S348: u8 = 0xf, const S349: u8 = 0x9, const S350: u8 = 0x1, const S351: u8 = 0x4,
+    const S352: u8 = 0x3, const S353: u8 = 0x5, const S354: u8 = 0xe, const S355: u8 = 0xb,
+    const S356: u8 = 0x5, const S357: u8 = 0xc, const S358: u8 = 0x2, const S359: u8 = 0x7,
+    const S360: u8 = 0x8, const S361: u8 = 0x2, const S362: u8 = 0x4, const S363: u8 = 0xe,
+    const S400: u8 = 0x2, const S401: u8 = 0xe, const S402: u8 = 0xc, const S403: u8 = 0xb,
+    const S404: u8 = 0x4, const S405: u8 = 0x2, const S406: u8 = 0x1, const S407: u8 = 0xc,
+    const S408: u8 = 0x7, const S409: u8 = 0x4, const S410: u8 = 0xa, const S411: u8 = 0x7,
+    const S412: u8 = 0xb, const S413: u8 = 0xd, const S414: u8 = 0x6, const S415: u8 = 0x1,
+    const S416: u8 = 0x8, const S417: u8 = 0x5, const S418: u8 = 0x5, const S419: u8 = 0x0,
+    const S420: u8 = 0x3, const S421: u8 = 0xf, const S422: u8 = 0xf, const S423: u8 = 0xa,
+    const S424: u8 = 0xd, const S425: u8 = 0x3, const S426: u8 = 0x0, const S427: u8 = 0x9,
+    const S428: u8 = 0xe, const S429: u8 = 0x8, const S430: u8 = 0x9, const S431: u8 = 0x6,
+    const S432: u8 = 0x4, const S433: u8 = 0xb, const S434: u8 = 0x2, const S435: u8 = 0x8,
+    const S436: u8 = 0x1, const S437: u8 = 0xc, const S438: u8 = 0xb, const S439: u8 = 0x7,
+    const S440: u8 = 0xa, const S441: u8 = 0x1, const S442: u8 = 0xd, const S443: u8 = 0xe,
+    const S444: u8 = 0x7, const S445: u8 = 0x2, const S446: u8 = 0x8, const S447: u8 = 0xd,
+    const S448: u8 = 0xf, const S449: u8 = 0x6, const S450: u8 = 0x9, const S451: u8 = 0xf,
+    const S452: u8 = 0xc, const S453: u8 = 0x0, const S454: u8 = 0x5, const S455: u8 = 0x9,
+    const S456: u8 = 0x6, const S457: u8 = 0xa, const S458: u8 = 0x3, const S459: u8 = 0x4,
+    const S460: u8 = 0x0, const S461: u8 = 0x5, const S462: u8 = 0xe, const S463: u8 = 0x3,
+    const S500: u8 = 0xc, const S501: u8 = 0xa, const S502: u8 = 0x1, const S503: u8 = 0xf,
+    const S504: u8 = 0xa, const S505: u8 = 0x4, const S506: u8 = 0xf, const S507: u8 = 0x2,
+    const S508: u8 = 0x9, const S509: u8 = 0x7, const S510: u8 = 0x2, const S511: u8 = 0xc,
+    const S512: u8 = 0x6, const S513: u8 = 0x9, const S514: u8 = 0x8, const S515: u8 = 0x5,
+    const S516: u8 = 0x0, const S517: u8 = 0x6, const S518: u8 = 0xd, const S519: u8 = 0x1,
+    const S520: u8 = 0x3, const S521: u8 = 0xd, const S522: u8 = 0x4, const S523: u8 = 0xe,
+    const S524: u8 = 0xe, const S525: u8 = 0x0, const S526: u8 = 0x7, const S527: u8 = 0xb,
+    const S528: u8 = 0x5, const S529: u8 = 0x3, const S530: u8 = 0xb, const S531: u8 = 0x8,
+    const S532: u8 = 0x9, const S533: u8 = 0x4, const S534: u8 = 0xe, const S535: u8 = 0x3,
+    const S536: u8 = 0xf, const S537: u8 = 0x2, const S538: u8 = 0x5, const S539: u8 = 0xc,
+    const S540: u8 = 0x2, const S541: u8 = 0x9, const S542: u8 = 0x8, const S543: u8 = 0x5,
+    const S544: u8 = 0xc, const S545: u8 = 0xf, const S546: u8 = 0x3, const S547: u8 = 0xa,
+    const S548: u8 = 0x7, const S549: u8 = 0xb, const S550: u8 = 0x0, const S551: u8 = 0xe,
+    const S552: u8 = 0x4, const S553: u8 = 0x1, const S554: u8 = 0xa, const S555: u8 = 0x7,
+    const S556: u8 = 0x1, const S557: u8 = 0x6, const S558: u8 = 0xd, const S559: u8 = 0x0,
+    const S560: u8 = 0xb, const S561: u8 = 0x8, const S562: u8 = 0x6, const S563: u8 = 0xd,
+    const S600: u8 = 0x4, const S601: u8 = 0xd, const S602: u8 = 0xb, const S603: u8 = 0x0,
+    const S604: u8 = 0x2, const S605: u8 = 0xb, const S606: u8 = 0xe, const S607: u8 = 0x7,
+    const S608: u8 = 0xf, const S609: u8 = 0x4, const S610: u8 = 0x0, const S611: u8 = 0x9,
+    const S612: u8 = 0x8, const S613: u8 = 0x1, const S614: u8 = 0xd, const S615: u8 = 0xa,
+    const S616: u8 = 0x3, const S617: u8 = 0xe, const S618: u8 = 0xc, const S619: u8 = 0x3,
+    const S620: u8 = 0x9, const S621: u8 = 0x5, const S622: u8 = 0x7, const S623: u8 = 0xc,
+    const S624: u8 = 0x5, const S625: u8 = 0x2, const S626: u8 = 0xa, const S627: u8 = 0xf,
+    const S628: u8 = 0x6, const S629: u8 = 0x8, const S630: u8 = 0x1, const S631: u8 = 0x6,
+    const S632: u8 = 0x1, const S633: u8 = 0x6, const S634: u8 = 0x4, const S635: u8 = 0xb,
+    const S636: u8 = 0xb, const S637: u8 = 0xd, const S638: u8 = 0xd, const S639: u8 = 0x8,
+    const S640: u8 = 0xc, const S641: u8 = 0x1, const S642: u8 = 0x3, const S643: u8 = 0x4,
+    const S644: u8 = 0x7, const S645: u8 = 0xa, const S646: u8 = 0xe, const S647: u8 = 0x7,
+    const S648: u8 = 0xa, const S649: u8 = 0x9, const S650: u8 = 0xf, const S651: u8 = 0x5,
+    const S652: u8 = 0x6, const S653: u8 = 0x0, const S654: u8 = 0x8, const S655: u8 = 0xf,
+    const S656: u8 = 0x0, const S657: u8 = 0xe, const S658: u8 = 0x5, const S659: u8 = 0x2,
+    const S660: u8 = 0x9, const S661: u8 = 0x3, const S662: u8 = 0x2, const S663: u8 = 0xc,
+    const S700: u8 = 0xd, const S701: u8 = 0x1, const S702: u8 = 0x2, const S703: u8 = 0xf,
+    const S704: u8 = 0x8, const S705: u8 = 0xd, const S706: u8 = 0x4, const S707: u8 = 0x8,
+    const S708: u8 = 0x6, const S709: u8 = 0xa, const S710: u8 = 0xf, const S711: u8 = 0x3,
+    const S712: u8 = 0xb, const S713: u8 = 0x7, const S714: u8 = 0x1, const S715: u8 = 0x4,
+    const S716: u8 = 0xa, const S717: u8 = 0xc, const S718: u8 = 0x9, const S719: u8 = 0x5,
+    const S720: u8 = 0x3, const S721: u8 = 0x6, const S722: u8 = 0xe, const S723: u8 = 0xb,
+    const S724: u8 = 0x5, const S725: u8 = 0x0, const S726: u8 = 0x0, const S727: u8 = 0xe,
+    const S728: u8 = 0xc, const S729: u8 = 0x9, const S730: u8 = 0x7, const S731: u8 = 0x2,
+    const S732: u8 = 0x7, const S733: u8 = 0x2, const S734: u8 = 0xb, const S735: u8 = 0x1,
+    const S736: u8 = 0x4, const S737: u8 = 0xe, const S738: u8 = 0x1, const S739: u8 = 0x7,
+    const S740: u8 = 0x9, const S741: u8 = 0x4, const S742: u8 = 0xc, const S743: u8 = 0xa,
+    const S744: u8 = 0xe, const S745: u8 = 0x8, const S746: u8 = 0x2, const S747: u8 = 0xd,
+    const S748: u8 = 0x0, const S749: u8 = 0xf, const S750: u8 = 0x6, const S751: u8 = 0xc,
+    const S752: u8 = 0xa, const S753: u8 = 0x9, const S754: u8 = 0xd, const S755: u8 = 0x0,
+    const S756: u8 = 0xf, const S757: u8 = 0x3, const S758: u8 = 0x3, const S759: u8 = 0x5,
+    const S760: u8 = 0x5, const S761: u8 = 0x6, const S762: u8 = 0x8, const S763: u8 = 0xb>
+            = DES_Generic<16, 0b_1000000100000011,
+                    57, 49, 41, 33, 25, 17, 09, 01,
+                    58, 50, 42, 34, 26, 18, 10, 02,
+                    59, 51, 43, 35, 27, 19, 11, 03,
+                    60, 52, 44, 36, 63, 55, 47, 39,
+                    31, 23, 15, 07, 62, 54, 46, 38,
+                    30, 22, 14, 06, 61, 53, 45, 37,
+                    29, 21, 13, 05, 28, 20, 12, 04,
+                    14, 17, 11, 24, 01, 05, 03, 28,
+                    15, 06, 21, 10, 23, 19, 12, 04,
+                    26, 08, 16, 07, 27, 20, 13, 02,
+                    41, 52, 31, 37, 47, 55, 30, 40,
+                    51, 45, 33, 48, 44, 49, 39, 56,
+                    34, 53, 46, 42, 50, 36, 29, 32,
+                    58, 50, 42, 34, 26, 18, 10, 02,
+                    60, 52, 44, 36, 28, 20, 12, 04,
+                    62, 54, 46, 38, 30, 22, 14, 06,
+                    64, 56, 48, 40, 32, 24, 16, 08,
+                    57, 49, 41, 33, 25, 17, 09, 01,
+                    59, 51, 43, 35, 27, 19, 11, 03,
+                    61, 53, 45, 37, 29, 21, 13, 05,
+                    63, 55, 47, 39, 31, 23, 15, 07,
+                    EP01, EP02, EP03, EP04, EP05, EP06, EP07, EP08, EP09, EP10, EP11, EP12,
+                    EP13, EP14, EP15, EP16, EP17, EP18, EP19, EP20, EP21, EP22, EP23, EP24,
+                    EP25, EP26, EP27, EP28, EP29, EP30, EP31, EP32, EP33, EP34, EP35, EP36,
+                    EP37, EP38, EP39, EP40, EP41, EP42, EP43, EP44, EP45, EP46, EP47, EP48,
+                    TP01, TP02, TP03, TP04, TP05, TP06, TP07, TP08, TP09, TP10, TP11, TP12,
+                    TP13, TP14, TP15, TP16, TP17, TP18, TP19, TP20, TP21, TP22, TP23, TP24,
+                    TP25, TP26, TP27, TP28, TP29, TP30, TP31, TP32,
+                    S000, S001, S002, S003, S004, S005, S006, S007, S008, S009, S010, S011,
+                    S012, S013, S014, S015, S016, S017, S018, S019, S020, S021, S022, S023,
+                    S024, S025, S026, S027, S028, S029, S030, S031, S032, S033, S034, S035,
+                    S036, S037, S038, S039, S040, S041, S042, S043, S044, S045, S046, S047,
+                    S048, S049, S050, S051, S052, S053, S054, S055, S056, S057, S058, S059,
+                    S060, S061, S062, S063,
+                    S100, S101, S102, S103, S104, S105, S106, S107, S108, S109, S110, S111,
+                    S112, S113, S114, S115, S116, S117, S118, S119, S120, S121, S122, S123,
+                    S124, S125, S126, S127, S128, S129, S130, S131, S132, S133, S134, S135,
+                    S136, S137, S138, S139, S140, S141, S142, S143, S144, S145, S146, S147,
+                    S148, S149, S150, S151, S152, S153, S154, S155, S156, S157, S158, S159,
+                    S160, S161, S162, S163,
+                    S200, S201, S202, S203, S204, S205, S206, S207, S208, S209, S210, S211,
+                    S212, S213, S214, S215, S216, S217, S218, S219, S220, S221, S222, S223,
+                    S224, S225, S226, S227, S228, S229, S230, S231, S232, S233, S234, S235,
+                    S236, S237, S238, S239, S240, S241, S242, S243, S244, S245, S246, S247,
+                    S248, S249, S250, S251, S252, S253, S254, S255, S256, S257, S258, S259,
+                    S260, S261, S262, S263,
+                    S300, S301, S302, S303, S304, S305, S306, S307, S308, S309, S310, S311,
+                    S312, S313, S314, S315, S316, S317, S318, S319, S320, S321, S322, S323,
+                    S324, S325, S326, S327, S328, S329, S330, S331, S332, S333, S334, S335,
+                    S336, S337, S338, S339, S340, S341, S342, S343, S344, S345, S346, S347,
+                    S348, S349, S350, S351, S352, S353, S354, S355, S356, S357, S358, S359,
+                    S360, S361, S362, S363,
+                    S400, S401, S402, S403, S404, S405, S406, S407, S408, S409, S410, S411,
+                    S412, S413, S414, S415, S416, S417, S418, S419, S420, S421, S422, S423,
+                    S424, S425, S426, S427, S428, S429, S430, S431, S432, S433, S434, S435,
+                    S436, S437, S438, S439, S440, S441, S442, S443, S444, S445, S446, S447,
+                    S448, S449, S450, S451, S452, S453, S454, S455, S456, S457, S458, S459,
+                    S460, S461, S462, S463,
+                    S500, S501, S502, S503, S504, S505, S506, S507, S508, S509, S510, S511,
+                    S512, S513, S514, S515, S516, S517, S518, S519, S520, S521, S522, S523,
+                    S524, S525, S526, S527, S528, S529, S530, S531, S532, S533, S534, S535,
+                    S536, S537, S538, S539, S540, S541, S542, S543, S544, S545, S546, S547,
+                    S548, S549, S550, S551, S552, S553, S554, S555, S556, S557, S558, S559,
+                    S560, S561, S562, S563,
+                    S600, S601, S602, S603, S604, S605, S606, S607, S608, S609, S610, S611,
+                    S612, S613, S614, S615, S616, S617, S618, S619, S620, S621, S622, S623,
+                    S624, S625, S626, S627, S628, S629, S630, S631, S632, S633, S634, S635,
+                    S636, S637, S638, S639, S640, S641, S642, S643, S644, S645, S646, S647,
+                    S648, S649, S650, S651, S652, S653, S654, S655, S656, S657, S658, S659,
+                    S660, S661, S662, S663,
+                    S700, S701, S702, S703, S704, S705, S706, S707, S708, S709, S710, S711,
+                    S712, S713, S714, S715, S716, S717, S718, S719, S720, S721, S722, S723,
+                    S724, S725, S726, S727, S728, S729, S730, S731, S732, S733, S734, S735,
+                    S736, S737, S738, S739, S740, S741, S742, S743, S744, S745, S746, S747,
+                    S748, S749, S750, S751, S752, S753, S754, S755, S756, S757, S758, S759,
+                    S760, S761, S762, S763>;
+
+
+
+
 /// You have freedom of changing SHIFT, and PC101 ~ PC248.
 /// You can change the DES algorithm by simply changing the generic parameters
 /// `SHIFT`, and PC101 ~ PC248 without touching the source code itself.
@@ -437,6 +706,8 @@ const PC245: u8 = 50, const PC246: u8 = 36, const PC247: u8 = 29, const PC248: u
                             PC233, PC234, PC235, PC236, PC237, PC238, PC239, PC240,
                             PC241, PC242, PC243, PC244, PC245, PC246, PC247, PC248>;
 
+
+
 /// You have freedom of changing ROUND and SHIFT. You can change the DES
 /// algorithm by simply changing the generic parameters `ROUND` and `SHIFT`
 /// without touching the source code itself.
@@ -467,19 +738,61 @@ pub type DES_Expanded<const ROUND: usize = 16, const SHIFT: u128 = 0b_1000000100
 pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 
 /// A DES symmetric-key algorithm for the encryption of digital data
+/// 
 /// # Note
-/// *This descryption about DES is according to big endianness.*
+/// **This descryption about DES is according to big endianness.**
 /// MSB (Most Significant Bit) is the first bit and LSB (Least Significant Bit)
 /// is the 64th bit in this descryption.
 /// 
 /// # Introduction
-/// // Todo
+/// DES is the acronym of Data Encryption Standard. It is the symmetric key
+/// encryption/decryption algorithm. It was originally developed based on
+/// Lucifer encryption/decryption algorithm made by IBM. DES was approved as a 
+/// federal standard in November 1976.
 /// 
 /// # Vulnerability
-/// // Todo
+/// - Its key length is only 56-bit. It is considered to be too short against
+///   modern computing power. Actually, in July, 1998, the DES key was broken by
+///   brute-force attack within 56 hours with a machine DES cracker (Deep Crack)
+///   made by EEF (Electronic Frontier Foundation). And, in January, 1999, Deep
+///   Crack and distributed.net broke a DES key together within 22 hours and
+///   15 minutes.
+/// - Weak keys: 0x0000000000000000, 0x0101010101010101, 0xFFFFFFFFFFFFFFFF,
+///   0xFEFEFEFEFEFEFEFE, 0xE0E0E0E0F1F1F1F1, 0xE1E1E1E1F0F0F0F0,
+///   0x1F1F1F1F0E0E0E0E, 0x1E1E1E1E0F0F0F0F in big-endianness.
+///   Actually, if the parity bits in keys are ignored,
+///   the keys 0x0000000000000000 and 0x0101010101010101 are the same key.
+///   In fact, not only 0x0101010101010101 is the same key as
+///   0x0000000000000000. 0x0100000000000000 is also the same key. All the 256
+///   keys that have only different parity bits and all other bits same are the
+///   same key as 0x0000000000000000, too. Though only representative keys will
+///   be mentioned in this description, please keep in mind that all the 256
+///   keys that have only different parity bits and all other bits same are the
+///   same key.
+///   And, the keys 0xFFFFFFFFFFFFFFFF and 0xFEFEFEFEFEFEFEFE are also the same key.
+///   And, The keys 0xE0E0E0E0F1F1F1F1 and 0xE1E1E1E1F0F0F0F0 are also the same key.
+///   And, the keys 0x1F1F1F1F0E0E0E0E and 0x1E1E1E1E0F0F0F0F are the same key, too.
+///   For instance, if you encrypt your data with the key 0x0000000000000000 and
+///   encrypt the output cipher text again with the same key 0x0000000000000000,
+///   you will get the original plain text! So, the cipher text is only
+///   secure-looking.
+/// - Semi-week keys: The pairs 0x011F011F010E010E and 0x1F011F010E010E01,
+///   0x01E001E001F101F1 and 0xE001E001F101F101,
+///   0x01FE01FE01FE01FE and 0xFE01FE01FE01FE01,
+///   0x1FE01FE00EF10EF1 and 0xE01FE01FF10EF10E,
+///   0x1FFE1FFE0EFE0EFE and 0xFE1FFE1FFE0EFE0E, and
+///   0xE0FEE0FEF1FEF1FE and 0xFEE0FEE0FEF1FEF1 in big-endianness are considered
+///   to be week.
+///   For example, if you encrypt your data with the key 0x011F011F010E010E and
+///   encrypt the output cipher text again with its counterpart key
+///   0xE001E001F101F101, you will get the original plain text!
+///   So, the cipher text is only secure-looking.
 /// 
 /// # Use of DES and its variants
-/// // Todo
+/// This algorithm is implemented generic way. Most of the constants are
+/// implemented as generic constants. So, without changing any code, you can
+/// change the algorithm by changing the generic parameter. You can design and
+/// implement your own algorithm based on DES which uses Feistel structure. 
 /// 
 /// # Generic Parameters
 /// - ROUND: You can determine how many times the Fiestel network will be
@@ -517,16 +830,18 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 ///   bits intead of dropping 9th, 18th, 22nd, 25th, 35th, 43rd, and 54th bits.
 ///   Dropping other bits does not kill the whole DES encryption/decryption
 ///   algorithm.
-/// - IP01 ~ IP64: Inital permutation constants. They are 1-based.
-///   For example, `IP01 = 58` means that the 58th bit of data
-///   is moved to the first bit of the data which is MSB at initial permutation.
-///   You can change inital permutation wire by changing these constants.
-///   The change of these constants does not change the security strength.
-///   Final permutation constants is automatically calculated from Inital
-///   permutation constants. FP01 ~ FP64 is inverse version of IP01 ~ IP64.
-///   So, FP01 ~ FP64 will be automagically determined. You don't have to
-///   determine them.
-/// - S000 ~ S763: S-Box constants, and its index such as 000, 212, etc. is
+/// - IP01 ~ IP64: Inital permutation constants. They are 1-based. For example,
+///   `IP01 = 58` means that the 58th bit of data is moved to the first bit of
+///   the data which is MSB at initial permutation. You can change inital
+///   permutation wire by changing these constants. The change of these
+///   constants does not change the security strength. However, when you change
+///   these constants, you have to remember that you should included all the
+///   bits. You cannot drop any bit. Your dropping any bit will surely kill the
+///   whole DES encryption/decryption algorithm. Final permutation constants is
+///   automatically calculated from Inital permutation constants. FP01 ~ FP64
+///   is inverse version of IP01 ~ IP64. So, FP01 ~ FP64 will be automagically
+///   determined. You don't have to determine them.
+/// - S000 ~ S763: S-Box constants. Its index such as 000, 212, etc. is
 ///   0-based. S0XX means S-Box 0, S1XX means S-Box 1, and so on. S000 is the
 ///   first element of S-Box 0.
 ///   According to [the document](https://page.math.tu-berlin.de/~kant/teaching/hess/krypto-ws2006/des.htm),
@@ -534,27 +849,41 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 ///   bit of the six bits represent in base 2 a number in the decimal range 0 to
 ///   3 (or binary 00 to 11) which is row number. The rest middle four bits
 ///   represent in base 2 a number in the decimal range 0 to 15 (binary 0000 to
-///   1111) which is column number. However, in this crate, S-boxes are
-///   implemented to be two-dimensional array which is an array of S-box.
-///   Each S-box is an array of 64 four-bit numbers. The input six-bit number
-///   is used as the index of the array of these 64 four-bit numbers. So, the
-///   S-box tables have been rearranged to be the 2-dimensional array.
-///   You can cange S-Box by changing these constants.
-///   *The change of these constants may hurt the security a lot.*
-/// - EP01 ~ EP48: Expansion permutation constants.
-/// - TP01 ~ TP32: Translation permutation constans.
-/// 
-/// // Todo
-/// 
-/// About the parameters and their default values,
-/// read [more](https://datatracker.ietf.org/doc/html/rfc1320)
-/// 
-/// # Security of your own expanded version
-/// // Todo
+///   1111) which is column number. It is considered that the DES designers
+///   explained the S-box structure _unnecessarily too complicated_. The
+///   above-described S-box indexing way looks two dimensional, but actually is
+///   one dimensional. So, in this crate, S-boxes are implemented to be
+///   two-dimensional array which is an array of S-boxes. Each S-box is an array
+///   of 64 four-bit numbers. The input six-bit number is used as the index of
+///   the one-dimensional array of these 64 four-bit numbers. So, the S-box
+///   tables have been rearranged to be the one-dimensional array. You can cange
+///   S-Box by changing these constants. However, you have know that *the change
+///   of these constants may hurt the security a lot*. And the principle of
+///   S-box has been unknown so far.
+/// - EP01 ~ EP48: Expansion permutation constants. They are 1-based. For
+///   example, `EP01 = 28` means that the 28th bit of data is moved to the first
+///   bit of the data which is MSB at expansion permutation. They expand the
+///   32-bit right-half data from the Feistel structure of the corresponding
+///   round into 48 bits in order to perform XOR (exclusive OR) with the
+///   corresponding 48-bit round key. When you change these constants, you have
+///   to remember that you should included all the bits. You cannot drop any
+///   bit. Your dropping any bit will surely kill the whole DES
+///   encryption/decryption algorithm.
+/// - TP01 ~ TP32: Translation permutation constans.  They are 1-based. For
+///   example, `TP01 = 16` means that the 16th bit of data is moved to the
+///   first bit of the data which is MSB at translation permutation. You can
+///   change translation permutation wire by changing these constants. The
+///   change of these constants does not change the security strength. However,
+///   when you change these constants, you have to remember that you should
+///   included all the bits. You cannot drop any bit. Your dropping any bit will
+///   surely kill the whole DES encryption/decryption algorithm.
 /// 
 /// # Reference
-/// Read [more](https://en.wikipedia.org/wiki/Data_Encryption_Standard)
-/// about DES in detail.
+/// [Read more](https://en.wikipedia.org/wiki/Data_Encryption_Standard)
+/// about DES in brief.
+/// Watch [this video](https://www.youtube.com/watch?v=kPBJIhpcZgE)
+/// and [this video](https://www.youtube.com/watch?v=l-7YW06BFNs) in series
+/// for more (or deeper or full) understanding of DES.
 /// 
 /// # Quick Start
 /// // Todo
@@ -623,8 +952,6 @@ const TP17: u8 = 02, const TP18: u8 = 08, const TP19: u8 = 24, const TP20: u8 = 
 const TP21: u8 = 32, const TP22: u8 = 27, const TP23: u8 = 03, const TP24: u8 = 09,
 const TP25: u8 = 19, const TP26: u8 = 13, const TP27: u8 = 30, const TP28: u8 = 06,
 const TP29: u8 = 22, const TP30: u8 = 11, const TP31: u8 = 04, const TP32: u8 = 25,
-// https://page.math.tu-berlin.de/~kant/teaching/hess/krypto-ws2006/des.htm
-// https://m.blog.naver.com/wnrjsxo/221708511553
 const S000: u8 = 0xe, const S001: u8 = 0x0, const S002: u8 = 0x4, const S003: u8 = 0xf,
 const S004: u8 = 0xd, const S005: u8 = 0x7, const S006: u8 = 0x1, const S007: u8 = 0x4,
 const S008: u8 = 0x2, const S009: u8 = 0xe, const S010: u8 = 0xf, const S011: u8 = 0x2,
@@ -1207,7 +1534,36 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// Constructs a new object DES_Generic.
     /// 
     /// # Features
-    /// This method sets the key to be [0, 0, 0, 0, 0, 0, 0, 0].
+    /// - In order to encrypt date, object should be instantiated mutable.
+    /// - This method sets the key to be [0, 0, 0, 0, 0, 0, 0, 0].
+    /// - Do not use this default key [0, 0, 0, 0, 0, 0, 0, 0]
+    ///   because it is known as one of the weak keys.
+    /// 
+    /// # Example 1
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let mut des = DES::new();   // The default key is 0x0000000000000000 which is a weak key.
+    /// let plaintext = 0x1234567890ABCDEF_u64;
+    /// let ciphertext = des.encrypt_u64(plaintext);
+    ///
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text:\t\t{:016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x1E32B46B44C69201_u64);
+    ///
+    /// let cipher_cipher_text = des.encrypt_u64(ciphertext);
+    /// println!("Cipher cipher text:\t{:016X}", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);  // So, you can't use the default key!!!
+    /// ```
+    /// 
+    /// # Compile-fail Example
+    /// ```compile_fail
+    /// use cryptocol::symmetric::DES;
+    /// let des = DES::new();
+    /// // It cannot be compiled!
+    /// des.encrypt_u64(0x1E32B46B44C69201_u64);
+    /// ```
     #[inline]
     pub fn new() -> Self
     {
@@ -1221,6 +1577,349 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// # Features
     /// This method sets the key to be the given argument `key`.
+    /// 
+    /// # Example 1 for normal case
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// let mut des = DES::new_with_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let plaintext = 0x1234567890ABCDEF_u64;
+    /// let ciphertext = des.encrypt_u64(plaintext);
+    /// 
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text:\t\t{:016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x3B6041D76AF28F23_u64);
+    /// 
+    /// let cipher_cipher_text = des.encrypt_u64(ciphertext);
+    /// println!("Cipher cipher text:\t{:016X}\n", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x7C5AAE491DC1310D_u64);
+    /// assert_ne!(cipher_cipher_text, plaintext);
+    /// ```
+    /// 
+    /// # Example 2 for Weak key case for [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+    /// ```
+    /// // The key [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] is the same key as the key
+    /// // [0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01] because of parity bits.
+    ///
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let mut des1 = DES::new_with_key([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
+    /// let mut des2 = DES::new_with_key([0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01]);
+    /// 
+    /// let plaintext = 0x1234567890ABCDEF_u64;
+    /// let ciphertext1 = des1.encrypt_u64(plaintext);
+    /// let ciphertext2 = des2.encrypt_u64(plaintext);
+    /// 
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text1:\t\t{:016X}", ciphertext1);
+    /// println!("Cipher text2:\t\t{:016X}", ciphertext2);
+    /// assert_eq!(ciphertext1, 0x1E32B46B44C69201_u64);
+    /// assert_eq!(ciphertext2, 0x1E32B46B44C69201_u64);
+    /// assert_eq!(ciphertext1, ciphertext2);
+    /// 
+    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
+    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
+    /// println!("Cipher cipher text1:\t{:016X}\n", cipher_cipher_text1);
+    /// println!("Cipher cipher text2:\t{:016X}\n", cipher_cipher_text2);
+    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text1, plaintext);
+    /// assert_eq!(cipher_cipher_text2, plaintext);
+    /// // So, you can't use the weak key [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+    /// // and [0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01]!!!
+    /// ```
+    /// 
+    /// # Example 3 for Weak key case for [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]
+    /// ```
+    /// // The key [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF] is the same key as the key
+    /// // [0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE] because of parity bits.
+    ///
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let mut des1 = DES::new_with_key([0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]);
+    /// let mut des2 = DES::new_with_key([0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE]);
+    /// let plaintext = 0x1234567890ABCDEF_u64;
+    /// let ciphertext1 = des1.encrypt_u64(plaintext);
+    /// let ciphertext2 = des2.encrypt_u64(plaintext);
+    /// 
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text1:\t\t{:016X}", ciphertext1);
+    /// println!("Cipher text2:\t\t{:016X}", ciphertext2);
+    /// assert_eq!(ciphertext1, 0xA5997AB38BC07250_u64);
+    /// assert_eq!(ciphertext2, 0xA5997AB38BC07250_u64);
+    /// assert_eq!(ciphertext1, ciphertext2);
+    /// 
+    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
+    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
+    /// println!("Cipher cipher text1:\t{:016X}\n", cipher_cipher_text1);
+    /// println!("Cipher cipher text2:\t{:016X}\n", cipher_cipher_text2);
+    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text1, plaintext);
+    /// assert_eq!(cipher_cipher_text2, plaintext);
+    /// // So, you can't use the weak key [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]
+    /// // and [0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE]!!!
+    /// ```
+    /// 
+    /// # Example 4 for Weak key case for [0xE0, 0xE0, 0xE0, 0xE0, 0xF1, 0xF1, 0xF1, 0xF1]
+    /// ```
+    /// // The key [0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0] is the same key as the key
+    /// // [0xE1, 0xE1, 0xE1, 0xE1, 0xF0, 0xF0, 0xF0, 0xF0] because of parity bits.
+    ///
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let mut des1 = DES::new_with_key([0xE0, 0xE0, 0xE0, 0xE0, 0xF1, 0xF1, 0xF1, 0xF1]);
+    /// let mut des2 = DES::new_with_key([0xE1, 0xE1, 0xE1, 0xE1, 0xF0, 0xF0, 0xF0, 0xF0]);
+    /// let plaintext = 0x1234567890ABCDEF_u64;
+    /// let ciphertext1 = des1.encrypt_u64(plaintext);
+    /// let ciphertext2 = des2.encrypt_u64(plaintext);
+    /// 
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text1:\t\t{:016X}", ciphertext1);
+    /// println!("Cipher text2:\t\t{:016X}", ciphertext2);
+    /// assert_eq!(ciphertext1, 0x94CCA0201F033101_u64);
+    /// assert_eq!(ciphertext2, 0x94CCA0201F033101_u64);
+    /// assert_eq!(ciphertext1, ciphertext2);
+    /// 
+    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
+    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
+    /// println!("Cipher cipher text1:\t{:016X}\n", cipher_cipher_text1);
+    /// println!("Cipher cipher text2:\t{:016X}\n", cipher_cipher_text2);
+    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text1, plaintext);
+    /// assert_eq!(cipher_cipher_text2, plaintext);
+    /// // So, you can't use the weak key [0xE0, 0xE0, 0xE0, 0xE0, 0xF1, 0xF1, 0xF1, 0xF1]
+    /// // and [0xE1, 0xE1, 0xE1, 0xE1, 0xE1, 0xE1, 0xE1, 0xE1]!!!
+    /// ```
+    /// 
+    /// # Example 5 for Weak key case for [0x1F, 0x1F, 0x1F, 0x1F, 0x0E, 0x0E, 0x0E, 0x0E]
+    /// ```
+    /// // The key [0x1F, 0x1F, 0x1F, 0x1F, 0x0E, 0x0E, 0x0E, 0x0E] is the same key as the key
+    /// // [0x1E, 0x1E, 0x1E, 0x1E, 0x0F, 0x0F, 0x0F, 0x0F] because of parity bits.
+    ///
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let mut des1 = DES::new_with_key([0x1F, 0x1F, 0x1F, 0x1F, 0x0E, 0x0E, 0x0E, 0x0E]);
+    /// let mut des2 = DES::new_with_key([0x1E, 0x1E, 0x1E, 0x1E, 0x0F, 0x0F, 0x0F, 0x0F]);
+    /// let plaintext = 0x1234567890ABCDEF_u64;
+    /// let ciphertext1 = des1.encrypt_u64(plaintext);
+    /// let ciphertext2 = des2.encrypt_u64(plaintext);
+    /// 
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text1:\t\t{:016X}", ciphertext1);
+    /// println!("Cipher text2:\t\t{:016X}", ciphertext2);
+    /// assert_eq!(ciphertext1, 0x4FB6397B5352DB0C_u64);
+    /// assert_eq!(ciphertext2, 0x4FB6397B5352DB0C_u64);
+    /// assert_eq!(ciphertext1, ciphertext2);
+    /// 
+    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
+    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
+    /// println!("Cipher cipher text1:\t{:016X}\n", cipher_cipher_text1);
+    /// println!("Cipher cipher text2:\t{:016X}\n", cipher_cipher_text2);
+    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text1, plaintext);
+    /// assert_eq!(cipher_cipher_text2, plaintext);
+    /// // So, you can't use the weak key [0x1F, 0x1F, 0x1F, 0x1F, 0x0E, 0x0E, 0x0E, 0x0E]
+    /// // and [0x1E, 0x1E, 0x1E, 0x1E, 0x0F, 0x0F, 0x0F, 0x0F]!!!
+    /// ```
+    /// 
+    /// # Example 6 for Semi-Weak key case for [0x01, 0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E] and [0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E, 0x01]
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let mut des1 = DES::new_with_key([0x01, 0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E]);
+    /// let mut des2 = DES::new_with_key([0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E, 0x01]);
+    /// 
+    /// let plaintext = 0x1234567890ABCDEF_u64;
+    /// let ciphertext = des1.encrypt_u64(plaintext);
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text:\t\t{:016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0xC2C71D736E97876C_u64);
+    /// 
+    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
+    /// println!("Cipher cipher text:\t{:016X}\n", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// 
+    /// let ciphertext = des2.encrypt_u64(plaintext);
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text:\t\t{:016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x063A6E55466423D2_u64);
+    /// 
+    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
+    /// println!("Cipher cipher text:\t{:016X}\n", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// // So, you can't use the semi-weak keys [0x01, 0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E]
+    /// // and [0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E, 0x01]!!!
+    /// ```
+    /// 
+    /// # Example 7 for Semi-Weak key case for [0x01, 0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1] and [0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1, 0x01]
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let mut des1 = DES::new_with_key([0x01, 0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1]);
+    /// let mut des2 = DES::new_with_key([0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1, 0x01]);
+    /// 
+    /// let plaintext = 0x1234567890ABCDEF_u64;
+    /// let ciphertext = des1.encrypt_u64(plaintext);
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text:\t\t{:016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x85A63690E79AAA15_u64);
+    /// 
+    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
+    /// println!("Cipher cipher text:\t{:016X}\n", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// 
+    /// let ciphertext = des2.encrypt_u64(plaintext);
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text:\t\t{:016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x15B721BBB44A12F5_u64);
+    /// 
+    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
+    /// println!("Cipher cipher text:\t{:016X}\n", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// // So, you can't use the semi-weak keys [0x01, 0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1]
+    /// // and [0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1, 0x01]!!!
+    /// ```
+    /// 
+    /// # Example 8 for Semi-Weak key case for [0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE] and [0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01]
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// // Semi-Weak key case 3 for 
+    /// let mut des1 = DES::new_with_key([0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE]);
+    /// let mut des2 = DES::new_with_key([0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01]);
+    /// 
+    /// let plaintext = 0x1234567890ABCDEF_u64;
+    /// let ciphertext = des1.encrypt_u64(plaintext);
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text:\t\t{:016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0xAE38CC9D9FA48581_u64);
+    /// 
+    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
+    /// println!("Cipher cipher text:\t{:016X}\n", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// 
+    /// let ciphertext = des2.encrypt_u64(plaintext);
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text:\t\t{:016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x7EE95658A653960D_u64);
+    /// 
+    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
+    /// println!("Cipher cipher text:\t{:016X}\n", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// // So, you can't use the semi-weak keys [0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE]
+    /// // and [0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01]!!!
+    /// ```
+    /// 
+    /// # Example 9 for Semi-Weak key case for [0x1F, 0xE0, 0x1F, 0xE0, 0x0E, 0xF1, 0x0E, 0xF1] and [0xE0, 0x1F, 0xE0, 0x1F, 0xF1, 0x0E, 0xF1, 0x0E]
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// // Semi-Weak key case 4 for 
+    /// let mut des1 = DES::new_with_key([0x1F, 0xE0, 0x1F, 0xE0, 0x0E, 0xF1, 0x0E, 0xF1]);
+    /// let mut des2 = DES::new_with_key([0xE0, 0x1F, 0xE0, 0x1F, 0xF1, 0x0E, 0xF1, 0x0E]);
+    /// 
+    /// let plaintext = 0x1234567890ABCDEF_u64;
+    /// let ciphertext = des1.encrypt_u64(plaintext);
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text:\t\t{:016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x81ECC05B173F793E_u64);
+    /// 
+    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
+    /// println!("Cipher cipher text:\t{:016X}\n", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// 
+    /// let ciphertext = des2.encrypt_u64(plaintext);
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text:\t\t{:016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x4D0AD4DC147E4BDF_u64);
+    /// 
+    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
+    /// println!("Cipher cipher text:\t{:016X}\n", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// // So, you can't use the semi-weak keys [0x1F, 0xE0, 0x1F, 0xE0, 0x0E, 0xF1, 0x0E, 0xF1]
+    /// // and [0xE0, 0x1F, 0xE0, 0x1F, 0xF1, 0x0E, 0xF1, 0x0E]!!!
+    /// ```
+    /// 
+    /// # Example 10 for Semi-Weak key case for [0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E, 0xFE] and [0xFE, 0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E]
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let mut des1 = DES::new_with_key([0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E, 0xFE]);
+    /// let mut des2 = DES::new_with_key([0xFE, 0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E]);
+    /// 
+    /// let plaintext = 0x1234567890ABCDEF_u64;
+    /// let ciphertext = des1.encrypt_u64(plaintext);
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text:\t\t{:016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x59735490F84A0AD0_u64);
+    /// 
+    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
+    /// println!("Cipher cipher text:\t{:016X}\n", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// 
+    /// let ciphertext = des2.encrypt_u64(plaintext);
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text:\t\t{:016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x79FD3CBFE57F4B0B_u64);
+    /// 
+    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
+    /// println!("Cipher cipher text:\t{:016X}\n", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// // So, you can't use the semi-weak keys [0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E, 0xFE]
+    /// // and [0xFE, 0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E]!!!
+    /// ```
+    /// 
+    /// # Example 11 for Semi-Weak key case for [0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1, 0xFE] and [0xFE, 0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1]
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// // Semi-Weak key case 6 for 
+    /// let mut des1 = DES::new_with_key([0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1, 0xFE]);
+    /// let mut des2 = DES::new_with_key([0xFE, 0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1]);
+    /// 
+    /// let plaintext = 0x1234567890ABCDEF_u64;
+    /// let ciphertext = des1.encrypt_u64(plaintext);
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text:\t\t{:016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x27C83AAE29571889_u64);
+    /// 
+    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
+    /// println!("Cipher cipher text:\t{:016X}\n", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// 
+    /// let ciphertext = des2.encrypt_u64(plaintext);
+    /// println!("Plain text:\t\t{:016X}", plaintext);
+    /// println!("Cipher text:\t\t{:016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0xDE76DF630C033919_u64);
+    /// 
+    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
+    /// println!("Cipher cipher text:\t{:016X}\n", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// // So, you can't use the semi-weak keys [0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1, 0xFE]
+    /// // and [0xFE, 0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1]!!!
+    /// ```
+    /// 
+    /// # Compile-fail Example
+    /// ```compile-fail
+    /// use cryptocol::symmetric::DES;
+    /// let des = DES::new_with_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// // It cannot be compiled!
+    /// #[cfg(compile_fail)]    des.encrypt_u64(0x1E32B46B44C69201_u64);
+    /// ```
     pub fn new_with_key(key: [u8; 8]) -> Self
     {
         let mut des = Self
