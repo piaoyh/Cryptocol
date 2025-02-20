@@ -773,8 +773,8 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 ///   And, The keys 0xE0E0E0E0F1F1F1F1 and 0xE1E1E1E1F0F0F0F0 are also the same key.
 ///   And, the keys 0x1F1F1F1F0E0E0E0E and 0x1E1E1E1E0F0F0F0F are the same key, too.
 ///   For instance, if you encrypt your data with the key 0x0000000000000000 and
-///   encrypt the output cipher text again with the same key 0x0000000000000000,
-///   you will get the original plain text! So, the cipher text is only
+///   encrypt the output ciphertext again with the same key 0x0000000000000000,
+///   you will get the original plaintext! So, the ciphertext is only
 ///   secure-looking.
 /// - Semi-week keys: The pairs 0x011F011F010E010E and 0x1F011F010E010E01,
 ///   0x01E001E001F101F1 and 0xE001E001F101F101,
@@ -784,9 +784,9 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 ///   0xE0FEE0FEF1FEF1FE and 0xFEE0FEE0FEF1FEF1 in big-endianness are considered
 ///   to be week.
 ///   For example, if you encrypt your data with the key 0x011F011F010E010E and
-///   encrypt the output cipher text again with its counterpart key
-///   0xE001E001F101F101, you will get the original plain text!
-///   So, the cipher text is only secure-looking.
+///   encrypt the output ciphertext again with its counterpart key
+///   0xE001E001F101F101, you will get the original plaintext!
+///   So, the ciphertext is only secure-looking.
 /// 
 /// # Use of DES and its variants
 /// This algorithm is implemented generic way. Most of the constants are
@@ -1548,12 +1548,12 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des.encrypt_u64(plaintext);
     ///
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x1E32B46B44C69201_u64);
     ///
     /// let cipher_cipher_text = des.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);  // So, you can't use the default key!!!
     /// ```
@@ -1595,12 +1595,12 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x3B6041D76AF28F23_u64);
     /// 
     /// let cipher_cipher_text = des.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x7C5AAE491DC1310D_u64);
     /// assert_ne!(cipher_cipher_text, plaintext);
     /// ```
@@ -1619,17 +1619,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0x1E32B46B44C69201_u64);
     /// assert_eq!(ciphertext2, 0x1E32B46B44C69201_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -1651,17 +1651,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0xA5997AB38BC07250_u64);
     /// assert_eq!(ciphertext2, 0xA5997AB38BC07250_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -1683,17 +1683,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0x94CCA0201F033101_u64);
     /// assert_eq!(ciphertext2, 0x94CCA0201F033101_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -1715,17 +1715,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0x4FB6397B5352DB0C_u64);
     /// assert_eq!(ciphertext2, 0x4FB6397B5352DB0C_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -1743,22 +1743,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0xC2C71D736E97876C_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x063A6E55466423D2_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys [0x01, 0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E]
@@ -1774,22 +1774,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x85A63690E79AAA15_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x15B721BBB44A12F5_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys [0x01, 0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1]
@@ -1806,22 +1806,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0xAE38CC9D9FA48581_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x7EE95658A653960D_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys [0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE]
@@ -1838,22 +1838,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x81ECC05B173F793E_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x4D0AD4DC147E4BDF_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys [0x1F, 0xE0, 0x1F, 0xE0, 0x0E, 0xF1, 0x0E, 0xF1]
@@ -1869,22 +1869,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x59735490F84A0AD0_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x79FD3CBFE57F4B0B_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys [0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E, 0xFE]
@@ -1901,22 +1901,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x27C83AAE29571889_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0xDE76DF630C033919_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys [0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1, 0xFE]
@@ -1969,12 +1969,12 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x3B6041D76AF28F23_u64);
     /// 
     /// let cipher_cipher_text = des.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x7C5AAE491DC1310D_u64);
     /// assert_ne!(cipher_cipher_text, plaintext);
     /// ```
@@ -1991,17 +1991,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0x1E32B46B44C69201_u64);
     /// assert_eq!(ciphertext2, 0x1E32B46B44C69201_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -2020,17 +2020,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0xA5997AB38BC07250_u64);
     /// assert_eq!(ciphertext2, 0xA5997AB38BC07250_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -2049,17 +2049,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0x94CCA0201F033101_u64);
     /// assert_eq!(ciphertext2, 0x94CCA0201F033101_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -2078,17 +2078,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0x4FB6397B5352DB0C_u64);
     /// assert_eq!(ciphertext2, 0x4FB6397B5352DB0C_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -2105,22 +2105,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0xC2C71D736E97876C_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x063A6E55466423D2_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys 0x0E010E011F011F01 and 0x010E010E011F011F!!!
@@ -2135,22 +2135,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x85A63690E79AAA15_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x15B721BBB44A12F5_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys 0xF101F101E001E001 and 0x01F101F101E001E0!!!
@@ -2165,22 +2165,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0xAE38CC9D9FA48581_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x7EE95658A653960D_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys 0xFE01FE01FE01FE01 and 0x01FE01FE01FE01FE!!!
@@ -2195,22 +2195,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x81ECC05B173F793E_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x4D0AD4DC147E4BDF_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys 0xF10EF10EE01FE01F and 0x0EF10EF11FE01FE0!!!
@@ -2225,22 +2225,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x59735490F84A0AD0_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x79FD3CBFE57F4B0B_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys 0xFE0EFE0EFE1FFE1F and 0x0EFE0EFE1FFE1FFE!!!
@@ -2255,22 +2255,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x27C83AAE29571889_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0xDE76DF630C033919_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys 0xFEF1FEF1FEE0FEE0 and 0xF1FEF1FEE0FEE0FE!!!
@@ -2313,12 +2313,12 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x3B6041D76AF28F23_u64);
     /// 
     /// let cipher_cipher_text = des.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x7C5AAE491DC1310D_u64);
     /// assert_ne!(cipher_cipher_text, plaintext);
     /// ```
@@ -2338,17 +2338,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0x1E32B46B44C69201_u64);
     /// assert_eq!(ciphertext2, 0x1E32B46B44C69201_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -2371,17 +2371,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0xA5997AB38BC07250_u64);
     /// assert_eq!(ciphertext2, 0xA5997AB38BC07250_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -2404,17 +2404,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0x94CCA0201F033101_u64);
     /// assert_eq!(ciphertext2, 0x94CCA0201F033101_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -2437,17 +2437,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0x4FB6397B5352DB0C_u64);
     /// assert_eq!(ciphertext2, 0x4FB6397B5352DB0C_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -2467,22 +2467,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0xC2C71D736E97876C_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x063A6E55466423D2_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys [0x01, 0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E]
@@ -2500,22 +2500,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x85A63690E79AAA15_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x15B721BBB44A12F5_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys [0x01, 0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1]
@@ -2533,22 +2533,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0xAE38CC9D9FA48581_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x7EE95658A653960D_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys [0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE]
@@ -2566,22 +2566,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x81ECC05B173F793E_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x4D0AD4DC147E4BDF_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys [0x1F, 0xE0, 0x1F, 0xE0, 0x0E, 0xF1, 0x0E, 0xF1]
@@ -2599,22 +2599,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x59735490F84A0AD0_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x79FD3CBFE57F4B0B_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys [0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E, 0xFE]
@@ -2632,22 +2632,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x27C83AAE29571889_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0xDE76DF630C033919_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys [0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1, 0xFE]
@@ -2692,12 +2692,12 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x3B6041D76AF28F23_u64);
     /// 
     /// let cipher_cipher_text = des.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x7C5AAE491DC1310D_u64);
     /// assert_ne!(cipher_cipher_text, plaintext);
     /// ```
@@ -2716,17 +2716,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0x1E32B46B44C69201_u64);
     /// assert_eq!(ciphertext2, 0x1E32B46B44C69201_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -2747,17 +2747,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0xA5997AB38BC07250_u64);
     /// assert_eq!(ciphertext2, 0xA5997AB38BC07250_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -2778,17 +2778,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0x94CCA0201F033101_u64);
     /// assert_eq!(ciphertext2, 0x94CCA0201F033101_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -2809,17 +2809,17 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let ciphertext1 = des1.encrypt_u64(plaintext);
     /// let ciphertext2 = des2.encrypt_u64(plaintext);
     /// 
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text1:\t\t{:#016X}", ciphertext1);
-    /// println!("Cipher text2:\t\t{:#016X}", ciphertext2);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
+    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
     /// assert_eq!(ciphertext1, 0x4FB6397B5352DB0C_u64);
     /// assert_eq!(ciphertext2, 0x4FB6397B5352DB0C_u64);
     /// assert_eq!(ciphertext1, ciphertext2);
     /// 
     /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
     /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher cipher text1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher cipher text2:\t{:#016X}\n", cipher_cipher_text2);
+    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
+    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
     /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text1, plaintext);
@@ -2838,22 +2838,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0xC2C71D736E97876C_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x063A6E55466423D2_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys 0x0E010E011F011F01 and 0x010E010E011F011F!!!
@@ -2870,22 +2870,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x85A63690E79AAA15_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x15B721BBB44A12F5_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys 0xF101F101E001E001 and 0x01F101F101E001E0!!!
@@ -2902,22 +2902,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0xAE38CC9D9FA48581_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x7EE95658A653960D_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys 0xFE01FE01FE01FE01 and 0x01FE01FE01FE01FE!!!
@@ -2934,22 +2934,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x81ECC05B173F793E_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x4D0AD4DC147E4BDF_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys 0xF10EF10EE01FE01F and 0x0EF10EF11FE01FE0!!!
@@ -2966,22 +2966,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x59735490F84A0AD0_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x79FD3CBFE57F4B0B_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys 0xFE0EFE0EFE1FFE1F and 0x0EFE0EFE1FFE1FFE!!!
@@ -2998,22 +2998,22 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// 
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0x27C83AAE29571889_u64);
     /// 
     /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// 
     /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plain text:\t\t{:#016X}", plaintext);
-    /// println!("Cipher text:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
     /// assert_eq!(ciphertext, 0xDE76DF630C033919_u64);
     /// 
     /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher cipher text:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// // So, you can't use the semi-weak keys 0xFEF1FEF1FEE0FEE0 and 0xF1FEF1FEE0FEE0FE!!!
@@ -3028,7 +3028,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// Encrypts a 64-bit data.
     /// 
     /// # Arguments
-    /// `message` is of `u64`-type and the plain text to be encrypted.
+    /// `message` is of `u64`-type and the plaintext to be encrypted.
     /// 
     /// # Output
     /// This method returns the encrypted data of `u64`-type from `message`.
@@ -3098,7 +3098,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// Decrypts a 64-bit data.
     /// 
     /// # Arguments
-    /// `cioher` is of `u64`-type and the cipher text to be decrypted.
+    /// `cioher` is of `u64`-type and the ciphertext to be decrypted.
     /// 
     /// # Output
     /// This method returns the decrypted data of `u64`-type from `cipher`.
@@ -3188,9 +3188,9 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// Encrypts an array of 64-bit data.
     /// 
     /// # Arguments
-    /// - `message` is of an array of `u64`-type and the plain text to be
+    /// - `message` is of an array of `u64`-type and the plaintext to be
     ///   encrypted.
-    /// - `cipher` is of an array of `u64`-type and the cipher text to be
+    /// - `cipher` is of an array of `u64`-type and the ciphertext to be
     ///   stored.
     /// 
     /// # Example 1 for Normal case 
@@ -3200,7 +3200,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016x}", key);
     /// 
-    /// let message = [0x_1234567890ABCDEF_u64, 0x_EFCDAB9078563412, 0xFEDCBA0987654321 ];
+    /// let message = [0x_1234567890ABCDEF_u64, 0xEFCDAB9078563412, 0xFEDCBA0987654321 ];
     /// print!("M =\t");
     /// for m in message
     ///     { print!("{:#016X} ", m); }
@@ -3225,7 +3225,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016x}", key);
     /// 
-    /// let message = [0x_1234567890ABCDEF_u64, 0x_EFCDAB9078563412, 0xFEDCBA0987654321 ];
+    /// let message = [0x_1234567890ABCDEF_u64, 0xEFCDAB9078563412, 0xFEDCBA0987654321 ];
     /// print!("M =\t");
     /// for m in message
     ///     { print!("{:#016X} ", m); }
@@ -3253,7 +3253,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// println!("K =\t{:#016x}", key);
     /// 
-    /// let message = [0x_1234567890ABCDEF_u64, 0x_EFCDAB9078563412, 0xFEDCBA0987654321 ];
+    /// let message = [0x_1234567890ABCDEF_u64, 0xEFCDAB9078563412, 0xFEDCBA0987654321 ];
     /// print!("M =\t");
     /// for m in message
     ///     { print!("{:#016X} ", m); }
@@ -3295,13 +3295,140 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// Decrypts an array of 64-bit data.
     /// 
     /// # Arguments
-    /// - `cipher` is of an array of `u64`-type and the cipher text to be
+    /// - `cipher` is of an array of `u64`-type and the ciphertext to be
     ///   decrypted.
-    /// - `message` is of an array of `u64`-type and the plain text to be
+    /// - `message` is of an array of `u64`-type and the plaintext to be
     ///   stored.
     /// 
     /// # Example 1 for Normal case 
     /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016x}", key);
+    /// 
+    /// let message = [0x_1234567890ABCDEF_u64, 0xEFCDAB9078563412, 0xFEDCBA0987654321 ];
+    /// print!("M =\t");
+    /// for m in message
+    ///     { print!("{:#016X} ", m); }
+    /// println!();
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let mut cipher = [0; 3];
+    /// a_des.encrypt_array_u64(&message, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher
+    ///     { print!("{:#016X} ", c); }
+    /// println!();
+    /// assert_eq!(cipher[0], 0x_1BC4896735BBE206_u64);
+    /// assert_eq!(cipher[1], 0x_1D8A61E5E62226A4_u64);
+    /// assert_eq!(cipher[2], 0x_2990D69525C17067_u64);
+    /// 
+    /// let mut recovered = [0; 3];
+    /// a_des.decrypt_array_u64(&cipher, &mut recovered);
+    /// print!("B (16 rounds) =\t");
+    /// for r in recovered
+    ///     { print!("{:#016X} ", r); }
+    /// println!();
+    /// assert_eq!(recovered[0], 0x_1234567890ABCDEF_u64);
+    /// assert_eq!(recovered[1], 0x_EFCDAB9078563412_u64);
+    /// assert_eq!(recovered[2], 0x_FEDCBA0987654321_u64);
+    /// ```
+    /// 
+    /// # Example 2 for 128 rounds
+    /// ```
+    /// use cryptocol::symmetric::DES_Expanded;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016x}", key);
+    /// 
+    /// let message = [0x_1234567890ABCDEF_u64, 0xEFCDAB9078563412, 0xFEDCBA0987654321 ];
+    /// print!("M =\t");
+    /// for m in message
+    ///     { print!("{:#016X} ", m); }
+    /// println!();
+    /// let mut b_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64(key);
+    /// 
+    /// let mut cipher = [0; 3];
+    /// b_des.encrypt_array_u64(&message, &mut cipher);
+    /// print!("C (128 rounds) =\t");
+    /// for c in cipher
+    ///     { print!("{:#016X} ", c); }
+    /// println!();
+    /// assert_eq!(cipher[0], 0x_21F25F81CE4D4AA3_u64);
+    /// assert_eq!(cipher[1], 0x_352F391A1482A504_u64);
+    /// assert_eq!(cipher[2], 0x_F793546957AFDE50_u64);
+    /// 
+    /// let mut recovered = [0; 3];
+    /// b_des.decrypt_array_u64(&cipher, &mut recovered);
+    /// print!("B (128 rounds) =\t");
+    /// for r in recovered
+    ///     { print!("{:#016X} ", r); }
+    /// println!();
+    /// assert_eq!(recovered[0], 0x_1234567890ABCDEF_u64);
+    /// assert_eq!(recovered[1], 0x_EFCDAB9078563412_u64);
+    /// assert_eq!(recovered[2], 0x_FEDCBA0987654321_u64);
+    /// ```
+    /// 
+    /// # Example 3 for 0 rounds which means that key is meaningless
+    /// ```
+    /// use cryptocol::symmetric::DES_Expanded;
+    /// 
+    /// let key1 = 0x_1234567890ABCDEF_u64;
+    /// let key2 = 0_u64;
+    /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
+    /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
+    /// println!("K =\t{:#016x}", key);
+    /// 
+    /// let message = [0x_1234567890ABCDEF_u64, 0xEFCDAB9078563412, 0xFEDCBA0987654321 ];
+    /// print!("M =\t");
+    /// for m in message
+    ///     { print!("{:#016X} ", m); }
+    /// println!();
+    /// 
+    /// let mut cipher1 = [0; 3];
+    /// let mut cipher2 = [0; 3];
+    /// c_des.encrypt_array_u64(&message, &mut cipher1);
+    /// d_des.encrypt_array_u64(&message, &mut cipher2);
+    /// print!("C (0 rounds) =\t");
+    /// for c in cipher1
+    ///     { print!("{:#016X} ", c); }
+    /// println!();
+    /// print!("D (0 rounds) =\t");
+    /// for c in cipher2
+    ///     { print!("{:#016X} ", c); }
+    /// println!();
+    /// assert_eq!(cipher1[0], 0x_2138A9B46057CEDF_u64);
+    /// assert_eq!(cipher1[1], 0x_DFCE5760B4A93821_u64);
+    /// assert_eq!(cipher1[2], 0x_FDEC75064B9A8312_u64);
+    /// assert_eq!(cipher2[0], 0x_2138A9B46057CEDF_u64);
+    /// assert_eq!(cipher2[1], 0x_DFCE5760B4A93821_u64);
+    /// assert_eq!(cipher2[2], 0x_FDEC75064B9A8312_u64);
+    /// assert_eq!(cipher1[0], cipher2[0]);
+    /// assert_eq!(cipher1[1], cipher2[1]);
+    /// assert_eq!(cipher1[2], cipher2[2]);
+    /// 
+    /// let mut recovered1 = [0; 3];
+    /// let mut recovered2 = [0; 3];
+    /// c_des.decrypt_array_u64(&cipher1, &mut recovered1);
+    /// d_des.decrypt_array_u64(&cipher2, &mut recovered2);
+    /// print!("B1 (0 rounds) =\t");
+    /// for r in recovered1
+    ///     { print!("{:#016X} ", r); }
+    /// println!();
+    /// print!("B2 (0 rounds) =\t");
+    /// for r in recovered2
+    ///     { print!("{:#016X} ", r); }
+    /// println!();
+    /// assert_eq!(recovered1[0], 0x_1234567890ABCDEF_u64);
+    /// assert_eq!(recovered1[1], 0x_EFCDAB9078563412_u64);
+    /// assert_eq!(recovered1[2], 0x_FEDCBA0987654321_u64);
+    /// assert_eq!(recovered2[0], 0x_1234567890ABCDEF_u64);
+    /// assert_eq!(recovered2[1], 0x_EFCDAB9078563412_u64);
+    /// assert_eq!(recovered2[2], 0x_FEDCBA0987654321_u64);
+    /// assert_eq!(recovered1[0], recovered2[0]);
+    /// assert_eq!(recovered1[1], recovered2[1]);
+    /// assert_eq!(recovered1[2], recovered2[2]);
     /// ```
     pub fn decrypt_array_u64<const N: usize>(&mut self, cipher: &[u64; N], message: &mut [u64; N])
     {
@@ -3313,14 +3440,40 @@ S756, S757, S758, S759, S760, S761, S762, S763
         }
     }
 
-
+    // pub fn encrypt_with_padding_pkcs7(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     /// Encrypts the data with the padding defined in PKCS #7.
     /// 
+    /// # Arguments
+    /// - `message` is a pointer to u8 which is `*const u8`,
+    ///   and the plaintext to be encrypted.
+    /// - `length_in_bytes`` is of `u64`-type,
+    ///   and the length of the plaintext `message` in bytes.
+    /// - `cipher` is a pointer to u8 which is `*mut u8`,
+    ///   and the ciphertext to be stored.
+    /// - The size of the memory area which starts at `cipher` and the
+    ///   ciphertext will be stored at is assumed to be enough.
+    ///   The size of the area should be prepared to be
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
+    /// 
+    /// # Output
+    /// This method returns the size of ciphertext including padding bits
+    /// in bytes.
     /// 
     /// # Features
+    /// - This method is useful to use in hybrid programming with C/C++.
     /// - If `length_in_bytes` is `0`, only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
+    /// - The padding bits composed of the bytes that indicate the length of
+    ///   the plaintext. For more information about the padding bits according
+    ///   to PKCS#7, Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - This method performs pure encryption without any operation mode.
+    ///   It is equivalent to ECB (Electronic Code Book) mode.
     /// 
+    /// # Example 1
+    /// ```
+    /// 
+    /// ```
     pub fn encrypt_with_padding_pkcs7(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
         let mut progress = 0_u64;
@@ -3402,10 +3555,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     ///   this method does not perform encryption and returns `false`.
     /// - If `N` is equal to the next multiple of 8 from `length_in_bytes`,
     ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted cipher text, and returns `true`.
+    ///   encrypted ciphertext, and returns `true`.
     /// - If `N` is greater than the next multiple of 8 from `length_in_bytes`,
     ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted cipher text, and then fills the rest of elements of
+    ///   encrypted ciphertext, and then fills the rest of elements of
     ///   the array `cipher`, and returns `true`.
     /// 
     pub fn encrypt_with_padding_pkcs7_into_array<T, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
@@ -3567,8 +3720,9 @@ S756, S757, S758, S759, S760, S761, S762, S763
     where T: SmallUInt + Copy + Clone
     {
         pre_decrypt_into_vec!(message, length_in_bytes, T);
-        self.decrypt_with_padding_pkcs7(cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
-
+        let res = self.decrypt_with_padding_pkcs7(cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
+        message.truncate(res as usize);
+        res
         // let mut progress = 0_u64;
         // let mut decoded: u64;
         // let mut block: u64;
@@ -4441,10 +4595,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     ///   this method does not perform encryption and returns `false`.
     /// - If `N` is equal to the next multiple of 8 from `length_in_bytes`,
     ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted cipher text, and returns `true`.
+    ///   encrypted ciphertext, and returns `true`.
     /// - If `N` is greater than the next multiple of 8 from `length_in_bytes`,
     ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted cipher text, and then fills the rest of elements of
+    ///   encrypted ciphertext, and then fills the rest of elements of
     ///   the array `cipher`, and returns `true`.
     /// 
     pub fn encrypt_with_padding_pkcs7_cbc_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
@@ -4937,10 +5091,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     ///   this method does not perform encryption and returns `false`.
     /// - If `N` is equal to the next multiple of 8 from `length_in_bytes`,
     ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted cipher text, and returns `true`.
+    ///   encrypted ciphertext, and returns `true`.
     /// - If `N` is greater than the next multiple of 8 from `length_in_bytes`,
     ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted cipher text, and then fills the rest of elements of
+    ///   encrypted ciphertext, and then fills the rest of elements of
     ///   the array `cipher`, and returns `true`.
     /// 
     pub fn encrypt_with_padding_pkcs7_pcbc_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
@@ -5430,10 +5584,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     ///   this method does not perform encryption and returns `false`.
     /// - If `N` is equal to the next multiple of 8 from `length_in_bytes`,
     ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted cipher text, and returns `true`.
+    ///   encrypted ciphertext, and returns `true`.
     /// - If `N` is greater than the next multiple of 8 from `length_in_bytes`,
     ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted cipher text, and then fills the rest of elements of
+    ///   encrypted ciphertext, and then fills the rest of elements of
     ///   the array `cipher`, and returns `true`.
     /// 
     pub fn encrypt_cfb_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
@@ -5691,10 +5845,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     ///   this method does not perform encryption and returns `false`.
     /// - If `N` is equal to the next multiple of 8 from `length_in_bytes`,
     ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted cipher text, and returns `true`.
+    ///   encrypted ciphertext, and returns `true`.
     /// - If `N` is greater than the next multiple of 8 from `length_in_bytes`,
     ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted cipher text, and then fills the rest of elements of
+    ///   encrypted ciphertext, and then fills the rest of elements of
     ///   the array `cipher`, and returns `true`.
     /// 
     pub fn encrypt_ofb_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
@@ -5934,10 +6088,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     ///   this method does not perform encryption and returns `false`.
     /// - If `N` is equal to the next multiple of 8 from `length_in_bytes`,
     ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted cipher text, and returns `true`.
+    ///   encrypted ciphertext, and returns `true`.
     /// - If `N` is greater than the next multiple of 8 from `length_in_bytes`,
     ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted cipher text, and then fills the rest of elements of
+    ///   encrypted ciphertext, and then fills the rest of elements of
     ///   the array `cipher`, and returns `true`.
     /// 
     pub fn encrypt_ctr_into_array<T, const N: usize>(&mut self, nonce: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
