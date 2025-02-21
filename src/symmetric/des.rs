@@ -4319,7 +4319,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     where T: SmallUInt + Copy + Clone
     {
         if length_in_bytes > (T::size_in_bytes() * N) as u64 
-            { return 0; }decrypt_with_padding_pkcs7
+            { return 0; }
         pre_decrypt_into_array!(message, length_in_bytes, T);
         self.decrypt_with_padding_pkcs7(cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
     }
@@ -5244,14 +5244,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
                 progress += 8;
             }
         }
-        for _ in 0..(length_in_bytes >> 3) - 1  // length_in_bytes >> 3 == length_in_bytes / 8
-        {
-            block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
-            decoded = iv ^ self.decrypt_u64(block);
-            iv = block;
-            unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), 8); }
-            progress += 8;
-        }
+
         block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
         decoded = iv ^ self.decrypt_u64(block);
         let decoded_union = LongUnion::new_with(decoded);
@@ -5975,7 +5968,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn decrypt_with_padding_iso_pcbc(&mut self, mut iv: u64, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
     {
         let mut progress = 0_u64;
-        for _ in 0..(length_in_bytes >> 3) - 1
+        if length_in_bytes > 8
         {
             for i in 0..(length_in_bytes >> 3) - 1
             {
