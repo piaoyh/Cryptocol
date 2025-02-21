@@ -4331,58 +4331,59 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7<T>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7<T>(&mut self, cipher: &Vec<T>, message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_into_vec<T, U>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_into_vec<T, U>(&mut self, cipher: &Vec<T>, message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_into_vec(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_into_vec(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_into_array<T, U, const N: usize>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_into_array<T, U, const N: usize>(&mut self, cipher: &Vec<T>, message: &mut [U; N]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_into_array(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_into_array(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_into_string<T>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_into_string<T>(&mut self, cipher: &Vec<T>, message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_into_string(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_into_string(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7<T, const N: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_array_with_padding_pkcs7<T, const N: usize>(&mut self, cipher: &[T; N], message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_into_vec<T, U, const N: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_into_vec<T, U, const N: usize>(&mut self, cipher: &[T; N], message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_into_vec(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_into_vec(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_into_array<T, U, const N: usize, const M: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: &mut [U; M]) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_into_array<T, U, const N: usize, const M: usize>(&mut self, cipher: &[T; N], message: &mut [U; M]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_into_array(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_into_array(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_into_string<T, const N: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_into_string<T, const N: usize>(&mut self, cipher: &[T; N], message: &mut String) -> u64
+    where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_into_string(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_into_string(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
 
@@ -4647,59 +4648,59 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso<T>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_vec_with_padding_iso<T>(&mut self, cipher: &Vec<T>, message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_into_vec<T, U>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_vec_with_padding_iso_into_vec<T, U>(&mut self, cipher: &Vec<T>, message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_into_vec(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_into_vec(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_into_array<T, U, const N: usize>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    pub fn decrypt_vec_with_padding_iso_into_array<T, U, const N: usize>(&mut self, cipher: &Vec<T>, message: &mut [U; N]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_into_array(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_into_array(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_into_string<T>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_vec_with_padding_iso_into_string<T>(&mut self, cipher: &Vec<T>, message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_into_string(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_into_string(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso<T, const N: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_array_with_padding_iso<T, const N: usize>(&mut self, cipher: &[T; N], message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_into_vec<T, U, const N: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_array_with_padding_iso_into_vec<T, U, const N: usize>(&mut self, cipher: &[T; N], message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_into_vec(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_into_vec(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_into_array<T, U, const N: usize, const M: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: &mut [U; M]) -> u64
+    pub fn decrypt_array_with_padding_iso_into_array<T, U, const N: usize, const M: usize>(&mut self, cipher: &[T; N], message: &mut [U; M]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_into_array(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_into_array(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_into_string<T, const N: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_array_with_padding_iso_into_string<T, const N: usize>(&mut self, cipher: &[T; N], message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_into_string(cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_into_string(cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
 
@@ -4835,58 +4836,59 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_ecb<T>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_ecb<T>(&mut self, cipher: &Vec<T>, message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_vec_with_padding_pkcs7(cipher, length_in_bytes, message)
+        self.decrypt_vec_with_padding_pkcs7(cipher, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_ecb_into_vec<T, U>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_ecb_into_vec<T, U>(&mut self, cipher: &Vec<T>, message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_vec_with_padding_pkcs7_into_vec(cipher, length_in_bytes, message)
+        self.decrypt_vec_with_padding_pkcs7_into_vec(cipher, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_ecb_into_array<T, U, const N: usize>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_ecb_into_array<T, U, const N: usize>(&mut self, cipher: &Vec<T>, message: &mut [U; N]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_vec_with_padding_pkcs7_into_array(cipher, length_in_bytes, message)
+        self.decrypt_vec_with_padding_pkcs7_into_array(cipher, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_ecb_into_string<T>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_ecb_into_string<T>(&mut self, cipher: &Vec<T>, message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_vec_with_padding_pkcs7_into_string(cipher, length_in_bytes, message)
+        self.decrypt_vec_with_padding_pkcs7_into_string(cipher, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_ecb<T, const N: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_ecb<T, const N: usize>(&mut self, cipher: &[T; N], message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_array_with_padding_pkcs7(cipher, length_in_bytes, message)
+        self.decrypt_array_with_padding_pkcs7(cipher, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_ecb_into_vec<T, U, const N: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_ecb_into_vec<T, U, const N: usize>(&mut self, cipher: &[T; N], message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_array_with_padding_pkcs7_into_vec(cipher, length_in_bytes, message)
+        self.decrypt_array_with_padding_pkcs7_into_vec(cipher, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_ecb_into_array<T, U, const N: usize, const M: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: &mut [U; M]) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_ecb_into_array<T, U, const N: usize, const M: usize>(&mut self, cipher: &[T; N], message: &mut [U; M]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_array_with_padding_pkcs7_into_array(cipher, length_in_bytes, message)
+        self.decrypt_array_with_padding_pkcs7_into_array(cipher, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_ecb_into_string<T, const N: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_ecb_into_string<T, const N: usize>(&mut self, cipher: &[T; N], message: &mut String) -> u64
+    where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_array_with_padding_pkcs7_into_string(cipher, length_in_bytes, message)
+        self.decrypt_array_with_padding_pkcs7_into_string(cipher, message)
     }
 
 
@@ -5022,59 +5024,59 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_ecb<T>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_vec_with_padding_iso_ecb<T>(&mut self, cipher: &Vec<T>, message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_vec_with_padding_iso(cipher, length_in_bytes, message)
+        self.decrypt_vec_with_padding_iso(cipher, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_ecb_into_vec<T, U>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_vec_with_padding_iso_ecb_into_vec<T, U>(&mut self, cipher: &Vec<T>, message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_vec_with_padding_iso_into_vec(cipher, length_in_bytes, message)
+        self.decrypt_vec_with_padding_iso_into_vec(cipher, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_ecb_into_array<T, U, const N: usize>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    pub fn decrypt_vec_with_padding_iso_ecb_into_array<T, U, const N: usize>(&mut self, cipher: &Vec<T>, message: &mut [U; N]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_vec_with_padding_iso_into_array(cipher, length_in_bytes, message)
+        self.decrypt_vec_with_padding_iso_into_array(cipher, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_ecb_into_string<T>(&mut self, cipher: &Vec<T>, length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_vec_with_padding_iso_ecb_into_string<T>(&mut self, cipher: &Vec<T>, message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_vec_with_padding_iso_into_string(cipher, length_in_bytes, message)
+        self.decrypt_vec_with_padding_iso_into_string(cipher, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_ecb<T, const N: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_array_with_padding_iso_ecb<T, const N: usize>(&mut self, cipher: &[T; N], message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_array_with_padding_iso(cipher, length_in_bytes, message)
+        self.decrypt_array_with_padding_iso(cipher, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_ecb_into_vec<T, U, const N: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_array_with_padding_iso_ecb_into_vec<T, U, const N: usize>(&mut self, cipher: &[T; N], message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_array_with_padding_iso_into_vec(cipher, length_in_bytes, message)
+        self.decrypt_array_with_padding_iso_into_vec(cipher, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_ecb_into_array<T, U, const N: usize, const M: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: &mut [U; M]) -> u64
+    pub fn decrypt_array_with_padding_iso_ecb_into_array<T, U, const N: usize, const M: usize>(&mut self, cipher: &[T; N], message: &mut [U; M]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_array_with_padding_iso_into_array(cipher, length_in_bytes, message)
+        self.decrypt_array_with_padding_iso_into_array(cipher, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_ecb_into_string<T, const N: usize>(&mut self, cipher: &[T; N], length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_array_with_padding_iso_ecb_into_string<T, const N: usize>(&mut self, cipher: &[T; N], message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_array_with_padding_iso_into_string(cipher, length_in_bytes, message)
+        self.decrypt_array_with_padding_iso_into_string(cipher, message)
     }
 
 
@@ -5284,58 +5286,59 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_cbc<T>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_cbc<T>(&mut self, iv: u64, cipher: &Vec<T>, message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_cbc(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_cbc(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_cbc_into_vec<T, U>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_cbc_into_vec<T, U>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_cbc_into_vec(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_cbc_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_cbc_into_array<T, U, const N: usize>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_cbc_into_array<T, U, const N: usize>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut [U; N]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_cbc_into_array(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_cbc_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_cbc_into_string<T>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_cbc_into_string<T>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_cbc_into_string(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_cbc_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_cbc<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_cbc<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_cbc(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_cbc(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_cbc_into_vec<T, U, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_cbc_into_vec<T, U, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_cbc_into_vec(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_cbc_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_cbc_into_array<T, U, const N: usize, const M: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut [U; M]) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_cbc_into_array<T, U, const N: usize, const M: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut [U; M]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_cbc_into_array(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_cbc_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_cbc_into_string<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_cbc_into_string<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut String) -> u64
+    where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_cbc_into_string(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_cbc_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
 
@@ -5522,59 +5525,59 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_cbc<T>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_vec_with_padding_iso_cbc<T>(&mut self, iv: u64, cipher: &Vec<T>, message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_cbc(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_cbc(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_cbc_into_vec<T, U>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_vec_with_padding_iso_cbc_into_vec<T, U>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_cbc_into_vec(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_cbc_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_cbc_into_array<T, U, const N: usize>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    pub fn decrypt_vec_with_padding_iso_cbc_into_array<T, U, const N: usize>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut [U; N]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_cbc_into_array(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_cbc_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_cbc_into_string<T>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_vec_with_padding_iso_cbc_into_string<T>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_cbc_into_string(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_cbc_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_cbc<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_array_with_padding_iso_cbc<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_cbc(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_cbc(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_cbc_into_vec<T, U, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_array_with_padding_iso_cbc_into_vec<T, U, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_cbc_into_vec(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_cbc_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_cbc_into_array<T, U, const N: usize, const M: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut [U; M]) -> u64
+    pub fn decrypt_array_with_padding_iso_cbc_into_array<T, U, const N: usize, const M: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut [U; M]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_cbc_into_array(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_cbc_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_cbc_into_string<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_array_with_padding_iso_cbc_into_string<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_cbc_into_string(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_cbc_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
 
@@ -5781,59 +5784,59 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_pcbc<T>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_pcbc<T>(&mut self, iv: u64, cipher: &Vec<T>, message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_pcbc(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_pcbc(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_pcbc_into_vec<T, U>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_pcbc_into_vec<T, U>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_pcbc_into_vec(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_pcbc_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_pcbc_into_array<T, U, const N: usize>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_pcbc_into_array<T, U, const N: usize>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut [U; N]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_pcbc_into_array(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_pcbc_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_pkcs7_pcbc_into_string<T>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_vec_with_padding_pkcs7_pcbc_into_string<T>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_pcbc_into_string(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_pcbc_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_pcbc<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_pcbc<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_pcbc(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_pcbc(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_pcbc_into_vec<T, U, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_pcbc_into_vec<T, U, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_pcbc_into_vec(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_pcbc_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_pcbc_into_array<T, U, const N: usize, const M: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut [U; M]) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_pcbc_into_array<T, U, const N: usize, const M: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut [U; M]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_pcbc_into_array(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_pcbc_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_pkcs7_pcbc_into_string<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_array_with_padding_pkcs7_pcbc_into_string<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_pkcs7_pcbc_into_string(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_pkcs7_pcbc_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
 
@@ -6022,59 +6025,59 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_pcbc<T>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_vec_with_padding_iso_pcbc<T>(&mut self, iv: u64, cipher: &Vec<T>, message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_pcbc(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_pcbc(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_pcbc_into_vec<T, U>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_vec_with_padding_iso_pcbc_into_vec<T, U>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_pcbc_into_vec(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_pcbc_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_pcbc_into_array<T, U, const N: usize>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    pub fn decrypt_vec_with_padding_iso_pcbc_into_array<T, U, const N: usize>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut [U; N]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_pcbc_into_array(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_pcbc_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_with_padding_iso_pcbc_into_string<T>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_vec_with_padding_iso_pcbc_into_string<T>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_pcbc_into_string(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_pcbc_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_pcbc<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_array_with_padding_iso_pcbc<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_pcbc(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_pcbc(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_pcbc_into_vec<T, U, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_array_with_padding_iso_pcbc_into_vec<T, U, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_pcbc_into_vec(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_pcbc_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_pcbc_into_array<T, U, const N: usize, const M: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut [U; M]) -> u64
+    pub fn decrypt_array_with_padding_iso_pcbc_into_array<T, U, const N: usize, const M: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut [U; M]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_pcbc_into_array(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_pcbc_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_with_padding_iso_pcbc_into_string<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_array_with_padding_iso_pcbc_into_string<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_with_padding_iso_pcbc_into_string(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_with_padding_iso_pcbc_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
 
@@ -6280,59 +6283,59 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
     #[inline]
-    pub fn decrypt_vec_cfb<T>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_vec_cfb<T>(&mut self, iv: u64, cipher: &Vec<T>, message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_cfb(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_cfb(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_cfb_into_vec<T, U>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_vec_cfb_into_vec<T, U>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_cfb_into_vec(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_cfb_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_cfb_into_array<T, U, const N: usize>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    pub fn decrypt_vec_cfb_into_array<T, U, const N: usize>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut [U; N]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_cfb_into_array(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_cfb_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_cfb_into_string<T>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_vec_cfb_into_string<T>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_cfb_into_string(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_cfb_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_cfb<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_array_cfb<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_cfb(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_cfb(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_cfb_into_vec<T, U, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_array_cfb_into_vec<T, U, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_cfb_into_vec(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_cfb_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_cfb_into_array<T, U, const N: usize, const M: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut [U; M]) -> u64
+    pub fn decrypt_array_cfb_into_array<T, U, const N: usize, const M: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut [U; M]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_cfb_into_array(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_cfb_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_cfb_into_string<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_array_cfb_into_string<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_cfb_into_string(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_cfb_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
 
@@ -6521,59 +6524,59 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
     #[inline]
-    pub fn decrypt_vec_ofb<T>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_vec_ofb<T>(&mut self, iv: u64, cipher: &Vec<T>, message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_ofb(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ofb(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_ofb_into_vec<T, U>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_vec_ofb_into_vec<T, U>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_ofb_into_vec(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ofb_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_ofb_into_array<T, U, const N: usize>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    pub fn decrypt_vec_ofb_into_array<T, U, const N: usize>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut [U; N]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_ofb_into_array(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ofb_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_ofb_into_string<T>(&mut self, iv: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_vec_ofb_into_string<T>(&mut self, iv: u64, cipher: &Vec<T>, message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_ofb_into_string(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ofb_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_ofb<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_array_ofb<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_ofb(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ofb(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_ofb_into_vec<T, U, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_array_ofb_into_vec<T, U, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_ofb_into_vec(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ofb_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_ofb_into_array<T, U, const N: usize, const M: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut [U; M]) -> u64
+    pub fn decrypt_array_ofb_into_array<T, U, const N: usize, const M: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut [U; M]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_ofb_into_array(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ofb_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_ofb_into_string<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_array_ofb_into_string<T, const N: usize>(&mut self, iv: u64, cipher: &[T; N], message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_ofb_into_string(iv, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ofb_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     
@@ -6766,59 +6769,59 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
     #[inline]
-    pub fn decrypt_vec_ctr<T>(&mut self, nonce: u64, cipher: &Vec<T>, length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_vec_ctr<T>(&mut self, nonce: u64, cipher: &Vec<T>, message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_ctr(nonce, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ctr(nonce, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_ctr_into_vec<T, U>(&mut self, nonce: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_vec_ctr_into_vec<T, U>(&mut self, nonce: u64, cipher: &Vec<T>, message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_ctr_into_vec(nonce, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ctr_into_vec(nonce, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_ctr_into_array<T, U, const N: usize>(&mut self, nonce: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    pub fn decrypt_vec_ctr_into_array<T, U, const N: usize>(&mut self, nonce: u64, cipher: &Vec<T>, message: &mut [U; N]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_ctr_into_array(nonce, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ctr_into_array(nonce, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_vec_ctr_into_string<T>(&mut self, nonce: u64, cipher: &Vec<T>, length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_vec_ctr_into_string<T>(&mut self, nonce: u64, cipher: &Vec<T>, message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_ctr_into_string(nonce, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ctr_into_string(nonce, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_ctr<T, const N: usize>(&mut self, nonce: u64, cipher: &[T; N], length_in_bytes: u64, message: *mut u8) -> u64
+    pub fn decrypt_array_ctr<T, const N: usize>(&mut self, nonce: u64, cipher: &[T; N], message: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_ctr(nonce, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ctr(nonce, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_ctr_into_vec<T, U, const N: usize>(&mut self, nonce: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    pub fn decrypt_array_ctr_into_vec<T, U, const N: usize>(&mut self, nonce: u64, cipher: &[T; N], message: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_ctr_into_vec(nonce, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ctr_into_vec(nonce, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_ctr_into_array<T, U, const N: usize, const M: usize>(&mut self, nonce: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut [U; M]) -> u64
+    pub fn decrypt_array_ctr_into_array<T, U, const N: usize, const M: usize>(&mut self, nonce: u64, cipher: &[T; N], message: &mut [U; M]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.decrypt_ctr_into_array(nonce, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ctr_into_array(nonce, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    pub fn decrypt_array_ctr_into_string<T, const N: usize>(&mut self, nonce: u64, cipher: &[T; N], length_in_bytes: u64, message: &mut String) -> u64
+    pub fn decrypt_array_ctr_into_string<T, const N: usize>(&mut self, nonce: u64, cipher: &[T; N], message: &mut String) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        self.decrypt_ctr_into_string(nonce, cipher.as_ptr() as *const u8, length_in_bytes, message)
+        self.decrypt_ctr_into_string(nonce, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
     fn encrypt_block(&mut self)
