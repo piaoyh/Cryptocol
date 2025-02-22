@@ -4556,8 +4556,9 @@ S756, S757, S758, S759, S760, S761, S762, S763
     where T: SmallUInt + Copy + Clone
     {
         pre_decrypt_into_vec!(message, length_in_bytes, T);
-        self.decrypt_with_padding_iso(cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
-
+        let len = self.decrypt_with_padding_iso(cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
+        message.truncate(len as usize);
+        len
         // let mut progress = 0_u64;
         // let mut decoded: u64;
         // let mut block: u64;
