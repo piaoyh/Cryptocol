@@ -6429,7 +6429,7 @@ fn des_decrypt_with_padding_iso_into_vec()
     let mut txt = String::new();
     for c in recovered.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E 00 ");
+    assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
 
     let mut converted = String::new();
     unsafe { converted.as_mut_vec() }.append(&mut recovered);
@@ -6468,7 +6468,7 @@ fn des_decrypt_with_padding_iso_into_vec()
     let mut txt = String::new();
     for c in recovered.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E 00 ");
+    assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
 
     let mut converted = String::new();
     unsafe { converted.as_mut_vec() }.append(&mut recovered);
@@ -6522,7 +6522,7 @@ fn des_decrypt_with_padding_iso_into_vec()
     let mut txt = String::new();
     for c in recovered1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E 00 ");
+    assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
     print!("B2a (0 rounds) =\t");
     for b in recovered2.clone()
         { print!("{:02X} ", b); }
@@ -6530,7 +6530,7 @@ fn des_decrypt_with_padding_iso_into_vec()
     let mut txt = String::new();
     for c in recovered2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E 00 ");
+    assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
 
     let mut converted1 = String::new();
     let mut converted2 = String::new();
@@ -6576,7 +6576,7 @@ fn des_decrypt_with_padding_iso_into_vec()
     let mut txt = String::new();
     for c in recovered.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "00 00 00 00 00 00 00 00 ");
+    assert_eq!(txt, "");
 
     let mut converted = String::new();
     unsafe { converted.as_mut_vec() }.append(&mut recovered);
@@ -6615,7 +6615,7 @@ fn des_decrypt_with_padding_iso_into_vec()
     let mut txt = String::new();
     for c in recovered.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 20 62 79 74 65 73 00 ");
+    assert_eq!(txt, "37 20 62 79 74 65 73 ");
 
     let mut converted = String::new();
     unsafe { converted.as_mut_vec() }.append(&mut recovered);
@@ -6654,7 +6654,7 @@ fn des_decrypt_with_padding_iso_into_vec()
     let mut txt = String::new();
     for c in recovered.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "49 20 61 6D 20 4F 4B 2E 00 00 00 00 00 00 00 00 ");
+    assert_eq!(txt, "49 20 61 6D 20 4F 4B 2E ");
 
     let mut converted = String::new();
     unsafe { converted.as_mut_vec() }.append(&mut recovered);
@@ -6693,7 +6693,7 @@ fn des_decrypt_with_padding_iso_into_vec()
     let mut txt = String::new();
     for c in recovered.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 41 52 4B 20 59 6F 75 6E 67 68 6F 00 00 00 00 ");
+    assert_eq!(txt, "50 41 52 4B 20 59 6F 75 6E 67 68 6F ");
 
     let mut converted = String::new();
     unsafe { converted.as_mut_vec() }.append(&mut recovered);
@@ -6733,7 +6733,7 @@ fn des_decrypt_with_padding_iso_into_vec()
     let mut txt = String::new();
     for c in recovered.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "EA B3 A0 EB A7 99 EC 8A B5 EB 8B 88 EB 8B A4 2E 00 00 00 00 00 00 00 00 ");
+    assert_eq!(txt, "EA B3 A0 EB A7 99 EC 8A B5 EB 8B 88 EB 8B A4 2E ");
 
     let mut converted = String::new();
     unsafe { converted.as_mut_vec() }.append(&mut recovered);
@@ -7138,7 +7138,7 @@ fn des_decrypt_with_padding_iso_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "DD C6 D8 D1 B0 66 D9 AC F7 F3 B4 FD D6 6C ED 78 20 FB A6 8D 35 38 EA 65 B0 65 23 05 FF D4 53 B1 D1 E0 C5 52 36 1E AC E2 19 EF 94 B8 98 04 A9 69 CC 6A BC 81 7D 6B 29 C0 ");
+    assert_eq!(txt, "DD C6 D8 D1 B0 66 D9 AC F7 F3 B4 FD D6 6C ED 78 20 FB A6 8D 35 38 EA 65 B0 65 23 05 FF D4 53 B1 D1 E0 C5 52 36 1E AC E2 19 EF 94 B8 98 04 A9 69 22 62 41 CF 85 0E E5 3F ");
 
     let mut recovered = String::new();
     b_des.decrypt_with_padding_iso_into_string(cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -7169,7 +7169,7 @@ fn des_decrypt_with_padding_iso_into_string()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 02 ");
+    assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 40 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -7177,7 +7177,7 @@ fn des_decrypt_with_padding_iso_into_string()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 02 ");
+    assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 40 ");
 
     let mut recovered1 = String::new();
     let mut recovered2 = String::new();
@@ -7209,7 +7209,7 @@ fn des_decrypt_with_padding_iso_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
+    assert_eq!(txt, "E2 22 32 FE 87 E8 0A 93 ");
 
     let mut recovered = String::new();
     a_des.decrypt_with_padding_iso_into_string(cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -7235,7 +7235,7 @@ fn des_decrypt_with_padding_iso_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "F6 F0 41 DD 55 55 3B 35 ");
+    assert_eq!(txt, "ED 30 F1 06 B7 E3 E7 07 ");
 
     let mut recovered = String::new();
     a_des.decrypt_with_padding_iso_into_string(cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -7261,7 +7261,7 @@ fn des_decrypt_with_padding_iso_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "27 F5 93 EE 76 DC 64 87 41 7F 89 79 08 CD A1 4C ");
+    assert_eq!(txt, "27 F5 93 EE 76 DC 64 87 E2 22 32 FE 87 E8 0A 93 ");
 
     let mut recovered = String::new();
     a_des.decrypt_with_padding_iso_into_string(cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -7287,7 +7287,7 @@ fn des_decrypt_with_padding_iso_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8E 52 20 47 78 78 51 B7 00 69 10 77 91 B7 52 36 ");
+    assert_eq!(txt, "8E 52 20 47 78 78 51 B7 BB 55 6A 78 71 84 72 58 ");
 
     let mut recovered = String::new();
     a_des.decrypt_with_padding_iso_into_string(cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -7313,7 +7313,7 @@ fn des_decrypt_with_padding_iso_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 41 7F 89 79 08 CD A1 4C ");
+    assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 E2 22 32 FE 87 E8 0A 93 ");
 
     let mut recovered = String::new();
     a_des.decrypt_with_padding_iso_into_string(cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -7345,7 +7345,7 @@ fn des_decrypt_vec_with_padding_iso()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
 
     let mut recovered = vec![0; 55];
     a_des.decrypt_vec_with_padding_iso(&cipher, recovered.as_mut_ptr());
@@ -7383,7 +7383,7 @@ fn des_decrypt_vec_with_padding_iso()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "DD C6 D8 D1 B0 66 D9 AC F7 F3 B4 FD D6 6C ED 78 20 FB A6 8D 35 38 EA 65 B0 65 23 05 FF D4 53 B1 D1 E0 C5 52 36 1E AC E2 19 EF 94 B8 98 04 A9 69 CC 6A BC 81 7D 6B 29 C0 ");
+    assert_eq!(txt, "DD C6 D8 D1 B0 66 D9 AC F7 F3 B4 FD D6 6C ED 78 20 FB A6 8D 35 38 EA 65 B0 65 23 05 FF D4 53 B1 D1 E0 C5 52 36 1E AC E2 19 EF 94 B8 98 04 A9 69 22 62 41 CF 85 0E E5 3F ");
 
     let mut recovered = vec![0; 55];
     a_des.decrypt_vec_with_padding_iso(&cipher, recovered.as_mut_ptr());
@@ -7426,7 +7426,7 @@ fn des_decrypt_vec_with_padding_iso()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 02 ");
+    assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 40 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -7434,7 +7434,7 @@ fn des_decrypt_vec_with_padding_iso()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 02 ");
+    assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 40 ");
 
     let mut recovered1 = vec![0; 55];
     let mut recovered2 = vec![0; 55];
@@ -7488,7 +7488,7 @@ fn des_decrypt_vec_with_padding_iso()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
+    assert_eq!(txt, "E2 22 32 FE 87 E8 0A 93 ");
 
     let mut recovered = vec![0; 8];
     let len = a_des.decrypt_vec_with_padding_iso(&cipher, recovered.as_mut_ptr());
@@ -7527,7 +7527,7 @@ fn des_decrypt_vec_with_padding_iso()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "F6 F0 41 DD 55 55 3B 35 ");
+    assert_eq!(txt, "ED 30 F1 06 B7 E3 E7 07 ");
     
     let mut recovered = vec![0; 8];
     let len = a_des.decrypt_vec_with_padding_iso(&cipher, recovered.as_mut_ptr());
@@ -7566,7 +7566,7 @@ fn des_decrypt_vec_with_padding_iso()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "27 F5 93 EE 76 DC 64 87 41 7F 89 79 08 CD A1 4C ");
+    assert_eq!(txt, "27 F5 93 EE 76 DC 64 87 E2 22 32 FE 87 E8 0A 93 ");
     
     let mut recovered = vec![0; 16];
     let len = a_des.decrypt_vec_with_padding_iso(&cipher, recovered.as_mut_ptr());
@@ -7605,7 +7605,7 @@ fn des_decrypt_vec_with_padding_iso()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8E 52 20 47 78 78 51 B7 00 69 10 77 91 B7 52 36 ");
+    assert_eq!(txt, "8E 52 20 47 78 78 51 B7 BB 55 6A 78 71 84 72 58 ");
 
     let mut recovered = vec![0; 16];
     let len = a_des.decrypt_vec_with_padding_iso(&cipher, recovered.as_mut_ptr());
@@ -7645,7 +7645,7 @@ fn des_decrypt_vec_with_padding_iso()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 41 7F 89 79 08 CD A1 4C ");
+    assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 E2 22 32 FE 87 E8 0A 93 ");
 
     let mut recovered = vec![0; 24];
     let len = a_des.decrypt_vec_with_padding_iso(&cipher, recovered.as_mut_ptr());
