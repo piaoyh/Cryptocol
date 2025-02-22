@@ -3733,7 +3733,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_pkcs7_into_array<T, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes.next_multiple_of(8) > (T::size_in_bytes() * N) as u64
+        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64
             { return 0; }
         pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_pkcs7(message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
@@ -4425,7 +4425,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_iso_into_array<T, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes.next_multiple_of(8) > (T::size_in_bytes() * N) as u64 
+        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64 
             { return 0; }
         pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_iso(message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
@@ -5106,7 +5106,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_pkcs7_cbc_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes.next_multiple_of(8) > (T::size_in_bytes() * N) as u64
+        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64
             { return 0; }
         pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_pkcs7_cbc(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
@@ -5347,7 +5347,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_iso_cbc_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes.next_multiple_of(8) > (T::size_in_bytes() * N) as u64 
+        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64 
             { return 0; }
         pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_iso_cbc(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
@@ -5611,7 +5611,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_pkcs7_pcbc_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes.next_multiple_of(8) > (T::size_in_bytes() * N) as u64
+        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64
             { return 0; }
         pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_pkcs7_pcbc(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
@@ -5850,7 +5850,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_iso_pcbc_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes.next_multiple_of(8) > (T::size_in_bytes() * N) as u64 
+        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64 
             { return 0; }
         pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_iso_pcbc(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
@@ -6118,7 +6118,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_cfb_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes.next_multiple_of(8) > (T::size_in_bytes() * N) as u64
+        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64
             { return 0; }
         pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_cfb(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
@@ -6385,7 +6385,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_ofb_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes.next_multiple_of(8) > (T::size_in_bytes() * N) as u64
+        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64
             { return 0; }
         pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_ofb(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
@@ -6634,7 +6634,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_ctr_into_array<T, const N: usize>(&mut self, nonce: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes.next_multiple_of(8) > (T::size_in_bytes() * N) as u64
+        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64
             { return 0; }
         pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_ctr(nonce, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
