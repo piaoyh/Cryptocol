@@ -4739,7 +4739,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
     
     #[inline]
-    pub fn encrypt_vec_with_padding_pkcs7_ecb_into_vec<T, U>(&mut self, message: &Vec<T>, cipher: &mut Vec<T>) -> u64
+    pub fn encrypt_vec_with_padding_pkcs7_ecb_into_vec<T, U>(&mut self, message: &Vec<T>, cipher: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
         self.encrypt_vec_with_padding_pkcs7_into_vec(message, cipher)
@@ -4760,14 +4760,14 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
     
     #[inline]
-    pub fn encrypt_array_with_padding_pkcs7_ecb_into_vec<T, U, const N: usize>(&mut self, message: &[T; N], cipher: &mut Vec<T>) -> u64
+    pub fn encrypt_array_with_padding_pkcs7_ecb_into_vec<T, U, const N: usize>(&mut self, message: &[T; N], cipher: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
         self.encrypt_array_with_padding_pkcs7_into_vec(message, cipher)
     }
 
     #[inline]
-    pub fn encrypt_array_with_padding_pkcs7_ecb_into_array<T, U, const N: usize>(&mut self, message: &[T; N], cipher: &mut [U; N]) -> u64
+    pub fn encrypt_array_with_padding_pkcs7_ecb_into_array<T, U, const N: usize, const M: usize>(&mut self, message: &[T; N], cipher: &mut [U; M]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
         self.encrypt_array_with_padding_pkcs7_into_array(message, cipher)
@@ -4927,7 +4927,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
     
     #[inline]
-    pub fn encrypt_vec_with_padding_iso_ecb_into_vec<T, U>(&mut self, message: &Vec<T>, cipher: &mut Vec<T>) -> u64
+    pub fn encrypt_vec_with_padding_iso_ecb_into_vec<T, U>(&mut self, message: &Vec<T>, cipher: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
         self.encrypt_vec_with_padding_iso_into_vec(message, cipher)
@@ -4948,20 +4948,18 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
     
     #[inline]
-    pub fn encrypt_array_with_padding_iso_ecb_into_vec<T, U, const N: usize>(&mut self, message: &[T; N], cipher: &mut Vec<T>) -> u64
+    pub fn encrypt_array_with_padding_iso_ecb_into_vec<T, U, const N: usize>(&mut self, message: &[T; N], cipher: &mut Vec<U>) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
         self.encrypt_array_with_padding_iso_into_vec(message, cipher)
     }
 
     #[inline]
-    pub fn encrypt_array_with_padding_iso_ecb_into_array<T, U, const N: usize>(&mut self, message: &[T; N], cipher: &mut [U; N]) -> u64
+    pub fn encrypt_array_with_padding_iso_ecb_into_array<T, U, const N: usize, const M: usize>(&mut self, message: &[T; N], cipher: &mut [U; M]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
         self.encrypt_array_with_padding_iso_into_array(message, cipher)
     }
-
-
 
     #[inline]
     pub fn decrypt_with_padding_iso_ecb(&mut self, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
