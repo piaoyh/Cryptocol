@@ -45,3 +45,9 @@ pub use des::*;
 // pub use ndes::*;
 // pub use aes::*;
 // pub use naes::*;
+
+/// des.rs was too big because of documentation and plenty of examples
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to all the *.rs in documentation folder.
+pub mod documentation;

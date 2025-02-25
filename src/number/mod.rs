@@ -156,7 +156,7 @@ pub mod macros_for_integer_unions;
 /// big_uint.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
-/// examples were moved to big_uint_arithmetic.rs.
+/// examples were moved to all the *.rs in documentation folder.
 pub mod documentation;
 
 /// Implementaion of trait SmallUInt for u8, u16, u32, u64, u128, and usize

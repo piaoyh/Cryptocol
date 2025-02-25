@@ -60,7 +60,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 {
     /***** CONSTRUCTORS *****/
 
-// pub fn new() -> Self
+    // pub fn new() -> Self
     /// Constructs a new `BigUInt<T, N>`.
     /// 
     /// # Output
