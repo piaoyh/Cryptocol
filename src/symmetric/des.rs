@@ -4489,7 +4489,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_array_with_padding_iso_into_array<T, U, const N: usize, const M: usize>(&mut self, message: &[T; N], cipher: &mut [U; M]) -> u64
     where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
-        self.encrypt_with_padding_iso_into_array(message.as_ptr() as *const u8, (M * T::size_in_bytes()) as u64, cipher)
+        self.encrypt_with_padding_iso_into_array(message.as_ptr() as *const u8, (N * T::size_in_bytes()) as u64, cipher)
     }
 
     #[inline]
