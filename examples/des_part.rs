@@ -2,44 +2,44 @@ use std::io::Write;
 
 fn main()
 {
-    des_crypt_ofb_main();
+    des_crypt_ctr_main();
 }
 
-fn des_crypt_ofb_main()
+fn des_crypt_ctr_main()
 {
-    des_encrypt_ofb();
-    des_encrypt_ofb_into_vec();
-    des_encrypt_ofb_into_array();
-    des_encrypt_str_ofb();
-    des_encrypt_str_ofb_into_vec();
-    des_encrypt_str_ofb_into_array();
-    des_encrypt_string_ofb();
-    des_encrypt_string_ofb_into_vec();
-    des_encrypt_string_ofb_into_array();
-    des_encrypt_vec_ofb();
-    des_encrypt_vec_ofb_into_vec();
-    des_encrypt_vec_ofb_into_array();
-    des_encrypt_array_ofb();
-    des_encrypt_array_ofb_into_vec();
-    des_encrypt_array_ofb_into_array();
+    des_encrypt_ctr();
+    des_encrypt_ctr_into_vec();
+    des_encrypt_ctr_into_array();
+    des_encrypt_str_ctr();
+    des_encrypt_str_ctr_into_vec();
+    des_encrypt_str_ctr_into_array();
+    des_encrypt_string_ctr();
+    des_encrypt_string_ctr_into_vec();
+    des_encrypt_string_ctr_into_array();
+    des_encrypt_vec_ctr();
+    des_encrypt_vec_ctr_into_vec();
+    des_encrypt_vec_ctr_into_array();
+    des_encrypt_array_ctr();
+    des_encrypt_array_ctr_into_vec();
+    des_encrypt_array_ctr_into_array();
 
-    des_decrypt_ofb();
-    des_decrypt_ofb_into_vec();
-    des_decrypt_ofb_into_array();
-    des_decrypt_ofb_into_string();
-    des_decrypt_vec_ofb();
-    des_decrypt_vec_ofb_into_vec();
-    des_decrypt_vec_ofb_into_array();
-    des_decrypt_vec_ofb_into_string();
-    des_decrypt_array_ofb();
-    des_decrypt_array_ofb_into_vec();
-    des_decrypt_array_ofb_into_array();
-    des_decrypt_array_ofb_into_string();
+    des_decrypt_ctr();
+    des_decrypt_ctr_into_vec();
+    des_decrypt_ctr_into_array();
+    des_decrypt_ctr_into_string();
+    des_decrypt_vec_ctr();
+    des_decrypt_vec_ctr_into_vec();
+    des_decrypt_vec_ctr_into_array();
+    des_decrypt_vec_ctr_into_string();
+    des_decrypt_array_ctr();
+    des_decrypt_array_ctr_into_vec();
+    des_decrypt_array_ctr_into_array();
+    des_decrypt_array_ctr_into_string();
 }
 
-fn des_encrypt_ofb()
+fn des_encrypt_ctr()
 {
-    println!("des_encrypt_ofb");
+    println!("des_encrypt_ctr");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -53,7 +53,7 @@ fn des_encrypt_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_ofb(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt_ctr(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -61,7 +61,7 @@ fn des_encrypt_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -76,7 +76,7 @@ fn des_encrypt_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_ofb(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt_ctr(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -84,7 +84,7 @@ fn des_encrypt_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -101,8 +101,8 @@ fn des_encrypt_ofb()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 55];
     let mut cipher2 = [0_u8; 55];
-    c_des.encrypt_ofb(iv, message.as_ptr(), message.len() as u64, cipher1.as_mut_ptr());
-    d_des.encrypt_ofb(iv, message.as_ptr(), message.len() as u64, cipher2.as_mut_ptr());
+    c_des.encrypt_ctr(iv, message.as_ptr(), message.len() as u64, cipher1.as_mut_ptr());
+    d_des.encrypt_ctr(iv, message.as_ptr(), message.len() as u64, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -110,7 +110,7 @@ fn des_encrypt_ofb()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -118,7 +118,7 @@ fn des_encrypt_ofb()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -132,7 +132,7 @@ fn des_encrypt_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 0];
-    a_des.encrypt_ofb(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt_ctr(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -154,7 +154,7 @@ fn des_encrypt_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 7];
-    a_des.encrypt_ofb(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt_ctr(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -162,7 +162,7 @@ fn des_encrypt_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -176,7 +176,7 @@ fn des_encrypt_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_ofb(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt_ctr(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -184,7 +184,7 @@ fn des_encrypt_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -198,7 +198,7 @@ fn des_encrypt_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 12];
-    a_des.encrypt_ofb(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt_ctr(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -206,7 +206,7 @@ fn des_encrypt_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -220,7 +220,7 @@ fn des_encrypt_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_ofb(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt_ctr(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -228,13 +228,13 @@ fn des_encrypt_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_encrypt_ofb_into_vec()
+fn des_encrypt_ctr_into_vec()
 {
-    println!("des_encrypt_ofb_into_vec");
+    println!("des_encrypt_ctr_into_vec");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -248,7 +248,7 @@ fn des_encrypt_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -256,7 +256,7 @@ fn des_encrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -270,7 +270,7 @@ fn des_encrypt_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -278,7 +278,7 @@ fn des_encrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -295,8 +295,8 @@ fn des_encrypt_ofb_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -304,7 +304,7 @@ fn des_encrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -312,7 +312,7 @@ fn des_encrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -326,7 +326,7 @@ fn des_encrypt_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -348,7 +348,7 @@ fn des_encrypt_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -356,7 +356,7 @@ fn des_encrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -370,7 +370,7 @@ fn des_encrypt_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -378,7 +378,7 @@ fn des_encrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -392,7 +392,7 @@ fn des_encrypt_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -400,7 +400,7 @@ fn des_encrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -414,7 +414,7 @@ fn des_encrypt_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -422,13 +422,13 @@ fn des_encrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_encrypt_ofb_into_array()
+fn des_encrypt_ctr_into_array()
 {
-    println!("des_encrypt_ofb_into_array");
+    println!("des_encrypt_ctr_into_array");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -442,7 +442,7 @@ fn des_encrypt_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -450,7 +450,7 @@ fn des_encrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -464,7 +464,7 @@ fn des_encrypt_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -472,7 +472,7 @@ fn des_encrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -489,8 +489,8 @@ fn des_encrypt_ofb_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 55];
     let mut cipher2 = [0_u8; 55];
-    c_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -498,7 +498,7 @@ fn des_encrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -506,7 +506,7 @@ fn des_encrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -520,7 +520,7 @@ fn des_encrypt_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 0];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -542,7 +542,7 @@ fn des_encrypt_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 7];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -550,7 +550,7 @@ fn des_encrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -564,7 +564,7 @@ fn des_encrypt_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -572,7 +572,7 @@ fn des_encrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -586,7 +586,7 @@ fn des_encrypt_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 12];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -594,7 +594,7 @@ fn des_encrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -608,7 +608,7 @@ fn des_encrypt_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -616,13 +616,13 @@ fn des_encrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_encrypt_str_ofb()
+fn des_encrypt_str_ctr()
 {
-    println!("des_encrypt_str_ofb");
+    println!("des_encrypt_str_ctr");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -636,7 +636,7 @@ fn des_encrypt_str_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_str_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -644,7 +644,7 @@ fn des_encrypt_str_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -658,7 +658,7 @@ fn des_encrypt_str_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_str_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -666,7 +666,7 @@ fn des_encrypt_str_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -683,8 +683,8 @@ fn des_encrypt_str_ofb()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 55];
     let mut cipher2 = [0_u8; 55];
-    c_des.encrypt_str_ofb(iv, &message, cipher1.as_mut_ptr());
-    d_des.encrypt_str_ofb(iv, &message, cipher2.as_mut_ptr());
+    c_des.encrypt_str_ctr(iv, &message, cipher1.as_mut_ptr());
+    d_des.encrypt_str_ctr(iv, &message, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -692,7 +692,7 @@ fn des_encrypt_str_ofb()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -700,7 +700,7 @@ fn des_encrypt_str_ofb()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -714,7 +714,7 @@ fn des_encrypt_str_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 0];
-    a_des.encrypt_str_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -736,7 +736,7 @@ fn des_encrypt_str_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 7];
-    a_des.encrypt_str_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -744,7 +744,7 @@ fn des_encrypt_str_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -758,7 +758,7 @@ fn des_encrypt_str_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_str_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -766,7 +766,7 @@ fn des_encrypt_str_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -780,7 +780,7 @@ fn des_encrypt_str_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 12];
-    a_des.encrypt_str_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -788,7 +788,7 @@ fn des_encrypt_str_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -802,7 +802,7 @@ fn des_encrypt_str_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_str_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -810,13 +810,13 @@ fn des_encrypt_str_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_encrypt_str_ofb_into_vec()
+fn des_encrypt_str_ctr_into_vec()
 {
-    println!("des_encrypt_str_ofb_into_vec");
+    println!("des_encrypt_str_ctr_into_vec");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -830,7 +830,7 @@ fn des_encrypt_str_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_ctr_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -838,7 +838,7 @@ fn des_encrypt_str_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -852,7 +852,7 @@ fn des_encrypt_str_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_ctr_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -860,7 +860,7 @@ fn des_encrypt_str_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -877,8 +877,8 @@ fn des_encrypt_str_ofb_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_str_ofb_into_vec(iv, &message, &mut cipher1);
-    d_des.encrypt_str_ofb_into_vec(iv, &message, &mut cipher2);
+    c_des.encrypt_str_ctr_into_vec(iv, &message, &mut cipher1);
+    d_des.encrypt_str_ctr_into_vec(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -886,7 +886,7 @@ fn des_encrypt_str_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -894,7 +894,7 @@ fn des_encrypt_str_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -908,7 +908,7 @@ fn des_encrypt_str_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -930,7 +930,7 @@ fn des_encrypt_str_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -938,7 +938,7 @@ fn des_encrypt_str_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -952,7 +952,7 @@ fn des_encrypt_str_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -960,7 +960,7 @@ fn des_encrypt_str_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -974,7 +974,7 @@ fn des_encrypt_str_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -982,7 +982,7 @@ fn des_encrypt_str_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -996,7 +996,7 @@ fn des_encrypt_str_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1004,13 +1004,13 @@ fn des_encrypt_str_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_encrypt_str_ofb_into_array()
+fn des_encrypt_str_ctr_into_array()
 {
-    println!("des_encrypt_str_ofb_into_array");
+    println!("des_encrypt_str_ctr_into_array");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -1024,7 +1024,7 @@ fn des_encrypt_str_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_str_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_ctr_into_array(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1032,7 +1032,7 @@ fn des_encrypt_str_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -1046,7 +1046,7 @@ fn des_encrypt_str_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_str_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_ctr_into_array(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1054,7 +1054,7 @@ fn des_encrypt_str_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -1071,8 +1071,8 @@ fn des_encrypt_str_ofb_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 55];
     let mut cipher2 = [0_u8; 55];
-    c_des.encrypt_str_ofb_into_array(iv, &message, &mut cipher1);
-    d_des.encrypt_str_ofb_into_array(iv, &message, &mut cipher2);
+    c_des.encrypt_str_ctr_into_array(iv, &message, &mut cipher1);
+    d_des.encrypt_str_ctr_into_array(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -1080,7 +1080,7 @@ fn des_encrypt_str_ofb_into_array()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -1088,7 +1088,7 @@ fn des_encrypt_str_ofb_into_array()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -1102,7 +1102,7 @@ fn des_encrypt_str_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 0];
-    a_des.encrypt_str_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1124,7 +1124,7 @@ fn des_encrypt_str_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 7];
-    a_des.encrypt_str_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1132,7 +1132,7 @@ fn des_encrypt_str_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -1146,7 +1146,7 @@ fn des_encrypt_str_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_str_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1154,7 +1154,7 @@ fn des_encrypt_str_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -1168,7 +1168,7 @@ fn des_encrypt_str_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 12];
-    a_des.encrypt_str_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1176,7 +1176,7 @@ fn des_encrypt_str_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -1190,7 +1190,7 @@ fn des_encrypt_str_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_str_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1198,13 +1198,13 @@ fn des_encrypt_str_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_encrypt_string_ofb()
+fn des_encrypt_string_ctr()
 {
-    println!("des_encrypt_string_ofb");
+    println!("des_encrypt_string_ctr");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -1218,7 +1218,7 @@ fn des_encrypt_string_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_string_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1226,7 +1226,7 @@ fn des_encrypt_string_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -1240,7 +1240,7 @@ fn des_encrypt_string_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_string_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1248,7 +1248,7 @@ fn des_encrypt_string_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -1265,8 +1265,8 @@ fn des_encrypt_string_ofb()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 55];
     let mut cipher2 = [0_u8; 55];
-    c_des.encrypt_string_ofb(iv, &message, cipher1.as_mut_ptr());
-    d_des.encrypt_string_ofb(iv, &message, cipher2.as_mut_ptr());
+    c_des.encrypt_string_ctr(iv, &message, cipher1.as_mut_ptr());
+    d_des.encrypt_string_ctr(iv, &message, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -1274,7 +1274,7 @@ fn des_encrypt_string_ofb()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -1282,7 +1282,7 @@ fn des_encrypt_string_ofb()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -1296,7 +1296,7 @@ fn des_encrypt_string_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 0];
-    a_des.encrypt_string_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1318,7 +1318,7 @@ fn des_encrypt_string_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 7];
-    a_des.encrypt_string_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1326,7 +1326,7 @@ fn des_encrypt_string_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -1340,7 +1340,7 @@ fn des_encrypt_string_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_string_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1348,7 +1348,7 @@ fn des_encrypt_string_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -1362,7 +1362,7 @@ fn des_encrypt_string_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 12];
-    a_des.encrypt_string_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1370,7 +1370,7 @@ fn des_encrypt_string_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -1384,7 +1384,7 @@ fn des_encrypt_string_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_string_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1392,13 +1392,13 @@ fn des_encrypt_string_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_encrypt_string_ofb_into_vec()
+fn des_encrypt_string_ctr_into_vec()
 {
-    println!("des_encrypt_string_ofb_into_vec");
+    println!("des_encrypt_string_ctr_into_vec");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -1412,7 +1412,7 @@ fn des_encrypt_string_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_ctr_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1420,7 +1420,7 @@ fn des_encrypt_string_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -1434,7 +1434,7 @@ fn des_encrypt_string_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_ctr_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1442,7 +1442,7 @@ fn des_encrypt_string_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -1459,8 +1459,8 @@ fn des_encrypt_string_ofb_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_string_ofb_into_vec(iv, &message, &mut cipher1);
-    d_des.encrypt_string_ofb_into_vec(iv, &message, &mut cipher2);
+    c_des.encrypt_string_ctr_into_vec(iv, &message, &mut cipher1);
+    d_des.encrypt_string_ctr_into_vec(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -1468,7 +1468,7 @@ fn des_encrypt_string_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -1476,7 +1476,7 @@ fn des_encrypt_string_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -1490,7 +1490,7 @@ fn des_encrypt_string_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1512,7 +1512,7 @@ fn des_encrypt_string_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1520,7 +1520,7 @@ fn des_encrypt_string_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -1534,7 +1534,7 @@ fn des_encrypt_string_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1542,7 +1542,7 @@ fn des_encrypt_string_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -1556,7 +1556,7 @@ fn des_encrypt_string_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1564,7 +1564,7 @@ fn des_encrypt_string_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -1578,7 +1578,7 @@ fn des_encrypt_string_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1586,13 +1586,13 @@ fn des_encrypt_string_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_encrypt_string_ofb_into_array()
+fn des_encrypt_string_ctr_into_array()
 {
-    println!("des_encrypt_string_ofb_into_array");
+    println!("des_encrypt_string_ctr_into_array");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -1606,7 +1606,7 @@ fn des_encrypt_string_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_string_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_ctr_into_array(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1614,7 +1614,7 @@ fn des_encrypt_string_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -1628,7 +1628,7 @@ fn des_encrypt_string_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_string_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_ctr_into_array(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1636,7 +1636,7 @@ fn des_encrypt_string_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -1653,8 +1653,8 @@ fn des_encrypt_string_ofb_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 55];
     let mut cipher2 = [0_u8; 55];
-    c_des.encrypt_string_ofb_into_array(iv, &message, &mut cipher1);
-    d_des.encrypt_string_ofb_into_array(iv, &message, &mut cipher2);
+    c_des.encrypt_string_ctr_into_array(iv, &message, &mut cipher1);
+    d_des.encrypt_string_ctr_into_array(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -1662,7 +1662,7 @@ fn des_encrypt_string_ofb_into_array()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -1670,7 +1670,7 @@ fn des_encrypt_string_ofb_into_array()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -1684,7 +1684,7 @@ fn des_encrypt_string_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 0];
-    a_des.encrypt_string_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1706,7 +1706,7 @@ fn des_encrypt_string_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 7];
-    a_des.encrypt_string_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1714,7 +1714,7 @@ fn des_encrypt_string_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -1728,7 +1728,7 @@ fn des_encrypt_string_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_string_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1736,7 +1736,7 @@ fn des_encrypt_string_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -1750,7 +1750,7 @@ fn des_encrypt_string_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 12];
-    a_des.encrypt_string_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1758,7 +1758,7 @@ fn des_encrypt_string_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -1772,7 +1772,7 @@ fn des_encrypt_string_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_string_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1780,13 +1780,13 @@ fn des_encrypt_string_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_encrypt_vec_ofb()
+fn des_encrypt_vec_ctr()
 {
-    println!("des_encrypt_vec_ofb");
+    println!("des_encrypt_vec_ctr");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -1801,7 +1801,7 @@ fn des_encrypt_vec_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_vec_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1809,7 +1809,7 @@ fn des_encrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -1824,7 +1824,7 @@ fn des_encrypt_vec_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_vec_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1832,7 +1832,7 @@ fn des_encrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -1851,8 +1851,8 @@ fn des_encrypt_vec_ofb()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 55];
     let mut cipher2 = [0_u8; 55];
-    c_des.encrypt_vec_ofb(iv, &message, cipher1.as_mut_ptr());
-    d_des.encrypt_vec_ofb(iv, &message, cipher2.as_mut_ptr());
+    c_des.encrypt_vec_ctr(iv, &message, cipher1.as_mut_ptr());
+    d_des.encrypt_vec_ctr(iv, &message, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -1860,7 +1860,7 @@ fn des_encrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -1868,7 +1868,7 @@ fn des_encrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -1883,7 +1883,7 @@ fn des_encrypt_vec_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 0];
-    a_des.encrypt_vec_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1906,7 +1906,7 @@ fn des_encrypt_vec_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 7];
-    a_des.encrypt_vec_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1914,7 +1914,7 @@ fn des_encrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -1929,7 +1929,7 @@ fn des_encrypt_vec_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_vec_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1937,7 +1937,7 @@ fn des_encrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -1952,7 +1952,7 @@ fn des_encrypt_vec_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 12];
-    a_des.encrypt_vec_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1960,7 +1960,7 @@ fn des_encrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -1975,7 +1975,7 @@ fn des_encrypt_vec_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_vec_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1983,13 +1983,13 @@ fn des_encrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_encrypt_vec_ofb_into_vec()
+fn des_encrypt_vec_ctr_into_vec()
 {
-    println!("des_encrypt_vec_ofb_into_vec");
+    println!("des_encrypt_vec_ctr_into_vec");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -2004,7 +2004,7 @@ fn des_encrypt_vec_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_ctr_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2012,7 +2012,7 @@ fn des_encrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -2027,7 +2027,7 @@ fn des_encrypt_vec_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_ctr_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2035,7 +2035,7 @@ fn des_encrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -2055,8 +2055,8 @@ fn des_encrypt_vec_ofb_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_vec_ofb_into_vec(iv, &message, &mut cipher1);
-    d_des.encrypt_vec_ofb_into_vec(iv, &message, &mut cipher2);
+    c_des.encrypt_vec_ctr_into_vec(iv, &message, &mut cipher1);
+    d_des.encrypt_vec_ctr_into_vec(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -2064,7 +2064,7 @@ fn des_encrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -2072,7 +2072,7 @@ fn des_encrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -2087,7 +2087,7 @@ fn des_encrypt_vec_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2110,7 +2110,7 @@ fn des_encrypt_vec_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2118,7 +2118,7 @@ fn des_encrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -2133,7 +2133,7 @@ fn des_encrypt_vec_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2141,7 +2141,7 @@ fn des_encrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -2156,7 +2156,7 @@ fn des_encrypt_vec_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2164,7 +2164,7 @@ fn des_encrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -2179,7 +2179,7 @@ fn des_encrypt_vec_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2187,13 +2187,13 @@ fn des_encrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_encrypt_vec_ofb_into_array()
+fn des_encrypt_vec_ctr_into_array()
 {
-    println!("des_encrypt_vec_ofb_into_array");
+    println!("des_encrypt_vec_ctr_into_array");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -2208,7 +2208,7 @@ fn des_encrypt_vec_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_vec_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_ctr_into_array(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2216,7 +2216,7 @@ fn des_encrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -2231,7 +2231,7 @@ fn des_encrypt_vec_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_vec_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_ctr_into_array(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2239,7 +2239,7 @@ fn des_encrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -2258,8 +2258,8 @@ fn des_encrypt_vec_ofb_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 55];
     let mut cipher2 = [0_u8; 55];
-    c_des.encrypt_vec_ofb_into_array(iv, &message, &mut cipher1);
-    d_des.encrypt_vec_ofb_into_array(iv, &message, &mut cipher2);
+    c_des.encrypt_vec_ctr_into_array(iv, &message, &mut cipher1);
+    d_des.encrypt_vec_ctr_into_array(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -2267,7 +2267,7 @@ fn des_encrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -2275,7 +2275,7 @@ fn des_encrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -2290,7 +2290,7 @@ fn des_encrypt_vec_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 0];
-    a_des.encrypt_vec_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2313,7 +2313,7 @@ fn des_encrypt_vec_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 7];
-    a_des.encrypt_vec_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2321,7 +2321,7 @@ fn des_encrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -2336,7 +2336,7 @@ fn des_encrypt_vec_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_vec_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2344,7 +2344,7 @@ fn des_encrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -2359,7 +2359,7 @@ fn des_encrypt_vec_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 12];
-    a_des.encrypt_vec_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2367,7 +2367,7 @@ fn des_encrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -2382,7 +2382,7 @@ fn des_encrypt_vec_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_vec_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2390,13 +2390,13 @@ fn des_encrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_encrypt_array_ofb()
+fn des_encrypt_array_ctr()
 {
-    println!("des_encrypt_array_ofb");
+    println!("des_encrypt_array_ctr");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -2412,7 +2412,7 @@ fn des_encrypt_array_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_array_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2420,7 +2420,7 @@ fn des_encrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -2436,7 +2436,7 @@ fn des_encrypt_array_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_array_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2444,7 +2444,7 @@ fn des_encrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -2464,8 +2464,8 @@ fn des_encrypt_array_ofb()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 55];
     let mut cipher2 = [0_u8; 55];
-    c_des.encrypt_array_ofb(iv, &message, cipher1.as_mut_ptr());
-    d_des.encrypt_array_ofb(iv, &message, cipher2.as_mut_ptr());
+    c_des.encrypt_array_ctr(iv, &message, cipher1.as_mut_ptr());
+    d_des.encrypt_array_ctr(iv, &message, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -2473,7 +2473,7 @@ fn des_encrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -2481,7 +2481,7 @@ fn des_encrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -2497,7 +2497,7 @@ fn des_encrypt_array_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 0];
-    a_des.encrypt_array_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2521,7 +2521,7 @@ fn des_encrypt_array_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 7];
-    a_des.encrypt_array_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2529,7 +2529,7 @@ fn des_encrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -2545,7 +2545,7 @@ fn des_encrypt_array_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_array_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2553,7 +2553,7 @@ fn des_encrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -2569,7 +2569,7 @@ fn des_encrypt_array_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 12];
-    a_des.encrypt_array_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2577,7 +2577,7 @@ fn des_encrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -2593,7 +2593,7 @@ fn des_encrypt_array_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_array_ofb(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array_ctr(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2601,13 +2601,13 @@ fn des_encrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_encrypt_array_ofb_into_vec()
+fn des_encrypt_array_ctr_into_vec()
 {
-    println!("des_encrypt_array_ofb_into_vec");
+    println!("des_encrypt_array_ctr_into_vec");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -2623,7 +2623,7 @@ fn des_encrypt_array_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_ctr_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2631,7 +2631,7 @@ fn des_encrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -2647,7 +2647,7 @@ fn des_encrypt_array_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_ctr_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2655,7 +2655,7 @@ fn des_encrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -2676,8 +2676,8 @@ fn des_encrypt_array_ofb_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_array_ofb_into_vec(iv, &message, &mut cipher1);
-    d_des.encrypt_array_ofb_into_vec(iv, &message, &mut cipher2);
+    c_des.encrypt_array_ctr_into_vec(iv, &message, &mut cipher1);
+    d_des.encrypt_array_ctr_into_vec(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -2685,7 +2685,7 @@ fn des_encrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -2693,7 +2693,7 @@ fn des_encrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -2709,7 +2709,7 @@ fn des_encrypt_array_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2733,7 +2733,7 @@ fn des_encrypt_array_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2741,7 +2741,7 @@ fn des_encrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -2757,7 +2757,7 @@ fn des_encrypt_array_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2765,7 +2765,7 @@ fn des_encrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -2781,7 +2781,7 @@ fn des_encrypt_array_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2789,7 +2789,7 @@ fn des_encrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -2805,7 +2805,7 @@ fn des_encrypt_array_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_ofb_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_ctr_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2813,13 +2813,13 @@ fn des_encrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_encrypt_array_ofb_into_array()
+fn des_encrypt_array_ctr_into_array()
 {
-    println!("des_encrypt_array_ofb_into_array");
+    println!("des_encrypt_array_ctr_into_array");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -2835,14 +2835,14 @@ fn des_encrypt_array_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_array_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_ctr_into_array(iv, &message, &mut cipher);
     for c in cipher.clone()
         { print!("{:02X} ", c); }
     println!();
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     println!();
 
 
@@ -2858,7 +2858,7 @@ fn des_encrypt_array_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_array_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_ctr_into_array(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2866,7 +2866,7 @@ fn des_encrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     println!();
 
 
@@ -2886,8 +2886,8 @@ fn des_encrypt_array_ofb_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 55];
     let mut cipher2 = [0_u8; 55];
-    c_des.encrypt_array_ofb_into_array(iv, &message, &mut cipher1);
-    d_des.encrypt_array_ofb_into_array(iv, &message, &mut cipher2);
+    c_des.encrypt_array_ctr_into_array(iv, &message, &mut cipher1);
+    d_des.encrypt_array_ctr_into_array(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -2895,7 +2895,7 @@ fn des_encrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -2903,7 +2903,7 @@ fn des_encrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     println!();
 
 
@@ -2919,7 +2919,7 @@ fn des_encrypt_array_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 0];
-    a_des.encrypt_array_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2943,7 +2943,7 @@ fn des_encrypt_array_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 7];
-    a_des.encrypt_array_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2951,7 +2951,7 @@ fn des_encrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     println!();
 
 
@@ -2967,7 +2967,7 @@ fn des_encrypt_array_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_array_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2975,7 +2975,7 @@ fn des_encrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     println!();
 
 
@@ -2991,7 +2991,7 @@ fn des_encrypt_array_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 12];
-    a_des.encrypt_array_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2999,7 +2999,7 @@ fn des_encrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     println!();
 
 
@@ -3015,7 +3015,7 @@ fn des_encrypt_array_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_array_ofb_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_ctr_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3023,13 +3023,13 @@ fn des_encrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     println!("-------------------------------");
 }
 
-fn des_decrypt_ofb()
+fn des_decrypt_ctr()
 {
-    println!("des_decrypt_ofb");
+    println!("des_decrypt_ctr");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -3043,7 +3043,7 @@ fn des_decrypt_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3051,10 +3051,10 @@ fn des_decrypt_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
 
     let mut recovered = vec![0; 55];
-    a_des.decrypt_ofb(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    a_des.decrypt_ctr(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3083,7 +3083,7 @@ fn des_decrypt_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3091,10 +3091,10 @@ fn des_decrypt_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
 
     let mut recovered = vec![0; 55];
-    a_des.decrypt_ofb(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    a_des.decrypt_ctr(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3126,8 +3126,8 @@ fn des_decrypt_ofb()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -3135,7 +3135,7 @@ fn des_decrypt_ofb()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -3143,12 +3143,12 @@ fn des_decrypt_ofb()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
 
     let mut recovered1 = vec![0; 55];
     let mut recovered2 = vec![0; 55];
-    c_des.decrypt_ofb(iv, cipher1.as_ptr(), cipher1.len() as u64, recovered1.as_mut_ptr());
-    d_des.decrypt_ofb(iv, cipher2.as_ptr(), cipher2.len() as u64, recovered2.as_mut_ptr());
+    c_des.decrypt_ctr(iv, cipher1.as_ptr(), cipher1.len() as u64, recovered1.as_mut_ptr());
+    d_des.decrypt_ctr(iv, cipher2.as_ptr(), cipher2.len() as u64, recovered2.as_mut_ptr());
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -3191,7 +3191,7 @@ fn des_decrypt_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3202,7 +3202,7 @@ fn des_decrypt_ofb()
     assert_eq!(txt, "");
 
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_ofb(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt_ctr(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3232,7 +3232,7 @@ fn des_decrypt_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3240,10 +3240,10 @@ fn des_decrypt_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_ofb(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt_ctr(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3273,7 +3273,7 @@ fn des_decrypt_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3281,10 +3281,10 @@ fn des_decrypt_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_ofb(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt_ctr(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3314,7 +3314,7 @@ fn des_decrypt_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3322,10 +3322,10 @@ fn des_decrypt_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
 
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_ofb(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt_ctr(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3355,7 +3355,7 @@ fn des_decrypt_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3363,10 +3363,10 @@ fn des_decrypt_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
 
     let mut recovered = vec![0; 24];
-    let len = a_des.decrypt_ofb(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt_ctr(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3386,9 +3386,9 @@ fn des_decrypt_ofb()
     println!("-------------------------------");
 }
 
-fn des_decrypt_ofb_into_vec()
+fn des_decrypt_ctr_into_vec()
 {
-    println!("des_decrypt_ofb_into_vec");
+    println!("des_decrypt_ctr_into_vec");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -3402,7 +3402,7 @@ fn des_decrypt_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3410,10 +3410,10 @@ fn des_decrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_ofb_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_ctr_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3442,7 +3442,7 @@ fn des_decrypt_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3450,10 +3450,10 @@ fn des_decrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_ofb_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_ctr_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3485,8 +3485,8 @@ fn des_decrypt_ofb_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -3494,7 +3494,7 @@ fn des_decrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -3502,12 +3502,12 @@ fn des_decrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
 
     let mut recovered1 = Vec::<u8>::new();
     let mut recovered2 = Vec::<u8>::new();
-    c_des.decrypt_ofb_into_vec(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
-    d_des.decrypt_ofb_into_vec(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
+    c_des.decrypt_ctr_into_vec(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
+    d_des.decrypt_ctr_into_vec(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -3550,7 +3550,7 @@ fn des_decrypt_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3561,7 +3561,7 @@ fn des_decrypt_ofb_into_vec()
     assert_eq!(txt, "");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_ofb_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_ctr_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3590,7 +3590,7 @@ fn des_decrypt_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3598,10 +3598,10 @@ fn des_decrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_ofb_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_ctr_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3630,7 +3630,7 @@ fn des_decrypt_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3638,10 +3638,10 @@ fn des_decrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_ofb_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_ctr_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3670,7 +3670,7 @@ fn des_decrypt_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3678,10 +3678,10 @@ fn des_decrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_ofb_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_ctr_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3710,7 +3710,7 @@ fn des_decrypt_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3718,10 +3718,10 @@ fn des_decrypt_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_ofb_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_ctr_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3740,9 +3740,9 @@ fn des_decrypt_ofb_into_vec()
     println!("-------------------------------");
 }
 
-fn des_decrypt_ofb_into_array()
+fn des_decrypt_ctr_into_array()
 {
-    println!("des_decrypt_ofb_into_array");
+    println!("des_decrypt_ctr_into_array");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -3756,7 +3756,7 @@ fn des_decrypt_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3764,10 +3764,10 @@ fn des_decrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_ofb_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_ctr_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3796,7 +3796,7 @@ fn des_decrypt_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3804,10 +3804,10 @@ fn des_decrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_ofb_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_ctr_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -3839,8 +3839,8 @@ fn des_decrypt_ofb_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -3848,7 +3848,7 @@ fn des_decrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -3856,12 +3856,12 @@ fn des_decrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
 
     let mut recovered1 = [0u8; 56];
     let mut recovered2 = [0u8; 56];
-    let len1 = c_des.decrypt_ofb_into_array(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
-    let len2 = d_des.decrypt_ofb_into_array(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
+    let len1 = c_des.decrypt_ctr_into_array(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
+    let len2 = d_des.decrypt_ctr_into_array(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -3905,7 +3905,7 @@ fn des_decrypt_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3916,7 +3916,7 @@ fn des_decrypt_ofb_into_array()
     assert_eq!(txt, "");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_ofb_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_ctr_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -3946,7 +3946,7 @@ fn des_decrypt_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3954,10 +3954,10 @@ fn des_decrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_ofb_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_ctr_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -3987,7 +3987,7 @@ fn des_decrypt_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3995,10 +3995,10 @@ fn des_decrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_ofb_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_ctr_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -4028,7 +4028,7 @@ fn des_decrypt_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4036,10 +4036,10 @@ fn des_decrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_ofb_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_ctr_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -4069,7 +4069,7 @@ fn des_decrypt_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4077,10 +4077,10 @@ fn des_decrypt_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
 
     let mut recovered = [0u8; 24];
-    let len = a_des.decrypt_ofb_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_ctr_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -4100,9 +4100,9 @@ fn des_decrypt_ofb_into_array()
     println!("-------------------------------");
 }
 
-fn des_decrypt_ofb_into_string()
+fn des_decrypt_ctr_into_string()
 {
-    println!("des_decrypt_ofb_into_string");
+    println!("des_decrypt_ctr_into_string");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -4116,7 +4116,7 @@ fn des_decrypt_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4124,10 +4124,10 @@ fn des_decrypt_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
 
     let mut recovered = String::new();
-    a_des.decrypt_ofb_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_ctr_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B (16 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -4144,7 +4144,7 @@ fn des_decrypt_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4152,10 +4152,10 @@ fn des_decrypt_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
 
     let mut recovered = String::new();
-    a_des.decrypt_ofb_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_ctr_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B (128 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -4175,8 +4175,8 @@ fn des_decrypt_ofb_into_string()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -4184,7 +4184,7 @@ fn des_decrypt_ofb_into_string()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -4192,12 +4192,12 @@ fn des_decrypt_ofb_into_string()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
 
     let mut recovered1 = String::new();
     let mut recovered2 = String::new();
-    c_des.decrypt_ofb_into_string(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
-    d_des.decrypt_ofb_into_string(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
+    c_des.decrypt_ctr_into_string(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
+    d_des.decrypt_ctr_into_string(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
     println!("B1 (0 rounds) =\t{}", recovered1);
     println!("B2 (0 rounds) =\t{}", recovered2);
     assert_eq!(recovered1, "In the beginning God created the heavens and the earth.");
@@ -4218,7 +4218,7 @@ fn des_decrypt_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4229,7 +4229,7 @@ fn des_decrypt_ofb_into_string()
     assert_eq!(txt, "");
 
     let mut recovered = String::new();
-    a_des.decrypt_ofb_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_ctr_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "");
     assert_eq!(recovered, message);
@@ -4246,7 +4246,7 @@ fn des_decrypt_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4254,10 +4254,10 @@ fn des_decrypt_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_ofb_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_ctr_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "7 bytes");
     assert_eq!(recovered, message);
@@ -4274,7 +4274,7 @@ fn des_decrypt_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4282,10 +4282,10 @@ fn des_decrypt_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_ofb_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_ctr_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "I am OK.");
     assert_eq!(recovered, message);
@@ -4302,7 +4302,7 @@ fn des_decrypt_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4310,10 +4310,10 @@ fn des_decrypt_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_ofb_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_ctr_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "PARK Youngho");
     assert_eq!(recovered, message);
@@ -4330,7 +4330,7 @@ fn des_decrypt_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4338,19 +4338,19 @@ fn des_decrypt_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_ofb_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_ctr_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "고맙습니다.");
     assert_eq!(recovered, message);
     println!("-------------------------------");
 }
 
-fn des_decrypt_vec_ofb()
+fn des_decrypt_vec_ctr()
 {
-    println!("des_decrypt_vec_ofb");
+    println!("des_decrypt_vec_ctr");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -4364,7 +4364,7 @@ fn des_decrypt_vec_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4372,10 +4372,10 @@ fn des_decrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
 
     let mut recovered = vec![0; 55];
-    a_des.decrypt_vec_ofb(iv, &cipher, recovered.as_mut_ptr());
+    a_des.decrypt_vec_ctr(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -4404,7 +4404,7 @@ fn des_decrypt_vec_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4412,10 +4412,10 @@ fn des_decrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
 
     let mut recovered = vec![0; 55];
-    a_des.decrypt_vec_ofb(iv, &cipher, recovered.as_mut_ptr());
+    a_des.decrypt_vec_ctr(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -4447,8 +4447,8 @@ fn des_decrypt_vec_ofb()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -4456,7 +4456,7 @@ fn des_decrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -4464,12 +4464,12 @@ fn des_decrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
 
     let mut recovered1 = vec![0; 55];
     let mut recovered2 = vec![0; 55];
-    c_des.decrypt_vec_ofb(iv, &cipher1, recovered1.as_mut_ptr());
-    d_des.decrypt_vec_ofb(iv, &cipher2, recovered2.as_mut_ptr());
+    c_des.decrypt_vec_ctr(iv, &cipher1, recovered1.as_mut_ptr());
+    d_des.decrypt_vec_ctr(iv, &cipher2, recovered2.as_mut_ptr());
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -4512,7 +4512,7 @@ fn des_decrypt_vec_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4523,7 +4523,7 @@ fn des_decrypt_vec_ofb()
     assert_eq!(txt, "");
 
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_vec_ofb(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec_ctr(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -4553,7 +4553,7 @@ fn des_decrypt_vec_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4561,10 +4561,10 @@ fn des_decrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_vec_ofb(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec_ctr(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -4594,7 +4594,7 @@ fn des_decrypt_vec_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4602,10 +4602,10 @@ fn des_decrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_vec_ofb(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec_ctr(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -4635,7 +4635,7 @@ fn des_decrypt_vec_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4643,10 +4643,10 @@ fn des_decrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
 
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_vec_ofb(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec_ctr(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -4676,7 +4676,7 @@ fn des_decrypt_vec_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4684,10 +4684,10 @@ fn des_decrypt_vec_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
 
     let mut recovered = vec![0; 24];
-    let len = a_des.decrypt_vec_ofb(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec_ctr(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -4707,9 +4707,9 @@ fn des_decrypt_vec_ofb()
     println!("-------------------------------");
 }
 
-fn des_decrypt_vec_ofb_into_vec()
+fn des_decrypt_vec_ctr_into_vec()
 {
-    println!("des_decrypt_vec_ofb_into_vec");
+    println!("des_decrypt_vec_ctr_into_vec");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -4723,7 +4723,7 @@ fn des_decrypt_vec_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4731,10 +4731,10 @@ fn des_decrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_ofb_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_ctr_into_vec(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -4763,7 +4763,7 @@ fn des_decrypt_vec_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4771,10 +4771,10 @@ fn des_decrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_ofb_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_ctr_into_vec(iv, &cipher, &mut recovered);
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -4806,8 +4806,8 @@ fn des_decrypt_vec_ofb_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -4815,7 +4815,7 @@ fn des_decrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -4823,12 +4823,12 @@ fn des_decrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
 
     let mut recovered1 = Vec::<u8>::new();
     let mut recovered2 = Vec::<u8>::new();
-    c_des.decrypt_vec_ofb_into_vec(iv, &cipher1, &mut recovered1);
-    d_des.decrypt_vec_ofb_into_vec(iv, &cipher2, &mut recovered2);
+    c_des.decrypt_vec_ctr_into_vec(iv, &cipher1, &mut recovered1);
+    d_des.decrypt_vec_ctr_into_vec(iv, &cipher2, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -4871,7 +4871,7 @@ fn des_decrypt_vec_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4882,7 +4882,7 @@ fn des_decrypt_vec_ofb_into_vec()
     assert_eq!(txt, "");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_ofb_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_ctr_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -4911,7 +4911,7 @@ fn des_decrypt_vec_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4919,10 +4919,10 @@ fn des_decrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_ofb_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_ctr_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -4951,7 +4951,7 @@ fn des_decrypt_vec_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4959,10 +4959,10 @@ fn des_decrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_ofb_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_ctr_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -4991,7 +4991,7 @@ fn des_decrypt_vec_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4999,10 +4999,10 @@ fn des_decrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_ofb_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_ctr_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -5031,7 +5031,7 @@ fn des_decrypt_vec_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5039,10 +5039,10 @@ fn des_decrypt_vec_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_ofb_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_ctr_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -5061,9 +5061,9 @@ fn des_decrypt_vec_ofb_into_vec()
     println!("-------------------------------");
 }
 
-fn des_decrypt_vec_ofb_into_array()
+fn des_decrypt_vec_ctr_into_array()
 {
-    println!("des_decrypt_vec_ofb_into_array");
+    println!("des_decrypt_vec_ctr_into_array");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -5077,7 +5077,7 @@ fn des_decrypt_vec_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5085,10 +5085,10 @@ fn des_decrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_vec_ofb_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_ctr_into_array(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -5117,7 +5117,7 @@ fn des_decrypt_vec_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5125,10 +5125,10 @@ fn des_decrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_vec_ofb_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_ctr_into_array(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -5160,8 +5160,8 @@ fn des_decrypt_vec_ofb_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -5169,7 +5169,7 @@ fn des_decrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -5177,12 +5177,12 @@ fn des_decrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
 
     let mut recovered1 = [0u8; 56];
     let mut recovered2 = [0u8; 56];
-    let len1 = c_des.decrypt_vec_ofb_into_array(iv, &cipher1, &mut recovered1);
-    let len2 = d_des.decrypt_vec_ofb_into_array(iv, &cipher2, &mut recovered2);
+    let len1 = c_des.decrypt_vec_ctr_into_array(iv, &cipher1, &mut recovered1);
+    let len2 = d_des.decrypt_vec_ctr_into_array(iv, &cipher2, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -5226,7 +5226,7 @@ fn des_decrypt_vec_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5237,7 +5237,7 @@ fn des_decrypt_vec_ofb_into_array()
     assert_eq!(txt, "");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_vec_ofb_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_ctr_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -5267,7 +5267,7 @@ fn des_decrypt_vec_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5275,10 +5275,10 @@ fn des_decrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_vec_ofb_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_ctr_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -5308,7 +5308,7 @@ fn des_decrypt_vec_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5316,10 +5316,10 @@ fn des_decrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_vec_ofb_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_ctr_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -5349,7 +5349,7 @@ fn des_decrypt_vec_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5357,10 +5357,10 @@ fn des_decrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_vec_ofb_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_ctr_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -5390,7 +5390,7 @@ fn des_decrypt_vec_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5398,10 +5398,10 @@ fn des_decrypt_vec_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
 
     let mut recovered = [0u8; 24];
-    let len = a_des.decrypt_vec_ofb_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_ctr_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -5421,9 +5421,9 @@ fn des_decrypt_vec_ofb_into_array()
     println!("-------------------------------");
 }
 
-fn des_decrypt_vec_ofb_into_string()
+fn des_decrypt_vec_ctr_into_string()
 {
-    println!("des_decrypt_vec_ofb_into_string");
+    println!("des_decrypt_vec_ctr_into_string");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -5437,7 +5437,7 @@ fn des_decrypt_vec_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5445,10 +5445,10 @@ fn des_decrypt_vec_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_ofb_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_ctr_into_string(iv, &cipher, &mut recovered);
     println!("B (16 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -5465,7 +5465,7 @@ fn des_decrypt_vec_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5473,10 +5473,10 @@ fn des_decrypt_vec_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_ofb_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_ctr_into_string(iv, &cipher, &mut recovered);
     println!("B (128 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -5496,8 +5496,8 @@ fn des_decrypt_vec_ofb_into_string()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -5505,7 +5505,7 @@ fn des_decrypt_vec_ofb_into_string()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -5513,12 +5513,12 @@ fn des_decrypt_vec_ofb_into_string()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
 
     let mut recovered1 = String::new();
     let mut recovered2 = String::new();
-    c_des.decrypt_vec_ofb_into_string(iv, &cipher1, &mut recovered1);
-    d_des.decrypt_vec_ofb_into_string(iv, &cipher2, &mut recovered2);
+    c_des.decrypt_vec_ctr_into_string(iv, &cipher1, &mut recovered1);
+    d_des.decrypt_vec_ctr_into_string(iv, &cipher2, &mut recovered2);
     println!("B1 (0 rounds) =\t{}", recovered1);
     println!("B2 (0 rounds) =\t{}", recovered2);
     assert_eq!(recovered1, "In the beginning God created the heavens and the earth.");
@@ -5539,7 +5539,7 @@ fn des_decrypt_vec_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5550,7 +5550,7 @@ fn des_decrypt_vec_ofb_into_string()
     assert_eq!(txt, "");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_ofb_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_ctr_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "");
     assert_eq!(recovered, message);
@@ -5567,7 +5567,7 @@ fn des_decrypt_vec_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5575,10 +5575,10 @@ fn des_decrypt_vec_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_ofb_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_ctr_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "7 bytes");
     assert_eq!(recovered, message);
@@ -5595,7 +5595,7 @@ fn des_decrypt_vec_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5603,10 +5603,10 @@ fn des_decrypt_vec_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_ofb_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_ctr_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "I am OK.");
     assert_eq!(recovered, message);
@@ -5623,7 +5623,7 @@ fn des_decrypt_vec_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5631,10 +5631,10 @@ fn des_decrypt_vec_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_ofb_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_ctr_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "PARK Youngho");
     assert_eq!(recovered, message);
@@ -5651,7 +5651,7 @@ fn des_decrypt_vec_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_ofb_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5659,19 +5659,19 @@ fn des_decrypt_vec_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_ofb_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_ctr_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "고맙습니다.");
     assert_eq!(recovered, message);
     println!("-------------------------------");
 }
 
-fn des_decrypt_array_ofb()
+fn des_decrypt_array_ctr()
 {
-    println!("des_decrypt_array_ofb");
+    println!("des_decrypt_array_ctr");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -5685,7 +5685,7 @@ fn des_decrypt_array_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5693,10 +5693,10 @@ fn des_decrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
 
     let mut recovered = vec![0; 55];
-    let len = a_des.decrypt_array_ofb(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array_ctr(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
@@ -5726,7 +5726,7 @@ fn des_decrypt_array_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5734,10 +5734,10 @@ fn des_decrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
 
     let mut recovered = vec![0; 55];
-    let len = a_des.decrypt_array_ofb(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array_ctr(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
@@ -5770,8 +5770,8 @@ fn des_decrypt_array_ofb()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 55];
     let mut cipher2 = [0_u8; 55];
-    c_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -5779,7 +5779,7 @@ fn des_decrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -5787,12 +5787,12 @@ fn des_decrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
 
     let mut recovered1 = vec![0; 55];
     let mut recovered2 = vec![0; 55];
-    let len1 = c_des.decrypt_array_ofb(iv, &cipher1, recovered1.as_mut_ptr());
-    let len2 = d_des.decrypt_array_ofb(iv, &cipher2, recovered2.as_mut_ptr());
+    let len1 = c_des.decrypt_array_ctr(iv, &cipher1, recovered1.as_mut_ptr());
+    let len2 = d_des.decrypt_array_ctr(iv, &cipher2, recovered2.as_mut_ptr());
     recovered1.truncate(len1 as usize);
     recovered2.truncate(len2 as usize);
 
@@ -5838,7 +5838,7 @@ fn des_decrypt_array_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 0];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5849,7 +5849,7 @@ fn des_decrypt_array_ofb()
     assert_eq!(txt, "");
 
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_array_ofb(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array_ctr(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
 
     print!("Ba =\t");
@@ -5880,7 +5880,7 @@ fn des_decrypt_array_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 7];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5888,10 +5888,10 @@ fn des_decrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_array_ofb(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array_ctr(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
 
     print!("Ba =\t");
@@ -5922,7 +5922,7 @@ fn des_decrypt_array_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5930,10 +5930,10 @@ fn des_decrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_array_ofb(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array_ctr(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
 
     print!("Ba =\t");
@@ -5964,7 +5964,7 @@ fn des_decrypt_array_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 12];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5972,10 +5972,10 @@ fn des_decrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
 
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_array_ofb(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array_ctr(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
     print!("Ba =\t");
     for b in recovered.clone()
@@ -6005,7 +6005,7 @@ fn des_decrypt_array_ofb()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6013,10 +6013,10 @@ fn des_decrypt_array_ofb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
 
     let mut recovered = vec![0; 24];
-    let len = a_des.decrypt_array_ofb(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array_ctr(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
 
     print!("Ba =\t");
@@ -6037,9 +6037,9 @@ fn des_decrypt_array_ofb()
     println!("-------------------------------");
 }
 
-fn des_decrypt_array_ofb_into_vec()
+fn des_decrypt_array_ctr_into_vec()
 {
-    println!("des_decrypt_array_ofb_into_vec");
+    println!("des_decrypt_array_ctr_into_vec");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -6053,7 +6053,7 @@ fn des_decrypt_array_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6061,10 +6061,10 @@ fn des_decrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_ofb_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_ctr_into_vec(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -6093,7 +6093,7 @@ fn des_decrypt_array_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6101,10 +6101,10 @@ fn des_decrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_ofb_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_ctr_into_vec(iv, &cipher, &mut recovered);
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -6136,8 +6136,8 @@ fn des_decrypt_array_ofb_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 55];
     let mut cipher2 = [0_u8; 55];
-    c_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -6145,7 +6145,7 @@ fn des_decrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -6153,12 +6153,12 @@ fn des_decrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
 
     let mut recovered1 = Vec::<u8>::new();
     let mut recovered2 = Vec::<u8>::new();
-    c_des.decrypt_array_ofb_into_vec(iv, &cipher1, &mut recovered1);
-    d_des.decrypt_array_ofb_into_vec(iv, &cipher2, &mut recovered2);
+    c_des.decrypt_array_ctr_into_vec(iv, &cipher1, &mut recovered1);
+    d_des.decrypt_array_ctr_into_vec(iv, &cipher2, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -6201,7 +6201,7 @@ fn des_decrypt_array_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 0];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6212,7 +6212,7 @@ fn des_decrypt_array_ofb_into_vec()
     assert_eq!(txt, "");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_ofb_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_ctr_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -6241,7 +6241,7 @@ fn des_decrypt_array_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 7];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6249,10 +6249,10 @@ fn des_decrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_ofb_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_ctr_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -6281,7 +6281,7 @@ fn des_decrypt_array_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6289,10 +6289,10 @@ fn des_decrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_ofb_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_ctr_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -6321,7 +6321,7 @@ fn des_decrypt_array_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 12];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6329,10 +6329,10 @@ fn des_decrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_ofb_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_ctr_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -6361,7 +6361,7 @@ fn des_decrypt_array_ofb_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6369,10 +6369,10 @@ fn des_decrypt_array_ofb_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_ofb_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_ctr_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -6391,9 +6391,9 @@ fn des_decrypt_array_ofb_into_vec()
     println!("-------------------------------");
 }
 
-fn des_decrypt_array_ofb_into_array()
+fn des_decrypt_array_ctr_into_array()
 {
-    println!("des_decrypt_array_ofb_into_array");
+    println!("des_decrypt_array_ctr_into_array");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -6407,7 +6407,7 @@ fn des_decrypt_array_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6415,10 +6415,10 @@ fn des_decrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_array_ofb_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_ctr_into_array(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -6447,7 +6447,7 @@ fn des_decrypt_array_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6455,10 +6455,10 @@ fn des_decrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_array_ofb_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_ctr_into_array(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -6490,8 +6490,8 @@ fn des_decrypt_array_ofb_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 55];
     let mut cipher2 = [0_u8; 55];
-    c_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -6499,7 +6499,7 @@ fn des_decrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -6507,12 +6507,12 @@ fn des_decrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
 
     let mut recovered1 = [0u8; 56];
     let mut recovered2 = [0u8; 56];
-    let len1 = c_des.decrypt_array_ofb_into_array(iv, &cipher1, &mut recovered1);
-    let len2 = d_des.decrypt_array_ofb_into_array(iv, &cipher2, &mut recovered2);
+    let len1 = c_des.decrypt_array_ctr_into_array(iv, &cipher1, &mut recovered1);
+    let len2 = d_des.decrypt_array_ctr_into_array(iv, &cipher2, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -6556,7 +6556,7 @@ fn des_decrypt_array_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 0];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6567,7 +6567,7 @@ fn des_decrypt_array_ofb_into_array()
     assert_eq!(txt, "");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_array_ofb_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_ctr_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -6597,7 +6597,7 @@ fn des_decrypt_array_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 7];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6605,10 +6605,10 @@ fn des_decrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_array_ofb_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_ctr_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -6638,7 +6638,7 @@ fn des_decrypt_array_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6646,10 +6646,10 @@ fn des_decrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_array_ofb_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_ctr_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -6679,7 +6679,7 @@ fn des_decrypt_array_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 12];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6687,10 +6687,10 @@ fn des_decrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_array_ofb_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_ctr_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -6720,7 +6720,7 @@ fn des_decrypt_array_ofb_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6728,10 +6728,10 @@ fn des_decrypt_array_ofb_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
 
     let mut recovered = [0u8; 24];
-    let len = a_des.decrypt_array_ofb_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_ctr_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -6751,9 +6751,9 @@ fn des_decrypt_array_ofb_into_array()
     println!("-------------------------------");
 }
 
-fn des_decrypt_array_ofb_into_string()
+fn des_decrypt_array_ctr_into_string()
 {
-    println!("des_decrypt_array_ofb_into_string");
+    println!("des_decrypt_array_ctr_into_string");
     use std::fmt::Write;
     use cryptocol::symmetric::{ DES, DES_Expanded };
 
@@ -6767,7 +6767,7 @@ fn des_decrypt_array_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6775,10 +6775,10 @@ fn des_decrypt_array_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
+    assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_ofb_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_ctr_into_string(iv, &cipher, &mut recovered);
     println!("B (16 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -6795,7 +6795,7 @@ fn des_decrypt_array_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 55];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6803,10 +6803,10 @@ fn des_decrypt_array_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "19 B0 8F 23 01 31 B3 95 5F 0F 7C D5 96 55 DB 98 76 6C C7 23 49 6D 35 9B FD DE B7 1A 6B B2 8A EF B6 63 DB A5 50 F6 07 30 8C 75 28 32 25 32 33 77 B0 46 FE 96 1C F7 6B ");
+    assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_ofb_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_ctr_into_string(iv, &cipher, &mut recovered);
     println!("B (128 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -6826,8 +6826,8 @@ fn des_decrypt_array_ofb_into_string()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 55];
     let mut cipher2 = [0_u8; 55];
-    c_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -6835,7 +6835,7 @@ fn des_decrypt_array_ofb_into_string()
     let mut txt = String::new();
     for c in cipher1.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
     print!("D (0 rounds) =\t");
     for c in cipher2.clone()
         { print!("{:02X} ", c); }
@@ -6843,12 +6843,12 @@ fn des_decrypt_array_ofb_into_string()
     let mut txt = String::new();
     for c in cipher2.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "5B ED BA 3F 6E 10 CC 9F 44 24 0C E9 67 D3 B2 99 32 C4 F5 2F 26 16 9E 98 40 37 00 E3 29 CE B4 9B 32 EB FF 2A 70 10 82 8E 01 22 0B E3 29 CE B4 9B 32 E6 FB 39 72 1D C2 ");
+    assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
 
     let mut recovered1 = String::new();
     let mut recovered2 = String::new();
-    c_des.decrypt_array_ofb_into_string(iv, &cipher1, &mut recovered1);
-    d_des.decrypt_array_ofb_into_string(iv, &cipher2, &mut recovered2);
+    c_des.decrypt_array_ctr_into_string(iv, &cipher1, &mut recovered1);
+    d_des.decrypt_array_ctr_into_string(iv, &cipher2, &mut recovered2);
     println!("B1 (0 rounds) =\t{}", recovered1);
     println!("B2 (0 rounds) =\t{}", recovered2);
     assert_eq!(recovered1, "In the beginning God created the heavens and the earth.");
@@ -6869,7 +6869,7 @@ fn des_decrypt_array_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 0];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6880,7 +6880,7 @@ fn des_decrypt_array_ofb_into_string()
     assert_eq!(txt, "");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_ofb_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_ctr_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "");
     assert_eq!(recovered, message);
@@ -6897,7 +6897,7 @@ fn des_decrypt_array_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 7];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6905,10 +6905,10 @@ fn des_decrypt_array_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 50 A3 5C E1 B3 E3 ");
+    assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_ofb_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_ctr_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "7 bytes");
     assert_eq!(recovered, message);
@@ -6925,7 +6925,7 @@ fn des_decrypt_array_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6933,10 +6933,10 @@ fn des_decrypt_array_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "2E 50 A0 48 B5 99 DB 07 ");
+    assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_ofb_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_ctr_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "I am OK.");
     assert_eq!(recovered, message);
@@ -6953,7 +6953,7 @@ fn des_decrypt_array_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 12];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6961,10 +6961,10 @@ fn des_decrypt_array_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 31 93 6E B5 8F FF 5C 21 EF BD 48 ");
+    assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_ofb_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_ctr_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "PARK Youngho");
     assert_eq!(recovered, message);
@@ -6981,7 +6981,7 @@ fn des_decrypt_array_ofb_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_ofb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_ctr_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -6989,10 +6989,10 @@ fn des_decrypt_array_ofb_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 FA 63 5E AF A4 18 0A 6E ");
+    assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_ofb_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_ctr_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "고맙습니다.");
     assert_eq!(recovered, message);
