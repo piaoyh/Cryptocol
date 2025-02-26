@@ -6381,8 +6381,6 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_ofb_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64
-            { return 0; }
         pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_ofb(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
