@@ -833,8 +833,7 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// - IP01 ~ IP64: Inital permutation constants. They are 1-based. For example,
 ///   `IP01 = 58` means that the 58th bit of data is moved to the first bit of
 ///   the data which is MSB at initial permutation. You can change inital
-///   permutation wire by changing these constants. The change of these
-///   constants does not change the security strength. However, when you change
+///   permutation wire by changing these constants. However, when you change
 ///   these constants, you have to remember that you should included all the
 ///   bits. You cannot drop any bit. Your dropping any bit will surely kill the
 ///   whole DES encryption/decryption algorithm. Final permutation constants is
@@ -872,8 +871,7 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// - TP01 ~ TP32: Translation permutation constans.  They are 1-based. For
 ///   example, `TP01 = 16` means that the 16th bit of data is moved to the
 ///   first bit of the data which is MSB at translation permutation. You can
-///   change translation permutation wire by changing these constants. The
-///   change of these constants does not change the security strength. However,
+///   change translation permutation wire by changing these constants. However,
 ///   when you change these constants, you have to remember that you should
 ///   included all the bits. You cannot drop any bit. Your dropping any bit will
 ///   surely kill the whole DES encryption/decryption algorithm.
@@ -886,8 +884,140 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// for more (or deeper or full) understanding of DES.
 /// 
 /// # Quick Start
-/// // Todo
+/// You have to import (use) the module `des` in order to use official DES
+/// as shown in Example 1.
 /// 
+/// # Example 1
+/// ```
+/// use cryptocol::symmetric::DES;
+/// ```
+/// 
+/// You can instantiate the DES object with `u64` key as Example 2.
+/// In this case, you have to take endianness into account.
+/// In little-endianness, 0x_1234567890ABCDEF_u64 is [0xEFu8, 0xCDu8, 0xABu8,
+/// 0x90u8, 0x78u8, 0x56u8, 0x34u8, 0x12u8] while the same 
+/// 0x_1234567890ABCDEF_u64 is [0x12u8, 0x34u8, 0x56u8, 0x78u8, 0x90u8, 0xABu8,
+/// 0xCDu8, 0xEF_u64] in big-endianness.
+/// The instantiated object should be mutable.
+/// 
+/// # Example 2
+/// ```
+/// use cryptocol::symmetric::DES;
+/// let key = 0x_1234567890ABCDEF_u64;
+/// let mut _a_des = DES::new_with_key_u64(key);
+/// ```
+/// 
+/// Also, you can instantiate the DES object with `[u8; 8]` key as shown in
+/// Example 3. In this case, you don't have to take endianness into account.
+/// The instantiated object should be mutable.
+/// 
+/// # Example 3
+/// ```
+/// use cryptocol::symmetric::DES;
+/// let key = [0xEFu8, 0xCDu8, 0xABu8, 0x90u8, 0x78u8, 0x56u8, 0x34u8, 0x12u8];
+/// let mut _a_des = DES::new_with_key(key);
+/// ```
+/// 
+/// You can instantiate the DES object without key and set a `u64` key later as
+/// shown in Example 4 or a `[u8; 8]` key later as shown in Example 5.
+/// 
+/// # Example 4
+/// ```
+/// use cryptocol::symmetric::DES;
+/// let mut a_des = DES::new();
+/// let key = 0x_1234567890ABCDEF_u64;
+/// a_des.set_key_u64(key);
+/// ```
+/// 
+/// # Example 5
+/// ```
+/// use cryptocol::symmetric::DES;
+/// let mut a_des = DES::new();
+/// let key = [0xEFu8, 0xCDu8, 0xABu8, 0x90u8, 0x78u8, 0x56u8, 0x34u8, 0x12u8];
+/// a_des.set_key(key);
+/// ```
+/// 
+/// Now, you can freely use any methods
+/// encrypt_[vec|array|str|string]_with_padding_[pkcs7|iso]_[ecb|cbc|pcbc]_into_vec()
+/// and encrypt_[vec|array|str|string]_[cfb|ofb|ctr]_into_vec() to encrypt,
+/// decrypt_[vec|array]_with_padding_[pkcs7|iso]_into_[vec|string]() and
+/// decrypt_[vec|array]_[cfb|ofb|ctr]_into_[vec|string]() to decrypt. However,
+/// you are encouraged to avoid using the methods such as
+/// encrypt_with_padding_[pkcs7|iso](), encrypt_[cfb|ofb|ctr](),
+/// decrypt_with_padding_[pkcs7|iso](), and decrypt_[cfb|ofb|ctr]()
+/// that receive pointer arguments and the data length
+/// unless you develope in hybrid programming context especially with C/C++. 
+/// Instead, you are highly encouraged to use the methods 
+/// encrypt_[vec|array|str|string]_with_padding_[pkcs7|iso]_[ecb|cbc|pcbc]_into_vec(),
+/// encrypt_[vec|array|str|string]_[cfb|ofb|ctr]_into_vec()
+/// decrypt_[vec|array]_with_padding_[pkcs7|iso]_into_[vec|string](), and
+/// decrypt_[vec|array]_[cfb|ofb|ctr]_into_[vec|string]() because you don't
+/// have to consider the length of data so that you will meak less mistakes.
+/// 
+/// # Example 6
+/// ```
+/// use std::io::Write;
+/// use std::fmt::Write as _;
+/// use cryptocol::symmetric::DES
+/// 
+/// let mut a_des = DES::new_with_key([0xEFu8, 0xCDu8, 0xABu8, 0x90u8, 0x78u8, 0x56u8, 0x34u8, 0x12u8]);
+/// let message = "In the beginning God created the heavens and the earth.";
+/// println!("M =\t{}", message);
+/// let iv = 0x_FEDCBA0987654321_u64;
+/// println!("IV =\t{}", iv);
+/// let mut cipher = Vec::<u8>::new();
+/// a_des.encrypt_str_with_padding_pkcs7_cbc_into_vec(iv, message, &mut cipher);
+/// print!("C =\t");
+/// for c in cipher.clone()
+///     { print!("{:02X} ", c); }
+/// println!();
+/// let mut txt = String::new();
+/// for c in cipher.clone()
+///     { write!(txt, "{:02X} ", c); }
+/// assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
+/// 
+/// let mut recovered = String::new();
+/// a_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+/// println!("B (16 rounds) =\t{}", recovered);
+/// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+/// assert_eq!(recovered, message);
+/// println!();
+/// ```
+/// 
+/// You can modify the DES encryption/decryption algorithm as you want. All
+/// the constants are implemented as generic parameters. For instance, you can
+/// change S-box, the number of rounds of Feistel network, the number of
+/// shift-left in round key generators, etc. The following Example 7 shows the
+/// variation of DES which has 256 rounds instead of 16 rounds.
+/// 
+/// # Example 7
+/// ```
+/// use std::io::Write;
+/// use std::fmt::Write as _;
+/// use cryptocol::symmetric::DES_Expanded;
+/// 
+/// let mut a_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64([0xEFu8, 0xCDu8, 0xABu8, 0x90u8, 0x78u8, 0x56u8, 0x34u8, 0x12u8]);
+/// let message = "In the beginning God created the heavens and the earth.";
+/// println!("M =\t{}", message);
+/// let iv = 0x_FEDCBA0987654321_u64;
+/// println!("IV =\t{}", iv);
+/// let mut cipher = Vec::<u8>::new();
+/// a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+/// print!("C =\t");
+/// for c in cipher.clone()
+///     { print!("{:02X} ", c); }
+/// println!();
+/// let mut txt = String::new();
+/// for c in cipher.clone()
+///     { write!(txt, "{:02X} ", c); }
+/// assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
+/// 
+/// let mut recovered = String::new();
+/// a_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+/// println!("B =\t{}", recovered);
+/// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+/// assert_eq!(recovered, message);
+/// ```
 #[allow(non_camel_case_types)]
 pub struct DES_Generic<const ROUND: usize = 16, const SHIFT: u128 = 0b_1000000100000011,
 const PC101: u8 = 57, const PC102: u8 = 49, const PC103: u8 = 41, const PC104: u8 = 33,
@@ -1535,7 +1665,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// Constructs a new object DES_Generic.
     /// 
     /// # Features
-    /// - In order to encrypt date, object should be instantiated mutable.
+    /// - In order to encrypt data, object should be instantiated mutable.
     /// - This method sets the key to be [0, 0, 0, 0, 0, 0, 0, 0].
     /// - Do not use this default key [0, 0, 0, 0, 0, 0, 0, 0]
     ///   because it is known as one of the weak keys.
@@ -1558,13 +1688,8 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// assert_eq!(cipher_cipher_text, plaintext);  // So, you can't use the default key!!!
     /// ```
     /// 
-    /// # Compile-fail Example
-    /// ```compile_fail
-    /// use cryptocol::symmetric::DES;
-    /// let des = DES::new();
-    /// // It cannot be compiled!
-    /// des.encrypt_u64(0x1E32B46B44C69201_u64);
-    /// ```
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new)           
     #[inline]
     pub fn new() -> Self
     {
@@ -1605,331 +1730,8 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// assert_ne!(cipher_cipher_text, plaintext);
     /// ```
     /// 
-    /// # Example 2 for Weak key case for [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
-    /// ```
-    /// // The key [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] is the same key as the key
-    /// // [0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01] because of parity bits.
-    ///
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new_with_key([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
-    /// let mut des2 = DES::new_with_key([0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01]);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0x1E32B46B44C69201_u64);
-    /// assert_eq!(ciphertext2, 0x1E32B46B44C69201_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
-    /// // and [0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01]!!!
-    /// ```
-    /// 
-    /// # Example 3 for Weak key case for [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]
-    /// ```
-    /// // The key [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF] is the same key as the key
-    /// // [0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE] because of parity bits.
-    ///
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new_with_key([0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]);
-    /// let mut des2 = DES::new_with_key([0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE]);
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0xA5997AB38BC07250_u64);
-    /// assert_eq!(ciphertext2, 0xA5997AB38BC07250_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]
-    /// // and [0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE]!!!
-    /// ```
-    /// 
-    /// # Example 4 for Weak key case for [0xE0, 0xE0, 0xE0, 0xE0, 0xF1, 0xF1, 0xF1, 0xF1]
-    /// ```
-    /// // The key [0xE0, 0xE0, 0xE0, 0xE0, 0xF1, 0xF1, 0xF1, 0xF1] is the same key as the key
-    /// // [0xE1, 0xE1, 0xE1, 0xE1, 0xF0, 0xF0, 0xF0, 0xF0] because of parity bits.
-    ///
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new_with_key([0xE0, 0xE0, 0xE0, 0xE0, 0xF1, 0xF1, 0xF1, 0xF1]);
-    /// let mut des2 = DES::new_with_key([0xE1, 0xE1, 0xE1, 0xE1, 0xF0, 0xF0, 0xF0, 0xF0]);
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0x94CCA0201F033101_u64);
-    /// assert_eq!(ciphertext2, 0x94CCA0201F033101_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key [0xE0, 0xE0, 0xE0, 0xE0, 0xF1, 0xF1, 0xF1, 0xF1]
-    /// // and [0xE1, 0xE1, 0xE1, 0xE1, 0xE1, 0xE1, 0xE1, 0xE1]!!!
-    /// ```
-    /// 
-    /// # Example 5 for Weak key case for [0x1F, 0x1F, 0x1F, 0x1F, 0x0E, 0x0E, 0x0E, 0x0E]
-    /// ```
-    /// // The key [0x1F, 0x1F, 0x1F, 0x1F, 0x0E, 0x0E, 0x0E, 0x0E] is the same key as the key
-    /// // [0x1E, 0x1E, 0x1E, 0x1E, 0x0F, 0x0F, 0x0F, 0x0F] because of parity bits.
-    ///
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new_with_key([0x1F, 0x1F, 0x1F, 0x1F, 0x0E, 0x0E, 0x0E, 0x0E]);
-    /// let mut des2 = DES::new_with_key([0x1E, 0x1E, 0x1E, 0x1E, 0x0F, 0x0F, 0x0F, 0x0F]);
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0x4FB6397B5352DB0C_u64);
-    /// assert_eq!(ciphertext2, 0x4FB6397B5352DB0C_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key [0x1F, 0x1F, 0x1F, 0x1F, 0x0E, 0x0E, 0x0E, 0x0E]
-    /// // and [0x1E, 0x1E, 0x1E, 0x1E, 0x0F, 0x0F, 0x0F, 0x0F]!!!
-    /// ```
-    /// 
-    /// # Example 6 for Semi-Weak key case for [0x01, 0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E] and [0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E, 0x01]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new_with_key([0x01, 0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E]);
-    /// let mut des2 = DES::new_with_key([0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E, 0x01]);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0xC2C71D736E97876C_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x063A6E55466423D2_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys [0x01, 0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E]
-    /// // and [0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E, 0x01]!!!
-    /// ```
-    /// 
-    /// # Example 7 for Semi-Weak key case for [0x01, 0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1] and [0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1, 0x01]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new_with_key([0x01, 0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1]);
-    /// let mut des2 = DES::new_with_key([0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1, 0x01]);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x85A63690E79AAA15_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x15B721BBB44A12F5_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys [0x01, 0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1]
-    /// // and [0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1, 0x01]!!!
-    /// ```
-    /// 
-    /// # Example 8 for Semi-Weak key case for [0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE] and [0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // Semi-Weak key case 3 for 
-    /// let mut des1 = DES::new_with_key([0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE]);
-    /// let mut des2 = DES::new_with_key([0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01]);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0xAE38CC9D9FA48581_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x7EE95658A653960D_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys [0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE]
-    /// // and [0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01]!!!
-    /// ```
-    /// 
-    /// # Example 9 for Semi-Weak key case for [0x1F, 0xE0, 0x1F, 0xE0, 0x0E, 0xF1, 0x0E, 0xF1] and [0xE0, 0x1F, 0xE0, 0x1F, 0xF1, 0x0E, 0xF1, 0x0E]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // Semi-Weak key case 4 for 
-    /// let mut des1 = DES::new_with_key([0x1F, 0xE0, 0x1F, 0xE0, 0x0E, 0xF1, 0x0E, 0xF1]);
-    /// let mut des2 = DES::new_with_key([0xE0, 0x1F, 0xE0, 0x1F, 0xF1, 0x0E, 0xF1, 0x0E]);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x81ECC05B173F793E_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x4D0AD4DC147E4BDF_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys [0x1F, 0xE0, 0x1F, 0xE0, 0x0E, 0xF1, 0x0E, 0xF1]
-    /// // and [0xE0, 0x1F, 0xE0, 0x1F, 0xF1, 0x0E, 0xF1, 0x0E]!!!
-    /// ```
-    /// 
-    /// # Example 10 for Semi-Weak key case for [0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E, 0xFE] and [0xFE, 0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new_with_key([0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E, 0xFE]);
-    /// let mut des2 = DES::new_with_key([0xFE, 0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E]);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x59735490F84A0AD0_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x79FD3CBFE57F4B0B_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys [0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E, 0xFE]
-    /// // and [0xFE, 0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E]!!!
-    /// ```
-    /// 
-    /// # Example 11 for Semi-Weak key case for [0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1, 0xFE] and [0xFE, 0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // Semi-Weak key case 6 for 
-    /// let mut des1 = DES::new_with_key([0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1, 0xFE]);
-    /// let mut des2 = DES::new_with_key([0xFE, 0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1]);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x27C83AAE29571889_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0xDE76DF630C033919_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys [0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1, 0xFE]
-    /// // and [0xFE, 0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1]!!!
-    /// ```
-    /// 
-    /// # Compile-fail Example
-    /// ```compile-fail
-    /// use cryptocol::symmetric::DES;
-    /// let des = DES::new_with_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
-    /// // It cannot be compiled!
-    /// des.encrypt_u64(0x1E32B46B44C69201_u64);
-    /// ```
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new_with_key)
     pub fn new_with_key(key: [u8; 8]) -> Self
     {
         let mut des = Self
@@ -1979,302 +1781,8 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// assert_ne!(cipher_cipher_text, plaintext);
     /// ```
     /// 
-    /// # Example 2 for Weak key case for 0x0000000000000000
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // The key 0x0000000000000000 is the same key as the key 0x0101010101010101 because of parity bits.
-    /// let mut des1 = DES::new_with_key_u64(0x0000000000000000);
-    /// let mut des2 = DES::new_with_key_u64(0x0101010101010101);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0x1E32B46B44C69201_u64);
-    /// assert_eq!(ciphertext2, 0x1E32B46B44C69201_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key 0x0000000000000000 and 0x0101010101010101!!!
-    /// ```
-    /// 
-    /// # Example 3 for Weak key case for 0xFFFFFFFFFFFFFFFF
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // The key 0xFFFFFFFFFFFFFFFF is the same key as the key 0xFEFEFEFEFEFEFEFE because of parity bits.
-    /// let mut des1 = DES::new_with_key_u64(0xFFFFFFFFFFFFFFFF);
-    /// let mut des2 = DES::new_with_key_u64(0xFEFEFEFEFEFEFEFE);
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0xA5997AB38BC07250_u64);
-    /// assert_eq!(ciphertext2, 0xA5997AB38BC07250_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key 0xFFFFFFFFFFFFFFFF and 0xFEFEFEFEFEFEFEFE!!!
-    /// ```
-    /// 
-    /// # Example 4 for Weak key case for 0xF1F1F1F1E0E0E0E0 in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // The key 0xF1F1F1F1E0E0E0E0 is the same key as the key 0xF0F0F0F0E1E1E1E1 because of parity bits.
-    /// let mut des1 = DES::new_with_key_u64(0xF1F1F1F1E0E0E0E0);
-    /// let mut des2 = DES::new_with_key_u64(0xF0F0F0F0E1E1E1E1);
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0x94CCA0201F033101_u64);
-    /// assert_eq!(ciphertext2, 0x94CCA0201F033101_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key 0xF1F1F1F1E0E0E0E0 and 0xF0F0F0F0E1E1E1E1!!!
-    /// ```
-    /// 
-    /// # Example 5 for Weak key case for 0x0E0E0E0E1F1F1F1F in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // The key 0x0E0E0E0E1F1F1F1F is the same key as the key 0x0F0F0F0F1E1E1E1E because of parity bits.
-    /// let mut des1 = DES::new_with_key_u64(0x0E0E0E0E1F1F1F1F);
-    /// let mut des2 = DES::new_with_key_u64(0x0F0F0F0F1E1E1E1E);
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0x4FB6397B5352DB0C_u64);
-    /// assert_eq!(ciphertext2, 0x4FB6397B5352DB0C_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key 0x0E0E0E0E1F1F1F1F and 0x0F0F0F0F1E1E1E1E!!!
-    /// ```
-    /// 
-    /// # Example 6 for Weak key case for 0x0E010E011F011F01 and 0x010E010E011F011F in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new_with_key_u64(0x0E010E011F011F01);
-    /// let mut des2 = DES::new_with_key_u64(0x010E010E011F011F);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0xC2C71D736E97876C_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x063A6E55466423D2_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys 0x0E010E011F011F01 and 0x010E010E011F011F!!!
-    /// ```
-    /// 
-    /// # Example 7 for Weak key case for 0xF101F101E001E001 and 0x01F101F101E001E0 in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new_with_key_u64(0xF101F101E001E001);
-    /// let mut des2 = DES::new_with_key_u64(0x01F101F101E001E0);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x85A63690E79AAA15_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x15B721BBB44A12F5_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys 0xF101F101E001E001 and 0x01F101F101E001E0!!!
-    /// ```
-    /// 
-    /// # Example 8 for Weak key case for 0xFE01FE01FE01FE01 and 0x01FE01FE01FE01FE in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new_with_key_u64(0xFE01FE01FE01FE01);
-    /// let mut des2 = DES::new_with_key_u64(0x01FE01FE01FE01FE);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0xAE38CC9D9FA48581_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x7EE95658A653960D_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys 0xFE01FE01FE01FE01 and 0x01FE01FE01FE01FE!!!
-    /// ```
-    /// 
-    /// # Example 9 for Weak key case for 0xF10EF10EE01FE01F and 0x0EF10EF11FE01FE0 in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new_with_key_u64(0xF10EF10EE01FE01F);
-    /// let mut des2 = DES::new_with_key_u64(0x0EF10EF11FE01FE0);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x81ECC05B173F793E_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x4D0AD4DC147E4BDF_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys 0xF10EF10EE01FE01F and 0x0EF10EF11FE01FE0!!!
-    /// ```
-    /// 
-    /// # Example 10 for Weak key case for 0xFE0EFE0EFE1FFE1F and 0x0EFE0EFE1FFE1FFE in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new_with_key_u64(0xFE0EFE0EFE1FFE1F);
-    /// let mut des2 = DES::new_with_key_u64(0x0EFE0EFE1FFE1FFE);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x59735490F84A0AD0_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x79FD3CBFE57F4B0B_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys 0xFE0EFE0EFE1FFE1F and 0x0EFE0EFE1FFE1FFE!!!
-    /// ```
-    /// 
-    /// # Example 11 for Weak key case for 0xFEF1FEF1FEE0FEE0 and 0xF1FEF1FEE0FEE0FE in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new_with_key_u64(0xFEF1FEF1FEE0FEE0);
-    /// let mut des2 = DES::new_with_key_u64(0xF1FEF1FEE0FEE0FE);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x27C83AAE29571889_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0xDE76DF630C033919_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys 0xFEF1FEF1FEE0FEE0 and 0xF1FEF1FEE0FEE0FE!!!
-    /// ```
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new_with_key_u64)
     pub fn new_with_key_u64(key: u64) -> Self
     {
         let mut des = Self
@@ -2323,336 +1831,8 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// assert_ne!(cipher_cipher_text, plaintext);
     /// ```
     /// 
-    /// # Example 2 for Weak key case for [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // The key [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] is the same key as the key
-    /// // [0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01] because of parity bits.
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
-    /// des2.set_key([0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01]);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0x1E32B46B44C69201_u64);
-    /// assert_eq!(ciphertext2, 0x1E32B46B44C69201_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
-    /// // and [0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01]!!!
-    /// ```
-    /// 
-    /// # Example 3 for Weak key case for [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // The key [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF] is the same key as the key
-    /// // [0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE] because of parity bits.
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key([0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]);
-    /// des2.set_key([0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE]);
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0xA5997AB38BC07250_u64);
-    /// assert_eq!(ciphertext2, 0xA5997AB38BC07250_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]
-    /// // and [0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE]!!!
-    /// ```
-    /// 
-    /// # Example 4 for Weak key case for [0xE0, 0xE0, 0xE0, 0xE0, 0xF1, 0xF1, 0xF1, 0xF1]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // The key [0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0] is the same key as the key
-    /// // [0xE1, 0xE1, 0xE1, 0xE1, 0xF0, 0xF0, 0xF0, 0xF0] because of parity bits.
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key([0xE0, 0xE0, 0xE0, 0xE0, 0xF1, 0xF1, 0xF1, 0xF1]);
-    /// des2.set_key([0xE1, 0xE1, 0xE1, 0xE1, 0xF0, 0xF0, 0xF0, 0xF0]);
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0x94CCA0201F033101_u64);
-    /// assert_eq!(ciphertext2, 0x94CCA0201F033101_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key [0xE0, 0xE0, 0xE0, 0xE0, 0xF1, 0xF1, 0xF1, 0xF1]
-    /// // and [0xE1, 0xE1, 0xE1, 0xE1, 0xE1, 0xE1, 0xE1, 0xE1]!!!
-    /// ```
-    /// 
-    /// # Example 5 for Weak key case for [0x1F, 0x1F, 0x1F, 0x1F, 0x0E, 0x0E, 0x0E, 0x0E]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // The key [0x1F, 0x1F, 0x1F, 0x1F, 0x0E, 0x0E, 0x0E, 0x0E] is the same key as the key
-    /// // [0x1E, 0x1E, 0x1E, 0x1E, 0x0F, 0x0F, 0x0F, 0x0F] because of parity bits.
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key([0x1F, 0x1F, 0x1F, 0x1F, 0x0E, 0x0E, 0x0E, 0x0E]);
-    /// des2.set_key([0x1E, 0x1E, 0x1E, 0x1E, 0x0F, 0x0F, 0x0F, 0x0F]);
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0x4FB6397B5352DB0C_u64);
-    /// assert_eq!(ciphertext2, 0x4FB6397B5352DB0C_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key [0x1F, 0x1F, 0x1F, 0x1F, 0x0E, 0x0E, 0x0E, 0x0E]
-    /// // and [0x1E, 0x1E, 0x1E, 0x1E, 0x0F, 0x0F, 0x0F, 0x0F]!!!
-    /// ```
-    /// 
-    /// # Example 5 for Semi-Weak key case for [0x01, 0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E] and [0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E, 0x01]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key([0x01, 0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E]);
-    /// des2.set_key([0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E, 0x01]);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0xC2C71D736E97876C_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x063A6E55466423D2_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys [0x01, 0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E]
-    /// // and [0x1F, 0x01, 0x1F, 0x01, 0x0E, 0x01, 0x0E, 0x01]!!!
-    /// ```
-    /// 
-    /// # Example 6 for Semi-Weak key case for [0x01, 0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1] and [0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1, 0x01]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key([0x01, 0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1]);
-    /// des2.set_key([0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1, 0x01]);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x85A63690E79AAA15_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x15B721BBB44A12F5_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys [0x01, 0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1]
-    /// // and [0xE0, 0x01, 0xE0, 0x01, 0xF1, 0x01, 0xF1, 0x01]!!!
-    /// ```
-    /// 
-    /// # Example 7 for Semi-Weak key case for [0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE] and [0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key([0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE]);
-    /// des2.set_key([0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01]);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0xAE38CC9D9FA48581_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x7EE95658A653960D_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys [0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE]
-    /// // and [0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01, 0xFE, 0x01]!!!
-    /// ```
-    /// 
-    /// # Example 8 for Semi-Weak key case for [0x1F, 0xE0, 0x1F, 0xE0, 0x0E, 0xF1, 0x0E, 0xF1] and [0xE0, 0x1F, 0xE0, 0x1F, 0xF1, 0x0E, 0xF1, 0x0E]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key([0x1F, 0xE0, 0x1F, 0xE0, 0x0E, 0xF1, 0x0E, 0xF1]);
-    /// des2.set_key([0xE0, 0x1F, 0xE0, 0x1F, 0xF1, 0x0E, 0xF1, 0x0E]);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x81ECC05B173F793E_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x4D0AD4DC147E4BDF_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys [0x1F, 0xE0, 0x1F, 0xE0, 0x0E, 0xF1, 0x0E, 0xF1]
-    /// // and [0xE0, 0x1F, 0xE0, 0x1F, 0xF1, 0x0E, 0xF1, 0x0E]!!!
-    /// ```
-    /// 
-    /// # Example 9 for Semi-Weak key case for [0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E, 0xFE] and [0xFE, 0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key([0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E, 0xFE]);
-    /// des2.set_key([0xFE, 0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E]);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x59735490F84A0AD0_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x79FD3CBFE57F4B0B_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys [0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E, 0xFE]
-    /// // and [0xFE, 0x1F, 0xFE, 0x1F, 0xFE, 0x0E, 0xFE, 0x0E]!!!
-    /// ```
-    /// 
-    /// # Example 10 for Semi-Weak key case for [0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1, 0xFE] and [0xFE, 0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1]
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key([0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1, 0xFE]);
-    /// des2.set_key([0xFE, 0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1]);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x27C83AAE29571889_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0xDE76DF630C033919_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys [0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1, 0xFE]
-    /// // and [0xFE, 0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1]!!!
-    /// ```
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.set_key)
     pub fn set_key(&mut self, key: [u8; 8])
     {
         let mut i = 0_usize;
@@ -2702,322 +1882,8 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// assert_ne!(cipher_cipher_text, plaintext);
     /// ```
     /// 
-    /// # Example 2 for Weak key case for 0x0000000000000000
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // The key 0x0000000000000000 is the same key as the key 0x0101010101010101 because of parity bits.
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key_u64(0x0000000000000000);
-    /// des2.set_key_u64(0x0101010101010101);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0x1E32B46B44C69201_u64);
-    /// assert_eq!(ciphertext2, 0x1E32B46B44C69201_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key 0x0000000000000000 and 0x0101010101010101!!!
-    /// ```
-    /// 
-    /// # Example 3 for Weak key case for 0xFFFFFFFFFFFFFFFF
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // The key 0xFFFFFFFFFFFFFFFF is the same key as the key 0xFEFEFEFEFEFEFEFE because of parity bits.
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key_u64(0xFFFFFFFFFFFFFFFF);
-    /// des2.set_key_u64(0xFEFEFEFEFEFEFEFE);
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0xA5997AB38BC07250_u64);
-    /// assert_eq!(ciphertext2, 0xA5997AB38BC07250_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key 0xFFFFFFFFFFFFFFFF and 0xFEFEFEFEFEFEFEFE!!!
-    /// ```
-    /// 
-    /// # Example 4 for Weak key case for 0xF1F1F1F1E0E0E0E0 in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // The key 0xF1F1F1F1E0E0E0E0 is the same key as the key 0xF0F0F0F0E1E1E1E1 because of parity bits.
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key_u64(0xF1F1F1F1E0E0E0E0);
-    /// des2.set_key_u64(0xF0F0F0F0E1E1E1E1);
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0x94CCA0201F033101_u64);
-    /// assert_eq!(ciphertext2, 0x94CCA0201F033101_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key 0xF1F1F1F1E0E0E0E0 and 0xF0F0F0F0E1E1E1E1!!!
-    /// ```
-    /// 
-    /// # Example 5 for Weak key case for 0x0E0E0E0E1F1F1F1F in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// // The key 0x0E0E0E0E1F1F1F1F is the same key as the key 0x0F0F0F0F1E1E1E1E because of parity bits.
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key_u64(0x0E0E0E0E1F1F1F1F);
-    /// des2.set_key_u64(0x0F0F0F0F1E1E1E1E);
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext1 = des1.encrypt_u64(plaintext);
-    /// let ciphertext2 = des2.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext1:\t\t{:#016X}", ciphertext1);
-    /// println!("Ciphertext2:\t\t{:#016X}", ciphertext2);
-    /// assert_eq!(ciphertext1, 0x4FB6397B5352DB0C_u64);
-    /// assert_eq!(ciphertext2, 0x4FB6397B5352DB0C_u64);
-    /// assert_eq!(ciphertext1, ciphertext2);
-    /// 
-    /// let cipher_cipher_text1 = des1.encrypt_u64(ciphertext1);
-    /// let cipher_cipher_text2 = des2.encrypt_u64(ciphertext2);
-    /// println!("Cipher-ciphertext1:\t{:#016X}\n", cipher_cipher_text1);
-    /// println!("Cipher-ciphertext2:\t{:#016X}\n", cipher_cipher_text2);
-    /// assert_eq!(cipher_cipher_text1, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text2, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text1, plaintext);
-    /// assert_eq!(cipher_cipher_text2, plaintext);
-    /// // So, you can't use the weak key 0x0E0E0E0E1F1F1F1F and 0x0F0F0F0F1E1E1E1E!!!
-    /// ```
-    /// 
-    /// # Example 6 for Semi-Weak key case for 0x0E010E011F011F01 and 0x010E010E011F011F in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key_u64(0x0E010E011F011F01);
-    /// des2.set_key_u64(0x010E010E011F011F);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0xC2C71D736E97876C_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x063A6E55466423D2_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys 0x0E010E011F011F01 and 0x010E010E011F011F!!!
-    /// ```
-    /// 
-    /// # Example 7 for Semi-Weak key case for 0x0E010E011F011F01 and 0x010E010E011F011F in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key_u64(0xF101F101E001E001);
-    /// des2.set_key_u64(0x01F101F101E001E0);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x85A63690E79AAA15_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x15B721BBB44A12F5_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys 0xF101F101E001E001 and 0x01F101F101E001E0!!!
-    /// ```
-    /// 
-    /// # Example 8 for Semi-Weak key case for 0xFE01FE01FE01FE01 and 0x01FE01FE01FE01FE in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key_u64(0xFE01FE01FE01FE01);
-    /// des2.set_key_u64(0x01FE01FE01FE01FE);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0xAE38CC9D9FA48581_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x7EE95658A653960D_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys 0xFE01FE01FE01FE01 and 0x01FE01FE01FE01FE!!!
-    /// ```
-    /// 
-    /// # Example 9 for Semi-Weak key case for 0xF10EF10EE01FE01F and 0x0EF10EF11FE01FE0 in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key_u64(0xF10EF10EE01FE01F);
-    /// des2.set_key_u64(0x0EF10EF11FE01FE0);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x81ECC05B173F793E_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x4D0AD4DC147E4BDF_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys 0xF10EF10EE01FE01F and 0x0EF10EF11FE01FE0!!!
-    /// ```
-    /// 
-    /// # Example 10 for Semi-Weak key case for 0xFE0EFE0EFE1FFE1F and 0x0EFE0EFE1FFE1FFE in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key_u64(0xFE0EFE0EFE1FFE1F);
-    /// des2.set_key_u64(0x0EFE0EFE1FFE1FFE);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x59735490F84A0AD0_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x79FD3CBFE57F4B0B_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys 0xFE0EFE0EFE1FFE1F and 0x0EFE0EFE1FFE1FFE!!!
-    /// ```
-    /// 
-    /// # Example 11 for Semi-Weak key case for 0xFEF1FEF1FEE0FEE0 and 0xF1FEF1FEE0FEE0FE in little-endianness
-    /// ```
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut des1 = DES::new();
-    /// let mut des2 = DES::new();
-    /// des1.set_key_u64(0xFEF1FEF1FEE0FEE0);
-    /// des2.set_key_u64(0xF1FEF1FEE0FEE0FE);
-    /// 
-    /// let plaintext = 0x1234567890ABCDEF_u64;
-    /// let ciphertext = des1.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x27C83AAE29571889_u64);
-    /// 
-    /// let cipher_cipher_text = des2.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// 
-    /// let ciphertext = des2.encrypt_u64(plaintext);
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0xDE76DF630C033919_u64);
-    /// 
-    /// let cipher_cipher_text = des1.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
-    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
-    /// assert_eq!(cipher_cipher_text, plaintext);
-    /// // So, you can't use the semi-weak keys 0xFEF1FEF1FEE0FEE0 and 0xF1FEF1FEE0FEE0FE!!!
-    /// ```
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.set_key_u64)
     pub fn set_key_u64(&mut self, key: u64)
     {
         self.key.set(key);
@@ -3049,44 +1915,8 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// assert_eq!(cipher, 0x_1BC4896735BBE206_u64);
     /// ```
     /// 
-    /// # Example 2 for 128 rounds
-    /// ```
-    /// use cryptocol::symmetric::DES_Expanded;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// 
-    /// let message = 0x_1234567890ABCDEF_u64;
-    /// println!("M_u64 =\t{:#016X}", message);
-    /// 
-    /// let mut b_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64(key);
-    /// let cipher = b_des.encrypt_u64(message);
-    /// println!("C_u64 (128 rounds) =\t{:#016X}", cipher);
-    /// assert_eq!(cipher, 0x_21F25F81CE4D4AA3_u64);
-    /// ```
-    /// 
-    /// # Example 3 for 0 rounds which means that key is meaningless
-    /// ```
-    /// use cryptocol::symmetric::DES_Expanded;
-    /// 
-    /// let key1 = 0x_1234567890ABCDEF_u64;
-    /// let key2 = 0_u64;
-    /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
-    /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
-    /// println!("K1 =\t{:#016x}", key1);
-    /// 
-    /// let message = 0x_1234567890ABCDEF_u64;
-    /// println!("M_u64 =\t{:#016X}", message);
-    /// 
-    /// let cipher1 = c_des.encrypt_u64(message);
-    /// let cipher2 = d_des.encrypt_u64(message);
-    /// println!("C_u64 (0 rounds) =\t{:#016X}", cipher1);
-    /// assert_eq!(cipher1, 0x_2138A9B46057CEDF_u64);
-    /// 
-    /// println!("D_u64 (0 rounds) =\t{:#016X}", cipher);
-    /// assert_eq!(cipher2, 0x_2138A9B46057CEDF_u64);
-    /// assert_eq!(cipher1, cipher2);
-    /// ```
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.encrypt_u64)
     pub fn encrypt_u64(&mut self, message: u64) -> u64
     {
         self.set_block(message);
@@ -3124,59 +1954,8 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// assert_eq!(recovered, message);
     /// ```
     /// 
-    /// # Example 2 for for 128 rounds
-    /// ```
-    /// use cryptocol::symmetric::DES_Expanded;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// 
-    /// let message = 0x_1234567890ABCDEF_u64;
-    /// println!("M_u64 =\t{:#016X}", message);
-    /// 
-    /// let mut b_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64(key);
-    /// let cipher = b_des.encrypt_u64(message);
-    /// println!("C_u64 (128 rounds) =\t{:#016X}", cipher);
-    /// assert_eq!(cipher, 0x_21F25F81CE4D4AA3_u64);
-    /// 
-    /// let recovered = b_des.decrypt_u64(cipher);
-    /// println!("B_u64 (16 rounds) =\t{:#016X}", recovered);
-    /// assert_eq!(recovered, 0x_1234567890ABCDEF_u64);
-    /// assert_eq!(recovered, message);
-    /// ```
-    /// 
-    /// # Example 3 for for 0 rounds which means that key is meaningless
-    /// ```
-    /// use cryptocol::symmetric::{ DES, DES_Expanded };
-    /// 
-    /// let key1 = 0x_1234567890ABCDEF_u64;
-    /// let key2 = 0_u64;
-    /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
-    /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
-    /// println!("K =\t{:#016X}", key);
-    /// 
-    /// let message = 0x_1234567890ABCDEF_u64;
-    /// println!("M_u64 =\t{:#016X}", message);
-    /// 
-    /// let cipher1 = c_des.encrypt_u64(message);
-    /// let cipher2 = d_des.encrypt_u64(message);
-    /// println!("C_u64 (0 rounds) =\t{:#016X}", cipher1);
-    /// assert_eq!(cipher1, 0x_2138A9B46057CEDF_u64);
-    /// 
-    /// println!("D_u64 (0 rounds) =\t{:#016X}", cipher);
-    /// assert_eq!(cipher2, 0x_2138A9B46057CEDF_u64);
-    /// assert_eq!(cipher1, cipher2);
-    /// 
-    /// let recovered1 = c_des.decrypt_u64(cipher1);
-    /// let recovered2 = d_des.decrypt_u64(cipher2);
-    /// println!("B1_u64 (0 rounds) =\t{:#016X}", recovered1);
-    /// println!("B2_u64 (0 rounds) =\t{:#016X}", recovered2);
-    /// assert_eq!(recovered1, 0x_1234567890ABCDEF_u64);
-    /// assert_eq!(recovered1, message);
-    /// assert_eq!(recovered2, 0x_1234567890ABCDEF_u64);
-    /// assert_eq!(recovered2, message);
-    /// assert_eq!(recovered1, recovered2);
-    /// ```
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.decrypt_u64)
     pub fn decrypt_u64(&mut self, cipher: u64) -> u64
     {
         self.set_block(cipher);
@@ -3218,69 +1997,8 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// assert_eq!(cipher[2], 0x_2990D69525C17067_u64);
     /// ```
     /// 
-    /// # Example 2 for 128 rounds
-    /// ```
-    /// use cryptocol::symmetric::DES_Expanded;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// 
-    /// let message = [0x_1234567890ABCDEF_u64, 0xEFCDAB9078563412, 0xFEDCBA0987654321 ];
-    /// print!("M =\t");
-    /// for m in message
-    ///     { print!("{:#016X} ", m); }
-    /// println!();
-    /// let mut b_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64(key);
-    /// 
-    /// let mut cipher = [0; 3];
-    /// b_des.encrypt_array_u64(&message, &mut cipher);
-    /// print!("C (128 rounds) =\t");
-    /// for c in cipher
-    ///     { print!("{:#016X} ", c); }
-    /// println!();
-    /// assert_eq!(cipher[0], 0x_21F25F81CE4D4AA3_u64);
-    /// assert_eq!(cipher[1], 0x_352F391A1482A504_u64);
-    /// assert_eq!(cipher[2], 0x_F793546957AFDE50_u64);
-    /// ```
-    /// 
-    /// # Example 3 for 0 rounds which means that key is meaningless
-    /// ```
-    /// use cryptocol::symmetric::DES_Expanded;
-    /// 
-    /// let key1 = 0x_1234567890ABCDEF_u64;
-    /// let key2 = 0_u64;
-    /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
-    /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
-    /// println!("K =\t{:#016X}", key);
-    /// 
-    /// let message = [0x_1234567890ABCDEF_u64, 0xEFCDAB9078563412, 0xFEDCBA0987654321 ];
-    /// print!("M =\t");
-    /// for m in message
-    ///     { print!("{:#016X} ", m); }
-    /// println!();
-    /// 
-    /// let mut cipher1 = [0; 3];
-    /// let mut cipher2 = [0; 3];
-    /// c_des.encrypt_array_u64(&message, &mut cipher1);
-    /// d_des.encrypt_array_u64(&message, &mut cipher2);
-    /// print!("C (0 rounds) =\t");
-    /// for c in cipher1
-    ///     { print!("{:#016X} ", c); }
-    /// println!();
-    /// print!("D (0 rounds) =\t");
-    /// for c in cipher2
-    ///     { print!("{:#016X} ", c); }
-    /// println!();
-    /// assert_eq!(cipher1[0], 0x_2138A9B46057CEDF_u64);
-    /// assert_eq!(cipher1[1], 0x_DFCE5760B4A93821_u64);
-    /// assert_eq!(cipher1[2], 0x_FDEC75064B9A8312_u64);
-    /// assert_eq!(cipher2[0], 0x_2138A9B46057CEDF_u64);
-    /// assert_eq!(cipher2[1], 0x_DFCE5760B4A93821_u64);
-    /// assert_eq!(cipher2[2], 0x_FDEC75064B9A8312_u64);
-    /// assert_eq!(cipher1[0], cipher2[0]);
-    /// assert_eq!(cipher1[1], cipher2[1]);
-    /// assert_eq!(cipher1[2], cipher2[2]);
-    /// ```
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.encrypt_array_u64)
     pub fn encrypt_array_u64<const N: usize>(&mut self, message: &[u64; N], cipher: &mut [u64; N])
     {
         for i in 0..N
@@ -3335,101 +2053,8 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// assert_eq!(recovered[2], 0x_FEDCBA0987654321_u64);
     /// ```
     /// 
-    /// # Example 2 for 128 rounds
-    /// ```
-    /// use cryptocol::symmetric::DES_Expanded;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// 
-    /// let message = [0x_1234567890ABCDEF_u64, 0xEFCDAB9078563412, 0xFEDCBA0987654321 ];
-    /// print!("M =\t");
-    /// for m in message
-    ///     { print!("{:#016X} ", m); }
-    /// println!();
-    /// let mut b_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64(key);
-    /// 
-    /// let mut cipher = [0; 3];
-    /// b_des.encrypt_array_u64(&message, &mut cipher);
-    /// print!("C (128 rounds) =\t");
-    /// for c in cipher
-    ///     { print!("{:#016X} ", c); }
-    /// println!();
-    /// assert_eq!(cipher[0], 0x_21F25F81CE4D4AA3_u64);
-    /// assert_eq!(cipher[1], 0x_352F391A1482A504_u64);
-    /// assert_eq!(cipher[2], 0x_F793546957AFDE50_u64);
-    /// 
-    /// let mut recovered = [0; 3];
-    /// b_des.decrypt_array_u64(&cipher, &mut recovered);
-    /// print!("B (128 rounds) =\t");
-    /// for r in recovered
-    ///     { print!("{:#016X} ", r); }
-    /// println!();
-    /// assert_eq!(recovered[0], 0x_1234567890ABCDEF_u64);
-    /// assert_eq!(recovered[1], 0x_EFCDAB9078563412_u64);
-    /// assert_eq!(recovered[2], 0x_FEDCBA0987654321_u64);
-    /// ```
-    /// 
-    /// # Example 3 for 0 rounds which means that key is meaningless
-    /// ```
-    /// use cryptocol::symmetric::DES_Expanded;
-    /// 
-    /// let key1 = 0x_1234567890ABCDEF_u64;
-    /// let key2 = 0_u64;
-    /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
-    /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
-    /// println!("K =\t{:#016X}", key);
-    /// 
-    /// let message = [0x_1234567890ABCDEF_u64, 0xEFCDAB9078563412, 0xFEDCBA0987654321 ];
-    /// print!("M =\t");
-    /// for m in message
-    ///     { print!("{:#016X} ", m); }
-    /// println!();
-    /// 
-    /// let mut cipher1 = [0; 3];
-    /// let mut cipher2 = [0; 3];
-    /// c_des.encrypt_array_u64(&message, &mut cipher1);
-    /// d_des.encrypt_array_u64(&message, &mut cipher2);
-    /// print!("C (0 rounds) =\t");
-    /// for c in cipher1
-    ///     { print!("{:#016X} ", c); }
-    /// println!();
-    /// print!("D (0 rounds) =\t");
-    /// for c in cipher2
-    ///     { print!("{:#016X} ", c); }
-    /// println!();
-    /// assert_eq!(cipher1[0], 0x_2138A9B46057CEDF_u64);
-    /// assert_eq!(cipher1[1], 0x_DFCE5760B4A93821_u64);
-    /// assert_eq!(cipher1[2], 0x_FDEC75064B9A8312_u64);
-    /// assert_eq!(cipher2[0], 0x_2138A9B46057CEDF_u64);
-    /// assert_eq!(cipher2[1], 0x_DFCE5760B4A93821_u64);
-    /// assert_eq!(cipher2[2], 0x_FDEC75064B9A8312_u64);
-    /// assert_eq!(cipher1[0], cipher2[0]);
-    /// assert_eq!(cipher1[1], cipher2[1]);
-    /// assert_eq!(cipher1[2], cipher2[2]);
-    /// 
-    /// let mut recovered1 = [0; 3];
-    /// let mut recovered2 = [0; 3];
-    /// c_des.decrypt_array_u64(&cipher1, &mut recovered1);
-    /// d_des.decrypt_array_u64(&cipher2, &mut recovered2);
-    /// print!("B1 (0 rounds) =\t");
-    /// for r in recovered1
-    ///     { print!("{:#016X} ", r); }
-    /// println!();
-    /// print!("B2 (0 rounds) =\t");
-    /// for r in recovered2
-    ///     { print!("{:#016X} ", r); }
-    /// println!();
-    /// assert_eq!(recovered1[0], 0x_1234567890ABCDEF_u64);
-    /// assert_eq!(recovered1[1], 0x_EFCDAB9078563412_u64);
-    /// assert_eq!(recovered1[2], 0x_FEDCBA0987654321_u64);
-    /// assert_eq!(recovered2[0], 0x_1234567890ABCDEF_u64);
-    /// assert_eq!(recovered2[1], 0x_EFCDAB9078563412_u64);
-    /// assert_eq!(recovered2[2], 0x_FEDCBA0987654321_u64);
-    /// assert_eq!(recovered1[0], recovered2[0]);
-    /// assert_eq!(recovered1[1], recovered2[1]);
-    /// assert_eq!(recovered1[2], recovered2[2]);
-    /// ```
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.decrypt_array_u64)
     pub fn decrypt_array_u64<const N: usize>(&mut self, cipher: &[u64; N], message: &mut [u64; N])
     {
         for i in 0..N
