@@ -2068,21 +2068,6 @@ S756, S757, S758, S759, S760, S761, S762, S763
         }
     }
 
-    // pub fn is_failed(&self) -> bool
-    /// Checks whether the previous encryption or decryption was failed.
-    /// 
-    /// # Output
-    /// If the previous encryption or decryption was failed, this method
-    /// returns true. Otherwise, it returns false.
-    /// 
-    /// # Features
-    /// If the ciphertext is 8 bytes for decryption with the padding either
-    /// pkcs7 or iso, the return value `0` of the decryption methods is not
-    /// discriminatory. You don't know whether the previous decryption was
-    /// failed or the original plaintext was just null string or "". In this
-    /// case you check its success with this method.
-    #[inline] pub fn is_failed(&self) -> bool   { self.block.get() == Self::FAILURE }
-
     // pub fn is_succeful(&self) -> bool
     /// Checks whether the previous encryption or decryption was successful.
     /// 
@@ -2091,12 +2076,33 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// returns true. Otherwise, it returns false.
     /// 
     /// # Features
-    /// If the ciphertext is 8 bytes for decryption with the padding either
-    /// pkcs7 or iso, the return value `0` of the decryption methods is not
-    /// discriminatory. You don't know whether the previous decryption was
-    /// failed or the original plaintext was just null string or "". In this
-    /// case you check its success with this method.
+    /// - Usually, you don't have to use this method because the encryption
+    ///   methods returns the length of ciphertext and the decryption methods
+    ///   returns the length of plaintext but they returns `0` when they failed.
+    /// - If the ciphertext is 8 bytes for decryption with the padding either
+    ///   pkcs7 or iso, the return value `0` of the decryption methods is not
+    ///   discriminatory. You don't know whether the previous decryption was
+    ///   failed or the original plaintext was just null string or "". In this
+    ///   case you can check its success with this method.
     #[inline] pub fn is_successful(&self) -> bool { self.block.get() == Self::SUCCESS }
+
+    // pub fn is_failed(&self) -> bool
+    /// Checks whether the previous encryption or decryption was failed.
+    /// 
+    /// # Output
+    /// If the previous encryption or decryption was failed, this method
+    /// returns true. Otherwise, it returns false.
+    /// 
+    /// # Features
+    /// - Usually, you don't have to use this method because the encryption
+    ///   methods returns the length of ciphertext and the decryption methods
+    ///   returns the length of plaintext but they returns `0` when they failed.
+    /// - If the ciphertext is 8 bytes for decryption with the padding either
+    ///   pkcs7 or iso, the return value `0` of the decryption methods is not
+    ///   discriminatory. You don't know whether the previous decryption was
+    ///   failed or the original plaintext was just null string or "". In this
+    ///   case you can check its success with this method.
+    #[inline] pub fn is_failed(&self) -> bool   { self.block.get() == Self::FAILURE }
 
     // pub fn encrypt_with_padding_pkcs7(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     /// Encrypts the data with the padding defined in PKCS #7.
@@ -2392,7 +2398,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_pkcs7_into_array<T, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64
+        if (length_in_bytes as u128 + 1).next_multiple_of(8) > (T::size_in_bytes() as u128 * N as u128)
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -2983,7 +2989,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn decrypt_with_padding_pkcs7_into_array<T, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes - 1 > (T::size_in_bytes() * N) as u64 
+        if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -3094,7 +3100,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_iso_into_array<T, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64 
+        if (length_in_bytes as u128 + 1).next_multiple_of(8) > (T::size_in_bytes() as u128 * N as u128) 
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -3236,7 +3242,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn decrypt_with_padding_iso_into_array<T, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes - 1 > (T::size_in_bytes() * N) as u64 
+        if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -3782,7 +3788,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_pkcs7_cbc_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64
+        if (length_in_bytes as u128 + 1).next_multiple_of(8) > (T::size_in_bytes() as u128 * N as u128)
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -3920,7 +3926,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn decrypt_with_padding_pkcs7_cbc_into_array<T, const N: usize>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes - 1 > (T::size_in_bytes() * N) as u64 
+        if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -4030,7 +4036,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_iso_cbc_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64 
+        if (length_in_bytes as u128 + 1).next_multiple_of(8) > (T::size_in_bytes() as u128 * N as u128) 
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -4170,7 +4176,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn decrypt_with_padding_iso_cbc_into_array<T, const N: usize>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes - 1 > (T::size_in_bytes() * N) as u64 
+        if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -4303,7 +4309,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_pkcs7_pcbc_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64 
+        if (length_in_bytes as u128 + 1).next_multiple_of(8) > (T::size_in_bytes() as u128 * N as u128) 
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -4438,7 +4444,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn decrypt_with_padding_pkcs7_pcbc_into_array<T, const N: usize>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes - 1 > (T::size_in_bytes() * N) as u64 
+        if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -4549,7 +4555,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_iso_pcbc_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if (length_in_bytes + 1).next_multiple_of(8) > (T::size_in_bytes() * N) as u64 
+        if (length_in_bytes as u128 + 1).next_multiple_of(8) > (T::size_in_bytes() as u128 * N as u128) 
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -4690,7 +4696,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn decrypt_with_padding_iso_pcbc_into_array<T, const N: usize>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes - 1 > (T::size_in_bytes() * N) as u64 
+        if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -4827,7 +4833,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_cfb_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes > (T::size_in_bytes() * N) as u64 
+        if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -5102,7 +5108,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_ofb_into_array<T, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes > (T::size_in_bytes() * N) as u64 
+        if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -5213,7 +5219,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn decrypt_ofb_into_array<T, const N: usize>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes > (T::size_in_bytes() * N) as u64 
+        if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -5357,7 +5363,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_ctr_into_array<T, const N: usize>(&mut self, nonce: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes > (T::size_in_bytes() * N) as u64 
+        if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
             self.block.set(Self::FAILURE);
             return 0;
@@ -5468,7 +5474,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn decrypt_ctr_into_array<T, const N: usize>(&mut self, nonce: u64, cipher: *const u8, length_in_bytes: u64, message: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        if length_in_bytes > (T::size_in_bytes() * N) as u64 
+        if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
             self.block.set(Self::FAILURE);
             return 0;
