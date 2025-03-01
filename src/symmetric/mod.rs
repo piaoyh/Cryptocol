@@ -37,12 +37,14 @@
 // ! - For `NAES`, read [here](struct@NAES_Generic#quick-start).
 
 mod des;
-// mod ndes;
+mod small_des;
+mod ndes;
 // mod aes;
 // mod naes;
 
 pub use des::*;
-// pub use ndes::*;
+pub use small_des::*;
+pub use ndes::*;
 // pub use aes::*;
 // pub use naes::*;
 
