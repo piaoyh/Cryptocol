@@ -2384,6 +2384,264 @@ S756, S757, S758, S759, S760, S761, S762, S763
         unimplemented!(); // Dummy code for documentation
     }
 
+    // pub fn is_succeful(&self) -> bool
+    /// Checks whether the previous encryption or decryption was successful.
+    /// 
+    /// # Output
+    /// If the previous encryption or decryption was successful, this method
+    /// returns true. Otherwise, it returns false.
+    /// 
+    /// # Features
+    /// - Usually, you don't have to use this method because the encryption
+    ///   methods returns the length of ciphertext and the decryption methods
+    ///   returns the length of plaintext but they returns `0` when they failed.
+    /// - If the ciphertext is 8 bytes for decryption with the padding either
+    ///   pkcs7 or iso, the return value `0` of the decryption methods is not
+    ///   discriminatory. You don't know whether the previous decryption was
+    ///   failed or the original plaintext was just null string or "". In this
+    ///   case you can check its success with this method.
+    /// 
+    /// # Example 1 for Normal case for the message of 0 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 8];
+    /// let len = a_des.encrypt_with_padding_pkcs7_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// println!("The length of ciphertext = {}", len);
+    /// assert_eq!(len, 8);
+    /// let success = a_des.is_successful();
+    /// assert_eq!(success, true);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
+    /// ```
+    /// 
+    /// # Example 2 for Normal case for the original message of 0 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let cipher = [0x41u8, 0x7F, 0x89, 0x79, 0x08, 0xCD, 0xA1, 0x4C];
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut recovered = [0u8; 8];
+    /// let len = a_des.decrypt_array_with_padding_pkcs7_into_array(&cipher, &mut recovered);
+    /// println!("The length of plaintext = {}", len);
+    /// assert_eq!(len, 0);
+    /// let success = a_des.is_successful();
+    /// assert_eq!(success, true);
+    /// print!("Ba =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "00 00 00 00 00 00 00 00 ");
+    /// 
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.write(&recovered);
+    /// unsafe { converted.as_mut_vec() }.truncate(len as usize);
+    /// println!("Bb =\t{}", converted);
+    /// assert_eq!(converted, "");
+    /// assert_eq!(converted, message);
+    /// ```
+    /// 
+    /// # Example 3 for Failed case for encryption
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 40];
+    /// let len = a_des.encrypt_cfb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// println!("The length of ciphertext = {}", len);
+    /// assert_eq!(len, 0);
+    /// let success = a_des.is_successful();
+    /// assert_eq!(success, false);
+    /// ```
+    /// 
+    /// # Example 4 for Failed case for decryption
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let cipher = [0x2Eu8, 0x1E, 0xE1, 0x51, 0xFD, 0xB3, 0xB0, 0x4B, 0x79, 0x3A, 0xA1, 0x78, 0xEC, 0xCD, 0x02, 0x72, 0x6A, 0xC4, 0x41, 0x7C, 0x25, 0xA4, 0x2C, 0x07, 0xFC, 0x77, 0x25, 0x49, 0x12, 0x55, 0x0F, 0x8A, 0xED, 0x44, 0xC3, 0xE4, 0xDC, 0x91, 0x69, 0x0F, 0x40, 0x72, 0x7F, 0xF2, 0xD9, 0xB7, 0x54, 0x9F, 0x36, 0x91, 0xC5, 0x85, 0x4F, 0x9B, 0x30];
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut recovered = [0u8; 40];
+    /// let len = a_des.decrypt_array_cfb_into_array(iv, &cipher, &mut recovered);
+    /// println!("The length of plaintext = {}", len);
+    /// assert_eq!(len, 0);
+    /// let success = a_des.is_successful();
+    /// assert_eq!(success, false);
+    /// ```
+    pub fn is_successful(&self) -> bool
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn is_failed(&self) -> bool
+    /// Checks whether the previous encryption or decryption was failed.
+    /// 
+    /// # Output
+    /// If the previous encryption or decryption was failed, this method
+    /// returns true. Otherwise, it returns false.
+    /// 
+    /// # Features
+    /// - Usually, you don't have to use this method because the encryption
+    ///   methods returns the length of ciphertext and the decryption methods
+    ///   returns the length of plaintext but they returns `0` when they failed.
+    /// - If the ciphertext is 8 bytes for decryption with the padding either
+    ///   pkcs7 or iso, the return value `0` of the decryption methods is not
+    ///   discriminatory. You don't know whether the previous decryption was
+    ///   failed or the original plaintext was just null string or "". In this
+    ///   case you can check its success with this method.
+    /// 
+    /// # Example 1 for Normal case for the message of 0 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 8];
+    /// let len = a_des.encrypt_with_padding_pkcs7_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// println!("The length of ciphertext = {}", len);
+    /// assert_eq!(len, 8);
+    /// let failure = a_des.is_failed();
+    /// assert_eq!(failure, false);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
+    /// ```
+    /// 
+    /// # Example 2 for Normal case for the original message of 0 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let cipher = [0x41u8, 0x7F, 0x89, 0x79, 0x08, 0xCD, 0xA1, 0x4C];
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// let mut recovered = [0u8; 8];
+    /// let len = a_des.decrypt_array_with_padding_pkcs7_into_array(&cipher, &mut recovered);
+    /// println!("The length of plaintext = {}", len);
+    /// assert_eq!(len, 0);
+    /// let failure = a_des.is_failed();
+    /// assert_eq!(failure, false);
+    /// print!("Ba =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "00 00 00 00 00 00 00 00 ");
+    /// 
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.write(&recovered);
+    /// unsafe { converted.as_mut_vec() }.truncate(len as usize);
+    /// println!("Bb =\t{}", converted);
+    /// assert_eq!(converted, "");
+    /// assert_eq!(converted, message);
+    /// ```
+    /// 
+    /// # Example 3 for Failed case for encryption
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 40];
+    /// let len = a_des.encrypt_cfb_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// println!("The length of ciphertext = {}", len);
+    /// assert_eq!(len, 0);
+    /// let failure = a_des.is_failed();
+    /// assert_eq!(failure, true);
+    /// ```
+    /// 
+    /// # Example 4 for Failed case for decryption
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let cipher = [0x2Eu8, 0x1E, 0xE1, 0x51, 0xFD, 0xB3, 0xB0, 0x4B, 0x79, 0x3A, 0xA1, 0x78, 0xEC, 0xCD, 0x02, 0x72, 0x6A, 0xC4, 0x41, 0x7C, 0x25, 0xA4, 0x2C, 0x07, 0xFC, 0x77, 0x25, 0x49, 0x12, 0x55, 0x0F, 0x8A, 0xED, 0x44, 0xC3, 0xE4, 0xDC, 0x91, 0x69, 0x0F, 0x40, 0x72, 0x7F, 0xF2, 0xD9, 0xB7, 0x54, 0x9F, 0x36, 0x91, 0xC5, 0x85, 0x4F, 0x9B, 0x30];
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// let mut recovered = [0u8; 40];
+    /// let len = a_des.decrypt_array_cfb_into_array(iv, &cipher, &mut recovered);
+    /// println!("The length of plaintext = {}", len);
+    /// assert_eq!(len, 0);
+    /// let failure = a_des.is_failed();
+    /// assert_eq!(failure, true);
+    /// ```
+    pub fn is_failed(&self) -> bool
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
     // pub fn encrypt_with_padding_pkcs7(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     /// Encrypts the data with the padding defined in PKCS #7.
     /// 

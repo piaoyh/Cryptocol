@@ -25,7 +25,7 @@ use crate::number::{ SmallUInt, IntUnion, LongUnion };
 // Converts bit number into 0-based bit number in Little Endianness.
 macro_rules! convert {
     ($p:expr) => {
-        (($p - 1) / 8) * 8 + (7 - (($p - 1) % 8))
+        ((($p - 1) >> 3) << 3) + (7 - (($p - 1) & 0b111))
     };
 }
 
@@ -2084,6 +2084,37 @@ S756, S757, S758, S759, S760, S761, S762, S763
     ///   discriminatory. You don't know whether the previous decryption was
     ///   failed or the original plaintext was just null string or "". In this
     ///   case you can check its success with this method.
+    /// 
+    /// # Example 1 for Normal case for the message of 0 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 8];
+    /// let len = a_des.encrypt_with_padding_pkcs7_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// println!("The length of ciphertext = {}", len);
+    /// assert_eq!(len, 8);
+    /// let success = a_des.is_successful();
+    /// assert_eq!(success, true);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.is_successful)
     #[inline] pub fn is_successful(&self) -> bool { self.block.get() == Self::SUCCESS }
 
     // pub fn is_failed(&self) -> bool
@@ -2102,6 +2133,37 @@ S756, S757, S758, S759, S760, S761, S762, S763
     ///   discriminatory. You don't know whether the previous decryption was
     ///   failed or the original plaintext was just null string or "". In this
     ///   case you can check its success with this method.
+    /// 
+    /// # Example 1 for Normal case for the message of 0 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 8];
+    /// let len = a_des.encrypt_with_padding_pkcs7_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// println!("The length of ciphertext = {}", len);
+    /// assert_eq!(len, 8);
+    /// let failure = a_des.is_failed();
+    /// assert_eq!(failure, false);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.is_failed)
     #[inline] pub fn is_failed(&self) -> bool   { self.block.get() == Self::FAILURE }
 
     // pub fn encrypt_with_padding_pkcs7(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
@@ -2405,42 +2467,6 @@ S756, S757, S758, S759, S760, S761, S762, S763
         }
         pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_pkcs7(message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
-
-        // let mut progress = 0_u64;
-        // let mut encoded: u64;
-        // let mut encoded_union = LongUnion::new();
-        // for _ in 0..length_in_bytes >> 3    // length_in_bytes >> 3 == length_in_bytes / 8
-        // {
-        //     let block = unsafe { *(message.add(progress as usize) as *const u64 ) };
-        //     encoded = self.encrypt_u64(block);
-        //     encoded_union.set(encoded);
-        //     // for i in 0..8
-        //     //     { cipher[progress as usize + i] = encoded_union.get_ubyte_(i); }
-        //     copy!(cipher, encoded_union, progress, u8);
-        //     progress += 8;
-        // }
-
-        // let mut block = 0_u64;
-        // let mut block_union = LongUnion::new_with(0x_08_08_08_08__08_08_08_08);
-        // if progress != length_in_bytes
-        // {
-        //     let tail = (length_in_bytes - progress) as usize;
-        //     let addr = unsafe { message.add(progress as usize) as *const u8 };
-        //     unsafe { copy_nonoverlapping(addr, &mut block as *mut u64 as *mut u8, tail); }
-        //     let padding = 8 - tail as u8;
-        //     block_union.set(block);
-        //     for i in tail..8
-        //         { block_union.set_ubyte_(i, padding); }
-        // }
-        // encoded = self.encrypt_u64(block_union.get());
-        // encoded_union.set(encoded);
-        // // for i in 0..8
-        // //     { cipher[progress as usize + i] = encoded_union.get_ubyte_(i); }
-        // copy!(cipher, encoded_union, progress, u8);
-        // // for i in progress as usize + 8..N
-        // //     { cipher[i] = 0_u8; }
-        // copy_append!(cipher, encoded_union, progress, u8);
-        // progress + 8
     }
 
     #[inline]
@@ -2558,7 +2584,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn decrypt_with_padding_pkcs7(&mut self, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
     {
         if length_in_bytes < 8
-            { return 0; }
+        {
+            self.block.set(Self::FAILURE);
+            return 0;
+        }
         let mut progress = 0_u64;
         let mut decoded: u64;
         let mut block: u64;
@@ -3220,13 +3249,16 @@ S756, S757, S758, S759, S760, S761, S762, S763
             {
                 let message_bytes = 7-i;
                 unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), message_bytes); }
-                return progress + message_bytes as u64
+                self.block.set(Self::SUCCESS);
+                return progress + message_bytes as u64;
             }
             else
             {
+                self.block.set(Self::FAILURE);
                 return 0;
             }
         }
+        self.block.set(Self::FAILURE);
         return 0;
     }
 
@@ -3249,45 +3281,6 @@ S756, S757, S758, S759, S760, S761, S762, S763
         }
         pre_decrypt_into_array!(message, length_in_bytes, T);
         self.decrypt_with_padding_iso(cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
-
-        // if length_in_bytes > M.next_multiple_of(8) as u64
-        //     { return 0; }
-        // let mut progress = 0_u64;
-        // let mut decoded: u64;
-        // let mut block: u64;
-        // let mut decoded_union = LongUnion::new();
-        // for i in 0..(length_in_bytes as usize / 8 - 1)
-        // {
-        //     block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
-        //     decoded = self.decrypt_u64(block);
-        //     decoded_union.set(decoded);
-        //     for i in 0..8
-        //         { message[progress as usize + i] = decoded_union.get_ubyte_(i); }
-        //     progress += 8;
-        // }
-
-        // block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
-        // decoded = self.decrypt_u64(block);
-        // decoded_union.set(decoded);
-        // for i in 0..8_usize
-        // {
-        //     if decoded_union.get_ubyte_(7-i) == 0
-        //         { continue; }
-        //     if decoded_union.get_ubyte_(7-i) == 0b_1000_0000_u8
-        //     {
-        //         let message_bytes = 7-i;
-        //         if M < progress as usize + message_bytes
-        //             { return 0; }
-        //         for i in 0..message_bytes
-        //             { message[progress as usize + i] = decoded_union.get_ubyte_(i); }
-        //         return progress + message_bytes as u64;
-        //     }
-        //     else
-        //     {
-        //         return 0;
-        //     }
-        // }
-        // return 0;
     }
 
     #[inline]
@@ -3903,14 +3896,21 @@ S756, S757, S758, S759, S760, S761, S762, S763
         let decoded_union = LongUnion::new_with(decoded);
         let padding_bytes = decoded_union.get_ubyte_(7);
         if padding_bytes > 8
-            { return 0; }
+        {
+            self.block.set(Self::FAILURE);
+            return 0;
+        }
         let message_bytes = 8 - padding_bytes as usize;
         for i in (message_bytes)..8
         {
             if decoded_union.get_ubyte_(i) != padding_bytes
-                { return 0; }
+            {
+                self.block.set(Self::FAILURE);
+                return 0;
+            }
         }
         unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), message_bytes); }
+        self.block.set(Self::SUCCESS);
         progress + message_bytes as u64
     }
 
@@ -4154,13 +4154,16 @@ S756, S757, S758, S759, S760, S761, S762, S763
             {
                 let message_bytes = 7-i;
                 unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), message_bytes); }
-                return progress + message_bytes as u64
+                self.block.set(Self::SUCCESS);
+                return progress + message_bytes as u64;
             }
             else
             {
+                self.block.set(Self::FAILURE);
                 return 0;
             }
         }
+        self.block.set(Self::FAILURE);
         return 0;
     }
 
@@ -4426,9 +4429,13 @@ S756, S757, S758, S759, S760, S761, S762, S763
         for i in (message_bytes)..8
         {
             if decoded_union.get_ubyte_(i) != padding_bytes
-                { return 0; }
+            {
+                self.block.set(Self::FAILURE);
+                return 0;
+            }
         }
         unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), message_bytes); }
+        self.block.set(Self::SUCCESS);
         progress + message_bytes as u64
     }
 
@@ -4674,13 +4681,16 @@ S756, S757, S758, S759, S760, S761, S762, S763
             {
                 let message_bytes = 7-i;
                 unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), message_bytes); }
-                return progress + message_bytes as u64
+                self.block.set(Self::SUCCESS);
+                return progress + message_bytes as u64;
             }
             else
             {
+                self.block.set(Self::FAILURE);
                 return 0;
             }
         }
+        self.block.set(Self::FAILURE);
         return 0;
     }
 
