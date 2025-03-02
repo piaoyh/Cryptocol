@@ -1215,6 +1215,8 @@ const S760: u8 = 0x5, const S761: u8 = 0x6, const S762: u8 = 0x8, const S763: u8
     key: LongUnion,
     block: LongUnion,
     round_key: [u64; ROUND],
+    enc: fn (s: &mut Self, message: u64) -> u64,
+    dec: fn (s: &mut Self, cipher: u64) -> u64,
 }
 
 impl <const ROUND: usize, const SHIFT: u128,
@@ -1742,6 +1744,8 @@ S756, S757, S758, S759, S760, S761, S762, S763
             key:        LongUnion::new_with_ubytes(key),
             block:      LongUnion::new(),
             round_key:  [0_u64; ROUND],
+            enc:        Self::encrypt_u64,
+            dec:        Self::decrypt_u64,
         };
         des.make_round_keys();
         des
@@ -1793,6 +1797,118 @@ S756, S757, S758, S759, S760, S761, S762, S763
             key:        LongUnion::new_with(key),
             block:      LongUnion::new(),
             round_key:  [0_u64; ROUND],
+            enc:        Self::encrypt_u64,
+            dec:        Self::decrypt_u64,
+        };
+        des.make_round_keys();
+        des
+    }
+
+    // pub fn encryptor_with_key(key: [u8; 8]) -> Self
+    /// Constructs a new object DES_Generic for the component of NDES.
+    /// 
+    /// # Arguments
+    /// - The argument `key` is the array of u8 that has 8 elements.
+    /// - Remember that inverted parity bits do not affect the 56-bit real key.
+    ///   So, [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+    ///   [0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01],
+    ///   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01],
+    ///   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00],
+    ///   [0x01, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x01], etc.
+    ///   are all the same keys. Each key has 255 different equivalent keys
+    ///   in DES. 
+    /// 
+    /// # Features
+    /// This method sets the key to be the given argument `key`.
+    #[inline]
+    pub fn encryptor_with_key(key: [u8; 8]) -> Self
+    {
+        Self::new_with_key([0_u8; 8])
+    }
+
+    // pub fn encryptor_with_key_u64(key: u64) -> Self
+    /// Constructs a new object DES_Generic for the component of NDES.
+    /// 
+    /// # Arguments
+    /// - The argument `key` is of `u64`.
+    /// - It should be in the same endianness of machine. For example,
+    ///   if a key is [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF],
+    ///   the key in `u64` is 0x_1234567890ABCDEF_u64 for big-endian machine,
+    ///   and the key in `u64` is 0x_EFCDAB9078563412_u64 for little-endian
+    ///   machine.
+    /// - Remember that inverted parity bits do not affect the 56-bit real key.
+    ///   So, 0x_0000_0000_0000_0000_u4, 0x_0101_0101_0101_0101_u64,
+    ///   0x_0000_0000_0000_0001_u64, 0x_0000_0000_0000_0100_u64,
+    ///   0x_0100_0010_0000_0001_u64, etc. are all the same keys. 
+    ///   Each key has 255 different equivalent keys in DES. 
+    /// 
+    /// # Features
+    /// This method sets the key to be the given argument `key`.
+    #[inline]
+    pub fn encryptor_with_key_u64(key: u64) -> Self
+    {
+        Self::new_with_key_u64(key)
+    }
+
+    // pub fn decryptor_with_key(key: [u8; 8]) -> Self
+    /// Constructs a new object DES_Generic for the component of NDES.
+    /// 
+    /// # Arguments
+    /// - The argument `key` is the array of u8 that has 8 elements.
+    /// - Remember that inverted parity bits do not affect the 56-bit real key.
+    ///   So, [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+    ///   [0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01],
+    ///   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01],
+    ///   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00],
+    ///   [0x01, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x01], etc.
+    ///   are all the same keys. Each key has 255 different equivalent keys
+    ///   in DES. 
+    /// 
+    /// # Features
+    /// This method sets the key to be the given argument `key`.
+    #[inline]
+    pub fn decryptor_with_key(key: [u8; 8]) -> Self
+    {
+        let mut des = Self
+        {
+            key:        LongUnion::new_with_ubytes(key),
+            block:      LongUnion::new(),
+            round_key:  [0_u64; ROUND],
+            enc:        Self::decrypt_u64,
+            dec:        Self::encrypt_u64,
+        };
+        des.make_round_keys();
+        des
+    }
+
+    // pub fn decryptor_with_key_u64(key: u64) -> Self
+    /// Constructs a new object DES_Generic for the component of NDES.
+    /// 
+    /// # Arguments
+    /// - The argument `key` is of `u64`.
+    /// - It should be in the same endianness of machine. For example,
+    ///   if a key is [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF],
+    ///   the key in `u64` is 0x_1234567890ABCDEF_u64 for big-endian machine,
+    ///   and the key in `u64` is 0x_EFCDAB9078563412_u64 for little-endian
+    ///   machine.
+    /// - Remember that inverted parity bits do not affect the 56-bit real key.
+    ///   So, 0x_0000_0000_0000_0000_u4, 0x_0101_0101_0101_0101_u64,
+    ///   0x_0000_0000_0000_0001_u64, 0x_0000_0000_0000_0100_u64,
+    ///   0x_0100_0010_0000_0001_u64, etc. are all the same keys. 
+    ///   Each key has 255 different equivalent keys in DES. 
+    /// 
+    /// # Features
+    /// This method sets the key to be the given argument `key`.
+    #[inline]
+    pub fn decryptor_with_key_u64(key: u64) -> Self
+    {
+        let mut des = Self
+        {
+            key:        LongUnion::new_with(key),
+            block:      LongUnion::new(),
+            round_key:  [0_u64; ROUND],
+            enc:        Self::decrypt_u64,
+            dec:        Self::encrypt_u64,
         };
         des.make_round_keys();
         des
@@ -1965,6 +2081,9 @@ S756, S757, S758, S759, S760, S761, S762, S763
         self.decrypt_block();
         self.get_block()
     }
+
+    #[inline] pub fn encrypt(&mut self, message: u64) -> u64    { (self.enc)(self, message) }
+    #[inline] pub fn decrypt(&mut self, cipher: u64) -> u64     { (self.dec)(self, cipher) }
 
     // pub fn encrypt_array_u64<const N: usize>(&mut self, message: &[u64; N], cipher: &mut [u64; N])
     /// Encrypts an array of 64-bit data.

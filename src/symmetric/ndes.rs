@@ -16,223 +16,10 @@
 
 use std::ptr::copy_nonoverlapping;
 use std::vec::Vec;
-// use std::slice::from_raw_parts;
-// use std::fmt::{ self, Debug, Display, Formatter };
-// use std::collections::HashMap;
 
-use crate::number::{ SmallUInt, IntUnion, LongUnion };
-
+use crate::number::{ SmallUInt, LongUnion };
 use super::SmallDES;
 
-// Converts bit number into 0-based bit number in Little Endianness.
-macro_rules! convert {
-    ($p:expr) => {
-        ((($p - 1) >> 3) << 3) + (7 - (($p - 1) & 0b111))
-    };
-}
-
-macro_rules! make_FP {
-    () => {
-        if true
-        {
-            let mut out = [0_u8; 64];
-            out[Self::IP[00] as usize] = 00;
-            out[Self::IP[01] as usize] = 01;
-            out[Self::IP[02] as usize] = 02;
-            out[Self::IP[03] as usize] = 03;
-            out[Self::IP[04] as usize] = 04;
-            out[Self::IP[05] as usize] = 05;
-            out[Self::IP[06] as usize] = 06;
-            out[Self::IP[07] as usize] = 07;
-            out[Self::IP[08] as usize] = 08;
-            out[Self::IP[09] as usize] = 09;
-            out[Self::IP[10] as usize] = 10;
-            out[Self::IP[11] as usize] = 11;
-            out[Self::IP[12] as usize] = 12;
-            out[Self::IP[13] as usize] = 13;
-            out[Self::IP[14] as usize] = 14;
-            out[Self::IP[15] as usize] = 15;
-            out[Self::IP[16] as usize] = 16;
-            out[Self::IP[17] as usize] = 17;
-            out[Self::IP[18] as usize] = 18;
-            out[Self::IP[19] as usize] = 19;
-            out[Self::IP[20] as usize] = 20;
-            out[Self::IP[21] as usize] = 21;
-            out[Self::IP[22] as usize] = 22;
-            out[Self::IP[23] as usize] = 23;
-            out[Self::IP[24] as usize] = 24;
-            out[Self::IP[25] as usize] = 25;
-            out[Self::IP[26] as usize] = 26;
-            out[Self::IP[27] as usize] = 27;
-            out[Self::IP[28] as usize] = 28;
-            out[Self::IP[29] as usize] = 29;
-            out[Self::IP[30] as usize] = 30;
-            out[Self::IP[31] as usize] = 31;
-            out[Self::IP[32] as usize] = 32;
-            out[Self::IP[33] as usize] = 33;
-            out[Self::IP[34] as usize] = 34;
-            out[Self::IP[35] as usize] = 35;
-            out[Self::IP[36] as usize] = 36;
-            out[Self::IP[37] as usize] = 37;
-            out[Self::IP[38] as usize] = 38;
-            out[Self::IP[39] as usize] = 39;
-            out[Self::IP[40] as usize] = 40;
-            out[Self::IP[41] as usize] = 41;
-            out[Self::IP[42] as usize] = 42;
-            out[Self::IP[43] as usize] = 43;
-            out[Self::IP[44] as usize] = 44;
-            out[Self::IP[45] as usize] = 45;
-            out[Self::IP[46] as usize] = 46;
-            out[Self::IP[47] as usize] = 47;
-            out[Self::IP[48] as usize] = 48;
-            out[Self::IP[49] as usize] = 49;
-            out[Self::IP[50] as usize] = 50;
-            out[Self::IP[51] as usize] = 51;
-            out[Self::IP[52] as usize] = 52;
-            out[Self::IP[53] as usize] = 53;
-            out[Self::IP[54] as usize] = 54;
-            out[Self::IP[55] as usize] = 55;
-            out[Self::IP[56] as usize] = 56;
-            out[Self::IP[57] as usize] = 57;
-            out[Self::IP[58] as usize] = 58;
-            out[Self::IP[59] as usize] = 59;
-            out[Self::IP[60] as usize] = 60;
-            out[Self::IP[61] as usize] = 61;
-            out[Self::IP[62] as usize] = 62;
-            out[Self::IP[63] as usize] = 63;
-            out
-        }
-        else
-        {
-            [0_u8; 64]
-        }
-    }
-}
-
-macro_rules! permutate_data {
-    ($me:expr, $permut:expr) => {
-        let data = $me.block.get();
-        let mut permuted = 0_u64;
-        let mut idx = 0_usize;
-        // $permut and pos are already changed to be 0-based in little endianness.
-        for pos in $permut
-        {
-            if data.is_bit_set_(pos as usize)
-                { permuted |= 1_u64 << idx; } // ((7 - idx % 8) + (idx / 8) * 8); }
-            idx += 1;
-        }
-        $me.block.set(permuted);
-    };
-    // permutate_data!(Self::IP);
-    //
-    // let data = self.block.get();
-    // let mut permuted = 0_u64;
-    // let mut idx = 0_usize;
-    // // IP and pos are already changed to be 0-based in little endianness.
-    // for pos in Self::IP
-    // {
-    //     if data.is_bit_set_(pos as usize)
-    //         { permuted |= 1_u64 << idx; } // ((7 - idx % 8) + (idx / 8) * 8); }
-    //     idx += 1;
-    // }
-    // self.block.set(permuted);
-
-    ($permut:expr, $type:ty, $right:expr) => {
-        if true
-        {
-            let mut permuted = 0 as $type;
-            let mut idx = 0_usize;
-            // $permut and pos are already changed to be 0-based in little endianness.
-            for pos in $permut
-            {
-                if $right.is_bit_set_(pos as usize)
-                    { permuted |= 1 as $type << idx; } // ((7 - idx % 8) + (idx / 8) * 8); }
-                idx += 1;
-            }
-            permuted
-        }
-        else
-        {
-            0 as $type
-        }
-    };
-    // permutate_data!(Self::TP, u32, right);
-    //
-    // let mut permuted = 0_u32;
-    // let mut idx = 0_usize;
-    // // TP and pos are already changed to be 0-based in little endianness.
-    // for pos in Self::TP
-    // {
-    //     if right.is_bit_set_(pos as usize)
-    //         { permuted |= 1 << idx; }
-    //     idx += 1;
-    // }
-    // permuted
-}
-
-macro_rules! shift_right_union {
-    ($u:expr, $n:expr) => {
-        let mut carry = 0_u8;
-        for i in 0..4
-        {
-            let tmp = $u.get_ubyte_(i) << (8 - $n);
-            $u.set_ubyte_(i, ($u.get_ubyte_(i) >> $n) | carry);
-            carry = tmp;
-        }
-    };
-}
-
-macro_rules! shift_left_union {
-    ($u:expr, $n:expr) => {
-        let mut carry = 0_u8;
-        for i in 0..4
-        {
-            let tmp = $u.get_ubyte_(3 - i) >> (8 - $n);
-            $u.set_ubyte_(3 - i, ($u.get_ubyte_(3 - i) << $n) | carry);
-            carry = tmp;
-        }
-    };
-    ($u:expr, $n:expr, $size:expr) => {
-        let mut carry = 0_u8;
-        for i in 0..$size
-        {
-            let tmp = $u.get_ubyte_($size - 1 - i) >> (8 - $n);
-            $u.set_ubyte_($size - 1 - i, ($u.get_ubyte_($size - 1 - i) << $n) | carry);
-            carry = tmp;
-        }
-    };
-}
-
-macro_rules! rotate_halfkey {
-    ($u:expr, $even:expr) => {
-        let n = if $even {2} else {1};
-        let mut carry = ($u.get_ubyte_(0) >> (4 - n)) & 0b11110000;
-        for i in 0..4
-        {
-            let tmp = $u.get_ubyte_(3 - i) >> (8 - n);
-            $u.set_ubyte_(3 - i, ($u.get_ubyte_(3 - i) << n) | carry);
-            carry = tmp;
-        }
-    };
-}
-
-macro_rules! slice_index {
-    ($indices:expr, $array:expr) => {
-        let mut idx = LongUnion::new_with($indices);
-        for i in 0..8_usize
-        {
-            $array[i] = ((idx.get_ubyte_(0) & 0b_111_111_00_u8) >> 2) as usize;
-            shift_left_union!(idx, 6, 6);
-        }
-    };
-}
-
-macro_rules! combine_pieces {
-    ($body:expr, $piece:expr) => {
-        $body >>= 8;
-        $body |= ($piece << 24);
-    };
-}
 
 macro_rules! pre_encrypt_into_vec {
     ($to:expr, $length_in_bytes:expr, $type:ty) => {
@@ -279,87 +66,6 @@ macro_rules! pre_decrypt_into_array {
             { $to[i] = <$type>::zero(); }
     };
 }
-
-/*
-macro_rules! copy {
-    ($to:expr, $from:expr, $progress:expr, u8) => {
-            for i in 0..8
-                { $to[$progress as usize + i] = $from.get_ubyte_(i); }
-        };
-    ($to:expr, $from:expr, $progress:expr, u16) => {
-            for i in 0..4
-                { $to[($progress as usize >> 1) + i] = $from.get_ushort_(i); }
-        };
-    ($to:expr, $from:expr, $progress:expr, u32) => {
-            for i in 0..2
-                { $to[($progress as usize >> 2) + i] = $from.get_uint_(i); }
-        };
-    ($to:expr, $from:expr, $progress:expr, u64) => {
-            $to[$progress as usize >> 3] = $from.get();
-        };
-    ($to:expr, $from:expr, $progress:expr, u128) => {
-            $to[$progress as usize >> 4] =  if ($progress as usize >> 3).is_odd()
-                                                { ($to[$progress as usize >> 4] << 64) | $from.get(); }
-                                            else 
-                                                { $from.get() };
-        };
-    ($to:expr, $from:expr, $progress:expr, usize) => {
-            #[cfg!(target_pointer_width = 16)]
-            for i in 0..4
-                { $to[($progress as usize >> 1) + i] = $from.get_usize_(i); }
-            #[cfg!(target_pointer_width = 32)]
-            for i in 0..2
-                { $to[($progress as usize >> 2) + i] = $from.get_usize_(i); }
-            #[cfg!(target_pointer_width = 64)]
-            $to[$progress as usize >> 3] = $from.get();
-        };
-    ($to:expr, $from:expr, $progress:expr, 8) =>    { copy!($to, $from, $progress, u8); };
-    ($to:expr, $from:expr, $progress:expr, 16) =>   { copy!($to, $from, $progress, u16); };
-    ($to:expr, $from:expr, $progress:expr, 32) =>   { copy!($to, $from, $progress, u32); };
-    ($to:expr, $from:expr, $progress:expr, 64) =>   { copy!($to, $from, $progress, u64); };
-    ($to:expr, $from:expr, $progress:expr, 128) =>  { copy!($to, $from, $progress, u128); };
-}
-
-macro_rules! copy_append {
-    ($to:expr, $from:expr, $progress:expr, u8) => {
-            for i in $progress as usize + 8..N
-                { $to[i] = 0; }
-        };
-    ($to:expr, $from:expr, $progress:expr, u16) => {
-            for i in ($progress as usize >> 1) + 4..N
-                { $to[i] = 0; }
-        };
-    ($to:expr, $from:expr, $progress:expr, u32) => {
-            for i in ($progress as usize >> 2) + 2..N
-                { $to[i] = 0; }
-        };
-    ($to:expr, $from:expr, $progress:expr, u64) => {
-            for i in ($progress as usize >> 3) + 1..N
-                { $to[i] = 0; }
-        };
-    ($to:expr, $from:expr, $progress:expr, u128) => {
-            for i in ($progress as usize >> 4) + 1..N
-                { $to[i] = 0; }
-        };
-    ($to:expr, $from:expr, $progress:expr, usize) => {
-            #[cfg!(target_pointer_width = 16)]
-            for i in ($progress as usize >> 1) + 4..N
-                { $to[i] = 0; }
-            #[cfg!(target_pointer_width = 32)]
-            for i in ($progress as usize >> 2) + 2..N
-                { $to[i] = 0; }
-            #[cfg!(target_pointer_width = 64)]
-            for i in ($progress as usize >> 3) + 1..N
-                { $to[i] = 0; }
-        };
-    ($to:expr, $from:expr, $progress:expr, 8) =>    { copy_append!($to, $from, $progress, u8); };
-    ($to:expr, $from:expr, $progress:expr, 16) =>   { copy_append!($to, $from, $progress, u16); };
-    ($to:expr, $from:expr, $progress:expr, 32) =>   { copy_append!($to, $from, $progress, u32); };
-    ($to:expr, $from:expr, $progress:expr, 64) =>   { copy_append!($to, $from, $progress, u64); };
-    ($to:expr, $from:expr, $progress:expr, 128) =>  { copy_append!($to, $from, $progress, u128); };
-}
-*/
-
 
 
 /// An NDES symmetric-key algorithm for the encryption of digital data
@@ -576,12 +282,13 @@ macro_rules! copy_append {
 /// ```
 /// ```
 #[allow(non_camel_case_types)]
-pub struct NDES
+pub struct NDES<S: SmallDES + Sized>
 {
-    des: Vec<SmallDES>,
+    block: LongUnion,
+    des: Vec<S>,
 }
 
-impl NDES
+impl<S: SmallDES + Sized> NDES<S>
 {
     const SUCCESS: u64 = 0xFFFFFFFF_FFFFFFFF;
     const FAILURE: u64 = 0;
@@ -606,7 +313,7 @@ impl NDES
     #[inline]
     pub fn new() -> Self
     {
-        Self { des: Vec::<SmallDES>::new() }
+        Self { block: LongUnion::zero(), des: Vec::<S>::new() }
     }
 
     // pub fn new_with_small_des<const N: usize>(smalldes: [SmallDES; N]) -> Self
@@ -624,10 +331,10 @@ impl NDES
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new_with_key)
-    pub fn new_with_small_des<const N: usize>(smalldes: [SmallDES; N]) -> Self
+    pub fn new_with_small_des_array<const N: usize>(smalldes: [S; N]) -> Self
     {
         let mut des = Self::new();
-        des.set_small_des(smalldes);
+        des.set_small_des_array(smalldes);
         des
     }
 
@@ -658,10 +365,10 @@ impl NDES
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new_with_key_u64)
-    pub fn new_with_small_des<const N: usize>(smalldes: Vec<SmallDES>) -> Self
+    pub fn new_with_small_des_vec(smalldes: Vec<S>) -> Self
     {
         let mut des = Self::new();
-        des.set_small_des(smalldes);
+        des.set_small_des_vec(smalldes);
         des
     }
 
@@ -690,7 +397,7 @@ impl NDES
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.set_key)
-    pub fn set_small_des_array<const N: usize>(&mut self, smalldes: [SmallDES; N])
+    pub fn set_small_des_array<const N: usize>(&mut self, smalldes: [S; N])
     {
         for val in smalldes
             { self.des.push(val); }
@@ -721,7 +428,7 @@ impl NDES
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.set_key)
-    pub fn set_small_des_vec<const N: usize>(&mut self, smalldes: Vec<SmallDES>)
+    pub fn set_small_des_vec(&mut self, smalldes: Vec<S>)
     {
         for val in smalldes
             { self.des.push(val); }
@@ -748,7 +455,7 @@ impl NDES
     {
         self.set_block(message);
         self.encrypt_block();
-        self.get_block()
+        self.block.get()
     }
 
     // pub fn decrypt_u64(&mut self, cipher: u64) -> u64
@@ -787,7 +494,7 @@ impl NDES
     {
         self.set_block(cipher);
         self.decrypt_block();
-        self.get_block()
+        self.block.get()
     }
 
     // pub fn encrypt_array_u64<const N: usize>(&mut self, message: &[u64; N], cipher: &mut [u64; N])
@@ -829,11 +536,7 @@ impl NDES
     pub fn encrypt_array_u64<const N: usize>(&mut self, message: &[u64; N], cipher: &mut [u64; N])
     {
         for i in 0..N
-        {
-            self.set_block(message[i]);
-            self.encrypt_block();
-            cipher[i] = self.get_block();
-        }
+            { cipher[i] = self.encrypt_u64(message[i]); }
     }
 
     // pub fn decrypt_array_u64<const N: usize>(&mut self, cipher: &[u64; N], message: &mut [u64; N])
@@ -885,11 +588,7 @@ impl NDES
     pub fn decrypt_array_u64<const N: usize>(&mut self, cipher: &[u64; N], message: &mut [u64; N])
     {
         for i in 0..N
-        {
-            self.set_block(cipher[i]);
-            self.decrypt_block();
-            message[i] = self.get_block();
-        }
+            { message[i] = self.decrypt_u64(cipher[i]); }
     }
 
     // pub fn is_succeful(&self) -> bool
@@ -4381,121 +4080,21 @@ impl NDES
 
     fn encrypt_block(&mut self)
     {
-        self.permutate_initially();
-        for round in 0..ROUND
-            { self.feistel(round); }
-        let left = self.block.get_uint_(0);
-        let right = self.block.get_uint_(1);
-        self.block.set_uint_(0, right);
-        self.block.set_uint_(1, left);
-        self.permutate_finally();
+        let mut block = self.des[0].encrypt_u64(self.block.get());
+        for i in 1..self.des.len()
+            { block = self.des[i].encrypt_u64(block); }
+        self.block.set(block);
     }
 
     fn decrypt_block(&mut self)
     {
-        self.permutate_initially();
-        for round in 0..ROUND
-            { self.feistel(ROUND - 1 - round); }
-        let left = self.block.get_uint_(0);
-        let right = self.block.get_uint_(1);
-        self.block.set_uint_(0, right);
-        self.block.set_uint_(1, left);
-        self.permutate_finally();
+        let len = self.des.len();
+        let mut block = self.des[len-1].decrypt_u64(self.block.get());
+        for i in 2..len+1
+            { block = self.des[len-i].decrypt_u64(block); }
+        self.block.set(block);
     }
-
-    #[allow(dead_code)]
-    fn feistel(&mut self, round: usize)
-    {
-        const LEFT: usize = 0;
-        const RIGHT: usize = 1;
-        let right = self.block.get_uint_(RIGHT);
-        let left = self.block.get_uint_(LEFT) ^ self.f(round, right);
-        self.block.set_uint_(LEFT, right);
-        self.block.set_uint_(RIGHT, left);
-    }
-
-    #[allow(dead_code)]
-    fn f(&mut self, round: usize, right: u32) -> u32
-    {
-        let expanded = self.expand(right);
-        let indices = expanded ^ self.round_key[round];
-        let mut idx = [0_usize; 8];
-        slice_index!(indices, idx);
-        let mut out = 0_u32;
-        for i in 0..4
-        {
-            let left = i * 2;
-            let right = left + 1;
-            combine_pieces!(out, ((Self::SBOX[left][idx[left]] << 4) | Self::SBOX[right][idx[right]]) as u32);
-        }
-        self.translate(out)
-    }
-
-    fn make_round_keys(&mut self)
-    {
-        let (mut left, mut right) = self.split();
-        let mut shift = SHIFT;
-        for i in 0..ROUND
-        {
-            rotate_halfkey!(left, shift.is_even());
-            rotate_halfkey!(right, shift.is_even());
-            self.make_a_round_key(i, left, right);
-            shift >>= 1;
-        }
-    }
-
-    fn make_a_round_key(&mut self, round: usize, left: IntUnion, mut right: IntUnion)
-    {
-        let tail = right.get_ubyte_(0) >> 4;
-        shift_left_union!(right, 4);
-        let mut whole = LongUnion::new_with_uints([left.get(), right.get()]);
-        whole.set_ubyte_(3, whole.get_ubyte_(3) | tail);
-        self.round_key[round] = self.compress_into_48bits(whole.get());
-    }
-
-    fn split(&self) -> (IntUnion, IntUnion)
-    {
-        let key_56bit = self.compress_into_56bits();
-        let key = LongUnion::new_with(key_56bit);
-        let mut left = IntUnion::new_with(key.get_uint_(0));
-        left.set_ubyte_(3, left.get_ubyte_(3) & 0b_1111_0000);
-        let mut right = IntUnion::new_with(key.get_uint_(1));
-        shift_right_union!(right, 4);
-        right.set_ubyte_(0, (key.get_ubyte_(3) << 4) | right.get_ubyte_(0));
-        (left, right)
-    }
-
-    fn permutate_initially(&mut self)   { permutate_data!(self, Self::IP); }
-    fn permutate_finally(&mut self)     { permutate_data!(self, Self::FP); }
-    fn compress_into_56bits(&self) -> u64   { return permutate_data!(Self::PC1, u64, self.key.get()); }
-    fn compress_into_48bits(&self, whole: u64) -> u64   { return permutate_data!(Self::PC2, u64, whole); }
-    fn expand(&self, right: u32) -> u64     { return permutate_data!(Self::EP, u64, right);}
-    fn translate(&self, right: u32) -> u32  { return permutate_data!(Self::TP, u32, right); }
 
     #[inline] fn get_block(&self) -> u64            { self.block.get() }
     #[inline] fn set_block(&mut self, block: u64)   { self.block.set(block); }
-
-
-
-
-    ////// for unit test /////
-    // #[inline] pub fn test_get_block(&self) -> u64           { self.block.get() }
-    // #[inline] pub fn test_set_block(&mut self, block: u64)  { self.block.set(block); }
-    //
-    // pub fn test_set_key(&mut self, key: [u8; 8])
-    // {
-    //     for i in 0..8
-    //         { self.key.set_ubyte_(i, key[i]); }
-    // }
-    //
-    // pub fn test_permutate_initially(&mut self)    { permutate_data!(self, Self::IP); }
-    // pub fn test_permutate_finally(&mut self)      { permutate_data!(self, Self::FP); }
-    // #[inline] pub fn test_expand(&self, right: u32) -> u64  { self.expand(right) }
-    // #[inline] pub fn test_compress_into_56bits(&self) -> u64    { self.compress_into_56bits() }
-    // #[inline] pub fn test_split(&self) -> (IntUnion, IntUnion)  { self.split() }
-    // #[inline] pub fn test_make_round_keys(&mut self)    { self.make_round_keys(); }
-    // #[inline] pub fn test_get_round_key(&self, round: usize) -> u64  { self.round_key[round] }
-    // pub fn test_slice_indices(&self, indices: u64, array: &mut [usize; 8])   { slice_index!(indices, array); }
-    // pub fn test_combine(&self, collector: &mut u32, piece: u32) { combine_pieces!(*collector, piece); }
-    // pub fn test_f(&mut self, round: usize, right: u32) -> u32   { self.f(round, right) }
 }

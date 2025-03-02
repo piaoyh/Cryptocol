@@ -14,13 +14,6 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use std::ptr::copy_nonoverlapping;
-use std::vec::Vec;
-// use std::slice::from_raw_parts;
-// use std::fmt::{ self, Debug, Display, Formatter };
-// use std::collections::HashMap;
-
-use crate::number::{ SmallUInt, IntUnion, LongUnion };
 use crate::symmetric::DES_Generic;
 
 pub trait SmallDES : Sized
@@ -29,8 +22,6 @@ pub trait SmallDES : Sized
     fn set_key_u64(&mut self, key: u64);
     fn encrypt_u64(&mut self, message: u64) -> u64;
     fn decrypt_u64(&mut self, cipher: u64) -> u64;
-    fn encrypt_array_u64<const N: usize>(&mut self, message: &[u64; N], cipher: &mut [u64; N]);
-    fn decrypt_array_u64<const N: usize>(&mut self, cipher: &[u64; N], message: &mut [u64; N]);
 }
 
 
@@ -326,8 +317,6 @@ S756, S757, S758, S759, S760, S761, S762, S763
 {
     #[inline] fn set_key(&mut self, key: [u8; 8])   { self.set_key(key); }
     #[inline] fn set_key_u64(&mut self, key: u64)   { self.set_key_u64(key); }
-    #[inline] fn encrypt_u64(&mut self, message: u64) -> u64    { self.encrypt_u64(message) }
-    #[inline] fn decrypt_u64(&mut self, cipher: u64) -> u64     { self.decrypt_u64(cipher) }
-    #[inline] fn encrypt_array_u64<const N: usize>(&mut self, message: &[u64; N], cipher: &mut [u64; N])    { self.encrypt_array_u64(message, cipher) }
-    #[inline] fn decrypt_array_u64<const N: usize>(&mut self, cipher: &[u64; N], message: &mut [u64; N])    { self.decrypt_array_u64(cipher, message) }
+    #[inline] fn encrypt_u64(&mut self, message: u64) -> u64    { self.encrypt(message) }
+    #[inline] fn decrypt_u64(&mut self, cipher: u64) -> u64     { self.decrypt(cipher) }
 }
