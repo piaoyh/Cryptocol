@@ -2667,14 +2667,213 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// - If `length_in_bytes` is `0`, only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
     /// - The padding bits composed of the bytes that indicate the length of
-    ///   the plaintext. For more information about the padding bits according
-    ///   to PKCS#7, Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    ///   the padding bytes. For more information about the padding bits
+    ///   according to PKCS#7, Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// - This method performs pure encryption without any operation mode.
     ///   It is equivalent to ECB (Electronic Code Book) mode.
     /// 
-    /// # Example 1
+    /// # Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 56];
+    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
     /// ```
     /// 
+    /// # Example 2 for Expanded case for 128 rounds
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES_Expanded;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64(key);
+    /// 
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 56];
+    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// print!("C (128 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "DD C6 D8 D1 B0 66 D9 AC F7 F3 B4 FD D6 6C ED 78 20 FB A6 8D 35 38 EA 65 B0 65 23 05 FF D4 53 B1 D1 E0 C5 52 36 1E AC E2 19 EF 94 B8 98 04 A9 69 CC 6A BC 81 7D 6B 29 C0 ");
+    /// ```
+    /// 
+    /// # Example 3 for Expanded case for 0 rounds which means that key is meaningless
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES_Expanded;
+    /// 
+    /// let key1 = 0x_1234567890ABCDEF_u64;
+    /// let key2 = 0_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
+    /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
+    /// 
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher1 = [0_u8; 56];
+    /// let mut cipher2 = [0_u8; 56];
+    /// c_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher1.as_mut_ptr());
+    /// d_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher2.as_mut_ptr());
+    /// print!("C (0 rounds) =\t");
+    /// for c in cipher1.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher1.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 02 ");
+    /// print!("D (0 rounds) =\t");
+    /// for c in cipher2.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher2.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 02 ");
+    /// ```
+    /// 
+    /// # Example 4 for Normal case for the message of 0 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 8];
+    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
+    /// ```
+    /// 
+    /// # Example 5 for Normal case for the message shorter than 8 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "7 bytes";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 8];
+    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "F6 F0 41 DD 55 55 3B 35 ");
+    /// ```
+    /// 
+    /// # Example 6 for Normal case for the message of 8 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "I am OK.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 16];
+    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "27 F5 93 EE 76 DC 64 87 41 7F 89 79 08 CD A1 4C ");
+    /// ```
+    /// 
+    /// # Example 7 for Normal case for the message longer than 8 bytes and shorter than 16 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "PARK Youngho";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 16];
+    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "8E 52 20 47 78 78 51 B7 00 69 10 77 91 B7 52 36 ");
+    /// ```
+    /// 
+    /// # Example 7 for Normal case for the message of 16 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "고맙습니다.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 24];
+    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 41 7F 89 79 08 CD A1 4C ");
     /// ```
     pub fn encrypt_with_padding_pkcs7(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {

@@ -232,51 +232,55 @@ macro_rules! combine_pieces {
     };
 }
 
-macro_rules! pre_encrypt_into_vec {
+macro_rules! des_pre_encrypt_into_vec {
     ($to:expr, $length_in_bytes:expr, $type:ty) => {
         let mut len = if <$type>::size_in_bytes() == 16 {16_usize} else {8};
         len = ($length_in_bytes + 1).next_multiple_of(len as u64) as usize / <$type>::size_in_bytes();
         $to.truncate(len - 1);
         $to.resize(len, <$type>::zero());
     };
-    // pre_encrypt_into_vec!(cipher, length_in_bytes, T);
+    // des_pre_encrypt_into_vec!(cipher, length_in_bytes, T);
     //
     // let mut len = if T::size_in_bytes() == 16 {16_usize} else {8};
     // len = (length_in_bytes + 1).next_multiple_of(len as u64) as usize / T::size_in_bytes();
     // cipher.truncate(len - 1);
     // cipher.resize(len, T::zero());
 }
+pub(super) use des_pre_encrypt_into_vec;
 
-macro_rules! pre_decrypt_into_vec {
+macro_rules! des_pre_decrypt_into_vec {
     ($to:expr, $length_in_bytes:expr, $type:ty) => {
         let len = $length_in_bytes as usize / <$type>::size_in_bytes();
         $to.truncate(len - 1);
         $to.resize(len, <$type>::zero());
     };
 }
+pub(super) use des_pre_decrypt_into_vec;
 
-macro_rules! pre_encrypt_into_array {
+macro_rules! des_pre_encrypt_into_array {
     ($to:expr, $length_in_bytes:expr, $type:ty) => {
         let mut len = if <$type>::size_in_bytes() == 16 {16_usize} else {8};
         len = ($length_in_bytes + 1).next_multiple_of(len as u64) as usize / <$type>::size_in_bytes();
         for i in len - 1..$to.len()
             { $to[i] = <$type>::zero(); }
     };
-    // pre_encrypt_into_array!(cipher, length_in_bytes, T);
+    // des_pre_encrypt_into_array!(cipher, length_in_bytes, T);
     //
     // let mut len = if T::size_in_bytes() == 16 {16_usize} else {8};
     // len = (length_in_bytes + 1).next_multiple_of(len as u64) as usize / T::size_in_bytes();
     // for i in len..M
     //     { cipher[i] = T::zero(); }
 }
+pub(super) use des_pre_encrypt_into_array;
 
-macro_rules! pre_decrypt_into_array {
+macro_rules! des_pre_decrypt_into_array {
     ($to:expr, $length_in_bytes:expr, $type:ty) => {
         let len = $length_in_bytes as usize / <$type>::size_in_bytes();
         for i in len - 1..$to.len()
             { $to[i] = <$type>::zero(); }
     };
 }
+pub(super) use des_pre_decrypt_into_array;
 
 /*
 macro_rules! copy {
@@ -2172,6 +2176,9 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.is_failed)
     #[inline] pub fn is_failed(&self) -> bool   { self.block.get() == Self::FAILURE }
 
+    #[inline] pub fn set_success(&mut self) { self.block.set(Self::SUCCESS); }
+    #[inline] pub fn set_failed(&mut self)  { self.block.set(Self::FAILURE); }
+
     // pub fn encrypt_with_padding_pkcs7(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     /// Encrypts the data with the padding defined in PKCS #7.
     /// 
@@ -2197,15 +2204,37 @@ S756, S757, S758, S759, S760, S761, S762, S763
     /// - If `length_in_bytes` is `0`, only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
     /// - The padding bits composed of the bytes that indicate the length of
-    ///   the plaintext. For more information about the padding bits according
-    ///   to PKCS#7, Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    ///   the padding bytes. For more information about the padding bits
+    ///   according to PKCS#7, Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// - This method performs pure encryption without any operation mode.
     ///   It is equivalent to ECB (Electronic Code Book) mode.
     /// 
-    /// # Example 1
+    /// # Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 56];
+    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
     /// ```
     /// 
-    /// ```
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.encrypt_with_padding_pkcs7)
     pub fn encrypt_with_padding_pkcs7(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
         let mut progress = 0_u64;
@@ -2232,7 +2261,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
         }
         encoded = self.encrypt_u64(block_union.get());
         unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
-        self.block.set(Self::SUCCESS);
+        self.set_success();
         progress + 8
     }
 
@@ -2443,7 +2472,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_pkcs7_into_vec<T>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_encrypt_into_vec!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_vec!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_pkcs7(message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -2468,10 +2497,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if (length_in_bytes as u128 + 1).next_multiple_of(8) > T::size_in_bytes() as u128 * N as u128
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_encrypt_into_array!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_pkcs7(message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -2591,7 +2620,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if length_in_bytes < 8
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
         let mut progress = 0_u64;
@@ -2616,12 +2645,12 @@ S756, S757, S758, S759, S760, S761, S762, S763
         {
             if decoded_union.get_ubyte_(i) != padding_bytes
             {
-                self.block.set(Self::FAILURE);
+                self.set_failed();
                 return 0;
             }
         }
         unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), message_bytes); }
-        self.block.set(Self::SUCCESS);
+        self.set_success();
         progress + message_bytes as u64
     }
 
@@ -3008,7 +3037,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn decrypt_with_padding_pkcs7_into_vec<T>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_decrypt_into_vec!(message, length_in_bytes, T);
+        des_pre_decrypt_into_vec!(message, length_in_bytes, T);
         let res = self.decrypt_with_padding_pkcs7(cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
         message.truncate(res as usize);
         res
@@ -3026,10 +3055,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_decrypt_into_array!(message, length_in_bytes, T);
+        des_pre_decrypt_into_array!(message, length_in_bytes, T);
         self.decrypt_with_padding_pkcs7(cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
     }
 
@@ -3121,14 +3150,14 @@ S756, S757, S758, S759, S760, S761, S762, S763
         }
         encoded = self.encrypt_u64(block_union.get());
         unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
-        self.block.set(Self::SUCCESS);
+        self.set_success();
         progress + 8
     }
 
     pub fn encrypt_with_padding_iso_into_vec<T>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_encrypt_into_vec!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_vec!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_iso(message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -3137,10 +3166,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if (length_in_bytes as u128 + 1).next_multiple_of(8) > T::size_in_bytes() as u128 * N as u128
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_encrypt_into_array!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_iso(message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -3255,23 +3284,23 @@ S756, S757, S758, S759, S760, S761, S762, S763
             {
                 let message_bytes = 7-i;
                 unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), message_bytes); }
-                self.block.set(Self::SUCCESS);
+                self.set_success();
                 return progress + message_bytes as u64;
             }
             else
             {
-                self.block.set(Self::FAILURE);
+                self.set_failed();
                 return 0;
             }
         }
-        self.block.set(Self::FAILURE);
+        self.set_failed();
         return 0;
     }
 
     pub fn decrypt_with_padding_iso_into_vec<T>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_decrypt_into_vec!(message, length_in_bytes, T);
+        des_pre_decrypt_into_vec!(message, length_in_bytes, T);
         let len = self.decrypt_with_padding_iso(cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
         message.truncate(len as usize);
         len
@@ -3282,10 +3311,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_decrypt_into_array!(message, length_in_bytes, T);
+        des_pre_decrypt_into_array!(message, length_in_bytes, T);
         self.decrypt_with_padding_iso(cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
     }
 
@@ -3752,7 +3781,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
         }
         encoded = self.encrypt_u64(block_union.get() ^ encoded);
         unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
-        self.block.set(Self::SUCCESS);
+        self.set_success();
         progress + 8
     }
 
@@ -3764,7 +3793,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_pkcs7_cbc_into_vec<T>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_encrypt_into_vec!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_vec!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_pkcs7_cbc(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -3789,10 +3818,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if (length_in_bytes as u128 + 1).next_multiple_of(8) > T::size_in_bytes() as u128 * N as u128
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_encrypt_into_array!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_pkcs7_cbc(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -3903,7 +3932,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
         let padding_bytes = decoded_union.get_ubyte_(7);
         if padding_bytes > 8
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
         let message_bytes = 8 - padding_bytes as usize;
@@ -3911,19 +3940,19 @@ S756, S757, S758, S759, S760, S761, S762, S763
         {
             if decoded_union.get_ubyte_(i) != padding_bytes
             {
-                self.block.set(Self::FAILURE);
+                self.set_failed();
                 return 0;
             }
         }
         unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), message_bytes); }
-        self.block.set(Self::SUCCESS);
+        self.set_success();
         progress + message_bytes as u64
     }
 
     pub fn decrypt_with_padding_pkcs7_cbc_into_vec<T>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_decrypt_into_vec!(message, length_in_bytes, T);
+        des_pre_decrypt_into_vec!(message, length_in_bytes, T);
         let len = self.decrypt_with_padding_pkcs7_cbc(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
         message.truncate(len as usize);
         len
@@ -3934,10 +3963,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_decrypt_into_array!(message, length_in_bytes, T);
+        des_pre_decrypt_into_array!(message, length_in_bytes, T);
         self.decrypt_with_padding_pkcs7_cbc(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
     }
 
@@ -4028,14 +4057,14 @@ S756, S757, S758, S759, S760, S761, S762, S763
         }
         encoded = self.encrypt_u64(block_union.get() ^ encoded);
         unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
-        self.block.set(Self::SUCCESS);
+        self.set_success();
         progress + 8
     }
 
     pub fn encrypt_with_padding_iso_cbc_into_vec<T>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_encrypt_into_vec!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_vec!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_iso_cbc(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -4044,10 +4073,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if (length_in_bytes as u128 + 1).next_multiple_of(8) > T::size_in_bytes() as u128 * N as u128
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_encrypt_into_array!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_iso_cbc(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -4160,23 +4189,23 @@ S756, S757, S758, S759, S760, S761, S762, S763
             {
                 let message_bytes = 7-i;
                 unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), message_bytes); }
-                self.block.set(Self::SUCCESS);
+                self.set_success();
                 return progress + message_bytes as u64;
             }
             else
             {
-                self.block.set(Self::FAILURE);
+                self.set_failed();
                 return 0;
             }
         }
-        self.block.set(Self::FAILURE);
+        self.set_failed();
         return 0;
     }
 
     pub fn decrypt_with_padding_iso_cbc_into_vec<T>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_decrypt_into_vec!(message, length_in_bytes, T);
+        des_pre_decrypt_into_vec!(message, length_in_bytes, T);
         let len = self.decrypt_with_padding_iso_cbc(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
         message.truncate(len as usize);
         len
@@ -4187,10 +4216,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_decrypt_into_array!(message, length_in_bytes, T);
+        des_pre_decrypt_into_array!(message, length_in_bytes, T);
         self.decrypt_with_padding_iso_cbc(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
     }
 
@@ -4284,7 +4313,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
         }
         let encoded = self.encrypt_u64(block_union.get() ^ iv);
         unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
-        self.block.set(Self::SUCCESS);
+        self.set_success();
         progress + 8
     }
 
@@ -4296,7 +4325,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_with_padding_pkcs7_pcbc_into_vec<T>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_encrypt_into_vec!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_vec!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_pkcs7_pcbc(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -4320,10 +4349,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if (length_in_bytes as u128 + 1).next_multiple_of(8) > T::size_in_bytes() as u128 * N as u128
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_encrypt_into_array!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_pkcs7_pcbc(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -4436,19 +4465,19 @@ S756, S757, S758, S759, S760, S761, S762, S763
         {
             if decoded_union.get_ubyte_(i) != padding_bytes
             {
-                self.block.set(Self::FAILURE);
+                self.set_failed();
                 return 0;
             }
         }
         unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), message_bytes); }
-        self.block.set(Self::SUCCESS);
+        self.set_success();
         progress + message_bytes as u64
     }
 
     pub fn decrypt_with_padding_pkcs7_pcbc_into_vec<T>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_decrypt_into_vec!(message, length_in_bytes, T);
+        des_pre_decrypt_into_vec!(message, length_in_bytes, T);
         let len = self.decrypt_with_padding_pkcs7_pcbc(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
         message.truncate(len as usize);
         len
@@ -4459,10 +4488,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_decrypt_into_array!(message, length_in_bytes, T);
+        des_pre_decrypt_into_array!(message, length_in_bytes, T);
         self.decrypt_with_padding_pkcs7_pcbc(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
     }
 
@@ -4554,14 +4583,14 @@ S756, S757, S758, S759, S760, S761, S762, S763
         }
         let encoded = self.encrypt_u64(block_union.get() ^ iv);
         unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
-        self.block.set(Self::SUCCESS);
+        self.set_success();
         progress + 8
     }
 
     pub fn encrypt_with_padding_iso_pcbc_into_vec<T>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_encrypt_into_vec!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_vec!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_iso_pcbc(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -4570,10 +4599,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if (length_in_bytes as u128 + 1).next_multiple_of(8) > T::size_in_bytes() as u128 * N as u128
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_encrypt_into_array!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_with_padding_iso_pcbc(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -4687,23 +4716,23 @@ S756, S757, S758, S759, S760, S761, S762, S763
             {
                 let message_bytes = 7-i;
                 unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), message_bytes); }
-                self.block.set(Self::SUCCESS);
+                self.set_success();
                 return progress + message_bytes as u64;
             }
             else
             {
-                self.block.set(Self::FAILURE);
+                self.set_failed();
                 return 0;
             }
         }
-        self.block.set(Self::FAILURE);
+        self.set_failed();
         return 0;
     }
 
     pub fn decrypt_with_padding_iso_pcbc_into_vec<T>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_decrypt_into_vec!(message, length_in_bytes, T);
+        des_pre_decrypt_into_vec!(message, length_in_bytes, T);
         let len = self.decrypt_with_padding_iso_pcbc(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
         message.truncate(len as usize);
         len
@@ -4714,10 +4743,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128 + 1
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_decrypt_into_array!(message, length_in_bytes, T);
+        des_pre_decrypt_into_array!(message, length_in_bytes, T);
         self.decrypt_with_padding_iso_pcbc(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
     }
 
@@ -4799,7 +4828,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
 
         if progress == length_in_bytes
         {
-            self.block.set(Self::SUCCESS);
+            self.set_success();
             progress
         }
         else
@@ -4810,7 +4839,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
             unsafe { copy_nonoverlapping(addr, &mut block as *mut u64 as *mut u8, tail); }
             encoded = block ^ self.encrypt_u64(encoded);
             unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), tail); }
-            self.block.set(Self::SUCCESS);
+            self.set_success();
             progress + tail as u64
         }
     }
@@ -4824,7 +4853,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_cfb_into_vec<T>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_encrypt_into_vec!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_vec!(cipher, length_in_bytes, T);
         let len = self.encrypt_cfb(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8);
         cipher.truncate(len as usize);
         len
@@ -4851,10 +4880,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_encrypt_into_array!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_cfb(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -4973,7 +5002,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn decrypt_cfb_into_vec<T>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_decrypt_into_vec!(message, length_in_bytes, T);
+        des_pre_decrypt_into_vec!(message, length_in_bytes, T);
         let len = self.decrypt_cfb(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
         message.truncate(len as usize);
         len
@@ -4984,10 +5013,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_decrypt_into_array!(message, length_in_bytes, T);
+        des_pre_decrypt_into_array!(message, length_in_bytes, T);
         self.decrypt_cfb(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
     }
 
@@ -5069,7 +5098,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
 
         if progress == length_in_bytes
         {
-            self.block.set(Self::SUCCESS);
+            self.set_success();
             progress
         }
         else
@@ -5080,7 +5109,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
             unsafe { copy_nonoverlapping(addr, &mut block as *mut u64 as *mut u8, tail); }
             let coded = block ^ self.encrypt_u64(iv);
             unsafe { copy_nonoverlapping(&coded as *const u64 as *const u8, to.add(progress as usize), tail); }
-            self.block.set(Self::SUCCESS);
+            self.set_success();
             progress + tail as u64
         }
     }
@@ -5099,7 +5128,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_ofb_into_vec<T>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_encrypt_into_vec!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_vec!(cipher, length_in_bytes, T);
         let len = self.encrypt_ofb(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8);
         cipher.truncate(len as usize);
         len
@@ -5126,10 +5155,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_encrypt_into_array!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_ofb(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -5226,7 +5255,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn decrypt_ofb_into_vec<T>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_decrypt_into_vec!(message, length_in_bytes, T);
+        des_pre_decrypt_into_vec!(message, length_in_bytes, T);
         let len = self.decrypt_ofb(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
         message.truncate(len as usize);
         len
@@ -5237,10 +5266,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_decrypt_into_array!(message, length_in_bytes, T);
+        des_pre_decrypt_into_array!(message, length_in_bytes, T);
         self.decrypt_ofb(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
     }
 
@@ -5335,7 +5364,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
         }
         let coded = block ^ self.encrypt_u64(nonce);
         unsafe { copy_nonoverlapping(&coded as *const u64 as *const u8, to.add(progress as usize), tail); }
-        self.block.set(Self::SUCCESS);
+        self.set_success();
         progress + tail as u64
     }
 
@@ -5354,7 +5383,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn encrypt_ctr_into_vec<T>(&mut self, nonce: u64, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_encrypt_into_vec!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_vec!(cipher, length_in_bytes, T);
         let len = self.encrypt_ctr(nonce, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8);
         cipher.truncate(len as usize);
         len
@@ -5381,10 +5410,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_encrypt_into_array!(cipher, length_in_bytes, T);
+        des_pre_encrypt_into_array!(cipher, length_in_bytes, T);
         self.encrypt_ctr(nonce, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
@@ -5481,7 +5510,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     pub fn decrypt_ctr_into_vec<T>(&mut self, nonce: u64, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<T>) -> u64
     where T: SmallUInt + Copy + Clone
     {
-        pre_decrypt_into_vec!(message, length_in_bytes, T);
+        des_pre_decrypt_into_vec!(message, length_in_bytes, T);
         let len = self.decrypt_ctr(nonce, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
         message.truncate(len as usize);
         len
@@ -5492,10 +5521,10 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         if length_in_bytes as u128 > T::size_in_bytes() as u128 * N as u128
         {
-            self.block.set(Self::FAILURE);
+            self.set_failed();
             return 0;
         }
-        pre_decrypt_into_array!(message, length_in_bytes, T);
+        des_pre_decrypt_into_array!(message, length_in_bytes, T);
         self.decrypt_ctr(nonce, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
     }
 
