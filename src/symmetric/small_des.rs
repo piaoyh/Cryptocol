@@ -16,12 +16,17 @@
 
 use crate::symmetric::DES_Generic;
 
+
 pub trait SmallDES : Sized
 {
     fn set_key(&mut self, key: [u8; 8]);
     fn set_key_u64(&mut self, key: u64);
     fn encrypt_u64(&mut self, message: u64) -> u64;
     fn decrypt_u64(&mut self, cipher: u64) -> u64;
+    fn turn_inverse(&mut self);
+    fn turn_encryptor(&mut self);
+    fn turn_decryptor(&mut self);
+    // fn clone_small_des(&self) -> Self;
 }
 
 
@@ -319,4 +324,8 @@ S756, S757, S758, S759, S760, S761, S762, S763
     #[inline] fn set_key_u64(&mut self, key: u64)   { self.set_key_u64(key); }
     #[inline] fn encrypt_u64(&mut self, message: u64) -> u64    { self.encrypt(message) }
     #[inline] fn decrypt_u64(&mut self, cipher: u64) -> u64     { self.decrypt(cipher) }
+    #[inline] fn turn_inverse(&mut self)    { self.turn_inverse(); }
+    #[inline] fn turn_encryptor(&mut self)  { self.turn_encryptor(); }
+    #[inline] fn turn_decryptor(&mut self)  { self.turn_decryptor(); }
+    // #[inline] fn clone_small_des(&self) -> Self { self.clone_small_des() }
 }

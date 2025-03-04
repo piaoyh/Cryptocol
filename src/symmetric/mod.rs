@@ -53,3 +53,10 @@ pub use ndes::*;
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to all the *.rs in documentation folder.
 pub mod documentation;
+
+
+/// Implementaion of various traits for DES_Generic
+pub mod traits_for_des_impl;
+
+/// Implementaion of various traits for DNES_Generic
+pub mod traits_for_ndes_impl;

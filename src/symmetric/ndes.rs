@@ -282,6 +282,7 @@ macro_rules! pre_decrypt_into_array {
 /// ```
 /// ```
 #[allow(non_camel_case_types)]
+#[derive(Clone)]
 pub struct NDES<S: SmallDES + Sized>
 {
     block: LongUnion,

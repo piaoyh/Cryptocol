@@ -21,6 +21,7 @@ use std::vec::Vec;
 // use std::collections::HashMap;
 
 use crate::number::{ SmallUInt, IntUnion, LongUnion };
+use crate::symmetric::SmallDES;
 
 // Converts bit number into 0-based bit number in Little Endianness.
 macro_rules! convert {
@@ -1019,6 +1020,7 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// assert_eq!(recovered, message);
 /// ```
 #[allow(non_camel_case_types)]
+#[derive(Clone)]
 pub struct DES_Generic<const ROUND: usize = 16, const SHIFT: u128 = 0b_1000000100000011,
 const PC101: u8 = 57, const PC102: u8 = 49, const PC103: u8 = 41, const PC104: u8 = 33,
 const PC105: u8 = 25, const PC106: u8 = 17, const PC107: u8 = 09, const PC108: u8 = 01,
@@ -1210,7 +1212,7 @@ const S748: u8 = 0x0, const S749: u8 = 0xf, const S750: u8 = 0x6, const S751: u8
 const S752: u8 = 0xa, const S753: u8 = 0x9, const S754: u8 = 0xd, const S755: u8 = 0x0,
 const S756: u8 = 0xf, const S757: u8 = 0x3, const S758: u8 = 0x3, const S759: u8 = 0x5,
 const S760: u8 = 0x5, const S761: u8 = 0x6, const S762: u8 = 0x8, const S763: u8 = 0xb
->
+> where Self: SmallDES
 {
     key: LongUnion,
     block: LongUnion,
@@ -1666,6 +1668,11 @@ S756, S757, S758, S759, S760, S761, S762, S763
     const SUCCESS: u64 = 0xFFFFFFFF_FFFFFFFF;
     const FAILURE: u64 = 0;
 
+    // pub fn clone_small_des(&self) -> SmallDES
+    // {
+    //     self
+    // }
+
     // pub fn new() -> Self
     /// Constructs a new object DES_Generic.
     /// 
@@ -2008,6 +2015,24 @@ S756, S757, S758, S759, S760, S761, S762, S763
         self.key.set(key);
         self.make_round_keys();
     }
+
+    pub fn turn_inverse(&mut self)
+    {
+        (self.enc, self.dec) = (self.dec, self.enc);
+    }
+
+    pub fn turn_encryptor(&mut self)
+    {
+        self.enc = Self::encrypt_u64;
+        self.dec = Self::decrypt_u64;
+    }
+
+    pub fn turn_decryptor(&mut self)
+    {
+        self.enc = Self::decrypt_u64;
+        self.dec = Self::encrypt_u64;
+    }
+
 
     // pub fn encrypt_u64(&mut self, message: u64) -> u64
     /// Encrypts a 64-bit data.
