@@ -742,7 +742,7 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// # Note
 /// **This descryption about DES is according to big endianness.**
 /// MSB (Most Significant Bit) is the first bit and LSB (Least Significant Bit)
-/// is the 64th bit in this descryption.
+/// is the 64th bit in this descryption unless otherwise mentioned.
 /// 
 /// # Introduction
 /// DES is the acronym of Data Encryption Standard. It is the symmetric key
@@ -876,11 +876,17 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 ///   included all the bits. You cannot drop any bit. Your dropping any bit will
 ///   surely kill the whole DES encryption/decryption algorithm.
 /// 
+/// # Caution
+/// DES is not considered to be secure anymore. So, it is wise not to use DES
+/// for serious purpose. Instead, use TDES or AES or any other equivalents.
+/// In this crate, NDES which is generalized version of TDES will be provided
+/// soon, and AES will be also provided later.
+/// 
 /// # Reference
 /// [Read more](https://en.wikipedia.org/wiki/Data_Encryption_Standard)
 /// about DES in brief.
-/// Watch [this video](https://www.youtube.com/watch?v=kPBJIhpcZgE)
-/// and [this video](https://www.youtube.com/watch?v=l-7YW06BFNs) in series
+/// Watch [this video](https://www.youtube.com/watch?v=kPBJIhpcZgE) and then
+/// [this video](https://www.youtube.com/watch?v=l-7YW06BFNs) in series
 /// for more (or deeper or full) understanding of DES.
 /// 
 /// # Quick Start

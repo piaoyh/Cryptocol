@@ -9,6 +9,7 @@
 #![allow(missing_docs)]
 #![allow(unused_must_use)]
 #![allow(dead_code)]
+#![allow(unused_imports)]
 
 ///// For test
 // use cryptocol::symmetric::DES;

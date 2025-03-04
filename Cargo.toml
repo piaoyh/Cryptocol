@@ -8,7 +8,7 @@ keywords = ["number", "sha2", "sha512", "des", "random"]
 license = "MIT OR Apache-2.0"
 name = "cryptocol"
 readme = "README.md"
-version = "0.10.0"
+version = "0.10.1"
 # repository = "https://github.com/piaoyh/cryptocol"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -72,6 +72,10 @@ doc-scrape-examples = false
 [[example]]
 name = "des_examples"
 doc-scrape-examples = false
+
+#[[example]]
+#name = "ndes_examples"
+#doc-scrape-examples = false
 
 [[example]]
 name = "random_examples"
