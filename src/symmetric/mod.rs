@@ -43,6 +43,7 @@ mod des;
 // mod aes;
 // mod naes;
 
+mod traits_pcbc_with_padding_iso;
 mod traits_cfb;
 mod traits_ofb;
 mod traits_ctr;
@@ -52,6 +53,7 @@ pub use des::*;
 // pub use aes::*;
 // pub use naes::*;
 
+pub use traits_pcbc_with_padding_iso::PCBC_ISO;
 pub use traits_cfb::CFB;
 pub use traits_ofb::OFB;
 pub use traits_ctr::CTR;
