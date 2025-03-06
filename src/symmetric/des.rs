@@ -4813,7 +4813,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
 
-
+/*
     pub fn encrypt_cfb(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
         let mut progress = 0_u64;
@@ -5083,7 +5083,6 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
 
-/*
     fn crypt_ofb(&mut self, mut iv: u64, from: *const u8, length_in_bytes: u64, to: *mut u8) -> u64
     {
         let mut progress = 0_u64;
