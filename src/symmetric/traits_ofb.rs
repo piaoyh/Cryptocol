@@ -22,26 +22,26 @@ use crate::symmetric::DES_Generic;
 use crate::symmetric::{ des_pre_encrypt_into_vec, des_pre_encrypt_into_array,
                         des_pre_decrypt_into_vec, des_pre_decrypt_into_array };
 
-pub trait CTR<T> : Sized
+pub trait OFB<T> : Sized
 {
-    fn encrypt(&mut self, nonce: T, from: *const u8, length_in_bytes: u64, to: *mut u8) -> u64;
+    fn encrypt(&mut self, iv: T, from: *const u8, length_in_bytes: u64, to: *mut u8) -> u64;
 
-    // fn encrypt_into_vec<U>(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+    // fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     /// Encrypts the data without padding.
     /// 
     /// # Features
     /// - If `length_in_bytes` is `0`, only padding bytes will be encrypted,
     ///   and pushed into the vector `cipher`.
-    fn encrypt_into_vec<U>(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+    fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
         des_pre_encrypt_into_vec!(cipher, length_in_bytes, U);
-        let len = self.encrypt(nonce, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8);
+        let len = self.encrypt(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8);
         cipher.truncate(len as usize);
         len
     }
 
-    // fn encrypt_into_array<U, const N: usize>(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+    // fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     /// Encrypts the data with the padding defined in PKCS #7.
     /// 
     /// # Features
@@ -57,171 +57,171 @@ pub trait CTR<T> : Sized
     ///   encrypted ciphertext, and then fills the rest of elements of
     ///   the array `cipher`, and returns `true`.
     /// 
-    fn encrypt_into_array<U, const N: usize>(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+    fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone;
 
     #[inline]
-    fn encrypt_str(&mut self, nonce: T, message: &str, cipher: *mut u8) -> u64
+    fn encrypt_str(&mut self, iv: T, message: &str, cipher: *mut u8) -> u64
     {
-        self.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher)
+        self.encrypt(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
     #[inline]
-    fn encrypt_str_into_vec<U>(&mut self, nonce: T, message: &str, cipher: &mut Vec<U>) -> u64
+    fn encrypt_str_into_vec<U>(&mut self, iv: T, message: &str, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, cipher)
+        self.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
     #[inline]
-    fn encrypt_str_into_array<U, const N: usize>(&mut self, nonce: T, message: &str, cipher: &mut [U; N]) -> u64
+    fn encrypt_str_into_array<U, const N: usize>(&mut self, iv: T, message: &str, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, cipher)
+        self.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
     #[inline]
-    fn encrypt_string(&mut self, nonce: T, message: &String, cipher: *mut u8) -> u64
+    fn encrypt_string(&mut self, iv: T, message: &String, cipher: *mut u8) -> u64
     {
-        self.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher)
+        self.encrypt(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
     #[inline]
-    fn encrypt_string_into_vec<U>(&mut self, nonce: T, message: &String, cipher: &mut Vec<U>) -> u64
+    fn encrypt_string_into_vec<U>(&mut self, iv: T, message: &String, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, cipher)
+        self.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
     #[inline]
-    fn encrypt_string_into_array<U, const N: usize>(&mut self, nonce: T, message: &String, cipher: &mut [U; N]) -> u64
+    fn encrypt_string_into_array<U, const N: usize>(&mut self, iv: T, message: &String, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, cipher)
+        self.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
     #[inline]
-    fn encrypt_vec<U>(&mut self, nonce: T, message: &Vec<U>, cipher: *mut u8) -> u64
+    fn encrypt_vec<U>(&mut self, iv: T, message: &Vec<U>, cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt(nonce, message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
+        self.encrypt(iv, message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
     }
 
     #[inline]
-    fn encrypt_vec_into_vec<U, V>(&mut self, nonce: T, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
+    fn encrypt_vec_into_vec<U, V>(&mut self, iv: T, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_vec(nonce, message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_vec(iv, message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
     }
 
     #[inline]
-    fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, nonce: T, message: &Vec<U>, cipher: &mut [V; N]) -> u64
+    fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, message: &Vec<U>, cipher: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_array(nonce, message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_array(iv, message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
     }
 
     #[inline]
-    fn encrypt_array<U, const N: usize>(&mut self, nonce: T, message: &[U; N], cipher: *mut u8) -> u64
+    fn encrypt_array<U, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt(nonce, message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
+        self.encrypt(iv, message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
     }
 
     #[inline]
-    fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, nonce: T, message: &[U; N], cipher: &mut Vec<V>) -> u64
+    fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_vec(nonce, message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_vec(iv, message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
     }
 
     #[inline]
-    fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, nonce: T, message: &[U; N], cipher: &mut [V; M]) -> u64
+    fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_array(nonce, message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_array(iv, message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
     }
 
 
 
     #[inline]
-    fn decrypt(&mut self, nonce: T, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
+    fn decrypt(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
     {
-        self.encrypt(nonce, cipher, length_in_bytes, message)
+        self.encrypt(iv, cipher, length_in_bytes, message)
     }
 
-    fn decrypt_into_vec<U>(&mut self, nonce: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
         des_pre_decrypt_into_vec!(message, length_in_bytes, U);
-        let len = self.decrypt(nonce, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
+        let len = self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
         message.truncate(len as usize);
         len
     }
 
-    fn decrypt_into_array<U, const N: usize>(&mut self, nonce: T, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    fn decrypt_into_array<U, const N: usize>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone;
 
     #[inline]
-    fn decrypt_into_string(&mut self, nonce: T, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
+    fn decrypt_into_string(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
     {
-        self.decrypt_into_vec(nonce, cipher, length_in_bytes, unsafe { message.as_mut_vec() })
+        self.decrypt_into_vec(iv, cipher, length_in_bytes, unsafe { message.as_mut_vec() })
     }
 
     #[inline]
-    fn decrypt_vec<U>(&mut self, nonce: T, cipher: &Vec<U>, message: *mut u8) -> u64
+    fn decrypt_vec<U>(&mut self, iv: T, cipher: &Vec<U>, message: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt(nonce, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    fn decrypt_vec_into_vec<U, V>(&mut self, nonce: T, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
+    fn decrypt_vec_into_vec<U, V>(&mut self, iv: T, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_vec(nonce, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, nonce: T, cipher: &Vec<U>, message: &mut [V; N]) -> u64
+    fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, cipher: &Vec<U>, message: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_array(nonce, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    fn decrypt_vec_into_string<U>(&mut self, nonce: T, cipher: &Vec<U>, message: &mut String) -> u64
+    fn decrypt_vec_into_string<U>(&mut self, iv: T, cipher: &Vec<U>, message: &mut String) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_string(nonce, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    fn decrypt_array<U, const N: usize>(&mut self, nonce: T, cipher: &[U; N], message: *mut u8) -> u64
+    fn decrypt_array<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt(nonce, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, nonce: T, cipher: &[U; N], message: &mut Vec<V>) -> u64
+    fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_vec(nonce, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, nonce: T, cipher: &[U; N], message: &mut [V; M]) -> u64
+    fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_array(nonce, cipher.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_array(iv, cipher.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, message)
     }
 
     #[inline]
-    fn decrypt_array_into_string<U, const N: usize>(&mut self, nonce: T, cipher: &[U; N], message: &mut String) -> u64
+    fn decrypt_array_into_string<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut String) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_string(nonce, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
     }
 }
 
@@ -417,7 +417,7 @@ const S748: u8, const S749: u8, const S750: u8, const S751: u8,
 const S752: u8, const S753: u8, const S754: u8, const S755: u8,
 const S756: u8, const S757: u8, const S758: u8, const S759: u8,
 const S760: u8, const S761: u8, const S762: u8, const S763: u8>
-CTR<u64> for DES_Generic<ROUND, SHIFT,
+OFB<u64> for DES_Generic<ROUND, SHIFT,
 PC101, PC102, PC103, PC104, PC105, PC106, PC107, PC108,
 PC109, PC110, PC111, PC112, PC113, PC114, PC115, PC116,
 PC117, PC118, PC119, PC120, PC121, PC122, PC123, PC124,
@@ -514,39 +514,37 @@ S740, S741, S742, S743, S744, S745, S746, S747,
 S748, S749, S750, S751, S752, S753, S754, S755,
 S756, S757, S758, S759, S760, S761, S762, S763>
 {
-    fn encrypt(&mut self, mut nonce: u64, from: *const u8, length_in_bytes: u64, to: *mut u8) -> u64
+    fn encrypt(&mut self, mut iv: u64, from: *const u8, length_in_bytes: u64, to: *mut u8) -> u64
     {
         let mut progress = 0_u64;
-        nonce = nonce.wrapping_add(1);
         for _ in 0..length_in_bytes >> 3    // length_in_bytes >> 3 == length_in_bytes / 8
         {
             let block = unsafe { *(from.add(progress as usize) as *const u64 ) };
-            let coded = block ^ self.encrypt_u64(nonce);
-            nonce = nonce.wrapping_add(1);
+            iv = self.encrypt_u64(iv);
+            let coded = block ^ iv;
             unsafe { copy_nonoverlapping(&coded as *const u64 as *const u8, to.add(progress as usize), 8); }
             progress += 8;
         }
 
-        let mut tail = 8_usize;
-        let mut block: u64;
-        if progress + 8 == length_in_bytes
+        if progress == length_in_bytes
         {
-            block = unsafe { *(from.add(progress as usize - 8) as *const u64 ) };
+            self.set_success();
+            progress
         }
         else
         {
-            block = 0_u64;
-            tail = (length_in_bytes - progress) as usize;
+            let mut block = 0_u64;
+            let tail = (length_in_bytes - progress) as usize;
             let addr = unsafe { from.add(progress as usize) as *const u8 };
             unsafe { copy_nonoverlapping(addr, &mut block as *mut u64 as *mut u8, tail); }
+            let coded = block ^ self.encrypt_u64(iv);
+            unsafe { copy_nonoverlapping(&coded as *const u64 as *const u8, to.add(progress as usize), tail); }
+            self.set_success();
+            progress + tail as u64
         }
-        let coded = block ^ self.encrypt_u64(nonce);
-        unsafe { copy_nonoverlapping(&coded as *const u64 as *const u8, to.add(progress as usize), tail); }
-        self.set_success();
-        progress + tail as u64
     }
 
-    // fn encrypt_into_array<U, const N: usize>(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+    // fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     /// Encrypts the data with the padding defined in PKCS #7.
     /// 
     /// # Features
@@ -562,7 +560,7 @@ S756, S757, S758, S759, S760, S761, S762, S763>
     ///   encrypted ciphertext, and then fills the rest of elements of
     ///   the array `cipher`, and returns `true`.
     /// 
-    fn encrypt_into_array<U, const N: usize>(&mut self, nonce: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+    fn encrypt_into_array<U, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
     {
         if length_in_bytes as u128 > U::size_in_bytes() as u128 * N as u128
@@ -571,10 +569,10 @@ S756, S757, S758, S759, S760, S761, S762, S763>
             return 0;
         }
         des_pre_encrypt_into_array!(cipher, length_in_bytes, U);
-        self.encrypt(nonce, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
+        self.encrypt(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
-    fn decrypt_into_array<U, const N: usize>(&mut self, nonce: u64, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    fn decrypt_into_array<U, const N: usize>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
     {
         if length_in_bytes as u128 > U::size_in_bytes() as u128 * N as u128
@@ -583,6 +581,6 @@ S756, S757, S758, S759, S760, S761, S762, S763>
             return 0;
         }
         des_pre_decrypt_into_array!(message, length_in_bytes, U);
-        self.decrypt(nonce, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
+        self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
     }
 }

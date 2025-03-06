@@ -40,12 +40,14 @@ mod des;
 // mod ndes;
 // mod aes;
 // mod naes;
+mod traits_ofb;
 mod traits_ctr;
 
 pub use des::*;
 // pub use ndes::*;
 // pub use aes::*;
 // pub use naes::*;
+pub use traits_ofb::*;
 pub use traits_ctr::*;
 
 /// des.rs was too big because of documentation and plenty of examples

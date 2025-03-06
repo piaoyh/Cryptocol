@@ -5083,7 +5083,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
 
-
+/*
     fn crypt_ofb(&mut self, mut iv: u64, from: *const u8, length_in_bytes: u64, to: *mut u8) -> u64
     {
         let mut progress = 0_u64;
@@ -5335,7 +5335,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
         self.decrypt_ofb_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
 
-    
+
     fn crypt_ctr(&mut self, mut nonce: u64, from: *const u8, length_in_bytes: u64, to: *mut u8) -> u64
     {
         let mut progress = 0_u64;
@@ -5589,7 +5589,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     {
         self.decrypt_ctr_into_string(nonce, cipher.as_ptr() as *const u8, (cipher.len() * T::size_in_bytes()) as u64, message)
     }
-
+*/
     fn encrypt_block(&mut self)
     {
         self.permutate_initially();
