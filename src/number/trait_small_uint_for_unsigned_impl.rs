@@ -607,43 +607,21 @@ macro_rules! SmallUInt_methods_for_uint_impl {
                 if self.is_zero_or_one() || self.is_even()
                     { return false; }
                 
-                if (self as u128) < 10000_u128
+                if self <= (u8::MAX as Self)    // repetition is meaningless.
                 {
-                    let small_self = self.into_u16();
-                    let sqrt = SmallUInt::isqrt(small_self);
-                    for p in [3_u16, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
-                    {
-                        if (p > sqrt) || (small_self.wrapping_rem(p) == 0)
-                            { return false; }              
-                    }
-                    return true;
-                }
-                else if self <= (u32::MAX as Self)
-                {
-                    let a_list = [2_u8, 7, 61];
-                    let len = a_list.len();
-                    let common = if len < repetition { len } else { repetition };
-                    for i in 0..common
-                    {
-                        if !self.test_miller_rabin(a_list[i] as Self)
-                            { return false; }
-                    }
-                    return true;
-                }
-                else if self <= u64::MAX as Self
-                {
-                    let a_list = [2_u64, 325, 9375, 28178, 450775, 9780504, 1795265022];
-                    let len = a_list.len();
-                    let common = if len < repetition { len } else { repetition };
-                    for i in 0..common
-                    {
-                        if !self.test_miller_rabin(a_list[i] as Self)
-                            { return false; }
-                    }
-                    return true;
+                    return self.test_miller_rabin(2 as Self);
                 }
 
-                let a_list = [2_u64, 7, 61, 325, 9375, 28178, 450775, 9780504, 1795265022];
+                let a_list;
+                if self <= (u16::MAX as Self)
+                    { a_list = vec![2_u8, 3]; }
+                else if self <= (u32::MAX as Self)
+                    { a_list = vec![2_u8, 3, 5, 7]; }
+                else if self <= u64::MAX as Self
+                    { a_list = vec![2_u8, 3, 5, 7, 11, 13, 17]; }
+                else    // if self <= u124::MAX as Self
+                    { a_list = vec![2_u8, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]; }
+
                 let len = a_list.len();
                 let common = if len < repetition { len } else { repetition };
                 for i in 0..common
@@ -651,15 +629,59 @@ macro_rules! SmallUInt_methods_for_uint_impl {
                     if !self.test_miller_rabin(a_list[i] as Self)
                         { return false; }
                 }
-
-                let mut a = a_list[len-1] + 1;
-                for _ in len..repetition
-                {
-                    if !self.test_miller_rabin(a as Self)
-                        { return false; }
-                    a += 1;
-                }
                 true
+            }
+
+            /// Tests a `SmallUInt`-type object to find whether or not it is a
+            /// primne number.
+            /// [Read more](trait@SmallUInt#tymethod.is_prime_using_miller_rabin)
+            /// in detail.
+            fn is_prime(self) -> bool
+            {
+                if self == 2 ||  self == 3
+                    { return true; }
+
+                if self.is_zero_or_one() || self.is_even()
+                    { return false; }
+                
+                if self <= (u8::MAX as Self)
+                {
+                    return self.test_miller_rabin(2 as Self);
+                }
+                else if self <= (u16::MAX as Self)
+                {
+                    return self.test_miller_rabin(2 as Self) && return self.test_miller_rabin(3 as Self);
+                }
+                else if self <= (u32::MAX as Self)
+                {
+                    let a_list = [2_u8, 3, 5, 7];
+                    for a in a_list
+                    {
+                        if !self.test_miller_rabin(a as Self)
+                            { return false; }
+                    }
+                    return true;
+                }
+                else if self <= u64::MAX as Self
+                {
+                    let a_list = [2_u8, 3, 5, 7, 11, 13, 17];
+                    for a in a_list
+                    {
+                        if !self.test_miller_rabin(a as Self)
+                            { return false; }
+                    }
+                    return true;
+                }
+                else
+                {
+                    let a_list = [2_u8, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37];
+                    for a in a_list
+                    {
+                        if !self.test_miller_rabin(a as Self)
+                            { return false; }
+                    }
+                    return true;
+                }
             }
 
             /// Tests a `SmallUInt`-type object to find whether or not `self`
@@ -670,14 +692,22 @@ macro_rules! SmallUInt_methods_for_uint_impl {
             {
                 let self_minus_one = self.wrapping_sub(Self::one());
                 let mut d = self_minus_one;
+                let mut s = 0_u64;
                 while d.is_even()
                 {
-                    if a.modular_pow(d, self) == self_minus_one
-                        { return true; }
                     d >>= 1;
+                    s += 1;
                 }
-                let tmp = a.modular_pow(d, self);
-                return tmp == self_minus_one || tmp.is_one();
+                let mut x = a.modular_pow(d, self);
+                if x == self_minus_one || x.is_one()
+                    { return true; }
+                for _ in 0..s-1
+                {
+                    x = x.modular_pow(Self::u8_as_smalluint(2), self);
+                    if x == self_minus_one
+                        { return true; }
+                }
+                false
             }
 
             /// Reverses the order of bits in the integer.

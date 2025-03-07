@@ -370,6 +370,12 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl {
             /// in detail.
             #[inline] fn is_prime_using_miller_rabin(self, repetition: usize) -> bool   { self.get().is_prime_using_miller_rabin(repetition) }
 
+            /// Tests a `SmallUInt`-type object to find whether or not it is a
+            /// primne number.
+            /// [Read more](trait@SmallUInt#tymethod.is_prime_using_miller_rabin)
+            /// in detail.
+            #[inline] fn is_prime(self) -> bool { self.get().is_prime() }
+            
             /// Tests a `SmallUInt`-type object to find whether or not `self`
             /// is a prime number.
             /// [Read more](trait@SmallUInt#tymethod.test_miller_rabin)

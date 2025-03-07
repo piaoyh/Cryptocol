@@ -23788,16 +23788,33 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///   1/16 (= 1/4 * 1/4). Therefore, if you test any number with
     ///   `repeatition` (= 5) and they all result in a prime number,
     ///   it is 99.9% that the number is a prime number.
-    /// - However, for performance, if the number is less than 10000,
-    ///   it does not use Miller-Rabin alogrithm but deterministic algorithm
-    ///   so that the argument `repetition` is meaningless.
-    /// - If the number is less than u32::MAX (= 4294967295_u32),
-    ///   3 is enough for `repetition` for 100% certainty for determination of
-    ///   prime number. This method tests the number with 2, 7, and 61.
-    /// - If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///   7 is enough for `repetition` for 100% certainty for determination of
-    ///   prime number. This method tests the number with 2, 325, 9375, 28178,
-    ///   450775, 9780504, and 1795265022.
+    /// - However, if the number is u8 less than or equal to u8::MAX (= 255_u8),
+    ///   2 is enough for the value `a` for 100% certainty for determination of
+    ///   prime number. This method tests the number with only 2.
+    ///   So, the argument `repetition` is meaningless.
+    /// - If the number is less than or equal to u16::MAX (= 65535_u16), 2 and 3
+    ///   are enough for the value `a` for 100% certainty for determination of
+    ///   prime number. This method tests the number with 2 and 3. So, if the
+    ///   argument `repetition` is greater than `2`,  the argument `repetition`
+    ///   is virtually the same as `2`.
+    /// - If the number is less than or equal to u32::MAX (= 4294967295_u32),
+    ///   2, 3, 5, and 7 are enough for the value `a` for 100% certainty for
+    ///   determination of prime number. This method tests the number with 2, 3,
+    ///   5, and 7. So, if the argument `repetition` is greater than `4`,  the
+    ///   argument `repetition` is virtually the same as `4`.
+    /// - If the number is less than or equal to u64::MAX
+    ///   (= 18446744073709551615_u64), 2, 3, 5, 7, 11, 13, and 17 are enough
+    ///   for the value `a` for 100% certainty for determination of prime
+    ///   number. This method tests the number with 2, 3, 5, 7, 11, 13, and 17.
+    ///   So, if the argument `repetition` is greater than `7`,  the
+    ///   argument `repetition` is virtually the same as `7`.
+    /// - If the number is less than or equal to u128::MAX
+    ///   (= 340282366920938463463374607431768211455_u128), 2, 3, 5, 7, 11, 13,
+    ///   17, 19, 23, 29, 31, and 37 are enough for the value `a` for 100%
+    ///   certainty for determination of prime number. This method tests the
+    ///   number with 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, and 37.
+    ///   So, if the argument `repetition` is greater than `12`,  the
+    ///   argument `repetition` is virtually the same as `12`.
     /// 
     /// # Example 1 for u8
     /// ```
@@ -23808,9 +23825,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut a_u8 = Any::new().random_u8();
     ///     a_u8.set_lsb();
     /// 
-    ///     // For performance, if the number is less than 10000,
-    ///     // it does not use Miller-Rabin alogrithm but deterministic algorithm
-    ///     // so that the argument `repetition` is meaningless.
+    ///     // If the number is less than u8::MAX (= 255_u8),
+    ///     // `1` is enough for `repetition` with the base `a`, 2
+    ///     // for 100% certainty for determination of prime number. 
     ///     let prime = a_u8.is_prime_using_miller_rabin(0_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_u8); }
@@ -23820,9 +23837,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut b_u8 = Any::new().random_u8();
     ///     b_u8.set_lsb();
     /// 
-    ///     // For performance, if the number is less than 10000,
-    ///     // it does not use Miller-Rabin alogrithm but deterministic algorithm
-    ///     // so that the argument `repetition` is meaningless.
+    ///     // If the number is less than u8::MAX (= 255_u8),
+    ///     // `1` is enough for `repetition` with the base `a`, 2
+    ///     // for 100% certainty for determination of prime number. 
     ///     let prime = func(b_u8, 0_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_u8); }
@@ -23845,10 +23862,10 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut a_u16 = Any::new().random_u16();
     ///     a_u16.set_lsb();
     /// 
-    ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
+    ///     // If the number is less than u16::MAX (= 65535_u16),
+    ///     // `2` is enough for `repetition` with the bases `a`, `2` and `3`
     ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = a_u16.is_prime_using_miller_rabin(3_usize);
+    ///     let prime = a_u16.is_prime_using_miller_rabin(2_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_u16); }
     ///     else
@@ -23857,10 +23874,10 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut b_u16 = Any::new().random_u16();
     ///     b_u16.set_lsb();
     /// 
-    ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
+    ///     // If the number is less than u16::MAX (= 65535_u16),
+    ///     // `2` is enough for `repetition` with the bases `a`, `2` and `3`
     ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = func(b_u16, 3_usize);
+    ///     let prime = func(b_u16, 2_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_u16); }
     ///     else
@@ -23881,11 +23898,12 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// {
     ///     let mut a_u32 = Any::new().random_u32();
     ///     a_u32.set_lsb();
-    /// 
+    ///  
     ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
-    ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = a_u32.is_prime_using_miller_rabin(3_usize);
+    ///     // `4` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, and `7` for 100% certainty for determination of
+    ///     // prime number.
+    ///     let prime = a_u32.is_prime_using_miller_rabin(4_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_u32); }
     ///     else
@@ -23895,9 +23913,10 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     b_u32.set_lsb();
     /// 
     ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
-    ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = func(b_u32, 3_usize);
+    ///     // `4` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, and `7` for 100% certainty for determination of
+    ///     // prime number.
+    ///     let prime = func(b_u32, 4_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_u32); }
     ///     else
@@ -23920,8 +23939,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     a_u64.set_lsb();
     /// 
     ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
     ///     let prime = a_u64.is_prime_using_miller_rabin(7_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_u64); }
@@ -23932,8 +23952,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     b_u64.set_lsb();
     /// 
     ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
     ///     let prime = func(b_u64, 7_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_u64); }
@@ -23955,17 +23976,29 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// {
     ///     let mut a_u128 = Any::new().random_u128();
     ///     a_u128.set_lsb();
-    ///     let prime = a_u128.is_prime_using_miller_rabin(5_usize);
+    /// 
+    ///     // If the number is less than u128::MAX
+    ///     // (= 340282366920938463463374607431768211455_u128),
+    ///     // `12` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
+    ///     let prime = a_u128.is_prime_using_miller_rabin(12_usize);
     ///     if prime
-    ///         { println!("It is 99.9% certain that {} is a prime number.", a_u128); }
+    ///         { println!("It is 100% certain that {} is a prime number.", a_u128); }
     ///     else
     ///         { println!("It is 100% certain that {} is a composite number.", a_u128); }
     /// 
     ///     let mut b_u128 = Any::new().random_u128();
     ///     b_u128.set_lsb();
+    /// 
+    ///     // If the number is less than u128::MAX
+    ///     // (= 340282366920938463463374607431768211455_u128),
+    ///     // `12` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
     ///     let prime = func(b_u128, 5_usize);
     ///     if prime
-    ///         { println!("It is 99.9% certain that {} is a prime number.", b_u128); }
+    ///         { println!("It is 100% certain that {} is a prime number.", b_u128); }
     ///     else
     ///         { println!("It is 100% certain that {} is a composite number.", b_u128); }
     /// 
@@ -23986,9 +24019,14 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut a_usize = Any::new().random_usize();
     ///     a_usize.set_lsb();
     /// 
-    ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
+    ///     // If the number is less than usize::MAX
+    ///     // (= 18446744073709551615_usize for 64-bit machine, and
+    ///     // = 4294967295_usize for 32-bit machine),
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty for 64-bit
+    ///     // machine, and `4` is enough for `repetition` with the bases `a`,
+    ///     // `2`, `3`, `5`, and `7` for 100% certainty for 64-bit machine,
+    ///     // for determination of prime number.
     ///     let prime = a_usize.is_prime_using_miller_rabin(7_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_usize); }
@@ -23998,9 +24036,14 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut b_usize = Any::new().random_usize();
     ///     b_usize.set_lsb();
     /// 
-    ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
+    ///     // If the number is less than usize::MAX
+    ///     // (= 18446744073709551615_usize for 64-bit machine, and
+    ///     // = 4294967295_usize for 32-bit machine),
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty for 64-bit
+    ///     // machine, and `4` is enough for `repetition` with the bases `a`,
+    ///     // `2`, `3`, `5`, and `7` for 100% certainty for 64-bit machine,
+    ///     // for determination of prime number.
     ///     let prime = func(b_usize, 7_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_usize); }
@@ -24023,10 +24066,10 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut a_shortunion = Any::new().random_u16().into_shortunion();
     ///     a_shortunion.set_lsb();
     /// 
-    ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
+    ///     // If the number is less than u16::MAX (= 65535_u16),
+    ///     // `2` is enough for `repetition` with the bases `a`, `2` and `3`
     ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = a_shortunion.is_prime_using_miller_rabin(3_usize);
+    ///     let prime = a_shortunion.is_prime_using_miller_rabin(2_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_shortunion); }
     ///     else
@@ -24035,10 +24078,10 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut b_shortunion = Any::new().random_u16().into_shortunion();
     ///     b_shortunion.set_lsb();
     /// 
-    ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
+    ///     // If the number is less than u16::MAX (= 65535_u16),
+    ///     // `2` is enough for `repetition` with the bases `a`, `2` and `3`
     ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = func(b_shortunion, 3_usize);
+    ///     let prime = func(b_shortunion, 2_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_shortunion); }
     ///     else
@@ -24061,9 +24104,10 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     a_intunion.set_lsb();
     /// 
     ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
-    ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = a_intunion.is_prime_using_miller_rabin(3_usize);
+    ///     // `4` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, and `7` for 100% certainty for determination of
+    ///     // prime number.
+    ///     let prime = a_intunion.is_prime_using_miller_rabin(4_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_intunion); }
     ///     else
@@ -24073,9 +24117,10 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     b_intunion.set_lsb();
     /// 
     ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
-    ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = func(b_intunion, 3_usize);
+    ///     // `4` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, and `7` for 100% certainty for determination of
+    ///     // prime number.
+    ///     let prime = func(b_intunion, 4_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_intunion); }
     ///     else
@@ -24098,8 +24143,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     a_longunion.set_lsb();
     /// 
     ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
     ///     let prime = a_longunion.is_prime_using_miller_rabin(7_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_longunion); }
@@ -24110,8 +24156,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     b_longunion.set_lsb();
     /// 
     ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
     ///     let prime = func(b_longunion, 7_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_longunion); }
@@ -24133,6 +24180,12 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// {
     ///     let mut a_longerunion = Any::new().random_u128().into_longerunion();
     ///     a_longerunion.set_lsb();
+    /// 
+    ///     // If the number is less than u128::MAX
+    ///     // (= 340282366920938463463374607431768211455_u128),
+    ///     // `12` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
     ///     let prime = a_longerunion.is_prime_using_miller_rabin(5_usize);
     ///     if prime
     ///         { println!("It is 99.9% certain that {} is a prime number.", a_longerunion); }
@@ -24141,6 +24194,12 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// 
     ///     let mut b_longerunion = Any::new().random_u128().into_longerunion();
     ///     b_longerunion.set_lsb();
+    /// 
+    ///     // If the number is less than u128::MAX
+    ///     // (= 340282366920938463463374607431768211455_u128),
+    ///     // `12` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
     ///     let prime = func(b_longerunion, 5_usize);
     ///     if prime
     ///         { println!("It is 99.9% certain that {} is a prime number.", b_longerunion); }
@@ -24163,9 +24222,14 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut a_sizeunion = Any::new().random_usize().into_sizeunion();
     ///     a_sizeunion.set_lsb();
     /// 
-    ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
+    ///     // If the number is less than usize::MAX
+    ///     // (= 18446744073709551615_usize for 64-bit machine, and
+    ///     // = 4294967295_usize for 32-bit machine),
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty for 64-bit
+    ///     // machine, and `4` is enough for `repetition` with the bases `a`,
+    ///     // `2`, `3`, `5`, and `7` for 100% certainty for 64-bit machine,
+    ///     // for determination of prime number.
     ///     let prime = a_sizeunion.is_prime_using_miller_rabin(7_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_sizeunion); }
@@ -24175,9 +24239,14 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut b_sizeunion = Any::new().random_usize().into_sizeunion();
     ///     b_sizeunion.set_lsb();
     /// 
-    ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
+    ///     // If the number is less than usize::MAX
+    ///     // (= 18446744073709551615_usize for 64-bit machine, and
+    ///     // = 4294967295_usize for 32-bit machine),
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty for 64-bit
+    ///     // machine, and `4` is enough for `repetition` with the bases `a`,
+    ///     // `2`, `3`, `5`, and `7` for 100% certainty for 64-bit machine,
+    ///     // for determination of prime number.
     ///     let prime = func(b_sizeunion, 7_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_sizeunion); }
@@ -24203,10 +24272,10 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut a_u8 = Any::new().random_u8();
     ///     a_u8.set_lsb();
     /// 
-    ///     // For performance, if the number is less than 10000,
-    ///     // it does not use Miller-Rabin alogrithm but deterministic algorithm
-    ///     // so that the argument `repetition` is meaningless.
-    ///     let prime = a_u8.is_prime_using_miller_rabin(0_usize);
+    ///     // If the number is less than u8::MAX (= 255_u8),
+    ///     // `1` is enough for `repetition` with the base `a`, 2
+    ///     // for 100% certainty for determination of prime number. 
+    ///     let prime = a_u8.is_prime_using_miller_rabin(1_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_u8); }
     ///     else
@@ -24215,10 +24284,10 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut b_u8 = Any::new().random_u8();
     ///     b_u8.set_lsb();
     /// 
-    ///     // For performance, if the number is less than 10000,
-    ///     // it does not use Miller-Rabin alogrithm but deterministic algorithm
-    ///     // so that the argument `repetition` is meaningless.
-    ///     let prime = func(b_u8, 0_usize);
+    ///     // If the number is less than u8::MAX (= 255_u8),
+    ///     // `1` is enough for `repetition` with the base `a`, 2
+    ///     // for 100% certainty for determination of prime number. 
+    ///     let prime = func(b_u8, 1_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_u8); }
     ///     else
@@ -24227,10 +24296,10 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut a_u16 = Any::new().random_u16();
     ///     a_u16.set_lsb();
     /// 
-    ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
+    ///     // If the number is less than u16::MAX (= 65535_u16),
+    ///     // `2` is enough for `repetition` with the bases `a`, `2` and `3`
     ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = a_u16.is_prime_using_miller_rabin(3_usize);
+    ///     let prime = a_u16.is_prime_using_miller_rabin(2_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_u16); }
     ///     else
@@ -24239,10 +24308,10 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut b_u16 = Any::new().random_u16();
     ///     b_u16.set_lsb();
     /// 
-    ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
+    ///     // If the number is less than u16::MAX (= 65535_u16),
+    ///     // `2` is enough for `repetition` with the bases `a`, `2` and `3`
     ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = func(b_u16, 3_usize);
+    ///     let prime = func(b_u16, 2_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_u16); }
     ///     else
@@ -24251,10 +24320,11 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut a_u32 = Any::new().random_u32();
     ///     a_u32.set_lsb();
     /// 
-    ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
-    ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = a_u32.is_prime_using_miller_rabin(3_usize);
+    ///     // If the number is less than or equal to u32::MAX (= 4294967295_u32),
+    ///     // `4` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, and `7` for 100% certainty for determination of
+    ///     // prime number.
+    ///     let prime = a_u32.is_prime_using_miller_rabin(4_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_u32); }
     ///     else
@@ -24263,10 +24333,11 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut b_u32 = Any::new().random_u32();
     ///     b_u32.set_lsb();
     /// 
-    ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
-    ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = func(b_u32, 3_usize);
+    ///     // If the number is less than or equal to u32::MAX (= 4294967295_u32),
+    ///     // `4` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, and `7` for 100% certainty for determination of
+    ///     // prime number.
+    ///     let prime = func(b_u32, 4_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_u32); }
     ///     else
@@ -24275,29 +24346,37 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut a_u64 = Any::new().random_u64();
     ///     a_u64.set_lsb();
     /// 
-    ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = a_u64.is_prime_using_miller_rabin(7_usize);
+    ///     // If the number is less than or equal to u64::MAX (= 18446744073709551615_u64),
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
+    ///     let prime = a_u64.is_prime_using_miller_rabin(5_usize);
     ///     if prime
-    ///         { println!("It is 100% certain that {} is a prime number.", a_u64); }
+    ///         { println!("It is 99.9% certain that {} is a prime number.", a_u64); }
     ///     else
     ///         { println!("It is 100% certain that {} is a composite number.", a_u64); }
     /// 
     ///     let mut b_u64 = Any::new().random_u64();
     ///     b_u64.set_lsb();
     /// 
-    ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = func(b_u64, 7_usize);
+    ///     // If the number is less than or equal to u64::MAX (= 18446744073709551615_u64),
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
+    ///     let prime = func(b_u64, 5_usize);
     ///     if prime
-    ///         { println!("It is 100% certain that {} is a prime number.", b_u64); }
+    ///         { println!("It is 99.9% certain that {} is a prime number.", b_u64); }
     ///     else
     ///         { println!("It is 100% certain that {} is a composite number.", b_u64); }
     /// 
     ///     let mut a_u128 = Any::new().random_u128();
     ///     a_u128.set_lsb();
+    /// 
+    ///     // If the number is less than or equal to u128::MAX
+    ///     // (= 340282366920938463463374607431768211455_u128),
+    ///     // `12` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
     ///     let prime = a_u128.is_prime_using_miller_rabin(5_usize);
     ///     if prime
     ///         { println!("It is 99.9% certain that {} is a prime number.", a_u128); }
@@ -24306,6 +24385,12 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// 
     ///     let mut b_u128 = Any::new().random_u128();
     ///     b_u128.set_lsb();
+    /// 
+    ///     // If the number is less than or equal to u128::MAX
+    ///     // (= 340282366920938463463374607431768211455_u128),
+    ///     // `12` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
     ///     let prime = func(b_u128, 5_usize);
     ///     if prime
     ///         { println!("It is 99.9% certain that {} is a prime number.", b_u128); }
@@ -24315,9 +24400,14 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut a_usize = Any::new().random_usize();
     ///     a_usize.set_lsb();
     /// 
-    ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
+    ///     // If the number is less than or equal to usize::MAX
+    ///     // (= 18446744073709551615_usize for 64-bit machine, and
+    ///     // = 4294967295_usize for 32-bit machine),
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty for 64-bit
+    ///     // machine, and `4` is enough for `repetition` with the bases `a`,
+    ///     // `2`, `3`, `5`, and `7` for 100% certainty for 32-bit machine,
+    ///     // for determination of prime number.
     ///     let prime = a_usize.is_prime_using_miller_rabin(7_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_usize); }
@@ -24327,9 +24417,14 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut b_usize = Any::new().random_usize();
     ///     b_usize.set_lsb();
     /// 
-    ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
+    ///     // If the number is less than or equal to usize::MAX
+    ///     // (= 18446744073709551615_usize for 64-bit machine, and
+    ///     // = 4294967295_usize for 32-bit machine),
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty for 64-bit
+    ///     // machine, and `4` is enough for `repetition` with the bases `a`,
+    ///     // `2`, `3`, `5`, and `7` for 100% certainty for 32-bit machine,
+    ///     // for determination of prime number.
     ///     let prime = func(b_usize, 7_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_usize); }
@@ -24339,10 +24434,10 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut a_shortunion = Any::new().random_u16().into_shortunion();
     ///     a_shortunion.set_lsb();
     /// 
-    ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
+    ///     // If the number is less than or equal to u16::MAX (= 65535_u16),
+    ///     // `2` is enough for `repetition` with the bases `a`, `2` and `3`
     ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = a_shortunion.is_prime_using_miller_rabin(3_usize);
+    ///     let prime = a_shortunion.is_prime_using_miller_rabin(2_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_shortunion); }
     ///     else
@@ -24351,10 +24446,10 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut b_shortunion = Any::new().random_u16().into_shortunion();
     ///     b_shortunion.set_lsb();
     /// 
-    ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
+    ///     // If the number is less than or equal to u16::MAX (= 65535_u16),
+    ///     // `2` is enough for `repetition` with the bases `a`, `2` and `3`
     ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = func(b_shortunion, 3_usize);
+    ///     let prime = func(b_shortunion, 2_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_shortunion); }
     ///     else
@@ -24363,10 +24458,11 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut a_intunion = Any::new().random_u32().into_intunion();
     ///     a_intunion.set_lsb();
     /// 
-    ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
-    ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = a_intunion.is_prime_using_miller_rabin(3_usize);
+    ///     // If the number is less than or equal to u32::MAX (= 4294967295_u32),
+    ///     // `4` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, and `7` for 100% certainty for determination of
+    ///     // prime number.
+    ///     let prime = a_intunion.is_prime_using_miller_rabin(4_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_intunion); }
     ///     else
@@ -24375,10 +24471,11 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut b_intunion = Any::new().random_u32().into_intunion();
     ///     b_intunion.set_lsb();
     /// 
-    ///     // If the number is less than u32::MAX (= 4294967295_u32),
-    ///     // 3 is enough for `repetition` with 2, 7, and 61
-    ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = func(b_intunion, 3_usize);
+    ///     // If the number is less than or equal to u32::MAX (= 4294967295_u32),
+    ///     // `4` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, and `7` for 100% certainty for determination of
+    ///     // prime number.
+    ///     let prime = func(b_intunion, 4_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_intunion); }
     ///     else
@@ -24386,30 +24483,38 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// 
     ///     let mut a_longunion = Any::new().random_u64().into_longunion();
     ///     a_longunion.set_lsb();
-    /// 
-    ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = a_longunion.is_prime_using_miller_rabin(7_usize);
+    ///
+    ///     // If the number is less than or equal to u64::MAX (= 18446744073709551615_u64),
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
+    ///     let prime = a_longunion.is_prime_using_miller_rabin(5_usize);
     ///     if prime
-    ///         { println!("It is 100% certain that {} is a prime number.", a_longunion); }
+    ///         { println!("It is 99.9% certain that {} is a prime number.", a_longunion); }
     ///     else
     ///         { println!("It is 100% certain that {} is a composite number.", a_longunion); }
     /// 
     ///     let mut b_longunion = Any::new().random_u64().into_longunion();
     ///     b_longunion.set_lsb();
     /// 
-    ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
-    ///     let prime = func(b_longunion, 7_usize);
+    ///     // If the number is less than or equal to u64::MAX (= 18446744073709551615_u64),
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
+    ///     let prime = func(b_longunion, 5_usize);
     ///     if prime
-    ///         { println!("It is 100% certain that {} is a prime number.", b_longunion); }
+    ///         { println!("It is 99.9% certain that {} is a prime number.", b_longunion); }
     ///     else
     ///         { println!("It is 100% certain that {} is a composite number.", b_longunion); }
     /// 
     ///     let mut a_longerunion = Any::new().random_u128().into_longerunion();
     ///     a_longerunion.set_lsb();
+    /// 
+    ///     // If the number is less than or equal to u128::MAX
+    ///     // (= 340282366920938463463374607431768211455_u128),
+    ///     // `12` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
     ///     let prime = a_longerunion.is_prime_using_miller_rabin(5_usize);
     ///     if prime
     ///         { println!("It is 99.9% certain that {} is a prime number.", a_longerunion); }
@@ -24418,6 +24523,12 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// 
     ///     let mut b_longerunion = Any::new().random_u128().into_longerunion();
     ///     b_longerunion.set_lsb();
+    /// 
+    ///     // If the number is less than or equal to u128::MAX
+    ///     // (= 340282366920938463463374607431768211455_u128),
+    ///     // `12` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty
+    ///     // for determination of prime number.
     ///     let prime = func(b_longerunion, 5_usize);
     ///     if prime
     ///         { println!("It is 99.9% certain that {} is a prime number.", b_longerunion); }
@@ -24427,9 +24538,14 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut a_sizeunion = Any::new().random_usize().into_sizeunion();
     ///     a_sizeunion.set_lsb();
     /// 
-    ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
+    ///     // If the number is less than or equal to usize::MAX
+    ///     // (= 18446744073709551615_usize for 64-bit machine, and
+    ///     // = 4294967295_usize for 32-bit machine),
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty for 64-bit
+    ///     // machine, and `4` is enough for `repetition` with the bases `a`,
+    ///     // `2`, `3`, `5`, and `7` for 100% certainty for 32-bit machine,
+    ///     // for determination of prime number.
     ///     let prime = a_sizeunion.is_prime_using_miller_rabin(7_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", a_sizeunion); }
@@ -24439,9 +24555,14 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     let mut b_sizeunion = Any::new().random_usize().into_sizeunion();
     ///     b_sizeunion.set_lsb();
     /// 
-    ///     // If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///     // 7 is enough for `repetition` with 2_u64, 325, 9375, 28178, 450775, 9780504, and 1795265022
-    ///     // for 100% certainty for determination of prime number. 
+    ///     // If the number is less than or equal to usize::MAX
+    ///     // (= 18446744073709551615_usize for 64-bit machine, and
+    ///     // = 4294967295_usize for 32-bit machine),
+    ///     // `7` is enough for `repetition` with the bases `a`, `2`, `3`,
+    ///     // `5`, `7`, `11`, `13`, and `17` for 100% certainty for 64-bit
+    ///     // machine, and `4` is enough for `repetition` with the bases `a`,
+    ///     // `2`, `3`, `5`, and `7` for 100% certainty for 32-bit machine,
+    ///     // for determination of prime number.
     ///     let prime = func(b_sizeunion, 7_usize);
     ///     if prime
     ///         { println!("It is 100% certain that {} is a prime number.", b_sizeunion); }
@@ -24460,6 +24581,600 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// to use it for Big Endian CPUs for serious purpose. Only use this crate
     /// for Big-endian CPUs with your own full responsibility.
     fn is_prime_using_miller_rabin(self, repetition: usize) -> bool;
+
+    // fn is_prime(self) -> bool
+    /// Tests a `SmallUInt`-type object such as u8, u16, u32, u64, u128, and
+    /// usize to find whether or not it is a primne number.
+    /// 
+    /// # Output
+    /// It returns `true` if it is a primne number.
+    /// Otherwise, it returns `false`.
+    /// 
+    /// # Features
+    /// - It uses the method `test_miller_rabin()` which uses
+    ///   [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
+    /// - If this test results in composite number, the tested number is surely
+    ///   a composite number. If this test results in prime number,
+    ///   the probability that the tested number is not a prime number is
+    ///   (1/4) ^ `repeatition`.
+    ///   So, if `repeatition` is two and it results in prime number the
+    ///   probability that the tested number is not a prime number is
+    ///   1/16 (= 1/4 * 1/4). Therefore, if you test any number with
+    ///   `repeatition` (= 5) and they all result in a prime number,
+    ///   it is 99.9% that the number is a prime number.
+    /// - However, if the number is u8 less than or equal to u8::MAX (= 255_u8),
+    ///   2 is enough for the value `a` for 100% certainty for determination of
+    ///   prime number. This method tests the number with 2.
+    /// - If the number is less than or equal to u16::MAX (= 65535_u16), 2 and 3
+    ///   are enough for the value `a` for 100% certainty for determination of
+    ///   prime number. This method tests the number with 2 and 3.
+    /// - If the number is less than or equal to u32::MAX (= 4294967295_u32),
+    ///   2, 3, 5, and 7 are enough for the value `a` for 100% certainty for
+    ///   determination of prime number.
+    ///   This method tests the number with 2, 3, 5, and 7.
+    /// - If the number is less than or equal to u64::MAX
+    ///   (= 18446744073709551615_u64), 2, 3, 5, 7, 11, 13, and 17 are enough
+    ///   for the value `a` for 100% certainty for determination of prime
+    ///   number. This method tests the number with 2, 3, 5, 7, 11, 13, and 17.
+    /// - If the number is less than or equal to u128::MAX
+    ///   (= 340282366920938463463374607431768211455_u128), 2, 3, 5, 7, 11, 13,
+    ///   17, 19, 23, 29, 31, and 37 are enough for the value `a` for 100%
+    ///   certainty for determination of prime number. This method tests the
+    ///   number with 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, and 37.
+    /// 
+    /// # Example 1 for u8
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// use cryptocol::random::Any;
+    /// fn main()
+    /// {
+    ///     let mut a_u8 = Any::new().random_u8();
+    ///     a_u8.set_lsb();
+    /// 
+    ///     let prime = a_u8.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_u8); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_u8); }
+    /// 
+    ///     let mut b_u8 = Any::new().random_u8();
+    ///     b_u8.set_lsb();
+    /// 
+    ///     let prime = func(b_u8);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_u8); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_u8); }
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: T) -> bool
+    /// {
+    ///     num.is_prime()
+    /// }
+    /// ```
+    /// 
+    /// # Example 2 for u16
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// use cryptocol::random::Any;
+    /// fn main()
+    /// {
+    ///     let mut a_u16 = Any::new().random_u16();
+    ///     a_u16.set_lsb();
+    /// 
+    ///     let prime = a_u16.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_u16); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_u16); }
+    /// 
+    ///     let mut b_u16 = Any::new().random_u16();
+    ///     b_u16.set_lsb();
+    /// 
+    ///     let prime = func(b_u16);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_u16); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_u16); }
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: T) -> bool
+    /// {
+    ///     num.is_prime()
+    /// }
+    /// ```
+    /// 
+    /// # Example 3 for u32
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// use cryptocol::random::Any;
+    /// fn main()
+    /// {
+    ///     let mut a_u32 = Any::new().random_u32();
+    ///     a_u32.set_lsb();
+    /// 
+    ///     let prime = a_u32.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_u32); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_u32); }
+    /// 
+    ///     let mut b_u32 = Any::new().random_u32();
+    ///     b_u32.set_lsb();
+    /// 
+    ///     let prime = func(b_u32);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_u32); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_u32); }
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: T) -> bool
+    /// {
+    ///     num.is_prime()
+    /// }
+    /// ```
+    /// 
+    /// # Example 4 for u64
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// use cryptocol::random::Any;
+    /// fn main()
+    /// {
+    ///     let mut a_u64 = Any::new().random_u64();
+    ///     a_u64.set_lsb();
+    /// 
+    ///     let prime = a_u64.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_u64); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_u64); }
+    /// 
+    ///     let mut b_u64 = Any::new().random_u64();
+    ///     b_u64.set_lsb();
+    ///  
+    ///     let prime = func(b_u64);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_u64); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_u64); }
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: T) -> bool
+    /// {
+    ///     num.is_prime()
+    /// }
+    /// ```
+    /// 
+    /// # Example 5 for u128
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// use cryptocol::random::Any;
+    /// fn main()
+    /// {
+    ///     let mut a_u128 = Any::new().random_u128();
+    ///     a_u128.set_lsb();
+    ///     let prime = a_u128.is_prime();
+    ///     if prime
+    ///         { println!("It is 99.9% certain that {} is a prime number.", a_u128); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_u128); }
+    /// 
+    ///     let mut b_u128 = Any::new().random_u128();
+    ///     b_u128.set_lsb();
+    ///     let prime = func(b_u128);
+    ///     if prime
+    ///         { println!("It is 99.9% certain that {} is a prime number.", b_u128); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_u128); }
+    /// 
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: T) -> bool
+    /// {
+    ///     num.is_prime()
+    /// }
+    /// ```
+    /// 
+    /// # Example 6 for usize
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// use cryptocol::random::Any;
+    /// fn main()
+    /// {
+    ///     let mut a_usize = Any::new().random_usize();
+    ///     a_usize.set_lsb();
+    /// 
+    ///     let prime = a_usize.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_usize); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_usize); }
+    /// 
+    ///     let mut b_usize = Any::new().random_usize();
+    ///     b_usize.set_lsb();
+    /// 
+    ///     let prime = func(b_usize);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_usize); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_usize); }
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: T, repetition: usize) -> bool
+    /// {
+    ///     num.is_prime()
+    /// }
+    /// ```
+    /// 
+    /// # Example 7 for ShortUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// use cryptocol::random::Any;
+    /// fn main()
+    /// {
+    ///     let mut a_shortunion = Any::new().random_u16().into_shortunion();
+    ///     a_shortunion.set_lsb();
+    /// 
+    ///     let prime = a_shortunion.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_shortunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_shortunion); }
+    /// 
+    ///     let mut b_shortunion = Any::new().random_u16().into_shortunion();
+    ///     b_shortunion.set_lsb();
+    /// 
+    ///     let prime = func(b_shortunion);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_shortunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_shortunion); }
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: T) -> bool
+    /// {
+    ///     num.is_prime()
+    /// }
+    /// ```
+    /// 
+    /// # Example 8 for IntUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// use cryptocol::random::Any;
+    /// fn main()
+    /// {
+    ///     let mut a_intunion = Any::new().random_u32().into_intunion();
+    ///     a_intunion.set_lsb();
+    /// 
+    ///     let prime = a_intunion.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_intunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_intunion); }
+    /// 
+    ///     let mut b_intunion = Any::new().random_u32().into_intunion();
+    ///     b_intunion.set_lsb();
+    /// 
+    ///     let prime = func(b_intunion);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_intunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_intunion); }
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: T) -> bool
+    /// {
+    ///     num.is_prime()
+    /// }
+    /// ```
+    /// 
+    /// # Example 9 for LongUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// use cryptocol::random::Any;
+    /// fn main()
+    /// {
+    ///     let mut a_longunion = Any::new().random_u64().into_longunion();
+    ///     a_longunion.set_lsb();
+    /// 
+    ///     let prime = a_longunion.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_longunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_longunion); }
+    /// 
+    ///     let mut b_longunion = Any::new().random_u64().into_longunion();
+    ///     b_longunion.set_lsb();
+    /// 
+    ///     let prime = func(b_longunion);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_longunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_longunion); }
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: T) -> bool
+    /// {
+    ///     num.is_prime()
+    /// }
+    /// ```
+    /// 
+    /// # Example 10 for LongerUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// use cryptocol::random::Any;
+    /// fn main()
+    /// {
+    ///     let mut a_longerunion = Any::new().random_u128().into_longerunion();
+    ///     a_longerunion.set_lsb();
+    ///     let prime = a_longerunion.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_longerunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_longerunion); }
+    /// 
+    ///     let mut b_longerunion = Any::new().random_u128().into_longerunion();
+    ///     b_longerunion.set_lsb();
+    ///     let prime = func(b_longerunion);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_longerunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_longerunion); }
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: T) -> bool
+    /// {
+    ///     num.is_prime()
+    /// }
+    /// ```
+    /// 
+    /// # Example 11 for SizeUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// use cryptocol::random::Any;
+    /// fn main()
+    /// {
+    ///     let mut a_sizeunion = Any::new().random_usize().into_sizeunion();
+    ///     a_sizeunion.set_lsb();
+    /// 
+    ///     let prime = a_sizeunion.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_sizeunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_sizeunion); }
+    /// 
+    ///     let mut b_sizeunion = Any::new().random_usize().into_sizeunion();
+    ///     b_sizeunion.set_lsb();
+    /// 
+    ///     let prime = func(b_sizeunion);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_sizeunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_sizeunion); }
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: T) -> bool
+    /// {
+    ///     num.is_prime()
+    /// }
+    /// ```
+    /// You can use the above generic function `func<>()` for all
+    /// SmallUInt-supported data types in a same scope.
+    /// Look into the following example.
+    /// 
+    /// # Collective Example
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// use cryptocol::random::Any;
+    /// fn main()
+    /// {
+    ///     let mut a_u8 = Any::new().random_u8();
+    ///     a_u8.set_lsb();
+    /// 
+    ///     let prime = a_u8.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_u8); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_u8); }
+    /// 
+    ///     let mut b_u8 = Any::new().random_u8();
+    ///     b_u8.set_lsb();
+    /// 
+    ///     let prime = func(b_u8);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_u8); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_u8); }
+    /// 
+    ///     let mut a_u16 = Any::new().random_u16();
+    ///     a_u16.set_lsb();
+    /// 
+    ///     let prime = a_u16.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_u16); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_u16); }
+    /// 
+    ///     let mut b_u16 = Any::new().random_u16();
+    ///     b_u16.set_lsb();
+    /// 
+    ///     let prime = func(b_u16);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_u16); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_u16); }
+    /// 
+    ///     let mut a_u32 = Any::new().random_u32();
+    ///     a_u32.set_lsb();
+    /// 
+    ///     let prime = a_u32.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_u32); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_u32); }
+    /// 
+    ///     let mut b_u32 = Any::new().random_u32();
+    ///     b_u32.set_lsb();
+    /// 
+    ///     let prime = func(b_u32);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_u32); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_u32); }
+    /// 
+    ///     let mut a_u64 = Any::new().random_u64();
+    ///     a_u64.set_lsb();
+    /// 
+    ///     let prime = a_u64.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_u64); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_u64); }
+    /// 
+    ///     let mut b_u64 = Any::new().random_u64();
+    ///     b_u64.set_lsb();
+    /// 
+    ///     let prime = func(b_u64);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_u64); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_u64); }
+    /// 
+    ///     let mut a_u128 = Any::new().random_u128();
+    ///     a_u128.set_lsb();
+    ///     let prime = a_u128.is_prime();
+    ///     if prime
+    ///         { println!("It is 99.9% certain that {} is a prime number.", a_u128); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_u128); }
+    /// 
+    ///     let mut b_u128 = Any::new().random_u128();
+    ///     b_u128.set_lsb();
+    ///     let prime = func(b_u128);
+    ///     if prime
+    ///         { println!("It is 99.9% certain that {} is a prime number.", b_u128); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_u128); }
+    /// 
+    ///     let mut a_usize = Any::new().random_usize();
+    ///     a_usize.set_lsb();
+    /// 
+    ///     let prime = a_usize.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_usize); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_usize); }
+    /// 
+    ///     let mut b_usize = Any::new().random_usize();
+    ///     b_usize.set_lsb();
+    /// 
+    ///     let prime = func(b_usize);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_usize); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_usize); }
+    /// 
+    ///     let mut a_shortunion = Any::new().random_u16().into_shortunion();
+    ///     a_shortunion.set_lsb();
+    /// 
+    ///     let prime = a_shortunion.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_shortunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_shortunion); }
+    /// 
+    ///     let mut b_shortunion = Any::new().random_u16().into_shortunion();
+    ///     b_shortunion.set_lsb();
+    ///  
+    ///     let prime = func(b_shortunion);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_shortunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_shortunion); }
+    /// 
+    ///     let mut a_intunion = Any::new().random_u32().into_intunion();
+    ///     a_intunion.set_lsb();
+    /// 
+    ///     let prime = a_intunion.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_intunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_intunion); }
+    /// 
+    ///     let mut b_intunion = Any::new().random_u32().into_intunion();
+    ///     b_intunion.set_lsb();
+    /// 
+    ///     let prime = func(b_intunion);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_intunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_intunion); }
+    /// 
+    ///     let mut a_longunion = Any::new().random_u64().into_longunion();
+    ///     a_longunion.set_lsb();
+    /// 
+    ///     let prime = a_longunion.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_longunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_longunion); }
+    /// 
+    ///     let mut b_longunion = Any::new().random_u64().into_longunion();
+    ///     b_longunion.set_lsb();
+    /// 
+    ///     let prime = func(b_longunion);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_longunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_longunion); }
+    /// 
+    ///     let mut a_longerunion = Any::new().random_u128().into_longerunion();
+    ///     a_longerunion.set_lsb();
+    ///     let prime = a_longerunion.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_longerunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_longerunion); }
+    /// 
+    ///     let mut b_longerunion = Any::new().random_u128().into_longerunion();
+    ///     b_longerunion.set_lsb();
+    ///     let prime = func(b_longerunion);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_longerunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_longerunion); }
+    /// 
+    ///     let mut a_sizeunion = Any::new().random_usize().into_sizeunion();
+    ///     a_sizeunion.set_lsb();
+    /// 
+    ///     let prime = a_sizeunion.is_prime();
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", a_sizeunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", a_sizeunion); }
+    /// 
+    ///     let mut b_sizeunion = Any::new().random_usize().into_sizeunion();
+    ///     b_sizeunion.set_lsb();
+    /// 
+    ///     let prime = func(b_sizeunion);
+    ///     if prime
+    ///         { println!("It is 100% certain that {} is a prime number.", b_sizeunion); }
+    ///     else
+    ///         { println!("It is 100% certain that {} is a composite number.", b_sizeunion); }
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: T) -> bool
+    /// {
+    ///     num.is_prime()
+    /// }
+    /// ```
+    /// 
+    /// # Big-endian issue
+    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
+    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
+    /// for Big-endian CPUs with your own full responsibility.
+    fn is_prime(self) -> bool;
 
     // fn reverse_bits(self) -> Self;
     /// Reverses the order of bits in the integer.

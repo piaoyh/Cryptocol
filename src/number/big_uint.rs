@@ -19390,19 +19390,19 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.is_prime_using_miller_rabin)
     pub fn is_prime_using_miller_rabin(&self, repetition: usize) -> bool
     {
-        if self.is_zero_or_one() || self.is_even()
-            { return false; }
-        
         if self.is_uint(2_u8) ||  self.is_uint(3_u8)
             { return true; }
 
-        if self.le_uint(u64::MAX)
+        if self.is_zero_or_one() || self.is_even()
+            { return false; }
+        
+        if self.le_uint(u128::MAX)
         {
-            let small_self = self.into_u64();
+            let small_self = self.into_u128();
             return small_self.is_prime_using_miller_rabin(repetition);
         }
 
-        let a_list = [2_u64, 7, 61, 325, 9375, 28178, 450775, 9780504, 1795265022];
+        let a_list = [2_u64, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37];
         let len = a_list.len();
         let common = if len < repetition { len } else { repetition };
         let mut i = 0;
@@ -19413,7 +19413,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             i += 1;
         }
 
-        let mut a = a_list[len-1] + 1;
+        let mut a = a_list[len-1] + 2;
         for _ in i..repetition
         {
             if !self.test_miller_rabin(&Self::from_uint(a))
@@ -19428,14 +19428,22 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         let self_minus_one = self.wrapping_sub_uint(1_u8);
         let mut d = self_minus_one.clone();
+        let mut s = 0_u64;
         while d.is_even()
         {
-            if a.modular_pow(&d, self) == self_minus_one
-                { return true; }
             d.shift_right_assign(1_u8);
+            s += 1;
         }
-        let tmp = a.modular_pow(&d, self);
-        return tmp == self_minus_one || tmp.is_one();
+        let mut x = a.modular_pow(&d, self);
+        if x == self_minus_one || x.is_one()
+            { return true; }
+        for _ in 0..s-1
+        {
+            x.modular_pow_assign_uint(2_u8, self);
+            if x == self_minus_one
+                { return true; }
+        }
+        false
     }
 
 
