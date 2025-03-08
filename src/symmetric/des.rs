@@ -2179,6 +2179,8 @@ S756, S757, S758, S759, S760, S761, S762, S763
     #[inline] pub fn set_success(&mut self) { self.block.set(Self::SUCCESS); }
     #[inline] pub fn set_failed(&mut self)  { self.block.set(Self::FAILURE); }
 
+
+/*
     // pub fn encrypt_with_padding_pkcs7(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     /// Encrypts the data with the padding defined in PKCS #7.
     /// 
@@ -3755,7 +3757,7 @@ S756, S757, S758, S759, S760, S761, S762, S763
     }
 
 
-/*
+
     pub fn encrypt_with_padding_pkcs7_cbc(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
         let mut progress = 0_u64;

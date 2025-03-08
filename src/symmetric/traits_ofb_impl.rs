@@ -309,15 +309,15 @@ S740, S741, S742, S743, S744, S745, S746, S747,
 S748, S749, S750, S751, S752, S753, S754, S755,
 S756, S757, S758, S759, S760, S761, S762, S763>
 {
-    fn encrypt(&mut self, mut iv: u64, from: *const u8, length_in_bytes: u64, to: *mut u8) -> u64
+    fn encrypt(&mut self, mut iv: u64, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
         let mut progress = 0_u64;
         for _ in 0..length_in_bytes >> 3    // length_in_bytes >> 3 == length_in_bytes / 8
         {
-            let block = unsafe { *(from.add(progress as usize) as *const u64 ) };
+            let block = unsafe { *(message.add(progress as usize) as *const u64 ) };
             iv = self.encrypt_u64(iv);
             let coded = block ^ iv;
-            unsafe { copy_nonoverlapping(&coded as *const u64 as *const u8, to.add(progress as usize), 8); }
+            unsafe { copy_nonoverlapping(&coded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
             progress += 8;
         }
 
@@ -330,10 +330,10 @@ S756, S757, S758, S759, S760, S761, S762, S763>
         {
             let mut block = 0_u64;
             let tail = (length_in_bytes - progress) as usize;
-            let addr = unsafe { from.add(progress as usize) as *const u8 };
+            let addr = unsafe { message.add(progress as usize) as *const u8 };
             unsafe { copy_nonoverlapping(addr, &mut block as *mut u64 as *mut u8, tail); }
             let coded = block ^ self.encrypt_u64(iv);
-            unsafe { copy_nonoverlapping(&coded as *const u64 as *const u8, to.add(progress as usize), tail); }
+            unsafe { copy_nonoverlapping(&coded as *const u64 as *const u8, cipher.add(progress as usize), tail); }
             self.set_success();
             progress + tail as u64
         }

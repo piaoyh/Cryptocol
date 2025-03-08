@@ -23,7 +23,7 @@ use crate::symmetric::{ des_pre_encrypt_into_vec, des_pre_decrypt_into_vec };
 #[allow(non_camel_case_types)]
 pub trait CBC_PKCS7<T> : Sized
 {
-    fn encrypt(&mut self, iv: T, from: *const u8, length_in_bytes: u64, to: *mut u8) -> u64;
+    fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 
     // fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     /// Encrypts the data without padding.
