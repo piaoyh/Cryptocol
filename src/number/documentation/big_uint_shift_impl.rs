@@ -6,6 +6,9 @@
 // This file may not be copied, modified, or distributed
 // except according to those terms.
 
+#![allow(dead_code)]
+#![allow(unused)]
+
 use std::fmt::{ Display, Debug };
 use std::cmp::{ PartialEq, PartialOrd };
 use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
@@ -19,7 +22,7 @@ use crate::number::SmallUInt;
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to big_uint_arithmetic.rs.
-pub struct BigUInt<T, const N: usize>
+struct BigUInt<T, const N: usize>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign

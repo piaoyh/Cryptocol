@@ -136,40 +136,40 @@
 // ! - For `LargeInt`, read [here](struct@LargeInt#quick-start).
 
 
-pub mod small_uint;
-pub mod small_sint;
-pub mod short_union;
-pub mod int_union;
-pub mod long_union;
-pub mod longer_union;
-pub mod size_union;
-pub mod shared_values;
-pub mod shared_arrays;
-pub mod big_uint;
+mod small_uint;
+mod small_sint;
+mod short_union;
+mod int_union;
+mod long_union;
+mod longer_union;
+mod size_union;
+mod shared_values;
+mod shared_arrays;
+mod big_uint;
 
 /// Additional methods for BigUInt
-pub mod trait_big_uint_more;
-pub mod number_errors;
-pub mod macros_for_types;
-pub mod macros_for_integer_unions;
+mod trait_big_uint_more;
+mod number_errors;
+mod macros_for_types;
+mod macros_for_integer_unions;
 
 /// big_uint.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to all the *.rs in documentation folder.
-pub mod documentation;
+mod documentation;
 
 /// Implementaion of trait SmallUInt for u8, u16, u32, u64, u128, and usize
-pub mod trait_small_uint_for_unsigned_impl;
+mod trait_small_uint_for_unsigned_impl;
 
 /// Implementaion of trait SmallUInt for ShortUnion, IntUnion, LongUnion, LongerUnion, and SizeUnion
-pub mod trait_small_uint_for_integer_unions_impl;
+mod trait_small_uint_for_integer_unions_impl;
 
 /// Implementaion of various traits for BigUInt
-pub mod traits_for_big_uint_impl;
+mod traits_for_big_uint_impl;
 
 /// Implementaion of BigUInt_More trait for BigUInt
-pub mod trait_big_uint_more_impl;
+mod trait_big_uint_more_impl;
 
 
 
@@ -192,7 +192,7 @@ use macros_for_integer_unions::*;
 /********** FOR BIG-ENDIANNESS ONLY **********/
 
 #[cfg(target_endian = "big")]
-pub mod traits_for_big_uint_for_big_endian_impl;
+mod traits_for_big_uint_for_big_endian_impl;
 
 #[cfg(target_endian = "big")]
-pub use traits_for_big_uint_for_big_endian_impl::*;
+use traits_for_big_uint_for_big_endian_impl::*;

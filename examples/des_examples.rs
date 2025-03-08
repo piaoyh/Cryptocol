@@ -460,7 +460,7 @@ fn des_quick_start_encryption_decryption_16_rounds()
     println!("des_quick_start_encryption_decryption_16_rounds()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::DES;
+    use cryptocol::symmetric::{ CBC_PKCS7, DES };
     
     let mut a_des = DES::new_with_key([0xEFu8, 0xCDu8, 0xABu8, 0x90u8, 0x78u8, 0x56u8, 0x34u8, 0x12u8]);
     let message = "In the beginning God created the heavens and the earth.";
@@ -468,7 +468,7 @@ fn des_quick_start_encryption_decryption_16_rounds()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_vec(iv, message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -479,7 +479,7 @@ fn des_quick_start_encryption_decryption_16_rounds()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
     
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B (16 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -491,7 +491,7 @@ fn des_quick_start_encryption_decryption_256_rounds()
     println!("des_quick_start_encryption_decryption_256_rounds()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::DES_Expanded;
+    use cryptocol::symmetric::{ CBC_PKCS7, DES_Expanded };
 
     let mut a_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key([0xEFu8, 0xCDu8, 0xABu8, 0x90u8, 0x78u8, 0x56u8, 0x34u8, 0x12u8]);
     let message = "In the beginning God created the heavens and the earth.";
@@ -499,7 +499,7 @@ fn des_quick_start_encryption_decryption_256_rounds()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -510,7 +510,7 @@ fn des_quick_start_encryption_decryption_256_rounds()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -28826,7 +28826,7 @@ fn des_encrypt_with_padding_pkcs7_cbc()
     println!("des_encrypt_with_padding_pkcs7_cbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -28838,7 +28838,7 @@ fn des_encrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_cbc(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -28860,7 +28860,7 @@ fn des_encrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_cbc(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -28885,8 +28885,8 @@ fn des_encrypt_with_padding_pkcs7_cbc()
     println!("IV =\t{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_with_padding_pkcs7_cbc(iv, message.as_ptr(), message.len() as u64, cipher1.as_mut_ptr());
-    d_des.encrypt_with_padding_pkcs7_cbc(iv, message.as_ptr(), message.len() as u64, cipher2.as_mut_ptr());
+    c_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher1.as_mut_ptr());
+    d_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -28916,7 +28916,7 @@ fn des_encrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_cbc(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -28938,7 +28938,7 @@ fn des_encrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_cbc(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -28960,7 +28960,7 @@ fn des_encrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_cbc(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -28982,7 +28982,7 @@ fn des_encrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_cbc(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29005,7 +29005,7 @@ fn des_encrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_with_padding_pkcs7_cbc(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29022,7 +29022,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_vec()
     println!("des_encrypt_with_padding_pkcs7_cbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -29034,7 +29034,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29056,7 +29056,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_vec()
     let mut cipher = Vec::<u8>::new();
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29081,8 +29081,8 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_vec()
     println!("IV =\t{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -29112,7 +29112,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29134,7 +29134,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29156,7 +29156,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29178,7 +29178,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29200,7 +29200,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29217,7 +29217,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_array()
     println!("des_encrypt_with_padding_pkcs7_cbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -29229,7 +29229,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29251,7 +29251,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29276,8 +29276,8 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_array()
     println!("IV =\t{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -29307,7 +29307,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29329,7 +29329,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29351,7 +29351,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29373,7 +29373,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29396,7 +29396,7 @@ fn des_encrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29413,7 +29413,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc()
     println!("des_encrypt_str_with_padding_pkcs7_cbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -29425,7 +29425,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_str_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29447,7 +29447,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_str_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29472,8 +29472,8 @@ fn des_encrypt_str_with_padding_pkcs7_cbc()
     println!("IV =\t{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_str_with_padding_pkcs7_cbc(iv, &message, cipher1.as_mut_ptr());
-    d_des.encrypt_str_with_padding_pkcs7_cbc(iv, &message, cipher2.as_mut_ptr());
+    c_des.encrypt_str(iv, &message, cipher1.as_mut_ptr());
+    d_des.encrypt_str(iv, &message, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -29503,7 +29503,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_str_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29525,7 +29525,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_str_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29547,7 +29547,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_str_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29569,7 +29569,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_str_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29592,7 +29592,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_str_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29609,7 +29609,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_vec()
     println!("des_encrypt_str_with_padding_pkcs7_cbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -29621,7 +29621,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29643,7 +29643,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29668,8 +29668,8 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_vec()
     println!("IV =\t{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_str_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher1);
-    d_des.encrypt_str_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher2);
+    c_des.encrypt_str_into_vec(iv, &message, &mut cipher1);
+    d_des.encrypt_str_into_vec(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -29699,7 +29699,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29721,7 +29721,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29743,7 +29743,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29765,7 +29765,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29788,7 +29788,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29805,7 +29805,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_array()
     println!("des_encrypt_str_with_padding_pkcs7_cbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -29817,7 +29817,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_array(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29839,7 +29839,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_array(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29864,8 +29864,8 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_array()
     println!("IV =\t{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_str_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher1);
-    d_des.encrypt_str_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher2);
+    c_des.encrypt_str_into_array(iv, &message, &mut cipher1);
+    d_des.encrypt_str_into_array(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -29895,7 +29895,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29917,7 +29917,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29939,7 +29939,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29961,7 +29961,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -29984,7 +29984,7 @@ fn des_encrypt_str_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_str_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30001,7 +30001,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc()
     println!("des_encrypt_string_with_padding_pkcs7_cbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -30013,7 +30013,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_string_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30035,7 +30035,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_string_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30060,8 +30060,8 @@ fn des_encrypt_string_with_padding_pkcs7_cbc()
     println!("IV =\t{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_string_with_padding_pkcs7_cbc(iv, &message, cipher1.as_mut_ptr());
-    d_des.encrypt_string_with_padding_pkcs7_cbc(iv, &message, cipher2.as_mut_ptr());
+    c_des.encrypt_string(iv, &message, cipher1.as_mut_ptr());
+    d_des.encrypt_string(iv, &message, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -30091,7 +30091,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_string_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30113,7 +30113,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_string_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30135,7 +30135,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_string_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30157,7 +30157,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_string_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30180,7 +30180,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_string_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30197,7 +30197,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_vec()
     println!("des_encrypt_string_with_padding_pkcs7_cbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -30209,7 +30209,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30231,7 +30231,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30256,8 +30256,8 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_vec()
     println!("IV =\t{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_string_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher1);
-    d_des.encrypt_string_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher2);
+    c_des.encrypt_string_into_vec(iv, &message, &mut cipher1);
+    d_des.encrypt_string_into_vec(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -30287,7 +30287,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30309,7 +30309,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30331,7 +30331,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30353,7 +30353,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30376,7 +30376,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30393,7 +30393,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_array()
     println!("des_encrypt_string_with_padding_pkcs7_cbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -30405,7 +30405,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_string_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30427,7 +30427,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_string_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30452,8 +30452,8 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_array()
     println!("IV =\t{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_string_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher1);
-    d_des.encrypt_string_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher2);
+    c_des.encrypt_string_into_array(iv, &message, &mut cipher1);
+    d_des.encrypt_string_into_array(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -30483,7 +30483,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_string_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30505,7 +30505,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_string_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30527,7 +30527,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_string_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30549,7 +30549,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_string_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30571,7 +30571,7 @@ fn des_encrypt_string_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_string_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30588,7 +30588,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc()
     println!("des_encrypt_vec_with_padding_pkcs7_cbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -30601,7 +30601,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_vec_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30624,7 +30624,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_vec_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30651,8 +30651,8 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc()
     println!("IV =\t{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_vec_with_padding_pkcs7_cbc(iv, &message, cipher1.as_mut_ptr());
-    d_des.encrypt_vec_with_padding_pkcs7_cbc(iv, &message, cipher2.as_mut_ptr());
+    c_des.encrypt_vec(iv, &message, cipher1.as_mut_ptr());
+    d_des.encrypt_vec(iv, &message, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -30683,7 +30683,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_vec_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30706,7 +30706,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_vec_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30729,7 +30729,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_vec_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30752,7 +30752,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_vec_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30776,7 +30776,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_vec_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30793,7 +30793,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_vec()
     println!("des_encrypt_vec_with_padding_pkcs7_cbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -30806,7 +30806,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30829,7 +30829,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30856,8 +30856,8 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_vec()
     println!("IV =\t{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher1);
-    d_des.encrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher2);
+    c_des.encrypt_vec_into_vec(iv, &message, &mut cipher1);
+    d_des.encrypt_vec_into_vec(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -30888,7 +30888,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30911,7 +30911,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30934,7 +30934,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30957,7 +30957,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30981,7 +30981,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -30998,7 +30998,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_array()
     println!("des_encrypt_vec_with_padding_pkcs7_cbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -31011,7 +31011,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31034,7 +31034,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31061,8 +31061,8 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_array()
     println!("IV =\t{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher1);
-    d_des.encrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher2);
+    c_des.encrypt_vec_into_array(iv, &message, &mut cipher1);
+    d_des.encrypt_vec_into_array(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -31093,7 +31093,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31116,7 +31116,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31139,7 +31139,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31162,7 +31162,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31186,7 +31186,7 @@ fn des_encrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31203,7 +31203,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc()
     println!("des_encrypt_array_with_padding_pkcs7_cbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -31217,7 +31217,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_array_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31241,7 +31241,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_array_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31269,8 +31269,8 @@ fn des_encrypt_array_with_padding_pkcs7_cbc()
     println!("IV =\t{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_array_with_padding_pkcs7_cbc(iv, &message, cipher1.as_mut_ptr());
-    d_des.encrypt_array_with_padding_pkcs7_cbc(iv, &message, cipher2.as_mut_ptr());
+    c_des.encrypt_array(iv, &message, cipher1.as_mut_ptr());
+    d_des.encrypt_array(iv, &message, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -31302,7 +31302,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_array_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31326,7 +31326,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_array_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31350,7 +31350,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_array_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31374,7 +31374,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_array_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31399,7 +31399,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_array_with_padding_pkcs7_cbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31416,7 +31416,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_vec()
     println!("des_encrypt_array_with_padding_pkcs7_cbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -31430,7 +31430,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31454,7 +31454,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31482,8 +31482,8 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_vec()
     println!("IV =\t{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher1);
-    d_des.encrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher2);
+    c_des.encrypt_array_into_vec(iv, &message, &mut cipher1);
+    d_des.encrypt_array_into_vec(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -31515,7 +31515,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31539,7 +31539,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31563,7 +31563,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31587,7 +31587,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31612,7 +31612,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31629,7 +31629,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_array()
     println!("des_encrypt_array_with_padding_pkcs7_cbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -31643,7 +31643,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_array_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31667,7 +31667,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_array_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31695,8 +31695,8 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_array()
     println!("IV =\t{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_array_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher1);
-    d_des.encrypt_array_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher2);
+    c_des.encrypt_array_into_array(iv, &message, &mut cipher1);
+    d_des.encrypt_array_into_array(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -31728,7 +31728,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_array_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31752,7 +31752,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_array_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31776,7 +31776,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_array_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31800,7 +31800,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_array_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31825,7 +31825,7 @@ fn des_encrypt_array_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_array_with_padding_pkcs7_cbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31842,7 +31842,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     println!("des_decrypt_with_padding_pkcs7_cbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -31854,7 +31854,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31865,7 +31865,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
 
     let mut recovered = vec![0; 55];
-    a_des.decrypt_with_padding_pkcs7_cbc(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -31894,7 +31894,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -31905,7 +31905,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
 
     let mut recovered = vec![0; 55];
-    a_des.decrypt_with_padding_pkcs7_cbc(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -31937,8 +31937,8 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     println!("IV =\t{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -31958,8 +31958,8 @@ fn des_decrypt_with_padding_pkcs7_cbc()
 
     let mut recovered1 = vec![0; 55];
     let mut recovered2 = vec![0; 55];
-    c_des.decrypt_with_padding_pkcs7_cbc(iv, cipher1.as_ptr(), cipher1.len() as u64, recovered1.as_mut_ptr());
-    d_des.decrypt_with_padding_pkcs7_cbc(iv, cipher2.as_ptr(), cipher2.len() as u64, recovered2.as_mut_ptr());
+    c_des.decrypt(iv, cipher1.as_ptr(), cipher1.len() as u64, recovered1.as_mut_ptr());
+    d_des.decrypt(iv, cipher2.as_ptr(), cipher2.len() as u64, recovered2.as_mut_ptr());
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -32002,7 +32002,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32013,7 +32013,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_with_padding_pkcs7_cbc(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -32043,7 +32043,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32054,7 +32054,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
     
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_with_padding_pkcs7_cbc(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -32084,7 +32084,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32095,7 +32095,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 AB 12 20 DA B4 A6 F1 F1 ");
     
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_with_padding_pkcs7_cbc(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -32125,7 +32125,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32136,7 +32136,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B 91 E7 5E CF CC C0 44 5A ");
 
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_with_padding_pkcs7_cbc(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -32167,7 +32167,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32178,7 +32178,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E F4 0C B1 6A 69 67 13 26 91 D0 EB 51 AF F5 1F 5A ");
 
     let mut recovered = vec![0; 24];
-    let len = a_des.decrypt_with_padding_pkcs7_cbc(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -32203,7 +32203,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     println!("des_decrypt_with_padding_pkcs7_cbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -32215,7 +32215,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32226,7 +32226,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_with_padding_pkcs7_cbc_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -32255,7 +32255,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32266,7 +32266,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_with_padding_pkcs7_cbc_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -32298,8 +32298,8 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     println!("IV =\t{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -32319,8 +32319,8 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
 
     let mut recovered1 = Vec::<u8>::new();
     let mut recovered2 = Vec::<u8>::new();
-    c_des.decrypt_with_padding_pkcs7_cbc_into_vec(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
-    d_des.decrypt_with_padding_pkcs7_cbc_into_vec(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
+    c_des.decrypt_into_vec(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
+    d_des.decrypt_into_vec(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -32363,7 +32363,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32374,7 +32374,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_with_padding_pkcs7_cbc_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -32403,7 +32403,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32414,7 +32414,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_with_padding_pkcs7_cbc_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -32443,7 +32443,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32454,7 +32454,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 AB 12 20 DA B4 A6 F1 F1 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_with_padding_pkcs7_cbc_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -32483,7 +32483,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32494,7 +32494,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B 91 E7 5E CF CC C0 44 5A ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_with_padding_pkcs7_cbc_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -32523,7 +32523,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32534,7 +32534,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E F4 0C B1 6A 69 67 13 26 91 D0 EB 51 AF F5 1F 5A ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_with_padding_pkcs7_cbc_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -32558,7 +32558,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     println!("des_decrypt_with_padding_pkcs7_cbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -32570,7 +32570,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32581,7 +32581,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_with_padding_pkcs7_cbc_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -32610,7 +32610,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32621,7 +32621,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_with_padding_pkcs7_cbc_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -32653,8 +32653,8 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     println!("IV =\t{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -32674,8 +32674,8 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
 
     let mut recovered1 = [0u8; 56];
     let mut recovered2 = [0u8; 56];
-    let len1 = c_des.decrypt_with_padding_pkcs7_cbc_into_array(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
-    let len2 = d_des.decrypt_with_padding_pkcs7_cbc_into_array(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
+    let len1 = c_des.decrypt_into_array(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
+    let len2 = d_des.decrypt_into_array(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -32719,7 +32719,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32730,7 +32730,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_with_padding_pkcs7_cbc_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -32760,7 +32760,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32771,7 +32771,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_with_padding_pkcs7_cbc_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -32801,7 +32801,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32812,7 +32812,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 AB 12 20 DA B4 A6 F1 F1 ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_with_padding_pkcs7_cbc_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -32842,7 +32842,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32853,7 +32853,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B 91 E7 5E CF CC C0 44 5A ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_with_padding_pkcs7_cbc_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -32883,7 +32883,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32894,7 +32894,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E F4 0C B1 6A 69 67 13 26 91 D0 EB 51 AF F5 1F 5A ");
 
     let mut recovered = [0u8; 24];
-    let len = a_des.decrypt_with_padding_pkcs7_cbc_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -32919,7 +32919,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     println!("des_decrypt_with_padding_pkcs7_cbc_into_string");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -32931,7 +32931,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32942,7 +32942,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
 
     let mut recovered = String::new();
-    a_des.decrypt_with_padding_pkcs7_cbc_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B (16 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -32959,7 +32959,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -32970,7 +32970,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
 
     let mut recovered = String::new();
-    a_des.decrypt_with_padding_pkcs7_cbc_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B (128 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -32990,8 +32990,8 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     println!("IV =\t{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -33011,8 +33011,8 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
 
     let mut recovered1 = String::new();
     let mut recovered2 = String::new();
-    c_des.decrypt_with_padding_pkcs7_cbc_into_string(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
-    d_des.decrypt_with_padding_pkcs7_cbc_into_string(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
+    c_des.decrypt_into_string(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
+    d_des.decrypt_into_string(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
     println!("B1 (0 rounds) =\t{}", recovered1);
     println!("B2 (0 rounds) =\t{}", recovered2);
     assert_eq!(recovered1, "In the beginning God created the heavens and the earth.");
@@ -33033,7 +33033,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33044,7 +33044,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_with_padding_pkcs7_cbc_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "");
     assert_eq!(recovered, message);
@@ -33061,7 +33061,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33072,7 +33072,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_with_padding_pkcs7_cbc_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "7 bytes");
     assert_eq!(recovered, message);
@@ -33089,7 +33089,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33100,7 +33100,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 AB 12 20 DA B4 A6 F1 F1 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_with_padding_pkcs7_cbc_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "I am OK.");
     assert_eq!(recovered, message);
@@ -33117,7 +33117,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33128,7 +33128,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B 91 E7 5E CF CC C0 44 5A ");
 
     let mut recovered = String::new();
-    a_des.decrypt_with_padding_pkcs7_cbc_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "PARK Youngho");
     assert_eq!(recovered, message);
@@ -33145,7 +33145,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33156,7 +33156,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E F4 0C B1 6A 69 67 13 26 91 D0 EB 51 AF F5 1F 5A ");
 
     let mut recovered = String::new();
-    a_des.decrypt_with_padding_pkcs7_cbc_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "고맙습니다.");
     assert_eq!(recovered, message);
@@ -33168,7 +33168,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     println!("des_decrypt_vec_with_padding_pkcs7_cbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -33180,7 +33180,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33191,7 +33191,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
 
     let mut recovered = vec![0; 55];
-    a_des.decrypt_vec_with_padding_pkcs7_cbc(iv, &cipher, recovered.as_mut_ptr());
+    a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33220,7 +33220,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33231,7 +33231,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
 
     let mut recovered = vec![0; 55];
-    a_des.decrypt_vec_with_padding_pkcs7_cbc(iv, &cipher, recovered.as_mut_ptr());
+    a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33263,8 +33263,8 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     println!("IV =\t{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -33284,8 +33284,8 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
 
     let mut recovered1 = vec![0; 55];
     let mut recovered2 = vec![0; 55];
-    c_des.decrypt_vec_with_padding_pkcs7_cbc(iv, &cipher1, recovered1.as_mut_ptr());
-    d_des.decrypt_vec_with_padding_pkcs7_cbc(iv, &cipher2, recovered2.as_mut_ptr());
+    c_des.decrypt_vec(iv, &cipher1, recovered1.as_mut_ptr());
+    d_des.decrypt_vec(iv, &cipher2, recovered2.as_mut_ptr());
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -33328,7 +33328,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33339,7 +33339,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_cbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33369,7 +33369,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33380,7 +33380,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
     
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_cbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33410,7 +33410,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33421,7 +33421,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 AB 12 20 DA B4 A6 F1 F1 ");
     
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_cbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33451,7 +33451,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33462,7 +33462,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B 91 E7 5E CF CC C0 44 5A ");
 
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_cbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33492,7 +33492,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33503,7 +33503,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E F4 0C B1 6A 69 67 13 26 91 D0 EB 51 AF F5 1F 5A ");
 
     let mut recovered = vec![0; 24];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_cbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33528,7 +33528,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     println!("des_decrypt_vec_with_padding_pkcs7_cbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -33540,7 +33540,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33551,7 +33551,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33580,7 +33580,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33591,7 +33591,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33623,8 +33623,8 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     println!("IV =\t{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -33644,8 +33644,8 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
 
     let mut recovered1 = Vec::<u8>::new();
     let mut recovered2 = Vec::<u8>::new();
-    c_des.decrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &cipher1, &mut recovered1);
-    d_des.decrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &cipher2, &mut recovered2);
+    c_des.decrypt_vec_into_vec(iv, &cipher1, &mut recovered1);
+    d_des.decrypt_vec_into_vec(iv, &cipher2, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -33688,7 +33688,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33699,7 +33699,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33728,7 +33728,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33739,7 +33739,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33768,7 +33768,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33779,7 +33779,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 AB 12 20 DA B4 A6 F1 F1 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33808,7 +33808,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33819,7 +33819,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B 91 E7 5E CF CC C0 44 5A ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33848,7 +33848,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33859,7 +33859,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E F4 0C B1 6A 69 67 13 26 91 D0 EB 51 AF F5 1F 5A ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33883,7 +33883,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     println!("des_decrypt_vec_with_padding_pkcs7_cbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -33895,7 +33895,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33906,7 +33906,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33935,7 +33935,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -33946,7 +33946,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -33978,8 +33978,8 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     println!("IV =\t{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -33999,8 +33999,8 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
 
     let mut recovered1 = [0u8; 56];
     let mut recovered2 = [0u8; 56];
-    let len1 = c_des.decrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &cipher1, &mut recovered1);
-    let len2 = d_des.decrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &cipher2, &mut recovered2);
+    let len1 = c_des.decrypt_vec_into_array(iv, &cipher1, &mut recovered1);
+    let len2 = d_des.decrypt_vec_into_array(iv, &cipher2, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -34044,7 +34044,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34055,7 +34055,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -34085,7 +34085,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34096,7 +34096,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -34126,7 +34126,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34137,7 +34137,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 AB 12 20 DA B4 A6 F1 F1 ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -34167,7 +34167,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34178,7 +34178,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B 91 E7 5E CF CC C0 44 5A ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -34208,7 +34208,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34219,7 +34219,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E F4 0C B1 6A 69 67 13 26 91 D0 EB 51 AF F5 1F 5A ");
 
     let mut recovered = [0u8; 24];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_cbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -34244,7 +34244,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     println!("des_decrypt_vec_with_padding_pkcs7_cbc_into_string");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -34256,7 +34256,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34267,7 +34267,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B (16 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -34284,7 +34284,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34295,7 +34295,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B (128 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -34315,8 +34315,8 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     println!("IV =\t{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -34336,8 +34336,8 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
 
     let mut recovered1 = String::new();
     let mut recovered2 = String::new();
-    c_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher1, &mut recovered1);
-    d_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher2, &mut recovered2);
+    c_des.decrypt_vec_into_string(iv, &cipher1, &mut recovered1);
+    d_des.decrypt_vec_into_string(iv, &cipher2, &mut recovered2);
     println!("B1 (0 rounds) =\t{}", recovered1);
     println!("B2 (0 rounds) =\t{}", recovered2);
     assert_eq!(recovered1, "In the beginning God created the heavens and the earth.");
@@ -34358,7 +34358,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34369,7 +34369,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "");
     assert_eq!(recovered, message);
@@ -34386,7 +34386,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34397,7 +34397,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "7 bytes");
     assert_eq!(recovered, message);
@@ -34414,7 +34414,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34425,7 +34425,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 AB 12 20 DA B4 A6 F1 F1 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "I am OK.");
     assert_eq!(recovered, message);
@@ -34442,7 +34442,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34453,7 +34453,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B 91 E7 5E CF CC C0 44 5A ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "PARK Youngho");
     assert_eq!(recovered, message);
@@ -34470,7 +34470,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34481,7 +34481,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E F4 0C B1 6A 69 67 13 26 91 D0 EB 51 AF F5 1F 5A ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "고맙습니다.");
     assert_eq!(recovered, message);
@@ -34493,7 +34493,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     println!("des_decrypt_array_with_padding_pkcs7_cbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -34505,7 +34505,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34516,7 +34516,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
 
     let mut recovered = vec![0; 55];
-    let len = a_des.decrypt_array_with_padding_pkcs7_cbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
@@ -34546,7 +34546,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34557,7 +34557,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
 
     let mut recovered = vec![0; 55];
-    let len = a_des.decrypt_array_with_padding_pkcs7_cbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
@@ -34590,8 +34590,8 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     println!("IV =\t{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -34611,8 +34611,8 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
 
     let mut recovered1 = vec![0; 55];
     let mut recovered2 = vec![0; 55];
-    let len1 = c_des.decrypt_array_with_padding_pkcs7_cbc(iv, &cipher1, recovered1.as_mut_ptr());
-    let len2 = d_des.decrypt_array_with_padding_pkcs7_cbc(iv, &cipher2, recovered2.as_mut_ptr());
+    let len1 = c_des.decrypt_array(iv, &cipher1, recovered1.as_mut_ptr());
+    let len2 = d_des.decrypt_array(iv, &cipher2, recovered2.as_mut_ptr());
     recovered1.truncate(len1 as usize);
     recovered2.truncate(len2 as usize);
 
@@ -34658,7 +34658,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34669,7 +34669,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_array_with_padding_pkcs7_cbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
 
     print!("Ba =\t");
@@ -34700,7 +34700,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34711,7 +34711,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
     
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_array_with_padding_pkcs7_cbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
 
     print!("Ba =\t");
@@ -34742,7 +34742,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34753,7 +34753,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 AB 12 20 DA B4 A6 F1 F1 ");
     
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_array_with_padding_pkcs7_cbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
 
     print!("Ba =\t");
@@ -34784,7 +34784,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34795,7 +34795,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B 91 E7 5E CF CC C0 44 5A ");
 
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_array_with_padding_pkcs7_cbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
     print!("Ba =\t");
     for b in recovered.clone()
@@ -34825,7 +34825,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34836,7 +34836,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E F4 0C B1 6A 69 67 13 26 91 D0 EB 51 AF F5 1F 5A ");
 
     let mut recovered = vec![0; 24];
-    let len = a_des.decrypt_array_with_padding_pkcs7_cbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
 
     print!("Ba =\t");
@@ -34862,7 +34862,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     println!("des_decrypt_array_with_padding_pkcs7_cbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -34874,7 +34874,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34885,7 +34885,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -34914,7 +34914,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -34925,7 +34925,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -34957,8 +34957,8 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     println!("IV =\t{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -34978,8 +34978,8 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
 
     let mut recovered1 = Vec::<u8>::new();
     let mut recovered2 = Vec::<u8>::new();
-    c_des.decrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &cipher1, &mut recovered1);
-    d_des.decrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &cipher2, &mut recovered2);
+    c_des.decrypt_array_into_vec(iv, &cipher1, &mut recovered1);
+    d_des.decrypt_array_into_vec(iv, &cipher2, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -35022,7 +35022,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35033,7 +35033,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -35062,7 +35062,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35073,7 +35073,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -35102,7 +35102,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35113,7 +35113,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 AB 12 20 DA B4 A6 F1 F1 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -35142,7 +35142,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35153,7 +35153,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B 91 E7 5E CF CC C0 44 5A ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -35182,7 +35182,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35193,7 +35193,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E F4 0C B1 6A 69 67 13 26 91 D0 EB 51 AF F5 1F 5A ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_with_padding_pkcs7_cbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -35217,7 +35217,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     println!("des_decrypt_array_with_padding_pkcs7_cbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -35229,7 +35229,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35240,7 +35240,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_array_with_padding_pkcs7_cbc_into_array(iv,&cipher, &mut recovered);
+    let len = a_des.decrypt_array_into_array(iv,&cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -35269,7 +35269,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35280,7 +35280,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_array_with_padding_pkcs7_cbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -35312,8 +35312,8 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     println!("IV =\t{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -35333,8 +35333,8 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
 
     let mut recovered1 = [0u8; 56];
     let mut recovered2 = [0u8; 56];
-    let len1 = c_des.decrypt_array_with_padding_pkcs7_cbc_into_array(iv, &cipher1, &mut recovered1);
-    let len2 = d_des.decrypt_array_with_padding_pkcs7_cbc_into_array(iv, &cipher2, &mut recovered2);
+    let len1 = c_des.decrypt_array_into_array(iv, &cipher1, &mut recovered1);
+    let len2 = d_des.decrypt_array_into_array(iv, &cipher2, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -35378,7 +35378,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35389,7 +35389,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_array_with_padding_pkcs7_cbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -35419,7 +35419,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35430,7 +35430,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_array_with_padding_pkcs7_cbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -35460,7 +35460,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35471,7 +35471,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 AB 12 20 DA B4 A6 F1 F1 ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_array_with_padding_pkcs7_cbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -35501,7 +35501,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35512,7 +35512,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B 91 E7 5E CF CC C0 44 5A ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_array_with_padding_pkcs7_cbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -35542,7 +35542,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35553,7 +35553,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_array()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E F4 0C B1 6A 69 67 13 26 91 D0 EB 51 AF F5 1F 5A ");
 
     let mut recovered = [0u8; 24];
-    let len = a_des.decrypt_array_with_padding_pkcs7_cbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -35578,7 +35578,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     println!("des_decrypt_array_with_padding_pkcs7_cbc_into_string");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, CBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -35590,7 +35590,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35601,7 +35601,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
     println!("B (16 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -35618,7 +35618,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35629,7 +35629,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
     println!("B (128 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -35649,8 +35649,8 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     println!("IV =\t{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -35670,8 +35670,8 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
 
     let mut recovered1 = String::new();
     let mut recovered2 = String::new();
-    c_des.decrypt_array_with_padding_pkcs7_cbc_into_string(iv, &cipher1, &mut recovered1);
-    d_des.decrypt_array_with_padding_pkcs7_cbc_into_string(iv, &cipher2, &mut recovered2);
+    c_des.decrypt_array_into_string(iv, &cipher1, &mut recovered1);
+    d_des.decrypt_array_into_string(iv, &cipher2, &mut recovered2);
     println!("B1 (0 rounds) =\t{}", recovered1);
     println!("B2 (0 rounds) =\t{}", recovered2);
     assert_eq!(recovered1, "In the beginning God created the heavens and the earth.");
@@ -35692,7 +35692,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35703,7 +35703,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "");
     assert_eq!(recovered, message);
@@ -35720,7 +35720,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35731,7 +35731,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "7 bytes");
     assert_eq!(recovered, message);
@@ -35748,7 +35748,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35759,7 +35759,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 AB 12 20 DA B4 A6 F1 F1 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "I am OK.");
     assert_eq!(recovered, message);
@@ -35776,7 +35776,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35787,7 +35787,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B 91 E7 5E CF CC C0 44 5A ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "PARK Youngho");
     assert_eq!(recovered, message);
@@ -35804,7 +35804,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_with_padding_pkcs7_cbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -35815,7 +35815,7 @@ fn des_decrypt_array_with_padding_pkcs7_cbc_into_string()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E F4 0C B1 6A 69 67 13 26 91 D0 EB 51 AF F5 1F 5A ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "고맙습니다.");
     assert_eq!(recovered, message);
@@ -42895,7 +42895,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc()
     println!("des_encrypt_with_padding_pkcs7_pcbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -42907,7 +42907,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_pcbc(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -42930,7 +42930,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_pcbc(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -42955,8 +42955,8 @@ fn des_encrypt_with_padding_pkcs7_pcbc()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_with_padding_pkcs7_pcbc(iv, message.as_ptr(), message.len() as u64, cipher1.as_mut_ptr());
-    d_des.encrypt_with_padding_pkcs7_pcbc(iv, message.as_ptr(), message.len() as u64, cipher2.as_mut_ptr());
+    c_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher1.as_mut_ptr());
+    d_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -42986,7 +42986,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_pcbc(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43008,7 +43008,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_pcbc(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43030,7 +43030,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_pcbc(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43052,7 +43052,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_pcbc(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43075,7 +43075,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_with_padding_pkcs7_pcbc(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43092,7 +43092,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_vec()
     println!("des_encrypt_with_padding_pkcs7_pcbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -43104,7 +43104,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43126,7 +43126,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43151,8 +43151,8 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -43182,7 +43182,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43204,7 +43204,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43226,7 +43226,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43248,7 +43248,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43270,7 +43270,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43287,7 +43287,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_array()
     println!("des_encrypt_with_padding_pkcs7_pcbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -43299,7 +43299,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43321,7 +43321,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43346,8 +43346,8 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -43377,7 +43377,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43399,7 +43399,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43421,7 +43421,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43443,7 +43443,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43466,7 +43466,7 @@ fn des_encrypt_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43483,7 +43483,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc()
     println!("des_encrypt_str_with_padding_pkcs7_pcbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -43495,7 +43495,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_str_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43517,7 +43517,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_str_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43542,8 +43542,8 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_str_with_padding_pkcs7_pcbc(iv, &message, cipher1.as_mut_ptr());
-    d_des.encrypt_str_with_padding_pkcs7_pcbc(iv, &message, cipher2.as_mut_ptr());
+    c_des.encrypt_str(iv, &message, cipher1.as_mut_ptr());
+    d_des.encrypt_str(iv, &message, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -43573,7 +43573,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_str_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43595,7 +43595,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_str_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43617,7 +43617,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_str_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43639,7 +43639,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_str_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43662,7 +43662,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_str_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43679,7 +43679,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_vec()
     println!("des_encrypt_str_with_padding_pkcs7_pcbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -43691,7 +43691,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43713,7 +43713,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43738,8 +43738,8 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_str_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher1);
-    d_des.encrypt_str_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher2);
+    c_des.encrypt_str_into_vec(iv, &message, &mut cipher1);
+    d_des.encrypt_str_into_vec(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -43769,7 +43769,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43791,7 +43791,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43813,7 +43813,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43835,7 +43835,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43858,7 +43858,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_str_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43875,7 +43875,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_array()
     println!("des_encrypt_str_with_padding_pkcs7_pcbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -43887,7 +43887,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_str_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_array(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43909,7 +43909,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_str_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_array(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43934,8 +43934,8 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_str_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher1);
-    d_des.encrypt_str_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher2);
+    c_des.encrypt_str_into_array(iv, &message, &mut cipher1);
+    d_des.encrypt_str_into_array(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -43965,7 +43965,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_str_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -43987,7 +43987,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_str_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44009,7 +44009,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_str_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44031,7 +44031,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_str_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44054,7 +44054,7 @@ fn des_encrypt_str_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_str_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_str_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44071,7 +44071,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc()
     println!("des_encrypt_string_with_padding_pkcs7_pcbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -44083,7 +44083,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_string_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44105,7 +44105,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_string_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44130,8 +44130,8 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_string_with_padding_pkcs7_pcbc(iv, &message, cipher1.as_mut_ptr());
-    d_des.encrypt_string_with_padding_pkcs7_pcbc(iv, &message, cipher2.as_mut_ptr());
+    c_des.encrypt_string(iv, &message, cipher1.as_mut_ptr());
+    d_des.encrypt_string(iv, &message, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -44161,7 +44161,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_string_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44183,7 +44183,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_string_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44205,7 +44205,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_string_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44227,7 +44227,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_string_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44250,7 +44250,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_string_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44267,7 +44267,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_vec()
     println!("des_encrypt_string_with_padding_pkcs7_pcbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -44279,7 +44279,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44301,7 +44301,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44326,8 +44326,8 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_string_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher1);
-    d_des.encrypt_string_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher2);
+    c_des.encrypt_string_into_vec(iv, &message, &mut cipher1);
+    d_des.encrypt_string_into_vec(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -44357,7 +44357,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44379,7 +44379,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44401,7 +44401,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44423,7 +44423,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44446,7 +44446,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_string_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44463,7 +44463,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_array()
     println!("des_encrypt_string_with_padding_pkcs7_pcbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -44475,7 +44475,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_string_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44497,7 +44497,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_string_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44522,8 +44522,8 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_string_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher1);
-    d_des.encrypt_string_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher2);
+    c_des.encrypt_string_into_array(iv, &message, &mut cipher1);
+    d_des.encrypt_string_into_array(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -44553,7 +44553,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_string_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44575,7 +44575,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_string_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44597,7 +44597,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_string_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44619,7 +44619,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_string_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44641,7 +44641,7 @@ fn des_encrypt_string_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_string_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44658,7 +44658,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc()
     println!("des_encrypt_vec_with_padding_pkcs7_pcbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -44671,7 +44671,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44694,7 +44694,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44721,8 +44721,8 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_vec_with_padding_pkcs7_pcbc(iv, &message, cipher1.as_mut_ptr());
-    d_des.encrypt_vec_with_padding_pkcs7_pcbc(iv, &message, cipher2.as_mut_ptr());
+    c_des.encrypt_vec(iv, &message, cipher1.as_mut_ptr());
+    d_des.encrypt_vec(iv, &message, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -44753,7 +44753,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44776,7 +44776,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44799,7 +44799,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44822,7 +44822,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44846,7 +44846,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44863,7 +44863,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     println!("des_encrypt_vec_with_padding_pkcs7_pcbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -44876,7 +44876,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44899,7 +44899,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44927,8 +44927,8 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher1);
-    d_des.encrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher2);
+    c_des.encrypt_vec_into_vec(iv, &message, &mut cipher1);
+    d_des.encrypt_vec_into_vec(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -44959,7 +44959,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -44982,7 +44982,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45005,7 +45005,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45028,7 +45028,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45052,7 +45052,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45069,7 +45069,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_array()
     println!("des_encrypt_vec_with_padding_pkcs7_pcbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -45082,7 +45082,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45105,7 +45105,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45132,8 +45132,8 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher1);
-    d_des.encrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher2);
+    c_des.encrypt_vec_into_array(iv, &message, &mut cipher1);
+    d_des.encrypt_vec_into_array(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -45164,7 +45164,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45187,7 +45187,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45210,7 +45210,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45233,7 +45233,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45257,7 +45257,7 @@ fn des_encrypt_vec_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45274,7 +45274,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc()
     println!("des_encrypt_array_with_padding_pkcs7_pcbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -45288,7 +45288,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_array_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45312,7 +45312,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_array_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45340,8 +45340,8 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_array_with_padding_pkcs7_pcbc(iv, &message, cipher1.as_mut_ptr());
-    d_des.encrypt_array_with_padding_pkcs7_pcbc(iv, &message, cipher2.as_mut_ptr());
+    c_des.encrypt_array(iv, &message, cipher1.as_mut_ptr());
+    d_des.encrypt_array(iv, &message, cipher2.as_mut_ptr());
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -45373,7 +45373,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_array_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45397,7 +45397,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_array_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45421,7 +45421,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_array_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45445,7 +45445,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_array_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45470,7 +45470,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_array_with_padding_pkcs7_pcbc(iv, &message, cipher.as_mut_ptr());
+    a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45487,7 +45487,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
     println!("des_encrypt_array_with_padding_pkcs7_pcbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -45501,7 +45501,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45525,7 +45525,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45554,8 +45554,8 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher1);
-    d_des.encrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher2);
+    c_des.encrypt_array_into_vec(iv, &message, &mut cipher1);
+    d_des.encrypt_array_into_vec(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -45587,7 +45587,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45611,7 +45611,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45635,7 +45635,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45659,7 +45659,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45684,7 +45684,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45701,7 +45701,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_array()
     println!("des_encrypt_array_with_padding_pkcs7_pcbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -45715,7 +45715,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_array(iv, &message, &mut cipher);
     for c in cipher.clone()
         { print!("{:02X} ", c); }
     println!();
@@ -45738,7 +45738,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45766,8 +45766,8 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher1);
-    d_des.encrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher2);
+    c_des.encrypt_array_into_array(iv, &message, &mut cipher1);
+    d_des.encrypt_array_into_array(iv, &message, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -45799,7 +45799,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45823,7 +45823,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45847,7 +45847,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45871,7 +45871,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45896,7 +45896,7 @@ fn des_encrypt_array_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &message, &mut cipher);
+    a_des.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45913,7 +45913,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     println!("des_decrypt_with_padding_pkcs7_pcbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -45925,7 +45925,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45936,7 +45936,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 01 BB EE 98 FC B6 40 01 ");
 
     let mut recovered = vec![0; 55];
-    a_des.decrypt_with_padding_pkcs7_pcbc(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -45965,7 +45965,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -45976,7 +45976,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 2C A9 4B DE 29 F7 D5 52 0E 20 AB 1D 9D D8 D3 5B 35 83 96 A4 94 EA DE A9 49 7D 52 5C 7C 27 38 86 F8 72 8B 4D 95 49 1F AC 50 1E 3C 13 15 4F CE 12 ");
 
     let mut recovered = vec![0; 55];
-    a_des.decrypt_with_padding_pkcs7_pcbc(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46008,8 +46008,8 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -46029,8 +46029,8 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
 
     let mut recovered1 = vec![0; 55];
     let mut recovered2 = vec![0; 55];
-    c_des.decrypt_with_padding_pkcs7_pcbc(iv, cipher1.as_ptr(), cipher1.len() as u64, recovered1.as_mut_ptr());
-    d_des.decrypt_with_padding_pkcs7_pcbc(iv, cipher2.as_ptr(), cipher2.len() as u64, recovered2.as_mut_ptr());
+    c_des.decrypt(iv, cipher1.as_ptr(), cipher1.len() as u64, recovered1.as_mut_ptr());
+    d_des.decrypt(iv, cipher2.as_ptr(), cipher2.len() as u64, recovered2.as_mut_ptr());
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -46073,7 +46073,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46084,7 +46084,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_with_padding_pkcs7_pcbc(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46114,7 +46114,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46125,7 +46125,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
     
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_with_padding_pkcs7_pcbc(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46155,7 +46155,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46166,7 +46166,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 F3 26 1A F7 9E 57 19 5D ");
     
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_with_padding_pkcs7_pcbc(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46196,7 +46196,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46207,7 +46207,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B D4 1C 72 2B A2 5E E9 B1 ");
 
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_with_padding_pkcs7_pcbc(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46238,7 +46238,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46249,7 +46249,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E BA 3C 7F F6 D1 3B 80 23 DC 7E 78 E0 2E D2 53 18 ");
 
     let mut recovered = vec![0; 24];
-    let len = a_des.decrypt_with_padding_pkcs7_pcbc(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46274,7 +46274,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     println!("des_decrypt_with_padding_pkcs7_pcbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -46286,7 +46286,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46297,7 +46297,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 01 BB EE 98 FC B6 40 01 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_with_padding_pkcs7_pcbc_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46326,7 +46326,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46337,7 +46337,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 2C A9 4B DE 29 F7 D5 52 0E 20 AB 1D 9D D8 D3 5B 35 83 96 A4 94 EA DE A9 49 7D 52 5C 7C 27 38 86 F8 72 8B 4D 95 49 1F AC 50 1E 3C 13 15 4F CE 12 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_with_padding_pkcs7_pcbc_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46369,8 +46369,8 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -46390,8 +46390,8 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
 
     let mut recovered1 = Vec::<u8>::new();
     let mut recovered2 = Vec::<u8>::new();
-    c_des.decrypt_with_padding_pkcs7_pcbc_into_vec(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
-    d_des.decrypt_with_padding_pkcs7_pcbc_into_vec(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
+    c_des.decrypt_into_vec(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
+    d_des.decrypt_into_vec(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -46434,7 +46434,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46445,7 +46445,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_with_padding_pkcs7_pcbc_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46474,7 +46474,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46485,7 +46485,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_with_padding_pkcs7_pcbc_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46514,7 +46514,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46525,7 +46525,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 F3 26 1A F7 9E 57 19 5D ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_with_padding_pkcs7_pcbc_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46554,7 +46554,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46565,7 +46565,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B D4 1C 72 2B A2 5E E9 B1 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_with_padding_pkcs7_pcbc_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46594,7 +46594,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46605,7 +46605,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E BA 3C 7F F6 D1 3B 80 23 DC 7E 78 E0 2E D2 53 18 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_with_padding_pkcs7_pcbc_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46629,7 +46629,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     println!("des_decrypt_with_padding_pkcs7_pcbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -46641,7 +46641,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46652,7 +46652,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 01 BB EE 98 FC B6 40 01 ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_with_padding_pkcs7_pcbc_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46681,7 +46681,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46692,7 +46692,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 2C A9 4B DE 29 F7 D5 52 0E 20 AB 1D 9D D8 D3 5B 35 83 96 A4 94 EA DE A9 49 7D 52 5C 7C 27 38 86 F8 72 8B 4D 95 49 1F AC 50 1E 3C 13 15 4F CE 12 ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_with_padding_pkcs7_pcbc_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -46724,8 +46724,8 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -46745,8 +46745,8 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
 
     let mut recovered1 = [0u8; 56];
     let mut recovered2 = [0u8; 56];
-    let len1 = c_des.decrypt_with_padding_pkcs7_pcbc_into_array(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
-    let len2 = d_des.decrypt_with_padding_pkcs7_pcbc_into_array(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
+    let len1 = c_des.decrypt_into_array(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
+    let len2 = d_des.decrypt_into_array(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -46790,7 +46790,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46801,7 +46801,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_with_padding_pkcs7_pcbc_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -46831,7 +46831,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46842,7 +46842,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_with_padding_pkcs7_pcbc_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -46872,7 +46872,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46883,7 +46883,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 F3 26 1A F7 9E 57 19 5D ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_with_padding_pkcs7_pcbc_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -46913,7 +46913,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46924,7 +46924,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B D4 1C 72 2B A2 5E E9 B1 ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_with_padding_pkcs7_pcbc_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -46954,7 +46954,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -46965,7 +46965,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E BA 3C 7F F6 D1 3B 80 23 DC 7E 78 E0 2E D2 53 18 ");
 
     let mut recovered = [0u8; 24];
-    let len = a_des.decrypt_with_padding_pkcs7_pcbc_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -46990,7 +46990,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     println!("des_decrypt_with_padding_pkcs7_pcbc_into_string");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -47002,7 +47002,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47013,7 +47013,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 01 BB EE 98 FC B6 40 01 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_with_padding_pkcs7_pcbc_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B (16 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -47030,7 +47030,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47041,7 +47041,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 2C A9 4B DE 29 F7 D5 52 0E 20 AB 1D 9D D8 D3 5B 35 83 96 A4 94 EA DE A9 49 7D 52 5C 7C 27 38 86 F8 72 8B 4D 95 49 1F AC 50 1E 3C 13 15 4F CE 12 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_with_padding_pkcs7_pcbc_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B (128 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -47061,8 +47061,8 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -47082,8 +47082,8 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
 
     let mut recovered1 = String::new();
     let mut recovered2 = String::new();
-    c_des.decrypt_with_padding_pkcs7_pcbc_into_string(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
-    d_des.decrypt_with_padding_pkcs7_pcbc_into_string(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
+    c_des.decrypt_into_string(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
+    d_des.decrypt_into_string(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
     println!("B1 (0 rounds) =\t{}", recovered1);
     println!("B2 (0 rounds) =\t{}", recovered2);
     assert_eq!(recovered1, "In the beginning God created the heavens and the earth.");
@@ -47104,7 +47104,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47115,7 +47115,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_with_padding_pkcs7_pcbc_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "");
     assert_eq!(recovered, message);
@@ -47132,7 +47132,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47143,7 +47143,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_with_padding_pkcs7_pcbc_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "7 bytes");
     assert_eq!(recovered, message);
@@ -47160,7 +47160,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47171,7 +47171,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 F3 26 1A F7 9E 57 19 5D ");
 
     let mut recovered = String::new();
-    a_des.decrypt_with_padding_pkcs7_pcbc_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "I am OK.");
     assert_eq!(recovered, message);
@@ -47188,7 +47188,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47199,7 +47199,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B D4 1C 72 2B A2 5E E9 B1 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_with_padding_pkcs7_pcbc_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "PARK Youngho");
     assert_eq!(recovered, message);
@@ -47216,7 +47216,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47227,7 +47227,7 @@ fn des_decrypt_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E BA 3C 7F F6 D1 3B 80 23 DC 7E 78 E0 2E D2 53 18 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_with_padding_pkcs7_pcbc_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "고맙습니다.");
     assert_eq!(recovered, message);
@@ -47239,7 +47239,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     println!("des_decrypt_vec_with_padding_pkcs7_pcbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -47251,7 +47251,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47262,7 +47262,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 01 BB EE 98 FC B6 40 01 ");
 
     let mut recovered = vec![0; 55];
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc(iv, &cipher, recovered.as_mut_ptr());
+    a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -47291,7 +47291,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47302,7 +47302,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 2C A9 4B DE 29 F7 D5 52 0E 20 AB 1D 9D D8 D3 5B 35 83 96 A4 94 EA DE A9 49 7D 52 5C 7C 27 38 86 F8 72 8B 4D 95 49 1F AC 50 1E 3C 13 15 4F CE 12 ");
 
     let mut recovered = vec![0; 55];
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc(iv, &cipher, recovered.as_mut_ptr());
+    a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -47334,8 +47334,8 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -47355,8 +47355,8 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
 
     let mut recovered1 = vec![0; 55];
     let mut recovered2 = vec![0; 55];
-    c_des.decrypt_vec_with_padding_pkcs7_pcbc(iv, &cipher1, recovered1.as_mut_ptr());
-    d_des.decrypt_vec_with_padding_pkcs7_pcbc(iv, &cipher2, recovered2.as_mut_ptr());
+    c_des.decrypt_vec(iv, &cipher1, recovered1.as_mut_ptr());
+    d_des.decrypt_vec(iv, &cipher2, recovered2.as_mut_ptr());
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -47399,7 +47399,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47410,7 +47410,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_pcbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -47440,7 +47440,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47451,7 +47451,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
     
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_pcbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -47481,7 +47481,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47492,7 +47492,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 F3 26 1A F7 9E 57 19 5D ");
     
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_pcbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -47522,7 +47522,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47533,7 +47533,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B D4 1C 72 2B A2 5E E9 B1 ");
 
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_pcbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -47563,7 +47563,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47574,7 +47574,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E BA 3C 7F F6 D1 3B 80 23 DC 7E 78 E0 2E D2 53 18 ");
 
     let mut recovered = vec![0; 24];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_pcbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -47599,7 +47599,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     println!("des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -47611,7 +47611,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47622,7 +47622,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 01 BB EE 98 FC B6 40 01 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -47651,7 +47651,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47662,7 +47662,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 2C A9 4B DE 29 F7 D5 52 0E 20 AB 1D 9D D8 D3 5B 35 83 96 A4 94 EA DE A9 49 7D 52 5C 7C 27 38 86 F8 72 8B 4D 95 49 1F AC 50 1E 3C 13 15 4F CE 12 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -47694,8 +47694,8 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -47715,8 +47715,8 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
 
     let mut recovered1 = Vec::<u8>::new();
     let mut recovered2 = Vec::<u8>::new();
-    c_des.decrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &cipher1, &mut recovered1);
-    d_des.decrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &cipher2, &mut recovered2);
+    c_des.decrypt_vec_into_vec(iv, &cipher1, &mut recovered1);
+    d_des.decrypt_vec_into_vec(iv, &cipher2, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -47759,7 +47759,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47770,7 +47770,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -47799,7 +47799,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47810,7 +47810,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -47839,7 +47839,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47850,7 +47850,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 F3 26 1A F7 9E 57 19 5D ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -47879,7 +47879,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47890,7 +47890,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B D4 1C 72 2B A2 5E E9 B1 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -47919,7 +47919,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47930,7 +47930,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E BA 3C 7F F6 D1 3B 80 23 DC 7E 78 E0 2E D2 53 18 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -47954,7 +47954,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     println!("des_decrypt_vec_with_padding_pkcs7_pcbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -47966,7 +47966,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -47977,7 +47977,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 01 BB EE 98 FC B6 40 01 ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -48006,7 +48006,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48017,7 +48017,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 2C A9 4B DE 29 F7 D5 52 0E 20 AB 1D 9D D8 D3 5B 35 83 96 A4 94 EA DE A9 49 7D 52 5C 7C 27 38 86 F8 72 8B 4D 95 49 1F AC 50 1E 3C 13 15 4F CE 12 ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -48049,8 +48049,8 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -48070,8 +48070,8 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
 
     let mut recovered1 = [0u8; 56];
     let mut recovered2 = [0u8; 56];
-    let len1 = c_des.decrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &cipher1, &mut recovered1);
-    let len2 = d_des.decrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &cipher2, &mut recovered2);
+    let len1 = c_des.decrypt_vec_into_array(iv, &cipher1, &mut recovered1);
+    let len2 = d_des.decrypt_vec_into_array(iv, &cipher2, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -48115,7 +48115,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48126,7 +48126,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -48156,7 +48156,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48167,7 +48167,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -48197,7 +48197,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48208,7 +48208,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 F3 26 1A F7 9E 57 19 5D ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -48238,7 +48238,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48249,7 +48249,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B D4 1C 72 2B A2 5E E9 B1 ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -48279,7 +48279,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48290,7 +48290,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E BA 3C 7F F6 D1 3B 80 23 DC 7E 78 E0 2E D2 53 18 ");
 
     let mut recovered = [0u8; 24];
-    let len = a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -48315,7 +48315,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     println!("des_decrypt_vec_with_padding_pkcs7_pcbc_into_string");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -48327,7 +48327,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48338,7 +48338,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 01 BB EE 98 FC B6 40 01 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B (16 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -48355,7 +48355,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48366,7 +48366,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 2C A9 4B DE 29 F7 D5 52 0E 20 AB 1D 9D D8 D3 5B 35 83 96 A4 94 EA DE A9 49 7D 52 5C 7C 27 38 86 F8 72 8B 4D 95 49 1F AC 50 1E 3C 13 15 4F CE 12 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B (128 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -48386,8 +48386,8 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     println!("IV =	{}", iv);
     let mut cipher1 = Vec::<u8>::new();
     let mut cipher2 = Vec::<u8>::new();
-    c_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -48407,8 +48407,8 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
 
     let mut recovered1 = String::new();
     let mut recovered2 = String::new();
-    c_des.decrypt_vec_with_padding_pkcs7_pcbc_into_string(iv, &cipher1, &mut recovered1);
-    d_des.decrypt_vec_with_padding_pkcs7_pcbc_into_string(iv, &cipher2, &mut recovered2);
+    c_des.decrypt_vec_into_string(iv, &cipher1, &mut recovered1);
+    d_des.decrypt_vec_into_string(iv, &cipher2, &mut recovered2);
     println!("B1 (0 rounds) =\t{}", recovered1);
     println!("B2 (0 rounds) =\t{}", recovered2);
     assert_eq!(recovered1, "In the beginning God created the heavens and the earth.");
@@ -48429,7 +48429,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48440,7 +48440,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "");
     assert_eq!(recovered, message);
@@ -48457,7 +48457,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48468,7 +48468,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "7 bytes");
     assert_eq!(recovered, message);
@@ -48485,7 +48485,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48496,7 +48496,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 F3 26 1A F7 9E 57 19 5D ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "I am OK.");
     assert_eq!(recovered, message);
@@ -48513,7 +48513,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48524,7 +48524,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B D4 1C 72 2B A2 5E E9 B1 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "PARK Youngho");
     assert_eq!(recovered, message);
@@ -48541,7 +48541,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48552,7 +48552,7 @@ fn des_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E BA 3C 7F F6 D1 3B 80 23 DC 7E 78 E0 2E D2 53 18 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_vec_with_padding_pkcs7_pcbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "고맙습니다.");
     assert_eq!(recovered, message);
@@ -48564,7 +48564,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     println!("des_decrypt_array_with_padding_pkcs7_pcbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -48576,7 +48576,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48587,7 +48587,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 01 BB EE 98 FC B6 40 01 ");
 
     let mut recovered = vec![0; 55];
-    let len = a_des.decrypt_array_with_padding_pkcs7_pcbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
@@ -48617,7 +48617,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48628,7 +48628,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 2C A9 4B DE 29 F7 D5 52 0E 20 AB 1D 9D D8 D3 5B 35 83 96 A4 94 EA DE A9 49 7D 52 5C 7C 27 38 86 F8 72 8B 4D 95 49 1F AC 50 1E 3C 13 15 4F CE 12 ");
 
     let mut recovered = vec![0; 55];
-    let len = a_des.decrypt_array_with_padding_pkcs7_pcbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
@@ -48661,8 +48661,8 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -48682,8 +48682,8 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
 
     let mut recovered1 = vec![0; 55];
     let mut recovered2 = vec![0; 55];
-    let len1 = c_des.decrypt_array_with_padding_pkcs7_pcbc(iv, &cipher1, recovered1.as_mut_ptr());
-    let len2 = d_des.decrypt_array_with_padding_pkcs7_pcbc(iv, &cipher2, recovered2.as_mut_ptr());
+    let len1 = c_des.decrypt_array(iv, &cipher1, recovered1.as_mut_ptr());
+    let len2 = d_des.decrypt_array(iv, &cipher2, recovered2.as_mut_ptr());
     recovered1.truncate(len1 as usize);
     recovered2.truncate(len2 as usize);
 
@@ -48729,7 +48729,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48740,7 +48740,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_array_with_padding_pkcs7_pcbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
 
     print!("Ba =\t");
@@ -48771,7 +48771,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48782,7 +48782,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
     
     let mut recovered = vec![0; 8];
-    let len = a_des.decrypt_array_with_padding_pkcs7_pcbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
 
     print!("Ba =\t");
@@ -48813,7 +48813,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48824,7 +48824,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 F3 26 1A F7 9E 57 19 5D ");
     
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_array_with_padding_pkcs7_pcbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
 
     print!("Ba =\t");
@@ -48855,7 +48855,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48866,7 +48866,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B D4 1C 72 2B A2 5E E9 B1 ");
 
     let mut recovered = vec![0; 16];
-    let len = a_des.decrypt_array_with_padding_pkcs7_pcbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
     print!("Ba =\t");
     for b in recovered.clone()
@@ -48896,7 +48896,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48907,7 +48907,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E BA 3C 7F F6 D1 3B 80 23 DC 7E 78 E0 2E D2 53 18 ");
 
     let mut recovered = vec![0; 24];
-    let len = a_des.decrypt_array_with_padding_pkcs7_pcbc(iv, &cipher, recovered.as_mut_ptr());
+    let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     recovered.truncate(len as usize);
 
     print!("Ba =\t");
@@ -48933,7 +48933,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     println!("des_decrypt_array_with_padding_pkcs7_pcbc_into_vec");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -48945,7 +48945,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48956,7 +48956,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 01 BB EE 98 FC B6 40 01 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -48985,7 +48985,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -48996,7 +48996,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 2C A9 4B DE 29 F7 D5 52 0E 20 AB 1D 9D D8 D3 5B 35 83 96 A4 94 EA DE A9 49 7D 52 5C 7C 27 38 86 F8 72 8B 4D 95 49 1F AC 50 1E 3C 13 15 4F CE 12 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba (128 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -49028,8 +49028,8 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -49049,8 +49049,8 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
 
     let mut recovered1 = Vec::<u8>::new();
     let mut recovered2 = Vec::<u8>::new();
-    c_des.decrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &cipher1, &mut recovered1);
-    d_des.decrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &cipher2, &mut recovered2);
+    c_des.decrypt_array_into_vec(iv, &cipher1, &mut recovered1);
+    d_des.decrypt_array_into_vec(iv, &cipher2, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -49093,7 +49093,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49104,7 +49104,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -49133,7 +49133,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49144,7 +49144,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -49173,7 +49173,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49184,7 +49184,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 F3 26 1A F7 9E 57 19 5D ");
     
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -49213,7 +49213,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49224,7 +49224,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B D4 1C 72 2B A2 5E E9 B1 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -49253,7 +49253,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49264,7 +49264,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E BA 3C 7F F6 D1 3B 80 23 DC 7E 78 E0 2E D2 53 18 ");
 
     let mut recovered = Vec::<u8>::new();
-    a_des.decrypt_array_with_padding_pkcs7_pcbc_into_vec(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -49288,7 +49288,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     println!("des_decrypt_array_with_padding_pkcs7_pcbc_into_array");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -49300,7 +49300,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49311,7 +49311,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 01 BB EE 98 FC B6 40 01 ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -49340,7 +49340,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49351,7 +49351,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 2C A9 4B DE 29 F7 D5 52 0E 20 AB 1D 9D D8 D3 5B 35 83 96 A4 94 EA DE A9 49 7D 52 5C 7C 27 38 86 F8 72 8B 4D 95 49 1F AC 50 1E 3C 13 15 4F CE 12 ");
 
     let mut recovered = [0u8; 56];
-    let len = a_des.decrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
     print!("Ba (16 rounds) =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -49383,8 +49383,8 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -49404,8 +49404,8 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
 
     let mut recovered1 = [0u8; 56];
     let mut recovered2 = [0u8; 56];
-    let len1 = c_des.decrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &cipher1, &mut recovered1);
-    let len2 = d_des.decrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &cipher2, &mut recovered2);
+    let len1 = c_des.decrypt_array_into_array(iv, &cipher1, &mut recovered1);
+    let len2 = d_des.decrypt_array_into_array(iv, &cipher2, &mut recovered2);
     print!("B1a (0 rounds) =\t");
     for b in recovered1.clone()
         { print!("{:02X} ", b); }
@@ -49449,7 +49449,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49460,7 +49460,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -49490,7 +49490,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49501,7 +49501,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
 
     let mut recovered = [0u8; 8];
-    let len = a_des.decrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -49531,7 +49531,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49542,7 +49542,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 F3 26 1A F7 9E 57 19 5D ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -49572,7 +49572,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49583,7 +49583,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B D4 1C 72 2B A2 5E E9 B1 ");
 
     let mut recovered = [0u8; 16];
-    let len = a_des.decrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -49613,7 +49613,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49624,7 +49624,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_array()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E BA 3C 7F F6 D1 3B 80 23 DC 7E 78 E0 2E D2 53 18 ");
 
     let mut recovered = [0u8; 24];
-    let len = a_des.decrypt_array_with_padding_pkcs7_pcbc_into_array(iv, &cipher, &mut recovered);
+    let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
 
     print!("Ba =\t");
     for b in recovered.clone()
@@ -49649,7 +49649,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     println!("des_decrypt_array_with_padding_pkcs7_pcbc_into_string");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+    use cryptocol::symmetric::{ DES, DES_Expanded, PCBC_PKCS7 };
 
     // Normal case
     let key = 0x_1234567890ABCDEF_u64;
@@ -49661,7 +49661,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49672,7 +49672,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 01 BB EE 98 FC B6 40 01 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_with_padding_pkcs7_pcbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
     println!("B (16 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -49689,7 +49689,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49700,7 +49700,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 2C A9 4B DE 29 F7 D5 52 0E 20 AB 1D 9D D8 D3 5B 35 83 96 A4 94 EA DE A9 49 7D 52 5C 7C 27 38 86 F8 72 8B 4D 95 49 1F AC 50 1E 3C 13 15 4F CE 12 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_with_padding_pkcs7_pcbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
     println!("B (128 rounds) =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -49720,8 +49720,8 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
     let mut cipher2 = [0_u8; 56];
-    c_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
+    d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
     print!("C (0 rounds) =\t");
     for c in cipher1.clone()
         { print!("{:02X} ", c); }
@@ -49741,8 +49741,8 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
 
     let mut recovered1 = String::new();
     let mut recovered2 = String::new();
-    c_des.decrypt_array_with_padding_pkcs7_pcbc_into_string(iv, &cipher1, &mut recovered1);
-    d_des.decrypt_array_with_padding_pkcs7_pcbc_into_string(iv, &cipher2, &mut recovered2);
+    c_des.decrypt_array_into_string(iv, &cipher1, &mut recovered1);
+    d_des.decrypt_array_into_string(iv, &cipher2, &mut recovered2);
     println!("B1 (0 rounds) =\t{}", recovered1);
     println!("B2 (0 rounds) =\t{}", recovered2);
     assert_eq!(recovered1, "In the beginning God created the heavens and the earth.");
@@ -49763,7 +49763,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49774,7 +49774,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "A5 21 CF D8 13 A4 20 36 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_with_padding_pkcs7_pcbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "");
     assert_eq!(recovered, message);
@@ -49791,7 +49791,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49802,7 +49802,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "D8 F8 E5 E8 6B 44 98 16 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_with_padding_pkcs7_pcbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "7 bytes");
     assert_eq!(recovered, message);
@@ -49819,7 +49819,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49830,7 +49830,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "ED 4F CD B8 C1 A4 48 47 F3 26 1A F7 9E 57 19 5D ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_with_padding_pkcs7_pcbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "I am OK.");
     assert_eq!(recovered, message);
@@ -49847,7 +49847,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49858,7 +49858,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "5F 4F BB 12 C8 FB 7D 4B D4 1C 72 2B A2 5E E9 B1 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_with_padding_pkcs7_pcbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "PARK Youngho");
     assert_eq!(recovered, message);
@@ -49875,7 +49875,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
-    a_des.encrypt_with_padding_pkcs7_pcbc_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -49886,7 +49886,7 @@ fn des_decrypt_array_with_padding_pkcs7_pcbc_into_string()
     assert_eq!(txt, "C3 60 23 7C BD E7 0E 6E BA 3C 7F F6 D1 3B 80 23 DC 7E 78 E0 2E D2 53 18 ");
 
     let mut recovered = String::new();
-    a_des.decrypt_array_with_padding_pkcs7_pcbc_into_string(iv, &cipher, &mut recovered);
+    a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "고맙습니다.");
     assert_eq!(recovered, message);

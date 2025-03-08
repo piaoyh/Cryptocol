@@ -43,16 +43,27 @@ mod des;
 // mod aes;
 // mod naes;
 
+mod traits_cbc_with_padding_pkcs7;
+mod traits_pcbc_with_padding_pkcs7;
 mod traits_pcbc_with_padding_iso;
 mod traits_cfb;
 mod traits_ofb;
 mod traits_ctr;
+
+mod traits_cbc_with_padding_pkcs7_impl;
+mod traits_pcbc_with_padding_pkcs7_impl;
+mod traits_pcbc_with_padding_iso_impl;
+mod traits_cfb_impl;
+mod traits_ofb_impl;
+mod traits_ctr_impl;
 
 pub use des::*;
 // pub use ndes::*;
 // pub use aes::*;
 // pub use naes::*;
 
+pub use traits_cbc_with_padding_pkcs7::CBC_PKCS7;
+pub use traits_pcbc_with_padding_pkcs7::PCBC_PKCS7;
 pub use traits_pcbc_with_padding_iso::PCBC_ISO;
 pub use traits_cfb::CFB;
 pub use traits_ofb::OFB;

@@ -6,6 +6,9 @@
 // This file may not be copied, modified, or distributed
 // except according to those terms.
 
+#![allow(dead_code)]
+#![allow(unused)]
+
 use std::convert::From;
 use std::str::FromStr;
 use std::fmt::{ Display, Debug };
@@ -16,11 +19,12 @@ use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, 
 
 use crate::number::{ SmallUInt, NumberErr };
 
+
 /// big_uint.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to big_uint_basic_operation.rs.
-pub struct BigUInt<T, const N: usize>
+struct BigUInt<T, const N: usize>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign

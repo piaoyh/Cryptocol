@@ -17,10 +17,11 @@
 use std::vec::Vec;
 
 use crate::number::SmallUInt;
-use crate::symmetric::{ des_pre_encrypt_into_vec, des_pre_decrypt_into_vec, };
+use crate::symmetric::{ des_pre_encrypt_into_vec, des_pre_decrypt_into_vec };
 
 
-pub trait OFB<T> : Sized
+#[allow(non_camel_case_types)]
+pub trait PCBC_PKCS7<T> : Sized
 {
     fn encrypt(&mut self, iv: T, from: *const u8, length_in_bytes: u64, to: *mut u8) -> u64;
 
@@ -141,12 +142,7 @@ pub trait OFB<T> : Sized
     }
 
 
-
-    #[inline]
-    fn decrypt(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
-    {
-        self.encrypt(iv, cipher, length_in_bytes, message)
-    }
+    fn decrypt(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64;
 
     fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
