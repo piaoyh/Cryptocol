@@ -523,6 +523,10 @@ fn des_basic_operation_main()
     des_new();
     des_new_with_key();
     des_new_with_key_u64();
+    // des_encryptor_with_key();
+    // des_encryptor_with_key_u64();
+    // des_decryptor_with_key();
+    // des_decryptor_with_key_u64();
     des_set_key();
     des_set_key_u64();
 }
@@ -1175,6 +1179,174 @@ fn des_new_with_key_u64()
     // So, you can't use the semi-weak keys 0xFEF1FEF1FEE0FEE0 and 0xF1FEF1FEE0FEE0FE!!!
     println!("-------------------------------");
 }
+
+/*
+fn des_encryptor_with_key()
+{
+    println!("des_encryptor_with_key");
+    use cryptocol::symmetric::{ DES, NDES };
+    
+    let keys = [DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]),
+                DES::decryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]),
+                DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])];
+    let mut tdes = NDES::new_with_small_des_array(keys);
+    let plaintext = 0x_1234567890ABCDEF_u64;
+    let ciphertext = tdes.encrypt_u64(plaintext);
+    
+    println!("Plaintext:\t\t{:#016X}", plaintext);
+    println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    assert_eq!(ciphertext, 0x272A2AC7B4E66748_u64);
+    
+    let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
+    println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    assert_eq!(cipher_cipher_text, plaintext);
+    println!();
+
+    // Operators
+    let mut tdes = NDES::new()
+                    + DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])
+                    - DES::encryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])
+                    + DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
+    let plaintext = 0x_1234567890ABCDEF_u64;
+    let ciphertext = tdes.encrypt_u64(plaintext);
+
+    println!("Plaintext:\t\t{:#016X}", plaintext);
+    println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+
+    let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
+    println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    assert_eq!(cipher_cipher_text, 0x_1234567890ABCDEF_u64);
+    assert_eq!(cipher_cipher_text, plaintext);
+    println!("-------------------------------");
+}
+
+fn des_encryptor_with_key_u64()
+{
+    println!("des_encryptor_with_key_u64");
+    use cryptocol::symmetric::{ NDES, DES };
+
+    let keys = [DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64),
+                DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64),
+                DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)];
+    let mut tdes = NDES::new_with_small_des_array(keys);
+    let plaintext = 0x_1234567890ABCDEF_u64;
+    let ciphertext = tdes.encrypt_u64(plaintext);
+
+    println!("Plaintext:\t\t{:#016X}", plaintext);
+    println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+
+    let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
+    println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    assert_eq!(cipher_cipher_text, plaintext);
+    println!();
+    
+
+    // Operators
+    let mut tdes = NDES::new()
+                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+                    - DES::encryptor_with_key_u64(0x_FEDCBA0987654321_u64)
+                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let plaintext = 0x_1234567890ABCDEF_u64;
+    let ciphertext = tdes.encrypt_u64(plaintext);
+
+    println!("Plaintext:\t\t{:#016X}", plaintext);
+    println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+
+    let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
+    println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    assert_eq!(cipher_cipher_text, 0x_1234567890ABCDEF_u64);
+    assert_eq!(cipher_cipher_text, plaintext);
+    println!("-------------------------------");
+}
+
+fn des_decryptor_with_key()
+{
+    println!("des_decryptor_with_key_u64");
+    use cryptocol::symmetric::{ DES, NDES };
+    
+    let keys = [DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]),
+                DES::decryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]),
+                DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])];
+    let mut tdes = NDES::new_with_small_des_array(keys);
+    let plaintext = 0x_1234567890ABCDEF_u64;
+    let ciphertext = tdes.encrypt_u64(plaintext);
+    
+    println!("Plaintext:\t\t{:#016X}", plaintext);
+    println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    assert_eq!(ciphertext, 0x272A2AC7B4E66748_u64);
+    
+    let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
+    println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    assert_eq!(cipher_cipher_text, plaintext);
+    println!();
+
+    // Operators
+    let mut tdes = NDES::new()
+                    - DES::decryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])
+                    - DES::encryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])
+                    - DES::decryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
+    let plaintext = 0x_1234567890ABCDEF_u64;
+    let ciphertext = tdes.encrypt_u64(plaintext);
+
+    println!("Plaintext:\t\t{:#016X}", plaintext);
+    println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+
+    let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
+    println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    assert_eq!(cipher_cipher_text, 0x_1234567890ABCDEF_u64);
+    assert_eq!(cipher_cipher_text, plaintext);
+    println!("-------------------------------");
+}
+
+fn des_decryptor_with_key_u64()
+{
+    println!("des_decryptor_with_key_u64");
+    use cryptocol::symmetric::{ NDES, DES };
+
+    let keys = [DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64),
+                DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64),
+                DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)];
+    let mut tdes = NDES::new_with_small_des_array(keys);
+    let plaintext = 0x_1234567890ABCDEF_u64;
+    let ciphertext = tdes.encrypt_u64(plaintext);
+
+    println!("Plaintext:\t\t{:#016X}", plaintext);
+    println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    assert_eq!(ciphertext, 0x272A2AC7B4E66748_u64);
+
+    let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
+    println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    assert_eq!(cipher_cipher_text, plaintext);
+    println!();
+    
+
+    // Operators
+    let mut tdes = NDES::new()
+                    - DES::decryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+                    + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
+                    - DES::decryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let plaintext = 0x_1234567890ABCDEF_u64;
+    let ciphertext = tdes.encrypt_u64(plaintext);
+
+    println!("Plaintext:\t\t{:#016X}", plaintext);
+    println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+
+    let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
+    println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    assert_eq!(cipher_cipher_text, 0x_1234567890ABCDEF_u64);
+    assert_eq!(cipher_cipher_text, plaintext);
+    println!("-------------------------------");
+}
+*/
 
 fn des_set_key()
 {

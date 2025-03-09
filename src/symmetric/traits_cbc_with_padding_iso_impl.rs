@@ -361,7 +361,7 @@ S756, S757, S758, S759, S760, S761, S762, S763>
             return 0;
         }
         des_pre_encrypt_into_array!(cipher, length_in_bytes, U);
-        self.encrypt_with_padding_iso_cbc(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
+        self.encrypt(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
     fn decrypt(&mut self, mut iv: u64, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
@@ -411,6 +411,6 @@ S756, S757, S758, S759, S760, S761, S762, S763>
             return 0;
         }
         des_pre_decrypt_into_array!(message, length_in_bytes, U);
-        self.decrypt_with_padding_iso_cbc(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
+        self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
     }
 }

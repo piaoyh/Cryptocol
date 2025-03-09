@@ -1,125 +1,136 @@
 # Breaking Changes
 
+## Breaking changes from ver. 0.10.1 to ver. 0.10.2
+
+| Methods                                       |
+|-----------------------------------------------|
+| pub fn encrypt_with_padding_*(..) -> u64      |
+| pub fn encrypt\_\*\_with_padding_*(..) -> u64 |
+| pub fn decrypt_with_padding_*(..) -> u64      |
+| pub fn decrypt\_\*\_with_padding_*(..) -> u64 |
+
+- The methods above have been moved from struct DES_Generic to implementation of the traits ECB_PKCS7, ECB_ISO, CBC_PKCS7, CBC_ISO, PCBC_PKCS7, PCBC_ISO, CFB, OFB, and CTR.
+
 ## Breaking changes from ver. 0.9.3 to ver. 0.9.4
 
-| Methods                                                                                 |
-|-----------------------------------------------------------------------------------------|
-| fn next_multiple_of_uint<U>(&self, rhs: U) -> Self                                      |
-| fn next_multiple_of_assign_uint<U>(&mut self, rhs: U)                                   |
-| fn panic_free_next_multiple_of_uint<U>(&self, rhs: U) -> Self                           |
-| fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)                        |
-| fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self               |
-| fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)            |
-| fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self    |
-| fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self) |
-| fn is_multiple_of_uint<U>(&self, rhs: U) -> bool                                        |
-| fn next_multiple_of(&self, rhs: &Self) -> Self                                          |
-| fn next_multiple_of_assign(&mut self, rhs: &Self)                                       |
-| fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self                               |
-| fn panic_free_next_multiple_of_assign(&mut self, rhs: &Self)                            |
-| fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self                   |
-| fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)                |
-| fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self        |
-| fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)     |
-| fn is_multiple_of(&self, rhs: &Self) -> bool                                            |
-| fn midpoint_uint<U>(&self, rhs: U) -> Self                                              |
-| fn midpoint_assign_uint<U>(&mut self, rhs: U)                                           |
-| fn midpoint(&self, rhs: &Self) -> Self                                                  |
-| fn midpoint_assign(&mut self, rhs: &Self)                                               |
-| fn checked_pow_uint<U>(&self, exp: U) -> Option<Self>                                   |
-| fn unchecked_pow_uint<U>(&self, exp: U) -> Self                                         |
-| fn saturating_pow_uint<U>(&self, exp: U) -> Self                                        |
-| fn saturating_pow_assign_uint<U>(&mut self, exp: U)                                     |
-| fn checked_pow(&self, exp: &Self) -> Option<Self>                                       |
-| fn unchecked_pow(&self, exp: &Self) -> Self                                             |
-| fn saturating_pow(&self, exp: &Self) -> Self                                            |
-| fn saturating_pow_assign(&mut self, exp: &Self)                                         |
-| fn checked_iroot_uint<U>(&self, exp: U) -> Option<Self>                                 |
-| fn unchecked_iroot_uint<U>(&self, exp: U) -> Self                                       |
-| fn checked_ilog_uint<U>(&self, base: U) -> Option<Self>                                 |
-| fn unchecked_ilog_uint<U>(&self, base: U) -> Self                                       |
-| fn checked_iroot(&self, exp: &Self) -> Option<Self>                                     |
-| fn unchecked_iroot(&self, exp: &Self) -> Self                                           |
-| fn checked_ilog(&self, base: &Self) -> Self                                             |
-| fn unchecked_ilog(&self, base: &Self) -> Self                                           |
-| fn checked_ilog2(&self) -> Option<Self>                                                 |
-| fn unchecked_ilog2(&self) -> Self                                                       |
-| fn checked_ilog10(&self) -> Option<Self>                                                |
-| fn unchecked_ilog10(&self) -> Self                                                      |
-| fn checked_shift_left<U>(&self, n: U) -> Option<Self>                                   |
-| fn unchecked_shift_left<U>(&self, n: U) -> Self                                         |
-| fn checked_shift_right<U>(&self, n: U) -> Option<Self>                                  |
-| fn unchecked_shift_right<U>(&self, n: U) -> Self                                        |
+| Methods                                                                                  |
+|------------------------------------------------------------------------------------------|
+| fn next_multiple_of_uint<U\>(&self, rhs: U) -> Self                                      |
+| fn next_multiple_of_assign_uint<U\>(&mut self, rhs: U)                                   |
+| fn panic_free_next_multiple_of_uint<U\>(&self, rhs: U) -> Self                           |
+| fn panic_free_next_multiple_of_assign_uint<U\>(&mut self, rhs: U)                        |
+| fn modular_next_multiple_of_uint<U\>(&self, rhs: U, modulo: &Self) -> Self               |
+| fn modular_next_multiple_of_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)            |
+| fn panic_free_modular_next_multiple_of_uint<U\>(&self, rhs: U, modulo: &Self) -> Self    |
+| fn panic_free_modular_next_multiple_of_assign_uint<U\>(&mut self, rhs: U, modulo: &Self) |
+| fn is_multiple_of_uint<U\>(&self, rhs: U) -> bool                                        |
+| fn next_multiple_of(&self, rhs: &Self) -> Self                                           |
+| fn next_multiple_of_assign(&mut self, rhs: &Self)                                        |
+| fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self                                |
+| fn panic_free_next_multiple_of_assign(&mut self, rhs: &Self)                             |
+| fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self                    |
+| fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)                 |
+| fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self         |
+| fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)      |
+| fn is_multiple_of(&self, rhs: &Self) -> bool                                             |
+| fn midpoint_uint<U\>(&self, rhs: U) -> Self                                              |
+| fn midpoint_assign_uint<U\>(&mut self, rhs: U)                                           |
+| fn midpoint(&self, rhs: &Self) -> Self                                                   |
+| fn midpoint_assign(&mut self, rhs: &Self)                                                |
+| fn checked_pow_uint<U\>(&self, exp: U) -> Option<Self>                                   |
+| fn unchecked_pow_uint<U\>(&self, exp: U) -> Self                                         |
+| fn saturating_pow_uint<U\>(&self, exp: U) -> Self                                        |
+| fn saturating_pow_assign_uint<U\>(&mut self, exp: U)                                     |
+| fn checked_pow(&self, exp: &Self) -> Option<Self>                                        |
+| fn unchecked_pow(&self, exp: &Self) -> Self                                              |
+| fn saturating_pow(&self, exp: &Self) -> Self                                             |
+| fn saturating_pow_assign(&mut self, exp: &Self)                                          |
+| fn checked_iroot_uint<U\>(&self, exp: U) -> Option<Self>                                 |
+| fn unchecked_iroot_uint<U\>(&self, exp: U) -> Self                                       |
+| fn checked_ilog_uint<U\>(&self, base: U) -> Option<Self>                                 |
+| fn unchecked_ilog_uint<U\>(&self, base: U) -> Self                                       |
+| fn checked_iroot(&self, exp: &Self) -> Option<Self>                                      |
+| fn unchecked_iroot(&self, exp: &Self) -> Self                                            |
+| fn checked_ilog(&self, base: &Self) -> Self                                              |
+| fn unchecked_ilog(&self, base: &Self) -> Self                                            |
+| fn checked_ilog2(&self) -> Option<Self>                                                  |
+| fn unchecked_ilog2(&self) -> Self                                                        |
+| fn checked_ilog10(&self) -> Option<Self>                                                 |
+| fn unchecked_ilog10(&self) -> Self                                                       |
+| fn checked_shift_left<U\>(&self, n: U) -> Option<Self>                                   |
+| fn unchecked_shift_left<U\>(&self, n: U) -> Self                                         |
+| fn checked_shift_right<U\>(&self, n: U) -> Option<Self>                                  |
+| fn unchecked_shift_right<U\>(&self, n: U) -> Self                                        |
 
 - The methods above have been moved from struct BigUInt to trait BigUInt_More because docs.rs failed in generating struct.bigUInt.html.
 
 ## Breaking changes from ver. 0.9.2 to ver. 0.9.3
 
-| Methods                                               |
-|-------------------------------------------------------|
-| fn checked_add_uint<U>(&self, rhs: U) -> Option<Self> |
-| fn unchecked_add_uint<U>(&self, rhs: U) -> Self       |
-| fn saturating_add_uint<U>(&self, rhs: U) -> Self      |
-| fn saturating_add_assign_uint<U>(&mut self, rhs: U)   |
-| fn safe_add_uint<U>(&self, rhs: U) -> Self            |
-| fn safe_add_assign_uint<U>(&mut self, rhs: U)         |
-| fn checked_sub_uint<U>(&self, rhs: U) -> Option<Self> |
-| fn unchecked_sub_uint<U>(&self, rhs: U) -> Self       |
-| fn saturating_sub_uint<U>(&self, rhs: U) -> Self      |
-| fn saturating_sub_assign_uint<U>(&mut self, rhs: U)   |
-| fn safe_sub_uint<U>(&self, rhs: U) -> Self            |
-| fn safe_sub_assign_uint<U>(&mut self, rhs: U)         |
-| fn checked_mul_uint<U>(&self, rhs: U) -> Option<Self> |
-| fn unchecked_mul_uint<U>(&self, rhs: U) -> Self       |
-| fn saturating_mul_uint<U>(&self, rhs: U) -> Self      |
-| fn saturating_mul_assign_uint<U>(&mut self, rhs: U)   |
-| fn safe_mul_uint<U>(&self, rhs: U) -> Self            |
-| fn safe_mul_assign_uint<U>(&mut self, rhs: U)         |
-| fn checked_div_uint<U>(&self, rhs: U) -> Option<Self> |
-| fn unchecked_div_uint<U>(&self, rhs: U) -> Self       |
-| fn saturating_div_uint<U>(&self, rhs: U) -> Self      |
-| fn saturating_div_assign_uint<U>(&mut self, rhs: U)   |
-| fn checked_rem_uint<U>(&self, rhs: U) -> Option<Self> |
-| fn unchecked_rem_uint<U>(&self, rhs: U) -> Self       |
-| fn saturating_rem_uint<U>(&self, rhs: U) -> Self      |
-| fn saturating_rem_assign_uint<U>(&mut self, rhs: U)   |
-| fn checked_add<U>(&self, rhs: U) -> Option<Self>      |
-| fn unchecked_add<U>(&self, rhs: U) -> Self            |
-| fn saturating_add<U>(&self, rhs: U) -> Self           |
-| fn saturating_add_assign<U>(&mut self, rhs: U)        |
-| fn safe_add<U>(&self, rhs: U) -> Self                 |
-| fn safe_add_assign<U>(&mut self, rhs: U)              |
-| fn checked_sub<U>(&self, rhs: U) -> Option<Self>      |
-| fn unchecked_sub<U>(&self, rhs: U) -> Self            |
-| fn saturating_sub<U>(&self, rhs: U) -> Self           |
-| fn saturating_sub_assign<U>(&mut self, rhs: U)        |
-| fn safe_sub<U>(&self, rhs: U) -> Self                 |
-| fn safe_sub_assign<U>(&mut self, rhs: U)              |
-| fn checked_mul<U>(&self, rhs: U) -> Option<Self>      |
-| fn unchecked_mul<U>(&self, rhs: U) -> Self            |
-| fn saturating_mul<U>(&self, rhs: U) -> Self           |
-| fn saturating_mul_assign<U>(&mut self, rhs: U)        |
-| fn safe_mul<U>(&self, rhs: U) -> Self                 |
-| fn safe_mul_assign<U>(&mut self, rhs: U)              |
-| fn checked_div<U>(&self, rhs: U) -> Option<Self>      |
-| fn unchecked_div<U>(&self, rhs: U) -> Self            |
-| fn saturating_div<U>(&self, rhs: U) -> Self           |
-| fn saturating_div_assign<U>(&mut self, rhs: U)        |
-| fn checked_rem<U>(&self, rhs: U) -> Option<Self>      |
-| fn unchecked_rem<U>(&self, rhs: U) -> Self            |
-| fn saturating_rem<U>(&self, rhs: U) -> Self           |
-| fn saturating_rem_assign<U>(&mut self, rhs: U)        |
+| Methods                                                |
+|--------------------------------------------------------|
+| fn checked_add_uint<U\>(&self, rhs: U) -> Option<Self> |
+| fn unchecked_add_uint<U\>(&self, rhs: U) -> Self       |
+| fn saturating_add_uint<U\>(&self, rhs: U) -> Self      |
+| fn saturating_add_assign_uint<U\>(&mut self, rhs: U)   |
+| fn safe_add_uint<U\>(&self, rhs: U) -> Self            |
+| fn safe_add_assign_uint<U\>(&mut self, rhs: U)         |
+| fn checked_sub_uint<U\>(&self, rhs: U) -> Option<Self> |
+| fn unchecked_sub_uint<U\>(&self, rhs: U) -> Self       |
+| fn saturating_sub_uint<U\>(&self, rhs: U) -> Self      |
+| fn saturating_sub_assign_uint<U\>(&mut self, rhs: U)   |
+| fn safe_sub_uint<U\>(&self, rhs: U) -> Self            |
+| fn safe_sub_assign_uint<U\>(&mut self, rhs: U)         |
+| fn checked_mul_uint<U\>(&self, rhs: U) -> Option<Self> |
+| fn unchecked_mul_uint<U\>(&self, rhs: U) -> Self       |
+| fn saturating_mul_uint<U\>(&self, rhs: U) -> Self      |
+| fn saturating_mul_assign_uint<U\>(&mut self, rhs: U)   |
+| fn safe_mul_uint<U\>(&self, rhs: U) -> Self            |
+| fn safe_mul_assign_uint<U\>(&mut self, rhs: U)         |
+| fn checked_div_uint<U\>(&self, rhs: U) -> Option<Self> |
+| fn unchecked_div_uint<U\>(&self, rhs: U) -> Self       |
+| fn saturating_div_uint<U\>(&self, rhs: U) -> Self      |
+| fn saturating_div_assign_uint<U\>(&mut self, rhs: U)   |
+| fn checked_rem_uint<U\>(&self, rhs: U) -> Option<Self> |
+| fn unchecked_rem_uint<U\>(&self, rhs: U) -> Self       |
+| fn saturating_rem_uint<U\>(&self, rhs: U) -> Self      |
+| fn saturating_rem_assign_uint<U\>(&mut self, rhs: U)   |
+| fn checked_add<U\>(&self, rhs: U) -> Option<Self>      |
+| fn unchecked_add<U\>(&self, rhs: U) -> Self            |
+| fn saturating_add<U\>(&self, rhs: U) -> Self           |
+| fn saturating_add_assign<U\>(&mut self, rhs: U)        |
+| fn safe_add<U\>(&self, rhs: U) -> Self                 |
+| fn safe_add_assign<U\>(&mut self, rhs: U)              |
+| fn checked_sub<U\>(&self, rhs: U) -> Option<Self>      |
+| fn unchecked_sub<U\>(&self, rhs: U) -> Self            |
+| fn saturating_sub<U\>(&self, rhs: U) -> Self           |
+| fn saturating_sub_assign<U\>(&mut self, rhs: U)        |
+| fn safe_sub<U\>(&self, rhs: U) -> Self                 |
+| fn safe_sub_assign<U\>(&mut self, rhs: U)              |
+| fn checked_mul<U\>(&self, rhs: U) -> Option<Self>      |
+| fn unchecked_mul<U\>(&self, rhs: U) -> Self            |
+| fn saturating_mul<U\>(&self, rhs: U) -> Self           |
+| fn saturating_mul_assign<U\>(&mut self, rhs: U)        |
+| fn safe_mul<U\>(&self, rhs: U) -> Self                 |
+| fn safe_mul_assign<U\>(&mut self, rhs: U)              |
+| fn checked_div<U\>(&self, rhs: U) -> Option<Self>      |
+| fn unchecked_div<U\>(&self, rhs: U) -> Self            |
+| fn saturating_div<U\>(&self, rhs: U) -> Self           |
+| fn saturating_div_assign<U\>(&mut self, rhs: U)        |
+| fn checked_rem<U\>(&self, rhs: U) -> Option<Self>      |
+| fn unchecked_rem<U\>(&self, rhs: U) -> Self            |
+| fn saturating_rem<U\>(&self, rhs: U) -> Self           |
+| fn saturating_rem_assign<U\>(&mut self, rhs: U)        |
 
 - The methods above have been moved from struct BigUInt to trait BigUInt_More because docs.rs failed in generating struct.bigUInt.html.
 
 ## Breaking changes from ver. 0.9.0 to ver. 0.9.1
 
-| Ver. 0.9.0                                            | Ver. 0.9.1 |
-|-------------------------------------------------------|------------|
-| pub fn wrapping_pow_uint<U>(&self, exp: U) -> Self    | removed    |
-| pub fn wrapping_pow_assign_uint<U>(&mut self, exp: U) | removed    |
-| pub fn wrapping_pow(&mut self, exp: &Self) -> Self    | removed    |
-| pub fn wrapping_pow_assign(&mut self, exp: &Self)     | removed    |
+| Ver. 0.9.0                                             | Ver. 0.9.1 |
+|--------------------------------------------------------|------------|
+| pub fn wrapping_pow_uint<U\>(&self, exp: U) -> Self    | removed    |
+| pub fn wrapping_pow_assign_uint<U\>(&mut self, exp: U) | removed    |
+| pub fn wrapping_pow(&mut self, exp: &Self) -> Self     | removed    |
+| pub fn wrapping_pow_assign(&mut self, exp: &Self)      | removed    |
 
 - The methods above have been removed because they are redundant because of pow_uint(), pow_assign_uint(), pow(), and pow_assign().
 
@@ -183,16 +194,16 @@
 
 ### Bit manipulation methods of BigUInt
 
-| Methods                                                    |
-|------------------------------------------------------------|
-| pub fn shift_left<U>(&self, n: U) -> Self                  |
-| pub fn shift_left_assign<U>(&mut self, n: U)               |
-| pub fn checked_shift_left<U>(&self, n: U) -> Option<Self>  |
-| pub fn unchecked_shift_left<U>(&self, n: U) -> Self        |
-| pub fn shift_right<U>(&self, n: U) -> Self                 |
-| pub fn shift_right_assign<U>(&mut self, n: U)              |
-| pub fn checked_shift_right<U>(&self, n: U) -> Option<Self> |
-| pub fn unchecked_shift_right<U>(&self, n: U) -> Self       |       
+| Methods                                                     |
+|-------------------------------------------------------------|
+| pub fn shift_left<U\>(&self, n: U) -> Self                  |
+| pub fn shift_left_assign<U\>(&mut self, n: U)               |
+| pub fn checked_shift_left<U\>(&self, n: U) -> Option<Self>  |
+| pub fn unchecked_shift_left<U\>(&self, n: U) -> Self        |
+| pub fn shift_right<U\>(&self, n: U) -> Self                 |
+| pub fn shift_right_assign<U\>(&mut self, n: U)              |
+| pub fn checked_shift_right<U\>(&self, n: U) -> Option<Self> |
+| pub fn unchecked_shift_right<U\>(&self, n: U) -> Self       |       
 
 - These methods have been changed to set tbe flag `LEFT_CARRY` instead of the flag `OVERFLOW` when a bit `1` is pushed out to the left, and to set tbe flag `RIGHT_CARRY` instead of the flag `UNDERFLOW` when a bit `1` is pushed out to the right.
 
@@ -245,12 +256,12 @@
 
 | Methods                                                                    |
 |----------------------------------------------------------------------------|
-| pub fn panic_free_iroot_uint<U>(&self, exp: U) -> Self                     |
+| pub fn panic_free_iroot_uint<U\>(&self, exp: U) -> Self                    |
 | pub fn panic_free_modular_add_assign(&mut self, rhs: &Self, modulo: &Self) |
 | pub fn panic_free_modular_sub(&self, rhs: &Self, modulo: &Self) -> Self    |
 | pub fn panic_free_modular_sub_assign(&mut self, rhs: &Self, modulo: &Self) |
 | pub fn panic_free_modular_mul_assign(&mut self, rhs: &Self, modulo: &Self) |
-| pub fn panic_free_divide_fully_uint<U>(&self, rhs: U) -> (Self, U)         |
+| pub fn panic_free_divide_fully_uint<U\>(&self, rhs: U) -> (Self, U)        |
 | pub fn panic_free_divide_fully(&self, rhs: &Self) -> (Self, Self)          |
 
 - When the result approaches infinity, the flags of the result to be set were `INFINITY`, `OVERFLOW`, and `UNDEFINED` in ver. 0.8.4 but the flags of the result to be set have been changed to be `INFINITY` and `UNDEFINED` in ver. 0.8.5.
@@ -261,13 +272,13 @@
 
 ### Five methods of BigUInt
 
-| Methods                                                                        |
-|--------------------------------------------------------------------------------|
-| pub fn panic_free_divide_fully_uint<U>(&self, rhs: U) -> (Self, Self)          |
-| pub fn panic_free_div_uint<U>(&self, rhs: U) -> Self                           |
-| pub fn panic_free_div_assign_uint<U>(&mut self, rhs: U)                        |
-| pub fn panic_free_modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self    |
-| pub fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self) |
+| Methods                                                                         |
+|---------------------------------------------------------------------------------|
+| pub fn panic_free_divide_fully_uint<U\>(&self, rhs: U) -> (Self, Self)          |
+| pub fn panic_free_div_uint<U\>(&self, rhs: U) -> Self                           |
+| pub fn panic_free_div_assign_uint<U\>(&mut self, rhs: U)                        |
+| pub fn panic_free_modular_div_uint<U\>(&self, rhs: U, modulo: &Self) -> Self    |
+| pub fn panic_free_modular_div_assign_uint<U\>(&mut self, rhs: U, modulo: &Self) |
 
 - When dividing by zero, the flags of the quotient to be set were `NFINITY`, `DIVIDED_BY_ZERO`, and `OVERFLOW` in ver. 0.8.3 but the flags of the quotient to be set have been changed to be `INFINITY` and `DIVIDED_BY_ZERO` in ver. 0.8.4. The meaning of the fag `OVERFLOW` has been changed to mean that the value was wrapped around at maximum value in ver. 0.8.4. From the beginning, the meaning of the flag `UNDERFLOW` has meant that it was wrapped around at zero.
 
@@ -442,8 +453,8 @@
 
 ### A method of union SharedArray
 
-| Ver. 0.7.1                                   | Ver. 0.7.2                                           |
-|----------------------------------------------|------------------------------------------------------|
+| Ver. 0.7.1                                   | Ver. 0.7.2                                       |
+|----------------------------------------------|--------------------------------------------------|
 | pub fn into_des(&mut self, des: &mut [D; N]) | pub fn put_des_in_array(&self, des: &mut [D; N]) |
 
 - The function name `into_des()` does not show its functionality very clearly. It is desirable that the function name `into_des()` is changed to put_des_in_array() for the name consistency with the methods such as put_hash_value_in_array() in hash modules. The argument `&mut self` does not have to be `&mut self` so that it was changed to `&self`
@@ -541,7 +552,7 @@
 
 ## Breaking change from ver. 0.6.2 to ver. 0.6.3
 
-A breaking change has been made to change the function `number::BigUInt::copy_within<R>(&mut self, src: R, dest: usize)` from public to private since it should have been private from the beginning for security reason because it is high chance that this function will be missused or even abused.
+A breaking change has been made to change the function `number::BigUInt::copy_within<R\>(&mut self, src: R, dest: usize)` from public to private since it should have been private from the beginning for security reason because it is high chance that this function will be missused or even abused.
 
 ### A method of struct BigUInt
 
