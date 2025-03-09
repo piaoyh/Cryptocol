@@ -7,8 +7,14 @@ pub mod des_basic;
 /// des.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
-/// examples were moved to des_ecb.rs.
-pub mod des_ecb;
+/// examples were moved to des_ecb_pkcs7.rs.
+pub mod des_ecb_pkcs7;
+
+/// des.rs was too big because of documentation and plenty of examples
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to des_ecb_iso.rs.
+pub mod des_ecb_iso;
 
 /// des.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing

@@ -337,7 +337,7 @@ S756, S757, S758, S759, S760, S761, S762, S763>
         }
         let coded = block ^ self.encrypt_u64(nonce);
         unsafe { copy_nonoverlapping(&coded as *const u64 as *const u8, cipher.add(progress as usize), tail); }
-        self.set_success();
+        self.set_successful();
         progress + tail as u64
     }
 

@@ -2026,12 +2026,94 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
     }
 
     // pub fn turn_inverse(&mut self)
+    /// Flips its role in NDES.
+    /// 
+    /// # Features
+    /// - You won't use this method unless you use NDES for such as Triple DES.
+    /// - Even if you are writing codes in the context of using NDES,
+    ///   you will hardly use this method because it is high chance that you
+    ///   will have constructed components with the methods,
+    ///   encryptor_with_key(struct@DES_Generic#method.encryptor_with_key),
+    ///   encryptor_with_key_u64(struct@DES_Generic#method.encryptor_with_key_u64),
+    ///   decryptor_with_key(struct@DES_Generic#method.decryptor_with_key), and
+    ///   decryptor_with_key_u64(struct@DES_Generic#method.decryptor_with_key_u64).
+    /// - If it is constructed as encryptor for NDES,
+    ///   it will be changed into decryptor.
+    /// - If it is constructed as decryptor for NDES,
+    ///   it will be changed into encryptor.
+    /// 
+    /// # Example 1
+    /// ```
+    /// use cryptocol::symmetric::{ NDES, DES };
+    /// 
+    /// let mut keys = [DES::new_with_key_u64(0x_1234567890ABCDEF_u64),
+    ///             DES::new_with_key_u64(0x_FEDCBA0987654321_u64),
+    ///             DES::new_with_key_u64(0x_1234567890ABCDEF_u64)];
+    /// keys[1].turn_inverse();
+    /// 
+    /// let mut tdes = NDES::new_with_small_des_array(keys);
+    /// let plaintext = 0x_1234567890ABCDEF_u64;
+    /// let ciphertext = tdes.encrypt_u64(plaintext);
+    /// 
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+    /// 
+    /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
+    /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.turn_inverse)
     pub fn turn_inverse(&mut self)
     {
         (self.enc, self.dec) = (self.dec, self.enc);
     }
 
     // pub fn turn_encryptor(&mut self)
+    /// Changes its role in NDES to encryptor.
+    /// 
+    /// # Features
+    /// - You won't use this method unless you use NDES for such as Triple DES.
+    /// - Even if you are writing codes in the context of using NDES,
+    ///   you will hardly use this method because it is high chance that you
+    ///   will have constructed components with the methods,
+    ///   encryptor_with_key(struct@DES_Generic#method.encryptor_with_key),
+    ///   encryptor_with_key_u64(struct@DES_Generic#method.encryptor_with_key_u64),
+    ///   decryptor_with_key(struct@DES_Generic#method.decryptor_with_key), and
+    ///   decryptor_with_key_u64(struct@DES_Generic#method.decryptor_with_key_u64).
+    /// - If it is constructed as encryptor for NDES,
+    ///   it will not be changed at all.
+    /// - If it is constructed as decryptor for NDES,
+    ///   it will be changed into encryptor.
+    /// 
+    /// # Example 1
+    /// ```
+    /// use cryptocol::symmetric::{ NDES, DES };
+    /// 
+    /// let mut keys = [DES::new_with_key_u64(0x_1234567890ABCDEF_u64),
+    ///             DES::new_with_key_u64(0x_FEDCBA0987654321_u64),
+    ///             DES::new_with_key_u64(0x_1234567890ABCDEF_u64)];
+    /// keys[0].turn_encryptor();
+    /// 
+    /// let mut tdes = NDES::new_with_small_des_array(keys);
+    /// let plaintext = 0x_1234567890ABCDEF_u64;
+    /// let ciphertext = tdes.encrypt_u64(plaintext);
+    /// 
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+    /// 
+    /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
+    /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.turn_encryptor)
     pub fn turn_encryptor(&mut self)
     {
         self.enc = Self::encrypt_u64;
@@ -2039,6 +2121,47 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
     }
 
     // pub fn turn_decryptor(&mut self)
+    /// Changes its role in NDES to decryptor.
+    /// 
+    /// # Features
+    /// - You won't use this method unless you use NDES for such as Triple DES.
+    /// - Even if you are writing codes in the context of using NDES,
+    ///   you will hardly use this method because it is high chance that you
+    ///   will have constructed components with the methods,
+    ///   encryptor_with_key(struct@DES_Generic#method.encryptor_with_key),
+    ///   encryptor_with_key_u64(struct@DES_Generic#method.encryptor_with_key_u64),
+    ///   decryptor_with_key(struct@DES_Generic#method.decryptor_with_key), and
+    ///   decryptor_with_key_u64(struct@DES_Generic#method.decryptor_with_key_u64).
+    /// - If it is constructed as encryptor for NDES,
+    ///   it will be changed into decryptor.
+    /// - If it is constructed as decryptor for NDES,
+    ///   it will not be changed at all.
+    /// 
+    /// # Example 1
+    /// ```
+    /// use cryptocol::symmetric::{ NDES, DES };
+    /// 
+    /// let mut keys = [DES::new_with_key_u64(0x_1234567890ABCDEF_u64),
+    ///             DES::new_with_key_u64(0x_FEDCBA0987654321_u64),
+    ///             DES::new_with_key_u64(0x_1234567890ABCDEF_u64)];
+    /// keys[1].turn_decryptor();
+    /// 
+    /// let mut tdes = NDES::new_with_small_des_array(keys);
+    /// let plaintext = 0x_1234567890ABCDEF_u64;
+    /// let ciphertext = tdes.encrypt_u64(plaintext);
+    /// 
+    /// println!("Plaintext:\t\t{:#016X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+    /// 
+    /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
+    /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.turn_decryptor)
     pub fn turn_decryptor(&mut self)
     {
         self.enc = Self::decrypt_u64;
@@ -2118,8 +2241,82 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
         self.get_block()
     }
 
-    #[inline] pub fn _encrypt(&mut self, message: u64) -> u64    { (self.enc)(self, message) }
-    #[inline] pub fn _decrypt(&mut self, cipher: u64) -> u64     { (self.dec)(self, cipher) }
+    // pub fn _encrypt(&mut self, message: u64) -> u64
+    /// Encrypts a 64-bit data when NDES encrypting if the object was
+    /// constructed as encryptor for NDES such as Triple DES, and decrypts a
+    /// 64-bit data when NDES encrypting if the object was constructed as
+    /// decryptor for NDES such as Triple DES.
+    /// 
+    /// # Arguments
+    /// `message` is of `u64`-type and the plaintext to be encrypted.
+    /// 
+    /// # Output
+    /// This method returns the encrypted data of `u64`-type from `message`.
+    /// 
+    /// # Example 1 for Normal case 
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// 
+    /// let message = 0x_1234567890ABCDEF_u64;
+    /// println!("M_u64 =\t{:#016X}", message);
+    /// 
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// let cipher = a_des._encrypt(message);
+    /// println!("C_u64 (16 rounds) =\t{:#016X}", cipher);
+    /// assert_eq!(cipher, 0x_1BC4896735BBE206_u64);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method._encrypt)
+    #[inline]
+    pub fn _encrypt(&mut self, message: u64) -> u64
+    {
+        (self.enc)(self, message)
+    }
+
+    // pub fn _decrypt(&mut self, cipher: u64) -> u64
+    /// Decrypts a 64-bit data when NDES decrypting if the object was
+    /// constructed as encryptor for NDES such as Triple DES, and encrypts a
+    /// 64-bit data when NDES decrypting if the object was constructed as
+    /// decryptor for NDES such as Triple DES.
+    /// 
+    /// # Arguments
+    /// `cipher` is of `u64`-type and the ciphertext to be decrypted.
+    /// 
+    /// # Output
+    /// This method returns the decrypted data of `u64`-type from `cipher`.
+    /// 
+    /// # Example 1 for Normal case 
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// 
+    /// let message = 0x_1234567890ABCDEF_u64;
+    /// println!("M_u64 =\t{:#016X}", message);
+    /// 
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// let cipher = a_des._encrypt(message);
+    /// println!("C_u64 (16 rounds) =\t{:#016X}", cipher);
+    /// assert_eq!(cipher, 0x_1BC4896735BBE206_u64);
+    /// 
+    /// let recovered = a_des._decrypt(cipher);
+    /// println!("B_u64 (16 rounds) =\t{:#016X}", recovered);
+    /// assert_eq!(recovered, 0x_1234567890ABCDEF_u64);
+    /// assert_eq!(recovered, message);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method._decrypt)
+    #[inline]
+    pub fn _decrypt(&mut self, cipher: u64) -> u64
+    {
+        (self.dec)(self, cipher)
+    }
 
     // pub fn encrypt_array_u64<const N: usize>(&mut self, message: &[u64; N], cipher: &mut [u64; N])
     /// Encrypts an array of 64-bit data.
@@ -2127,8 +2324,57 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
     /// # Arguments
     /// - `message` is of an array of `u64`-type and the plaintext to be
     ///   encrypted.
-    /// - `cipher` is of an array of `u64`-type and the ciphertext to be
-    ///   stored.
+    /// - `cipher` is of an array of `u64`-type and the ciphertext to be stored.
+    /// 
+    /// # Features
+    /// This method encrypts multiple of 64-bit data without padding anything
+    /// in ECB (Electronic Code Book) mode.
+    /// 
+    /// # Counterpart methods
+    /// - If you need to encrypt data with padding bits according PKCS #7
+    ///   in ECB operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::ECB_PKCS7`.
+    ///   see [here](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)
+    /// - If you need to encrypt data with padding bits according ISO
+    ///   in ECB operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::ECB_ISO`.
+    ///   see [here](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)
+    /// - If you need to encrypt data with padding bits according PKCS #7
+    ///   in CBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::CBC_PKCS7`.
+    ///   see [here](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)
+    /// - If you need to encrypt data with padding bits according ISO
+    ///   in CBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::CBC_ISO`.
+    ///   see [here](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)
+    /// - If you need to encrypt data with padding bits according PKCS #7
+    ///   in PCBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::PCBC_PKCS7`.
+    ///   see [here](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html)
+    /// - If you need to encrypt data with padding bits according ISO
+    ///   in PCBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::PCBC_ISO`.
+    ///   see [here](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html)
+    /// - If you need to encrypt data in CFB operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::CFB`.
+    ///   see [here](./traits_cfb/trait.CFB.html)
+    /// - If you need to encrypt data in OFB operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::OFB`.
+    ///   see [here](./traits_ofb/trait.OFB.html)
+    /// - If you need to encrypt data in CTR operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::CTR`.
+    ///   see [here](./traits_ctr/trait.CTR.html)
+    /// 
+    /// In summary,
+    /// 
+    /// |      | padding PKCS7                                                        | padding ISO                                                    | no padding                         |
+    /// |------|----------------------------------------------------------------------|----------------------------------------------------------------|------------------------------------|
+    /// | ECB  | [ECB_PKCS7](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)    | [ECB_ISO](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)    |                                    |
+    /// | CBC  | [CBC_PKCS7](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)    | [CBC_ISO](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)    |                                    |
+    /// | PCBC | [PCBC_PKCS7](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html) | [PCBC_ISO](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html) |                                    |
+    /// | CFB  |                                                                      |                                                                | [CFB](./traits_cfb/trait.CFB.html) |
+    /// | OFB  |                                                                      |                                                                | [OFB](./traits_ofb/trait.OFB.html) |
+    /// | CTR  |                                                                      |                                                                | [CTR](./traits_ctr/trait.CTR.html) |
     /// 
     /// # Example 1 for Normal case 
     /// ```
@@ -2173,8 +2419,57 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
     /// # Arguments
     /// - `cipher` is of an array of `u64`-type and the ciphertext to be
     ///   decrypted.
-    /// - `message` is of an array of `u64`-type and the plaintext to be
-    ///   stored.
+    /// - `message` is of an array of `u64`-type and the plaintext to be stored.
+    /// 
+    /// # Features
+    /// This method decrypts multiple of 64-bit data without padding anything
+    /// in ECB (Electronic Code Book) mode.
+    /// 
+    /// # Counterpart methods
+    /// - If you need to decrypt data with padding bits according PKCS #7
+    ///   in ECB operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::ECB_PKCS7`.
+    ///   see [here](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)
+    /// - If you need to decrypt data with padding bits according ISO
+    ///   in ECB operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::ECB_ISO`.
+    ///   see [here](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)
+    /// - If you need to decrypt data with padding bits according PKCS #7
+    ///   in CBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::CBC_PKCS7`.
+    ///   see [here](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)
+    /// - If you need to decrypt data with padding bits according ISO
+    ///   in CBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::CBC_ISO`.
+    ///   see [here](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)
+    /// - If you need to decrypt data with padding bits according PKCS #7
+    ///   in PCBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::PCBC_PKCS7`.
+    ///   see [here](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html)
+    /// - If you need to decrypt data with padding bits according ISO
+    ///   in PCBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::PCBC_ISO`.
+    ///   see [here](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html)
+    /// - If you need to decrypt data in CFB operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::CFB`.
+    ///   see [here](./traits_cfb/trait.CFB.html)
+    /// - If you need to decrypt data in OFB operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::OFB`.
+    ///   see [here](./traits_ofb/trait.OFB.html)
+    /// - If you need to decrypt data in CTR operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::CTR`.
+    ///   see [here](./traits_ctr/trait.CTR.html)
+    /// 
+    /// In summary,
+    /// 
+    /// |      | padding PKCS7                                                        | padding ISO                                                    | no padding                         |
+    /// |------|----------------------------------------------------------------------|----------------------------------------------------------------|------------------------------------|
+    /// | ECB  | [ECB_PKCS7](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)    | [ECB_ISO](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)    |                                    |
+    /// | CBC  | [CBC_PKCS7](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)    | [CBC_ISO](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)    |                                    |
+    /// | PCBC | [PCBC_PKCS7](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html) | [PCBC_ISO](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html) |                                    |
+    /// | CFB  |                                                                      |                                                                | [CFB](./traits_cfb/trait.CFB.html) |
+    /// | OFB  |                                                                      |                                                                | [OFB](./traits_ofb/trait.OFB.html) |
+    /// | CTR  |                                                                      |                                                                | [CTR](./traits_ctr/trait.CTR.html) |
     /// 
     /// # Example 1 for Normal case 
     /// ```
@@ -2270,7 +2565,11 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.is_successful)
-    #[inline] pub fn is_successful(&self) -> bool { self.block.get() == Self::SUCCESS }
+    #[inline]
+    pub fn is_successful(&self) -> bool
+    {
+        self.block.get() == Self::SUCCESS
+    }
 
     // pub fn is_failed(&self) -> bool
     /// Checks whether the previous encryption or decryption was failed.
@@ -2319,11 +2618,58 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.is_failed)
-    #[inline] pub fn is_failed(&self) -> bool   { self.block.get() == Self::FAILURE }
+    #[inline]
+    pub fn is_failed(&self) -> bool
+    {
+        self.block.get() == Self::FAILURE
+    }
 
-    #[inline] pub fn set_success(&mut self) { self.block.set(Self::SUCCESS); }
-    #[inline] pub fn set_failed(&mut self)  { self.block.set(Self::FAILURE); }
+    // pub fn set_successful(&mut self)
+    /// Sets the flag to mean that the previous encryption or decryption
+    /// was successful.
+    /// 
+    /// # Features
+    /// You won't use this method unless you write codes for implementation
+    /// of a trait for NDES.
+    /// 
+    /// # Example
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// let mut a_des = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
+    /// assert_eq!(a_des.is_successful(), false);
+    /// 
+    /// a_des.set_successful();
+    /// assert_eq!(a_des.is_successful(), true);
+    /// ```
+    #[inline]
+    pub fn set_successful(&mut self)
+    {
+        self.block.set(Self::SUCCESS);
+    }
 
+    // pub fn set_failed(&mut self)
+    /// Sets the flag to mean that the previous encryption or decryption
+    /// was failed.
+    /// 
+    /// # Features
+    /// You won't use this method unless you write codes for implementation
+    /// of a trait for NDES.
+    /// 
+    /// # Example
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// let mut a_des = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
+    /// a_des.encrypt_u64(0x1234567890ABCDEF_u64);
+    /// assert_eq!(a_des.is_failed(), false);
+    /// 
+    /// a_des.set_failed();
+    /// assert_eq!(a_des.is_failed(), true);
+    /// ```
+    #[inline]
+    pub fn set_failed(&mut self)
+    {
+        self.block.set(Self::FAILURE);
+    }
 
     fn encrypt_block(&mut self)
     {

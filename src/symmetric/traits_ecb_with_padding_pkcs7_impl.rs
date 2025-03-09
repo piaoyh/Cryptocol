@@ -335,7 +335,7 @@ S756, S757, S758, S759, S760, S761, S762, S763>
         }
         encoded = self.encrypt_u64(block_union.get());
         unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
-        self.set_success();
+        self.set_successful();
         progress + 8
     }
 
@@ -401,7 +401,7 @@ S756, S757, S758, S759, S760, S761, S762, S763>
             }
         }
         unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), message_bytes); }
-        self.set_success();
+        self.set_successful();
         progress + message_bytes as u64
     }
 

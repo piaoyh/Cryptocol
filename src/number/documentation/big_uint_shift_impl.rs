@@ -22,7 +22,7 @@ use crate::number::SmallUInt;
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to big_uint_arithmetic.rs.
-struct BigUInt<T, const N: usize>
+pub struct BigUInt<T, const N: usize>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign

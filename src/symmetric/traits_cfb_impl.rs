@@ -323,7 +323,7 @@ S756, S757, S758, S759, S760, S761, S762, S763>
 
         if progress == length_in_bytes
         {
-            self.set_success();
+            self.set_successful();
             progress
         }
         else
@@ -334,7 +334,7 @@ S756, S757, S758, S759, S760, S761, S762, S763>
             unsafe { copy_nonoverlapping(addr, &mut block as *mut u64 as *mut u8, tail); }
             encoded = block ^ self.encrypt_u64(encoded);
             unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), tail); }
-            self.set_success();
+            self.set_successful();
             progress + tail as u64
         }
     }
