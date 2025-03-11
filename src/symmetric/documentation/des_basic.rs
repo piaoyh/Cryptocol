@@ -2301,7 +2301,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// in ECB (Electronic Code Book) mode.
     /// 
     /// # Counterpart methods
-    /// - If you need to encrypt data with padding bits according PKCS #7
+    /// - If you need to encrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
     ///   in ECB operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::ECB_PKCS7`.
     ///   see [here](../../traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)
@@ -2309,7 +2310,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in ECB operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::ECB_ISO`.
     ///   see [here](../../traits_ecb_with_padding_iso/trait.ECB_ISO.html)
-    /// - If you need to encrypt data with padding bits according PKCS #7
+    /// - If you need to encrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
     ///   in CBC operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::CBC_PKCS7`.
     ///   see [here](../../traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)
@@ -2317,7 +2319,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in CBC operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::CBC_ISO`.
     ///   see [here](../../traits_cbc_with_padding_iso/trait.CBC_ISO.html)
-    /// - If you need to encrypt data with padding bits according PKCS #7
+    /// - If you need to encrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
     ///   in PCBC operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::PCBC_PKCS7`.
     ///   see [here](../../traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html)
@@ -2452,7 +2455,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// in ECB (Electronic Code Book) mode.
     /// 
     /// # Counterpart methods
-    /// - If you need to decrypt data with padding bits according PKCS #7
+    /// - If you need to decrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
     ///   in ECB operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::ECB_PKCS7`.
     ///   see [here](../../traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)
@@ -2460,7 +2464,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in ECB operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::ECB_ISO`.
     ///   see [here](../../traits_ecb_with_padding_iso/trait.ECB_ISO.html)
-    /// - If you need to decrypt data with padding bits according PKCS #7
+    /// - If you need to decrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
     ///   in CBC operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::CBC_PKCS7`.
     ///   see [here](../../traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)
@@ -2468,7 +2473,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in CBC operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::CBC_ISO`.
     ///   see [here](../../traits_cbc_with_padding_iso/trait.CBC_ISO.html)
-    /// - If you need to decrypt data with padding bits according PKCS #7
+    /// - If you need to decrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
     ///   in PCBC operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::PCBC_PKCS7`.
     ///   see [here](../../traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html)
@@ -2931,546 +2937,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// assert_eq!(a_des.is_failed(), true);
     /// ```
     pub fn set_failed(&mut self)
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    // pub fn encrypt_with_padding_pkcs7(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
-    /// Encrypts the data with the padding defined in PKCS #7.
-    /// 
-    /// # Arguments
-    /// - `message` is a pointer to u8 which is `*const u8`,
-    ///   and the plaintext to be encrypted.
-    /// - `length_in_bytes` is of `u64`-type,
-    ///   and the length of the plaintext `message` in bytes.
-    /// - `cipher` is a pointer to u8 which is `*mut u8`,
-    ///   and the ciphertext to be stored.
-    /// - The size of the memory area which starts at `cipher` and the
-    ///   ciphertext will be stored at is assumed to be enough.
-    ///   The size of the area should be prepared to be
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least.
-    ///   So, it is responsible for you to prepare the `cipher` area big enough!
-    /// 
-    /// # Output
-    /// This method returns the size of ciphertext including padding bits
-    /// in bytes.
-    /// 
-    /// # Features
-    /// - This method is useful to use in hybrid programming with C/C++.
-    /// - If `length_in_bytes` is `0`, only padding bytes will be encrypted,
-    ///   and stored in the memory area that starts from `cipher`.
-    /// - The padding bits composed of the bytes that indicate the length of
-    ///   the padding bytes. For more information about the padding bits
-    ///   according to PKCS#7, Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
-    /// - This method performs pure encryption without any operation mode.
-    ///   It is equivalent to ECB (Electronic Code Book) mode.
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    /// 
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// let mut cipher = [0_u8; 56];
-    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
-    /// print!("C (16 rounds) =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
-    /// ```
-    /// 
-    /// # Example 2 for Expanded case for 128 rounds
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::DES_Expanded;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64(key);
-    /// 
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// let mut cipher = [0_u8; 56];
-    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
-    /// print!("C (128 rounds) =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "DD C6 D8 D1 B0 66 D9 AC F7 F3 B4 FD D6 6C ED 78 20 FB A6 8D 35 38 EA 65 B0 65 23 05 FF D4 53 B1 D1 E0 C5 52 36 1E AC E2 19 EF 94 B8 98 04 A9 69 CC 6A BC 81 7D 6B 29 C0 ");
-    /// ```
-    /// 
-    /// # Example 3 for Expanded case for 0 rounds which means that key is meaningless
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::DES_Expanded;
-    /// 
-    /// let key1 = 0x_1234567890ABCDEF_u64;
-    /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
-    /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
-    /// 
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// let mut cipher1 = [0_u8; 56];
-    /// let mut cipher2 = [0_u8; 56];
-    /// c_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher1.as_mut_ptr());
-    /// d_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher2.as_mut_ptr());
-    /// print!("C (0 rounds) =\t");
-    /// for c in cipher1.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher1.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 02 ");
-    /// print!("D (0 rounds) =\t");
-    /// for c in cipher2.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher2.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 02 ");
-    /// ```
-    /// 
-    /// # Example 4 for Normal case for the message of 0 bytes
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    /// 
-    /// let message = "";
-    /// println!("M =\t{}", message);
-    /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
-    /// ```
-    /// 
-    /// # Example 5 for Normal case for the message shorter than 8 bytes
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    /// 
-    /// let message = "7 bytes";
-    /// println!("M =\t{}", message);
-    /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "F6 F0 41 DD 55 55 3B 35 ");
-    /// ```
-    /// 
-    /// # Example 6 for Normal case for the message of 8 bytes
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    /// 
-    /// let message = "I am OK.";
-    /// println!("M =\t{}", message);
-    /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "27 F5 93 EE 76 DC 64 87 41 7F 89 79 08 CD A1 4C ");
-    /// ```
-    /// 
-    /// # Example 7 for Normal case for the message longer than 8 bytes and shorter than 16 bytes
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    /// 
-    /// let message = "PARK Youngho";
-    /// println!("M =\t{}", message);
-    /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "8E 52 20 47 78 78 51 B7 00 69 10 77 91 B7 52 36 ");
-    /// ```
-    /// 
-    /// # Example 7 for Normal case for the message of 16 bytes
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    /// 
-    /// let message = "고맙습니다.";
-    /// println!("M =\t{}", message);
-    /// let mut cipher = [0_u8; 24];
-    /// a_des.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 41 7F 89 79 08 CD A1 4C ");
-    /// ```
-    pub fn encrypt_with_padding_pkcs7(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    // pub fn encrypt_with_padding_pkcs7_into_vec<T>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
-    /// Encrypts the data with the padding defined in PKCS #7.
-    /// 
-    /// # Features
-    /// - If `length_in_bytes` is `0`, only padding bytes will be encrypted,
-    ///   and pushed into the vector `cipher`.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::fmt::Write;
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// 
-    /// let mut a_des = DES::new_with_key_u64(key);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_with_padding_pkcs7_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C (16 rounds) =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
-    /// ```
-    /// 
-    /// # Example 2 for 128 rounds
-    /// ```
-    /// use std::fmt::Write;
-    /// use cryptocol::symmetric::DES_Expanded;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// 
-    /// let mut b_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64(key);
-    /// let mut cipher = Vec::<u8>::new();
-    /// b_des.encrypt_with_padding_pkcs7_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C (128 rounds) =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "DD C6 D8 D1 B0 66 D9 AC F7 F3 B4 FD D6 6C ED 78 20 FB A6 8D 35 38 EA 65 B0 65 23 05 FF D4 53 B1 D1 E0 C5 52 36 1E AC E2 19 EF 94 B8 98 04 A9 69 CC 6A BC 81 7D 6B 29 C0 ");
-    /// ```
-    /// 
-    /// # Example 3 for 128 rounds
-    /// ```
-    /// use std::fmt::Write;
-    /// use cryptocol::symmetric::DES_Expanded;
-    /// 
-    /// // Expanded case for 0 rounds which means that key is meaningless
-    /// let key1 = 0x_1234567890ABCDEF_u64;
-    /// let key2 = 0_u64;
-    /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
-    /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
-    /// println!("K =\t{:#016X}", key);
-    /// 
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// 
-    /// let mut cipher1 = Vec::<u8>::new();
-    /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_with_padding_pkcs7_into_vec(message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_with_padding_pkcs7_into_vec(message.as_ptr(), message.len() as u64, &mut cipher2);
-    /// print!("C (0 rounds) =\t");
-    /// for c in cipher1.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher1.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 02 ");
-    /// print!("D (0 rounds) =\t");
-    /// for c in cipher2.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher2.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 02 ");
-    /// ```
-    /// 
-    /// # Example 4 for the message of 0 bytes
-    /// ```
-    /// use std::fmt::Write;
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let message = "";
-    /// println!("M =\t{}", message);
-    /// 
-    /// let mut a_des = DES::new_with_key_u64(key);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_with_padding_pkcs7_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
-    /// ```
-    /// 
-    /// # Example 5 for the message shorter than 8 bytes
-    /// ```
-    /// use std::fmt::Write;
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let message = "7 bytes";
-    /// println!("M =\t{}", message);
-    /// 
-    /// let mut a_des = DES::new_with_key_u64(key);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_with_padding_pkcs7_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "F6 F0 41 DD 55 55 3B 35 ");
-    /// ```
-    /// 
-    /// # Example 6 for the message of 8 bytes
-    /// ```
-    /// use std::fmt::Write;
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let message = "I am OK.";
-    /// println!("M =\t{}", message);
-    /// 
-    /// let mut a_des = DES::new_with_key_u64(key);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_with_padding_pkcs7_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "27 F5 93 EE 76 DC 64 87 41 7F 89 79 08 CD A1 4C ");
-    /// ```
-    /// 
-    /// # Example 7 for the message longer than 8 bytes and shorter than 16 bytes
-    /// ```
-    /// use std::fmt::Write;
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let message = "PARK Youngho";
-    /// println!("M =\t{}", message);
-    /// 
-    /// let mut a_des = DES::new_with_key_u64(key);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_with_padding_pkcs7_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "8E 52 20 47 78 78 51 B7 00 69 10 77 91 B7 52 36 ");
-    /// ```
-    /// 
-    /// # Example 8 for the message of 16 bytes
-    /// ```
-    /// use std::fmt::Write;
-    /// use cryptocol::symmetric::DES;
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let message = "고맙습니다.";
-    /// println!("M =\t{}", message);
-    /// 
-    /// let mut a_des = DES::new_with_key_u64(key);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_with_padding_pkcs7_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 41 7F 89 79 08 CD A1 4C ");
-    /// ```
-    pub fn encrypt_with_padding_pkcs7_into_vec<T>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
-    where T: SmallUInt + Copy + Clone
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    // pub fn encrypt_with_padding_pkcs7_into_array<T, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
-    /// Encrypts the data with the padding defined in PKCS #7.
-    /// 
-    /// # Features
-    /// - If `length_in_bytes` is `0`, only padding bytes will be encrypted,
-    ///   and stored into the array `cipher`.
-    /// - If `N` is less than the next multiple of 8 from `length_in_bytes`,
-    ///   this method does not perform encryption and returns `false`.
-    /// - If `N` is equal to the next multiple of 8 from `length_in_bytes`,
-    ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted ciphertext, and returns `true`.
-    /// - If `N` is greater than the next multiple of 8 from `length_in_bytes`,
-    ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted ciphertext, and then fills the rest of elements of
-    ///   the array `cipher`, and returns `true`.
-    /// 
-    pub fn encrypt_with_padding_pkcs7_into_array<T, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
-    where T: SmallUInt + Copy + Clone
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    pub fn encrypt_str_with_padding_pkcs7(&mut self, message: &str, cipher: *mut u8) -> u64
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    pub fn encrypt_str_with_padding_pkcs7_into_vec<T>(&mut self, message: &str, cipher: &mut Vec<T>) -> u64
-    where T: SmallUInt + Copy + Clone
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    pub fn encrypt_str_with_padding_pkcs7_into_array<T, const N: usize>(&mut self, message: &str, cipher: &mut [T; N]) -> u64
-    where T: SmallUInt + Copy + Clone
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    pub fn encrypt_string_with_padding_pkcs7(&mut self, message: &String, cipher: *mut u8) -> u64
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    pub fn encrypt_string_with_padding_pkcs7_into_vec<T>(&mut self, message: &String, cipher: &mut Vec<T>) -> u64
-    where T: SmallUInt + Copy + Clone
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    pub fn encrypt_string_with_padding_pkcs7_into_array<T, const N: usize>(&mut self, message: &String, cipher: &mut [T; N]) -> u64
-    where T: SmallUInt + Copy + Clone
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    pub fn encrypt_vec_with_padding_pkcs7<T>(&mut self, message: &Vec<T>, cipher: *mut u8) -> u64
-    where T: SmallUInt + Copy + Clone
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    pub fn encrypt_vec_with_padding_pkcs7_into_vec<T, U>(&mut self, message: &Vec<T>, cipher: &mut Vec<U>) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    pub fn encrypt_vec_with_padding_pkcs7_into_array<T, U, const N: usize>(&mut self, message: &Vec<T>, cipher: &mut [U; N]) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    pub fn encrypt_array_with_padding_pkcs7<T, const N: usize>(&mut self, message: &[T; N], cipher: *mut u8) -> u64
-    where T: SmallUInt + Copy + Clone
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    pub fn encrypt_array_with_padding_pkcs7_into_vec<T, U, const N: usize>(&mut self, message: &[T; N], cipher: &mut Vec<U>) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
-    {
-        unimplemented!(); // Dummy code for documentation
-    }
-
-    pub fn encrypt_array_with_padding_pkcs7_into_array<T, U, const N: usize, const M: usize>(&mut self, message: &[T; N], cipher: &mut [U; M]) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }

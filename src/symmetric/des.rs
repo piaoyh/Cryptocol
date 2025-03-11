@@ -2331,7 +2331,8 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
     /// in ECB (Electronic Code Book) mode.
     /// 
     /// # Counterpart methods
-    /// - If you need to encrypt data with padding bits according PKCS #7
+    /// - If you need to encrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
     ///   in ECB operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::ECB_PKCS7`.
     ///   see [here](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)
@@ -2339,7 +2340,8 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
     ///   in ECB operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::ECB_ISO`.
     ///   see [here](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)
-    /// - If you need to encrypt data with padding bits according PKCS #7
+    /// - If you need to encrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
     ///   in CBC operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::CBC_PKCS7`.
     ///   see [here](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)
@@ -2347,7 +2349,8 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
     ///   in CBC operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::CBC_ISO`.
     ///   see [here](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)
-    /// - If you need to encrypt data with padding bits according PKCS #7
+    /// - If you need to encrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
     ///   in PCBC operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::PCBC_PKCS7`.
     ///   see [here](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html)
@@ -2426,7 +2429,8 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
     /// in ECB (Electronic Code Book) mode.
     /// 
     /// # Counterpart methods
-    /// - If you need to decrypt data with padding bits according PKCS #7
+    /// - If you need to decrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
     ///   in ECB operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::ECB_PKCS7`.
     ///   see [here](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)
@@ -2434,7 +2438,8 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
     ///   in ECB operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::ECB_ISO`.
     ///   see [here](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)
-    /// - If you need to decrypt data with padding bits according PKCS #7
+    /// - If you need to decrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
     ///   in CBC operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::CBC_PKCS7`.
     ///   see [here](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)
@@ -2442,7 +2447,8 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
     ///   in CBC operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::CBC_ISO`.
     ///   see [here](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)
-    /// - If you need to decrypt data with padding bits according PKCS #7
+    /// - If you need to decrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
     ///   in PCBC operation mode, you may need to import (use)
     ///   `cryptocol::symmetric::PCBC_PKCS7`.
     ///   see [here](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html)
