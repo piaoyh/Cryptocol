@@ -2245,6 +2245,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
         unimplemented!(); // Dummy code for documentation
     }
 
+    
     pub fn encrypt_vec<T>(&mut self, message: &Vec<T>, cipher: *mut u8) -> u64
     where T: SmallUInt + Copy + Clone
     {

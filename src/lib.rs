@@ -87,6 +87,18 @@
 //! - [ ] DES symmetric-key encryption/decryption algorithm
 //!     --- Includes DES and its expanded versions.
 //!     [`DES_Generic`](symmetric/des/struct.DES_Generic.html#struct.DES_Generic)
+//! - [ ] The traits and its implementations of Operation modes and padding bits for symmetric-key encryption/decryption algorithms
+//!     --- Includes ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits
+//!     according to PKCS#7 and ISO 7816-4.
+//!     [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+//!     [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+//!     [`CBC_PKCS7`](symmetric/trait.CBC_PKCS7.html#trait.CBC_PKCS7),
+//!     [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+//!     [`PCBC_PKCS7`](symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+//!     [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO),
+//!     [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+//!     [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+//!     [`CTR`](symmetric/trait.CTR.html#trait.CTR).
 //! - [ ] NDES symmetric-key encryption/decryption algorithm
 //!     --- Includes 2DES, 3DES, 4DES, etc., and their expanded versions.
 //!     `NDES_Generic`
@@ -127,7 +139,7 @@
 //! the version number 1.0.0.0 will be given. After that whenever another
 //! functionality is added to this crate, the version number will get higher
 //! beyond 1.0.0.0. Before the version number 1.0.0.0, the maximum version
-//! number will be 0.26.x.x since there are all twenty-five functionalities
+//! number will be 0.27.x.x since there are all twenty-five functionalities
 //! listed above. So, for example, even if the version number is 0.5.0.0,
 //! it does not mean that 50% of all functionalities are implemented.
 
