@@ -339,22 +339,6 @@ S756, S757, S758, S759, S760, S761, S762, S763>
         progress + 8
     }
 
-    // fn encrypt_into_array<U, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
-    /// Encrypts the data with the padding defined in PKCS #7.
-    /// 
-    /// # Features
-    /// - If `length_in_bytes` is `0`, only padding bytes will be encrypted,
-    ///   and stored into the array `cipher`.
-    /// - If `N` is less than the next multiple of 8 from `length_in_bytes`,
-    ///   this method does not perform encryption and returns `false`.
-    /// - If `N` is equal to the next multiple of 8 from `length_in_bytes`,
-    ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted ciphertext, and returns `true`.
-    /// - If `N` is greater than the next multiple of 8 from `length_in_bytes`,
-    ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted ciphertext, and then fills the rest of elements of
-    ///   the array `cipher`, and returns `true`.
-    /// 
     fn encrypt_into_array<U, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
     {

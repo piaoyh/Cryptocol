@@ -861,28 +861,22 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// a_des.set_key(key);
 /// ```
 /// 
-/// Now, you can freely use any methods
-/// encrypt_[vec|array|str|string]_with_padding_[pkcs7|iso]_[ecb|cbc|pcbc]_into_vec()
-/// and encrypt_[vec|array|str|string]_[cfb|ofb|ctr]_into_vec() to encrypt,
-/// decrypt_[vec|array]_with_padding_[pkcs7|iso]_into_[vec|string]() and
-/// decrypt_[vec|array]_[cfb|ofb|ctr]_into_[vec|string]() to decrypt. However,
-/// you are encouraged to avoid using the methods such as
-/// encrypt_with_padding_[pkcs7|iso](), encrypt_[cfb|ofb|ctr](),
-/// decrypt_with_padding_[pkcs7|iso](), and decrypt_[cfb|ofb|ctr]()
-/// that receive pointer arguments and the data length
-/// unless you develope in hybrid programming context especially with C/C++. 
-/// Instead, you are highly encouraged to use the methods 
-/// encrypt_[vec|array|str|string]_with_padding_[pkcs7|iso]_[ecb|cbc|pcbc]_into_vec(),
-/// encrypt_[vec|array|str|string]_[cfb|ofb|ctr]_into_vec()
-/// decrypt_[vec|array]_with_padding_[pkcs7|iso]_into_[vec|string](), and
-/// decrypt_[vec|array]_[cfb|ofb|ctr]_into_[vec|string]() because you don't
-/// have to consider the length of data so that you will meak less mistakes.
+/// Now, you can freely use any operation mode. This crate provide
+/// ECB (Electronic CodeBook), CBC(Cipher Block Chaining), PCBC (Propagation
+/// Cipher Block Chaining), CFB (Cipher FeedBack) OFB (Output FeedBack), and
+/// CTR (CounTeR). You can choose the way of padding bits according to either
+/// [PKCS#7](https://node-security.com/posts/cryptography-pkcs-7-padding/) or
+/// [ISO 7816-4](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+/// So, you can import (use) one of the following traits: ECB_PKCS7, ECB_ISO,
+/// CBC_PKCS7, CBC_ISO, PCBC_PKCS7, PCBC_ISO, CFB, OFB, and CTR. The following
+/// example 6 shows the case that you choose CBC operation mode and padding bits
+/// according to PKCS#7. 
 /// 
 /// # Example 6
 /// ```
 /// use std::io::Write;
 /// use std::fmt::Write as _;
-/// use cryptocol::symmetric::DES
+/// use cryptocol::symmetric::{ DES, CBC_PKCS7 };
 /// 
 /// let mut a_des = DES::new_with_key([0xEFu8, 0xCDu8, 0xABu8, 0x90u8, 0x78u8, 0x56u8, 0x34u8, 0x12u8]);
 /// let message = "In the beginning God created the heavens and the earth.";
@@ -890,7 +884,7 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// let iv = 0x_FEDCBA0987654321_u64;
 /// println!("IV =\t{}", iv);
 /// let mut cipher = Vec::<u8>::new();
-/// a_des.encrypt_str_with_padding_pkcs7_cbc_into_vec(iv, message, &mut cipher);
+/// a_des.encrypt_str_into_vec(iv, message, &mut cipher);
 /// print!("C =\t");
 /// for c in cipher.clone()
 ///     { print!("{:02X} ", c); }
@@ -901,7 +895,7 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
 /// 
 /// let mut recovered = String::new();
-/// a_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+/// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
 /// println!("B (16 rounds) =\t{}", recovered);
 /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
 /// assert_eq!(recovered, message);
@@ -2328,7 +2322,7 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
     /// 
     /// # Features
     /// This method encrypts multiple of 64-bit data without padding anything
-    /// in ECB (Electronic Code Book) mode.
+    /// in ECB (Electronic CodeBook) mode.
     /// 
     /// # Counterpart methods
     /// - If you need to encrypt data with padding bits according
@@ -2426,7 +2420,7 @@ const S760: u8, const S761: u8, const S762: u8, const S763: u8>
     /// 
     /// # Features
     /// This method decrypts multiple of 64-bit data without padding anything
-    /// in ECB (Electronic Code Book) mode.
+    /// in ECB (Electronic CodeBook) mode.
     /// 
     /// # Counterpart methods
     /// - If you need to decrypt data with padding bits according
