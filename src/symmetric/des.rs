@@ -865,12 +865,12 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// ECB (Electronic CodeBook), CBC(Cipher Block Chaining), PCBC (Propagation
 /// Cipher Block Chaining), CFB (Cipher FeedBack) OFB (Output FeedBack), and
 /// CTR (CounTeR). You can choose the way of padding bits according to either
-/// [PKCS#7](https://node-security.com/posts/cryptography-pkcs-7-padding/) or
+/// [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/) or
 /// [ISO 7816-4](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
 /// So, you can import (use) one of the following traits: ECB_PKCS7, ECB_ISO,
 /// CBC_PKCS7, CBC_ISO, PCBC_PKCS7, PCBC_ISO, CFB, OFB, and CTR. The following
 /// example 6 shows the case that you choose CBC operation mode and padding bits
-/// according to PKCS#7. 
+/// according to PKCS #7. 
 /// 
 /// # Example 6
 /// ```

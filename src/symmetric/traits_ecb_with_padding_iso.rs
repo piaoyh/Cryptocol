@@ -1635,7 +1635,7 @@ pub trait ECB_ISO<T> : Sized
     /// - If `V::size_in_bytes() * N` is less than 
     ///   `U::size_in_bytes() * cipher.len() - 1`,
     ///   this method does not perform encryption and returns `zero`.
-     /// - The padding bits are composed of the bytes that indicate the length of
+    /// - The padding bits are composed of the bytes that indicate the length of
     ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
