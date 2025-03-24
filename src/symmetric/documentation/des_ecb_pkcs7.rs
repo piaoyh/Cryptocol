@@ -523,7 +523,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 41 7F 89 79 08 CD A1 4C ");
     /// ```
-    pub fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
+    pub fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
