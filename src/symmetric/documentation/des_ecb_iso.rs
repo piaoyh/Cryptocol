@@ -526,8 +526,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 E2 22 32 FE 87 E8 0A 93 ");
     /// ```
-    pub fn encrypt_into_vec<T>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<T>) -> u64
-    where T: SmallUInt + Copy + Clone
+    pub fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+    where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -780,8 +780,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 E2 22 32 FE 87 E8 0A 93 ");
     /// ```
-    pub fn encrypt_into_array<T, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [T; N]) -> u64
-    where T: SmallUInt + Copy + Clone
+    pub fn encrypt_into_array<U, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+    where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1262,8 +1262,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 E2 22 32 FE 87 E8 0A 93 ");
     /// ```
-    pub fn encrypt_str_into_vec<T>(&mut self, message: &str, cipher: &mut Vec<T>) -> u64
-    where T: SmallUInt + Copy + Clone
+    pub fn encrypt_str_into_vec<U>(&mut self, message: &str, cipher: &mut Vec<U>) -> u64
+    where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1511,8 +1511,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 E2 22 32 FE 87 E8 0A 93 ");
     /// ```
-    pub fn encrypt_str_into_array<T, const N: usize>(&mut self, message: &str, cipher: &mut [T; N]) -> u64
-    where T: SmallUInt + Copy + Clone
+    pub fn encrypt_str_into_array<U, const N: usize>(&mut self, message: &str, cipher: &mut [U; N]) -> u64
+    where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1995,8 +1995,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 E2 22 32 FE 87 E8 0A 93 ");
     /// ```
-    pub fn encrypt_string_into_vec<T>(&mut self, message: &String, cipher: &mut Vec<T>) -> u64
-    where T: SmallUInt + Copy + Clone
+    pub fn encrypt_string_into_vec<U>(&mut self, message: &String, cipher: &mut Vec<U>) -> u64
+    where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2245,8 +2245,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 E2 22 32 FE 87 E8 0A 93 ");
     /// ```
-    pub fn encrypt_string_into_array<T, const N: usize>(&mut self, message: &String, cipher: &mut [T; N]) -> u64
-    where T: SmallUInt + Copy + Clone
+    pub fn encrypt_string_into_array<U, const N: usize>(&mut self, message: &String, cipher: &mut [U; N]) -> u64
+    where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2501,8 +2501,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 E2 22 32 FE 87 E8 0A 93 ");
     /// ```
-    pub fn encrypt_vec<T>(&mut self, message: &Vec<T>, cipher: *mut u8) -> u64
-    where T: SmallUInt + Copy + Clone
+    pub fn encrypt_vec<U>(&mut self, message: &Vec<U>, cipher: *mut u8) -> u64
+    where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2749,8 +2749,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 E2 22 32 FE 87 E8 0A 93 ");
     /// ```
-    pub fn encrypt_vec_into_vec<T, U>(&mut self, message: &Vec<T>, cipher: &mut Vec<U>) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
+    pub fn encrypt_vec_into_vec<U, V>(&mut self, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3010,8 +3010,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 E2 22 32 FE 87 E8 0A 93 ");
     /// ```
-    pub fn encrypt_vec_into_array<T, U, const N: usize>(&mut self, message: &Vec<T>, cipher: &mut [U; N]) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
+    pub fn encrypt_vec_into_array<U, V,const N: usize>(&mut self, message: &Vec<U>, cipher: &mut [V; N]) -> u64
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3275,8 +3275,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 E2 22 32 FE 87 E8 0A 93 ");
     /// ```
-    pub fn encrypt_array<T, const N: usize>(&mut self, message: &[T; N], cipher: *mut u8) -> u64
-    where T: SmallUInt + Copy + Clone
+    pub fn encrypt_array<U, const N: usize>(&mut self, message: &[U; N], cipher: *mut u8) -> u64
+    where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3532,8 +3532,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 E2 22 32 FE 87 E8 0A 93 ");
     /// ```
-    pub fn encrypt_array_into_vec<T, U, const N: usize>(&mut self, message: &[T; N], cipher: &mut Vec<U>) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
+    pub fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, message: &[U; N], cipher: &mut Vec<V>) -> u64
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3801,8 +3801,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 E2 22 32 FE 87 E8 0A 93 ");
     /// ```
-    pub fn encrypt_array_into_array<T, U, const N: usize, const M: usize>(&mut self, message: &[T; N], cipher: &mut [U; M]) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
+    pub fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, message: &[U; N], cipher: &mut [V; M]) -> u64
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4618,8 +4618,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// assert_eq!(converted, "고맙습니다.");
     /// assert_eq!(converted, message);
     /// ```
-    pub fn decrypt_into_vec<T>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<T>) -> u64
-    where T: SmallUInt + Copy + Clone
+    pub fn decrypt_into_vec<U>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5033,8 +5033,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// assert_eq!(converted, "고맙습니다.");
     /// assert_eq!(converted, message);
     /// ```
-    pub fn decrypt_into_array<T, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [T; N]) -> u64
-    where T: SmallUInt + Copy + Clone
+    pub fn decrypt_into_array<U, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5743,8 +5743,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// assert_eq!(converted, "고맙습니다.");
     /// assert_eq!(converted, message);
     /// ```
-    pub fn decrypt_vec<T>(&mut self, cipher: &Vec<T>, message: *mut u8) -> u64
-    where T: SmallUInt + Copy + Clone
+    pub fn decrypt_vec<U>(&mut self, cipher: &Vec<U>, message: *mut u8) -> u64
+    where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6145,8 +6145,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// assert_eq!(converted, "고맙습니다.");
     /// assert_eq!(converted, message);
     /// ```
-    pub fn decrypt_vec_into_vec<T, U>(&mut self, cipher: &Vec<T>, message: &mut Vec<U>) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
+    pub fn decrypt_vec_into_vec<U, V>(&mut self, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6560,8 +6560,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// assert_eq!(converted, "고맙습니다.");
     /// assert_eq!(converted, message);
     /// ```
-    pub fn decrypt_vec_into_array<T, U, const N: usize>(&mut self, cipher: &Vec<T>, message: &mut [U; N]) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
+    pub fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, cipher: &Vec<U>, message: &mut [V; N]) -> u64
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6856,8 +6856,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// assert_eq!(recovered, "고맙습니다.");
     /// assert_eq!(recovered, message);
     /// ```
-    pub fn decrypt_vec_into_string<T>(&mut self, cipher: &Vec<T>, message: &mut String) -> u64
-    where T: SmallUInt + Copy + Clone
+    pub fn decrypt_vec_into_string<U>(&mut self, cipher: &Vec<U>, message: &mut String) -> u64
+    where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7277,8 +7277,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// assert_eq!(converted, "고맙습니다.");
     /// assert_eq!(converted, message);
     /// ```
-    pub fn decrypt_array<T, const N: usize>(&mut self, cipher: &[T; N], message: *mut u8) -> u64
-    where T: SmallUInt + Copy + Clone
+    pub fn decrypt_array<U, const N: usize>(&mut self, cipher: &[U; N], message: *mut u8) -> u64
+    where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7680,8 +7680,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// assert_eq!(converted, "고맙습니다.");
     /// assert_eq!(converted, message);
     /// ```
-    pub fn decrypt_array_into_vec<T, U, const N: usize>(&mut self, cipher: &[T; N], message: &mut Vec<U>) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
+    pub fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, cipher: &[U; N], message: &mut Vec<V>) -> u64
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -8097,8 +8097,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// assert_eq!(converted, "고맙습니다.");
     /// assert_eq!(converted, message);
     /// ```
-    pub fn decrypt_array_into_array<T, U, const N: usize, const M: usize>(&mut self, cipher: &[T; N], message: &mut [U; M]) -> u64
-    where T: SmallUInt + Copy + Clone, U: SmallUInt + Copy + Clone
+    pub fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, cipher: &[U; N], message: &mut [V; M]) -> u64
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -8394,8 +8394,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// assert_eq!(recovered, "고맙습니다.");
     /// assert_eq!(recovered, message);
     /// ```
-    pub fn decrypt_array_into_string<T, const N: usize>(&mut self, cipher: &[T; N], message: &mut String) -> u64
-    where T: SmallUInt + Copy + Clone
+    pub fn decrypt_array_into_string<U, const N: usize>(&mut self, cipher: &[U; N], message: &mut String) -> u64
+    where U: SmallUInt + Copy + Clone
     {
         unimplemented!(); // Dummy code for documentation
     }
