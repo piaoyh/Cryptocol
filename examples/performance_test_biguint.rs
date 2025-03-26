@@ -204,7 +204,7 @@ use std::cmp::{ PartialEq, PartialOrd };
 use std::convert::From;
 use std::ops::*;
 
-use cryptocol::number::small_uint::*;
+use cryptocol::number::SmallUInt;
 use cryptocol::number::BigUInt;
 
 trait PerformanceTestForBigUint

@@ -8,7 +8,7 @@ keywords = ["number", "sha2", "sha512", "des", "random"]
 license = "MIT OR Apache-2.0"
 name = "cryptocol"
 readme = "README.md"
-version = "0.10.3"
+version = "0.10.4"
 # repository = "https://github.com/piaoyh/cryptocol"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -18,105 +18,114 @@ incremental = false
 
 [dependencies]
 
-[package.metadata.docs.rs]
-cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]
-
-[[example]]
-name = "small_uint_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "unions_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "biguint_basic_quick_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "biguint_arithmatic_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "biguint_arithmatic_uint_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "biguint_exponentiation_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "biguint_miscellaneous_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "biguint_etc_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "performance_test_biguint"
-doc-scrape-examples = false
-
-[[example]]
-name = "hash_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "hash_app"
-doc-scrape-examples = false
-
-[[example]]
-name = "md4_app"
-doc-scrape-examples = false
-
-[[example]]
-name = "md5_app"
-doc-scrape-examples = false
-
-[[example]]
-name = "sha1_app"
-doc-scrape-examples = false
-
-[[example]]
-name = "sha2_256_app"
-doc-scrape-examples = false
-
-[[example]]
-name = "sha2_512_224_app"
-doc-scrape-examples = false
-
-[[example]]
-name = "sha2_512_app"
-doc-scrape-examples = false
-
-[[example]]
-name = "des_basic_quick_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "des_ecb_pkcs7_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "des_ecb_iso_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "des_cbc_pkcs7_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "des_cbc_iso_examples"
-doc-scrape-examples = false
-
-[[example]]
-name = "des_examples"
-doc-scrape-examples = false
-
-#[[example]]
-#name = "ndes_examples"
-#doc-scrape-examples = false
-
-[[example]]
-name = "random_examples"
-doc-scrape-examples = false
+####################################
+## [package.metadata.docs.rs]
+## cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]
+## 
+## [[example]]
+## name = "small_uint_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "unions_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "biguint_basic_quick_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "biguint_arithmatic_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "biguint_arithmatic_uint_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "biguint_exponentiation_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "biguint_miscellaneous_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "biguint_etc_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "performance_test_biguint"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "hash_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "hash_app"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "md4_app"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "md5_app"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "sha1_app"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "sha2_256_app"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "sha2_512_224_app"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "sha2_512_app"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "des_basic_quick_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "des_ecb_pkcs7_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "des_ecb_iso_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "des_cbc_pkcs7_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "des_cbc_iso_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "des_pcbc_pkcs7_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "des_pcbc_iso_examples"
+## doc-scrape-examples = false
+## 
+## [[example]]
+## name = "des_examples"
+## doc-scrape-examples = false
+## 
+## #[[example]]
+## #name = "ndes_examples"
+## #doc-scrape-examples = false
+## 
+## [[example]]
+## name = "random_examples"
+## doc-scrape-examples = false

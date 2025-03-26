@@ -25,7 +25,7 @@ pub trait CBC_PKCS7<T> : Sized
 {
     // fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
     /// Encrypts the data with the padding defined according to PKCS #7
-    /// in CBC (Cipher Block Chaining) mode.
+    /// in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
@@ -98,7 +98,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     /// Encrypts the data with the padding defined according to PKCS #7
-    /// in CBC (Cipher Block Chaining) mode, and stores the encrypted data
+    /// in CBC (Cipher-Block Chaining) mode, and stores the encrypted data
     /// in `Vec<U>`.
     /// 
     /// # Arguments
@@ -171,7 +171,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     /// Encrypts the data with the padding defined according to PKCS #7
-    /// in CBC (Cipher Block Chaining) mode, and stores the encrypted data
+    /// in CBC (Cipher-Block Chaining) mode, and stores the encrypted data
     /// in array `[U; N]`.
     /// 
     /// # Arguments
@@ -249,7 +249,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn encrypt_str(&mut self, iv: T, message: &str, cipher: *mut u8) -> u64
     /// Encrypts the data in `str` with the padding defined
-    /// according to PKCS #7 in CBC (Cipher Block Chaining) mode.
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
@@ -321,7 +321,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn encrypt_str_into_vec<U>(&mut self, iv: T, message: &str, cipher: &mut Vec<U>) -> u64
     /// Encrypts the data in `str` with the padding defined according to PKCS #7
-    /// in CBC (Cipher Block Chaining) mode, and stores the encrypted data
+    /// in CBC (Cipher-Block Chaining) mode, and stores the encrypted data
     /// in `Vec<U>`.
     /// 
     /// # Arguments
@@ -387,7 +387,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn encrypt_str_into_array<U, const N: usize>(&mut self, iv: T, message: &str, cipher: &mut [U; N]) -> u64
     /// Encrypts the data in `str` with the padding defined according to PKCS #7
-    /// in CBC (Cipher Block Chaining) mode, and stores the encrypted data
+    /// in CBC (Cipher-Block Chaining) mode, and stores the encrypted data
     /// in array `[U; N]`.
     /// 
     /// # Arguments
@@ -464,7 +464,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn encrypt_string(&mut self, iv: T, message: &String, cipher: *mut u8) -> u64
     /// Encrypts the data stored in a String object with the padding according
-    /// to PKCS #7 in CBC (Cipher Block Chaining) mode.
+    /// to PKCS #7 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
@@ -537,7 +537,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn encrypt_string_into_vec<U>(&mut self, iv: T, message: &String, cipher: &mut Vec<U>) -> u64
     /// Encrypts the data stored in a String object with the padding according
-    /// to PKCS #7 in CBC (Cipher Block Chaining) mode, and stores the encrypted
+    /// to PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the encrypted
     /// data in `Vec<U>`.
     /// 
     /// # Arguments
@@ -603,7 +603,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn encrypt_string_into_array<U, const N: usize>(&mut self, iv: T, message: &String, cipher: &mut [U; N]) -> u64
     /// Encrypts the data stored in a String object with the padding according
-    /// to PKCS #7 in CBC (Cipher Block Chaining) mode, and stores the encrypted
+    /// to PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the encrypted
     /// data in array `[U; N]`.
     /// 
     /// # Arguments
@@ -680,7 +680,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn encrypt_vec<U>(&mut self, iv: T, message: &Vec<U>, cipher: *mut u8) -> u64
     /// Encrypts the data stored in a `Vec<U>` object with the padding defined
-    /// according to PKCS #7 in CBC (Cipher Block Chaining) mode.
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
@@ -756,7 +756,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn encrypt_vec_into_vec<U, V>(&mut self, iv: T, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
     /// Encrypts the data stored in a `Vec<U>` object with the padding according
-    /// to PKCS #7 in CBC (Cipher Block Chaining) mode, and stores the encrypted
+    /// to PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the encrypted
     /// data in `Vec<V>`.
     /// 
     /// # Arguments
@@ -823,7 +823,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, message: &Vec<U>, cipher: &mut [V; N]) -> u64
     /// Encrypts the data stored in a `Vec<U>` object with the padding according
-    /// to PKCS #7 in CBC (Cipher Block Chaining) mode, and stores the encrypted
+    /// to PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the encrypted
     /// data in array `[V; N]`.
     /// 
     /// # Arguments
@@ -904,7 +904,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn encrypt_array<U, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: *mut u8) -> u64
     /// Encrypts the data stored in an array `[U; N]` object with the padding
-    /// defined according to PKCS #7 in CBC (Cipher Block Chaining) mode.
+    /// defined according to PKCS #7 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
@@ -982,7 +982,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut Vec<V>) -> u64
     /// Encrypts the data stored in an array `[U; N]` object with the padding
-    /// according to PKCS #7 in CBC (Cipher Block Chaining) mode, and stores the
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the
     /// encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
@@ -1051,7 +1051,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut [V; M]) -> u64
     /// Encrypts the data stored in an array `[U; N]` object with the padding
-    /// according to PKCS #7 in CBC (Cipher Block Chaining) mode, and stores the
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the
     /// encrypted data in array `[V; M]`.
     /// 
     /// # Arguments
@@ -1134,7 +1134,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn decrypt(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64;
     /// Decrypts the data with the padding defined according to PKCS #7
-    /// in CBC (Cipher Block Chaining) mode.
+    /// in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
@@ -1224,7 +1224,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
     /// Decrypts the data with the padding defined according to PKCS #7
-    /// in CBC (Cipher Block Chaining) mode, and stores the decrypted data
+    /// in CBC (Cipher-Block Chaining) mode, and stores the decrypted data
     /// in `Vec<U>`.
     /// 
     /// # Arguments
@@ -1315,7 +1315,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn decrypt_into_array<U, const N: usize>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     /// Decrypts the data with the padding defined according to PKCS #7
-    /// in CBC (Cipher Block Chaining) mode, and stores the encrypted data
+    /// in CBC (Cipher-Block Chaining) mode, and stores the encrypted data
     /// in array `[U; N]`.
     /// 
     /// # Arguments
@@ -1406,7 +1406,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn decrypt_into_string(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
     /// Decrypts the data with the padding defined according to PKCS #7
-    /// in CBC (Cipher Block Chaining) mode, and stores the decrypted data
+    /// in CBC (Cipher-Block Chaining) mode, and stores the decrypted data
     /// in String object.
     /// 
     /// # Arguments
@@ -1482,7 +1482,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn decrypt_vec<U>(&mut self, iv: T, cipher: &Vec<U>, message: *mut u8) -> u64
     /// Decrypts the data stored in a `Vec<U>` object with the padding defined
-    /// according to PKCS #7 in CBC (Cipher Block Chaining) mode.
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
@@ -1577,7 +1577,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn decrypt_vec_into_vec<U, V>(&mut self, iv: T, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
     /// Decrypts the data stored in a `Vec<U>` object with the padding according
-    /// to PKCS #7 in CBC (Cipher Block Chaining) mode, and stores the decrypted
+    /// to PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the decrypted
     /// data in `Vec<V>`.
     /// 
     /// # Arguments
@@ -1665,7 +1665,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, cipher: &Vec<U>, message: &mut [V; N]) -> u64
     /// Decrypts the data stored in a `Vec<U>` object with the padding according
-    /// to PKCS #7 in CBC (Cipher Block Chaining) mode, and stores the decrypted
+    /// to PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the decrypted
     /// data in array `[V; N]`.
     /// 
     /// # Arguments
@@ -1760,7 +1760,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn decrypt_vec_into_string<U>(&mut self, iv: T, cipher: &Vec<U>, message: &mut String) -> u64
     /// Decrypts the data stored in a `Vec<U>` object with the padding according
-    /// to PKCS #7 in CBC (Cipher Block Chaining) mode, and stores the decrypted
+    /// to PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the decrypted
     /// data in String object.
     /// 
     /// # Arguments
@@ -1836,7 +1836,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn decrypt_array<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: *mut u8) -> u64
     /// Decrypts the data stored in an array `[U; N]` object with the padding
-    /// defined according to PKCS #7 in CBC (Cipher Block Chaining) mode.
+    /// defined according to PKCS #7 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
@@ -1930,7 +1930,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut Vec<V>) -> u64
     /// Decrypts the data stored in an array `[U; N]` object with the padding
-    /// according to PKCS #7 in CBC (Cipher Block Chaining) mode, and stores the
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the
     /// decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
@@ -2019,7 +2019,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut [V; M]) -> u64
     /// Decrypts the data stored in an array `[U; N]` object with the padding
-    /// according to PKCS #7 in CBC (Cipher Block Chaining) mode, and stores the
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the
     /// decrypted data in array `[V; M]`.
     /// 
     /// # Arguments
@@ -2116,7 +2116,7 @@ pub trait CBC_PKCS7<T> : Sized
 
     // fn decrypt_array_into_string<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut String) -> u64
     /// Decrypts the data stored in an array `[U; N]` object with the padding according
-    /// to PKCS #7 in CBC (Cipher Block Chaining) mode, and stores the decrypted
+    /// to PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the decrypted
     /// data in a String object.
     /// 
     /// # Arguments
