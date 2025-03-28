@@ -84,7 +84,7 @@
 //! - [ ] SHA-3 (SHAKE 256)
 //! 
 //! ## Symmetric-key Algorithms for the Encryption/Decryption of digital data
-//! - [ ] DES symmetric-key encryption/decryption algorithm and the traits and its implementations of Operation modes and padding bits for DES_Generic
+//! - [X] DES symmetric-key encryption/decryption algorithm and the traits and its implementations of Operation modes and padding bits for DES_Generic
 //!     --- Includes DES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits
 //!     according to PKCS#7 and ISO 7816-4.
 //!     [`DES_Generic`](symmetric/des/struct.DES_Generic.html#struct.DES_Generic)

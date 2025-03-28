@@ -4054,12 +4054,12 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
-    /// - `cipher` is a pointer to u8 which is `*mut u8`,
-    ///   and is the ciphertext to be stored.
+    /// - `cipher` is a pointer to u8 which is `*const u8`,
+    ///   and is the ciphertext to be decrypted.
     /// - `length_in_bytes` is of `u64`-type,
-    ///   and is the length of the plaintext `message` in bytes.
-    /// - `message` is a pointer to u8 which is `*const u8`,
-    ///   and is the plaintext to be encrypted.
+    ///   and is the length of the ciphertext `cipher` in bytes.
+    /// - `message` is a pointer to u8 which is `*mut u8`,
+    ///   and is the plaintext to be stored.
     /// - The size of the memory area which starts at `message` and the
     ///   plaintext will be stored at is assumed to be enough.
     /// - The size of the area for plaintext should be prepared to be:
@@ -5361,6 +5361,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the plaintext will be stored is enough.
+    /// - This method assumes that the original plaintext is a string
+    ///   in the format of UTF-8.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -6522,7 +6524,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   with zeros if any, and returns the size of the plaintext.
     /// - If `V::size_in_bytes() * N` is less than 
     ///   `U::size_in_bytes() * cipher.len() - 1`,
-    ///   this method does not perform encryption and returns `zero`.
+    ///   this method does not perform decryption and returns `zero`.
     /// - The padding bits are composed of the bytes that indicate the length of
     ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
     /// - For more information about the padding bits according to ISO 7816-4,
@@ -6951,6 +6953,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the plaintext will be stored is enough.
+    /// - This method assumes that the original plaintext is a string
+    ///   in the format of UTF-8.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -7248,22 +7252,25 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// # Output
     /// - This method returns the size of plaintext in bytes.
-    /// - If this method returns `zero`, and `length_in_bytes` is greater than
-    ///   `8` for `T` = `u64` or `16` for `T` = `u128`,
+    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
+    ///   is greater than `8` for `T` = `u64` or `16` for `T` = `u128`,
     ///   it means that this method failed in decryption.
-    /// - If this method returns `zero`, and `length_in_bytes` is `8` for `T` =
-    ///   `u64` or `16` for `T` = `u128`, it means either that this method
-    ///   failed in decryption or that the original plaintext is empty array
-    ///   [U; 0]. Then, you will have to check whether or not it failed by the
+    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
+    ///   is `8` for `T` = `u64` or `16` for `T` = `u128`,
+    ///   it means either that this method failed in decryption
+    ///   or that the original plaintext is empty array [U; 0].
+    ///   Then, you will have to check whether or not it failed by the
     ///   method `is_successful()` or `is_failed()`.
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
     ///   Instead, use other safer methods such as
     ///   decrypt_array_into_*().
+    /// - When `T` is `u64`, `N * U::size_in_bytes()`
+    ///   can be only any multiple of `8`.
+    /// - When `T` is `u128`, `N * U::size_in_bytes()`
+    ///   can be only any multiple of `16`.
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - When `T` is `u64`, `N` can be only any multiple of `8`.
-    /// - When `T` is `u128`, `N` can be only any multiple of `16`.
     /// - The padding bits are composed of the bytes that indicate the length of
     ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
     /// - For more information about the padding bits according to ISO 7816-4,
@@ -7691,9 +7698,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   method `is_successful()` or `is_failed()`.
     /// 
     /// # Features
-    /// - When `T` is `u64`, `cipher.len() * U::size_in_bytes()`
+    /// - When `T` is `u64`, `N * U::size_in_bytes()`
     ///   can be only any multiple of `8`.
-    /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
+    /// - When `T` is `u128`, `N * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
     /// - The padding bits are composed of the bytes that indicate the length of
     ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
@@ -8111,9 +8118,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   method `is_successful()` or `is_failed()`.
     /// 
     /// # Features
-    /// - When `T` is `u64`, `cipher.len() * U::size_in_bytes()`
+    /// - When `T` is `u64`, `N * U::size_in_bytes()`
     ///   can be only any multiple of `8`.
-    /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
+    /// - When `T` is `u128`, `N * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
     /// - If `V::size_in_bytes() * M` is less than `U::size_in_bytes() * N - 1`,
     ///   this method does not perform decryption and returns `zero`.
@@ -8553,6 +8560,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
+    /// - This method assumes that the original plaintext is a string
+    ///   in the format of UTF-8.
     /// 
     /// # Example 1 for Normal case
     /// ```

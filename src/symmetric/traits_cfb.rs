@@ -21,14 +21,128 @@ use crate::symmetric::{ des_pre_encrypt_into_vec, des_pre_decrypt_into_vec };
 
 pub trait CFB<T> : Sized
 {
-    fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
-
-    // fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data without padding.
+    // fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
+    /// Encrypts the data in CFB (Cipher FeedBack) mode.
+    /// 
+    /// # Arguments
+    /// - `message` is a pointer to u8 which is `*const u8`,
+    ///   and is the plaintext to be encrypted.
+    /// - `length_in_bytes` is of `u64`-type,
+    ///   and is the length of the plaintext `message` in bytes.
+    /// - `cipher` is a pointer to u8 which is `*mut u8`,
+    ///   and is the ciphertext to be stored.
+    /// - The size of the memory area which starts at `cipher` and the
+    ///   ciphertext will be stored at is assumed to be enough.
+    /// - The size of the area for ciphertext should be prepared to be:
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
     /// 
     /// # Features
-    /// - If `length_in_bytes` is `0`, only padding bytes will be encrypted,
-    ///   and pushed into the vector `cipher`.
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as
+    ///   encrypt_*_into_*().
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - If `length_in_bytes` is `0`, it means the message is null string.
+    ///   So, only null string will be stored in the memory area that starts
+    ///   from `cipher`.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 55];
+    /// a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt)
+    fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
+
+    // fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+    /// Encrypts the data in CFB (Cipher FeedBack) mode,
+    /// and stores the encrypted data in `Vec<U>`.
+    /// 
+    /// # Arguments
+    /// - `message` is a pointer to u8 which is `*const u8`,
+    ///   and is the plaintext to be encrypted.
+    /// - `length_in_bytes` is of `u64`-type,
+    ///   and is the length of the plaintext `message` in bytes.
+    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - If `length_in_bytes` is `0`, it means the message is null string.
+    ///   and stored in the `Vec<U>` object `cipher`.
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the ciphertext will be stored is enough.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_into_vec)
     fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
@@ -38,31 +152,191 @@ pub trait CFB<T> : Sized
         len
     }
 
-    // fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
-    /// Encrypts the data with the padding defined in PKCS #7.
+    // fn encrypt_into_array<U, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+    /// Encrypts the data in CFB (Cipher FeedBack) mode,
+    /// and stores the encrypted data in array `[U; N]`.
+    /// 
+    /// # Arguments
+    /// - `message` is a pointer to u8 which is `*const u8`,
+    ///   and is the plaintext to be encrypted.
+    /// - `length_in_bytes` is of `u64`-type,
+    ///   and is the length of the plaintext `message` in bytes.
+    /// - `cipher` is an array `[U; N]` object,
+    ///   and is the ciphertext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
     /// 
     /// # Features
-    /// - If `length_in_bytes` is `0`, only padding bytes will be encrypted,
-    ///   and stored into the array `cipher`.
-    /// - If `N` is less than the next multiple of 8 from `length_in_bytes`,
-    ///   this method does not perform encryption and returns `false`.
-    /// - If `N` is equal to the next multiple of 8 from `length_in_bytes`,
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - If `length_in_bytes` is `0`, it means the message is null data.
+    ///   and stored in the array `[U; N]` object `cipher`.
+    /// - If `U::size_in_bytes() * N` is less than `length_in_bytes`'s next
+    ///   multiple of 8, this method does not perform encryption and returns
+    ///   `zero`.
+    /// - If `U::size_in_bytes() * N` is equal to `length_in_bytes`, this
+    ///   method performs encryption, fills the array `cipher` with the
+    ///   (encrypted) ciphertext, and returns the size of the ciphertext.
+    /// - If `U::size_in_bytes() * N` is greater than `length_in_bytes`,
     ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted ciphertext, and returns `true`.
-    /// - If `N` is greater than the next multiple of 8 from `length_in_bytes`,
-    ///   this method performs encryption, fills the array `cipher` with the
-    ///   encrypted ciphertext, and then fills the rest of elements of
-    ///   the array `cipher`, and returns `true`.
+    ///   (encrypted) ciphertext, and then fills the rest of the elements of
+    ///   the array `cipher` with zeros, and returns the size of the ciphertext.
     /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 55];
+    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_into_array)
     fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone;
 
+    // fn encrypt_str(&mut self, message: &str, cipher: *mut u8) -> u64
+    /// Encrypts the data in `str` in CFB (Cipher FeedBack) mode.
+    /// 
+    /// # Arguments
+    /// - `message` is a `str` object, and is the plaintext to be encrypted.
+    /// - `cipher` is a pointer to u8 which is `*mut u8`,
+    ///   and is the ciphertext to be stored.
+    /// - The size of the memory area which starts at `cipher` and the
+    ///   ciphertext will be stored at is assumed to be enough.
+    /// - The size of the area for ciphertext should be prepared to be:
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as encrypt_str_into_*().
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - If `message` is a null string "", nothing will be stored
+    ///   in the memory area that starts from `cipher`.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 55];
+    /// a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_str)
     #[inline]
     fn encrypt_str(&mut self, iv: T, message: &str, cipher: *mut u8) -> u64
     {
         self.encrypt(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
+    // fn encrypt_str_into_vec<U>(&mut self, message: &str, cipher: &mut Vec<U>) -> u64
+    /// Encrypts the data in `str` in CFB (Cipher FeedBack) mode,
+    /// and stores the encrypted data in `Vec<U>`.
+    /// 
+    /// # Arguments
+    /// - `message` is a `str` object, and is the plaintext to be encrypted.
+    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - If `message` is a null string "", nothing will be stored
+    ///   in the `Vec<U>` object `cipher`.
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the ciphertext will be stored is enough.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_str_into_vec)
     #[inline]
     fn encrypt_str_into_vec<U>(&mut self, iv: T, message: &str, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
@@ -70,6 +344,67 @@ pub trait CFB<T> : Sized
         self.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
+    // fn encrypt_str_into_array<U, const N: usize>(&mut self, message: &str, cipher: &mut [U; N]) -> u64
+    /// Encrypts the data in `str` in CFB (Cipher FeedBack) mode,
+    /// and stores the encrypted data in array `[U; N]`.
+    /// 
+    /// # Arguments
+    /// - `message` is a `str` object, and is the plaintext to be encrypted.
+    /// - `cipher` is an array `[U; N]` object,
+    ///   and is the ciphertext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - If `message` is a null string "", nothing will be stored
+    ///   in the array `[U; N]` object `cipher`.
+    /// - If `U::size_in_bytes() * N` is less than `message.len()`'s next
+    ///   multiple of 8,
+    ///   this method does not perform encryption and returns `zero`.
+    /// - If `U::size_in_bytes() * N` is equal to `message.len()`, this
+    ///   method performs encryption, fills the array `cipher` with the
+    ///   (encrypted) ciphertext, and returns the size of the ciphertext.
+    /// - If `U::size_in_bytes() * N` is greater than `message.len()`,
+    ///   this method performs encryption, fills the array `cipher` with the
+    ///   (encrypted) ciphertext, and then fills the rest of the elements of
+    ///   the array `cipher` with zeros, and returns the size of the ciphertext.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 55];
+    /// a_des.encrypt_str_into_array(iv, &message, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_str_into_array)
     #[inline]
     fn encrypt_str_into_array<U, const N: usize>(&mut self, iv: T, message: &str, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
@@ -77,12 +412,125 @@ pub trait CFB<T> : Sized
         self.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
+    // fn encrypt_string(&mut self, message: &String, cipher: *mut u8) -> u64
+    /// Encrypts the data stored in a String object
+    /// in CFB (Cipher FeedBack) mode.
+    /// 
+    /// # Arguments
+    /// - `message` is a String object, and is the plaintext to be encrypted.
+    /// - `cipher` is a pointer to u8 which is `*mut u8`,
+    ///   and is the ciphertext to be stored.
+    /// - The size of the memory area which starts at `cipher` and the
+    ///   ciphertext will be stored at is assumed to be enough.
+    /// - The size of the area for ciphertext should be prepared to be:
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as
+    ///   encrypt_string_into_*().
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - If `message` is a null string String::new(), nothing will be stored
+    ///   in the memory area that starts from `cipher`.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.".to_string();
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 55];
+    /// a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_string)
     #[inline]
     fn encrypt_string(&mut self, iv: T, message: &String, cipher: *mut u8) -> u64
     {
         self.encrypt(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
+    // fn encrypt_string_into_vec<U>(&mut self, message: &String, cipher: &mut Vec<U>) -> u64
+    /// Encrypts the data stored in a String object in CFB (Cipher FeedBack)
+    /// mode, and stores the encrypted data in `Vec<U>`.
+    /// 
+    /// # Arguments
+    /// - `message` is a String object, and is the plaintext to be encrypted.
+    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - If `message` is a null string String::new(), nothing will be stored
+    ///   in the `Vec<U>` object `cipher`.
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the ciphertext will be stored is enough.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.".to_string();
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_string_into_vec)
     #[inline]
     fn encrypt_string_into_vec<U>(&mut self, iv: T, message: &String, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
@@ -90,6 +538,67 @@ pub trait CFB<T> : Sized
         self.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
+    // fn encrypt_string_into_array<U, const N: usize>(&mut self, message: &String, cipher: &mut [U; N]) -> u64
+    /// Encrypts the data stored in a String object in CFB (Cipher FeedBack)
+    /// mode, and stores the encrypted data in array `[U; N]`.
+    /// 
+    /// # Arguments
+    /// - `message` is a String object, and is the plaintext to be encrypted.
+    /// - `cipher` is an array `[U; N]` object,
+    ///   and is the ciphertext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - If `message` is a null string String::new(), nothing will be stored
+    ///   in the array `[U; N]` object `cipher`.
+    /// - If `U::size_in_bytes() * N` is less than `message.len()`'s next
+    ///   multiple of 8,
+    ///   this method does not perform encryption and returns `zero`.
+    /// - If `U::size_in_bytes() * N` is equal to `message.len()`, this
+    ///   method performs encryption, fills the array `cipher` with the
+    ///   (encrypted) ciphertext, and returns the size of the ciphertext.
+    /// - If `U::size_in_bytes() * N` is greater than `message.len()`,
+    ///   this method performs encryption, fills the array `cipher` with the
+    ///   (encrypted) ciphertext, and then fills the rest of the elements of
+    ///   the array `cipher` with zeros, and returns the size of the ciphertext.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.".to_string();
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 55];
+    /// a_des.encrypt_string_into_array(iv, &message, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_string_into_array)
     #[inline]
     fn encrypt_string_into_array<U, const N: usize>(&mut self, iv: T, message: &String, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
@@ -97,6 +606,68 @@ pub trait CFB<T> : Sized
         self.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
+    // fn encrypt_vec<U>(&mut self, message: &Vec<U>, cipher: *mut u8) -> u64
+    /// Encrypts the data stored in a `Vec<U>` object
+    /// in CFB (Cipher FeedBack) mode.
+    /// 
+    /// # Arguments
+    /// - `message` is a `Vec<U>` object, and is the plaintext to be encrypted.
+    /// - `cipher` is a pointer to u8 which is `*mut u8`,
+    ///   and is the ciphertext to be stored.
+    /// - The size of the memory area which starts at `cipher` and the
+    ///   ciphertext will be stored at is assumed to be enough.
+    /// - The size of the area for ciphertext should be prepared to be:
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as
+    ///   encrypt_vec_into_*().
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - If `message` is an empty Vec<U> object Vec::<U>::new(),
+    ///   nothing will be stored in the memory area that starts from `cipher`.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let message = unsafe { message.to_string().as_mut_vec().clone() };
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 55];
+    /// a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_vec)
     #[inline]
     fn encrypt_vec<U>(&mut self, iv: T, message: &Vec<U>, cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -104,6 +675,59 @@ pub trait CFB<T> : Sized
         self.encrypt(iv, message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
     }
 
+    // fn encrypt_vec_into_vec<U, V>(&mut self, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
+    /// Encrypts the data stored in a `Vec<U>` object in CFB (Cipher FeedBack)
+    /// mode, and stores the encrypted data in `Vec<V>`.
+    /// 
+    /// # Arguments
+    /// - `message` is a `Vec<U>` object, and is the plaintext to be encrypted.
+    /// - `cipher` is a `Vec<V>` object, and is the ciphertext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - If `message` is an empty Vec<U> object Vec::<U>::new(),
+    ///   nothing will be stored in the `Vec<V>` object `cipher`.
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the ciphertext will be stored is enough.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let message = unsafe { message.to_string().as_mut_vec().clone() };
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_vec_into_vec)
     #[inline]
     fn encrypt_vec_into_vec<U, V>(&mut self, iv: T, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -111,6 +735,70 @@ pub trait CFB<T> : Sized
         self.encrypt_into_vec(iv, message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
     }
 
+    // fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, message: &Vec<U>, cipher: &mut [V; N]) -> u64
+    /// Encrypts the data stored in a `Vec<U>` object in CFB (Cipher FeedBack)
+    /// mode, and stores the encrypted data in array `[V; N]`.
+    /// 
+    /// # Arguments
+    /// - `message` is a `Vec<U>` object, and is the plaintext to be encrypted.
+    /// - `cipher` is an array `[V; N]` object,
+    ///   and is the ciphertext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - If `message` is an empty Vec<U> object Vec::<U>::new(),
+    ///   nothing will be stored in the array `[V; N]` object `cipher`.
+    /// - If `V::size_in_bytes() * N` is less than 
+    ///   `U::size_in_bytes() * message.len()`'s next multiple of 8,
+    ///   this method does not perform encryption and returns `zero`.
+    /// - If `V::size_in_bytes() * N` is equal to
+    ///   `U::size_in_bytes() * message.len()`, this method performs encryption,
+    ///   fills the array `cipher` with the (encrypted) ciphertext, and returns
+    ///   the size of the ciphertext.
+    /// - If `V::size_in_bytes() * N` is greater than
+    ///   `U::size_in_bytes() * message.len()`, this method performs encryption,
+    ///   fills the array `cipher` with the (encrypted) ciphertext, and then
+    ///   fills the rest of the elements of the array `cipher` with zeros,
+    ///   and returns the size of the ciphertext.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let message = unsafe { message.to_string().as_mut_vec().clone() };
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 55];
+    /// a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_vec_into_array)
     #[inline]
     fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, message: &Vec<U>, cipher: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -118,6 +806,70 @@ pub trait CFB<T> : Sized
         self.encrypt_into_array(iv, message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
     }
 
+    // fn encrypt_array<U, const N: usize>(&mut self, message: &[U; N], cipher: *mut u8) -> u64
+    /// Encrypts the data stored in an array `[U; N]` object
+    /// in CFB (Cipher FeedBack) mode.
+    /// 
+    /// # Arguments
+    /// - `message` is the data stored in an array `[U; N]` object,
+    ///   and is the plaintext to be encrypted.
+    /// - `cipher` is a pointer to u8 which is `*mut u8`,
+    ///   and is the ciphertext to be stored.
+    /// - The size of the memory area which starts at `cipher` and the
+    ///   ciphertext will be stored at is assumed to be enough.
+    /// - The size of the area for ciphertext should be prepared to be:
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as
+    ///   encrypt_array_into_*().
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - If `message.len()` is `0`, it means the message is empty data.
+    ///   and stored in the memory area that starts from `cipher`.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let mes = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", mes);
+    /// let mut message = [0_u8; 55];
+    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 55];
+    /// a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_array)
     #[inline]
     fn encrypt_array<U, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -125,6 +877,61 @@ pub trait CFB<T> : Sized
         self.encrypt(iv, message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
     }
 
+    // fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, message: &[U; N], cipher: &mut Vec<V>) -> u64
+    /// Encrypts the data stored in an array `[U; N]` object in CFB (Cipher
+    /// FeedBack) mode, and stores the encrypted data in `Vec<V>`.
+    /// 
+    /// # Arguments
+    /// - `message` is an array `[U; N]` object, and is the plaintext to be
+    ///   encrypted.
+    /// - `cipher` is a `Vec<V>` object, and is the ciphertext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - If `message` is an empty array `[U; N]` object [U; 0],
+    ///   nothing will be stored in the `Vec<U>` object `cipher`.
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the ciphertext will be stored is enough.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let mes = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", mes);
+    /// let mut message = [0_u8; 55];
+    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_array_into_vec)
     #[inline]
     fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -132,6 +939,71 @@ pub trait CFB<T> : Sized
         self.encrypt_into_vec(iv, message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
     }
 
+    // fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, message: &[U; N], cipher: &mut [V; M]) -> u64
+    /// Encrypts the data stored in an array `[U; N]` object in CFB (Cipher
+    /// FeedBack) mode, and stores the encrypted data in array `[V; M]`.
+    /// 
+    /// # Arguments
+    /// - `message` is an array `[U; N]` object,
+    ///   and is the plaintext to be encrypted.
+    /// - `cipher` is an array `[V; M]` object,
+    ///   and is the ciphertext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - If `message` is an empty array `[U; N]` object [U; 0],
+    ///   nothing will be stored in the array `[V; M]` object `cipher`.
+    /// - If `V::size_in_bytes() * M` is less than 
+    ///   `U::size_in_bytes() * N`'s next multiple of 8,
+    ///   this method does not perform encryption and returns `zero`.
+    /// - If `V::size_in_bytes() * M` is equal to
+    ///   `U::size_in_bytes() * N`, this method performs encryption,
+    ///   fills the array `cipher` with the (encrypted) ciphertext, and returns
+    ///   the size of the ciphertext.
+    /// - If `V::size_in_bytes() * M` is greater than
+    ///   `U::size_in_bytes() * N`, this method performs encryption,
+    ///   fills the array `cipher` with the (encrypted) ciphertext, and then
+    ///   fills the rest of the elements of the array `cipher` with zeros,
+    ///   and returns the size of the ciphertext.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let mes = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", mes);
+    /// let mut message = [0_u8; 55];
+    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 55];
+    /// a_des.encrypt_array_into_array(iv, &message, &mut cipher);
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_array_into_array)
     #[inline]
     fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -139,9 +1011,160 @@ pub trait CFB<T> : Sized
         self.encrypt_into_array(iv, message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
     }
 
-
+    // fn decrypt(&mut self, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64;
+    /// Decrypts the data in CFB (Cipher FeedBack) mode.
+    /// 
+    /// # Arguments
+    /// - `cipher` is a pointer to u8 which is `*const u8`,
+    ///   and is the ciphertext to be decrypted.
+    /// - `length_in_bytes` is of `u64`-type,
+    ///   and is the length of the ciphertext `cipher` in bytes.
+    /// - `message` is a pointer to u8 which is `*mut u8`,
+    ///   and is the plaintext to be stored.
+    /// - The size of the memory area which starts at `message` and the
+    ///   plaintext will be stored at is assumed to be enough.
+    /// - The size of the area for plaintext should be prepared to be:
+    ///   `length_in_bytes`.
+    ///   So, it is responsible for you to prepare the `message` area big enough!
+    /// 
+    /// # Output
+    /// - This method returns the size of plaintext in bytes.
+    /// - If this method returns `zero`, and `length_in_bytes` is greater than
+    ///   `0`, it means that this method failed in decryption.
+    /// - If this method returns `zero`, and `length_in_bytes` is `0`,
+    ///   it means either that this method failed in decryption or
+    ///   that the original plaintext is empty data.
+    ///   Then, you will have to check whether or not it failed by the method
+    ///   `is_successful()` or `is_failed()`.
+    /// 
+    /// # Features
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as
+    ///   decrypt_*_into_*().
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    ///
+    /// let mut recovered = vec![0; 55];
+    /// a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    /// print!("Ba (16 rounds) =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    ///
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb (16 rounds) =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.decrypt)
     fn decrypt(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64;
 
+    // fn decrypt_into_vec<U>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    /// Decrypts the data in CFB (Cipher FeedBack) mode,
+    /// and stores the decrypted data in `Vec<U>`.
+    /// 
+    /// # Arguments
+    /// - `cipher` is a pointer to u8 which is `*const u8`,
+    ///   and is the ciphertext to be decrypted.
+    /// - `length_in_bytes` is of `u64`-type,
+    ///   and is the length of the ciphertext `cipher` in bytes.
+    /// - `message` is a `Vec<U>` object, and is the plaintext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of plaintext in bytes.
+    /// - If this method returns `zero`, and `length_in_bytes` is greater than
+    ///   `0`, it means that this method failed in decryption.
+    /// - If this method returns `zero`, and `length_in_bytes` is `0`,
+    ///   it means either that this method failed in decryption or
+    ///   that the original plaintext is empty data.
+    ///   Then, you will have to check whether or not it failed by the method
+    ///   `is_successful()` or `is_failed()`.
+    /// 
+    /// # Features
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the plaintext will be stored is enough.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    ///
+    /// let mut recovered = Vec::<u8>::new();
+    /// a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// print!("Ba (16 rounds) =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    ///
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb (16 rounds) =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.decrypt_into_vec)
     fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
@@ -151,15 +1174,234 @@ pub trait CFB<T> : Sized
         len
     }
 
+    // fn decrypt_into_array<U, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    /// Decrypts the data in CFB (Cipher FeedBack) mode,
+    /// and stores the encrypted data in array `[U; N]`.
+    /// 
+    /// # Arguments
+    /// - `cipher` is a pointer to u8 which is `*const u8`,
+    ///   and is the ciphertext to be encrypted.
+    /// - `length_in_bytes` is of `u64`-type,
+    ///   and is the length of the ciphertext `message` in bytes.
+    /// - `message` is an array `[U; N]` object,
+    ///   and is the plaintext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of plaintext in bytes.
+    /// - If this method returns `zero`, and `length_in_bytes` is greater than
+    ///   `0`, it means that this method failed in decryption.
+    /// - If this method returns `zero`, and `length_in_bytes` is `0`,
+    ///   it means either that this method failed in decryption or
+    ///   that the original plaintext is empty data.
+    ///   Then, you will have to check whether or not it failed by the method
+    ///   `is_successful()` or `is_failed()`.
+    /// 
+    /// # Features
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - If `U::size_in_bytes() * N` is less than `length_in_bytes` - 1,
+    ///   this method does not perform decryption and returns `zero`.
+    /// - If `U::size_in_bytes() * N` is greater than or equal to
+    ///   `length_in_bytes` - 1, this method performs decryption, fills the
+    ///   array `message` with the derypted plaintext, and then fills the rest
+    ///   of the elements of the array `message` with zeros if any, and returns
+    ///   the size of the plaintext.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    ///
+    /// let mut recovered = [0u8; 56];
+    /// let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// print!("Ba (16 rounds) =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E 00 ");
+    ///
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.write(&recovered);
+    /// unsafe { converted.as_mut_vec() }.truncate(len as usize);
+    /// println!("Bb (16 rounds) =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.decrypt_into_array)
     fn decrypt_into_array<U, const N: usize>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone;
 
+    // fn decrypt_into_string(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
+    /// Decrypts the data in CFB (Cipher FeedBack) mode,
+    /// and stores the decrypted data in String object.
+    /// 
+    /// # Arguments
+    /// - `cipher` is a pointer to u8 which is `*const u8`,
+    ///   and is the ciphertext to be decrypted.
+    /// - `length_in_bytes` is of `u64`-type,
+    ///   and is the length of the ciphertext `cipher` in bytes.
+    /// - `message` is a String object, and is the plaintext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of plaintext in bytes.
+    /// - If this method returns `zero`, and `length_in_bytes` is greater than
+    ///   `0`, it means that this method failed in decryption.
+    /// - If this method returns `zero`, and `length_in_bytes` is `0`,
+    ///   it means either that this method failed in decryption or
+    ///   that the original plaintext is empty String.
+    ///   Then, you will have to check whether or not it failed by the method
+    ///   `is_successful()` or `is_failed()`.
+    /// 
+    /// # Features
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the plaintext will be stored is enough.
+    /// - This method assumes that the original plaintext is a string
+    ///   in the format of UTF-8.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    ///
+    /// let mut recovered = String::new();
+    /// a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// println!("B (16 rounds) =\t{}", recovered);
+    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(recovered, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.decrypt_into_string)
     #[inline]
     fn decrypt_into_string(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
     {
         self.decrypt_into_vec(iv, cipher, length_in_bytes, unsafe { message.as_mut_vec() })
     }
 
+    // fn decrypt_vec<U>(&mut self, cipher: &Vec<U>, message: *mut u8) -> u64
+    /// Decrypts the data stored in a `Vec<U>` object 
+    /// in CFB (Cipher FeedBack) mode.
+    /// 
+    /// # Arguments
+    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be decrypted.
+    /// - `message` is a pointer to u8 which is `*mut u8`,
+    ///   and is the plaintext to be stored.
+    /// - The size of the memory area which starts at `message` and the
+    ///   plaintext will be stored at is assumed to be enough.
+    /// - The size of the area for plaintext should be prepared to be:
+    ///   `length_in_bytes`.
+    ///   So, it is responsible for you to prepare the `message` area big enough!
+    /// 
+    /// # Output
+    /// - This method returns the size of plaintext in bytes.
+    /// - If this method returns `zero`, and `cipher.len()` is greater than `0`,
+    ///   it means that this method failed in decryption.
+    /// - If this method returns `zero`, and `cipher.len()` is `0`,
+    ///   it means either that this method failed in decryption
+    ///   or that the original plaintext is empty data.
+    ///   Then, you will have to check whether or not it failed by the method
+    ///   `is_successful()` or `is_failed()`.
+    /// 
+    /// # Features
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as
+    ///   decrypt_vec_into_*().
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    ///
+    /// let mut recovered = vec![0; 55];
+    /// a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
+    /// print!("Ba (16 rounds) =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    ///
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb (16 rounds) =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.decrypt_vec)
     #[inline]
     fn decrypt_vec<U>(&mut self, iv: T, cipher: &Vec<U>, message: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -167,6 +1409,75 @@ pub trait CFB<T> : Sized
         self.decrypt(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
     }
 
+    // fn decrypt_vec_into_vec<U, V>(&mut self, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
+    /// Decrypts the data stored in a `Vec<U>` object in CFB (Cipher FeedBack)
+    /// mode, and stores the decrypted data in `Vec<V>`.
+    /// 
+    /// # Arguments
+    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be decrypted.
+    /// - `message` is a `Vec<V>` object, and is the plaintext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of plaintext in bytes.
+    /// - If this method returns `zero`, and `cipher.len()` is greater than `0`,
+    ///   it means that this method failed in decryption.
+    /// - If this method returns `zero`, and `cipher.len()` is `0`,
+    ///   it means either that this method failed in decryption
+    ///   or that the original plaintext is empty data.
+    ///   Then, you will have to check whether or not it failed by the method
+    ///   `is_successful()` or `is_failed()`.
+    /// 
+    /// # Features
+    /// You don't have to worry about whether or not the size of the memory
+    /// area where the plaintext will be stored is enough.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    ///
+    /// let mut recovered = Vec::<u8>::new();
+    /// a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
+    /// print!("Ba (16 rounds) =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    ///
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb (16 rounds) =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.decrypt_vec_into_vec)
     #[inline]
     fn decrypt_vec_into_vec<U, V>(&mut self, iv: T, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -174,6 +1485,82 @@ pub trait CFB<T> : Sized
         self.decrypt_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
     }
 
+    // fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, cipher: &Vec<U>, message: &mut [V; N]) -> u64
+    /// Decrypts the data stored in a `Vec<U>` object in CFB (Cipher FeedBack)
+    /// mode, and stores the decrypted data in array `[V; N]`.
+    /// 
+    /// # Arguments
+    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be decrypted.
+    /// - `message` is an array `[V; N]` object,
+    ///   and is the plaintext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of plaintext in bytes.
+    /// - If this method returns `zero`, and `cipher.len()` is greater than `0`,
+    ///   it means that this method failed in decryption.
+    /// - If this method returns `zero`, and `cipher.len()` is `0`,
+    ///   it means either that this method failed in decryption
+    ///   or that the original plaintext is empty data.
+    ///   Then, you will have to check whether or not it failed by the method
+    ///   `is_successful()` or `is_failed()`.
+    /// 
+    /// # Features
+    /// - If `V::size_in_bytes() * N` is greater than or equal to
+    ///   `U::size_in_bytes() * cipher.len()`, this method performs
+    ///   decryption, fills the array `message` with the derypted plaintext,
+    ///   and then fills the rest of the elements of the array `message`
+    ///   with zeros if any, and returns the size of the plaintext.
+    /// - If `V::size_in_bytes() * N` is less than 
+    ///   `U::size_in_bytes() * cipher.len()`,
+    ///   this method does not perform decryption and returns `zero`.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    ///
+    /// let mut recovered = [0u8; 56];
+    /// let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
+    /// print!("Ba (16 rounds) =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E 00 ");
+    ///
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.write(&recovered);
+    /// unsafe { converted.as_mut_vec() }.truncate(len as usize);
+    /// println!("Bb (16 rounds) =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.decrypt_vec_into_array)
     #[inline]
     fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, cipher: &Vec<U>, message: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -181,6 +1568,65 @@ pub trait CFB<T> : Sized
         self.decrypt_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
     }
 
+    // fn decrypt_vec_into_string<U>(&mut self, cipher: &Vec<U>, message: &mut String) -> u64
+    /// Decrypts the data stored in a `Vec<U>` object in CFB (Cipher FeedBack)
+    /// mode, and stores the decrypted data in String object.
+    /// 
+    /// # Arguments
+    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be decrypted.
+    /// - `message` is an String object, and is the plaintext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of plaintext in bytes.
+    /// - If this method returns `zero`, and `cipher.len()` is greater than `0`,
+    ///   it means that this method failed in decryption.
+    /// - If this method returns `zero`, and `cipher.len()` is `0`,
+    ///   it means either that this method failed in decryption
+    ///   or that the original plaintext is an empty String.
+    ///   Then, you will have to check whether or not it failed by the method
+    ///   `is_successful()` or `is_failed()`.
+    /// 
+    /// # Features
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the plaintext will be stored is enough.
+    /// - This method assumes that the original plaintext is a string
+    ///   in the format of UTF-8.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    ///
+    /// let mut recovered = String::new();
+    /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
+    /// println!("B (16 rounds) =\t{}", recovered);
+    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(recovered, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.decrypt_vec_into_string)
     #[inline]
     fn decrypt_vec_into_string<U>(&mut self, iv: T, cipher: &Vec<U>, message: &mut String) -> u64
     where U: SmallUInt + Copy + Clone
@@ -188,6 +1634,84 @@ pub trait CFB<T> : Sized
         self.decrypt_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
     }
 
+    // fn decrypt_array<U, const N: usize>(&mut self, cipher: &[U; N], message: *mut u8) -> u64
+    /// Decrypts the data stored in an array `[U; N]` object
+    /// in CFB (Cipher FeedBack) mode.
+    /// 
+    /// # Arguments
+    /// - `cipher` is the data stored in an array `[U; N]` object,
+    ///   and is the ciphertext to be decrypted.
+    /// - `message` is a pointer to u8 which is `*mut u8`,
+    ///   and is the plaintext to be stored.
+    /// - The size of the memory area which starts at `message` and the
+    ///   plaintext will be stored at is assumed to be enough.
+    /// - The size of the area for plaintext should be prepared to be:
+    ///   `N * U::size_in_bytes()`.
+    ///   So, it is responsible for you to prepare the `message` area big enough!
+    /// 
+    /// # Output
+    /// - This method returns the size of plaintext in bytes.
+    /// - If this method returns `zero`, and `N` is greater than `0`,
+    ///   it means that this method failed in decryption.
+    /// - If this method returns `zero`, and `N` is `0`,
+    ///   it means either that this method failed in decryption
+    ///   or that the original plaintext is empty array [U; 0].
+    ///   Then, you will have to check whether or not it failed by the
+    ///   method `is_successful()` or `is_failed()`.
+    /// 
+    /// # Features
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as decrypt_array_into_*().
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 55];
+    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    ///
+    /// let mut recovered = vec![0; 55];
+    /// let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
+    /// recovered.truncate(len as usize);
+    /// print!("Ba (16 rounds) =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    ///
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb (16 rounds) =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.decrypt_array)
     #[inline]
     fn decrypt_array<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -195,6 +1719,76 @@ pub trait CFB<T> : Sized
         self.decrypt(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
     }
 
+    // fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, cipher: &[U; N], message: &mut Vec<V>) -> u64
+    /// Decrypts the data stored in an array `[U; N]` object in CFB (Cipher
+    /// FeedBack) mode, and stores the decrypted data in `Vec<V>`.
+    /// 
+    /// # Arguments
+    /// - `cipher` is an array `[U; N]` object, and is the ciphertext to be
+    ///   decrypted.
+    /// - `message` is a `Vec<V>` object, and is the plaintext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of plaintext in bytes.
+    /// - If this method returns `zero`, and `N` is greater than `0`,
+    ///   it means that this method failed in decryption.
+    /// - If this method returns `zero`, and `N` is `0`,
+    ///   it means either that this method failed in decryption
+    ///   or that the original plaintext is empty array [U; 0].
+    ///   Then, you will have to check whether or not it failed by the
+    ///   method `is_successful()` or `is_failed()`.
+    /// 
+    /// # Features
+    /// You don't have to worry about whether or not the size of the memory
+    /// area where the ciphertext will be stored is enough.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 55];
+    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    ///
+    /// let mut recovered = Vec::<u8>::new();
+    /// a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
+    /// print!("Ba (16 rounds) =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    ///
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb (16 rounds) =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.decrypt_array_into_vec)
     #[inline]
     fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -202,6 +1796,84 @@ pub trait CFB<T> : Sized
         self.decrypt_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
     }
 
+    // fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, cipher: &[U; N], message: &mut [V; M]) -> u64
+    /// Decrypts the data stored in an array `[U; N]` object in CFB (Cipher
+    /// FeedBack) mode, and stores the decrypted data in array `[V; M]`.
+    /// 
+    /// # Arguments
+    /// - `cipher` is an array `[U; N]` object,
+    ///   and is the ciphertext to be decrypted.
+    /// - `message` is an array `[V; M]` object,
+    ///   and is the plaintext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of plaintext in bytes.
+    /// - If this method returns `zero`, and `N` is greater than `0`,
+    ///   it means that this method failed in decryption.
+    /// - If this method returns `zero`, and `N` is `0`,
+    ///   it means either that this method failed in decryption
+    ///   or that the original plaintext is empty array [U; 0].
+    ///   Then, you will have to check whether or not it failed by the
+    ///   method `is_successful()` or `is_failed()`.
+    /// 
+    /// # Features
+    /// - If `V::size_in_bytes() * M` is less than `U::size_in_bytes() * N`,
+    ///   this method does not perform decryption and returns `zero`.
+    /// - If `V::size_in_bytes() * M` is greater than or qual to
+    ///   `U::size_in_bytes() * N`, this method performs decryption,
+    ///   fills the array `message` with the derypted plaintext, and then
+    ///   fills the rest of the elements of the array `message` with zeros
+    ///   if any, and returns the size of the plaintext.
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the ciphertext will be stored is enough.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 55];
+    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    ///
+    /// let mut recovered = [0u8; 56];
+    /// let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
+    /// print!("Ba (16 rounds) =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E 00 ");
+    ///
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.write(&recovered);
+    /// unsafe { converted.as_mut_vec() }.truncate(len as usize);
+    /// println!("Bb (16 rounds) =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.decrypt_array_into_array)
     #[inline]
     fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -209,6 +1881,66 @@ pub trait CFB<T> : Sized
         self.decrypt_into_array(iv, cipher.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, message)
     }
 
+    // fn decrypt_array_into_string<U, const N: usize>(&mut self, cipher: &[U; N], message: &mut String) -> u64
+    /// Decrypts the data stored in an array `[U; N]` object in CFB (Cipher
+    /// FeedBack) mode, and stores the decrypted data in a String object.
+    /// 
+    /// # Arguments
+    /// - `cipher` is an array `[U; N]` object,
+    ///   and is the ciphertext to be decrypted.
+    /// - `message` is a String object, and is the plaintext to be encrypted.
+    /// 
+    /// # Output
+    /// - This method returns the size of plaintext in bytes.
+    /// - If this method returns `zero`, and `N` is greater than `0`,
+    ///   it means that this method failed in decryption.
+    /// - If this method returns `zero`, and `N` is `0`,
+    ///   it means either that this method failed in decryption
+    ///   or that the original plaintext is empty array [U; 0].
+    ///   Then, you will have to check whether or not it failed by the
+    ///   method `is_successful()` or `is_failed()`.
+    /// 
+    /// # Features
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the ciphertext will be stored is enough.
+    /// - This method assumes that the original plaintext is a string
+    ///   in the format of UTF-8.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = [0_u8; 55];
+    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    ///
+    /// let mut recovered = String::new();
+    /// a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
+    /// println!("B (16 rounds) =\t{}", recovered);
+    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(recovered, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.decrypt_array_into_string)
     #[inline]
     fn decrypt_array_into_string<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut String) -> u64
     where U: SmallUInt + Copy + Clone
