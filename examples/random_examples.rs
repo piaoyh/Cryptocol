@@ -13,7 +13,7 @@
 
 pub fn main()
 {
-    // random_quick_start();
+    random_quick_start();
     random_new();
     random_new_with_seeds();
     random_random_u8();

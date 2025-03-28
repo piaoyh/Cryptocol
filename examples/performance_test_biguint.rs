@@ -239,6 +239,7 @@ trait PerformanceTestForBigUint
             + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd;
+    #[allow(unused)]
     fn wrapping_mul_assign_uint1<U>(&mut self, rhs: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -248,6 +249,7 @@ trait PerformanceTestForBigUint
             + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd;
+    #[allow(unused)]
     fn wrapping_mul_assign_uint2<U>(&mut self, rhs: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -257,7 +259,9 @@ trait PerformanceTestForBigUint
             + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd;
+    #[allow(unused)]
     fn widening_mul_assign1(&mut self, rhs: &Self) -> Self;
+    #[allow(unused)]
     fn widening_mul_assign2(&mut self, rhs: &Self) -> Self;
     fn wrapping_mul_assign2(&mut self, rhs: &Self);
     fn wrapping_mul_assign3(&mut self, rhs: &Self);

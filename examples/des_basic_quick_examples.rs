@@ -516,15 +516,15 @@ fn des_basic_operation_main()
     des_new();
     des_new_with_key();
     des_new_with_key_u64();
-    // des_encryptor_with_key();
-    // des_encryptor_with_key_u64();
-    // des_decryptor_with_key();
-    // des_decryptor_with_key_u64();
+    des_encryptor_with_key();
+    des_encryptor_with_key_u64();
+    des_decryptor_with_key();
+    des_decryptor_with_key_u64();
     des_set_key();
     des_set_key_u64();
-    // des_turn_inverse();
-    // des_turn_encryptor();
-    // des_turn_decryptor();
+    des_turn_inverse();
+    des_turn_encryptor();
+    des_turn_decryptor();
 }
 
 fn des_new()
@@ -1156,7 +1156,6 @@ fn des_new_with_key_u64()
     println!("-------------------------------");
 }
 
-/*
 fn des_encryptor_with_key()
 {
     println!("des_encryptor_with_key");
@@ -1322,7 +1321,6 @@ fn des_decryptor_with_key_u64()
     assert_eq!(cipher_cipher_text, plaintext);
     println!("-------------------------------");
 }
-*/
 
 fn des_set_key()
 {
@@ -1957,7 +1955,6 @@ fn des_set_key_u64()
     println!("-------------------------------");
 }
 
-/*
 fn des_turn_inverse()
 {
     println!("des_turn_inverse");
@@ -1984,9 +1981,9 @@ fn des_turn_inverse()
     
 
     // Operators
-    let mut des1 = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
+    let des1 = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
     let mut des2 = DES::new_with_key_u64(0x_FEDCBA0987654321_u64);
-    let mut des3 = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
+    let des3 = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
     des2.turn_inverse();
 
     let mut tdes = NDES::new() + des1 + des2 + des3; 
@@ -2031,8 +2028,8 @@ fn des_turn_encryptor()
 
     // Operators
     let mut des1 = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
-    let mut des2 = DES::new_with_key_u64(0x_FEDCBA0987654321_u64);
-    let mut des3 = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
+    let des2 = DES::new_with_key_u64(0x_FEDCBA0987654321_u64);
+    let des3 = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
     des1.turn_encryptor();
 
     let mut tdes = NDES::new() + des1 + des2 + des3; 
@@ -2076,9 +2073,9 @@ fn des_turn_decryptor()
     
 
     // Operators
-    let mut des1 = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
+    let des1 = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
     let mut des2 = DES::new_with_key_u64(0x_FEDCBA0987654321_u64);
-    let mut des3 = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
+    let des3 = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
     des2.turn_decryptor();
 
     let mut tdes = NDES::new() + des1 + des2 + des3; 
@@ -2095,7 +2092,6 @@ fn des_turn_decryptor()
     assert_eq!(cipher_cipher_text, plaintext);
     println!("-------------------------------");
 }
-*/
 
 fn des_encrypt_decrypt_u64_array_u64_main()
 {
