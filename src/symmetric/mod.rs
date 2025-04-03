@@ -64,7 +64,7 @@ mod traits_cfb_impl;
 mod traits_ofb_impl;
 mod traits_ctr_impl;
 mod trait_small_cryptor_impl;
-mod traits_for_small_cryptor_impl;
+mod traits_for_big_cryptor_impl;
 
 pub use des::*;
 pub use big_cryptor::*;

@@ -1222,8 +1222,7 @@ fn des_encryptor_with_key_u64()
     
 
     // Operators
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     - DES::encryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let plaintext = 0x_1234567890ABCDEF_u64;
@@ -1306,8 +1305,7 @@ fn des_decryptor_with_key_u64()
     
 
     // Operators
-    let mut tdes = BigCryptor64::new()
-                    - DES::decryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = -DES::decryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     - DES::decryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let plaintext = 0x_1234567890ABCDEF_u64;
@@ -1989,7 +1987,7 @@ fn des_turn_inverse()
     let des3 = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
     des2.turn_inverse();
 
-    let mut tdes = BigCryptor64::new() + des1 + des2 + des3; 
+    let mut tdes = des1 + des2 + des3; 
     let plaintext = 0x_1234567890ABCDEF_u64;
     let ciphertext = tdes.encrypt_u64(plaintext);
 
@@ -2036,7 +2034,7 @@ fn des_turn_encryptor()
     let des3 = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
     des1.turn_encryptor();
 
-    let mut tdes = BigCryptor64::new() + des1 + des2 + des3; 
+    let mut tdes = des1 + des2 + des3; 
     let plaintext = 0x_1234567890ABCDEF_u64;
     let ciphertext = tdes.encrypt_u64(plaintext);
 
@@ -2083,7 +2081,7 @@ fn des_turn_decryptor()
     let des3 = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
     des2.turn_decryptor();
 
-    let mut tdes = BigCryptor64::new() + des1 + des2 + des3; 
+    let mut tdes = des1 + des2 + des3; 
     let plaintext = 0x_1234567890ABCDEF_u64;
     let ciphertext = tdes.encrypt_u64(plaintext);
 
