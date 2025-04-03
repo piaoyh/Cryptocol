@@ -937,6 +937,7 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// assert_eq!(recovered, message);
 /// ```
 #[allow(non_camel_case_types)]
+#[derive(Clone)]
 pub struct DES_Generic<const ROUND: usize = 16, const SHIFT: u128 = 0b_1000000100000011,
 const PC101: u8 = 57, const PC102: u8 = 49, const PC103: u8 = 41, const PC104: u8 = 33,
 const PC105: u8 = 25, const PC106: u8 = 17, const PC107: u8 = 09, const PC108: u8 = 01,

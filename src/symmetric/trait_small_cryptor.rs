@@ -14,12 +14,25 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-pub trait SmallCryptor<T, const N: usize> : Sized
+pub trait SmallCryptor128
 {
-    fn set_key(&mut self, key: [u8; N]);
-    fn set_key_unit(&mut self, key: T);
-    fn encrypt_unit(&mut self, message: T) -> T;
-    fn decrypt_unit(&mut self, cipher: T) -> T;
+    fn set_key(&mut self, key: [u8; 16]);
+    fn set_key_unit(&mut self, key: u128);
+    fn encrypt_unit(&mut self, message: u128) -> u128;
+    fn decrypt_unit(&mut self, cipher: u128) -> u128;
+    fn turn_inverse(&mut self);
+    fn turn_encryptor(&mut self);
+    fn turn_decryptor(&mut self);
+    // fn clone_cryptor(&self) -> Self;
+}
+
+
+pub trait SmallCryptor64
+{
+    fn set_key(&mut self, key: [u8; 8]);
+    fn set_key_unit(&mut self, key: u64);
+    fn encrypt_unit(&mut self, message: u64) -> u64;
+    fn decrypt_unit(&mut self, cipher: u64) -> u64;
     fn turn_inverse(&mut self);
     fn turn_encryptor(&mut self);
     fn turn_decryptor(&mut self);

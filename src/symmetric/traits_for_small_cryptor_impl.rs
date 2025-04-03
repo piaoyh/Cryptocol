@@ -15,26 +15,26 @@
 
 use std::ops::{ Add, Sub };
 
-use crate::symmetric::{ SmallCryptor, NDES };
+use crate::symmetric::{ SmallCryptor64, SmallCryptor128, BigCryptor64, BigCryptor128 };
 
 // use crate::number::SmallUInt;
 // use crate::symmetric::DES_Generic;
 
-impl <S> Add<S> for NDES<S>
-where S: SmallCryptor<u64, 8> + Sized
+impl <S> Add<S> for BigCryptor128
+where S: SmallCryptor128 + 'static
 {
     type Output = Self;
 
     #[inline]
     fn add(mut self, rhs: S) -> Self::Output
     {
-        self.push_small_des(rhs);
+        self.push_small_cryptor(rhs);
         self
     }
 }
 
-impl <S> Sub<S> for NDES<S>
-where S: SmallCryptor<u64, 8> + Sized
+impl <S> Sub<S> for BigCryptor128
+where S: SmallCryptor128 + 'static
 {
     type Output = Self;
 
@@ -42,7 +42,34 @@ where S: SmallCryptor<u64, 8> + Sized
     fn sub(mut self, mut rhs: S) -> Self::Output
     {
         rhs.turn_inverse();
-        self.push_small_des(rhs);
+        self.push_small_cryptor(rhs);
+        self
+    }
+}
+
+impl <S> Add<S> for BigCryptor64
+where S: SmallCryptor64 + 'static
+{
+    type Output = Self;
+
+    #[inline]
+    fn add(mut self, rhs: S) -> Self::Output
+    {
+        self.push_small_cryptor(rhs);
+        self
+    }
+}
+
+impl <S> Sub<S> for BigCryptor64
+where S: SmallCryptor64 + 'static
+{
+    type Output = Self;
+
+    #[inline]
+    fn sub(mut self, mut rhs: S) -> Self::Output
+    {
+        rhs.turn_inverse();
+        self.push_small_cryptor(rhs);
         self
     }
 }
@@ -50,12 +77,12 @@ where S: SmallCryptor<u64, 8> + Sized
 // impl<S> Add<S> for dyn SmallCryptor<u64, 8>
 // where S: SmallCryptor<u64, 8> + Sized, Self: Sized
 // {
-//     type Output = NDES<S>;
+//     type Output = BigCryptor<S>;
 
 //     #[inline]
 //     fn add(self, rhs: S) -> Self::Output
 //     {
-//         let ndes = NDES::<S>::new();
+//         let ndes = BigCryptor::<S>::new();
 //         ndes + self + rhs
 //     }
 // }
@@ -350,19 +377,19 @@ S: SmallCryptor<u64, 8> + Clone + Sized>
             S748, S749, S750, S751, S752, S753, S754, S755,
             S756, S757, S758, S759, S760, S761, S762, S763>
 {
-    type Output = NDES<S>;
+    type Output = BigCryptor<S>;
 
     #[inline]
     fn add(self, rhs: S) -> Self::Output
     {
-        let mut ndes = NDES::<S>::new();
+        let mut ndes = BigCryptor::<S>::new();
         ndes + self.clone_cryptor() + rhs
-        // ndes.push_small_des(self);
+        // ndes.push_small_cryptor_vec(self);
         // ndes + rhs
         // let mut smalldes = Vec::<S>::new();
         // smalldes.push(self);
         // smalldes.push(rhs);
-        // NDES::<S>::new_with_small_des_vec(smalldes)
+        // BigCryptor::<S>::new_with_small_des_vec(smalldes)
     }
 }
 
@@ -656,12 +683,12 @@ S: SmallCryptor<u64, 8> + Clone + Sized>
             S748, S749, S750, S751, S752, S753, S754, S755,
             S756, S757, S758, S759, S760, S761, S762, S763>
 {
-    type Output = NDES<S>;
+    type Output = BigCryptor<S>;
 
     #[inline]
     fn sub(self, rhs: S) -> Self::Output
     {
-        NDES::<S>::new() + self - rhs
+        BigCryptor::<S>::new() + self - rhs
         // fn push<T: SmallDES>(smalldes: &mut Vec::<T>, s: T)
         // {
         //     smalldes.push(s);
@@ -672,7 +699,7 @@ S: SmallCryptor<u64, 8> + Clone + Sized>
         // let s: S = self as SmallDES;
         // push(&mut smalldes, s);
         // smalldes.push(rhs);
-        // NDES::<S>::new_with_small_des_vec(smalldes)
+        // BigCryptor::<S>::new_with_small_des_vec(smalldes)
     }
 }
 */

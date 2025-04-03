@@ -408,22 +408,22 @@ fn des_f()
 
 pub fn main()
 {
-    des_quick_start_main();
+    ndes_quick_start_main();
     des_basic_operation_main();
     des_encrypt_decrypt_u64_array_u64_main();
 }
 
-fn des_quick_start_main()
+fn ndes_quick_start_main()
 {
-    des_quick_start_instantiation_with_key();
+    ndes_quick_start_instantiation_with_key();
     des_quick_start_instantiation_without_key();
     des_quick_start_encryption_decryption_16_rounds();
     des_quick_start_encryption_decryption_256_rounds();
 }
 
-fn des_quick_start_instantiation_with_key()
+fn ndes_quick_start_instantiation_with_key()
 {
-    println!("des_quick_start_instantiation_with_key()");
+    println!("ndes_quick_start_instantiation_with_key()");
     use cryptocol::symmetric::DES;
 
     let key = 0x_1234567890ABCDEF_u64;
@@ -1204,10 +1204,9 @@ fn des_encryptor_with_key_u64()
     use cryptocol::symmetric::{ BigCryptor64, DES };
 
     let mut tdes = BigCryptor64::new_with_small_cryptor_array(
-                [Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
-                Box::new(DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)),
-                Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64))]
-    );
+        [Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
+        Box::new(DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)),
+        Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64))] );
     let plaintext = 0x_1234567890ABCDEF_u64;
     let ciphertext = tdes.encrypt_u64(plaintext);
 
@@ -1289,9 +1288,9 @@ fn des_decryptor_with_key_u64()
     use cryptocol::symmetric::{ BigCryptor64, DES };
 
     let mut tdes = BigCryptor64::new_with_small_cryptor_array(
-                    [ Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
-                                    Box::new(DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)),
-                                    Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)) ] );
+        [ Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
+                        Box::new(DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)),
+                        Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)) ] );
     let plaintext = 0x_1234567890ABCDEF_u64;
     let ciphertext = tdes.encrypt_u64(plaintext);
 

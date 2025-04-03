@@ -39,7 +39,7 @@
 
 
 mod des;
-mod ndes;
+mod big_cryptor;
 // mod aes;
 // mod naes;
 
@@ -64,10 +64,10 @@ mod traits_cfb_impl;
 mod traits_ofb_impl;
 mod traits_ctr_impl;
 mod trait_small_cryptor_impl;
-mod traits_for_ndes_impl;
+mod traits_for_small_cryptor_impl;
 
 pub use des::*;
-pub use ndes::*;
+pub use big_cryptor::*;
 // pub use aes::*;
 // pub use naes::*;
 
@@ -80,7 +80,7 @@ pub use traits_pcbc_with_padding_iso::PCBC_ISO;
 pub use traits_cfb::CFB;
 pub use traits_ofb::OFB;
 pub use traits_ctr::CTR;
-pub use trait_small_cryptor::SmallCryptor;
+pub use trait_small_cryptor::{ SmallCryptor64, SmallCryptor128 };
 
 /// des.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
