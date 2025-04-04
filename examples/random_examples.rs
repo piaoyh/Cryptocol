@@ -51,11 +51,11 @@ pub fn main()
 fn random_quick_start()
 {
     println!("random_quick_start");
-    use cryptocol::random::Random;
+    use cryptocol::random::{ Random, R };
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
-    let mut rand = Random::new();
+    let mut rand = R::new(); //Random::new();
     println!("Random number = {}", rand.random_u128());
     println!("Random number = {}", rand.random_u64());
     println!("Random number = {}", rand.random_u32());

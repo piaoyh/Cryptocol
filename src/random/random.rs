@@ -351,8 +351,8 @@ pub type Any_Num = Any_Num_C;
 #[allow(non_camel_case_types)]
 pub struct Random_Generic<GenFunc: Random_Engine + 'static, const COUNT: u128 = 170141183460469231731687303715884105727>
 {
-    seed_generator: GenFunc,
-    aux_generator: GenFunc,
+    seed_generator: Box<dyn Random_Engine>,
+    aux_generator: Box<dyn Random_Engine>,
     count: u128,
     sugar: u64,
 }
@@ -470,8 +470,24 @@ impl<GenFunc: Random_Engine + 'static, const COUNT: u128> Random_Generic<GenFunc
 
         Self
         {
-            seed_generator: GenFunc::new_with(&Self::collect_seed()),
-            aux_generator: GenFunc::new_with(&Self::collect_seed()),
+            seed_generator: Box::new(GenFunc::new_with(&Self::collect_seed())),
+            aux_generator: Box::new(GenFunc::new_with(&Self::collect_seed())),
+            count: COUNT,
+            sugar: 0,
+        }
+    }
+
+    pub fn new_with(mut seed_generator: Box<dyn Random_Engine>, mut aux_generator: Box<dyn Random_Engine>) -> Self
+    {
+        if COUNT == 0
+            { panic!("COUNT should be greater than 0."); }
+
+        seed_generator.sow_array(&Self::collect_seed());
+        aux_generator.sow_array(&Self::collect_seed());
+        Self
+        {
+            seed_generator,
+            aux_generator,
             count: COUNT,
             sugar: 0,
         }
@@ -3199,5 +3215,15 @@ impl<GenFunc: Random_Engine + 'static, const COUNT: u128> Random_Generic<GenFunc
         while !res.is_prime_using_miller_rabin(repetition)
             { res = self.random_odd_with_msb_set_biguint::<T, N>(); }
         res
+    }
+}
+
+pub struct R {}
+
+impl R
+{
+    pub fn new() -> Random_Generic<SHA2_512>
+    {
+        Random_Generic::<SHA2_512>::new()
     }
 }

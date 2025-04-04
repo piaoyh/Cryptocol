@@ -41,7 +41,8 @@ impl<const H0: u64, const H1: u64, const H2: u64, const H3: u64,
     const RR1: u32, const RR8: u32, const RR14: u32, const RR18: u32, 
     const RR19: u32, const RR28: u32, const RR34: u32, const RR39: u32, 
     const RR41: u32, const RR61: u32, const SR6: i32, const SR7: i32>
-Random_Engine for SHA2_512_Generic<8, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
+        Random_Engine for SHA2_512_Generic<8,
+                            H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
                             K00, K01, K02, K03, K04, K05, K06, K07,
                             K08, K09, K10, K11, K12, K13, K14, K15,
                             K16, K17, K18, K19, K20, K21, K22, K23,
@@ -55,35 +56,37 @@ Random_Engine for SHA2_512_Generic<8, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
                             RR1, RR8, RR14, RR18, RR19, RR28, RR34,
                             RR39, RR41, RR61, SR6, SR7>
 {
-    fn new() -> Self
-    {
-        Self::new()
-    }
+    // fn new() -> Box<dyn Random_Engine>
+    // {
+    //     Box::new(Self::new())
+    // }
 
-    fn new_with<T, const N: usize>(message: &[T; N]) -> Self
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
-    {
-        let mut res = Self::new();
-        res.sow_array(message);
-        res
-    }
+    // // fn new_with<T, const N: usize>(message: &[T; N]) -> Self
+    // // where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+    // //     + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+    // //     + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+    // //     + Rem<Output=T> + RemAssign
+    // //     + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+    // //     + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+    // //     + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+    // //     + PartialEq + PartialOrd
+    // fn new_with(message: &[u64; 8]) -> Box<dyn Random_Engine>
+    // {
+    //     let mut res = Self::new();
+    //     res.sow_array(message);
+    //     Box::new(res)
+    // }
 
-    fn sow_array<T, const N: usize>(&mut self, message: &[T; N])
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+    // fn sow_array<T, const N: usize>(&mut self, message: &[T; N])
+    // where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+    //     + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+    //     + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+    //     + Rem<Output=T> + RemAssign
+    //     + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+    //     + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+    //     + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+    //     + PartialEq + PartialOrd
+    fn sow_array(&mut self, message: &[u64; 8])
     {
         self.digest_array(message);
     }
