@@ -7,11 +7,6 @@
 // except according to those terms.
 
 
-use std::fmt::{ Debug, Display };
-use std::ops::*;
-use std::cmp::{ PartialEq, PartialOrd};
-
-use crate::number::SmallUInt;
 use crate::hash::SHA2_256_Generic;
 use crate::random::Random_Engine;
 
@@ -39,46 +34,18 @@ impl<const H0: u32, const H1: u32, const H2: u32, const H3: u32,
     const RR13: u32, const RR17: u32, const RR18: u32, const RR19: u32, 
     const RR22: u32, const RR25: u32, const SR3: i32, const SR10: i32>
 Random_Engine for SHA2_256_Generic<8, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
-                            K00, K01, K02, K03, K04, K05, K06, K07,
-                            K08, K09, K10, K11, K12, K13, K14, K15,
-                            K16, K17, K18, K19, K20, K21, K22, K23,
-                            K24, K25, K26, K27, K28, K29, K30, K31,
-                            K32, K33, K34, K35, K36, K37, K38, K39,
-                            K40, K41, K42, K43, K44, K45, K46, K47,
-                            K48, K49, K50, K51, K52, K53, K54, K55,
-                            K56, K57, K58, K59, K60, K61, K62, K63,
-                            RR2, RR6, RR7, RR11, RR13, RR17, RR18, RR19, 
-                            RR22, RR25, SR3, SR10>
+                                    K00, K01, K02, K03, K04, K05, K06, K07,
+                                    K08, K09, K10, K11, K12, K13, K14, K15,
+                                    K16, K17, K18, K19, K20, K21, K22, K23,
+                                    K24, K25, K26, K27, K28, K29, K30, K31,
+                                    K32, K33, K34, K35, K36, K37, K38, K39,
+                                    K40, K41, K42, K43, K44, K45, K46, K47,
+                                    K48, K49, K50, K51, K52, K53, K54, K55,
+                                    K56, K57, K58, K59, K60, K61, K62, K63,
+                                    RR2, RR6, RR7, RR11, RR13, RR17, RR18, RR19, 
+                                    RR22, RR25, SR3, SR10>
 {
-    fn new() -> Self
-    {
-        Self::new()
-    }
-
-    fn new_with<T, const N: usize>(message: &[T; N]) -> Self
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
-    {
-        let mut res = Self::new();
-        res.sow_array(message);
-        res
-    }
-
-    fn sow_array<T, const N: usize>(&mut self, message: &[T; N])
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+    fn sow_array(&mut self, message: &[u64; 8])
     {
         self.digest_array(message);
     }

@@ -7,11 +7,6 @@
 // except according to those terms.
 
 
-use std::fmt::{ Debug, Display };
-use std::ops::*;
-use std::cmp::{ PartialEq, PartialOrd};
-
-use crate::number::SmallUInt;
 use crate::hash::SHA1_Generic;
 use crate::random::Random_Engine;
 
@@ -19,37 +14,10 @@ use crate::random::Random_Engine;
 impl<const H0: u32, const H1: u32, const H2: u32, const H3: u32,
     const H4: u32, const ROUND: usize, const K0: u32, const K1: u32,
     const K2: u32, const K3: u32, const RL1: u32, const RL5: u32, const RL30: u32>
-Random_Engine for SHA1_Generic<5, H0, H1, H2, H3, H4, ROUND, K0, K1, K2, K3, RL1, RL5, RL30>
+Random_Engine for SHA1_Generic<5, H0, H1, H2, H3, H4,
+                                ROUND, K0, K1, K2, K3, RL1, RL5, RL30>
 {
-    fn new() -> Self
-    {
-        Self::new()
-    }
-
-    fn new_with<T, const N: usize>(message: &[T; N]) -> Self
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
-    {
-        let mut res = Self::new();
-        res.sow_array(message);
-        res
-    }
-
-    fn sow_array<T, const N: usize>(&mut self, message: &[T; N])
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+    fn sow_array(&mut self, message: &[u64; 8])
     {
         self.digest_array(message);
     }

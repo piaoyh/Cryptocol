@@ -7,12 +7,6 @@
 // except according to those terms.
 
 
-use std::fmt::{ Debug, Display };
-use std::ops::*;
-use std::cmp::{ PartialEq, PartialOrd};
-
-use crate::number::SmallUInt;
-
 /// The supporting trait for `Random_Generic`
 /// `Random_Generic` uses whatever object that has this trait for pseudo-random
 /// number generator engine. So, if you plug in any hash algorithm that has
@@ -21,7 +15,7 @@ use crate::number::SmallUInt;
 /// You will hardly use the object that has this trait except the case
 /// that you use it in order to plug it in the `Random_Generic`. 
 #[allow(non_camel_case_types)]
-pub trait Random_Engine: Clone
+pub trait Random_Engine
 {
     // // fn new() -> Self;
     // /// Constructs the object.
