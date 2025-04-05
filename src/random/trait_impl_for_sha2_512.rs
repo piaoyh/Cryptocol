@@ -1,4 +1,4 @@
-// Copyright 2024 PARK Youngho.
+// Copyright 2024, 2025 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -51,12 +51,13 @@ Random_Engine for SHA2_512_Generic<8,
                                     RR1, RR8, RR14, RR18, RR19, RR28, RR34,
                                     RR39, RR41, RR61, SR6, SR7>
 {
-    fn sow_array(&mut self, message: &[u64; 8])
+    fn sow_array(&mut self, message: &[u64; 8]) -> [u64; 8]
     {
         self.digest_array(message);
+        self.get_hash_value_in_array()
     }
 
-    fn harvest(&mut self, tangling: u64) -> [u64; 8]
+    fn harvest(&mut self, tangling: u64, _: &[u64; 8]) -> [u64; 8]
     {
         self.tangle(tangling);
         self.get_hash_value_in_array()

@@ -1039,6 +1039,51 @@ impl <const ROUND: usize> DES_Generic<ROUND>
         unimplemented!(); // Dummy code for documentation
     }
 
+    // pub fn get_key(&mut self) -> [u8; 8]
+    /// Gets the key.
+    /// 
+    /// # Output
+    /// This method returns the key in the form of array of `u8`.
+    /// 
+    /// # Example
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let mut des = DES::new();
+    /// des.set_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let key = des.get_key();
+    /// print!("K = ");
+    /// for k in key
+    ///     { print!("{:X02#} ", k); }
+    /// assert_eq!(key, [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// ```
+    pub fn get_key(&mut self) -> [u8; 8]
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn get_key_u64(&self) -> u64
+    /// Gets the key.
+    /// 
+    /// # Output
+    /// This method returns the key in the form of `u64`.
+    /// 
+    /// # Example
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let mut des = DES::new();
+    /// des.set_key_u64(0xEFCDAB9078563412);
+    /// let key = des.get_key_u64();
+    /// println!("Key = {}", key);
+    /// assert_eq!(key, 0xEFCDAB9078563412_u64);
+    /// ```
+    #[inline]
+    pub fn get_key_u64(&self) -> u64
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
     // pub fn set_key(&mut self, key: [u8; 8])
     /// Sets the key.
     /// 
@@ -1868,7 +1913,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// println!("Plaintext:\t\t{:#016X}", plaintext);
     /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+    /// assert_eq!(ciphertext, 0x_CDAC175F3B7EAA2B_u64);
     /// 
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
     /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
@@ -1891,7 +1936,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// println!("Plaintext:\t\t{:#016X}", plaintext);
     /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+    /// assert_eq!(ciphertext, 0x_CDAC175F3B7EAA2B_u64);
     /// 
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
     /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
@@ -2765,6 +2810,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// let success = a_des.is_successful();
     /// assert_eq!(success, false);
     /// ```
+    #[inline]
     pub fn is_successful(&self) -> bool
     {
         unimplemented!(); // Dummy code for documentation
@@ -2891,6 +2937,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// let failure = a_des.is_failed();
     /// assert_eq!(failure, true);
     /// ```
+    #[inline]
     pub fn is_failed(&self) -> bool
     {
         unimplemented!(); // Dummy code for documentation
@@ -2913,6 +2960,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// a_des.set_successful();
     /// assert_eq!(a_des.is_successful(), true);
     /// ```
+    #[inline]
     pub fn set_successful(&mut self)
     {
         unimplemented!(); // Dummy code for documentation
@@ -2936,7 +2984,33 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// a_des.set_failed();
     /// assert_eq!(a_des.is_failed(), true);
     /// ```
+    #[inline]
     pub fn set_failed(&mut self)
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn has_weak_key(&self) -> bool
+    /// Checks wether or not it has a weak key.
+    /// 
+    /// # Output
+    /// This method returns `true` if it has a weak key.
+    /// Otherwise, it returns `false`.
+    /// 
+    /// # Example
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let mut a_des = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
+    /// let weak_key = a_des.has_weak_key();
+    /// assert_eq!(weak_key, false);
+    /// 
+    /// a_des.set_key_u64(0x_0000000000000000_u64);
+    /// let weak_key = a_des.has_weak_key();
+    /// assert_eq!(weak_key, true);
+    /// ```
+    #[inline]
+    pub fn has_weak_key(&mut self) -> bool
     {
         unimplemented!(); // Dummy code for documentation
     }

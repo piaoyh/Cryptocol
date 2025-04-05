@@ -1,4 +1,4 @@
-// Copyright 2024 PARK Youngho.
+// Copyright 2024, 2025 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -45,12 +45,17 @@ Random_Engine for SHA2_256_Generic<8, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
                                     RR2, RR6, RR7, RR11, RR13, RR17, RR18, RR19, 
                                     RR22, RR25, SR3, SR10>
 {
-    fn sow_array(&mut self, message: &[u64; 8])
+    fn sow_array(&mut self, message: &[u64; 8]) -> [u64; 8]
     {
         self.digest_array(message);
+        let a: [u32; 8] = self.get_hash_value_in_array();
+        let mut res = [0_u64; 8];
+        for i in 0..8
+            { res[i] = ((a[i] as u64) << 32) | (a[i] as u64); }
+        res
     }
 
-    fn harvest(&mut self, tangling: u64) -> [u64; 8]
+    fn harvest(&mut self, tangling: u64, _: &[u64; 8]) -> [u64; 8]
     {
         self.tangle(tangling);
         let a: [u32; 8] = self.get_hash_value_in_array();

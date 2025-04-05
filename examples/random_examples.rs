@@ -814,7 +814,6 @@ fn random_random_uint()
     for i in 0..10
         { println!("{} Any number (Random_Generic) = {}", i, any_sha2_expanded2.random_uint::<u128>()); }
     println!("-------------------------------");
-    panic!("Intentional Stop");
 }
 
 fn random_random_under_uint()

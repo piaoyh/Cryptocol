@@ -1,4 +1,4 @@
-// Copyright 2024 PARK Youngho.
+// Copyright 2024, 2025 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -345,6 +345,9 @@ pub mod trait_impl_for_sha2_512;
 
 /// The module that contains implementation of trait Random_Engine for AnyNumber
 pub mod trait_impl_for_any_number;
+
+/// The module that contains implementation of trait Random_Engine for DES
+pub mod trait_impl_for_des;
 
 pub use random::*;
 pub use trait_random_engine::*;

@@ -1,4 +1,4 @@
-// Copyright 2024 PARK Youngho.
+// Copyright 2024, 2025 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -43,12 +43,19 @@ Random_Engine for MD5_Generic<4, H0, H1, H2, H3, ROUND,
                                 R00, R01, R02, R03, R10, R11, R12, R13,
                                 R20, R21, R22, R23, R30, R31, R32, R33>
 {
-    fn sow_array(&mut self, message: &[u64; 8])
+    fn sow_array(&mut self, message: &[u64; 8]) -> [u64; 8]
     {
         self.digest_array(message);
+        let a: [u32; 4] = self.get_hash_value_in_array();
+        let mut res = [0_u64; 8];
+        for i in 0..4
+            { res[i] = ((a[i] as u64) << 32) | (a[i] as u64); }
+        for i in 0..4
+            { res[i+4] = ((a[i] as u64) << 32) | (a[i] as u64); }
+        res
     }
 
-    fn harvest(&mut self, tangling: u64) -> [u64; 8]
+    fn harvest(&mut self, tangling: u64, _: &[u64; 8]) -> [u64; 8]
     {
         self.tangle(tangling);
         let a: [u32; 4] = self.get_hash_value_in_array();

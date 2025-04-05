@@ -115,12 +115,10 @@ The checked items have already been implemented including documentation __at lea
 
 - [X] DES symmetric-key encryption/decryption algorithm and the traits and its implementations of Operation modes and padding bits for DES_Generic
     --- Includes DES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. [`DES_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/des/struct.DES_Generic.html#struct.DES_Generic), [`ECB_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7), [`ECB_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_ISO.html#trait.ECB_ISO), [`CBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_PKCS7.html#trait.CBC_PKCS7), [`CBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_ISO.html#trait.CBC_ISO), [`PCBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7), [`PCBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO), [`CFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CFB.html#trait.CFB), [`OFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.OFB.html#trait.OFB), and [`CTR`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CTR.html#trait.CTR).
-- [ ] NDES symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for NDES
-    --- Includes 2DES, 3DES, 4DES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `NDES`, `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
 - [ ] AES symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for AES_Generic
     --- Includes AES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `AES_Generic`, `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
-- [ ] NAES symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for NAES
-    --- Includes 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `NAES`, `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
+- [ ] BigCryptor64 and BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor64 and BigCryptor128
+    --- Includes 2DES, 3DES, 4DES, etc., 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `NAES`, `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
 
 <!--
 - [ ] SEED symmetric-key encryption/decryption algorithm
@@ -172,7 +170,7 @@ The checked items have already been implemented including documentation __at lea
     [`Any_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/type.Any_SHA2_512.html#type.Any_SHA2_512), and
     [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/type.Random_SHA2_512.html#type.Random_SHA2_512).
 - [ ] Pseudo-random number generator engines using symmetric-key encryption algorithms ---
-    `Any_DES`, `Any_NDES`, `Any_AES`, `Any_NAES`, `Random_AES`, and `Random_NAES`.
+    `Any_DES`, `Any_TDES`, `Any_AES`, `Any_TAES`, `Random_AES`, and `Random_TAES`.
 - [ ] Pseudo-random number generator engines using simple randomization algorithm ---
     [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/random/type.Any_Num_C.html#type.Any_Num_C)
 
@@ -197,7 +195,7 @@ When the implementation of all the above functionalitis are completed,
 the version number 1.0.0.0 will be given. After that whenever another
 functionality is added to this crate, the version number will get higher
 beyond 1.0.0.0. Before the version number 1.0.0.0, the maximum version
-number will be 0.26.x.x since there are all twenty-five functionalities
+number will be 0.25.x.x since there are all twenty-five functionalities
 listed above. So, for example, even if the version number is 0.5.0.0,
 it does not mean that 50% of all functionalities are implemented.
 

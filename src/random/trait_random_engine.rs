@@ -1,4 +1,4 @@
-// Copyright 2024 PARK Youngho.
+// Copyright 2024, 2025 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -60,7 +60,7 @@ pub trait Random_Engine
     //     + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
     //     + BitXor<Output=T> + BitXorAssign + Not<Output=T>
     //     + PartialEq + PartialOrd;
-    fn sow_array(&mut self, message: &[u64; 8]);
+    fn sow_array(&mut self, message: &[u64; 8]) -> [u64; 8];
 
     // fn harvest(&mut self, sugar: u64) -> [u64; 8]
     /// Outputs the pseudo-random number array.
@@ -72,5 +72,5 @@ pub trait Random_Engine
     /// 
     /// # Example
     /// Refer to the souce codes of `Random` to see how to use this method.
-    fn harvest(&mut self, sugar: u64) -> [u64; 8];
+    fn harvest(&mut self, sugar: u64, message: &[u64; 8]) -> [u64; 8];
 }

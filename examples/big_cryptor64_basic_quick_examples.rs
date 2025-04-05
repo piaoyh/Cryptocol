@@ -2019,7 +2019,7 @@ fn des_turn_encryptor()
 
     println!("Plaintext:\t\t{:#016X}", plaintext);
     println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+    assert_eq!(ciphertext, 0x_CDAC175F3B7EAA2B_u64);
 
     let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
     println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
@@ -2040,7 +2040,7 @@ fn des_turn_encryptor()
 
     println!("Plaintext:\t\t{:#016X}", plaintext);
     println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+    assert_eq!(ciphertext, 0x_CDAC175F3B7EAA2B_u64);
 
     let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
     println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);

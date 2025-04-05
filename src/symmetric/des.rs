@@ -1929,6 +1929,54 @@ impl <const ROUND: usize, const SHIFT: u128,
         des
     }
 
+    // pub fn get_key(&mut self) -> [u8; 8]
+    /// Gets the key.
+    /// 
+    /// # Output
+    /// This method returns the key in the form of array of `u8`.
+    /// 
+    /// # Example
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let mut des = DES::new();
+    /// des.set_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let key = des.get_key();
+    /// print!("K = ");
+    /// for k in key
+    ///     { print!("{:X02#} ", k); }
+    /// assert_eq!(key, [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// ```
+    pub fn get_key(&mut self) -> [u8; 8]
+    {
+        let mut key = [0u8; 8];
+        for i in 0..8
+            { key[i] = self.key.get_ubyte_(i); }
+        key
+    }
+
+    // pub fn get_key_u64(&self) -> u64
+    /// Gets the key.
+    /// 
+    /// # Output
+    /// This method returns the key in the form of `u64`.
+    /// 
+    /// # Example
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let mut des = DES::new();
+    /// des.set_key_u64(0xEFCDAB9078563412);
+    /// let key = des.get_key_u64();
+    /// println!("Key = {}", key);
+    /// assert_eq!(key, 0xEFCDAB9078563412_u64);
+    /// ```
+    #[inline]
+    pub fn get_key_u64(&self) -> u64
+    {
+        self.key.get_ulong()
+    }
+
     // pub fn set_key(&mut self, key: [u8; 8])
     /// Sets the key.
     /// 
@@ -2103,7 +2151,7 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// 
     /// println!("Plaintext:\t\t{:#016X}", plaintext);
     /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    /// assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+    /// assert_eq!(ciphertext, 0x_CDAC175F3B7EAA2B_u64);
     /// 
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
     /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
@@ -2674,6 +2722,32 @@ impl <const ROUND: usize, const SHIFT: u128,
     pub fn set_failed(&mut self)
     {
         self.block.set(Self::FAILURE);
+    }
+
+    // pub fn has_weak_key(&self) -> bool
+    /// Checks wether or not it has a weak key.
+    /// 
+    /// # Output
+    /// This method returns `true` if it has a weak key.
+    /// Otherwise, it returns `false`.
+    /// 
+    /// # Example
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let mut a_des = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
+    /// let weak_key = a_des.has_weak_key();
+    /// assert_eq!(weak_key, false);
+    /// 
+    /// a_des.set_key_u64(0x_0000000000000000_u64);
+    /// let weak_key = a_des.has_weak_key();
+    /// assert_eq!(weak_key, true);
+    /// ```
+    #[inline]
+    pub fn has_weak_key(&mut self) -> bool
+    {
+        let cipher = self.encrypt_u64(0);
+        self.encrypt_u64(cipher) == 0
     }
 
     fn encrypt_block(&mut self)

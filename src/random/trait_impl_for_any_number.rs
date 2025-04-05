@@ -1,4 +1,4 @@
-// Copyright 2024 PARK Youngho.
+// Copyright 2024, 2025 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -38,13 +38,14 @@ Random_Engine for AnyNumber_Engine_C_Generic<MULTIPLIER, ADDER>
     //     res
     // }
 
-    fn sow_array(&mut self, message: &[u64; 8])
+    fn sow_array(&mut self, message: &[u64; 8]) -> [u64; 8]
     {
         for i in 0..8
             { self.set_any_number_(i, message[i].into_u64().wrapping_mul(MULTIPLIER).wrapping_add(ADDER)); }
+        self.get_any_numbers()
     }
 
-    fn harvest(&mut self, tangling: u64) -> [u64; 8]
+    fn harvest(&mut self, tangling: u64, _: &[u64; 8]) -> [u64; 8]
     {
         self.tangle(tangling);
         self.get_any_numbers()

@@ -520,6 +520,8 @@ fn des_basic_operation_main()
     des_encryptor_with_key_u64();
     des_decryptor_with_key();
     des_decryptor_with_key_u64();
+    des_get_key();
+    des_get_key_u64();
     des_set_key();
     des_set_key_u64();
     des_turn_inverse();
@@ -1325,6 +1327,32 @@ fn des_decryptor_with_key_u64()
     println!("-------------------------------");
 }
 
+fn des_get_key()
+{
+    println!("des_get_key");
+    use cryptocol::symmetric::DES;
+
+    let mut des = DES::new();
+    des.set_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    let key = des.get_key();
+    print!("K = ");
+    for k in key
+        { print!("{:#02X} ", k); }
+    assert_eq!(key, [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+}
+
+fn des_get_key_u64()
+{
+    println!("des_get_key_u64");
+    use cryptocol::symmetric::DES;
+
+    let mut des = DES::new();
+    des.set_key_u64(0xEFCDAB9078563412);
+    let key = des.get_key_u64();
+    println!("Key = {}", key);
+    assert_eq!(key, 0xEFCDAB9078563412_u64);
+}
+
 fn des_set_key()
 {
     println!("des_set_key");
@@ -2022,7 +2050,7 @@ fn des_turn_encryptor()
 
     println!("Plaintext:\t\t{:#016X}", plaintext);
     println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+    assert_eq!(ciphertext, 0x_CDAC175F3B7EAA2B_u64);
 
     let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
     println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
@@ -2043,7 +2071,7 @@ fn des_turn_encryptor()
 
     println!("Plaintext:\t\t{:#016X}", plaintext);
     println!("Ciphertext:\t\t{:#016X}", ciphertext);
-    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
+    assert_eq!(ciphertext, 0x_CDAC175F3B7EAA2B_u64);
 
     let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
     println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
@@ -2111,6 +2139,7 @@ fn des_encrypt_decrypt_u64_array_u64_main()
     des_is_failed();
     des_set_successful();
     des_set_failed();
+    des_has_weak_key();
 }
 
 fn des_encrypt_u64()
@@ -2801,5 +2830,20 @@ fn des_set_failed()
 
     a_des.set_failed();
     assert_eq!(a_des.is_failed(), true);
+    println!("-------------------------------");
+}
+
+fn des_has_weak_key()
+{
+    println!("des_has_weak_key");
+    use cryptocol::symmetric::DES;
+
+    let mut a_des = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
+    let weak_key = a_des.has_weak_key();
+    assert_eq!(weak_key, false);
+
+    a_des.set_key_u64(0x_0000000000000000_u64);
+    let weak_key = a_des.has_weak_key();
+    assert_eq!(weak_key, true);
     println!("-------------------------------");
 }
