@@ -162,17 +162,18 @@ The checked items have already been implemented including documentation __at lea
     struct [`Random_Generic`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_Generic.html#struct.Random_Generic) and
     trait [`Random_Engine`](https://docs.rs/cryptocol/latest/cryptocol/random/trait_random_engine/trait.Random_Engine.html#trait.Random_Engine)
 - [ ] Pseudo-random number generator engines using hash algorithms ---
-    [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/random/type.Any_MD4.html#type.Any_MD4),
-    [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/random/type.Any_MD5.html#type.Any_MD5),
-    [`Any_SHA0`](https://docs.rs/cryptocol/latest/cryptocol/random/random/type.Any_SHA0.html#type.Any_SHA0),
-    [`Any_SHA1`](https://docs.rs/cryptocol/latest/cryptocol/random/random/type.Any_SHA1.html#type.Any_SHA1),
-    [`Any_SHA2_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/type.Any_SHA2_256.html#type.Any_SHA2_256),
-    [`Any_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/type.Any_SHA2_512.html#type.Any_SHA2_512), and
-    [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/type.Random_SHA2_512.html#type.Random_SHA2_512).
+    [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD4.html#struct.Any_MD4),
+    [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD5.html#struct.Any_MD5),
+    [`Any_SHA0`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA0.html#struct.Any_SHA0),
+    [`Any_SHA1`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA1.html#struct.Any_SHA1),
+    [`Any_SHA2_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_256.html#struct.Any_SHA2_256),
+    [`Any_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_512.html#struct.Any_SHA2_512), and
+    [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512).
 - [ ] Pseudo-random number generator engines using symmetric-key encryption algorithms ---
-    `Any_DES`, `Any_TDES`, `Any_AES`, `Any_TAES`, `Random_AES`, and `Random_TAES`.
+    [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES), 
+    `Any_TDES`, `Any_AES`, `Any_TAES`, `Random_AES`, and `Random_TAES`.
 - [ ] Pseudo-random number generator engines using simple randomization algorithm ---
-    [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/random/type.Any_Num_C.html#type.Any_Num_C)
+    [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Num_C.html#struct.Any_Num_C)
 
 ### Asymmetric-key Algorithms for the Encryption/Decryption of digital data
 

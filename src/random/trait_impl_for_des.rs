@@ -299,21 +299,14 @@ Random_Engine for DES_Generic<ROUND, SHIFT,
                         S748, S749, S750, S751, S752, S753, S754, S755,
                         S756, S757, S758, S759, S760, S761, S762, S763>
 {
-    fn sow_array(&mut self, message: &[u64; 8]) -> [u64; 8]
-    {
-        let mut cipher = [0_u64; 8];
-        self.encrypt_array_u64(message, &mut cipher);
-        cipher
-    }
-
-    fn harvest(&mut self, tangling: u64, message: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, sugar: u64, message: &[u64; 8]) -> [u64; 8]
     {
         let mut key = self.get_key_u64();
-        key += tangling;
+        key += sugar;
         self.set_key_u64(key);
         while self.has_weak_key()
         {
-            key += tangling;
+            key += 1;
             self.set_key_u64(key);
         }
         let mut cipher = [0_u64; 8];

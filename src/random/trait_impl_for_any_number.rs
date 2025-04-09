@@ -7,7 +7,6 @@
 // except according to those terms.
 
 
-use crate::number::SmallUInt;
 use crate::random::{ Random_Engine, AnyNumber_Engine_C_Generic };
 
 impl<const MULTIPLIER: u64, const ADDER: u64>
@@ -38,16 +37,17 @@ Random_Engine for AnyNumber_Engine_C_Generic<MULTIPLIER, ADDER>
     //     res
     // }
 
-    fn sow_array(&mut self, message: &[u64; 8]) -> [u64; 8]
-    {
-        for i in 0..8
-            { self.set_any_number_(i, message[i].into_u64().wrapping_mul(MULTIPLIER).wrapping_add(ADDER)); }
-        self.get_any_numbers()
-    }
 
-    fn harvest(&mut self, tangling: u64, _: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, sugar: u64, message: &[u64; 8]) -> [u64; 8]
     {
-        self.tangle(tangling);
-        self.get_any_numbers()
+        let mut any_numbers = [0_u64; 8];
+        for i in 0..8
+        {
+            any_numbers[i] = message[i].wrapping_add(sugar)
+                                        .wrapping_mul(MULTIPLIER)
+                                        .wrapping_add(ADDER)
+                                        ^ sugar;
+        }
+        any_numbers
     }
 }

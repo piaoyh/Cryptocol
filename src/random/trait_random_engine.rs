@@ -60,7 +60,7 @@ pub trait Random_Engine
     //     + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
     //     + BitXor<Output=T> + BitXorAssign + Not<Output=T>
     //     + PartialEq + PartialOrd;
-    fn sow_array(&mut self, message: &[u64; 8]) -> [u64; 8];
+    fn sow_array(&mut self, message: &[u64; 8]) {}
 
     // fn harvest(&mut self, sugar: u64) -> [u64; 8]
     /// Outputs the pseudo-random number array.

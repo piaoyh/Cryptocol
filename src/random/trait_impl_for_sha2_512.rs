@@ -51,15 +51,14 @@ Random_Engine for SHA2_512_Generic<8,
                                     RR1, RR8, RR14, RR18, RR19, RR28, RR34,
                                     RR39, RR41, RR61, SR6, SR7>
 {
-    fn sow_array(&mut self, message: &[u64; 8]) -> [u64; 8]
+    fn sow_array(&mut self, message: &[u64; 8])
     {
         self.digest_array(message);
-        self.get_hash_value_in_array()
     }
 
-    fn harvest(&mut self, tangling: u64, _: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, sugar: u64, _: &[u64; 8]) -> [u64; 8]
     {
-        self.tangle(tangling);
+        self.tangle(sugar);
         self.get_hash_value_in_array()
     }
 }
