@@ -957,7 +957,7 @@ pub union SizeUnion
 
 impl SizeUnion
 {
-    // pub fn new() -> Self
+    // pub const fn new() -> Self
     /// Constructs a new `SizeUnion`.
     /// 
     /// # Output
@@ -974,9 +974,9 @@ impl SizeUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 0_usize);
     /// ```
-    #[inline] pub fn new() -> Self  { Self { u_size: 0 } }
+    #[inline] pub const fn new() -> Self    { Self { u_size: 0 } }
 
-    // pub fn new_with(u_size: usize) -> Self
+    // pub const fn new_with(u_size: usize) -> Self
     /// Constructs a new `SizeUnion` with initializing it with `u_size`.
     /// 
     /// # Output
@@ -992,9 +992,9 @@ impl SizeUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 234_usize);
     /// ```
-    #[inline] pub fn new_with(u_size: usize) -> Self  { Self { u_size } }
+    #[inline] pub const fn new_with(u_size: usize) -> Self  { Self { u_size } }
 
-    // pub fn new_with_signed(s_size: isize) -> Self
+    // pub const fn new_with_signed(s_size: isize) -> Self
     /// Constructs a new `SizeUnion` with initializing it with `isize`.
     /// 
     /// # Output
@@ -1010,11 +1010,11 @@ impl SizeUnion
     /// println!("a = {}", a.get_signed());
     /// assert_eq!(a.get_signed(), -123_isize);
     /// ```
-    #[inline] pub fn new_with_signed(s_size: isize) -> Self     { Self { s_size } }
+    #[inline] pub const fn new_with_signed(s_size: isize) -> Self   { Self { s_size } }
 
     crate::number::new_with_small_uint!();
 
-    // pub fn new_with_u128(num: u128) -> Self
+    // pub const fn new_with_u128(num: u128) -> Self
     /// Constructs a new `SizeUnion` with initializing it with the lowest
     /// `usize`-length part of `num`.
     /// 
@@ -1037,9 +1037,9 @@ impl SizeUnion
     /// #[cfg(target_pointer_width = "16")]     assert_eq!(a.get(), 33045_usize);
     /// #[cfg(target_pointer_width = "8")]      assert_eq!(a.get(), 21_usize);
     /// ```
-    #[inline] pub fn new_with_u128(num: u128) -> Self   { Self { u_size: num as usize } }
+    #[inline] pub const fn new_with_u128(num: u128) -> Self { Self { u_size: num as usize } }
 
-    // pub fn new_with_bool(b: bool) -> Self
+    // pub const fn new_with_bool(b: bool) -> Self
     /// Constructs a new `SizeUnion` with initializing it with the value of `b`.
     /// 
     /// # Output
@@ -1061,7 +1061,7 @@ impl SizeUnion
     /// assert_eq!(a.get(), 1_usize);
     /// assert_eq!(b.get(), 0_usize);
     /// ```
-    #[inline] pub fn new_with_bool(b: bool) -> Self     { Self { u_size: b as usize } }
+    #[inline] pub const fn new_with_bool(b: bool) -> Self   { Self { u_size: b as usize } }
 
     // pub fn get(self) -> usize
     /// Returns its value as `usize`.

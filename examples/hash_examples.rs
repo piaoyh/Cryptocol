@@ -24,6 +24,74 @@ pub fn main()
     hash_sha2_512_256_main();
     hash_sha2_512_t_256_main();
     hash_sha2_512_t_224_main();
+
+    // let mut reg: u8 = 1;
+    // let mut st: u8 = 0b_0111_0001;
+    // let mut and = reg & st;
+    // let res = ((reg >> 1) | ((and.count_ones() as u8) << 7), reg & 1);
+    
+    fn register(reg: u8, rule: u8) -> (u8, u8)
+    {
+        ((reg >> 1) | (((reg & rule).count_ones() as u8) << 7), reg & 1)
+    }
+
+    fn make_rc(L: usize) -> [u128; 26]
+    {
+        let ROUNDS: usize = 12 + 2 * L;
+        let WIDTH: usize = 1 << L; // = 2_usize.pow(L as u32);
+        let mut RC = [0_u128; 26];
+        let mut bit = [0_usize; 7];
+        for j in 0..7_usize
+            { bit[j] = ((1_usize << j) - 1) % WIDTH; }
+        let mut state = 1_u8;
+        let mut output = 0_u8;
+        for i in 0..ROUNDS
+        {
+            for j in 0..7_usize
+            {
+                (state, output) = register(state, 0b_0111_0001);
+                if output != 0
+                    { RC[i] |= 1_u128 << bit[j]; }
+            }
+        }
+        RC
+    }
+
+    
+    println!("================\nL = 6");
+    let rc = make_rc(6);
+    for i in 0..24
+    {
+        println!("RC[{}] = {:#018X}", i, rc[i]);
+    }
+
+    let r: [u128; 26] = [
+                0x0000000000000001, 0x0000000000008082, 0x800000000000808A, 
+                0x8000000080008000, 0x000000000000808B, 0x0000000080000001, 
+                0x8000000080008081, 0x8000000000008009, 0x000000000000008A, 
+                0x0000000000000088, 0x0000000080008009, 0x000000008000000A, 
+                0x000000008000808B, 0x800000000000008B, 0x8000000000008089, 
+                0x8000000000008003, 0x8000000000008002, 0x8000000000000080, 
+                0x000000000000800A, 0x800000008000000A, 0x8000000080008081, 
+                0x8000000000008080, 0x0000000080000001, 0x8000000080008008,
+                0, 0 ];
+    assert_eq!(rc, r);
+
+    println!("================\nL = 5");
+    let rc = make_rc(5);
+    for i in 0..22
+    {
+        println!("RC[{}] = {:#010X}", i, rc[i]);
+    }
+
+    let r: [u128; 26] = [
+                0x00000001, 0x00008082, 0x0000808A, 0x80008000,
+                0x0000808B, 0x80000001, 0x80008081, 0x00008009,
+                0x0000008A, 0x00000088, 0x80008009, 0x8000000A, 
+                0x8000808B, 0x0000008B, 0x00008089, 0x00008003, 
+                0x00008002, 0x00000080, 0x0000800A, 0x8000000A,
+                0x80008081, 0x00008080, 0, 0, 0, 0 ];
+    assert_eq!(rc, r);
 }
 
 fn hash_md4_main()

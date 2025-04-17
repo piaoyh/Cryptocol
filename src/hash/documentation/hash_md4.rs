@@ -17,461 +17,10 @@ use std::fmt::{ self, Debug, Display, Formatter };
 
 use crate::number::{ SmallUInt, IntUnion, LongUnion };
 
-/// You have freedom of changing N, H0 ~ H3, and ROUND for MD4.
-/// 
-/// # Generic Parameters
-/// You can create your own expanded version of MD4 by changing the generic
-/// parameters N, H0 ~ H3, and ROUND.
-/// - N : the size of output. N cannot be 0 or greater than 4. If N is 4, the
-/// output is 128 bits, while if N is 1, the output is 32 bits.
-/// - H0 ~ H3 : the initial hash values, four u32 values.
-/// The default values of H0, H1, H2, and H3 are 0x67452301, 0xefcdab89,
-/// 0x98badcfe, and 0x10325476, respectively (in little endian representation).
-/// - ROUND : the number of rounds. The default value of it is `48` (= 16 * 3).
-/// 
-/// # Quick Start
-/// In order to use the module MD4_Expanded which is the expanded verstion
-/// of MD4, you don't have to import (or use) cryptocol::hash::md4::MD4_Expanded
-/// directly because the module cryptocol::hash::md4 is re-exported.
-/// All you have to do is only import MD4_Expanded in the module
-/// cryptocol::hash. The follwing example shows how to import and use
-/// MD4_Expanded.
-/// 
-/// ## Example 
-/// ```
-/// use std::string::*;
-/// use cryptocol::hash::MD4_Expanded;
-/// 
-/// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
-/// let mut hash = MyMD4::new();
-/// 
-/// let mut txt = "";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "13892AE087B903E5EC030A51E1BC720A");
-/// 
-/// let txt_stirng = String::from("A");
-/// hash.digest_string(&txt_stirng);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt_stirng, hash);
-/// assert_eq!(hash.to_string(), "0C0BE1B8893E47C005D95C69234141E9");
-/// 
-/// let txt_array = ['W' as u8, 'o' as u8, 'w' as u8];
-/// hash.digest_array(&txt_array);
-/// println!("Msg =\t\"{:?}\"\nHash =\t{}\n", txt_array, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "17545CEB681C5B848234A557C5957AA7");
-/// 
-/// txt = "This data is 26-byte long.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.to_string(), "70F3EA1DCDE46C65868DC0937E374433");
-/// 
-/// txt = "The unit of data length is not byte but bit.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "640B4635ED76F6574FC30AB233B74712");
-/// 
-/// txt = "I am testing MD4_Expanded for the data of the length 62 bytes.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.to_string(), "B0D18D969B99F4BF48365449AF82EAFB");
-/// 
-/// txt = "I am testing MD4_Expanded for the message which is 64 byte-long.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "2D4ADABC3504B4A1B98FCCBFC48145AE");
-/// 
-/// txt = "I am testing MD4_Expanded for the case data whose length is more than 64 bytes is given.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-/// assert_eq!(hash.to_string(), "26E5336E4D863BBAD6347918CE6DBAF5");
-/// ```
-#[allow(non_camel_case_types)]
-pub type MD4_Expanded<const N: usize = 4,
-                        const H0: u32 = 0x67452301, const H1: u32 = 0xefcdab89,
-                        const H2: u32 = 0x98badcfe, const H3: u32 = 0x10325476,
-                        const ROUND: usize = 48>
-                = MD4_Generic<N, H0, H1, H2, H3, ROUND>;
-
-/// You have freedom of changing N, ROUND, and K0 ~ K2 for MD4.
-/// 
-/// # Generic Parameters
-/// You can create your own expanded version of MD4 by changing the generic
-/// parameters N, H0 ~ H3, ROUND, K0 ~ K2, R00 ~ R03, R10 ~ R13, and R20 ~ R23.
-/// - N : the size of output. N cannot be 0 or greater than 4. If N is 4, the
-/// output is 128 bits, while if N is 1, the output is 32 bits.
-/// - ROUND : the number of rounds. The default value of it is `48` (= 16 * 3).
-/// - K0 ~ K2 : the added values in hashing process, three u32 values.
-/// The default values of K0, K1, and K2 are 0x00000000, 0x5A827999, and
-/// 0x6ED9EBA1, respectively (in little endian representation).
-#[allow(non_camel_case_types)]
-pub type MD4_Generic_HR_fixed<const N: usize = 4, const ROUND: usize = 48,
-                        const K0: u32 = 0x00000000, const K1: u32 = 0x5A827999,
-                        const K2: u32 = 0x6ED9EBA1>
-    = MD4_Generic<N, 0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, ROUND, K0, K1, K2>;
-    
-/// The official MD4 hash algorithm
-/// 
-/// # Quick Start
-/// In order to use the module MD4, you don't have to import (or use)
-/// cryptocol::hash::md4::md4 directly because the module cryptocol::hash::md4
-/// is re-exported. All you have to do is only import MD4 in the module
-/// cryptocol::hash. Example shows how to import and use MD4.
-/// 
-/// ## Example 
-/// ```
-/// use std::string::*;
-/// use cryptocol::hash::MD4;
-/// 
-/// let mut hash = MD4::new();
-/// 
-/// let mut txt = "";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "31D6CFE0D16AE931B73C59D7E0C089C0");
-/// 
-/// let txt_stirng = String::from("A");
-/// hash.digest_string(&txt_stirng);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt_stirng, hash);
-/// assert_eq!(hash.to_string(), "D5EF20EEB3F75679F86CF57F93ED0FFE");
-/// 
-/// let txt_array = ['W' as u8, 'o' as u8, 'w' as u8];
-/// hash.digest_array(&txt_array);
-/// println!("Msg =\t\"{:?}\"\nHash =\t{}\n", txt_array, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "6407C0E728DA762A04924ADFE630974C");
-/// 
-/// txt = "This data is 26-byte long.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.to_string(), "4F4A24D124B996BEA395344419F9A06B");
-/// 
-/// txt = "The unit of data length is not byte but bit.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "9DE35D8FCF68E74867FFB63F28625ABE");
-/// 
-/// txt = "I am testing MD4 for the data whose length is sixty-two bytes.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.to_string(), "3A9F1487472B3A4315E0C90DC5CB3A2E");
-/// 
-/// txt = "I am testing MD4 for the message which is sixty-four bytes long.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "6CDB5B2BFF823A4A7B23675180EB7BEF");
-/// 
-/// txt = "I am testing MD4 for the case data whose length is more than sixty-four bytes is given.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-/// assert_eq!(hash.to_string(), "56771653687981390B0EB2A7D0A40DBB");
-/// ```
-#[allow(non_camel_case_types)]
-pub type MD4 = MD4_Generic;     // equivalent to `pub type MD4 = MD4_Expanded;`
-
-/// A MD4 message-digest algorithm that lossily compresses data of arbitrary
-/// length into a 128-bit hash value, and its flexible variants that allows
-/// you to develop your own `MD4`-based hash algorithms
-/// 
-/// # Introduction
-/// MD4 was designed by Ronald Rivest who is one of the inventors of RSA
-/// asymmetric cryptographic algorithm. MD4 was invented in 1990. It was
-/// specified in 1992 as RFC 1320.
-/// This module provides not only the official MD4 but also its expanded
-/// versions which is implemented with the name `MD4_Generic`.
-/// MD4 uses the
-/// [Merkle–Damgård construction](https://en.wikipedia.org/wiki/Merkle%E2%80%93Damg%C3%A5rd_construction).
-/// 
-/// # Vulnerability
-/// The security of MD4 has been severely compromised. Today, MD4 is
-/// not recommended for serious cryptographic purposes anymore. So, NIST also
-/// does not include MD4 in their list of recommended hashes for password
-/// storage. __DO NOT USE MD4 FOR SERIOUS CRYPTOGRAPHIC PURPOSES AT ALL!__
-/// If you need to use a hash algorithm for serious cryptographic purposes,
-/// you are highly recommended to use SHA-2 or SHA-3 hash algorithm,
-/// for example, instead of MD4.
-/// 
-/// # Use of MD4 and their variants
-/// Though MD4 and its variants are lack of cryptographic security, MD4 and
-/// its variants can be still used for non-cryptograpic purposes such as:
-/// - Generating small number of IDs
-/// - Integrity test in some collision-free situations
-/// - Storing passwords with limited security
-/// - Key generation
-/// - Study of hash algorithms
-/// - Cryptanalysis Research to find the weakness of MD4 and Merkle-Damgard
-/// construction which MD2, MD4, MD5, SHA0, SHA1, and all SHA2 family use
-/// 
-/// # Generic Parameters
-/// You can create your own expanded version of MD4 by changing the generic
-/// parameters N, H0 ~ H3, ROUND, K0 ~ K2, R00 ~ R03, R10 ~ R13, and R20 ~ R23.
-/// - N : the size of output. N cannot be 0 or greater than 4. If N is 4, the
-/// output is 128 bits, while if N is 1, the output is 32 bits.
-/// - H0 ~ H3 : the initial hash values, four u32 values.
-/// The default values of H0, H1, H2, and H3 are 0x67452301, 0xefcdab89,
-/// 0x98badcfe, and 0x10325476, respectively (in little endian representation).
-/// - ROUND : the number of rounds. The default value of it is `48` (= 16 * 3).
-/// - K0 ~ K2 : the added values in hashing process, three u32 values.
-/// The default values of K0, K1, and K2 are 0x00000000, 0x5A827999, and
-/// 0x6ED9EBA1, respectively (in little endian representation).
-/// 0x5A827999 is a 32-bit constant of the square root of 2 in little endian
-/// prepresentation.
-/// 0x6ED9EBA1 is a 32-bit constant of the square root of 3 in little endian
-/// prepresentation.
-/// - R00 ~ R03, R10 ~ R13, and R20 ~ R23 : the amounts of rotate left in the
-/// hashing process.
-/// The default values of R00, R01, R02, and R03 are 3, 7, 11, and 19, respectively.
-/// The default values of R10, R11, R12, and R13 are 3, 5, 9, and 13, respectively.
-/// The default values of R20, R11, R12, and R23 are 3, 9, 11, and 15, respecively.
-/// 
-/// About the parameters and their default values,
-/// read [more](https://datatracker.ietf.org/doc/html/rfc1320)
-/// 
-/// # Security of your own expanded version
-/// Your own algrorithm based on MD4 may be stronger or weaker than official
-/// MD4. Unless you seriously checked the cryptographic security of your own
-/// algorithms, it is hard to assume that your own alogrithms are stronger
-/// than the official MD4.
-/// 
-/// # Reference
-/// Read [more](https://en.wikipedia.org/wiki/MD4) about MD4 in detail.
-/// 
-/// # Quick Start
-/// In order to use the module MD4, you don't have to import (or use)
-/// cryptocol::hash::md4::* directly because the module cryptocol::hash::md4
-/// is re-exported. All you have to do is only import MD4, MD4_Expanded,
-/// MD4_Generic_HR_fixed and/or MD4_Generic in the module cryptocol::hash.
-/// Example 1 shows how to import structs MD4, MD4_Expanded,
-/// MD4_Generic_HR_fixed and/or MD4_Generic. Plus, what you have to know is
-/// these. All the types (or structs) are the specific versions of MD4_Generic.
-/// Actually, MD4 is a specific version of MD4_Expanded. MD4_Expanded and
-/// MD4_Generic_HR_fixed are specific versions of MD4_Generic.
-/// 
-/// ## Example 1
-/// ```
-/// use cryptocol::hash::MD4;
-/// use cryptocol::hash::MD4_Expanded;
-/// use cryptocol::hash::MD4_Generic_HR_fixed;
-/// use cryptocol::hash::MD4_Generic;
-/// ```
-/// Then, you create MD4 object by the method MD4::new(). Now, you are ready to
-/// use all provided methods to hash any data. If you want to hash a string,
-/// for example, you can use the method digest_str(). Then, the MD4 object that
-/// you created will contain its hash value. You can use the macro println!(),
-/// for instance, to print on a commandline screen by `println!("{}", hash)`
-/// where hash is the MD4 object. Example 2 shows how to use MD4 struct quickly.
-/// 
-/// ## Example 2 for MD4
-/// ```
-/// use std::string::*;
-/// use cryptocol::hash::MD4;
-/// let mut hash = MD4::new();
-/// 
-/// let mut txt = "";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "31D6CFE0D16AE931B73C59D7E0C089C0");
-/// 
-/// let txt_stirng = String::from("A");
-/// hash.digest_string(&txt_stirng);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt_stirng, hash);
-/// assert_eq!(hash.to_string(), "D5EF20EEB3F75679F86CF57F93ED0FFE");
-/// 
-/// let txt_array = ['W' as u8, 'o' as u8, 'w' as u8];
-/// hash.digest_array(&txt_array);
-/// println!("Msg =\t\"{:?}\"\nHash =\t{}\n", txt_array, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "6407C0E728DA762A04924ADFE630974C");
-/// 
-/// txt = "This data is 26-byte long.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.to_string(), "4F4A24D124B996BEA395344419F9A06B");
-/// 
-/// txt = "The unit of data length is not byte but bit.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "9DE35D8FCF68E74867FFB63F28625ABE");
-/// 
-/// txt = "I am testing MD4 for the data whose length is sixty-two bytes.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.to_string(), "3A9F1487472B3A4315E0C90DC5CB3A2E");
-/// 
-/// txt = "I am testing MD4 for the message which is sixty-four bytes long.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "6CDB5B2BFF823A4A7B23675180EB7BEF");
-/// 
-/// txt = "I am testing MD4 for the case data whose length is more than sixty-four bytes is given.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-/// assert_eq!(hash.to_string(), "56771653687981390B0EB2A7D0A40DBB");
-/// ```
-/// 
-/// Example 3 shows how to use quickly MD4_Expanded which is the expanded
-/// version of MD4.
-/// 
-/// # Example 3 for MD4_Expanded
-/// ```
-/// use std::string::*;
-/// use cryptocol::hash::MD4_Expanded;
-/// 
-/// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
-/// let mut hash = MyMD4::new();
-/// 
-/// let mut txt = "";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "13892AE087B903E5EC030A51E1BC720A");
-/// 
-/// let txt_stirng = String::from("A");
-/// hash.digest_string(&txt_stirng);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt_stirng, hash);
-/// assert_eq!(hash.to_string(), "0C0BE1B8893E47C005D95C69234141E9");
-/// 
-/// let txt_array = ['W' as u8, 'o' as u8, 'w' as u8];
-/// hash.digest_array(&txt_array);
-/// println!("Msg =\t\"{:?}\"\nHash =\t{}\n", txt_array, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "17545CEB681C5B848234A557C5957AA7");
-/// 
-/// txt = "This data is 26-byte long.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.to_string(), "70F3EA1DCDE46C65868DC0937E374433");
-/// 
-/// txt = "The unit of data length is not byte but bit.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "640B4635ED76F6574FC30AB233B74712");
-/// 
-/// txt = "I am testing MD4_Expanded for the data of the length 62 bytes.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.to_string(), "B0D18D969B99F4BF48365449AF82EAFB");
-/// 
-/// txt = "I am testing MD4_Expanded for the message which is 64 byte-long.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
-/// assert_eq!(hash.get_hash_value_in_string(), "2D4ADABC3504B4A1B98FCCBFC48145AE");
-/// 
-/// txt = "I am testing MD4_Expanded for the case data whose length is more than 64 bytes is given.";
-/// hash.digest_str(txt);
-/// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-/// assert_eq!(hash.to_string(), "26E5336E4D863BBAD6347918CE6DBAF5");
-/// ```
-/// 
-/// # Big-endian issue
-/// It is just experimental for Big Endian CPUs. So, you are not encouraged
-/// to use it for Big Endian CPUs for serious purpose. Only use this crate
-/// for Big-endian CPUs with your own full responsibility.
-/// 
-/// # A Simple but Useful Application using cryptocol
-/// The following is the source code of the commandline MD4 hash value extractor
-/// using the struct MD4 of this module. You can get the hash value from a text
-/// or a file. The following source code assumes its executable file name will
-/// be "md4_app". You can find all the examples including the following source
-/// code in the folder "examples" of this crate.
-/// ```
-/// use std::{ io, env, fs };
-/// use std::io::BufRead;
-/// use std::convert::From;
-/// use cryptocol::hash::MD4;
-/// 
-/// fn main()
-/// {
-///     let args: Vec<String> = env::args().collect();
-///     if args.len() < 3
-///     {
-///         help();
-///         return;
-///     }
-/// 
-///     let arg = &args[1][..];
-///     match arg
-///     {
-///         "--text" | "-t" =>  { get_hash_value_from_text(&args[2][..]); },
-///         "--file" | "-f" =>  { get_hash_value_from_file(&args[2][..]); },
-///         "--check" | "-c" => { check_files(&args[2][..]) },
-///         _ =>  { help(); },
-///     }
-/// }
-/// 
-/// fn get_hash_value_from_text(txt: &str)
-/// {
-///     let mut hash = MD4::new();
-///     hash.digest_str(txt);
-///     println!("Hash value:\t{}", hash.get_hash_value_in_string());
-/// }
-/// 
-/// fn get_hash_value_from_file(file: &str)
-/// {
-///     if let Ok(contents) = fs::read(file)
-///     {
-///         let mut hash = MD4::new();
-///         hash.digest_vec(&contents);
-///         println!("Hash value:\t{}", hash.get_hash_value_in_string());
-///     }
-///     else
-///     {
-///         println!("File Error!");
-///     }
-/// }
-/// 
-/// fn check_files(file_list: &str)
-/// {
-///     let mut reader;
-///     match fs::File::open(file_list)
-///     {
-///         Ok(file) => {
-///                 reader = io::BufReader::new(file);
-///                 let mut line = String::new();
-///                 while let Ok(n) = reader.read_line(&mut line)
-///                 {
-///                     if n == 0
-///                         { break; }
-///                     let txt = line.trim();
-///                     if txt.chars().nth(0).unwrap() == '#'
-///                     { 
-///                         line.clear();
-///                         continue;
-///                     }
-///                     let elem: Vec<&str> = txt.split_whitespace().collect();
-///                     let item = elem[0];
-///                     let h = String::from(elem[1]).to_uppercase();
-///                     if let Ok(contents) = fs::read(item)
-///                     {
-///                         let mut hash = MD4::new();
-///                         hash.digest_vec(&contents);
-///                         if hash.to_string() == h
-///                             { println!("{} ---> OK", item); }
-///                         else
-///                             { println!("{} ---> Corrupted", item); }
-///                     }
-///                     line.clear();
-///                 }
-///             },
-///         _ => {
-///                 println!("File open error");
-///                 return;
-///             }
-///     }
-/// }
-/// 
-/// fn help()
-/// {
-///     println!("This is an MD4 hash value extractor from a text or a file, using cryptocol.");
-///     println!("Usage: md4_app <option> <source>");
-///     println!("options       description");
-///     println!("--text, -t    : <source> is a text to get a hash code.");
-///     println!("                The text should be enclosed by ' or \".");
-///     println!("--file, -f    : <source> is the name of the file to get a hash code.");
-///     println!("--check, -c   : <source> is the name of the file that contains pairs");
-///     println!("                of file and its hash code.");
-///     println!("--help, -h    : print this help message on screen\n");
-///     println!("Examples:");
-///     println!("\tmd4_app -t 'How are you doing?'");
-///     println!("\tmd4_app -f linuxmint-21.3-cinnamon-64bit.iso");
-///     println!("\tmd4_app -c CHECKSUM");
-/// }
-/// ```
+/// md4.rs was too big because of documentation and plenty of examples
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to hash_md4.rs.
 #[derive(Debug, Clone)]
 #[allow(non_camel_case_types)]
 pub struct MD4_Generic<const N: usize = 4,
@@ -482,6 +31,7 @@ pub struct MD4_Generic<const N: usize = 4,
         const R10: u32 = 3, const R11: u32 = 5, const R12: u32 = 9, const R13: u32 = 13, 
         const R20: u32 = 3, const R21: u32 = 9, const R22: u32 = 11, const R23: u32 = 15>
 {
+    // Dummy struct for documentation
     hash_code: [IntUnion; 4],
 }
 
@@ -493,13 +43,6 @@ impl<const N: usize, const H0: u32, const H1: u32, const H2: u32, const H3: u32,
 MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2, 
             R00, R01, R02, R03, R10, R11, R12, R13, R20, R21, R22, R23>
 {
-    const K: [u32; 3] = [ K0, K1, K2 ];
-    const R: [[u32; 4]; 3] = [  [R00, R01, R02, R03],
-                                [R10, R11, R12, R13],
-                                [R20, R21, R22, R23] ];
-    const H: [u32; 4] = [ H0, H1, H2, H3 ];
-
-
     // pub fn new() -> Self
     /// Constructs a new `MD4` object or a new MD4-based hash object.
     /// 
@@ -520,20 +63,17 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(hash.to_string(), "0123456789ABCDEFFEDCBA9876543210");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.new)
+    /// # Exmaple 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let my_hash = MyMD4::new();
+    /// println!("Hash =\t{}", my_hash);
+    /// assert_eq!(my_hash.to_string(), "111111114444444488888888FFFFFFFF");
+    /// ```
     pub fn new() -> Self
     {
-        if (N > 4) || (N == 0)
-            { panic!("N cannot be either 0 or greater than 4. {}", N); }
-
-        MD4_Generic
-        {
-            hash_code: [IntUnion::new_with(Self::H[0]),
-                        IntUnion::new_with(Self::H[1]),
-                        IntUnion::new_with(Self::H[2]),
-                        IntUnion::new_with(Self::H[3])]
-        }
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn digest(&mut self, message: *const u8, length_in_bytes: u64)
@@ -579,18 +119,19 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(hash.to_string(), "A18836F660C3C66B8CBEE4BD24FEFFA9");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.digest)
+    /// # Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let txt = "This is an example of the method digest().";
+    /// my_hash.digest(txt.as_ptr(), txt.len() as u64);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+    /// assert_eq!(my_hash.to_string(), "B2F465006DCBA147BCE76D7EB8B564E1");
+    /// ```
     pub fn digest(&mut self, message: *const u8, length_in_bytes: u64)
     {
-        type MessageType = u32;
-        const SHIFT_NUM: usize = 6;
-        const CHUNK_NUM: usize = 16;
-        self.initialize();
-        let length_done = (length_in_bytes >> SHIFT_NUM) as usize;
-        for i in 0..length_done
-            { self.update(unsafe { from_raw_parts(message.add(i << SHIFT_NUM) as *const MessageType, CHUNK_NUM) } ); }
-        self.finalize(unsafe { message.add(length_done << SHIFT_NUM) }, length_in_bytes);
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn digest_str(&mut self, message: &str)
@@ -630,12 +171,20 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(hash.to_string(), "E396CE68E2BE1001BCBFD62B49E226C0");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.digest_str)
+    /// # Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let txt = "This is an example of the method digest_str().";
+    /// my_hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+    /// assert_eq!(my_hash.to_string(), "719A1EB0F5077837BB408434B7AAD81E");
+    /// ```
     #[inline]
     pub fn digest_str(&mut self, message: &str)
     {
-        self.digest(message.as_ptr(), message.len() as u64);
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn digest_string(&mut self, message: &String)
@@ -675,12 +224,20 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(hash.to_string(), "DF23C7808B2B158C5E2D8C9FE1FF2ECC");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.digest_string)
+    /// # Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let txt = "This is an example of the method digest_string().".to_string();
+    /// my_hash.digest_string(&txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+    /// assert_eq!(my_hash.to_string(), "FD42F7479ED133619D877BB1E6C8A084");
+    /// ```
     #[inline]
     pub fn digest_string(&mut self, message: &String)
     {
-        self.digest(message.as_ptr(), message.len() as u64);
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn digest_array<T, const M: usize>(&mut self, message: &[T; M])
@@ -720,13 +277,21 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(hash.to_string(), "31489CF63B7FC170E9046F0176A60B39");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.digest_array)
+    /// # Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let data = [ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// my_hash.digest_array(&data);
+    /// println!("Msg =\t{:?}\nHash =\t{}", data, my_hash);
+    /// assert_eq!(my_hash.to_string(), "3011AFFDE0C322C2CCEE632FE39AF16D");
+    /// ```
     #[inline]
     pub fn digest_array<T, const M: usize>(&mut self, message: &[T; M])
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
-        self.digest(message.as_ptr() as *const u8, (M * T::size_in_bytes()) as u64);
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn digest_vec<T>(&mut self, message: &Vec<T>)
@@ -766,13 +331,21 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(hash.to_string(), "31489CF63B7FC170E9046F0176A60B39");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.digest_vec)
+    /// # Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let data = vec![ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// my_hash.digest_vec(&data);
+    /// println!("Msg =\t{:?}\nHash =\t{}", data, my_hash);
+    /// assert_eq!(my_hash.to_string(), "3011AFFDE0C322C2CCEE632FE39AF16D");
+    /// ```
     #[inline]
     pub fn digest_vec<T>(&mut self, message: &Vec<T>)
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
-        self.digest(message.as_ptr() as *const u8, (message.len() * T::size_in_bytes()) as u64);
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn ruminate(&mut self, n: usize, message: *const u8, length_in_bytes: u64)
@@ -817,13 +390,19 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(hash.to_string(), "23EAC3CEE64E4266EEDFE2D6AB255B9F");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.ruminate)
+    /// Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut hash = MyMD4::new();
+    /// let txt = "This is an example of the method ruminate().";
+    /// hash.ruminate(2, txt.as_ptr(), txt.len() as u64);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+    /// assert_eq!(hash.to_string(), "A1608F7E4052E267B3233862FD5C1C41");
+    /// ```
     pub fn ruminate(&mut self, n: usize, message: *const u8, length_in_bytes: u64)
     {
-        self.digest(message, length_in_bytes);
-        for _ in 1..n
-            { self.digest_array(&self.get_hash_value_in_array()); }
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn ruminate_str(&mut self, n: usize, message: &str)
@@ -863,12 +442,20 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(hash.to_string(), "B19769E514631D59FD257C4AD667BD9D");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.ruminate_str)
+    /// Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let txt = "This is an example of the method ruminate_str().";
+    /// my_hash.ruminate_str(3, txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+    /// assert_eq!(my_hash.to_string(), "534F1EC44D4B2CEF12B7A9A81941D9A8");
+    /// ```
     #[inline]
     pub fn ruminate_str(&mut self, n: usize, message: &str)
     {
-        self.ruminate(n, message.as_ptr(), message.len() as u64);
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn ruminate_string(&mut self, n: usize, message: &String)
@@ -908,12 +495,20 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(hash.to_string(), "71D3AB5636348DB24A7AE302E7E6C05A");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.ruminate_string)
+    /// Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let txt = "This is an example of the method ruminate_string().".to_string();
+    /// my_hash.ruminate_string(2, &txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+    /// assert_eq!(my_hash.to_string(), "EFB3B63FC1DBF3852F469D4EA0E8D517");
+    /// ```
     #[inline]
     pub fn ruminate_string(&mut self, n: usize, message: &String)
     {
-        self.ruminate(n, message.as_ptr(), message.len() as u64);
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn ruminate_array<T, const M: usize>(&mut self, n: usize, message: &[T; M])
@@ -953,13 +548,21 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(hash.to_string(), "810F75A7BD28179BA2D4604A3092FBC8");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.ruminate_array)
+    /// Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let data = [ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// my_hash.ruminate_array(5,&data);
+    /// println!("Msg =\t{:?}\nHash =\t{}", data, my_hash);
+    /// assert_eq!(my_hash.to_string(), "27F598D17E6DFBA0A0713F3262D34FFC");
+    /// ```
     #[inline]
     pub fn ruminate_array<T, const M: usize>(&mut self, n: usize, message: &[T; M])
     where T: SmallUInt + Copy + Clone
     {
-        self.ruminate(n, message.as_ptr() as *const u8, (M * T::size_in_bytes()) as u64);
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn ruminate_vec<T>(&mut self, n: usize, message: &Vec<T>)
@@ -999,13 +602,21 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(hash.to_string(), "B3E296760B88B44613DB03D72CE59917");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.ruminate_vec)
+    /// Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let data = vec![ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// my_hash.ruminate_vec(2, &data);
+    /// println!("Msg =\t{:?}\nHash =\t{}", data, my_hash);
+    /// assert_eq!(my_hash.to_string(), "AFC96A14952E9FB9D6D7C7A1FD3D4C2E");
+    /// ```
     #[inline]
     pub fn ruminate_vec<T>(&mut self, n: usize, message: &Vec<T>)
     where T: SmallUInt + Copy + Clone
     {
-        self.ruminate(n, message.as_ptr() as *const u8, (message.len() * T::size_in_bytes()) as u64);
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn get_hash_value(&self, hash_value: *mut u8, length: usize)
@@ -1048,21 +659,21 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(format!("{:02X?}", hash_value), "[A7, AD, DF, 36, A2, 43, 97, D1, 6D, 3C, 99, 78, A6, D5, 6E, 74]");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.get_hash_value)
+    /// # Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let txt = "This is an example of the method get_hash_value().";
+    /// let hash_value = [0_u8; 16];
+    /// my_hash.digest_str(txt);
+    /// my_hash.get_hash_value(hash_value.as_ptr() as *mut u8, hash_value.len());
+    /// println!("Msg =\t\"{}\"\nHash =\t{:02X?}", txt, hash_value);
+    /// assert_eq!(format!("{:02X?}", hash_value), "[02, 43, 79, C6, 08, F1, CA, 30, C0, 75, 5C, 6C, 07, AD, 76, 72]");
+    /// ```
     pub fn get_hash_value(&self, hash_value: *mut u8, length: usize)
     {
-        const BYTES: usize = 4;
-        let n_length = if length < (BYTES * N) {length} else {BYTES * N};
-        #[cfg(target_endian = "little")]   // Because of MD4 is based on Little Endian
-        unsafe { copy_nonoverlapping(self.hash_code.as_ptr() as *const u8, hash_value, n_length); }
-        #[cfg(target_endian = "big")]   // Because of MD4 is based on Little Endian
-        {
-            let mut hash_code = [IntUnion::new(); N];
-            for i in 0..N
-                { hash_code[i].set(self.hash_code[i].get().to_le()); }
-            unsafe { copy_nonoverlapping(hash_code.as_ptr() as *const u8, hash_value, n_length); }
-        }
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn get_hash_value_in_string(&self) -> String
@@ -1095,23 +706,19 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(hash.get_hash_value_in_string(), "FA48527AD8257A371E70AA9473D425D6");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.get_hash_value_in_string)
+    /// # Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let txt = "This is an example of the method get_hash_value_in_string().";
+    /// my_hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash.get_hash_value_in_string());
+    /// assert_eq!(my_hash.get_hash_value_in_string(), "626192ACD80D62D8966ACE89AE439E76");
+    /// ```
     pub fn get_hash_value_in_string(&self) -> String
     {
-        const BYTES: usize = 4;
-        let mut txt = String::new();
-        for i in 0..N
-        {
-            let hs = self.hash_code[i];
-            for j in 0..BYTES
-            {
-                let byte = hs.get_ubyte_(j);    // Because of MD4 is based on Little Endian
-                txt.push(Self::to_char(byte >> 4));
-                txt.push(Self::to_char(byte & 0b1111));
-            }
-        }
-        txt
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn get_hash_value_in_array(&self) -> [u32; N]
@@ -1148,14 +755,19 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(format!("{:08X?}", hash.get_hash_value_in_array()), "[832C724B, 4A73A717, 5EA679B8, E991D13B]");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.get_hash_value_in_array)
+    /// # Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let txt = "This is an example of the method get_hash_value_in_array().";
+    /// my_hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{:08X?}", txt, my_hash.get_hash_value_in_array());
+    /// assert_eq!(format!("{:08X?}", my_hash.get_hash_value_in_array()), "[2CFB0798, 77AA2A27, 602B457E, AD3B964C]");
+    /// ```
     pub fn get_hash_value_in_array(&self) -> [u32; N]
     {
-        let mut res = [0_u32; N];
-        for i in 0..N
-            { res[i] = self.hash_code[i].get().to_le(); }
-        res
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn get_hash_value_in_vec(&self) -> Vec<u32>
@@ -1188,15 +800,20 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(format!("{:08X?}", hash.get_hash_value_in_vec()), "[EE74475E, ECA09C8F, 038A89A3, 9B2A6C4F]");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.get_hash_value_in_vec)
+    /// # Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let txt = "This is an example of the method get_hash_value_in_vec().";
+    /// my_hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{:08X?}", txt, my_hash.get_hash_value_in_vec());
+    /// assert_eq!(format!("{:08X?}", my_hash.get_hash_value_in_vec()), "[440664DA, 49687C74, C0536C83, 192830D8]");
+    /// ```
     #[inline]
     pub fn get_hash_value_in_vec(&self) -> Vec<u32>
     {
-        let mut res = Vec::new();
-        for i in 0..N
-            { res.push(self.hash_code[i].get().to_le()); }
-        res
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn put_hash_value_in_array<T, const M: usize>(&self, out: &mut [T; M])
@@ -1221,15 +838,22 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(format!("{:08X?}", hash_code), "[147DD795, C34F9C9D, 80B94C86, FB922262]");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.put_hash_value_in_array)
+    /// # Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let txt = "This is an example of the method put_hash_value_in_array().";
+    /// let mut hash_code = [0_u32; 4];
+    /// my_hash.digest_str(txt);
+    /// my_hash.put_hash_value_in_array(&mut hash_code);
+    /// println!("Msg =\t\"{}\"\nHash =\t{:08X?}", txt, hash_code);
+    /// assert_eq!(format!("{:08X?}", hash_code), "[1411D15D, 37BBE0DF, 1EAF8DA5, AC822C42]");
+    /// ```
     pub fn put_hash_value_in_array<T, const M: usize>(&self, out: &mut [T; M])
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
-        let res = self.get_hash_value_in_array();
-        let out_size = T::size_in_bytes() * M;
-        let length = if out_size < 16 {out_size} else {16};
-        unsafe { copy_nonoverlapping(res.as_ptr() as *const u8, out as *mut T as *mut u8, length); }
+        unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn tangle(&mut self, tangling: u64)
@@ -1241,7 +865,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// # Features
     /// It is for using this struct as random number generator.
     /// 
-    /// Example for MD4
+    /// Example 1 for MD4
     /// ```
     /// use cryptocol::hash::MD4;
     /// let mut hash = MD4::new();
@@ -1257,111 +881,27 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(format!("{:08X?}", hash.get_hash_value_in_array()), "[5B9A2D14, 64888002, 15282E23, E5B2F4BD]");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.tangle)
+    /// Example 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let txt = "TANGLING";
+    /// my_hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{:08X?}", txt, my_hash.get_hash_value_in_array());
+    /// assert_eq!(format!("{:08X?}", my_hash.get_hash_value_in_array()), "[C4377D49, 05FD9A1F, 3DA4E254, ACF22116]");
+    /// my_hash.tangle(1);
+    /// println!("Hash =\t{:08X?}", my_hash.get_hash_value_in_array());
+    /// assert_eq!(format!("{:08X?}", my_hash.get_hash_value_in_array()), "[8CB0AF83, F75E073C, 77C5BF6C, EDFE1D51]");
+    /// my_hash.tangle(1);
+    /// println!("Hash =\t{:08X?}", my_hash.get_hash_value_in_array());
+    /// assert_eq!(format!("{:08X?}", my_hash.get_hash_value_in_array()), "[A5C900D1, 388193FA, B2C0ED53, 4DE71DDE]");
+    /// ```
     #[inline]
     pub fn tangle(&mut self, tangling: u64)
     {
-        let common = LongUnion::new_with(tangling);
-        let mut m = [0_u32; 6];
-        for i in 0..4
-            { m[i] = self.hash_code[i].get(); }
-        m[4] = common.get_uint_(0);
-        m[5] = common.get_uint_(1);
-        self.finalize(m.as_ptr() as *const u8, 24);
+        unimplemented!(); // Dummy code for documentation
     }
-
-    // fn initialize(&mut self)
-    /// Initializes all four self.hash_code[] with predetermined values H[].
-    fn initialize(&mut self)
-    {
-        for i in 0..4_usize
-            { self.hash_code[i] = IntUnion::new_with(Self::H[i]); }
-    }
-
-    // fn update(&mut self, message: &[u32])
-    /// This method is the core part of MD4 hash algorithm.
-    /// It has sixty-four rounds. It updates self.hash_code[] for those
-    /// sixty-four rounds.
-    fn update(&mut self, message: &[u32])
-    {
-        let mut a = self.hash_code[0].get();
-        let mut b = self.hash_code[1].get();
-        let mut c = self.hash_code[2].get();
-        let mut d = self.hash_code[3].get();
-
-        for i in 0..ROUND
-        {
-            let (mut f, g) = Self::func(b, c, d, i);
-            f = f.wrapping_add(a)
-                    .wrapping_add(Self::get_k(i))
-                    .wrapping_add(message[g].to_le())
-                    .rotate_left(Self::get_r(i));
-            a = d;
-            d = c;
-            c = b;
-            b = f;
-        }
-
-        self.hash_code[0].set(self.hash_code[0].get().wrapping_add(a));
-        self.hash_code[1].set(self.hash_code[1].get().wrapping_add(b));
-        self.hash_code[2].set(self.hash_code[2].get().wrapping_add(c));
-        self.hash_code[3].set(self.hash_code[3].get().wrapping_add(d));
-    }
-
-    // fn finalize(&mut self, message: *const u8, length_in_bytes: u64)
-    /// finalizes the hash process. In this process, it pads with padding bits,
-    /// which are bit one, bits zeros, and eight bytes that show the message
-    /// size in the unit of bits with little endianness so as to make the data
-    /// (message + padding bits) be multiples of 512 bits (64 bytes).
-    fn finalize(&mut self, message: *const u8, length_in_bytes: u64)
-    {
-        type ChunkType = u64;
-        type PieceType = u32;
-        const MESSAGE_NUM: usize = 64;
-        const LAST_BYTES: ChunkType = 0b11_1111;
-        union MU
-        {
-            chunk: [ChunkType; 8],
-            piece: [PieceType; 16],
-            txt: [u8; MESSAGE_NUM],
-        }
-
-        let mut mu = MU { txt: [0; 64] };
-        let last_bytes = (length_in_bytes & LAST_BYTES) as usize;    // equivalent to (length_in_bytes % 64) as usize
-        unsafe { copy_nonoverlapping(message, mu.txt.as_mut_ptr(), last_bytes); }
-        unsafe { mu.txt[last_bytes] = 0b1000_0000; }
-        // 데이터 기록후, 데이터의 길이를 비트 단위로 기록하기 위한 64 비트(8 바이트)와
-        // 0b1000_0000를 기록하기 위한 한 바이트의 여유공간이 남아있지 않으면,
-        if last_bytes > 54  // (64 - 8 - 1)
-        {
-            self.update(unsafe {&mu.piece});
-            for i in 0..7
-                { unsafe { mu.chunk[i] = 0; } }
-        }
-        unsafe { mu.chunk[7] = (length_in_bytes << 3).to_le(); }    // 데이터 길이의 단위는 바이트가 아니라 비트이다.
-        self.update(unsafe {&mu.piece});
-    }
-
-    // fn func(x: u32, y: u32, z: u32, round: usize) -> (u32, usize)
-    /// Round function
-    fn func(x: u32, y: u32, z: u32, round: usize) -> (u32, usize)
-    {
-        let r = round % 48;
-        if r < 16
-            { (Self::ff(x, y, z), r & 0b1111) }     // equivalent to r % 16
-        else if r < 32
-            { (Self::gg(x, y, z), (((r << 4) + r - 16) >> 2) & 0b1111) }    // equivalent to (17 * r - 16) / 4 % 16
-        else
-            { (Self::hh(x, y, z), ((r & 0b1_1111) * 8 + (((r & 0b1_1111) >> 1) << 2) + ((r & 0b1_1111) >> 2) * 10 + ((r & 0b1_1111) >> 3) * 13) & 0b1111) }    // equivalent to ((r % 32) * 8 + ((r % 32) / 2) * 4 + ((r % 32) / 4) * 10 + ((r % 32) / 8) * 13) % 16
-    }
-
-	#[inline] fn get_k(idx: usize) -> u32    { Self::K[(idx >> 4) % 3] }
-    #[inline] fn get_r(idx: usize) -> u32    { Self::R[(idx >> 4) % 3][idx & 0b11] }   // equivalent to Self::R[(idx / 16) % 3][idx % 4]
-    #[inline] fn ff(x: u32, y: u32, z: u32) -> u32  { z ^ (x & (y ^ z)) }   // equivalent to { (x & y) | (!x & z) }
-	#[inline] fn gg(x: u32, y: u32, z: u32) -> u32  { (x & y) | (y & z) | (z & x)}
-	#[inline] fn hh(x: u32, y: u32, z: u32) -> u32	{ x ^ y ^ z }
-    #[inline] fn to_char(nibble: u8) -> char    { if nibble < 10  { ('0' as u8 + nibble) as u8 as char } else { ('A' as u8 - 10 + nibble) as char } }
 }
 
 
@@ -1392,12 +932,39 @@ Display for MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// assert_eq!(hash.to_string(), "E2244B71E17D5BD7E1CCEB58C8F8C82E");
     /// ```
     /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.fmt)
+    /// # Example 2 for the method to_string() for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let txt = "Display::fmt() automagically implement to_string().";
+    /// my_hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash.to_string());
+    /// assert_eq!(my_hash.to_string(), "6B0D8F0CE90782E5FF88EE57B5DC5AF1");
+    /// ```
+    /// 
+    /// # Example 3 for the use in the macro println!() for MD4
+    /// ```
+    /// use cryptocol::hash::MD4;
+    /// let mut hash = MD4::new();
+    /// let txt = "Display::fmt() enables the object to be printed in the macro println!() directly for example.";
+    /// hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+    /// assert_eq!(hash.to_string(), "3C607B5548C155DCF4E84C7A6C21D349");
+    /// ```
+    /// 
+    /// # Example 4 for the use in the macro println!() for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let mut my_hash = MyMD4::new();
+    /// let txt = "Display::fmt() enables the object to be printed in the macro println!() directly for example.";
+    /// my_hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+    /// assert_eq!(my_hash.to_string(), "745B42127EC2479032923F2EE368FD92");
+    /// ```
     fn fmt(&self, f: &mut Formatter) -> fmt::Result
     {
-        // `write!` is like `format!`, but it will write the formatted string
-        // into a buffer (the first argument)
-        write!(f, "{}", self.get_hash_value_in_string())
+        unimplemented!(); // Dummy code for documentation
     }
 }

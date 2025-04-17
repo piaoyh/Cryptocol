@@ -15,10 +15,79 @@ use std::mem::{ size_of, size_of_val };
 
 use crate::number::{ SmallUInt, ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
 
-macro_rules! SmallUInt_methods_for_uint_impl {
-    ($f:ty) => {
-        impl SmallUInt for $f
+macro_rules! SmallUInt_methods_for_uint_impl
+{
+    (u128) => {
+        impl SmallUInt for u128
         {
+            const BYTES: usize = u128::BITS as usize / 8;
+            const MIN: Self = u128::MIN;
+            const MAX: Self = u128::MAX;
+            const ONE: Self = 1_u128;
+            SmallUInt_methods_for_uint_impl_!(u128);
+        }
+    };
+
+    (u64) => {
+        impl SmallUInt for u64
+        {
+            const BYTES: usize = u64::BITS as usize / 8;
+            const MIN: Self = u64::MIN;
+            const MAX: Self = u64::MAX;
+            const ONE: Self = 1_u64;
+            SmallUInt_methods_for_uint_impl_!(u64);
+        }
+    };
+
+    (u32) => {
+        impl SmallUInt for u32
+        {
+            const BYTES: usize = u32::BITS as usize / 8;
+            const MIN: Self = u32::MIN;
+            const MAX: Self = u32::MAX;
+            const ONE: Self = 1_u32;
+            SmallUInt_methods_for_uint_impl_!(u32);
+        }
+    };
+
+    (u16) => {
+        impl SmallUInt for u16
+        {
+            const BYTES: usize = u16::BITS as usize / 8;
+            const MIN: Self = u16::MIN;
+            const MAX: Self = u16::MAX;
+            const ONE: Self = 1_u16;
+            SmallUInt_methods_for_uint_impl_!(u16);
+        }
+    };
+
+    (u8) => {
+        impl SmallUInt for u8
+        {
+            const BYTES: usize = u8::BITS as usize / 8;
+            const MIN: Self = u8::MIN;
+            const MAX: Self = u8::MAX;
+            const ONE: Self = 1_u8;
+            SmallUInt_methods_for_uint_impl_!(u8);
+        }
+    };
+    
+    (usize) => {
+        impl SmallUInt for usize
+        {
+            const BYTES: usize = usize::BITS as usize / 8;
+            const MIN: Self = usize::MIN;
+            const MAX: Self = usize::MAX;
+            const ONE: Self = 1_usize;
+            SmallUInt_methods_for_uint_impl_!(usize);
+        }
+    };
+}
+
+macro_rules! SmallUInt_methods_for_uint_impl_ {
+    ($f:ty) => {
+        // impl SmallUInt for $f
+        // {
             /// Calculates `self` + `rhs` + `carry` and returns a tuple
             /// containing the sum and the output carry.
             /// [Read more](trait@SmallUInt#tymethod.carrying_add) in detail.
@@ -1010,11 +1079,11 @@ macro_rules! SmallUInt_methods_for_uint_impl {
 
             /// Returns the size of `Self` in bytes
             /// [Read more](trait@SmallUInt#tymethod.size_in_bytes) in detail.
-            #[inline] fn size_in_bytes() -> usize   { size_of::<Self>() }
+            #[inline] fn size_in_bytes() -> usize   { Self::BITS as usize / 8 }
 
             /// Returns the size of `Self` in bits
             /// [Read more](trait@SmallUInt#tymethod.size_in_bits) in detail.
-            #[inline] fn size_in_bits() -> usize    { size_of::<Self>() * 8 }
+            #[inline] fn size_in_bits() -> usize    { Self::BITS as usize }
 
             /// Returns the size of `self` in bytes
             /// [Read more](trait@SmallUInt#tymethod.length_in_bytes) in detail.
@@ -1023,7 +1092,7 @@ macro_rules! SmallUInt_methods_for_uint_impl {
             /// Returns the size of `self` in bits
             /// [Read more](trait@SmallUInt#tymethod.length_in_bits) in detail.
             #[inline] fn length_in_bits(self) -> usize     { size_of_val(&self) * 8 }
-        }
+        // }
     }
 }
 

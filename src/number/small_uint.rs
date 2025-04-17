@@ -150,6 +150,11 @@ use crate::number::{ ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
 /// Only use this crate for big-endian CPUs with your own full responsibility.
 pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
 {
+    const BYTES: usize;
+    const MIN: Self;
+    const MAX: Self;
+    const ONE: Self;
+
     /***** ADDITION *****/
 
     // fn carrying_add(self, rhs: Self, carry: bool) -> (Self, bool);

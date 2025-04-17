@@ -177,7 +177,7 @@ pub union ShortUnion
 
 impl ShortUnion
 {
-    // pub fn new() -> Self
+    // pub const fn new() -> Self
     /// Constructs a new `ShortUnion`.
     /// 
     /// # Output
@@ -194,9 +194,9 @@ impl ShortUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 0_u16);
     /// ```
-    #[inline] pub fn new() -> Self  { Self { ushort: 0 } }
+    #[inline] pub const fn new() -> Self    { Self { ushort: 0 } }
 
-    // pub fn new_with(ushort: u16) -> Self
+    // pub const fn new_with(ushort: u16) -> Self
     /// Constructs a new `ShortUnion` with initializing it with `ushort`.
     /// 
     /// # Output
@@ -212,9 +212,9 @@ impl ShortUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 1234_u16);
     /// ```
-    #[inline] pub fn new_with(ushort: u16) -> Self    { Self { ushort } }
+    #[inline] pub const fn new_with(ushort: u16) -> Self    { Self { ushort } }
 
-    // pub fn new_with_signed(sshort: i16) -> Self
+    // pub const fn new_with_signed(sshort: i16) -> Self
     /// Constructs a new `ShortUnion` with initializing it with `sshort`.
     /// 
     /// # Output
@@ -230,9 +230,9 @@ impl ShortUnion
     /// println!("a = {}", a.get_signed());
     /// assert_eq!(a.get_signed(), -1234_i16);
     /// ```
-    #[inline] pub fn new_with_signed(sshort: i16) -> Self   { Self { sshort } }
+    #[inline] pub const fn new_with_signed(sshort: i16) -> Self { Self { sshort } }
 
-    // pub fn new_with_ubytes(ubyte: [u8; 2]) -> Self
+    // pub const fn new_with_ubytes(ubyte: [u8; 2]) -> Self
     /// Constructs a new `ShortUnion` with initializing it with `ubyte`.
     /// 
     /// # Output
@@ -248,9 +248,9 @@ impl ShortUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 55468_u16);
     /// ```
-    #[inline] pub fn new_with_ubytes(ubyte: [u8; 2]) -> Self    { Self { ubyte } }
+    #[inline] pub const fn new_with_ubytes(ubyte: [u8; 2]) -> Self  { Self { ubyte } }
 
-    // pub fn new_with_u128(num: u128) -> Self
+    // pub const fn new_with_u128(num: u128) -> Self
     /// Constructs a new `ShortUnion` with initializing it with the lowest
     /// 16-bit part of `num`.
     /// 
@@ -272,9 +272,9 @@ impl ShortUnion
     /// assert_eq!(a.get(), 55468_u16);
     /// assert_eq!(b.get(), 33045_u16);
     /// ```
-    #[inline] pub fn new_with_u128(num: u128) -> Self   { Self { ushort: num as u16 } }
+    #[inline] pub const fn new_with_u128(num: u128) -> Self { Self { ushort: num as u16 } }
 
-    // pub fn new_with_bool(b: bool) -> Self
+    // pub const fn new_with_bool(b: bool) -> Self
     /// Constructs a new `ShortUnion` with initializing it
     /// with the value of `b`.
     /// 
@@ -297,7 +297,7 @@ impl ShortUnion
     /// assert_eq!(a.get(), 1_u16);
     /// assert_eq!(b.get(), 0_u16);
     /// ```
-    #[inline] pub fn new_with_bool(b: bool) -> Self     { Self { ushort: b as u16 } }
+    #[inline] pub const fn new_with_bool(b: bool) -> Self   { Self { ushort: b as u16 } }
 
     // pub fn get(self) -> u16
     /// Returns its value as `u16`.

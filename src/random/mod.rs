@@ -242,39 +242,14 @@
 //! impl Random_Engine for OsRng
 //! {
 //!     #[inline]
-//!     fn new() -> Self    { Self }
-//! 
-//!     #[inline]
-//!     fn new_with<T, const N: usize>(_: &[T; N]) -> Self
-//!     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-//!         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-//!         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-//!         + Rem<Output=T> + RemAssign
-//!         + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-//!         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-//!         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-//!         + PartialEq + PartialOrd
-//!     { Self::new() }
-//! 
-//!     #[inline]
-//!     fn sow_array<T, const N: usize>(&mut self, _: &[T; N])
-//!     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-//!         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-//!         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-//!         + Rem<Output=T> + RemAssign
-//!         + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-//!         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-//!         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-//!         + PartialEq + PartialOrd
-//!     {}
-//! 
-//!     #[inline]
-//!     fn harvest(&mut self, _: u64) -> [u64; 8]
+//!     fn harvest(&mut self, _: u64, _: &[u64; 8]) -> [u64; 8]
 //!     {
-//!         [   rngs::OsRng.next_u64(), rngs::OsRng.next_u64(),
+//!         [
 //!             rngs::OsRng.next_u64(), rngs::OsRng.next_u64(),
 //!             rngs::OsRng.next_u64(), rngs::OsRng.next_u64(),
-//!             rngs::OsRng.next_u64(), rngs::OsRng.next_u64()  ]
+//!             rngs::OsRng.next_u64(), rngs::OsRng.next_u64(),
+//!             rngs::OsRng.next_u64(), rngs::OsRng.next_u64()
+//!         ]
 //!     }
 //! }
 //! 

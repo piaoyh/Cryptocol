@@ -316,7 +316,7 @@ pub union LongUnion
 
 impl LongUnion
 {
-    // pub fn new() -> Self
+    // pub const fn new() -> Self
     /// Constructs a new `LongUnion`.
     /// 
     /// # Output
@@ -333,9 +333,9 @@ impl LongUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 0_u64);
     /// ```
-    #[inline] pub fn new() -> Self  { Self { ulong: 0 } }
+    #[inline] pub const fn new() -> Self    { Self { ulong: 0 } }
 
-    // pub fn new_with(ulong: u64) -> Self
+    // pub const fn new_with(ulong: u64) -> Self
     /// Constructs a new `LongUnion` with initializing it with `ulong`.
     /// 
     /// # Output
@@ -351,9 +351,9 @@ impl LongUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 12345678909876456_u64);
     /// ```
-    #[inline] pub fn new_with(ulong: u64) -> Self   { Self { ulong } }
+    #[inline] pub const fn new_with(ulong: u64) -> Self { Self { ulong } }
 
-    // pub fn new_with_signed(slong: i64) -> Self
+    // pub const fn new_with_signed(slong: i64) -> Self
     /// Constructs a new `LongUnion` with initializing it with `slong`.
     /// 
     /// # Output
@@ -369,9 +369,9 @@ impl LongUnion
     /// println!("a = {}", a.get_signed());
     /// assert_eq!(a.get_signed(), -12345678909876456_i64);
     /// ```
-    #[inline] pub fn new_with_signed(slong: i64) -> Self    { Self { slong } }
+    #[inline] pub const fn new_with_signed(slong: i64) -> Self  { Self { slong } }
 
-    // pub fn new_with_ubytes(ubyte: [u8; 8]) -> Self
+    // pub const fn new_with_ubytes(ubyte: [u8; 8]) -> Self
     /// Constructs a new `LongUnion` with initializing it with `ubyte`.
     /// 
     /// # Output
@@ -388,9 +388,9 @@ impl LongUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 18445509505818563971_u64);
     /// ```
-    #[inline] pub fn new_with_ubytes(ubyte: [u8; 8]) -> Self    { Self { ubyte } }
+    #[inline] pub const fn new_with_ubytes(ubyte: [u8; 8]) -> Self  { Self { ubyte } }
 
-    // pub fn new_with_ushorts(ushort: [u16; 2]) -> Self
+    // pub const fn new_with_ushorts(ushort: [u16; 2]) -> Self
     /// Constructs a new `LongUnion` with initializing it with `ushort`.
     /// 
     /// # Output
@@ -406,9 +406,9 @@ impl LongUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 18445509505818563971_u64);
     /// ```
-    #[inline] pub fn new_with_ushorts(ushort: [u16; 4])  -> Self   { Self { ushort } }
+    #[inline] pub const fn new_with_ushorts(ushort: [u16; 4])  -> Self  { Self { ushort } }
 
-    // pub fn new_with_uints(uint: [u32; 2]) -> Self
+    // pub const fn new_with_uints(uint: [u32; 2]) -> Self
     /// Constructs a new `LongUnion` with initializing it with `uint`.
     /// 
     /// # Output
@@ -424,9 +424,9 @@ impl LongUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 18445509505818563971_u64);
     /// ```
-    #[inline] pub fn new_with_uints(uint: [u32; 2]) -> Self     { Self { uint } }
+    #[inline] pub const fn new_with_uints(uint: [u32; 2]) -> Self   { Self { uint } }
 
-    // pub fn new_with_u128(num: u128) -> Self
+    // pub const fn new_with_u128(num: u128) -> Self
     /// Constructs a new `LongUnion` with initializing it with the lower
     /// 64-bit part of `num`.
     /// 
@@ -448,9 +448,9 @@ impl LongUnion
     /// assert_eq!(a.get(), 18445509505818563971_u64);
     /// assert_eq!(b.get(), 12312739301371248917_u64);
     /// ```
-    #[inline] pub fn new_with_u128(num: u128) -> Self   { Self { ulong: num as u64 } }
+    #[inline] pub const fn new_with_u128(num: u128) -> Self { Self { ulong: num as u64 } }
 
-    // pub fn new_with_bool(b: bool) -> Self
+    // pub const fn new_with_bool(b: bool) -> Self
     /// Constructs a new `LongUnion` with initializing it
     /// with the value of `b`.
     /// 
@@ -473,7 +473,7 @@ impl LongUnion
     /// assert_eq!(a.get(), 1_u64);
     /// assert_eq!(b.get(), 0_u64);
     /// ```
-    #[inline] pub fn new_with_bool(b: bool) -> Self     { Self { ulong: b as u64 } }
+    #[inline] pub const fn new_with_bool(b: bool) -> Self   { Self { ulong: b as u64 } }
 
     // pub fn get(self) -> u64
     /// Returns its value as `u64`.

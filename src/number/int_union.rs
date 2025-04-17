@@ -235,7 +235,7 @@ pub union IntUnion
 
 impl IntUnion
 {
-    // pub fn new() -> Self
+    // pub const fn new() -> Self
     /// Constructs a new `IntUnion`.
     /// 
     /// # Output
@@ -252,9 +252,9 @@ impl IntUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 0_u32);
     /// ```
-    #[inline] pub fn new() -> Self  { Self { uint: 0 } }
+    #[inline] pub const fn new() -> Self    { Self { uint: 0 } }
 
-    // pub fn new_with(uint: u32) -> Self
+    // pub const fn new_with(uint: u32) -> Self
     /// Constructs a new `IntUnion` with initializing it with `uint`.
     /// 
     /// # Output
@@ -270,9 +270,9 @@ impl IntUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 1234567890_u32);
     /// ```
-    #[inline] pub fn new_with(uint: u32) -> Self    { Self { uint } }
+    #[inline] pub const fn new_with(uint: u32) -> Self  { Self { uint } }
 
-    // pub fn new_with_signed(sint: i32) -> Self
+    // pub const fn new_with_signed(sint: i32) -> Self
     /// Constructs a new `IntUnion` with initializing it with `sint`.
     /// 
     /// # Output
@@ -288,9 +288,9 @@ impl IntUnion
     /// println!("a = {}", a.get_signed());
     /// assert_eq!(a.get_signed(), -1234567890_i32);
     /// ```
-    #[inline] pub fn new_with_signed(sint: i32) -> Self     { Self { sint } }
+    #[inline] pub const fn new_with_signed(sint: i32) -> Self   { Self { sint } }
 
-    // pub fn new_with_ubytes(ubyte: [u8; 4]) -> Self
+    // pub const fn new_with_ubytes(ubyte: [u8; 4]) -> Self
     /// Constructs a new `IntUnion` with initializing it with `ubyte`.
     /// 
     /// # Output
@@ -306,9 +306,9 @@ impl IntUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 3840278750_u32);
     /// ```
-    #[inline] pub fn new_with_ubytes(ubyte: [u8; 4]) -> Self   { Self { ubyte } }
+    #[inline] pub const fn new_with_ubytes(ubyte: [u8; 4]) -> Self  { Self { ubyte } }
 
-    // pub fn new_with_ushorts(ushort: [u16; 2]) -> Self
+    // pub const fn new_with_ushorts(ushort: [u16; 2]) -> Self
     /// Constructs a new `IntUnion` with initializing it with `ushort`.
     /// 
     /// # Output
@@ -324,9 +324,9 @@ impl IntUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 3840278750_u32);
     /// ```
-    #[inline] pub fn new_with_ushorts(ushort: [u16; 2]) -> Self    { Self { ushort } }
+    #[inline] pub const fn new_with_ushorts(ushort: [u16; 2]) -> Self   { Self { ushort } }
 
-    // pub fn new_with_u128(num: u128) -> Self
+    // pub const fn new_with_u128(num: u128) -> Self
     /// Constructs a new `IntUnion` with initializing it with the lowest
     /// 32-bit part of `num`.
     /// 
@@ -348,9 +348,9 @@ impl IntUnion
     /// assert_eq!(a.get(), 3840278750_u32);
     /// assert_eq!(b.get(), 2923004181_u32);
     /// ```
-    #[inline] pub fn new_with_u128(num: u128) -> Self { Self { uint: num as u32 } }
+    #[inline] pub const fn new_with_u128(num: u128) -> Self { Self { uint: num as u32 } }
 
-    // pub fn new_with_bool(b: bool) -> Self
+    // pub const fn new_with_bool(b: bool) -> Self
     /// Constructs a new `IntUnion` with initializing it
     /// with the value of `b`.
     /// 
@@ -373,7 +373,7 @@ impl IntUnion
     /// assert_eq!(a.get(), 1_u32);
     /// assert_eq!(b.get(), 0_u32);
     /// ```
-    #[inline] pub fn new_with_bool(b: bool) -> Self     { Self { uint: b as u32 } }
+    #[inline] pub const fn new_with_bool(b: bool) -> Self   { Self { uint: b as u32 } }
 
     // pub fn get(self) -> u32
     /// Returns its value as `u32`.

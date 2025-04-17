@@ -446,7 +446,7 @@ pub union LongerUnion
 
 impl LongerUnion
 {
-    // pub fn new() -> Self
+    // pub const fn new() -> Self
     /// Constructs a new `LongerUnion`.
     /// 
     /// # Output
@@ -463,9 +463,9 @@ impl LongerUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 0_u128);
     /// ```
-    #[inline] pub fn new() -> Self  { Self { ulonger: 0 } }
+    #[inline] pub const fn new() -> Self    { Self { ulonger: 0 } }
 
-    // pub fn new_with(ulonger: u128) -> Self
+    // pub const fn new_with(ulonger: u128) -> Self
     /// Constructs a new `LongerUnion` with initializing it with `ulonger`.
     /// 
     /// # Output
@@ -481,9 +481,9 @@ impl LongerUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 1234567890987654321012345678987654321_u128);
     /// ```
-    #[inline] pub fn new_with(ulonger: u128) -> Self    { Self { ulonger } }
+    #[inline] pub const fn new_with(ulonger: u128) -> Self  { Self { ulonger } }
 
-    // pub fn new_with_signed(slonger: i128) -> Self
+    // pub const fn new_with_signed(slonger: i128) -> Self
     /// Constructs a new `LongerUnion` with initializing it with `slonger`.
     /// 
     /// # Output
@@ -499,9 +499,9 @@ impl LongerUnion
     /// println!("a = {}", a.get_signed());
     /// assert_eq!(a.get_signed(), -1234567890987654321012345678987654321_i128);
     /// ```
-    #[inline] pub fn new_with_signed(slonger: i128) -> Self     { Self { slonger } }
+    #[inline] pub const fn new_with_signed(slonger: i128) -> Self   { Self { slonger } }
 
-    // pub fn new_with_ubytes(ubyte: [u8; 16]) -> Self
+    // pub const fn new_with_ubytes(ubyte: [u8; 16]) -> Self
     /// Constructs a new `LongerUnion` with initializing it with `ubyte`.
     /// 
     /// # Output
@@ -518,9 +518,9 @@ impl LongerUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 339047799029950809142362261752780557135_u128);
     /// ```
-    #[inline] pub fn new_with_ubytes(ubyte: [u8; 16]) -> Self  { Self { ubyte } }
+    #[inline] pub const fn new_with_ubytes(ubyte: [u8; 16]) -> Self { Self { ubyte } }
 
-    // pub fn new_with_ushorts(ushort: [u16; 8]) -> Self
+    // pub const fn new_with_ushorts(ushort: [u16; 8]) -> Self
     /// Constructs a new `LongerUnion` with initializing it with `ushort`.
     /// 
     /// # Output
@@ -537,9 +537,9 @@ impl LongerUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 339047799029950809142362261752780557135_u128);
     /// ```
-    #[inline] pub fn new_with_ushorts(ushort: [u16; 8]) -> Self     { Self { ushort } }
+    #[inline] pub const fn new_with_ushorts(ushort: [u16; 8]) -> Self   { Self { ushort } }
 
-    // pub fn new_with_uints(uint: [u32; 4]) -> Self
+    // pub const fn new_with_uints(uint: [u32; 4]) -> Self
     /// Constructs a new `LongerUnion` with initializing it with `uint`.
     /// 
     /// # Output
@@ -556,9 +556,9 @@ impl LongerUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 339047799029950809142362261752780557135_u128);
     /// ```
-    #[inline] pub fn new_with_uints(uint: [u32; 4]) -> Self     { Self { uint } }
+    #[inline] pub const fn new_with_uints(uint: [u32; 4]) -> Self   { Self { uint } }
 
-    // pub fn new_with_ulongs(ulong: [u64; 2]) -> Self
+    // pub const fn new_with_ulongs(ulong: [u64; 2]) -> Self
     /// Constructs a new `LongerUnion` with initializing it with `ulong`.
     /// 
     /// # Output
@@ -574,9 +574,9 @@ impl LongerUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 339047799029950809142362261752780557135_u128);
     /// ```
-    #[inline] pub fn new_with_ulongs(ulong: [u64; 2]) -> Self   { Self { ulong } }
+    #[inline] pub const fn new_with_ulongs(ulong: [u64; 2]) -> Self { Self { ulong } }
 
-    // pub fn new_with_u128(num: u128) -> Self
+    // pub const fn new_with_u128(num: u128) -> Self
     /// Constructs a new `LongerUnion` with initializing it with `num`.
     /// 
     /// # Output
@@ -592,9 +592,9 @@ impl LongerUnion
     /// println!("a = {}", a.get());
     /// assert_eq!(a.get(), 123456789012345678901234567890123456789_u128);
     /// ```
-    #[inline] pub fn new_with_u128(num: u128) -> Self   { Self { ulonger: num } }
+    #[inline] pub const fn new_with_u128(num: u128) -> Self { Self { ulonger: num } }
 
-    // pub fn new_with_bool(b: bool) -> Self
+    // pub const fn new_with_bool(b: bool) -> Self
     /// Constructs a new `LongerUnion` with initializing it
     /// with the value of `b`.
     /// 
@@ -617,7 +617,7 @@ impl LongerUnion
     /// assert_eq!(a.get(), 1_u128);
     /// assert_eq!(b.get(), 0_u128);
     /// ```
-    #[inline] pub fn new_with_bool(b: bool) -> Self     { Self { ulonger: b as u128 } }
+    #[inline] pub const fn new_with_bool(b: bool) -> Self   { Self { ulonger: b as u128 } }
 
     // pub fn get(self) -> u128
     /// Returns its value as `u128`.

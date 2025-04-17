@@ -25,7 +25,6 @@ macro_rules! convert {
 
 macro_rules! make_FP {
     () => {
-        if true
         {
             let mut out = [0_u8; 64];
             out[Self::IP[00] as usize] = 00;
@@ -94,10 +93,6 @@ macro_rules! make_FP {
             out[Self::IP[63] as usize] = 63;
             out
         }
-        else
-        {
-            [0_u8; 64]
-        }
     }
 }
 
@@ -130,7 +125,6 @@ macro_rules! permutate_data {
     // self.block.set(permuted);
 
     ($permut:expr, $type:ty, $right:expr) => {
-        if true
         {
             let mut permuted = 0 as $type;
             let mut idx = 0_usize;
@@ -142,10 +136,6 @@ macro_rules! permutate_data {
                 idx += 1;
             }
             permuted
-        }
-        else
-        {
-            0 as $type
         }
     };
     // permutate_data!(Self::TP, u32, right);
@@ -1581,11 +1571,7 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     const SUCCESS: u64 = 0xFFFFFFFF_FFFFFFFF;
     const FAILURE: u64 = 0;
-
-    // pub fn clone_small_des(&self) -> SmallDES
-    // {
-    //     self
-    // }
+    const MASK: u64 = 0x0101010101010101;
 
     // pub fn new() -> Self
     /// Constructs a new object DES_Generic.
@@ -2749,6 +2735,31 @@ impl <const ROUND: usize, const SHIFT: u128,
         let cipher = self.encrypt_u64(0);
         self.encrypt_u64(cipher) == 0
     }
+
+    // pub fn is_equivalent_key_u64(&mut self, key: u64) -> bool
+    /// Checks wether or not it `key` is equivalent to its key.
+    /// 
+    /// # Output
+    /// This method returns `true` if it is equivalent to its key.
+    /// Otherwise, it returns `false`.
+    #[inline]
+    pub fn is_equivalent_key_u64(&mut self, key: u64) -> bool
+    {
+        key & Self::MASK == self.key.get() & Self::MASK
+    }
+
+    // pub fn is_equivalent_key(&mut self, key: &[u8; 8]) -> bool
+    /// Checks wether or not it `key` is equivalent to its key.
+    /// 
+    /// # Output
+    /// This method returns `true` if it is equivalent to its key.
+    /// Otherwise, it returns `false`.
+    #[inline]
+    pub fn is_equivalent_key(&mut self, key: &[u8; 8]) -> bool
+    {
+        LongUnion::new_with_ubytes(*key).get() & Self::MASK == self.key.get() & Self::MASK
+    }
+
 
     fn encrypt_block(&mut self)
     {

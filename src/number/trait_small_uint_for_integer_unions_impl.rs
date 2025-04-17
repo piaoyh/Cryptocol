@@ -19,10 +19,69 @@ use std::mem::{ size_of, size_of_val };
 
 use crate::number::{ SmallUInt, ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
 
-macro_rules! SmallUInt_methods_for_integer_unions_impl {
-    ($f:ty, $g:ty) => {
-        impl SmallUInt for $f
+
+macro_rules! SmallUInt_methods_for_integer_unions_impl
+{
+    (LongerUnion) => {
+        impl SmallUInt for LongerUnion
         {
+            const BYTES: usize = u128::BITS as usize / 8;
+            const MIN: Self = LongerUnion::new();
+            const MAX: Self = LongerUnion::new_with(u128::MAX);
+            const ONE: Self = LongerUnion::new_with(1);
+            SmallUInt_methods_for_integer_unions_impl_!(LongerUnion, u128);
+        }
+    };
+
+    (LongUnion) => {
+        impl SmallUInt for LongUnion
+        {
+            const BYTES: usize = u64::BITS as usize / 8;
+            const MIN: Self = LongUnion::new();
+            const MAX: Self = LongUnion::new_with(u64::MAX);
+            const ONE: Self = LongUnion::new_with(1);
+            SmallUInt_methods_for_integer_unions_impl_!(LongUnion, u64);
+        }
+    };
+
+    (IntUnion) => {
+        impl SmallUInt for IntUnion
+        {
+            const BYTES: usize = u32::BITS as usize / 8;
+            const MIN: Self = IntUnion::new();
+            const MAX: Self = IntUnion::new_with(u32::MAX);
+            const ONE: Self = IntUnion::new_with(1);
+            SmallUInt_methods_for_integer_unions_impl_!(IntUnion, u32);
+        }
+    };
+
+    (ShortUnion) => {
+        impl SmallUInt for ShortUnion
+        {
+            const BYTES: usize = u16::BITS as usize / 8;
+            const MIN: Self = ShortUnion::new();
+            const MAX: Self = ShortUnion::new_with(u16::MAX);
+            const ONE: Self = ShortUnion::new_with(1);
+            SmallUInt_methods_for_integer_unions_impl_!(ShortUnion, u16);
+        }
+    };
+    
+    (SizeUnion) => {
+        impl SmallUInt for SizeUnion
+        {
+            const BYTES: usize = usize::BITS as usize / 8;
+            const MIN: Self = SizeUnion::new();
+            const MAX: Self = SizeUnion::new_with(usize::MAX);
+            const ONE: Self = SizeUnion::new_with(1);
+            SmallUInt_methods_for_integer_unions_impl_!(SizeUnion, usize);
+        }
+    };
+}
+
+macro_rules! SmallUInt_methods_for_integer_unions_impl_ {
+    ($f:ty, $g:ty) => {
+        // impl SmallUInt for $f
+        // {
             /// Calculates `self` + `rhs` + `carry` and returns a tuple
             /// containing the sum and the output carry.
             /// [Read more](trait@SmallUInt#tymethod.carrying_add) in detail.
@@ -693,13 +752,13 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl {
             /// Returns the size of `self` in bits
             /// [Read more](trait@SmallUInt#tymethod.length_in_bits) in detail.
             #[inline] fn length_in_bits(self) -> usize  { size_of_val(&self) * 8 }
-        }
+        // }
     }
 }
 
 
-SmallUInt_methods_for_integer_unions_impl! { ShortUnion, u16 }
-SmallUInt_methods_for_integer_unions_impl! { IntUnion, u32 }
-SmallUInt_methods_for_integer_unions_impl! { LongUnion, u64 }
-SmallUInt_methods_for_integer_unions_impl! { LongerUnion, u128 }
-SmallUInt_methods_for_integer_unions_impl! { SizeUnion, usize }
+SmallUInt_methods_for_integer_unions_impl! { ShortUnion }
+SmallUInt_methods_for_integer_unions_impl! { IntUnion }
+SmallUInt_methods_for_integer_unions_impl! { LongUnion }
+SmallUInt_methods_for_integer_unions_impl! { LongerUnion }
+SmallUInt_methods_for_integer_unions_impl! { SizeUnion }

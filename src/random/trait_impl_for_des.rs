@@ -303,10 +303,14 @@ Random_Engine for DES_Generic<ROUND, SHIFT,
     {
         let mut key = self.get_key_u64();
         key += sugar;
+        while self.is_equivalent_key_u64(key)
+            { key += 2; }
         self.set_key_u64(key);
         while self.has_weak_key()
         {
-            key += 1;
+            key += 2;
+            while self.is_equivalent_key_u64(key)
+                { key += 2; }
             self.set_key_u64(key);
         }
         let mut cipher = [0_u64; 8];
