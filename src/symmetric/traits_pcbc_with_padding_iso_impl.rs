@@ -312,9 +312,10 @@ S756, S757, S758, S759, S760, S761, S762, S763>
     fn encrypt(&mut self, mut iv: u64, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
         let mut progress = 0_u64;
+        let mut block = 0_u64;
         for _ in 0..length_in_bytes >> 3    // length_in_bytes >> 3 == length_in_bytes / 8
         {
-            let block = unsafe { *(message.add(progress as usize) as *const u64 ) };
+            unsafe { copy_nonoverlapping(message.add(progress as usize) as *const u8, (&mut block) as *mut u64 as *mut u8, 8); }
             let encoded = self.encrypt_u64(block ^ iv);
             unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
             iv = block ^ encoded;
@@ -368,11 +369,12 @@ S756, S757, S758, S759, S760, S761, S762, S763>
     fn decrypt(&mut self, mut iv: u64, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
     {
         let mut progress = 0_u64;
+        let mut block = 0_u64;
         if length_in_bytes > 8
         {
             for i in 0..(length_in_bytes >> 3) - 1
             {
-                let block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
+                unsafe { copy_nonoverlapping(cipher.add(progress as usize) as *const u8, (&mut block) as *mut u64 as *mut u8, 8); }
                 let decoded = iv ^ self.decrypt_u64(block);
                 iv = block ^ decoded;
                 unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), 8); }
@@ -380,7 +382,7 @@ S756, S757, S758, S759, S760, S761, S762, S763>
             }
         }
 
-        let block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
+        unsafe { copy_nonoverlapping(cipher.add(progress as usize) as *const u8, (&mut block) as *mut u64 as *mut u8, 8); }
         let decoded = iv ^ self.decrypt_u64(block);
         let decoded_union = LongUnion::new_with(decoded);
         for i in 0..8_usize

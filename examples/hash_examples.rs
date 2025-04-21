@@ -2894,13 +2894,13 @@ fn hash_sha2_512_main()
 {
     sha2_512_quick_start();
     sha2_512_new();
-    sha2_512_digest_c();
+    // sha2_512_digest_c();
     sha2_512_digest();
     sha2_512_digest_str();
     sha2_512_digest_string();
     sha2_512_digest_array();
     sha2_512_digest_vec();
-    sha2_512_ruminate_c();
+    // sha2_512_ruminate_c();
     sha2_512_ruminate();
     sha2_512_ruminate_str();
     sha2_512_ruminate_string();
@@ -2984,27 +2984,27 @@ fn sha2_512_new()
     println!("-------------------------------");
 }
 
-fn sha2_512_digest_c()
-{
-    println!("sha2_512_digest_c");
-    // # Example for SHA2_512
-    use cryptocol::hash::SHA2_512;
-    let mut hash = SHA2_512::new();
-    let txt = "This is an example of the method digest_c().";
-    hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-    assert_eq!(hash.to_string(), "345156BD2AC721CE25C08D57290D1C0DEB60E44B9B7BFBC16600F26A2061AE9AF6CC990F30E3B8C3BF0EA43DAFB17DD3C37C1CA2222ACE2E828A676443EF4F1C");
+// fn sha2_512_digest_c()
+// {
+//     println!("sha2_512_digest_c");
+//     // # Example for SHA2_512
+//     use cryptocol::hash::SHA2_512;
+//     let mut hash = SHA2_512::new();
+//     let txt = "This is an example of the method digest_c().";
+//     hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+//     assert_eq!(hash.to_string(), "345156BD2AC721CE25C08D57290D1C0DEB60E44B9B7BFBC16600F26A2061AE9AF6CC990F30E3B8C3BF0EA43DAFB17DD3C37C1CA2222ACE2E828A676443EF4F1C");
 
-    // # Example for SHA2_512_Expanded
-    use cryptocol::hash::SHA2_512_Expanded;
-    type MySHA2 = SHA2_512_Expanded<0x1111_1111_1111_1111, 0x3333_3333_3333_3333, 0x5555_5555_5555_5555, 0x7777_7777_7777_7777, 0x9999_9999_9999_9999, 0xbbbb_bbbb_bbbb_bbbb, 0xdddd_dddd_dddd_dddd, 0xffff_ffff_ffff_ffff, 160>;
-    let mut my_hash = MySHA2::new();
-    let txt = "This is an example of the method digest_c().";
-    my_hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
-    assert_eq!(my_hash.to_string(), "24354EDB98432813AF297B6BEEDB47F3563BBDDB29FF7F9F25996799BD46BB6364181CA4A8073978D14A345F4A43CB518BBC5D5F8BD6524904C840055B525D2C");
-    println!("-------------------------------");
-}
+//     // # Example for SHA2_512_Expanded
+//     use cryptocol::hash::SHA2_512_Expanded;
+//     type MySHA2 = SHA2_512_Expanded<0x1111_1111_1111_1111, 0x3333_3333_3333_3333, 0x5555_5555_5555_5555, 0x7777_7777_7777_7777, 0x9999_9999_9999_9999, 0xbbbb_bbbb_bbbb_bbbb, 0xdddd_dddd_dddd_dddd, 0xffff_ffff_ffff_ffff, 160>;
+//     let mut my_hash = MySHA2::new();
+//     let txt = "This is an example of the method digest_c().";
+//     my_hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+//     assert_eq!(my_hash.to_string(), "24354EDB98432813AF297B6BEEDB47F3563BBDDB29FF7F9F25996799BD46BB6364181CA4A8073978D14A345F4A43CB518BBC5D5F8BD6524904C840055B525D2C");
+//     println!("-------------------------------");
+// }
 
 fn sha2_512_digest()
 {
@@ -3013,7 +3013,7 @@ fn sha2_512_digest()
     use cryptocol::hash::SHA2_512;
     let mut hash = SHA2_512::new();
     let txt = "This is an example of the method digest().";
-    hash.digest(txt.as_ptr(), txt.len() as u128);
+    hash.digest(txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     assert_eq!(hash.to_string(), "7DE9DD6917A9B3353EA426F9C43894513095E944DBE0678491DDABAC0D87236E007374B7438231AB84DE91271F1BCCD11BA64AEC24E3BDC410DE1115A075E2DC");
 
@@ -3022,7 +3022,7 @@ fn sha2_512_digest()
     type MySHA2 = SHA2_512_Expanded<0x1111_1111_1111_1111, 0x3333_3333_3333_3333, 0x5555_5555_5555_5555, 0x7777_7777_7777_7777, 0x9999_9999_9999_9999, 0xbbbb_bbbb_bbbb_bbbb, 0xdddd_dddd_dddd_dddd, 0xffff_ffff_ffff_ffff, 160>;
     let mut my_hash = MySHA2::new();
     let txt = "This is an example of the method digest().";
-    my_hash.digest(txt.as_ptr(), txt.len() as u128);
+    my_hash.digest(txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     assert_eq!(my_hash.to_string(), "54D3E18AD977B18F4E3254FBE759C6D8072EFA95A88C671610C16A19D05253A9B3762FE32D054BADBEB877735287A47C1CD7439CA3AE8BE12489D0E8C7F73945");
     println!("-------------------------------");
@@ -3116,27 +3116,27 @@ fn sha2_512_digest_vec()
     println!("-------------------------------");
 }
 
-fn sha2_512_ruminate_c()
-{
-    println!("sha2_512_ruminate_c");
-    // Example for SHA2_512
-    use cryptocol::hash::SHA2_512;
-    let mut hash = SHA2_512::new();
-    let txt = "This is an example of the method ruminate_c().";
-    hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-    assert_eq!(hash.to_string(), "52787131CFC0C4C058147A8620A4592F9077E05796853761B9846E5A141F79D5C833F4C31754A0C39C6A111A5C9884703838F61544F31FDF39B74D07F3F04CCD");
+// fn sha2_512_ruminate_c()
+// {
+//     println!("sha2_512_ruminate_c");
+//     // Example for SHA2_512
+//     use cryptocol::hash::SHA2_512;
+//     let mut hash = SHA2_512::new();
+//     let txt = "This is an example of the method ruminate_c().";
+//     hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+//     assert_eq!(hash.to_string(), "52787131CFC0C4C058147A8620A4592F9077E05796853761B9846E5A141F79D5C833F4C31754A0C39C6A111A5C9884703838F61544F31FDF39B74D07F3F04CCD");
 
-    // Example for SHA2_512_Expanded
-    use cryptocol::hash::SHA2_512_Expanded;
-    type MySHA2_512 = SHA2_512_Expanded<0x1111_1111_1111_1111, 0x3333_3333_3333_3333, 0x5555_5555_5555_5555, 0x7777_7777_7777_7777, 0x9999_9999_9999_9999, 0xbbbb_bbbb_bbbb_bbbb, 0xdddd_dddd_dddd_dddd, 0xffff_ffff_ffff_ffff, 160>;
-    let mut hash = MySHA2_512::new();
-    let txt = "This is an example of the method ruminate_c().";
-    hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-    assert_eq!(hash.to_string(), "3A1097A01FE71CBD6F8EAC1D08D7FEAD5754F077DE1E997B0411A60313EAC182C82BAAFD550AC367D029CCF3B7DE823475EE0AFCAEAF9388BCA09262C28F730C");
-    println!("-------------------------------");
-}
+//     // Example for SHA2_512_Expanded
+//     use cryptocol::hash::SHA2_512_Expanded;
+//     type MySHA2_512 = SHA2_512_Expanded<0x1111_1111_1111_1111, 0x3333_3333_3333_3333, 0x5555_5555_5555_5555, 0x7777_7777_7777_7777, 0x9999_9999_9999_9999, 0xbbbb_bbbb_bbbb_bbbb, 0xdddd_dddd_dddd_dddd, 0xffff_ffff_ffff_ffff, 160>;
+//     let mut hash = MySHA2_512::new();
+//     let txt = "This is an example of the method ruminate_c().";
+//     hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+//     assert_eq!(hash.to_string(), "3A1097A01FE71CBD6F8EAC1D08D7FEAD5754F077DE1E997B0411A60313EAC182C82BAAFD550AC367D029CCF3B7DE823475EE0AFCAEAF9388BCA09262C28F730C");
+//     println!("-------------------------------");
+// }
 
 fn sha2_512_ruminate()
 {
@@ -3145,7 +3145,7 @@ fn sha2_512_ruminate()
     use cryptocol::hash::SHA2_512;
     let mut hash = SHA2_512::new();
     let txt = "This is an example of the method ruminate().";
-    hash.ruminate(2, txt.as_ptr(), txt.len() as u128);
+    hash.ruminate(2, txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     assert_eq!(hash.to_string(), "C19B01562E1A198DBDBB2C6CB093277109B9130E19B0A0EDBFF67D9690BAE5A5D12551257CA7DEC7AB02C27ADB8AD98D3281D376EBC0F944CBC04D7D87A80D11");
 
@@ -3154,7 +3154,7 @@ fn sha2_512_ruminate()
     type MySHA2_512 = SHA2_512_Expanded<0x1111_1111_1111_1111, 0x3333_3333_3333_3333, 0x5555_5555_5555_5555, 0x7777_7777_7777_7777, 0x9999_9999_9999_9999, 0xbbbb_bbbb_bbbb_bbbb, 0xdddd_dddd_dddd_dddd, 0xffff_ffff_ffff_ffff, 160>;
     let mut hash = MySHA2_512::new();
     let txt = "This is an example of the method ruminate().";
-    hash.ruminate(2, txt.as_ptr(), txt.len() as u128);
+    hash.ruminate(2, txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     assert_eq!(hash.to_string(), "9DD3646C38AECA875339D816DAA59A69A890F7098BF8BE7EF2714834EDB34C572555D609BA8D009BA65BE7E98E4A64CE80FCA8D2C6308085B0471F3758C17081");
     println!("-------------------------------");
@@ -3447,13 +3447,13 @@ fn hash_sha2_384_main()
 {
     sha2_384_quick_start();
     sha2_384_new();
-    sha2_384_digest_c();
+    // sha2_384_digest_c();
     sha2_384_digest();
     sha2_384_digest_str();
     sha2_384_digest_string();
     sha2_384_digest_array();
     sha2_384_digest_vec();
-    sha2_384_ruminate_c();
+    // sha2_384_ruminate_c();
     sha2_384_ruminate();
     sha2_384_ruminate_str();
     sha2_384_ruminate_string();
@@ -3536,27 +3536,27 @@ fn sha2_384_new()
     println!("-------------------------------");
 }
 
-fn sha2_384_digest_c()
-{
-    println!("sha2_384_digest_c");
-    // Example for SHA2_384
-    use cryptocol::hash::SHA2_384;
-    let mut hash = SHA2_384::new();
-    let txt = "This is an example of the method digest_c().";
-    hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-    assert_eq!(hash.to_string(), "49B260A01AE5737FD153A7C08700489B23A1D3150657EA88CBD834D89A7305B223C4CE52A682E5259FD16B2EF5BBA14D");
+// fn sha2_384_digest_c()
+// {
+//     println!("sha2_384_digest_c");
+//     // Example for SHA2_384
+//     use cryptocol::hash::SHA2_384;
+//     let mut hash = SHA2_384::new();
+//     let txt = "This is an example of the method digest_c().";
+//     hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+//     assert_eq!(hash.to_string(), "49B260A01AE5737FD153A7C08700489B23A1D3150657EA88CBD834D89A7305B223C4CE52A682E5259FD16B2EF5BBA14D");
 
-    // Example for SHA2_384_Expanded
-    use cryptocol::hash::SHA2_384_Expanded;
-    type MySHA2 = SHA2_384_Expanded<160>;
-    let mut my_hash = MySHA2::new();
-    let txt = "This is an example of the method digest_c().";
-    my_hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
-    assert_eq!(my_hash.to_string(), "C9282F31FFB5255BE04EA08708D85719C262AE1ABA9B9B1A99BC05E23DC5F8BE4E151BF327CD4C25342A292281FF9CA2");
-    println!("-------------------------------");
-}
+//     // Example for SHA2_384_Expanded
+//     use cryptocol::hash::SHA2_384_Expanded;
+//     type MySHA2 = SHA2_384_Expanded<160>;
+//     let mut my_hash = MySHA2::new();
+//     let txt = "This is an example of the method digest_c().";
+//     my_hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+//     assert_eq!(my_hash.to_string(), "C9282F31FFB5255BE04EA08708D85719C262AE1ABA9B9B1A99BC05E23DC5F8BE4E151BF327CD4C25342A292281FF9CA2");
+//     println!("-------------------------------");
+// }
 
 fn sha2_384_digest()
 {
@@ -3565,7 +3565,7 @@ fn sha2_384_digest()
     use cryptocol::hash::SHA2_384;
     let mut hash = SHA2_384::new();
     let txt = "This is an example of the method digest().";
-    hash.digest(txt.as_ptr(), txt.len() as u128);
+    hash.digest(txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     assert_eq!(hash.to_string(), "1EFF9CDB108E9FC430650DC0A8FB7195654B225B013ECF90F7949077A299D04A921997536D0E1941734ED63FA68AF5E2");
 
@@ -3574,7 +3574,7 @@ fn sha2_384_digest()
     type MySHA2 = SHA2_384_Expanded<160>;
     let mut my_hash = MySHA2::new();
     let txt = "This is an example of the method digest().";
-    my_hash.digest(txt.as_ptr(), txt.len() as u128);
+    my_hash.digest(txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     assert_eq!(my_hash.to_string(), "0A02CF201EFC3EA6FD5EF340487CBFDF8EECF6EC97F917C6519635696352FF08FE171445C5A724849ACE4BC3475C6C32");
     println!("-------------------------------");
@@ -3668,27 +3668,27 @@ fn sha2_384_digest_vec()
     println!("-------------------------------");
 }
 
-fn sha2_384_ruminate_c()
-{
-    println!("sha2_384_ruminate_c");
-    // Example for SHA2_384
-    use cryptocol::hash::SHA2_384;
-    let mut hash = SHA2_384::new();
-    let txt = "This is an example of the method ruminate_c().";
-    hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-    assert_eq!(hash.to_string(), "536CCC8C5BDA57DA3F130EDF2FBD2077BCE4A77CCB6719037DEFE738F76672EA7DCF6BDDDEE8C2E0FBD6A6E97496018D");
+// fn sha2_384_ruminate_c()
+// {
+//     println!("sha2_384_ruminate_c");
+//     // Example for SHA2_384
+//     use cryptocol::hash::SHA2_384;
+//     let mut hash = SHA2_384::new();
+//     let txt = "This is an example of the method ruminate_c().";
+//     hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+//     assert_eq!(hash.to_string(), "536CCC8C5BDA57DA3F130EDF2FBD2077BCE4A77CCB6719037DEFE738F76672EA7DCF6BDDDEE8C2E0FBD6A6E97496018D");
 
-    // Example for SHA2_384_Expanded
-    use cryptocol::hash::SHA2_384_Expanded;
-    type MySHA2 = SHA2_384_Expanded<160>;
-    let mut my_hash = MySHA2::new();
-    let txt = "This is an example of the method ruminate_c().";
-    my_hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
-    assert_eq!(my_hash.to_string(), "0F9AEA2C6450A05CBF6EDD67424B598EEB25DFFA347E16EDA1F23682AB16FDB59EECFB1D4FEC3FDBC47569102CB90A7C");
-    println!("-------------------------------");
-}
+//     // Example for SHA2_384_Expanded
+//     use cryptocol::hash::SHA2_384_Expanded;
+//     type MySHA2 = SHA2_384_Expanded<160>;
+//     let mut my_hash = MySHA2::new();
+//     let txt = "This is an example of the method ruminate_c().";
+//     my_hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+//     assert_eq!(my_hash.to_string(), "0F9AEA2C6450A05CBF6EDD67424B598EEB25DFFA347E16EDA1F23682AB16FDB59EECFB1D4FEC3FDBC47569102CB90A7C");
+//     println!("-------------------------------");
+// }
 
 fn sha2_384_ruminate()
 {
@@ -3697,7 +3697,7 @@ fn sha2_384_ruminate()
     use cryptocol::hash::SHA2_384;
     let mut hash = SHA2_384::new();
     let txt = "This is an example of the method ruminate().";
-    hash.ruminate(2, txt.as_ptr(), txt.len() as u128);
+    hash.ruminate(2, txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     assert_eq!(hash.to_string(), "D192674BCF9C76D86BA8F0A0A3615A4909788D23928CE62260D981E9DE6A6A98B3095BF03B6F124004C9672E1D784270");
 
@@ -3706,7 +3706,7 @@ fn sha2_384_ruminate()
     type MySHA2 = SHA2_384_Expanded<160>;
     let mut my_hash = MySHA2::new();
     let txt = "This is an example of the method ruminate().";
-    my_hash.ruminate(2, txt.as_ptr(), txt.len() as u128);
+    my_hash.ruminate(2, txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     assert_eq!(my_hash.to_string(), "767C864B487A2DA254618CAB19F4C549386AB2AFBE0B7881306FD978F705D6D034C4BF5488BCB179A7CDC2B8850F585E");
     println!("-------------------------------");
@@ -4000,13 +4000,13 @@ fn hash_sha2_512_256_main()
 {
     sha2_512_256_quick_start();
     sha2_512_256_new();
-    sha2_512_256_digest_c();
+    // sha2_512_256_digest_c();
     sha2_512_256_digest();
     sha2_512_256_digest_str();
     sha2_512_256_digest_string();
     sha2_512_256_digest_array();
     sha2_512_256_digest_vec();
-    sha2_512_256_ruminate_c();
+    // sha2_512_256_ruminate_c();
     sha2_512_256_ruminate();
     sha2_512_256_ruminate_str();
     sha2_512_256_ruminate_string();
@@ -4089,27 +4089,27 @@ fn sha2_512_256_new()
     println!("-------------------------------");
 }
 
-fn sha2_512_256_digest_c()
-{
-    println!("sha2_512_256_digest_c");
-    // Example for SHA2_512_256
-    use cryptocol::hash::SHA2_512_256;
-    let txt = "This is an example of the method digest_c().";
-    let mut hash = SHA2_512_256::new();
-    hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-    assert_eq!(hash.to_string(), "AE67F5B190BB09DC615859EC2D11736DA6CBE00340EE39396FE76257238E3AF1");
+// fn sha2_512_256_digest_c()
+// {
+//     println!("sha2_512_256_digest_c");
+//     // Example for SHA2_512_256
+//     use cryptocol::hash::SHA2_512_256;
+//     let txt = "This is an example of the method digest_c().";
+//     let mut hash = SHA2_512_256::new();
+//     hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+//     assert_eq!(hash.to_string(), "AE67F5B190BB09DC615859EC2D11736DA6CBE00340EE39396FE76257238E3AF1");
 
-    // Example for SHA2_512_256_Expanded
-    use cryptocol::hash::SHA2_512_256_Expanded;
-    type MySHA2 = SHA2_512_256_Expanded<160>;
-    let mut my_hash = MySHA2::new();
-    let txt = "This is an example of the method digest_c().";
-    my_hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
-    assert_eq!(my_hash.to_string(), "03637D7BF4A7D12D2BE672F2D2F5E904EFCC59CC4D2A8844016A5704E79B976F");
-    println!("-------------------------------");
-}
+//     // Example for SHA2_512_256_Expanded
+//     use cryptocol::hash::SHA2_512_256_Expanded;
+//     type MySHA2 = SHA2_512_256_Expanded<160>;
+//     let mut my_hash = MySHA2::new();
+//     let txt = "This is an example of the method digest_c().";
+//     my_hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+//     assert_eq!(my_hash.to_string(), "03637D7BF4A7D12D2BE672F2D2F5E904EFCC59CC4D2A8844016A5704E79B976F");
+//     println!("-------------------------------");
+// }
 
 fn sha2_512_256_digest()
 {
@@ -4118,7 +4118,7 @@ fn sha2_512_256_digest()
     use cryptocol::hash::SHA2_512_256;
     let mut hash = SHA2_512_256::new();
     let txt = "This is an example of the method digest().";
-    hash.digest(txt.as_ptr(), txt.len() as u128);
+    hash.digest(txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     assert_eq!(hash.to_string(), "BF3A06F51CE91951607AABD2E33AD24D8B75618F2366B90D98991AD28E47FAA5");
 
@@ -4127,7 +4127,7 @@ fn sha2_512_256_digest()
     type MySHA2 = SHA2_512_256_Expanded<160>;
     let mut my_hash = MySHA2::new();
     let txt = "This is an example of the method digest().";
-    my_hash.digest(txt.as_ptr(), txt.len() as u128);
+    my_hash.digest(txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     assert_eq!(my_hash.to_string(), "FC30259340B6326E1C8C5B91AA8554A16B83959E36F446781E9C96B01D6B9BA1");
     println!("-------------------------------");
@@ -4221,27 +4221,27 @@ fn sha2_512_256_digest_vec()
     println!("-------------------------------");
 }
 
-fn sha2_512_256_ruminate_c()
-{
-    println!("sha2_512_256_ruminate_c");
-    // Example for SHA2_512_256
-    use cryptocol::hash::SHA2_512_256;
-    let mut hash = SHA2_512_256::new();
-    let txt = "This is an example of the method ruminate_c().";
-    hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-    assert_eq!(hash.to_string(), "B5E60B697A54A96D45AAFA99A2B8AB144D6E95DABC67AD63885C7337348BA376");
+// fn sha2_512_256_ruminate_c()
+// {
+//     println!("sha2_512_256_ruminate_c");
+//     // Example for SHA2_512_256
+//     use cryptocol::hash::SHA2_512_256;
+//     let mut hash = SHA2_512_256::new();
+//     let txt = "This is an example of the method ruminate_c().";
+//     hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+//     assert_eq!(hash.to_string(), "B5E60B697A54A96D45AAFA99A2B8AB144D6E95DABC67AD63885C7337348BA376");
 
-    // Example for SHA2_512_256_Expanded
-    use cryptocol::hash::SHA2_512_256_Expanded;
-    type MySHA2 = SHA2_512_256_Expanded<160>;
-    let mut my_hash = MySHA2::new();
-    let txt = "This is an example of the method ruminate_c().";
-    my_hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
-    assert_eq!(my_hash.to_string(), "71E97C068FC379DC30E6208109C8166E5DB9DA1C9F3A6DA2270EE804D20554B9");
-    println!("-------------------------------");
-}
+//     // Example for SHA2_512_256_Expanded
+//     use cryptocol::hash::SHA2_512_256_Expanded;
+//     type MySHA2 = SHA2_512_256_Expanded<160>;
+//     let mut my_hash = MySHA2::new();
+//     let txt = "This is an example of the method ruminate_c().";
+//     my_hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+//     assert_eq!(my_hash.to_string(), "71E97C068FC379DC30E6208109C8166E5DB9DA1C9F3A6DA2270EE804D20554B9");
+//     println!("-------------------------------");
+// }
 
 fn sha2_512_256_ruminate()
 {
@@ -4250,7 +4250,7 @@ fn sha2_512_256_ruminate()
     use cryptocol::hash::SHA2_512_256;
     let mut hash = SHA2_512_256::new();
     let txt = "This is an example of the method ruminate().";
-    hash.ruminate(2, txt.as_ptr(), txt.len() as u128);
+    hash.ruminate(2, txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     assert_eq!(hash.to_string(), "927E9CC4F2CC0F074B450AA98D2ED3A98296664D4884B2786276E1CB1B6EC146");
 
@@ -4259,7 +4259,7 @@ fn sha2_512_256_ruminate()
     type MySHA2 = SHA2_512_256_Expanded<160>;
     let mut my_hash = MySHA2::new();
     let txt = "This is an example of the method ruminate().";
-    my_hash.ruminate(2, txt.as_ptr(), txt.len() as u128);
+    my_hash.ruminate(2, txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     assert_eq!(my_hash.to_string(), "403F0CE6772ECC2C7F0E58BED9C66F95C77CBB4620E1DBB81E70983D156DECC5");
     println!("-------------------------------");
@@ -4554,13 +4554,13 @@ fn hash_sha2_512_t_256_main()
     sha2_512_t_256_quick_start();
     sha2_512_t_256_new();
     sha2_512_t_256_new_with_seed_text();
-    sha2_512_t_256_digest_c();
+    // sha2_512_t_256_digest_c();
     sha2_512_t_256_digest();
     sha2_512_t_256_digest_str();
     sha2_512_t_256_digest_string();
     sha2_512_t_256_digest_array();
     sha2_512_t_256_digest_vec();
-    sha2_512_t_256_ruminate_c();
+    // sha2_512_t_256_ruminate_c();
     sha2_512_t_256_ruminate();
     sha2_512_t_256_ruminate_str();
     sha2_512_t_256_ruminate_string();
@@ -4664,27 +4664,27 @@ fn sha2_512_t_256_new_with_seed_text()
     println!("-------------------------------");
 }
 
-fn sha2_512_t_256_digest_c()
-{
-    println!("sha2_512_t_256_digest_c");
-    // Example for SHA2_512_t_256
-    use cryptocol::hash::SHA2_512_t_256;
-    let mut hash = SHA2_512_t_256::new();
-    let txt = "This is an example of the method digest_c().";
-    hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-    assert_eq!(hash.to_string(), "AE67F5B190BB09DC615859EC2D11736DA6CBE00340EE39396FE76257238E3AF1");
+// fn sha2_512_t_256_digest_c()
+// {
+//     println!("sha2_512_t_256_digest_c");
+//     // Example for SHA2_512_t_256
+//     use cryptocol::hash::SHA2_512_t_256;
+//     let mut hash = SHA2_512_t_256::new();
+//     let txt = "This is an example of the method digest_c().";
+//     hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+//     assert_eq!(hash.to_string(), "AE67F5B190BB09DC615859EC2D11736DA6CBE00340EE39396FE76257238E3AF1");
 
-    // Example for SHA2_512_t_256_Expanded
-    use cryptocol::hash::SHA2_512_t_256_Expanded;
-    type MySHA2 = SHA2_512_t_256_Expanded<0x123456789abcdef0, 160>;
-    let mut my_hash = MySHA2::new();
-    let txt = "This is an example of the method digest_c().";
-    my_hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
-    assert_eq!(my_hash.to_string(), "D9BE41EF1B7AFDCF7E3E8256661ACD436E3D0811FD433D5A6BF48823F2A004B4");
-    println!("-------------------------------");
-}
+//     // Example for SHA2_512_t_256_Expanded
+//     use cryptocol::hash::SHA2_512_t_256_Expanded;
+//     type MySHA2 = SHA2_512_t_256_Expanded<0x123456789abcdef0, 160>;
+//     let mut my_hash = MySHA2::new();
+//     let txt = "This is an example of the method digest_c().";
+//     my_hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+//     assert_eq!(my_hash.to_string(), "D9BE41EF1B7AFDCF7E3E8256661ACD436E3D0811FD433D5A6BF48823F2A004B4");
+//     println!("-------------------------------");
+// }
 
 fn sha2_512_t_256_digest()
 {
@@ -4693,7 +4693,7 @@ fn sha2_512_t_256_digest()
     use cryptocol::hash::SHA2_512_t_256;
     let mut hash = SHA2_512_t_256::new();
     let txt = "This is an example of the method digest().";
-    hash.digest(txt.as_ptr(), txt.len() as u128);
+    hash.digest(txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     assert_eq!(hash.to_string(), "BF3A06F51CE91951607AABD2E33AD24D8B75618F2366B90D98991AD28E47FAA5");
 
@@ -4701,7 +4701,7 @@ fn sha2_512_t_256_digest()
     use cryptocol::hash::SHA2_512_t_256_Expanded;
     type MySHA2 = SHA2_512_t_256_Expanded<160>;
     let mut my_hash = MySHA2::new();
-    my_hash.digest(txt.as_ptr(), txt.len() as u128);
+    my_hash.digest(txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     assert_eq!(my_hash.to_string(), "645C53583A01ABF44F279BEC2CC07AB072B57AA319962B524C73435DBE564CEF");
     println!("-------------------------------");
@@ -4795,27 +4795,27 @@ fn sha2_512_t_256_digest_vec()
     println!("-------------------------------");
 }
 
-fn sha2_512_t_256_ruminate_c()
-{
-    println!("sha2_512_t_256_ruminate_c");
-    // Example for SHA2_512_t_256
-    use cryptocol::hash::SHA2_512_t_256;
-    let mut hash = SHA2_512_t_256::new();
-    let txt = "This is an example of the method ruminate_c().";
-    hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-    assert_eq!(hash.to_string(), "71D8FB0BC160A3EAA18ED54D48EC54A2FBA4364D4592917CEB8846CAB1492DB6");
+// fn sha2_512_t_256_ruminate_c()
+// {
+//     println!("sha2_512_t_256_ruminate_c");
+//     // Example for SHA2_512_t_256
+//     use cryptocol::hash::SHA2_512_t_256;
+//     let mut hash = SHA2_512_t_256::new();
+//     let txt = "This is an example of the method ruminate_c().";
+//     hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+//     assert_eq!(hash.to_string(), "71D8FB0BC160A3EAA18ED54D48EC54A2FBA4364D4592917CEB8846CAB1492DB6");
 
-    // Example for SHA2_512_t_256_Expanded
-    use cryptocol::hash::SHA2_512_t_256_Expanded;
-    type MySHA2 = SHA2_512_t_256_Expanded<160>;
-    let mut my_hash = MySHA2::new();
-    let txt = "This is an example of the method ruminate_c().";
-    my_hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
-    assert_eq!(my_hash.to_string(), "A5098CDF4CAFEC47765E2D87557587D50CFA802385C39B3596A816B863C45F82");
-    println!("-------------------------------");
-}
+//     // Example for SHA2_512_t_256_Expanded
+//     use cryptocol::hash::SHA2_512_t_256_Expanded;
+//     type MySHA2 = SHA2_512_t_256_Expanded<160>;
+//     let mut my_hash = MySHA2::new();
+//     let txt = "This is an example of the method ruminate_c().";
+//     my_hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+//     assert_eq!(my_hash.to_string(), "A5098CDF4CAFEC47765E2D87557587D50CFA802385C39B3596A816B863C45F82");
+//     println!("-------------------------------");
+// }
 
 fn sha2_512_t_256_ruminate()
 {
@@ -4824,7 +4824,7 @@ fn sha2_512_t_256_ruminate()
     use cryptocol::hash::SHA2_512_t_256;
     let mut hash = SHA2_512_t_256::new();
     let txt = "This is an example of the method ruminate().";
-    hash.ruminate(2, txt.as_ptr(), txt.len() as u128);
+    hash.ruminate(2, txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     assert_eq!(hash.to_string(), "EBA9C4DE950CE07EDB662147C3246779660F03607D27493A0D62ECC6282C4501");
 
@@ -4833,7 +4833,7 @@ fn sha2_512_t_256_ruminate()
     type MySHA2 = SHA2_512_t_256_Expanded<160>;
     let mut my_hash = MySHA2::new();
     let txt = "This is an example of the method ruminate().";
-    my_hash.ruminate(2, txt.as_ptr(), txt.len() as u128);
+    my_hash.ruminate(2, txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     assert_eq!(my_hash.to_string(), "B60D75418A979C6B4E444B755D535257969C5FFC465FA84988026219FC7BD8B7");
     println!("-------------------------------");
@@ -5154,13 +5154,13 @@ fn hash_sha2_512_t_224_main()
     sha2_512_t_224_quick_start();
     sha2_512_t_224_new();
     sha2_512_t_224_new_with_seed_text();
-    sha2_512_t_224_digest_c();
+    // sha2_512_t_224_digest_c();
     sha2_512_t_224_digest();
     sha2_512_t_224_digest_str();
     sha2_512_t_224_digest_string();
     sha2_512_t_224_digest_array();
     sha2_512_t_224_digest_vec();
-    sha2_512_t_224_ruminate_c();
+    // sha2_512_t_224_ruminate_c();
     sha2_512_t_224_ruminate();
     sha2_512_t_224_ruminate_str();
     sha2_512_t_224_ruminate_string();
@@ -5264,27 +5264,27 @@ fn sha2_512_t_224_new_with_seed_text()
     println!("-------------------------------");
 }
 
-fn sha2_512_t_224_digest_c()
-{
-    println!("sha2_512_t_224_digest_c");
-    // Example for SHA2_512_t_224
-    use cryptocol::hash::SHA2_512_t_224;
-    let mut hash = SHA2_512_t_224::new();
-    let txt = "This is an example of the method digest_c().";
-    hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-    assert_eq!(hash.to_string(), "E7B8A450F1F3E90B361BED00083D6E14A90C2A074C71038D0743E384");
+// fn sha2_512_t_224_digest_c()
+// {
+//     println!("sha2_512_t_224_digest_c");
+//     // Example for SHA2_512_t_224
+//     use cryptocol::hash::SHA2_512_t_224;
+//     let mut hash = SHA2_512_t_224::new();
+//     let txt = "This is an example of the method digest_c().";
+//     hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+//     assert_eq!(hash.to_string(), "E7B8A450F1F3E90B361BED00083D6E14A90C2A074C71038D0743E384");
 
-    // Example for SHA2_512_t_224_Expanded
-    use cryptocol::hash::SHA2_512_t_224_Expanded;
-    type MySHA2 = SHA2_512_t_224_Expanded<0x123456789abcdef0, 160>;
-    let mut my_hash = MySHA2::new();
-    let txt = "This is an example of the method digest_c().";
-    my_hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
-    assert_eq!(my_hash.to_string(), "9B38B1C0434F66DB99A76273D167237ABC3BF8BC96F91DF051A3E31B");
-    println!("-------------------------------");
-}
+//     // Example for SHA2_512_t_224_Expanded
+//     use cryptocol::hash::SHA2_512_t_224_Expanded;
+//     type MySHA2 = SHA2_512_t_224_Expanded<0x123456789abcdef0, 160>;
+//     let mut my_hash = MySHA2::new();
+//     let txt = "This is an example of the method digest_c().";
+//     my_hash.digest_c(txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+//     assert_eq!(my_hash.to_string(), "9B38B1C0434F66DB99A76273D167237ABC3BF8BC96F91DF051A3E31B");
+//     println!("-------------------------------");
+// }
 
 fn sha2_512_t_224_digest()
 {
@@ -5293,7 +5293,7 @@ fn sha2_512_t_224_digest()
     use cryptocol::hash::SHA2_512_t_224;
     let mut hash = SHA2_512_t_224::new();
     let txt = "This is an example of the method digest().";
-    hash.digest(txt.as_ptr(), txt.len() as u128);
+    hash.digest(txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     assert_eq!(hash.to_string(), "2269C5A3791E72D00337D9EDDE9BA9568539F4E131B7DB7555545633");
 
@@ -5302,7 +5302,7 @@ fn sha2_512_t_224_digest()
     type MySHA2 = SHA2_512_t_224_Expanded<160>;
     let mut my_hash = MySHA2::new();
     let txt = "This is an example of the method digest().";
-    my_hash.digest(txt.as_ptr(), txt.len() as u128);
+    my_hash.digest(txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     assert_eq!(my_hash.to_string(), "1DCBF56DC6F3387734139CC5CA14FAC05DF67CD4B14AE86E474F421C");
     println!("-------------------------------");
@@ -5396,27 +5396,27 @@ fn sha2_512_t_224_digest_vec()
     println!("-------------------------------");
 }
 
-fn sha2_512_t_224_ruminate_c()
-{
-    println!("sha2_512_t_224_ruminate_c");
-    // Example for SHA2_512_t_224
-    use cryptocol::hash::SHA2_512_t_224;
-    let mut hash = SHA2_512_t_224::new();
-    let txt = "This is an example of the method ruminate_c().";
-    hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
-    assert_eq!(hash.to_string(), "4DA0CB3085D73CA7459E326D51349B5A7C065A270347558DA7FB3784");
+// fn sha2_512_t_224_ruminate_c()
+// {
+//     println!("sha2_512_t_224_ruminate_c");
+//     // Example for SHA2_512_t_224
+//     use cryptocol::hash::SHA2_512_t_224;
+//     let mut hash = SHA2_512_t_224::new();
+//     let txt = "This is an example of the method ruminate_c().";
+//     hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+//     assert_eq!(hash.to_string(), "4DA0CB3085D73CA7459E326D51349B5A7C065A270347558DA7FB3784");
 
-    // Example for SHA2_512_t_224_Expanded
-    use cryptocol::hash::SHA2_512_t_224_Expanded;
-    type MySHA2 = SHA2_512_t_224_Expanded<160>;
-    let mut my_hash = MySHA2::new();
-    let txt = "This is an example of the method ruminate_c().";
-    my_hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
-    println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
-    assert_eq!(my_hash.to_string(), "4AAE39BF545F153044E1A9D10CDAA98F56D048619C406770709FB015");
-    println!("-------------------------------");
-}
+//     // Example for SHA2_512_t_224_Expanded
+//     use cryptocol::hash::SHA2_512_t_224_Expanded;
+//     type MySHA2 = SHA2_512_t_224_Expanded<160>;
+//     let mut my_hash = MySHA2::new();
+//     let txt = "This is an example of the method ruminate_c().";
+//     my_hash.ruminate_c(2, txt.as_ptr(), txt.len() as u64, 0);
+//     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+//     assert_eq!(my_hash.to_string(), "4AAE39BF545F153044E1A9D10CDAA98F56D048619C406770709FB015");
+//     println!("-------------------------------");
+// }
 
 fn sha2_512_t_224_ruminate()
 {
@@ -5425,7 +5425,7 @@ fn sha2_512_t_224_ruminate()
     use cryptocol::hash::SHA2_512_t_224;
     let mut hash = SHA2_512_t_224::new();
     let txt = "This is an example of the method ruminate().";
-    hash.ruminate(2, txt.as_ptr(), txt.len() as u128);
+    hash.ruminate(2, txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     assert_eq!(hash.to_string(), "A3280359EA2135FE3E2667724FCA6996A47B362544FA60FD59D95DBF");
 
@@ -5434,7 +5434,7 @@ fn sha2_512_t_224_ruminate()
     type MySHA2 = SHA2_512_t_224_Expanded<160>;
     let mut my_hash = MySHA2::new();
     let txt = "This is an example of the method ruminate().";
-    my_hash.ruminate(2, txt.as_ptr(), txt.len() as u128);
+    my_hash.ruminate(2, txt.as_ptr(), txt.len() as u64);
     println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     assert_eq!(my_hash.to_string(), "E587737E4BC3E1D859AA7FDDD90D3E769158173B7A22FA4BC76E47BA");
     println!("-------------------------------");

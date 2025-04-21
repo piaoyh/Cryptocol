@@ -310,8 +310,9 @@ fn biguint_submax()
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
-    let half = U256::submax(128_usize);
+    let half = U256::submax(128_u32);
     println!("half maximum = {0} = {0:#x}", half);
+    println!("half maximum = \t{}", half.to_string_with_radix_and_stride(16, 4).unwrap());
     assert_eq!(half.to_string(), "340282366920938463463374607431768211455");
     assert_eq!(half.to_string_with_radix_and_stride(16, 4).unwrap(), "FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF");
     assert_eq!(half.is_overflow(), false);
@@ -1442,9 +1443,25 @@ fn biguint_set_submax()
 
     let mut a_biguint = U256::new();
     println!("a_biguint = {}", a_biguint);
-    a_biguint.set_submax(200_usize);
+    assert_eq!(a_biguint.is_overflow(), false);
+    assert_eq!(a_biguint.is_underflow(), false);
+    assert_eq!(a_biguint.is_infinity(), false);
+    assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
+
+    a_biguint.set_submax(200_u32);
     println!("a_biguint = {}", a_biguint.to_string_with_radix_and_stride(16, 8).unwrap());
     assert_eq!(a_biguint.to_string_with_radix_and_stride(16, 8).unwrap(), "FF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF");
+    assert_eq!(a_biguint.to_string_with_radix_and_stride(16, 8).unwrap(), "FF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF");
+    assert_eq!(a_biguint.is_overflow(), false);
+    assert_eq!(a_biguint.is_underflow(), false);
+    assert_eq!(a_biguint.is_infinity(), false);
+    assert_eq!(a_biguint.is_undefined(), false);
+    assert_eq!(a_biguint.is_divided_by_zero(), false);
+    assert_eq!(a_biguint.is_left_carry(), false);
+    assert_eq!(a_biguint.is_right_carry(), false);
     println!("---------------------------");
 }
 

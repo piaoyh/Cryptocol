@@ -17,8 +17,8 @@
 use std::ptr::copy_nonoverlapping;
 
 use crate::number::SmallUInt;
-use crate::symmetric::{ OFB, DES_Generic };
-use crate::symmetric::{ des_pre_encrypt_into_array, des_pre_decrypt_into_array };
+use crate::symmetric::{ DES_Generic, OFB, des_pre_encrypt_into_array,
+                        des_pre_decrypt_into_array_no_padding };
 
 
 impl <const ROUND: usize, const SHIFT: u128,
@@ -312,9 +312,10 @@ S756, S757, S758, S759, S760, S761, S762, S763>
     fn encrypt(&mut self, mut iv: u64, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
         let mut progress = 0_u64;
+        let mut block = 0_u64;
         for _ in 0..length_in_bytes >> 3    // length_in_bytes >> 3 == length_in_bytes / 8
         {
-            let block = unsafe { *(message.add(progress as usize) as *const u64 ) };
+            unsafe { copy_nonoverlapping(message.add(progress as usize) as *const u8, (&mut block) as *mut u64 as *mut u8, 8); }
             iv = self.encrypt_u64(iv);
             let coded = block ^ iv;
             unsafe { copy_nonoverlapping(&coded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
@@ -375,7 +376,7 @@ S756, S757, S758, S759, S760, S761, S762, S763>
             self.set_failed();
             return 0;
         }
-        des_pre_decrypt_into_array!(message, length_in_bytes, U);
+        des_pre_decrypt_into_array_no_padding!(message, length_in_bytes, U);
         self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
     }
 }

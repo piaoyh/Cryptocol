@@ -104,7 +104,7 @@ macro_rules! permutate_data {
         // $permut and pos are already changed to be 0-based in little endianness.
         for pos in $permut
         {
-            if data.is_bit_set_(pos as usize)
+            if data.is_bit_set_(pos as u32)
                 { permuted |= 1_u64 << idx; } // ((7 - idx % 8) + (idx / 8) * 8); }
             idx += 1;
         }
@@ -131,7 +131,7 @@ macro_rules! permutate_data {
             // $permut and pos are already changed to be 0-based in little endianness.
             for pos in $permut
             {
-                if $right.is_bit_set_(pos as usize)
+                if $right.is_bit_set_(pos as u32)
                     { permuted |= 1 as $type << idx; } // ((7 - idx % 8) + (idx / 8) * 8); }
                 idx += 1;
             }
@@ -219,7 +219,7 @@ macro_rules! combine_pieces {
 macro_rules! des_pre_encrypt_into_vec {
     ($to:expr, $length_in_bytes:expr, $type:ty) => {
         let mut len = if <$type>::size_in_bytes() == 16 {16_usize} else {8};
-        len = ($length_in_bytes + 1).next_multiple_of(len as u64) as usize / <$type>::size_in_bytes();
+        len = ($length_in_bytes + 1).next_multiple_of(len as u64) as usize / <$type>::size_in_bytes() as usize;
         $to.truncate(len - 1);
         $to.resize(len, <$type>::zero());
     };
@@ -234,17 +234,26 @@ pub(super) use des_pre_encrypt_into_vec;
 
 macro_rules! des_pre_decrypt_into_vec {
     ($to:expr, $length_in_bytes:expr, $type:ty) => {
-        let len = $length_in_bytes as usize / <$type>::size_in_bytes();
+        let len = $length_in_bytes as usize / <$type>::size_in_bytes() as usize;
         $to.truncate(len - 1);
         $to.resize(len, <$type>::zero());
     };
 }
 pub(super) use des_pre_decrypt_into_vec;
 
+macro_rules! des_pre_decrypt_into_vec_no_padding {
+    ($to:expr, $length_in_bytes:expr, $type:ty) => {
+        let len = $length_in_bytes as usize / <$type>::size_in_bytes() as usize;
+        $to.truncate(len);
+        $to.resize(len, <$type>::zero());
+    };
+}
+pub(super) use des_pre_decrypt_into_vec_no_padding;
+
 macro_rules! des_pre_encrypt_into_array {
     ($to:expr, $length_in_bytes:expr, $type:ty) => {
         let mut len = if <$type>::size_in_bytes() == 16 {16_usize} else {8};
-        len = ($length_in_bytes + 1).next_multiple_of(len as u64) as usize / <$type>::size_in_bytes();
+        len = ($length_in_bytes + 1).next_multiple_of(len as u64) as usize / <$type>::size_in_bytes() as usize;
         for i in len - 1..$to.len()
             { $to[i] = <$type>::zero(); }
     };
@@ -259,12 +268,21 @@ pub(super) use des_pre_encrypt_into_array;
 
 macro_rules! des_pre_decrypt_into_array {
     ($to:expr, $length_in_bytes:expr, $type:ty) => {
-        let len = $length_in_bytes as usize / <$type>::size_in_bytes();
+        let len = $length_in_bytes as usize / <$type>::size_in_bytes() as usize;
         for i in len - 1..$to.len()
             { $to[i] = <$type>::zero(); }
     };
 }
 pub(super) use des_pre_decrypt_into_array;
+
+macro_rules! des_pre_decrypt_into_array_no_padding {
+    ($to:expr, $length_in_bytes:expr, $type:ty) => {
+        let len = $length_in_bytes as usize / <$type>::size_in_bytes() as usize;
+        for i in len..$to.len()
+            { $to[i] = <$type>::zero(); }
+    };
+}
+pub(super) use des_pre_decrypt_into_array_no_padding;
 
 
 

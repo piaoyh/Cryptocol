@@ -150,7 +150,7 @@ use crate::number::{ ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
 /// Only use this crate for big-endian CPUs with your own full responsibility.
 pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
 {
-    const BYTES: usize;
+    const BITS: u32;
     const MIN: Self;
     const MAX: Self;
     const ONE: Self;
@@ -29279,7 +29279,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// ```
     fn set_lsb(&mut self);
 
-    // fn generate_check_bits(bit_pos: usize) -> Option<Self>
+    // fn generate_check_bits(bit_pos: u32) -> Option<Self>
     /// Returns a `Self`-typed value which has the bit specified by the argument
     /// `bit_pos` to be 1 and all the rest bits to be 0, wrapped by enum `Some`
     /// of `Option`.
@@ -29341,7 +29341,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> Option<T>
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> Option<T>
     /// {
     ///     SmallUInt::generate_check_bits(bit_pos)
     /// }
@@ -29393,7 +29393,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> Option<T>
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> Option<T>
     /// {
     ///     SmallUInt::generate_check_bits(bit_pos)
     /// }
@@ -29445,7 +29445,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> Option<T>
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> Option<T>
     /// {
     ///     SmallUInt::generate_check_bits(bit_pos)
     /// }
@@ -29497,7 +29497,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> Option<T>
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> Option<T>
     /// {
     ///     SmallUInt::generate_check_bits(bit_pos)
     /// }
@@ -29549,7 +29549,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> Option<T>
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> Option<T>
     /// {
     ///     SmallUInt::generate_check_bits(bit_pos)
     /// }
@@ -29601,7 +29601,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> Option<T>
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> Option<T>
     /// {
     ///     SmallUInt::generate_check_bits(bit_pos)
     /// }
@@ -29653,7 +29653,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> Option<T>
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> Option<T>
     /// {
     ///     SmallUInt::generate_check_bits(bit_pos)
     /// }
@@ -29705,7 +29705,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> Option<T>
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> Option<T>
     /// {
     ///     SmallUInt::generate_check_bits(bit_pos)
     /// }
@@ -29757,7 +29757,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> Option<T>
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> Option<T>
     /// {
     ///     SmallUInt::generate_check_bits(bit_pos)
     /// }
@@ -29809,7 +29809,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> Option<T>
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> Option<T>
     /// {
     ///     SmallUInt::generate_check_bits(bit_pos)
     /// }
@@ -29861,7 +29861,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> Option<T>
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> Option<T>
     /// {
     ///     SmallUInt::generate_check_bits(bit_pos)
     /// }
@@ -30085,14 +30085,14 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> Option<T>
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> Option<T>
     /// {
     ///     SmallUInt::generate_check_bits(bit_pos)
     /// }
     /// ```
-    fn generate_check_bits(bit_pos: usize) -> Option<Self>;
+    fn generate_check_bits(bit_pos: u32) -> Option<Self>;
 
-    // fn generate_check_bits_(&mut self, bit_pos: usize) -> Self
+    // fn generate_check_bits_(&mut self, bit_pos: u32) -> Self
     /// Returns a `Self`-typed value which has the bit specified by the argument
     /// `bit_pos` to be 1 and all the rest bits to be 0.
     /// 
@@ -30128,7 +30128,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let d_u8 = func::<u8>(9);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> T
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> T
     /// {
     ///     SmallUInt::generate_check_bits_(bit_pos)
     /// }
@@ -30152,7 +30152,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let d_u16 = func::<u16>(16);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> T
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> T
     /// {
     ///     SmallUInt::generate_check_bits_(bit_pos)
     /// }
@@ -30176,7 +30176,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let d_u32 = func::<u32>(40);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> T
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> T
     /// {
     ///     SmallUInt::generate_check_bits_(bit_pos)
     /// }
@@ -30200,7 +30200,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let d_u64 = func::<u64>(70);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> T
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> T
     /// {
     ///     SmallUInt::generate_check_bits_(bit_pos)
     /// }
@@ -30224,7 +30224,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let d_u128 = func::<u128>(200);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> T
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> T
     /// {
     ///     SmallUInt::generate_check_bits_(bit_pos)
     /// }
@@ -30248,7 +30248,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let d_usize = func::<usize>(72);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> T
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> T
     /// {
     ///     SmallUInt::generate_check_bits_(bit_pos)
     /// }
@@ -30272,7 +30272,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let d_shortunion = func::<ShortUnion>(16);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> T
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> T
     /// {
     ///     SmallUInt::generate_check_bits_(bit_pos)
     /// }
@@ -30296,7 +30296,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let d_intunion = func::<IntUnion>(40);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> T
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> T
     /// {
     ///     SmallUInt::generate_check_bits_(bit_pos)
     /// }
@@ -30320,7 +30320,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let d_longunion = func::<LongUnion>(70);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> T
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> T
     /// {
     ///     SmallUInt::generate_check_bits_(bit_pos)
     /// }
@@ -30344,7 +30344,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let d_longerunion = func::<LongerUnion>(200);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> T
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> T
     /// {
     ///     SmallUInt::generate_check_bits_(bit_pos)
     /// }
@@ -30368,7 +30368,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let d_sizeunion = func::<SizeUnion>(72);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> T
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> T
     /// {
     ///     SmallUInt::generate_check_bits_(bit_pos)
     /// }
@@ -30515,12 +30515,12 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let d_sizeunion = func::<SizeUnion>(72);    /// }
     /// }
     ///
-    /// fn func<T: SmallUInt>(bit_pos: usize) -> T
+    /// fn func<T: SmallUInt>(bit_pos: u32) -> T
     /// {
     ///     SmallUInt::generate_check_bits_(bit_pos)
     /// }
     /// ```
-    fn generate_check_bits_(bit_pos: usize) -> Self;
+    fn generate_check_bits_(bit_pos: u32) -> Self;
 
     // fn is_odd(&self) -> bool
     /// Checks whether or not `Self` is an odd number.
@@ -32396,7 +32396,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// ```
     fn is_msb_set(self) -> bool;
 
-    // fn is_bit_set(self, bit_pos: usize) -> Option<bool>;
+    // fn is_bit_set(self, bit_pos: u32) -> Option<bool>;
     /// Checks whether or not the bit of `self` specified by `bit_pos`
     /// is set one.
     /// 
@@ -32478,7 +32478,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> Option<bool>
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> Option<bool>
     /// {
     ///     num.is_bit_set(bit_pos)
     /// }
@@ -32548,7 +32548,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> Option<bool>
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> Option<bool>
     /// {
     ///     num.is_bit_set(bit_pos)
     /// }
@@ -32618,7 +32618,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> Option<bool>
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> Option<bool>
     /// {
     ///     num.is_bit_set(bit_pos)
     /// }
@@ -32688,7 +32688,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> Option<bool>
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> Option<bool>
     /// {
     ///     num.is_bit_set(bit_pos)
     /// }
@@ -32758,7 +32758,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> Option<bool>
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> Option<bool>
     /// {
     ///     num.is_bit_set(bit_pos)
     /// }
@@ -32828,7 +32828,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> Option<bool>
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> Option<bool>
     /// {
     ///     num.is_bit_set(bit_pos)
     /// }
@@ -32898,7 +32898,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> Option<bool>
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> Option<bool>
     /// {
     ///     num.is_bit_set(bit_pos)
     /// }
@@ -32968,7 +32968,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> Option<bool>
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> Option<bool>
     /// {
     ///     num.is_bit_set(bit_pos)
     /// }
@@ -33038,7 +33038,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> Option<bool>
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> Option<bool>
     /// {
     ///     num.is_bit_set(bit_pos)
     /// }
@@ -33108,7 +33108,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> Option<bool>
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> Option<bool>
     /// {
     ///     num.is_bit_set(bit_pos)
     /// }
@@ -33178,7 +33178,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> Option<bool>
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> Option<bool>
     /// {
     ///     num.is_bit_set(bit_pos)
     /// }
@@ -33831,14 +33831,14 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     }
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> Option<bool>
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> Option<bool>
     /// {
     ///     num.is_bit_set(bit_pos)
     /// }
     /// ```
-    fn is_bit_set(self, bit_pos: usize) -> Option<bool>;
+    fn is_bit_set(self, bit_pos: u32) -> Option<bool>;
 
-    // fn is_bit_set_(self, bit_pos: usize) -> bool;
+    // fn is_bit_set_(self, bit_pos: u32) -> bool;
     /// Checks whether or not the bit of `self` specified by `bit_pos`
     /// is set one.
     /// 
@@ -33884,7 +33884,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let set = func(b_u8, 9);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> bool
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> bool
     /// {
     ///     num.is_bit_set_(bit_pos)
     /// }
@@ -33916,7 +33916,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let set = func(b_u16, 16);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> bool
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> bool
     /// {
     ///     num.is_bit_set_(bit_pos)
     /// }
@@ -33948,7 +33948,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let set = func(b_u32, 40);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> bool
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> bool
     /// {
     ///     num.is_bit_set_(bit_pos)
     /// }
@@ -33980,7 +33980,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let set = func(b_u64, 70);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> bool
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> bool
     /// {
     ///     num.is_bit_set_(bit_pos)
     /// }
@@ -34012,7 +34012,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let set = func(b_u128, 70);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> bool
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> bool
     /// {
     ///     num.is_bit_set_(bit_pos)
     /// }
@@ -34044,7 +34044,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let set = func(b_usize, 70);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> bool
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> bool
     /// {
     ///     num.is_bit_set_(bit_pos)
     /// }
@@ -34076,7 +34076,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let set = func(b_shortunion, 16);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> bool
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> bool
     /// {
     ///     num.is_bit_set_(bit_pos)
     /// }
@@ -34108,7 +34108,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let set = func(b_intunion, 40);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> bool
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> bool
     /// {
     ///     num.is_bit_set_(bit_pos)
     /// }
@@ -34140,7 +34140,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let set = func(b_longunion, 70);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> bool
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> bool
     /// {
     ///     num.is_bit_set_(bit_pos)
     /// }
@@ -34172,7 +34172,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let set = func(b_longerunion, 70);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> bool
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> bool
     /// {
     ///     num.is_bit_set_(bit_pos)
     /// }
@@ -34204,7 +34204,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let set = func(b_sizeunion, 70);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> bool
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> bool
     /// {
     ///     num.is_bit_set_(bit_pos)
     /// }
@@ -34436,12 +34436,12 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // let set = func(b_sizeunion, 70);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T, bit_pos: usize) -> bool
+    /// fn func<T: SmallUInt>(num: T, bit_pos: u32) -> bool
     /// {
     ///     num.is_bit_set_(bit_pos)
     /// }
     /// ```
-    fn is_bit_set_(self, bit_pos: usize) -> bool;
+    fn is_bit_set_(self, bit_pos: u32) -> bool;
 
     // fn from_be(x: Self) -> Self;
     /// Converts an integer from big endian to the target’s endianness.
@@ -50356,7 +50356,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// ```
     fn is_max(self) -> bool;
 
-    // fn set_submax(&mut self, size_in_bits: usize)
+    // fn set_submax(&mut self, size_in_bits: u32)
     /// Sets `Self`-type number to be `size_in_bits`-bit long maximum value
     /// in which all bits are set to be `1`.
     /// 
@@ -50388,7 +50388,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(b_u8, 31_u8);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: usize)
+    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: u32)
     /// {
     ///     num.set_submax(size_in_bits);
     /// }
@@ -50412,7 +50412,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(b_u16, 1023_u16);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: usize)
+    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: u32)
     /// {
     ///     num.set_submax(size_in_bits);
     /// }
@@ -50436,7 +50436,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(b_u32, 1048575_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: usize)
+    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: u32)
     /// {
     ///     num.set_submax(size_in_bits);
     /// }
@@ -50460,7 +50460,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(b_u64, 1125899906842623_u64);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: usize)
+    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: u32)
     /// {
     ///     num.set_submax(size_in_bits);
     /// }
@@ -50484,7 +50484,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(b_u128, 1267650600228229401496703205375_u128);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: usize)
+    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: u32)
     /// {
     ///     num.set_submax(size_in_bits);
     /// }
@@ -50508,7 +50508,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(b_usize, 1125899906842623_usize);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: usize)
+    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: u32)
     /// {
     ///     num.set_submax(size_in_bits);
     /// }
@@ -50532,7 +50532,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(b_shortunion.get(), 1023_u16);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: usize)
+    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: u32)
     /// {
     ///     num.set_submax(size_in_bits);
     /// }
@@ -50556,7 +50556,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(b_intunion.get(), 1048575_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: usize)
+    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: u32)
     /// {
     ///     num.set_submax(size_in_bits);
     /// }
@@ -50580,7 +50580,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(b_longunion.get(), 1125899906842623_u64);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: usize)
+    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: u32)
     /// {
     ///     num.set_submax(size_in_bits);
     /// }
@@ -50604,7 +50604,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(b_longerunion.get(), 1267650600228229401496703205375_u128);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: usize)
+    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: u32)
     /// {
     ///     num.set_submax(size_in_bits);
     /// }
@@ -50628,7 +50628,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(b_sizeunion.get(), 1125899906842623_usize);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: usize)
+    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: u32)
     /// {
     ///     num.set_submax(size_in_bits);
     /// }
@@ -50785,12 +50785,12 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(b_sizeunion.get(), 1125899906842623_usize);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: usize)
+    /// fn func<T: SmallUInt>(num: &mut T, size_in_bits: u32)
     /// {
     ///     num.set_submax(size_in_bits);
     /// }
     /// ```
-    fn set_submax(&mut self, size_in_bits: usize);
+    fn set_submax(&mut self, size_in_bits: u32);
 
     // fn set_halfmax(&mut self)
     /// Sets `Self`-type number to be half long maximum value
@@ -51213,7 +51213,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// ```
     fn set_halfmax(&mut self);
 
-    // fn size_in_bytes() -> usize;
+    // fn size_in_bytes() -> u32;
     /// Returns the size of `Self` in bytes
     /// 
     /// # Output
@@ -51232,16 +51232,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     let size_usize = u8::size_in_bytes();
-    ///     println!("The size of u8 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 1_usize);
+    ///     let size_u32 = u8::size_in_bytes();
+    ///     println!("The size of u8 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 1_u32);
     /// 
-    ///     let size_usize = func::<u8>();
-    ///     println!("The size of u8 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 1_usize);
+    ///     let size_u32 = func::<u8>();
+    ///     println!("The size of u8 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 1_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bytes()
     /// }
@@ -51252,16 +51252,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     let size_usize = u16::size_in_bytes();
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = u16::size_in_bytes();
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// 
-    ///     let size_usize = func::<u16>();
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = func::<u16>();
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bytes()
     /// }
@@ -51272,16 +51272,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     let size_usize = u32::size_in_bytes();
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = u32::size_in_bytes();
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// 
-    ///     let size_usize = func::<u32>();
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = func::<u32>();
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bytes()
     /// }
@@ -51292,16 +51292,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     let size_usize = u64::size_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = u64::size_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func::<u64>();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func::<u64>();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bytes()
     /// }
@@ -51312,16 +51312,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     let size_usize = u128::size_in_bytes();
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = u128::size_in_bytes();
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func::<u128>();
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func::<u128>();
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bytes()
     /// }
@@ -51332,16 +51332,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     let size_usize = usize::size_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = usize::size_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func::<usize>();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func::<usize>();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bytes()
     /// }
@@ -51352,16 +51352,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::{ SmallUInt, ShortUnion };
     /// fn main()
     /// {
-    ///     let size_usize = ShortUnion::size_in_bytes();
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = ShortUnion::size_in_bytes();
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// 
-    ///     let size_usize = func::<ShortUnion>();
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = func::<ShortUnion>();
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bytes()
     /// }
@@ -51372,16 +51372,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::{ SmallUInt, IntUnion };
     /// fn main()
     /// {
-    ///     let size_usize = IntUnion::size_in_bytes();
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = IntUnion::size_in_bytes();
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// 
-    ///     let size_usize = func::<IntUnion>();
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = func::<IntUnion>();
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bytes()
     /// }
@@ -51392,16 +51392,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::{ SmallUInt, LongUnion };
     /// fn main()
     /// {
-    ///     let size_usize = LongUnion::size_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = LongUnion::size_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func::<LongUnion>();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func::<LongUnion>();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bytes()
     /// }
@@ -51412,16 +51412,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::{ SmallUInt, LongerUnion };
     /// fn main()
     /// {
-    ///     let size_usize = LongerUnion::size_in_bytes();
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = LongerUnion::size_in_bytes();
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func::<LongerUnion>();
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func::<LongerUnion>();
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bytes()
     /// }
@@ -51432,16 +51432,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::{ SmallUInt, SizeUnion };
     /// fn main()
     /// {
-    ///     let size_usize = SizeUnion::size_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = SizeUnion::size_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func::<SizeUnion>();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func::<SizeUnion>();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bytes()
     /// }
@@ -51455,103 +51455,103 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::{ SmallUInt, ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
     /// fn main()
     /// {
-    ///     let size_usize = u8::size_in_bytes();
-    ///     println!("The size of u8 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 1_usize);
+    ///     let size_u32 = u8::size_in_bytes();
+    ///     println!("The size of u8 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 1_u32);
     /// 
-    ///     let size_usize = func::<u8>();
-    ///     println!("The size of u8 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 1_usize);
+    ///     let size_u32 = func::<u8>();
+    ///     println!("The size of u8 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 1_u32);
     /// 
-    ///     let size_usize = u16::size_in_bytes();
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = u16::size_in_bytes();
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// 
-    ///     let size_usize = func::<u16>();
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = func::<u16>();
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// 
-    ///     let size_usize = u32::size_in_bytes();
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = u32::size_in_bytes();
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// 
-    ///     let size_usize = func::<u32>();
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = func::<u32>();
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// 
-    ///     let size_usize = u64::size_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = u64::size_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func::<u64>();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func::<u64>();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = u128::size_in_bytes();
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = u128::size_in_bytes();
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func::<u128>();
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func::<u128>();
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = usize::size_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = usize::size_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func::<usize>();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func::<usize>();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = ShortUnion::size_in_bytes();
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = ShortUnion::size_in_bytes();
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// 
-    ///     let size_usize = func::<ShortUnion>();
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = func::<ShortUnion>();
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// 
-    ///     let size_usize = IntUnion::size_in_bytes();
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = IntUnion::size_in_bytes();
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// 
-    ///     let size_usize = func::<IntUnion>();
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = func::<IntUnion>();
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// 
-    ///     let size_usize = LongUnion::size_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = LongUnion::size_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func::<LongUnion>();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func::<LongUnion>();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = LongerUnion::size_in_bytes();
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = LongerUnion::size_in_bytes();
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func::<LongerUnion>();
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func::<LongerUnion>();
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = SizeUnion::size_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = SizeUnion::size_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func::<SizeUnion>();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func::<SizeUnion>();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bytes()
     /// }
     /// ```
-    fn size_in_bytes() -> usize;
+    fn size_in_bytes() -> u32;
 
-    // fn size_in_bits() -> usize;
+    // fn size_in_bits() -> u32;
     /// Returns the size of `Self` in bits
     /// 
     /// # Output
@@ -51570,16 +51570,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     let size_usize = u8::size_in_bits();
-    ///     println!("The size of u8 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = u8::size_in_bits();
+    ///     println!("The size of u8 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func::<u8>();
-    ///     println!("The size of u8 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func::<u8>();
+    ///     println!("The size of u8 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bits()
     /// }
@@ -51590,16 +51590,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     let size_usize = u16::size_in_bits();
-    ///     println!("The size of u16 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = u16::size_in_bits();
+    ///     println!("The size of u16 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func::<u16>();
-    ///     println!("The size of u16 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func::<u16>();
+    ///     println!("The size of u16 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bits()
     /// }
@@ -51610,16 +51610,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     let size_usize = u32::size_in_bits();
-    ///     println!("The size of u32 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = u32::size_in_bits();
+    ///     println!("The size of u32 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// 
-    ///     let size_usize = func::<u32>();
-    ///     println!("The size of u32 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = func::<u32>();
+    ///     println!("The size of u32 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bits()
     /// }
@@ -51630,16 +51630,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     let size_usize = u64::size_in_bits();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = u64::size_in_bits();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func::<u64>();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func::<u64>();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bits()
     /// }
@@ -51650,16 +51650,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     let size_usize = u128::size_in_bits();
-    ///     println!("The size of u128 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = u128::size_in_bits();
+    ///     println!("The size of u128 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// 
-    ///     let size_usize = func::<u128>();
-    ///     println!("The size of u128 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = func::<u128>();
+    ///     println!("The size of u128 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bits()
     /// }
@@ -51670,16 +51670,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     let size_usize = usize::size_in_bits();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = usize::size_in_bits();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func::<usize>();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func::<usize>();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bits()
     /// }
@@ -51690,16 +51690,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::{ SmallUInt, ShortUnion };
     /// fn main()
     /// {
-    ///     let size_usize = ShortUnion::size_in_bits();
-    ///     println!("The size of ShortUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = ShortUnion::size_in_bits();
+    ///     println!("The size of ShortUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func::<ShortUnion>();
-    ///     println!("The size of ShortUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func::<ShortUnion>();
+    ///     println!("The size of ShortUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bits()
     /// }
@@ -51710,16 +51710,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::{ SmallUInt, IntUnion };
     /// fn main()
     /// {
-    ///     let size_usize = IntUnion::size_in_bits();
-    ///     println!("The size of IntUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = IntUnion::size_in_bits();
+    ///     println!("The size of IntUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// 
-    ///     let size_usize = func::<IntUnion>();
-    ///     println!("The size of IntUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = func::<IntUnion>();
+    ///     println!("The size of IntUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bits()
     /// }
@@ -51730,16 +51730,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::{ SmallUInt, LongUnion };
     /// fn main()
     /// {
-    ///     let size_usize = LongUnion::size_in_bits();
-    ///     println!("The size of LongUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = LongUnion::size_in_bits();
+    ///     println!("The size of LongUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func::<LongUnion>();
-    ///     println!("The size of LongUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func::<LongUnion>();
+    ///     println!("The size of LongUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bits()
     /// }
@@ -51750,16 +51750,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::{ SmallUInt, LongerUnion };
     /// fn main()
     /// {
-    ///     let size_usize = LongerUnion::size_in_bits();
-    ///     println!("The size of LongerUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = LongerUnion::size_in_bits();
+    ///     println!("The size of LongerUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// 
-    ///     let size_usize = func::<LongerUnion>();
-    ///     println!("The size of LongerUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = func::<LongerUnion>();
+    ///     println!("The size of LongerUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bits()
     /// }
@@ -51770,16 +51770,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::{ SmallUInt, SizeUnion };
     /// fn main()
     /// {
-    ///     let size_usize = SizeUnion::size_in_bits();
-    ///     println!("The size of SizeUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = SizeUnion::size_in_bits();
+    ///     println!("The size of SizeUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func::<SizeUnion>();
-    ///     println!("The size of SizeUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func::<SizeUnion>();
+    ///     println!("The size of SizeUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bits()
     /// }
@@ -51793,103 +51793,103 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// use cryptocol::number::{ SmallUInt, ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
     /// fn main()
     /// {
-    ///     let size_usize = u8::size_in_bits();
-    ///     println!("The size of u8 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = u8::size_in_bits();
+    ///     println!("The size of u8 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func::<u8>();
-    ///     println!("The size of u8 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func::<u8>();
+    ///     println!("The size of u8 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = u16::size_in_bits();
-    ///     println!("The size of u16 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = u16::size_in_bits();
+    ///     println!("The size of u16 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func::<u16>();
-    ///     println!("The size of u16 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func::<u16>();
+    ///     println!("The size of u16 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = u32::size_in_bits();
-    ///     println!("The size of u32 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = u32::size_in_bits();
+    ///     println!("The size of u32 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// 
-    ///     let size_usize = func::<u32>();
-    ///     println!("The size of u32 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = func::<u32>();
+    ///     println!("The size of u32 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// 
-    ///     let size_usize = u64::size_in_bits();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = u64::size_in_bits();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func::<u64>();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func::<u64>();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = u128::size_in_bits();
-    ///     println!("The size of u128 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = u128::size_in_bits();
+    ///     println!("The size of u128 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// 
-    ///     let size_usize = func::<u128>();
-    ///     println!("The size of u128 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = func::<u128>();
+    ///     println!("The size of u128 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// 
-    ///     let size_usize = usize::size_in_bits();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = usize::size_in_bits();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func::<usize>();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func::<usize>();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = ShortUnion::size_in_bits();
-    ///     println!("The size of ShortUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = ShortUnion::size_in_bits();
+    ///     println!("The size of ShortUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func::<ShortUnion>();
-    ///     println!("The size of ShortUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func::<ShortUnion>();
+    ///     println!("The size of ShortUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = IntUnion::size_in_bits();
-    ///     println!("The size of IntUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = IntUnion::size_in_bits();
+    ///     println!("The size of IntUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// 
-    ///     let size_usize = func::<IntUnion>();
-    ///     println!("The size of IntUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = func::<IntUnion>();
+    ///     println!("The size of IntUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// 
-    ///     let size_usize = LongUnion::size_in_bits();
-    ///     println!("The size of LongUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = LongUnion::size_in_bits();
+    ///     println!("The size of LongUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func::<LongUnion>();
-    ///     println!("The size of LongUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func::<LongUnion>();
+    ///     println!("The size of LongUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = LongerUnion::size_in_bits();
-    ///     println!("The size of LongerUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = LongerUnion::size_in_bits();
+    ///     println!("The size of LongerUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// 
-    ///     let size_usize = func::<LongerUnion>();
-    ///     println!("The size of LongerUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = func::<LongerUnion>();
+    ///     println!("The size of LongerUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// 
-    ///     let size_usize = SizeUnion::size_in_bits();
-    ///     println!("The size of SizeUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = SizeUnion::size_in_bits();
+    ///     println!("The size of SizeUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func::<SizeUnion>();
-    ///     println!("The size of SizeUnion is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func::<SizeUnion>();
+    ///     println!("The size of SizeUnion is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>() -> usize
+    /// fn func<T: SmallUInt>() -> u32
     /// {
     ///     T::size_in_bits()
     /// }
     /// ```
-    fn size_in_bits() -> usize;
+    fn size_in_bits() -> u32;
 
-    // fn length_in_bytes(self) -> usize;
+    // fn length_in_bytes(self) -> u32;
     /// Returns the size of `self` in bytes
     /// 
     /// # Output
@@ -51909,16 +51909,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_u8 = 100_u8;
-    ///     let size_usize = a_u8.length_in_bytes();
-    ///     println!("The size of u8 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 1_usize);
+    ///     let size_u32 = a_u8.length_in_bytes();
+    ///     println!("The size of u8 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 1_u32);
     /// 
-    ///     let size_usize = func(a_u8);
-    ///     println!("The size of u8 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 1_usize);
+    ///     let size_u32 = func(a_u8);
+    ///     println!("The size of u8 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 1_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bytes()
     /// }
@@ -51930,16 +51930,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_u16 = 10000_u16;
-    ///     let size_usize = a_u16.length_in_bytes();
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = a_u16.length_in_bytes();
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// 
-    ///     let size_usize = func(a_u16);
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = func(a_u16);
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bytes()
     /// }
@@ -51951,16 +51951,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_u32 = 1000000000_u32;
-    ///     let size_usize = a_u32.length_in_bytes();
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = a_u32.length_in_bytes();
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// 
-    ///     let size_usize = func(a_u32);
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = func(a_u32);
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bytes()
     /// }
@@ -51972,16 +51972,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_u64 = 10000000000000000_u64;
-    ///     let size_usize = a_u64.length_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = a_u64.length_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func(a_u64);
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func(a_u64);
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bytes()
     /// }
@@ -51993,16 +51993,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_u128 = 100000000000000000000000000000000000_u128;
-    ///     let size_usize = a_u128.length_in_bytes();
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = a_u128.length_in_bytes();
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func(a_u128);
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func(a_u128);
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bytes()
     /// }
@@ -52014,16 +52014,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_usize = 10000000000000000_usize;
-    ///     let size_usize = a_usize.length_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = a_usize.length_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func(a_usize);
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func(a_usize);
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bytes()
     /// }
@@ -52035,16 +52035,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_shortunion = 10000_u16.into_shortunion();
-    ///     let size_usize = a_shortunion.length_in_bytes();
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = a_shortunion.length_in_bytes();
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// 
-    ///     let size_usize = func(a_shortunion);
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = func(a_shortunion);
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bytes()
     /// }
@@ -52056,16 +52056,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_intunion = 1000000000_u32.into_intunion();
-    ///     let size_usize = a_intunion.length_in_bytes();
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = a_intunion.length_in_bytes();
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// 
-    ///     let size_usize = func(a_intunion);
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = func(a_intunion);
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bytes()
     /// }
@@ -52077,16 +52077,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_longunion = 10000000000000000_u64.into_longunion();
-    ///     let size_usize = a_longunion.length_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = a_longunion.length_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func(a_longunion);
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func(a_longunion);
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bytes()
     /// }
@@ -52098,16 +52098,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_longerunion = 100000000000000000000000000000000000_u128.into_longerunion();
-    ///     let size_usize = a_longerunion.length_in_bytes();
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = a_longerunion.length_in_bytes();
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func(a_longerunion);
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func(a_longerunion);
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bytes()
     /// }
@@ -52119,16 +52119,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_sizeunion = 10000000000000000_usize.into_sizeunion();
-    ///     let size_usize = a_sizeunion.length_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = a_sizeunion.length_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func(a_sizeunion);
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func(a_sizeunion);
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bytes()
     /// }
@@ -52143,113 +52143,113 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_u8 = 100_u8;
-    ///     let size_usize = a_u8.length_in_bytes();
-    ///     println!("The size of u8 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 1_usize);
+    ///     let size_u32 = a_u8.length_in_bytes();
+    ///     println!("The size of u8 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 1_u32);
     /// 
-    ///     let size_usize = func(a_u8);
-    ///     println!("The size of u8 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 1_usize);
+    ///     let size_u32 = func(a_u8);
+    ///     println!("The size of u8 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 1_u32);
     /// 
     ///     let a_u16 = 10000_u16;
-    ///     let size_usize = a_u16.length_in_bytes();
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = a_u16.length_in_bytes();
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// 
-    ///     let size_usize = func(a_u16);
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = func(a_u16);
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// 
     ///     let a_u32 = 1000000000_u32;
-    ///     let size_usize = a_u32.length_in_bytes();
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = a_u32.length_in_bytes();
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// 
-    ///     let size_usize = func(a_u32);
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = func(a_u32);
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// 
     ///     let a_u64 = 10000000000000000_u64;
-    ///     let size_usize = a_u64.length_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = a_u64.length_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func(a_u64);
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func(a_u64);
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
     ///     let a_u128 = 100000000000000000000000000000000000_u128;
-    ///     let size_usize = a_u128.length_in_bytes();
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = a_u128.length_in_bytes();
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func(a_u128);
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func(a_u128);
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
     ///     let a_usize = 10000000000000000_usize;
-    ///     let size_usize = a_usize.length_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = a_usize.length_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func(a_usize);
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func(a_usize);
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
     ///     let a_shortunion = 10000_u16.into_shortunion();
-    ///     let size_usize = a_shortunion.length_in_bytes();
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = a_shortunion.length_in_bytes();
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// 
-    ///     let size_usize = func(a_shortunion);
-    ///     println!("The size of u16 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 2_usize);
+    ///     let size_u32 = func(a_shortunion);
+    ///     println!("The size of u16 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 2_u32);
     /// 
     ///     let a_intunion = 1000000000_u32.into_intunion();
-    ///     let size_usize = a_intunion.length_in_bytes();
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = a_intunion.length_in_bytes();
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// 
-    ///     let size_usize = func(a_intunion);
-    ///     println!("The size of u32 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 4_usize);
+    ///     let size_u32 = func(a_intunion);
+    ///     println!("The size of u32 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 4_u32);
     /// 
     ///     let a_longunion = 10000000000000000_u64.into_longunion();
-    ///     let size_usize = a_longunion.length_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = a_longunion.length_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func(a_longunion);
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func(a_longunion);
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
     ///     let a_longerunion = 100000000000000000000000000000000000_u128.into_longerunion();
-    ///     let size_usize = a_longerunion.length_in_bytes();
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = a_longerunion.length_in_bytes();
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func(a_longerunion);
-    ///     println!("The size of u128 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func(a_longerunion);
+    ///     println!("The size of u128 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
     ///     let a_sizeunion = 10000000000000000_usize.into_sizeunion();
-    ///     let size_usize = a_sizeunion.length_in_bytes();
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = a_sizeunion.length_in_bytes();
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func(a_sizeunion);
-    ///     println!("The size of u64 is {} bytes.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func(a_sizeunion);
+    ///     println!("The size of u64 is {} bytes.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bytes()
     /// }
     /// ```
-    fn length_in_bytes(self) -> usize;
+    fn length_in_bytes(self) -> u32;
 
-    // fn length_in_bits(self) -> usize;
+    // fn length_in_bits(self) -> u32;
     /// Returns the size of `self` in bits
     /// 
     /// # Output
@@ -52269,16 +52269,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_u8 = 100_u8;
-    ///     let size_usize = a_u8.length_in_bits();
-    ///     println!("The size of u8 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = a_u8.length_in_bits();
+    ///     println!("The size of u8 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func(a_u8);
-    ///     println!("The size of u8 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func(a_u8);
+    ///     println!("The size of u8 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bits()
     /// }
@@ -52290,16 +52290,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_u16 = 10000_u16;
-    ///     let size_usize = a_u16.length_in_bits();
-    ///     println!("The size of u16 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = a_u16.length_in_bits();
+    ///     println!("The size of u16 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func(a_u16);
-    ///     println!("The size of u16 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func(a_u16);
+    ///     println!("The size of u16 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bits()
     /// }
@@ -52311,16 +52311,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_u32 = 1000000000_u32;
-    ///     let size_usize = a_u32.length_in_bits();
-    ///     println!("The size of u32 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = a_u32.length_in_bits();
+    ///     println!("The size of u32 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// 
-    ///     let size_usize = func(a_u32);
-    ///     println!("The size of u32 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = func(a_u32);
+    ///     println!("The size of u32 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bits()
     /// }
@@ -52332,16 +52332,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_u64 = 10000000000000000_u64;
-    ///     let size_usize = a_u64.length_in_bits();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = a_u64.length_in_bits();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func(a_u64);
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func(a_u64);
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bits()
     /// }
@@ -52353,16 +52353,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_u128 = 100000000000000000000000000000000000_u128;
-    ///     let size_usize = a_u128.length_in_bits();
-    ///     println!("The size of u128 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = a_u128.length_in_bits();
+    ///     println!("The size of u128 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// 
-    ///     let size_usize = func(a_u128);
-    ///     println!("The size of u128 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = func(a_u128);
+    ///     println!("The size of u128 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bits()
     /// }
@@ -52374,16 +52374,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_usize = 10000000000000000_usize;
-    ///     let size_usize = a_usize.length_in_bits();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = a_usize.length_in_bits();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func(a_usize);
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func(a_usize);
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bits()
     /// }
@@ -52395,16 +52395,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_shortunion = 10000_u16.into_shortunion();
-    ///     let size_usize = a_shortunion.length_in_bits();
-    ///     println!("The size of u16 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = a_shortunion.length_in_bits();
+    ///     println!("The size of u16 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func(a_shortunion);
-    ///     println!("The size of u16 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func(a_shortunion);
+    ///     println!("The size of u16 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bits()
     /// }
@@ -52416,16 +52416,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_intunion = 1000000000_u32.into_intunion();
-    ///     let size_usize = a_intunion.length_in_bits();
-    ///     println!("The size of u32 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = a_intunion.length_in_bits();
+    ///     println!("The size of u32 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// 
-    ///     let size_usize = func(a_intunion);
-    ///     println!("The size of u32 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = func(a_intunion);
+    ///     println!("The size of u32 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bits()
     /// }
@@ -52437,16 +52437,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_longunion = 10000000000000000_u64.into_longunion();
-    ///     let size_usize = a_longunion.length_in_bits();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = a_longunion.length_in_bits();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func(a_longunion);
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func(a_longunion);
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bits()
     /// }
@@ -52458,16 +52458,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_longerunion = 100000000000000000000000000000000000_u128.into_longerunion();
-    ///     let size_usize = a_longerunion.length_in_bits();
-    ///     println!("The size of u128 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = a_longerunion.length_in_bits();
+    ///     println!("The size of u128 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// 
-    ///     let size_usize = func(a_longerunion);
-    ///     println!("The size of u128 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = func(a_longerunion);
+    ///     println!("The size of u128 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bits()
     /// }
@@ -52479,16 +52479,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_sizeunion = 10000000000000000_usize.into_sizeunion();
-    ///     let size_usize = a_sizeunion.length_in_bits();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = a_sizeunion.length_in_bits();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func(a_sizeunion);
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func(a_sizeunion);
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bits()
     /// }
@@ -52503,111 +52503,111 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// fn main()
     /// {
     ///     let a_u8 = 100_u8;
-    ///     let size_usize = a_u8.length_in_bits();
-    ///     println!("The size of u8 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = a_u8.length_in_bits();
+    ///     println!("The size of u8 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
-    ///     let size_usize = func(a_u8);
-    ///     println!("The size of u8 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 8_usize);
+    ///     let size_u32 = func(a_u8);
+    ///     println!("The size of u8 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 8_u32);
     /// 
     ///     let a_u16 = 10000_u16;
-    ///     let size_usize = a_u16.length_in_bits();
-    ///     println!("The size of u16 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = a_u16.length_in_bits();
+    ///     println!("The size of u16 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func(a_u16);
-    ///     println!("The size of u16 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func(a_u16);
+    ///     println!("The size of u16 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
     ///     let a_u32 = 1000000000_u32;
-    ///     let size_usize = a_u32.length_in_bits();
-    ///     println!("The size of u32 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = a_u32.length_in_bits();
+    ///     println!("The size of u32 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// 
-    ///     let size_usize = func(a_u32);
-    ///     println!("The size of u32 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = func(a_u32);
+    ///     println!("The size of u32 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// 
     ///     let a_u64 = 10000000000000000_u64;
-    ///     let size_usize = a_u64.length_in_bits();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = a_u64.length_in_bits();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func(a_u64);
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func(a_u64);
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
     ///     let a_u128 = 100000000000000000000000000000000000_u128;
-    ///     let size_usize = a_u128.length_in_bits();
-    ///     println!("The size of u128 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = a_u128.length_in_bits();
+    ///     println!("The size of u128 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// 
-    ///     let size_usize = func(a_u128);
-    ///     println!("The size of u128 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = func(a_u128);
+    ///     println!("The size of u128 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// 
     ///     let a_usize = 10000000000000000_usize;
-    ///     let size_usize = a_usize.length_in_bits();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = a_usize.length_in_bits();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func(a_usize);
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func(a_usize);
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
     ///     let a_shortunion = 10000_u16.into_shortunion();
-    ///     let size_usize = a_shortunion.length_in_bits();
-    ///     println!("The size of u16 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = a_shortunion.length_in_bits();
+    ///     println!("The size of u16 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
-    ///     let size_usize = func(a_shortunion);
-    ///     println!("The size of u16 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 16_usize);
+    ///     let size_u32 = func(a_shortunion);
+    ///     println!("The size of u16 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 16_u32);
     /// 
     ///     let a_intunion = 1000000000_u32.into_intunion();
-    ///     let size_usize = a_intunion.length_in_bits();
-    ///     println!("The size of u32 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = a_intunion.length_in_bits();
+    ///     println!("The size of u32 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// 
-    ///     let size_usize = func(a_intunion);
-    ///     println!("The size of u32 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 32_usize);
+    ///     let size_u32 = func(a_intunion);
+    ///     println!("The size of u32 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 32_u32);
     /// 
     ///     let a_longunion = 10000000000000000_u64.into_longunion();
-    ///     let size_usize = a_longunion.length_in_bits();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = a_longunion.length_in_bits();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func(a_longunion);
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func(a_longunion);
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
     ///     let a_longerunion = 100000000000000000000000000000000000_u128.into_longerunion();
-    ///     let size_usize = a_longerunion.length_in_bits();
-    ///     println!("The size of u128 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = a_longerunion.length_in_bits();
+    ///     println!("The size of u128 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// 
-    ///     let size_usize = func(a_longerunion);
-    ///     println!("The size of u128 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 128_usize);
+    ///     let size_u32 = func(a_longerunion);
+    ///     println!("The size of u128 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 128_u32);
     /// 
     ///     let a_sizeunion = 10000000000000000_usize.into_sizeunion();
-    ///     let size_usize = a_sizeunion.length_in_bits();
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = a_sizeunion.length_in_bits();
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// 
-    ///     let size_usize = func(a_sizeunion);
-    ///     println!("The size of u64 is {} bits.", size_usize);
-    ///     assert_eq!(size_usize, 64_usize);
+    ///     let size_u32 = func(a_sizeunion);
+    ///     println!("The size of u64 is {} bits.", size_u32);
+    ///     assert_eq!(size_u32, 64_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(num: T) -> usize
+    /// fn func<T: SmallUInt>(num: T) -> u32
     /// {
     ///     num.length_in_bits()
     /// }
     /// ```
-    fn length_in_bits(self) -> usize;
+    fn length_in_bits(self) -> u32;
 }
 
     // fn reverse_bits_assign(&mut self);

@@ -34,7 +34,7 @@ macro_rules! make_RC {
     ($T:ty, $ROUNDS:expr, $LFSR:expr) => {
         {
             let mut union_A = A::<$T, $ROUNDS> { U128: [0_u128; ROUNDS] };
-            let WIDTH = <$T>::BYTES;
+            let WIDTH = <$T>::BITS as usize / 8;
             let mut RC = [<$T>::MIN; ROUNDS];
             let mut bit = [0_usize; 7];
             let mut j = 0_usize;
@@ -91,81 +91,23 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     #[allow(non_snake_case)] U8:    [u8; ROUNDS],
 }
 
-// #[allow(non_snake_case)]
-// const fn make_RC<T, const ROUNDS: usize, const LFSR: u8>() -> [T; ROUNDS]
-// where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-//         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-//         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-//         + Shl<Output = T>
-// {
-//     let mut union_A = A::<T, ROUNDS> { U128: [0_u128; ROUNDS] };
-//     let WIDTH = T::BYTES;
-//     let mut RC = [T::MIN; ROUNDS];
-//     let mut bit = [0_usize; 7];
-//     let mut j = 0_usize;
-//     while j < 7_usize
-//     {
-//         bit[j] = ((1_usize << j) - 1) % WIDTH;
-//         j += 1;
-//     }
-//     let mut state = 1_u8;
-//     let mut output: u8;
-//     let mut i = 0_usize;
-//     while i < ROUNDS
-//     {
-//         j = 0_usize;
-//         while j < 7_usize
-//         {
-//             (state, output) = run_register!(state, LFSR);
-//             if output != 0
-//             {
-//                 unsafe {
-//                     match WIDTH
-//                     {
-//                         16 =>   { union_A.U128[i] |= 1_u128 << bit[j]; },
-//                         8 =>    { union_A.U64[i] |= 1_u64 << bit[j]; },
-//                         4 =>    { union_A.U32[i] |= 1_u32 << bit[j]; },
-//                         2 =>    { union_A.U16[i] |= 1_u16 << bit[j]; },
-//                         1 =>    { union_A.U8[i] |= 1_u8 << bit[j]; },
-//                         _ =>    {},
-//                     }
-//                 }
-//             }
-//             j += 1;
-//         }
-//         unsafe { RC[i] = union_A.RC[i]; }
-//         i += 1;
-//     }
-//     RC
-// }
+#[allow(non_camel_case_types)]
+pub type SHAKE_128 = Keccak_Generic<64, 168, false>;
 
-// macro_rules! new_Keccak_Generic {
-//     ($N:expr, $T:ty,
-//         $THETA_LEFT:expr, $THETA_RIGHT:expr, $THETA_RR1:expr,
-//         $RHO_NEXT1:expr, $RHO_NEXT2:expr, $ROUND:expr,
-//         $RATE:expr, $LFSR:expr) => {
-//         match ($T)
-//         {
-//             (u128) => Keccak_Generic::<$N, $T, $THETA_LEFT$THETA_RIGHT, $THETA_RR1,
-//                                 $RHO_NEXT1, $RHO_NEXT2, $ROUND, $RATE, 7,
-//                                 $LFSR>::new(),
-//             (u64) => Keccak_Generic::<$N, $T, $THETA_LEFT$THETA_RIGHT, $THETA_RR1,
-//                                 $RHO_NEXT1, $RHO_NEXT2, $ROUND, $RATE, 6,
-//                                 $LFSR>::new(),
-//             (u32) => Keccak_Generic::<$N, $T, $THETA_LEFT$THETA_RIGHT, $THETA_RR1,
-//                                 $RHO_NEXT1, $RHO_NEXT2, $ROUND, $RATE, 5,
-//                                 $LFSR>::new(),
-//             (u16) => Keccak_Generic::<$N, $T, $THETA_LEFT$THETA_RIGHT, $THETA_RR1,
-//                                 $RHO_NEXT1, $RHO_NEXT2, $ROUND, $RATE, 4,
-//                                 $LFSR>::new(),
-//             (u8) => Keccak_Generic::<$N, $T, $THETA_LEFT$THETA_RIGHT, $THETA_RR1,
-//                                 $RHO_NEXT1, $RHO_NEXT2, $ROUND, $RATE, 3,
-//                                 $LFSR>::new(),
-//         };
-//     }
-// }
+#[allow(non_camel_case_types)]
+pub type SHAKE_256 = Keccak_Generic<64, 136, false>;
 
-pub type SHA3 = Keccak_Generic;
+#[allow(non_camel_case_types)]
+pub type SHA3_224 = Keccak_Generic<28, 144>;
+
+#[allow(non_camel_case_types)]
+pub type SHA3_256 = Keccak_Generic<32, 136>;
+
+#[allow(non_camel_case_types)]
+pub type SHA3_384 = Keccak_Generic<48, 104>;
+
+#[allow(non_camel_case_types)]
+pub type SHA3_512 = Keccak_Generic;
 
 
 /// A Keccak message-digest algorithm that lossily compresses data of arbitrary
@@ -179,7 +121,7 @@ pub type SHA3 = Keccak_Generic;
 /// but they are all incomplete attacks.
 /// Read [more](https://en.wikipedia.org/wiki/SHA-2#Cryptanalysis_and_validation)
 /// 
-/// # Use of SHA3 and their variants
+/// # Use of Keccak or SHA3 and their variants
 /// You can use Keccak and its variants for cryptograpic purposes such as:
 /// - Generating IDs
 /// - Integrity test
@@ -199,6 +141,10 @@ pub type SHA3 = Keccak_Generic;
 /// - RATE : The parameter `RATE` is in bytes though it is usually written in
 ///   bits in most of the document. `RATE` means how many bytes the message
 ///   will be absorbed at once.
+/// - PADDING: The parameter `PADDING` is whether or not the domain separate
+///   bits is `01` for SHA-3 style. So, if `PADDING` is `true`, the domain
+///   separate bits is `01` for SHA-3. If `PADDING` is `false`, the domain
+///   bits is `1111` for SHAKE.45
 /// 
 /// 
 /// , where w is the number of bits for one
@@ -275,21 +221,22 @@ pub type SHA3 = Keccak_Generic;
 /// for Big-endian CPUs with your own full responsibility.
 #[derive(Debug, Clone)]
 #[allow(non_camel_case_types)]
-pub struct Keccak_Generic<const N: usize = 8, T = u64, const ROUNDS: usize = 24,
-        const RATE: usize = 136, const LFSR: u8 = 0b_0111_0001,
+pub struct Keccak_Generic<const N: usize = 64, const RATE: usize = 72, const PADDING: bool = true,
+        const ROUNDS: usize = 24, T = u64, const LFSR: u8 = 0b_0111_0001,
         const THETA_LEFT: usize = 1, const THETA_RIGHT: usize = 1, const THETA_RR1: u32 = 1,
         const RHO_NEXT1: usize = 1, const RHO_NEXT2: usize = 2,
-        const RHO_RC_00: u8 = 00, const RHO_RC_01: u8 = 36, const RHO_RC_02: u8 = 03,
-        const RHO_RC_03: u8 = 41, const RHO_RC_04: u8 = 18,
-        const RHO_RC_10: u8 = 01, const RHO_RC_11: u8 = 44, const RHO_RC_12: u8 = 10,
-        const RHO_RC_13: u8 = 45, const RHO_RC_14: u8 = 02,
-        const RHO_RC_20: u8 = 62, const RHO_RC_21: u8 = 06, const RHO_RC_22: u8 = 43,
-        const RHO_RC_23: u8 = 15, const RHO_RC_24: u8 = 61,
-        const RHO_RC_30: u8 = 28, const RHO_RC_31: u8 = 55, const RHO_RC_32: u8 = 25,
-        const RHO_RC_33: u8 = 21, const RHO_RC_34: u8 = 56,
-        const RHO_RC_40: u8 = 27, const RHO_RC_41: u8 = 20, const RHO_RC_42: u8 = 39,
-        const RHO_RC_43: u8 = 08, const RHO_RC_44: u8 = 14
-        >
+        const RHO_RC_00: u16 = 000, const RHO_RC_01: u16 = 036, const RHO_RC_02: u16 = 003,
+        const RHO_RC_03: u16 = 105, const RHO_RC_04: u16 = 210,
+        const RHO_RC_10: u16 = 001, const RHO_RC_11: u16 = 300, const RHO_RC_12: u16 = 010,
+        const RHO_RC_13: u16 = 045, const RHO_RC_14: u16 = 066,
+        const RHO_RC_20: u16 = 190, const RHO_RC_21: u16 = 006, const RHO_RC_22: u16 = 171,
+        const RHO_RC_23: u16 = 015, const RHO_RC_24: u16 = 253,
+        const RHO_RC_30: u16 = 028, const RHO_RC_31: u16 = 055, const RHO_RC_32: u16 = 153,
+        const RHO_RC_33: u16 = 021, const RHO_RC_34: u16 = 120,
+        const RHO_RC_40: u16 = 091, const RHO_RC_41: u16 = 276, const RHO_RC_42: u16 = 231,
+        const RHO_RC_43: u16 = 136, const RHO_RC_44: u16 = 078,
+        const PI_MUL_X: usize = 1, const PI_MUL_Y: usize = 3,
+        const CHI_ADD_1: usize = 1, const CHI_ADD_2: usize = 2>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
@@ -298,28 +245,30 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     state: [[T; 5]; 5],
 }
 
-impl<const N: usize, T, const ROUNDS: usize, const RATE: usize, const LFSR: u8,
-        const THETA_LEFT: usize, const THETA_RIGHT: usize, const THETA_RR1: u32,
-        const RHO_NEXT1: usize, const RHO_NEXT2: usize,
-        const RHO_RC_00: u8, const RHO_RC_01: u8, const RHO_RC_02: u8,
-        const RHO_RC_03: u8, const RHO_RC_04: u8,
-        const RHO_RC_10: u8, const RHO_RC_11: u8, const RHO_RC_12: u8,
-        const RHO_RC_13: u8, const RHO_RC_14: u8,
-        const RHO_RC_20: u8, const RHO_RC_21: u8, const RHO_RC_22: u8,
-        const RHO_RC_23: u8, const RHO_RC_24: u8,
-        const RHO_RC_30: u8, const RHO_RC_31: u8, const RHO_RC_32: u8,
-        const RHO_RC_33: u8, const RHO_RC_34: u8,
-        const RHO_RC_40: u8, const RHO_RC_41: u8, const RHO_RC_42: u8,
-        const RHO_RC_43: u8, const RHO_RC_44: u8
-    >
-Keccak_Generic<N, T, ROUNDS, RATE, LFSR,
+impl<const N: usize, const RATE: usize, const PADDING: bool, const ROUNDS: usize, T, const LFSR: u8,
+    const THETA_LEFT: usize, const THETA_RIGHT: usize, const THETA_RR1: u32,
+    const RHO_NEXT1: usize, const RHO_NEXT2: usize,
+    const RHO_RC_00: u16, const RHO_RC_01: u16, const RHO_RC_02: u16,
+    const RHO_RC_03: u16, const RHO_RC_04: u16,
+    const RHO_RC_10: u16, const RHO_RC_11: u16, const RHO_RC_12: u16,
+    const RHO_RC_13: u16, const RHO_RC_14: u16,
+    const RHO_RC_20: u16, const RHO_RC_21: u16, const RHO_RC_22: u16,
+    const RHO_RC_23: u16, const RHO_RC_24: u16,
+    const RHO_RC_30: u16, const RHO_RC_31: u16, const RHO_RC_32: u16,
+    const RHO_RC_33: u16, const RHO_RC_34: u16,
+    const RHO_RC_40: u16, const RHO_RC_41: u16, const RHO_RC_42: u16,
+    const RHO_RC_43: u16, const RHO_RC_44: u16,
+    const PI_MUL_X: usize, const PI_MUL_Y: usize,
+    const CHI_ADD_1: usize, const CHI_ADD_2: usize>
+Keccak_Generic<N, RATE, PADDING, ROUNDS, T, LFSR,
                 THETA_LEFT, THETA_RIGHT, THETA_RR1,
                 RHO_NEXT1, RHO_NEXT2,
                 RHO_RC_00, RHO_RC_01, RHO_RC_02, RHO_RC_03, RHO_RC_04,
                 RHO_RC_10, RHO_RC_11, RHO_RC_12, RHO_RC_13, RHO_RC_14,
                 RHO_RC_20, RHO_RC_21, RHO_RC_22, RHO_RC_23, RHO_RC_24,
                 RHO_RC_30, RHO_RC_31, RHO_RC_32, RHO_RC_33, RHO_RC_34,
-                RHO_RC_40, RHO_RC_41, RHO_RC_42, RHO_RC_43, RHO_RC_44
+                RHO_RC_40, RHO_RC_41, RHO_RC_42, RHO_RC_43, RHO_RC_44,
+                PI_MUL_X, PI_MUL_Y, CHI_ADD_1, CHI_ADD_2
                 >
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
@@ -327,37 +276,23 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Shl<Output = T> 
 {
     const RC: [T; ROUNDS] = make_RC!(T, ROUNDS, LFSR);
-    // make_RC::<T, ROUNDS, LFSR>();
-                // [ 0x00000000000000000000000000000001, 0x00000000000000000000000000008082,
-                //   0x8000000000000000000000000000808A, 0x80000000000000000000000080008000,
-                //   0x0000000000000000000000000000808B, 0x00000000000000000000000080000001, 
-                //   0x80000000000000000000000080008081, 0x80000000000000000000000000008009,
-                //   0x0000000000000000000000000000008A, 0x00000000000000000000000000000088,
-                //   0x00000000000000000000000080008009, 0x0000000000000000000000008000000A, 
-                //   0x0000000000000000000000008000808B, 0x8000000000000000000000000000008B,
-                //   0x80000000000000000000000000008089, 0x80000000000000000000000000008003,
-                //   0x80000000000000000000000000008002, 0x80000000000000000000000000000080, 
-                //   0x0000000000000000000000000000800A, 0x8000000000000000000000008000000A,
-                //   0x80000000000000000000000080008081, 0x80000000000000000000000000008080,
-                //   0x00000000000000000000000080000001, 0x80000000000000000000000080008008,
-                //   0x00000000000000000000000080008000, 0x8000000000000000000000000000800a  ];
-    
-    // const RC: [u64; 24] = [ 0x0000000000000001, 0x0000000000008082, 0x800000000000808A, 
-    //                         0x8000000080008000, 0x000000000000808B, 0x0000000080000001, 
-    //                         0x8000000080008081, 0x8000000000008009, 0x000000000000008A, 
-    //                         0x0000000000000088, 0x0000000080008009, 0x000000008000000A, 
-    //                         0x000000008000808B, 0x800000000000008B, 0x8000000000008089, 
-    //                         0x8000000000008003, 0x8000000000008002, 0x8000000000000080, 
-    //                         0x000000000000800A, 0x800000008000000A, 0x8000000080008081, 
-    //                         0x8000000000008080, 0x0000000080000001, 0x8000000080008008 ];
-
     const R: [[u8; 5]; 5] = [
-            [ RHO_RC_00, RHO_RC_01, RHO_RC_02, RHO_RC_03, RHO_RC_04 ],
-            [ RHO_RC_10, RHO_RC_11, RHO_RC_12, RHO_RC_13, RHO_RC_14 ],
-            [ RHO_RC_20, RHO_RC_21, RHO_RC_22, RHO_RC_23, RHO_RC_24 ],
-            [ RHO_RC_30, RHO_RC_31, RHO_RC_32, RHO_RC_33, RHO_RC_34 ],
-            [ RHO_RC_40, RHO_RC_41, RHO_RC_42, RHO_RC_43, RHO_RC_44 ]
-    ];
+            [ (RHO_RC_00 % T::BITS as u16) as u8, (RHO_RC_01 % T::BITS as u16) as u8,
+              (RHO_RC_02 % T::BITS as u16) as u8, (RHO_RC_03 % T::BITS as u16) as u8,
+              (RHO_RC_04 % T::BITS as u16) as u8 ],
+            [ (RHO_RC_10 % T::BITS as u16) as u8, (RHO_RC_11 % T::BITS as u16) as u8,
+              (RHO_RC_12 % T::BITS as u16) as u8, (RHO_RC_13 % T::BITS as u16) as u8,
+              (RHO_RC_14 % T::BITS as u16) as u8 ],
+            [ (RHO_RC_20 % T::BITS as u16) as u8, (RHO_RC_21 % T::BITS as u16) as u8,
+              (RHO_RC_22 % T::BITS as u16) as u8, (RHO_RC_23 % T::BITS as u16) as u8,
+              (RHO_RC_24 % T::BITS as u16) as u8 ],
+            [ (RHO_RC_30 % T::BITS as u16) as u8, (RHO_RC_31 % T::BITS as u16) as u8,
+              (RHO_RC_32 % T::BITS as u16) as u8, (RHO_RC_33 % T::BITS as u16) as u8,
+              (RHO_RC_34 % T::BITS as u16) as u8 ],
+            [ (RHO_RC_40 % T::BITS as u16) as u8, (RHO_RC_41 % T::BITS as u16) as u8,
+              (RHO_RC_42 % T::BITS as u16) as u8, (RHO_RC_43 % T::BITS as u16) as u8,
+              (RHO_RC_44 % T::BITS as u16) as u8 ]
+        ];
 
 
     // pub fn new() -> Self
@@ -365,37 +300,128 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     #[inline]
     pub fn new() -> Self
     {
-        Self { state: [[T::zero(); 5]; 5] }
+        Self { state: [[T::MIN; 5]; 5] }
     }
 
-    // pub fn get_desirable_l() -> usize
-    /// Returns the desiable `L` according to the size of `T`.
     #[inline]
-    pub fn get_desirable_l() -> usize
+    pub fn digest(&mut self, message: *const u8, length_in_bytes: u64)
     {
-        T::size_in_bytes().trailing_zeros() as usize + 3
+        self.absorb(message, length_in_bytes);
     }
-
-    // pub fn get_desirable_rounds() -> usize
-    /// Returns the desiable number of rounds according to the size of `T`.
+    
     #[inline]
-    pub fn get_desirable_rounds() -> usize
+    pub fn digest_str(&mut self, message: &str)
     {
-        12 + 2 * Self::get_desirable_l() as usize
+        self.absorb(message.as_ptr(), message.len() as u64);
     }
 
-    // pub fn get_desirable_b() -> usize
-    /// Returns the desiable `B` according to the size of `T`. 
-    /// The desiable `B` is expressed not in bits but in bytes here.
     #[inline]
-    pub fn get_desirable_b() -> usize
+    pub fn digest_string(&mut self, message: &String)
     {
-        25 * (1 << (Self::get_desirable_l() - 3))
+        self.digest(message.as_ptr(), message.len() as u64);
     }
 
-    // pub fn initialize_state(&mut self)
+    #[inline]
+    pub fn digest_array<U, const M: usize>(&mut self, message: &[U; M])
+    where U: SmallUInt + Copy + Clone
+    {
+        self.digest(message.as_ptr() as *const u8, (M as u32 * U::size_in_bytes()) as u64);
+    }
+
+    #[inline]
+    pub fn digest_vec<U>(&mut self, message: &Vec<T>)
+    where U: SmallUInt + Copy + Clone
+    {
+        self.digest(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64);
+    }
+
+    pub fn get_hash_value(&mut self, hash_value: *mut u8, length_in_bytes: usize)
+    {
+        let chunk_num = length_in_bytes / RATE;
+        let rest_num = length_in_bytes % RATE;
+        for i in 0..chunk_num
+        {
+            let hash_code = self.squeeze();
+            unsafe { copy_nonoverlapping(hash_code.as_ptr() as *const u8, hash_value.add(i * RATE), RATE); }
+        }
+        if rest_num != 0
+        {
+            let hash_code = self.squeeze();
+            unsafe { copy_nonoverlapping(hash_code.as_ptr() as *const u8, hash_value.add(chunk_num * RATE), rest_num); }
+        }
+    }
+
+    pub fn get_hash_value_in_string(&mut self, length_in_bytes: usize) -> String
+    {
+        let chunk_num = length_in_bytes / RATE;
+        let rest_num = length_in_bytes % RATE;
+        let mut txt = String::new();
+        for i in 0..chunk_num
+        {
+            let hash_code = self.squeeze();
+            txt.push_str(Self::read_hash_value_in_hexadecimal(&hash_code).as_str());
+        }
+        if rest_num != 0
+        {
+            let hash_code = self.squeeze();
+            let mut chs = Self::read_hash_value_in_hexadecimal(&hash_code);
+            chs.truncate(rest_num << 1);
+            txt.push_str(chs.as_str());
+        }
+        txt
+    }
+
+    pub fn read_hash_value_in_hexadecimal<const M: usize>(hash: &[u8; M]) -> String
+    {
+        const BYTES: usize = 8;
+        let mut txt = String::new();
+        for i in 0..M
+        {
+            let byte = hash[i];
+            for j in 0..BYTES
+            {
+                txt.push(Self::to_char(byte >> 4));
+                txt.push(Self::to_char(byte & 0b1111));
+            }
+        }
+        txt
+    }
+
+    // pub fn squeeze(&mut self) -> [u8; RATE]
+    /// Returns the resulting hash code.
+    pub fn squeeze(&mut self) -> [u8; RATE]
+    {
+        let mut block = [0_u8; RATE];
+        unsafe { copy_nonoverlapping(self.state.as_ptr() as *mut u8, block.as_mut_ptr(), RATE); }
+        for round in 0..ROUNDS
+        {
+            self.theta();
+            self.rho_pi_chi();
+            self.iota(round);
+        }
+        block
+    }
+
+    // pub fn absorb(&mut self, message: *const u8, length_in_bytes: usize)
+    /// Digests the message.
+    pub fn absorb(&mut self, message: *const u8, length_in_bytes: u64)
+    {
+        let chunk_num = length_in_bytes as usize / RATE;
+        self.initialize_state();
+        for i in 0..chunk_num
+            { self.absorb_block(unsafe { message.add(i * RATE) }); }
+
+        let rest = length_in_bytes as usize % RATE;
+        let mut padded = [0_u8; RATE];
+        unsafe { copy_nonoverlapping(message.add(RATE * chunk_num), padded.as_mut_ptr(), rest); }
+        padded[rest] = if PADDING { 0b_0110_0000 } else { 0b_1111_1000};
+        padded[RATE - 1] |= 1_u8;
+        self.absorb_block(padded.as_ptr());
+    }
+
+    // fn initialize_state(&mut self)
     /// Initialize state array to be all zeros.
-    pub fn initialize_state(&mut self)
+    fn initialize_state(&mut self)
     {
         unsafe { write_bytes(self.state.as_mut_ptr(), 0, 5 * 5); }
         // for y in 0..5
@@ -405,26 +431,26 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         // }
     }
 
-    pub fn absorb(&mut self, message: *const u8, length_in_bytes: isize)
+    // fn absorb_block(&mut self, block: *const u8)
+    /// The block of length, `RATE` bytes, will be absorbed.
+    fn absorb_block(&mut self, block: *const u8)
     {
-        let shift_num = T::size_in_bits().ilog(2);
-        const CHUNK_NUM: usize = 16;
-        self.initialize_state();
-        let length_done = (length_in_bytes >> shift_num) as usize;
-        // for i in 0..length_done
-        //     { self.update(unsafe { from_raw_parts(message.add(i << shift_num) as *const T, 5 * 5) } ); }
-        // self.finalize(unsafe { message.add(length_done << shift_num) }, length_in_bytes);
-
+        self.feed_block_to_state(block);
+        for round in 0..ROUNDS
+        {
+            self.theta();
+            self.rho_pi_chi();
+            self.iota(round);
+        }
     }
 
     // fn feed_message_to_state(&mut self, message: *const u8)
     /// The message will be absorbed `RATE` bytes by `RATE` bytes.
     #[inline]
-    fn feed_message_to_state(&mut self, message: *const u8)
+    fn feed_block_to_state(&mut self, block: *const u8)
     {
-        self.initialize_state();
-        let mut state = [[T::zero(); 5]; 5];
-        unsafe { copy_nonoverlapping(message, state.as_mut_ptr() as *mut u8, RATE); }
+        let mut state = [[T::MIN; 5]; 5];
+        unsafe { copy_nonoverlapping(block, state.as_mut_ptr() as *mut u8, RATE); }
         let limit_y = RATE / 5;
         for y in 0..limit_y
         {
@@ -472,14 +498,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn rho_pi_chi(&mut self)
     {
-        let mut array= [[T::zero(); 5]; 5];
+        let mut array= [[T::MIN; 5]; 5];
         for y in 0..5_usize
         {
             for x in 0..5_usize
             {
-                let x2 = x.modular_mul(2, 5);
-                let y3 = y.modular_mul(3, 5);
-                let row = x2.modular_add(y3, 5);
+                let x1 = x.modular_mul(PI_MUL_X, 5);
+                let y3 = y.modular_mul(PI_MUL_Y, 5);
+                let row = x1.modular_add(y3, 5);
                 // pi step                      // rho step
                 array[row][y] = self.state[y][x].rotate_right(Self::R[x][y] as u32);
             }
@@ -491,8 +517,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             for x in 0..5_usize
             {
                 let a = array[y][x];
-                let b = !array[y][x.modular_add(1, 5)];
-                let c = array[y][x.modular_add(2, 5)];
+                let b = !array[y][x.modular_add(CHI_ADD_1, 5)];
+                let c = array[y][x.modular_add(CHI_ADD_2, 5)];
                 self.state[y][x] = a ^ (b & c);
             }
         }
@@ -505,5 +531,37 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
 
-    #[inline] fn get_RC(&mut self, idx: usize) -> T     { Self::RC[idx] }
+    // pub fn get_desirable_l() -> usize
+    /// Returns the desiable `L` according to the size of `T`.
+    #[inline]
+    pub fn get_desirable_l() -> usize
+    {
+        T::BITS.trailing_zeros() as usize
+    }
+
+    // pub fn get_desirable_rounds() -> usize
+    /// Returns the desiable number of rounds according to the size of `T`.
+    #[inline]
+    pub fn get_desirable_rounds() -> usize
+    {
+        12 + 2 * Self::get_desirable_l() as usize
+    }
+
+    // pub fn get_desirable_b() -> usize
+    /// Returns the desiable `B` according to the size of `T`. 
+    /// The desiable `B` is expressed not in bits but in bytes here.
+    #[inline]
+    pub fn get_desirable_b() -> usize
+    {
+        25 * (1 << (Self::get_desirable_l() - 3))
+    }
+
+    #[inline]
+    fn to_char(nibble: u8) -> char
+    {
+        if nibble < 10 
+            { ('0' as u8 + nibble) as u8 as char }
+        else
+            { ('A' as u8 - 10 + nibble) as char }
+    }
 }

@@ -217,7 +217,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
-    /// let half = U256::submax(128_usize);
+    /// let half = U256::submax(128_u32);
     /// println!("half maximum = \t{}", half);
     /// println!("half maximum = \t{}", half.to_string_with_radix_and_stride(16, 4).unwrap());
     /// assert_eq!(half.to_string(), "340282366920938463463374607431768211455");
@@ -2174,7 +2174,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_left_carry(), false);
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
-    /// a_biguint.set_submax(200_usize);
+    /// a_biguint.set_submax(200_u32);
     /// println!("a_biguint = {}", a_biguint.to_string_with_radix_and_stride(16, 8).unwrap());
     /// assert_eq!(a_biguint.to_string_with_radix_and_stride(16, 8).unwrap(), "FF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF");
     /// assert_eq!(a_biguint.is_overflow(), false);

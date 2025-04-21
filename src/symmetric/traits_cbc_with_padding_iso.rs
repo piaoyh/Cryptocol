@@ -751,7 +751,7 @@ pub trait CBC_ISO<T> : Sized
     fn encrypt_vec<U>(&mut self, iv: T, message: &Vec<U>, cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt(iv, message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
+        self.encrypt(iv, message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_vec_into_vec<U, V>(&mut self, iv: T, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
@@ -818,7 +818,7 @@ pub trait CBC_ISO<T> : Sized
     fn encrypt_vec_into_vec<U, V>(&mut self, iv: T, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_vec(iv, message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_vec(iv, message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, message: &Vec<U>, cipher: &mut [V; N]) -> u64
@@ -899,7 +899,7 @@ pub trait CBC_ISO<T> : Sized
     fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, message: &Vec<U>, cipher: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_array(iv, message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_array(iv, message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_array<U, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: *mut u8) -> u64
@@ -977,7 +977,7 @@ pub trait CBC_ISO<T> : Sized
     fn encrypt_array<U, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt(iv, message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
+        self.encrypt(iv, message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut Vec<V>) -> u64
@@ -1046,7 +1046,7 @@ pub trait CBC_ISO<T> : Sized
     fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_vec(iv, message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_vec(iv, message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut [V; M]) -> u64
@@ -1128,7 +1128,7 @@ pub trait CBC_ISO<T> : Sized
     fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_array(iv, message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_array(iv, message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn decrypt(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64;
@@ -1573,7 +1573,7 @@ pub trait CBC_ISO<T> : Sized
     fn decrypt_vec<U>(&mut self, iv: T, cipher: &Vec<U>, message: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt(iv, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_vec_into_vec<U, V>(&mut self, iv: T, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
@@ -1661,7 +1661,7 @@ pub trait CBC_ISO<T> : Sized
     fn decrypt_vec_into_vec<U, V>(&mut self, iv: T, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, cipher: &Vec<U>, message: &mut [V; N]) -> u64
@@ -1756,7 +1756,7 @@ pub trait CBC_ISO<T> : Sized
     fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, cipher: &Vec<U>, message: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_vec_into_string<U>(&mut self, iv: T, cipher: &Vec<U>, message: &mut String) -> u64
@@ -1834,7 +1834,7 @@ pub trait CBC_ISO<T> : Sized
     fn decrypt_vec_into_string<U>(&mut self, iv: T, cipher: &Vec<U>, message: &mut String) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_array<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: *mut u8) -> u64
@@ -1931,7 +1931,7 @@ pub trait CBC_ISO<T> : Sized
     fn decrypt_array<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt(iv, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut Vec<V>) -> u64
@@ -2020,7 +2020,7 @@ pub trait CBC_ISO<T> : Sized
     fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut [V; M]) -> u64
@@ -2117,7 +2117,7 @@ pub trait CBC_ISO<T> : Sized
     fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_array(iv, cipher.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_array(iv, cipher.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_array_into_string<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut String) -> u64
@@ -2196,6 +2196,6 @@ pub trait CBC_ISO<T> : Sized
     fn decrypt_array_into_string<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut String) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 }

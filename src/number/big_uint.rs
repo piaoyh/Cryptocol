@@ -1410,7 +1410,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     /***** CONSTRUCTORS *****/
 
-    // pub fn new() -> Self
+    // pub const fn new() -> Self
     /// Constructs a new `BigUInt<T, N>`.
     /// 
     /// # Output
@@ -1436,16 +1436,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(obj.is_left_carry(), false);
     /// assert_eq!(obj.is_right_carry(), false);
     /// ```
-    pub fn new() -> Self
+    pub const fn new() -> Self
     {
         Self
         {
-            number: [T::zero(); N],
+            number: [T::MIN; N],
             flag: 0,
         }
     }
 
-    // pub fn zero() -> Self
+    // pub const fn zero() -> Self
     /// Constructs a new `BigUInt<T, N>` which has the value of `0`.
     /// 
     /// # Output
@@ -1479,12 +1479,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(zero.is_right_carry(), false);
     /// ```
     #[inline]
-    pub fn zero() -> Self
+    pub const fn zero() -> Self
     {
         Self::new()   // unsafe { zeroed::<Self>() }
     }
 
-    // pub fn one() -> Self
+    // pub const fn one() -> Self
     /// Constructs a new `BigUInt<T, N>` which has the value of `1`.
     /// 
     /// # Output
@@ -1512,14 +1512,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(one.is_left_carry(), false);
     /// assert_eq!(one.is_right_carry(), false);
     /// ```
-    pub fn one() -> Self
+    pub const fn one() -> Self
     {
         let mut me = Self::zero();
-        me.set_num_(0, T::one());
+        me.set_num_(0, T::ONE);
         me
     }
 
-    // pub fn max() -> Self
+    // pub const fn max() -> Self
     /// Constructs a new `BigUInt<T, N>` which has the value of
     /// maximum.
     /// 
@@ -1545,11 +1545,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(maximum.is_right_carry(), false);
     /// assert_eq!(maximum.wrapping_add_uint(1_u16), U256::zero());
     /// ```
-    pub fn max() -> Self
+    pub const fn max() -> Self
     {
-        let mut me = Self::new();
-        me.set_max();
-        me
+        Self
+        {
+            number: [T::MAX; N],
+            flag: 0,
+        }
     }
 
     // pub fn submax(size_in_bits: usize) -> Self
@@ -1571,7 +1573,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
-    /// let half = U256::submax(128_usize);
+    /// let half = U256::submax(128_u32);
     /// println!("half maximum = \t{}", half);
     /// println!("half maximum = \t{}", half.to_string_with_radix_and_stride(16, 4).unwrap());
     /// assert_eq!(half.to_string(), "340282366920938463463374607431768211455");
@@ -1584,7 +1586,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(half.is_left_carry(), false);
     /// assert_eq!(half.is_right_carry(), false);
     /// ```
-    pub fn submax(size_in_bits: usize) -> Self
+    pub fn submax(size_in_bits: u32) -> Self
     {
         let mut res = Self::max();
         res.set_submax(size_in_bits);
@@ -1735,14 +1737,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             let size_t_bits = size_t * 8;
             for i in 0..size_u/size_t
             {
-                unsafe { me.set_num_(i, share.des); }
-                unsafe { share.src >>= U::usize_as_smalluint(size_t_bits); }
+                unsafe { me.set_num_(i as usize, share.des); }
+                unsafe { share.src >>= U::u32_as_smalluint(size_t_bits); }
             }
         }
         return me;
     }
 
-    // pub fn from_array(val: [T; N]) -> Self
+    // pub const fn from_array(val: [T; N]) -> Self
     /// Constructs a new `BigUInt<T, N>` from an array of type `T` with `N`
     /// elements.
     /// 
@@ -1769,7 +1771,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(big_num.is_left_carry(), false);
     /// assert_eq!(big_num.is_right_carry(), false);
     /// ```
-    pub fn from_array(val: [T; N]) -> Self
+    pub const fn from_array(val: [T; N]) -> Self
     {
         Self { number: val, flag: 0 }
     }
@@ -2152,90 +2154,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// }
     /// ```
     /// 
-    /// # Example 2 for NumberErr::OutOfValidRadixRange case
-    /// ```
-    /// use cryptocol::number::NumberErr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let b_contains_out_of_valid_radix_range = U512::from_str_radix("1234_5678_9ABC_DEF0_1234_5678_9ABC_DEF0_1234_5678_9ABC_DEF0_1234_5678_9ABC_DEF0_1234_5678_9ABC_DEF0_1234_5678_9ABC_DEF0_1234_5678_9ABC_DEF0_1234_5678_9ABC_DEF0", 63);
-    /// match b_contains_out_of_valid_radix_range
-    /// {
-    ///     Ok(n) =>  { println!("a_correct = {}", n); },
-    ///     Err(e) => {
-    ///         println!("Failed: {}", e);
-    ///         assert_eq!(e, NumberErr::OutOfValidRadixRange);
-    ///     },
-    /// }
-    /// ```
-    /// 
-    /// # Example 3 for NumberErr::NotAlphaNumeric case
-    /// ```
-    /// use cryptocol::number::NumberErr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let c_contains_non_alphanumeric = U512::from_str_radix("1234-5678-9ABC-DEF0-1234-5678-9ABC-DEF0-1234-5678-9ABC-DEF0-1234-5678-9ABC-DEF0-1234-5678-9ABC-DEF0-1234-5678-9ABC-DEF0-1234-5678-9ABC-DEF0-1234-5678-9ABC-DEF0", 16);
-    /// match c_contains_non_alphanumeric
-    /// {
-    ///     Ok(n) =>  { println!("a_correct = {}", n); },
-    ///     Err(e) => {
-    ///         println!("Failed: {}", e);
-    ///         assert_eq!(e, NumberErr::NotAlphaNumeric);
-    ///     },
-    /// }
-    /// ```
-    /// 
-    /// # Example 4 for NumberErr::NotFitToRadix case
-    /// ```
-    /// use cryptocol::number::NumberErr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let d_constains_not_fit_to_radix = U512::from_str_radix("1234_5678_9ABC_DEFG_1234_5678_9ABC_DEFG_1234_5678_9ABC_DEFG_1234_5678_9ABC_DEFG_1234_5678_9ABC_DEFG_1234_5678_9ABC_DEFG_1234_5678_9ABC_DEFG_1234_5678_9ABC_DEFG", 16);
-    /// match d_constains_not_fit_to_radix
-    /// {
-    ///     Ok(n) =>  { println!("d_constains_not_fit_to_radix = {}", n); },
-    ///     Err(e) => {
-    ///         println!("Failed: {}", e);
-    ///         assert_eq!(e, NumberErr::NotFitToRadix);
-    ///     },
-    /// }
-    /// ```
-    /// 
-    /// # Example 5 for NumberErr::TooBigNumber case
-    /// ```
-    /// use cryptocol::number::NumberErr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let e_constains_too_big_number = U512::from_str_radix("1_1234_5678_9ABC_DEF0_1234_5678_9ABC_DEF0_1234_5678_9ABC_DEF0_1234_5678_9ABC_DEF0_1234_5678_9ABC_DEF0_1234_5678_9ABC_DEF0_1234_5678_9ABC_DEF0_1234_5678_9ABC_DEF0", 16);
-    /// match e_constains_too_big_number
-    /// {
-    ///     Ok(n) =>  { println!("c_constains_too_big_number = {}", n); },
-    ///     Err(e) => {
-    ///         println!("Failed: {}", e);
-    ///         assert_eq!(e, NumberErr::TooBigNumber);
-    ///     },
-    /// }
-    /// ```
-    /// 
-    /// # Example 6 for NumberErr::NotAlphaNumeric, NumberErr::NotFitToRadix, and NumberErr::TooBigNumber case
-    /// ```
-    /// use cryptocol::number::NumberErr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let f_contains_non_alphanumeric_not_fit_to_radix = U512::from_str_radix("1,1234,5678,9ABC,DEFG,1234,5678,9ABC,DEFG,1234,5678,9ABC,DEFG,1234,5678,9ABC,DEFG,1234,5678,9ABC,DEFG,1234,5678,9ABC,DEFG,1234,5678,9ABC,DEFG,1234,5678,9ABC,DEFG", 16);
-    /// match f_contains_non_alphanumeric_not_fit_to_radix
-    /// {
-    ///     Ok(n) =>  { println!("f_contains_non_alphanumeric_not_fit_to_radix = {}", n); },
-    ///     Err(e) => {
-    ///         println!("Failed: {}", e);
-    ///         assert_eq!(e, NumberErr::NotAlphaNumeric);
-    ///     },
-    /// }
-    /// ```
+    /// # For more examples,
+    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.from_str_radix)
     pub fn from_str_radix(txt: &str, radix: u32) -> Result<Self, NumberErr>
     {
         if (radix < 2) || (radix > 10 + 26 + 26)
@@ -2291,7 +2211,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             { Ok(bignum) }
     }
 
-    // pub fn generate_check_bits(bit_pos: usize) -> Option<Self>
+    // pub fn generate_check_bits(bit_pos: u32) -> Option<Self>
     /// Constucts a new `BigUInt<T, N>` which has the value zero and sets only
     /// the bit specified by the argument bit_pos to be 1.
     /// 
@@ -2326,7 +2246,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # For more examples,
     /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.generate_check_bits)
-    pub fn generate_check_bits(bit_pos: usize) -> Option<Self>
+    pub fn generate_check_bits(bit_pos: u32) -> Option<Self>
     {
         if bit_pos < Self::size_in_bits()
             { Some(Self::generate_check_bits_(bit_pos)) }
@@ -2334,7 +2254,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             { None }
     }
 
-    // pub fn generate_check_bits_(bit_pos: usize) -> Self
+    // pub fn generate_check_bits_(bit_pos: u32) -> Self
     /// Constucts a new `BigUInt<T, N>` which has the value zero and sets only
     /// the bit specified by the argument bit_pos to be 1.
     /// 
@@ -2372,7 +2292,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # For more examples,
     /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.generate_check_bits_)
-    pub fn generate_check_bits_(bit_pos: usize) -> Self
+    pub fn generate_check_bits_(bit_pos: u32) -> Self
     {
         let mut check_bits = Self::zero();
         check_bits.turn_check_bits(bit_pos);
@@ -2383,7 +2303,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     
     /***** METHODS TO GET SIZE BOTH IN BYTES AND BITS *****/
 
-    // pub fn size_in_bytes() -> usize
+    // pub const fn size_in_bytes() -> u32
     /// Returns how many bytes long the number `BigUInt` is.
     /// 
     /// # Output
@@ -2401,12 +2321,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(U256::size_in_bytes(), 32);
     /// ```
     #[inline]
-    pub fn size_in_bytes() -> usize
+    pub const fn size_in_bytes() -> u32
     {
-        T::size_in_bytes() * N
+        T::BITS / 8 * N as u32
     }
 
-    // pub fn size_in_bits() -> usize
+    // pub const fn size_in_bits() -> u32
     /// Returns how many bits long the number `BigUInt` is.
     /// 
     /// # Output
@@ -2424,12 +2344,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(U256::size_in_bits(), 256);
     /// ```
     #[inline]
-    pub fn size_in_bits() -> usize
+    pub const fn size_in_bits() -> u32
     {
-        T::size_in_bits() * N
+        T::BITS * N as u32
     }
 
-    // pub fn length_in_bytes(&self) -> usize
+    // pub fn length_in_bytes(&self) -> u32
     /// Returns how many bytes long the number i.e. the object of
     /// `BigUInt` is.
     /// 
@@ -2449,12 +2369,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.length_in_bytes(), 32);
     /// ```
     #[inline]
-    pub fn length_in_bytes(&self) -> usize
+    pub fn length_in_bytes(&self) -> u32
     {
         Self::size_in_bytes()
     }
 
-    // pub fn length_in_bits(&self) -> usize
+    // pub fn length_in_bits(&self) -> u32
     /// Returns how many bits long the number i.e. the object of
     /// `BigUInt` is.
     /// 
@@ -2474,7 +2394,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.length_in_bits(), 256);
     /// ```
     #[inline]
-    pub fn length_in_bits(&self) -> usize
+    pub fn length_in_bits(&self) -> u32
     {
         Self::size_in_bits()
     }
@@ -2483,7 +2403,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     /***** METHODS TO GET, SET, AND CHECK *****/
 
-    // pub fn turn_check_bits(&mut self, bit_pos: usize)
+    // pub fn turn_check_bits(&mut self, bit_pos: u32)
     /// Changes a `BigUInt<T, N>` to have the value zero and sets only
     /// the bit specified by the argument `bit_pos` to be 1.
     /// 
@@ -2527,18 +2447,18 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # For more examples,
     /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.turn_check_bits)
-    pub fn turn_check_bits(&mut self, bit_pos: usize)
+    pub fn turn_check_bits(&mut self, bit_pos: u32)
     {
         let size_t_bits = T::size_in_bits();
         let chunk_num = bit_pos / size_t_bits;
         let piece_num = bit_pos % size_t_bits;
         let mut val = T::one();
-        val <<= T::usize_as_smalluint(piece_num);
+        val <<= T::u32_as_smalluint(piece_num);
         self.set_zero();
-        self.set_num_(chunk_num, val);
+        self.set_num_(chunk_num as usize, val);
     }
 
-    // pub fn is_bit_set(&self, bit_pos: usize) -> Option<bool>
+    // pub fn is_bit_set(&self, bit_pos: u32) -> Option<bool>
     /// Check a `self` to know whether or not the bit specified by the argument
     /// `bit_pos` to be 1.
     /// 
@@ -2588,15 +2508,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # For more examples,
     /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_bit_set)
-    pub fn is_bit_set(&self, bit_pos: usize) -> Option<bool>
+    pub fn is_bit_set(&self, bit_pos: u32) -> Option<bool>
     {
-        if (bit_pos / T::size_in_bits()) >= N
+        if (bit_pos / T::size_in_bits()) >= N as u32
             { None }
         else
             { Some(self.is_bit_set_(bit_pos)) }
     }
 
-    // pub fn is_bit_set_(&self, bit_pos: usize) -> bool
+    // pub fn is_bit_set_(&self, bit_pos: u32) -> bool
     /// Check whether or not the bit specified by the argument
     /// `bit_pos` in `self` to be 1.
     /// 
@@ -2637,15 +2557,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # For more examples,
     /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_bit_set_)
-    pub fn is_bit_set_(&self, bit_pos: usize) -> bool
+    pub fn is_bit_set_(&self, bit_pos: u32) -> bool
     {
         let size_t_bits = T::size_in_bits();
         let chunk_num = bit_pos / size_t_bits;
         let piece_num = bit_pos % size_t_bits;
-        self.get_num_(chunk_num).is_bit_set_(piece_num)
+        self.get_num_(chunk_num as usize).is_bit_set_(piece_num)
     }
 
-    // pub fn get_upper_portion(portion: usize) -> Self
+    // pub fn get_upper_portion(portion: u32) -> Self
     /// Get the non-zero upper portion (high order part) from `self`.
     /// 
     /// # Argument
@@ -2671,18 +2591,18 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("The 10-bit upper portion of {}_U256 is {}_U256", a_biguint.to_string_with_radix_and_stride(2, 10).unwrap(), b.to_string_with_radix_and_stride(2, 10).unwrap());
     /// assert_eq!(b.to_string_with_radix_and_stride(2, 10).unwrap(), "1101101001");
     /// ```
-    pub fn get_upper_portion(&self, portion: usize) -> Self
+    pub fn get_upper_portion(&self, portion: u32) -> Self
     {
         let leading = self.leading_zeros();
         let size = self.length_in_bits();
-        let available = size - leading as usize;
+        let available = size - leading;
         if portion >= available
             { self.clone() }
         else
             { self.shift_right(available - portion) }
     }
 
-    // pub fn get_lower_portion(portion: usize) -> Self
+    // pub fn get_lower_portion(portion: u32) -> Self
     /// Get the lower portion (low order part) from `self`.
     /// 
     /// # Argument
@@ -2708,11 +2628,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("The 10-bit lower portion of {}_U256 is {}_U256", a_biguint.to_string_with_radix_and_stride(2, 10).unwrap(), b.to_string_with_radix_and_stride(2, 10).unwrap());
     /// assert_eq!(b.to_string_with_radix_and_stride(2, 10).unwrap(), "1101010100");
     /// ```
-    pub fn get_lower_portion(&self, portion: usize) -> Self
+    pub fn get_lower_portion(&self, portion: u32) -> Self
     {
         let leading = self.leading_zeros();
         let size = self.length_in_bits();
-        let available = size - leading as usize;
+        let available = size - leading;
         let mut ret = self.clone();
         if portion == 0
         {
@@ -2725,13 +2645,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             let piece_num = portion % size_t_bits;
             if piece_num != 0
             {
-                let mut thing = ret.get_num_(chunk_num);
-                thing <<= T::usize_as_smalluint(T::size_in_bits() - piece_num);
-                thing >>= T::usize_as_smalluint(T::size_in_bits() - piece_num);
-                ret.set_num_(chunk_num, thing);
+                let mut thing = ret.get_num_(chunk_num as usize);
+                thing <<= T::u32_as_smalluint(T::size_in_bits() - piece_num);
+                thing >>= T::u32_as_smalluint(T::size_in_bits() - piece_num);
+                ret.set_num_(chunk_num as usize, thing);
             }
-            for i in (chunk_num + 1)..(N - leading as usize / size_t_bits)
-                { ret.set_num_(i, T::zero()); }
+            for i in (chunk_num + 1)..(N as u32 - leading / size_t_bits)
+                { ret.set_num_(i as usize, T::zero()); }
         }
         ret
     }
@@ -2958,7 +2878,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.set_num_)
     #[inline]
-    pub fn set_num_(&mut self, i: usize, val: T)
+    pub const fn set_num_(&mut self, i: usize, val: T)
     {
         #[cfg(target_endian = "little")]    { self.number[i] = val; }
         #[cfg(target_endian = "big")]       { self.number[N-1-i] = val; }
@@ -3365,7 +3285,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_left_carry(), false);
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
-    /// a_biguint.set_submax(200_usize);
+    /// a_biguint.set_submax(200_u32);
     /// println!("a_biguint = {}", a_biguint.to_string_with_radix_and_stride(16, 8).unwrap());
     /// assert_eq!(a_biguint.to_string_with_radix_and_stride(16, 8).unwrap(), "FF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF");
     /// assert_eq!(a_biguint.is_overflow(), false);
@@ -3376,7 +3296,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_left_carry(), false);
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
-    pub fn set_submax(&mut self, size_in_bits: usize)
+    pub fn set_submax(&mut self, size_in_bits: u32)
     {
         let size_t_bits = T::size_in_bits();
         if size_in_bits >= self.length_in_bits()
@@ -3396,11 +3316,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         let max = T::max();
         self.reset_all_flags();
         for i in 0..chunk_num
-            { self.set_num_(i, max); }
-        for i in chunk_num..N
+            { self.set_num_(i as usize, max); }
+        for i in chunk_num as usize..N
             { self.set_num_(i, zero); }
         if piece_num != 0
-            { self.set_num_(chunk_num, max >> T::usize_as_smalluint(size_t_bits - piece_num)); }
+            { self.set_num_(chunk_num as usize, max >> T::u32_as_smalluint(size_t_bits - piece_num)); }
     }
 
     // pub fn set_halfmax(&mut self)
@@ -3608,8 +3528,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             #[cfg(target_endian = "little")]
             for i in 0..size_v/size_t
             {
-                unsafe { self.set_num_(i, share.des); }
-                unsafe { share.src >>= U::usize_as_smalluint(size_t_bits); }
+                unsafe { self.set_num_(i as usize, share.des); }
+                unsafe { share.src >>= U::u32_as_smalluint(size_t_bits); }
             }
             #[cfg(target_endian = "big")]
             {
@@ -3686,9 +3606,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             #[cfg(target_endian = "little")]
             for i in 0..size_v/size_t
             {
-                if unsafe { self.get_num_(i) != share.des }
+                if unsafe { self.get_num_(i as usize) != share.des }
                     { return false; }
-                unsafe { share.src >>= U::usize_as_smalluint(size_t_bits); }
+                unsafe { share.src >>= U::u32_as_smalluint(size_t_bits); }
             }
             #[cfg(target_endian = "big")]
             {
@@ -3704,9 +3624,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
                     i -= 1;          
                 }
             }
-            for i in size_v/size_t..N
+            for i in size_v/size_t..N as u32
             {
-                if self.get_num_(i) != T::zero()
+                if self.get_num_(i as usize) != T::zero()
                     { return false; }
             }
         }
@@ -7797,8 +7717,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         else if U::size_in_bytes() <= T::size_in_bytes()
         {
             let mut quotient = Self::zero();
-            let size_rhs = rhs.length_in_bits() - rhs.leading_zeros() as usize;
-            let size_self = self.length_in_bits() - self.leading_zeros() as usize;
+            let size_rhs = rhs.length_in_bits() - rhs.leading_zeros();
+            let size_self = self.length_in_bits() - self.leading_zeros();
             let mut remainder = SharedValues::<U, T>::from_src(self.get_upper_portion(size_rhs).get_num_(0)).get_des();
             let mut position = size_self - size_rhs;
             loop
@@ -10172,7 +10092,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         if exp.is_zero()
             { return; }
 
-        let mut bit_check = one << U::usize_as_smalluint(exp.length_in_bits() - 1 - exp.leading_zeros() as usize);
+        let mut bit_check = one << U::u32_as_smalluint(exp.length_in_bits() - 1 - exp.leading_zeros());
         if !bit_check.is_zero()
         {
             self.wrapping_mul_assign(&multiplier);
@@ -10927,7 +10847,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        let mut highest = ((Self::size_in_bits() as u128 - self.leading_zeros() as u128).wrapping_div(exp.into_u128())) as usize;
+        let mut highest = (Self::size_in_bits() - self.leading_zeros()).wrapping_div(exp.into_u32());
         if highest.is_zero()
         {
             return Self::one();
@@ -14234,7 +14154,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         let size_t_bits_minus_one = T::size_in_bits() - 1;
         let mut high = Self::zero();
         let mut chunk = N - 1 - rhs.leading_zero_elements() as usize;
-        let mut piece = T::size_in_bits() - 1 - rhs.get_num_(chunk).leading_zeros() as usize;
+        let mut piece = T::size_in_bits() - 1 - rhs.get_num_(chunk).leading_zeros();
         self.set_zero();
         self.reset_all_flags();
         loop
@@ -14500,7 +14420,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         let adder = Self::from_array(self.get_number().clone());
         let size_t_bits_minus_one = T::size_in_bits()-1;
         let mut chunk = N - 1 - rhs.leading_zero_elements() as usize;
-        let mut piece = T::size_in_bits() - 1 - rhs.get_num_(chunk).leading_zeros() as usize;
+        let mut piece = T::size_in_bits() - 1 - rhs.get_num_(chunk).leading_zeros();
         self.set_zero();
         loop
         {
@@ -15015,8 +14935,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             { return (Self::one(), Self::zero()); }
 
         let mut quotient = Self::zero();
-        let size_rhs = rhs.length_in_bits() - rhs.leading_zeros() as usize;
-        let size_self = self.length_in_bits() - self.leading_zeros() as usize;
+        let size_rhs = rhs.length_in_bits() - rhs.leading_zeros();
+        let size_self = self.length_in_bits() - self.leading_zeros();
         let mut remainder = self.get_upper_portion(size_rhs);
         remainder.reset_all_flags();
         let mut position = size_self - size_rhs;
@@ -16782,7 +16702,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         if !self.is_power_of_two()
         {
             let flags = self.get_all_flags();
-            let bit_pos = Self::size_in_bits() - 1 - self.leading_zeros() as usize;
+            let bit_pos = Self::size_in_bits() - 1 - self.leading_zeros();
             self.turn_check_bits(bit_pos);
             self.shift_left_assign(1_u8);
             if self.is_left_carry()
@@ -17230,7 +17150,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             { return; }
 
         let mut bit_check = Self::one();
-        bit_check.shift_left_assign(exp.length_in_bits() - exp.leading_zeros() as usize - 1);
+        bit_check.shift_left_assign(exp.length_in_bits() - exp.leading_zeros() - 1);
         if !bit_check.is_zero()
         {
             self.wrapping_mul_assign(&multiplier); 
@@ -19579,8 +19499,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
 
         let size_t_bits = T::size_in_bits();    // The maximum of size_t_bits is 128. So, it can be cantained in even u8.
-        let chunk_num = n.wrapping_div(U::usize_as_smalluint(size_t_bits)).into_usize();
-        let piece_num = n.wrapping_rem(U::usize_as_smalluint(size_t_bits)).into_usize();
+        let chunk_num = n.wrapping_div(U::u32_as_smalluint(size_t_bits)).into_usize();
+        let piece_num = n.wrapping_rem(U::u32_as_smalluint(size_t_bits)).into_usize();
         let zero = T::zero();
         if chunk_num > 0
         {
@@ -19598,13 +19518,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
         if piece_num == 0
             { return; }
-        if !(self.get_num_(N-1) >> T::usize_as_smalluint(size_t_bits - piece_num)).is_zero()
+        if !(self.get_num_(N-1) >> T::u32_as_smalluint(size_t_bits - piece_num as u32)).is_zero()
             { self.set_left_carry(); }
 
         let mut num: T;
         let mut carry = zero;
         let shl = T::usize_as_smalluint(piece_num);
-        let shr = T::usize_as_smalluint(size_t_bits - piece_num);
+        let shr = T::u32_as_smalluint(size_t_bits - piece_num as u32);
         for idx in chunk_num..N
         {
             num = (self.get_num_(idx) << shl) | carry;
@@ -19747,8 +19667,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
 
         let size_t_bits = T::size_in_bits();    // The maximum of size_t_bits is 128. So, it can be cantained in even u8.
-        let chunk_num = n.wrapping_div(U::usize_as_smalluint(size_t_bits)).into_usize();
-        let piece_num = n.wrapping_rem(U::usize_as_smalluint(size_t_bits)).into_usize();
+        let chunk_num = n.wrapping_div(U::u32_as_smalluint(size_t_bits)).into_usize();
+        let piece_num = n.wrapping_rem(U::u32_as_smalluint(size_t_bits)).into_usize();
         let zero = T::zero();
         if chunk_num > 0
         {
@@ -19766,7 +19686,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
         if piece_num == 0
             { return; }
-        if !(self.get_num_(0) << T::usize_as_smalluint(size_t_bits - piece_num)).is_zero()
+        if !(self.get_num_(0) << T::u32_as_smalluint(size_t_bits - piece_num as u32)).is_zero()
             { self.set_right_carry(); }
 
 
@@ -19774,7 +19694,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         let mut carry = zero;
         let mut idx = N - 1 - chunk_num;
         let shr = T::usize_as_smalluint(piece_num);
-        let shl = T::usize_as_smalluint(size_t_bits - piece_num);
+        let shl = T::u32_as_smalluint(size_t_bits - piece_num as u32);
         loop
         {
             num = (self.get_num_(idx) >> shr) | carry;

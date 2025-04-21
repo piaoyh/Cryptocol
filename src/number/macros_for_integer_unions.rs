@@ -10936,7 +10936,7 @@ macro_rules! integer_union_methods {
             let mut low = zero;
             let mut high = zero;
             let mut overflow: bool;
-            let mut bit_check = one << (Self::size_in_bits() - 1 - rhs.leading_zeros() as usize);
+            let mut bit_check = one << (Self::size_in_bits() - 1 - rhs.leading_zeros());
             let adder = self;
             while !bit_check.is_zero()
             {

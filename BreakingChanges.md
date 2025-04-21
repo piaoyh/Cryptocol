@@ -1,5 +1,61 @@
 # Breaking Changes
 
+## Breaking changes from ver. 0.11.2 to ver. 0.11.3
+
+### Contant BYTES in trait SmallUInt
+
+| Ver. 0.11.2        | Ver. 0.11.3     |
+|--------------------|-----------------|
+| const BYTES: usize | const BITS: u32 |
+
+- The constant SmallUInt::BYTES has been renamed to SmallUInt::BITS, and its datatype has also been changed from `usize` to `u32` for consistancy with the primitive datatyes such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`.
+
+### Four methods in BigUInt
+
+| Ver. 0.11.2                                                | Ver. 0.11.3                                              |
+|------------------------------------------------------------|----------------------------------------------------------|
+| pub fn submax(size_in_bits: usize) -> Self                 | pub fn submax(size_in_bits: u32) -> Self                 |
+| pub const fn size_in_bytes() -> usize                      | pub const fn size_in_bytes() -> u32                      |
+| pub const fn size_in_bits() -> usize                       | pub const fn size_in_bits() -> u32                       |
+| pub fn length_in_bytes(&self) -> usize                     | pub fn length_in_bytes(&self) -> u32                     |
+| pub fn length_in_bits(&self) -> usize                      | pub fn length_in_bits(&self) -> u32                      |
+| pub fn set_submax(&mut self, size_in_bits: usize)          | pub fn set_submax(&mut self, size_in_bits: u32)          |
+| pub fn is_bit_set(self, bit_pos: usize) -> Option<bool>    | pub fn is_bit_set(self, bit_pos: u32) -> Option<bool>    |
+| pub fn is_bit_set_(self, bit_pos: usize) -> bool           | pub fn is_bit_set_(self, bit_pos: u32) -> bool           |
+| pub fn generate_check_bits(bit_pos: usize) -> Option<Self> | pub fn generate_check_bits(bit_pos: u32) -> Option<Self> |
+| pub fn generate_check_bits_(bit_pos: usize) -> Self        | pub fn generate_check_bits_(bit_pos: u32) -> Self        |
+| pub fn get_lower_portion(portion: usize) -> Self           | pub fn get_lower_portion(portion: u32) -> Self           |
+| 
+
+- The return types and the arguments of the above methods has been changed from `usize` to `u32` for consistancy with the primitive datatyes such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`.
+
+### Four methods in SmallUInt
+
+| Ver. 0.11.2                                            | Ver. 0.11.3                                          |
+|--------------------------------------------------------|------------------------------------------------------|
+| fn size_in_bytes() -> usize                            | fn size_in_bytes() -> u32                            |
+| fn size_in_bits() -> usize                             | fn size_in_bits() -> u32                             |
+| fn length_in_bytes(&self) -> usize                     | fn length_in_bytes(&self) -> u32                     |
+| fn length_in_bits(&self) -> usize                      | fn length_in_bits(&self) -> u32                      |
+| fn set_submax(&mut self, size_in_bits: usize)          | fn set_submax(&mut self, size_in_bits: u32)          |
+| fn is_bit_set(self, bit_pos: usize) -> Option<bool>    | fn is_bit_set(self, bit_pos: u32) -> Option<bool>    |
+| fn is_bit_set_(self, bit_pos: usize) -> bool           | fn is_bit_set_(self, bit_pos: u32) -> bool           |
+| fn generate_check_bits(bit_pos: usize) -> Option<Self> | fn generate_check_bits(bit_pos: u32) -> Option<Self> |
+| fn generate_check_bits_(bit_pos: usize) -> Self        | fn generate_check_bits_(bit_pos: u32) -> Self        |
+
+- The return types and the arguments of the above methods has been changed from `usize` to `u32` for consistancy with the primitive datatyes such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`.
+
+### methods in SHA_2_512_Generic and SHA_2_512_t_Generic
+
+| Ver. 0.11.2                                                                                                     | Ver. 0.11.3                                                                    |
+|-----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
+| pub fn digest(&mut self, message: *const u8, length_in_bytes: u128)                                             | pub fn digest(&mut self, message: *const u8, length_in_bytes: u64)             |
+| pub fn ruminate(&mut self, n: usize, message: *const u8, length_in_bytes: u128)                                 | pub fn ruminate(&mut self, n: usize, message: *const u8, length_in_bytes: u64) |
+| pub fn digest_c(&mut self, message: *const u8, length_in_bytes_low: u64, length_in_bytes_high: u64)             | removed                                                                        |
+| pub fn ruminate_c(&mut self, n: usize, message: *const u8, length_in_bytes_low: u64, length_in_bytes_high: u64) | removed                                                                        |
+
+- The arguments of the above method has been changed from `u128` to `u64` for consistancy with the methods digest() of other hash modules.
+
 ## Breaking changes from ver. 0.10.1 to ver. 0.10.2
 
 | Methods                                       |

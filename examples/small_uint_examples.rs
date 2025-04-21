@@ -9834,7 +9834,7 @@ fn small_uint_generate_check_bits()
     println!("--------------------------------------");
 }
 
-fn small_uint_generate_check_bits_func<T: cryptocol::number::SmallUInt>(bit_pos: usize) -> Option<T>
+fn small_uint_generate_check_bits_func<T: cryptocol::number::SmallUInt>(bit_pos: u32) -> Option<T>
 {
     cryptocol::number::SmallUInt::generate_check_bits(bit_pos)
 }
@@ -9989,7 +9989,7 @@ fn small_uint_generate_check_bits_()
 }
 
 #[allow(non_snake_case)]
-fn small_uint_generate_check_bits__func<T: cryptocol::number::SmallUInt>(bit_pos: usize) -> T
+fn small_uint_generate_check_bits__func<T: cryptocol::number::SmallUInt>(bit_pos: u32) -> T
 {
     cryptocol::number::SmallUInt::generate_check_bits_(bit_pos)
 }
@@ -11400,7 +11400,7 @@ fn small_uint_is_bit_set()
     println!("--------------------------------------");
 }
 
-fn small_uint_is_bit_set_func<T: cryptocol::number::SmallUInt>(num: T, bit_pos: usize) -> Option<bool>
+fn small_uint_is_bit_set_func<T: cryptocol::number::SmallUInt>(num: T, bit_pos: u32) -> Option<bool>
 {
     num.is_bit_set(bit_pos)
 }
@@ -11643,7 +11643,7 @@ fn small_uint_is_bit_set_()
 }
 
 #[allow(non_snake_case)]
-fn small_uint_is_bit_set__func<T: cryptocol::number::SmallUInt>(num: T, bit_pos: usize) -> bool
+fn small_uint_is_bit_set__func<T: cryptocol::number::SmallUInt>(num: T, bit_pos: u32) -> bool
 {
     num.is_bit_set_(bit_pos)
 }
@@ -17295,7 +17295,7 @@ fn small_uint_set_submax()
     println!("--------------------------------------");
 }
 
-fn small_uint_set_submax_func<T: cryptocol::number::SmallUInt>(num: &mut T, size_in_bits: usize)
+fn small_uint_set_submax_func<T: cryptocol::number::SmallUInt>(num: &mut T, size_in_bits: u32)
 {
     num.set_submax(size_in_bits);
 }
@@ -17470,96 +17470,96 @@ fn small_uint_size_in_bytes()
     println!("small_uint_size_in_bytes");
     use cryptocol::number::{ SmallUInt, ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
     // Example for u8
-    let size_usize = u8::size_in_bytes();
-    println!("The size of u8 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 1_usize);
-    let size_usize = small_uint_size_in_bytes_func::<u8>();
-    println!("The size of u8 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 1_usize);
+    let size_u32 = u8::size_in_bytes();
+    println!("The size of u8 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 1_u32);
+    let size_u32 = small_uint_size_in_bytes_func::<u8>();
+    println!("The size of u8 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 1_u32);
 
     // Example for u16
-    let size_usize = u16::size_in_bytes();
-    println!("The size of u16 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 2_usize);
-    let size_usize = small_uint_size_in_bytes_func::<u16>();
-    println!("The size of u16 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 2_usize);
+    let size_u32 = u16::size_in_bytes();
+    println!("The size of u16 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 2_u32);
+    let size_u32 = small_uint_size_in_bytes_func::<u16>();
+    println!("The size of u16 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 2_u32);
 
     // Example for u32
-    let size_usize = u32::size_in_bytes();
-    println!("The size of u32 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 4_usize);
-    let size_usize = small_uint_size_in_bytes_func::<u32>();
-    println!("The size of u32 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 4_usize);
+    let size_u32 = u32::size_in_bytes();
+    println!("The size of u32 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 4_u32);
+    let size_u32 = small_uint_size_in_bytes_func::<u32>();
+    println!("The size of u32 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 4_u32);
 
     // Example for u64
-    let size_usize = u64::size_in_bytes();
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
-    let size_usize = small_uint_size_in_bytes_func::<u64>();
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
+    let size_u32 = u64::size_in_bytes();
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
+    let size_u32 = small_uint_size_in_bytes_func::<u64>();
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
 
     // Example for u128
-    let size_usize = u128::size_in_bytes();
-    println!("The size of u128 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 16_usize);
-    let size_usize = small_uint_size_in_bytes_func::<u128>();
-    println!("The size of u128 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 16_usize);
+    let size_u32 = u128::size_in_bytes();
+    println!("The size of u128 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 16_u32);
+    let size_u32 = small_uint_size_in_bytes_func::<u128>();
+    println!("The size of u128 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 16_u32);
 
     // Example for usize
-    let size_usize = usize::size_in_bytes();
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
-    let size_usize = small_uint_size_in_bytes_func::<usize>();
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
+    let size_u32 = usize::size_in_bytes();
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
+    let size_u32 = small_uint_size_in_bytes_func::<usize>();
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
 
     // Example for ShortUnion
-    let size_usize = ShortUnion::size_in_bytes();
-    println!("The size of u16 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 2_usize);
-    let size_usize = small_uint_size_in_bytes_func::<ShortUnion>();
-    println!("The size of u16 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 2_usize);
+    let size_u32 = ShortUnion::size_in_bytes();
+    println!("The size of u16 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 2_u32);
+    let size_u32 = small_uint_size_in_bytes_func::<ShortUnion>();
+    println!("The size of u16 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 2_u32);
 
     // Example for IntUnion
-    let size_usize = IntUnion::size_in_bytes();
-    println!("The size of u32 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 4_usize);
-    let size_usize = small_uint_size_in_bytes_func::<IntUnion>();
-    println!("The size of u32 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 4_usize);
+    let size_u32 = IntUnion::size_in_bytes();
+    println!("The size of u32 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 4_u32);
+    let size_u32 = small_uint_size_in_bytes_func::<IntUnion>();
+    println!("The size of u32 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 4_u32);
 
     // Example for LongUnion
-    let size_usize = LongUnion::size_in_bytes();
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
-    let size_usize = small_uint_size_in_bytes_func::<LongUnion>();
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
+    let size_u32 = LongUnion::size_in_bytes();
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
+    let size_u32 = small_uint_size_in_bytes_func::<LongUnion>();
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
 
     // Example for LongerUnion
-    let size_usize = LongerUnion::size_in_bytes();
-    println!("The size of u128 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 16_usize);
-    let size_usize = small_uint_size_in_bytes_func::<LongerUnion>();
-    println!("The size of u128 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 16_usize);
+    let size_u32 = LongerUnion::size_in_bytes();
+    println!("The size of u128 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 16_u32);
+    let size_u32 = small_uint_size_in_bytes_func::<LongerUnion>();
+    println!("The size of u128 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 16_u32);
 
     // Example for SizeUnion
-    let size_usize = SizeUnion::size_in_bytes();
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
-    let size_usize = small_uint_size_in_bytes_func::<SizeUnion>();
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
+    let size_u32 = SizeUnion::size_in_bytes();
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
+    let size_u32 = small_uint_size_in_bytes_func::<SizeUnion>();
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
     println!("--------------------------------------");
 }
 
-fn small_uint_size_in_bytes_func<T: cryptocol::number::SmallUInt>() -> usize
+fn small_uint_size_in_bytes_func<T: cryptocol::number::SmallUInt>() -> u32
 {
     T::size_in_bytes()
 }
@@ -17569,96 +17569,96 @@ fn small_uint_size_in_bits()
     println!("small_uint_size_in_bits");
     use cryptocol::number::{ SmallUInt, ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
     // Example for u8
-    let size_usize = u8::size_in_bits();
-    println!("The size of u8 is {} bits.", size_usize);
-    assert_eq!(size_usize, 8_usize);
-    let size_usize = small_uint_size_in_bits_func::<u8>();
-    println!("The size of u8 is {} bits.", size_usize);
-    assert_eq!(size_usize, 8_usize);
+    let size_u32 = u8::size_in_bits();
+    println!("The size of u8 is {} bits.", size_u32);
+    assert_eq!(size_u32, 8_u32);
+    let size_u32 = small_uint_size_in_bits_func::<u8>();
+    println!("The size of u8 is {} bits.", size_u32);
+    assert_eq!(size_u32, 8_u32);
 
     // Example for u16
-    let size_usize = u16::size_in_bits();
-    println!("The size of u16 is {} bits.", size_usize);
-    assert_eq!(size_usize, 16_usize);
-    let size_usize = small_uint_size_in_bits_func::<u16>();
-    println!("The size of u16 is {} bits.", size_usize);
-    assert_eq!(size_usize, 16_usize);
+    let size_u32 = u16::size_in_bits();
+    println!("The size of u16 is {} bits.", size_u32);
+    assert_eq!(size_u32, 16_u32);
+    let size_u32 = small_uint_size_in_bits_func::<u16>();
+    println!("The size of u16 is {} bits.", size_u32);
+    assert_eq!(size_u32, 16_u32);
 
     // Example for u32
-    let size_usize = u32::size_in_bits();
-    println!("The size of u32 is {} bits.", size_usize);
-    assert_eq!(size_usize, 32_usize);
-    let size_usize = small_uint_size_in_bits_func::<u32>();
-    println!("The size of u32 is {} bits.", size_usize);
-    assert_eq!(size_usize, 32_usize);
+    let size_u32 = u32::size_in_bits();
+    println!("The size of u32 is {} bits.", size_u32);
+    assert_eq!(size_u32, 32_u32);
+    let size_u32 = small_uint_size_in_bits_func::<u32>();
+    println!("The size of u32 is {} bits.", size_u32);
+    assert_eq!(size_u32, 32_u32);
 
     // Example for u64
-    let size_usize = u64::size_in_bits();
-    println!("The size of u64 is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
-    let size_usize = small_uint_size_in_bits_func::<u64>();
-    println!("The size of u64 is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
+    let size_u32 = u64::size_in_bits();
+    println!("The size of u64 is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
+    let size_u32 = small_uint_size_in_bits_func::<u64>();
+    println!("The size of u64 is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
 
     // Example for u128
-    let size_usize = u128::size_in_bits();
-    println!("The size of u128 is {} bits.", size_usize);
-    assert_eq!(size_usize, 128_usize);
-    let size_usize = small_uint_size_in_bits_func::<u128>();
-    println!("The size of u128 is {} bits.", size_usize);
-    assert_eq!(size_usize, 128_usize);
+    let size_u32 = u128::size_in_bits();
+    println!("The size of u128 is {} bits.", size_u32);
+    assert_eq!(size_u32, 128_u32);
+    let size_u32 = small_uint_size_in_bits_func::<u128>();
+    println!("The size of u128 is {} bits.", size_u32);
+    assert_eq!(size_u32, 128_u32);
 
     // Example for usize
-    let size_usize = usize::size_in_bits();
-    println!("The size of u64 is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
-    let size_usize = small_uint_size_in_bits_func::<usize>();
-    println!("The size of u64 is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
+    let size_u32 = usize::size_in_bits();
+    println!("The size of u64 is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
+    let size_u32 = small_uint_size_in_bits_func::<usize>();
+    println!("The size of u64 is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
 
     // Example for ShortUnion
-    let size_usize = ShortUnion::size_in_bits();
-    println!("The size of ShortUnion is {} bits.", size_usize);
-    assert_eq!(size_usize, 16_usize);
-    let size_usize = small_uint_size_in_bits_func::<ShortUnion>();
-    println!("The size of ShortUnion is {} bits.", size_usize);
-    assert_eq!(size_usize, 16_usize);
+    let size_u32 = ShortUnion::size_in_bits();
+    println!("The size of ShortUnion is {} bits.", size_u32);
+    assert_eq!(size_u32, 16_u32);
+    let size_u32 = small_uint_size_in_bits_func::<ShortUnion>();
+    println!("The size of ShortUnion is {} bits.", size_u32);
+    assert_eq!(size_u32, 16_u32);
 
     // Example for IntUnion
-    let size_usize = IntUnion::size_in_bits();
-    println!("The size of IntUnion is {} bits.", size_usize);
-    assert_eq!(size_usize, 32_usize);
-    let size_usize = small_uint_size_in_bits_func::<IntUnion>();
-    println!("The size of IntUnion is {} bits.", size_usize);
-    assert_eq!(size_usize, 32_usize);
+    let size_u32 = IntUnion::size_in_bits();
+    println!("The size of IntUnion is {} bits.", size_u32);
+    assert_eq!(size_u32, 32_u32);
+    let size_u32 = small_uint_size_in_bits_func::<IntUnion>();
+    println!("The size of IntUnion is {} bits.", size_u32);
+    assert_eq!(size_u32, 32_u32);
 
     // Example for LongUnion
-    let size_usize = LongUnion::size_in_bits();
-    println!("The size of LongUnion is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
-    let size_usize = small_uint_size_in_bits_func::<LongUnion>();
-    println!("The size of LongUnion is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
+    let size_u32 = LongUnion::size_in_bits();
+    println!("The size of LongUnion is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
+    let size_u32 = small_uint_size_in_bits_func::<LongUnion>();
+    println!("The size of LongUnion is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
 
     // Example for LongerUnion
-    let size_usize = LongerUnion::size_in_bits();
-    println!("The size of LongerUnion is {} bits.", size_usize);
-    assert_eq!(size_usize, 128_usize);
-    let size_usize = small_uint_size_in_bits_func::<LongerUnion>();
-    println!("The size of LongerUnion is {} bits.", size_usize);
-    assert_eq!(size_usize, 128_usize);
+    let size_u32 = LongerUnion::size_in_bits();
+    println!("The size of LongerUnion is {} bits.", size_u32);
+    assert_eq!(size_u32, 128_u32);
+    let size_u32 = small_uint_size_in_bits_func::<LongerUnion>();
+    println!("The size of LongerUnion is {} bits.", size_u32);
+    assert_eq!(size_u32, 128_u32);
 
     // Example for SizeUnion
-    let size_usize = SizeUnion::size_in_bits();
-    println!("The size of SizeUnion is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
-    let size_usize = small_uint_size_in_bits_func::<SizeUnion>();
-    println!("The size of SizeUnion is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
+    let size_u32 = SizeUnion::size_in_bits();
+    println!("The size of SizeUnion is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
+    let size_u32 = small_uint_size_in_bits_func::<SizeUnion>();
+    println!("The size of SizeUnion is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
     println!("--------------------------------------");
 }
 
-fn small_uint_size_in_bits_func<T: cryptocol::number::SmallUInt>() -> usize
+fn small_uint_size_in_bits_func<T: cryptocol::number::SmallUInt>() -> u32
 {
     T::size_in_bits()
 }
@@ -17669,106 +17669,106 @@ fn small_uint_length_in_bytes()
     use cryptocol::number::SmallUInt;
     // Example for u8
     let a_u8 = 100_u8;
-    let size_usize = a_u8.length_in_bytes();
-    println!("The size of u8 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 1_usize);
-    let size_usize = small_uint_length_in_bytes_func(a_u8);
-    println!("The size of u8 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 1_usize);
+    let size_u32 = a_u8.length_in_bytes();
+    println!("The size of u8 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 1_u32);
+    let size_u32 = small_uint_length_in_bytes_func(a_u8);
+    println!("The size of u8 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 1_u32);
 
     // Example for u16
     let a_u16 = 10000_u16;
-    let size_usize = a_u16.length_in_bytes();
-    println!("The size of u16 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 2_usize);
-    let size_usize = small_uint_length_in_bytes_func(a_u16);
-    println!("The size of u16 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 2_usize);
+    let size_u32 = a_u16.length_in_bytes();
+    println!("The size of u16 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 2_u32);
+    let size_u32 = small_uint_length_in_bytes_func(a_u16);
+    println!("The size of u16 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 2_u32);
 
     // Example for u32
     let a_u32 = 1000000000_u32;
-    let size_usize = a_u32.length_in_bytes();
-    println!("The size of u32 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 4_usize);
-    let size_usize = small_uint_length_in_bytes_func(a_u32);
-    println!("The size of u32 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 4_usize);
+    let size_u32 = a_u32.length_in_bytes();
+    println!("The size of u32 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 4_u32);
+    let size_u32 = small_uint_length_in_bytes_func(a_u32);
+    println!("The size of u32 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 4_u32);
 
     // Example for u64
     let a_u64 = 10000000000000000_u64;
-    let size_usize = a_u64.length_in_bytes();
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
-    let size_usize = small_uint_length_in_bytes_func(a_u64);
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
+    let size_u32 = a_u64.length_in_bytes();
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
+    let size_u32 = small_uint_length_in_bytes_func(a_u64);
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
 
     // Example for u128
     let a_u128 = 100000000000000000000000000000000000_u128;
-    let size_usize = a_u128.length_in_bytes();
-    println!("The size of u128 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 16_usize);
-    let size_usize = small_uint_length_in_bytes_func(a_u128);
-    println!("The size of u128 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 16_usize);
+    let size_u32 = a_u128.length_in_bytes();
+    println!("The size of u128 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 16_u32);
+    let size_u32 = small_uint_length_in_bytes_func(a_u128);
+    println!("The size of u128 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 16_u32);
 
     // Example for usize
     let a_usize = 10000000000000000_usize;
-    let size_usize = a_usize.length_in_bytes();
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
-    let size_usize = small_uint_length_in_bytes_func(a_usize);
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
+    let size_u32 = a_usize.length_in_bytes();
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
+    let size_u32 = small_uint_length_in_bytes_func(a_usize);
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
 
     // Example for ShortUnion
     let a_shortunion = 10000_u16.into_shortunion();
-    let size_usize = a_shortunion.length_in_bytes();
-    println!("The size of u16 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 2_usize);
-    let size_usize = small_uint_length_in_bytes_func(a_shortunion);
-    println!("The size of u16 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 2_usize);
+    let size_u32 = a_shortunion.length_in_bytes();
+    println!("The size of u16 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 2_u32);
+    let size_u32 = small_uint_length_in_bytes_func(a_shortunion);
+    println!("The size of u16 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 2_u32);
 
     // Example for IntUnion
     let a_intunion = 1000000000_u32.into_intunion();
-    let size_usize = a_intunion.length_in_bytes();
-    println!("The size of u32 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 4_usize);
-    let size_usize = small_uint_length_in_bytes_func(a_intunion);
-    println!("The size of u32 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 4_usize);
+    let size_u32 = a_intunion.length_in_bytes();
+    println!("The size of u32 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 4_u32);
+    let size_u32 = small_uint_length_in_bytes_func(a_intunion);
+    println!("The size of u32 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 4_u32);
 
     // Example for LongUnion
     let a_longunion = 10000000000000000_u64.into_longunion();
-    let size_usize = a_longunion.length_in_bytes();
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
-    let size_usize = small_uint_length_in_bytes_func(a_longunion);
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
+    let size_u32 = a_longunion.length_in_bytes();
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
+    let size_u32 = small_uint_length_in_bytes_func(a_longunion);
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
 
     // Example for LongerUnion
     let a_longerunion = 100000000000000000000000000000000000_u128.into_longerunion();
-    let size_usize = a_longerunion.length_in_bytes();
-    println!("The size of u128 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 16_usize);
-    let size_usize = small_uint_length_in_bytes_func(a_longerunion);
-    println!("The size of u128 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 16_usize);
+    let size_u32 = a_longerunion.length_in_bytes();
+    println!("The size of u128 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 16_u32);
+    let size_u32 = small_uint_length_in_bytes_func(a_longerunion);
+    println!("The size of u128 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 16_u32);
 
     // Example for SizeUnion
     let a_sizeunion = 10000000000000000_usize.into_sizeunion();
-    let size_usize = a_sizeunion.length_in_bytes();
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
-    let size_usize = small_uint_length_in_bytes_func(a_sizeunion);
-    println!("The size of u64 is {} bytes.", size_usize);
-    assert_eq!(size_usize, 8_usize);
+    let size_u32 = a_sizeunion.length_in_bytes();
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
+    let size_u32 = small_uint_length_in_bytes_func(a_sizeunion);
+    println!("The size of u64 is {} bytes.", size_u32);
+    assert_eq!(size_u32, 8_u32);
     println!("--------------------------------------");
 }
 
-fn small_uint_length_in_bytes_func<T: cryptocol::number::SmallUInt>(num: T) -> usize
+fn small_uint_length_in_bytes_func<T: cryptocol::number::SmallUInt>(num: T) -> u32
 {
     num.length_in_bytes()
 }
@@ -17779,106 +17779,106 @@ fn small_uint_length_in_bits()
     use cryptocol::number::SmallUInt;
     // Example for u8
     let a_u8 = 100_u8;
-    let size_usize = a_u8.length_in_bits();
-    println!("The size of u8 is {} bits.", size_usize);
-    assert_eq!(size_usize, 8_usize);
-    let size_usize = small_uint_length_in_bits_func(a_u8);
-    println!("The size of u8 is {} bits.", size_usize);
-    assert_eq!(size_usize, 8_usize);
+    let size_u32 = a_u8.length_in_bits();
+    println!("The size of u8 is {} bits.", size_u32);
+    assert_eq!(size_u32, 8_u32);
+    let size_u32 = small_uint_length_in_bits_func(a_u8);
+    println!("The size of u8 is {} bits.", size_u32);
+    assert_eq!(size_u32, 8_u32);
 
     // Example for u16
     let a_u16 = 10000_u16;
-    let size_usize = a_u16.length_in_bits();
-    println!("The size of u16 is {} bits.", size_usize);
-    assert_eq!(size_usize, 16_usize);
-    let size_usize = small_uint_length_in_bits_func(a_u16);
-    println!("The size of u16 is {} bits.", size_usize);
-    assert_eq!(size_usize, 16_usize);
+    let size_u32 = a_u16.length_in_bits();
+    println!("The size of u16 is {} bits.", size_u32);
+    assert_eq!(size_u32, 16_u32);
+    let size_u32 = small_uint_length_in_bits_func(a_u16);
+    println!("The size of u16 is {} bits.", size_u32);
+    assert_eq!(size_u32, 16_u32);
 
     // Example for u32
     let a_u32 = 1000000000_u32;
-    let size_usize = a_u32.length_in_bits();
-    println!("The size of u32 is {} bits.", size_usize);
-    assert_eq!(size_usize, 32_usize);
-    let size_usize = small_uint_length_in_bits_func(a_u32);
-    println!("The size of u32 is {} bits.", size_usize);
-    assert_eq!(size_usize, 32_usize);
+    let size_u32 = a_u32.length_in_bits();
+    println!("The size of u32 is {} bits.", size_u32);
+    assert_eq!(size_u32, 32_u32);
+    let size_u32 = small_uint_length_in_bits_func(a_u32);
+    println!("The size of u32 is {} bits.", size_u32);
+    assert_eq!(size_u32, 32_u32);
 
     // Example for u64
     let a_u64 = 10000000000000000_u64;
-    let size_usize = a_u64.length_in_bits();
-    println!("The size of u64 is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
-    let size_usize = small_uint_length_in_bits_func(a_u64);
-    println!("The size of u64 is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
+    let size_u32 = a_u64.length_in_bits();
+    println!("The size of u64 is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
+    let size_u32 = small_uint_length_in_bits_func(a_u64);
+    println!("The size of u64 is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
 
     // Example for u128
     let a_u128 = 100000000000000000000000000000000000_u128;
-    let size_usize = a_u128.length_in_bits();
-    println!("The size of u128 is {} bits.", size_usize);
-    assert_eq!(size_usize, 128_usize);
-    let size_usize = small_uint_length_in_bits_func(a_u128);
-    println!("The size of u128 is {} bits.", size_usize);
-    assert_eq!(size_usize, 128_usize);
+    let size_u32 = a_u128.length_in_bits();
+    println!("The size of u128 is {} bits.", size_u32);
+    assert_eq!(size_u32, 128_u32);
+    let size_u32 = small_uint_length_in_bits_func(a_u128);
+    println!("The size of u128 is {} bits.", size_u32);
+    assert_eq!(size_u32, 128_u32);
 
     // Example for usize
     let a_usize = 10000000000000000_usize;
-    let size_usize = a_usize.length_in_bits();
-    println!("The size of u64 is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
-    let size_usize = small_uint_length_in_bits_func(a_usize);
-    println!("The size of u64 is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
+    let size_u32 = a_usize.length_in_bits();
+    println!("The size of u64 is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
+    let size_u32 = small_uint_length_in_bits_func(a_usize);
+    println!("The size of u64 is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
 
     // Example for ShortUnion
     let a_shortunion = 10000_u16.into_shortunion();
-    let size_usize = a_shortunion.length_in_bits();
-    println!("The size of u16 is {} bits.", size_usize);
-    assert_eq!(size_usize, 16_usize);
-    let size_usize = small_uint_length_in_bits_func(a_shortunion);
-    println!("The size of u16 is {} bits.", size_usize);
-    assert_eq!(size_usize, 16_usize);
+    let size_u32 = a_shortunion.length_in_bits();
+    println!("The size of u16 is {} bits.", size_u32);
+    assert_eq!(size_u32, 16_u32);
+    let size_u32 = small_uint_length_in_bits_func(a_shortunion);
+    println!("The size of u16 is {} bits.", size_u32);
+    assert_eq!(size_u32, 16_u32);
 
     // Example for IntUnion
     let a_intunion = 1000000000_u32.into_intunion();
-    let size_usize = a_intunion.length_in_bits();
-    println!("The size of u32 is {} bits.", size_usize);
-    assert_eq!(size_usize, 32_usize);
-    let size_usize = small_uint_length_in_bits_func(a_intunion);
-    println!("The size of u32 is {} bits.", size_usize);
-    assert_eq!(size_usize, 32_usize);
+    let size_u32 = a_intunion.length_in_bits();
+    println!("The size of u32 is {} bits.", size_u32);
+    assert_eq!(size_u32, 32_u32);
+    let size_u32 = small_uint_length_in_bits_func(a_intunion);
+    println!("The size of u32 is {} bits.", size_u32);
+    assert_eq!(size_u32, 32_u32);
 
     // Example for LongUnion
     let a_longunion = 10000000000000000_u64.into_longunion();
-    let size_usize = a_longunion.length_in_bits();
-    println!("The size of u64 is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
-    let size_usize = small_uint_length_in_bits_func(a_longunion);
-    println!("The size of u64 is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
+    let size_u32 = a_longunion.length_in_bits();
+    println!("The size of u64 is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
+    let size_u32 = small_uint_length_in_bits_func(a_longunion);
+    println!("The size of u64 is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
 
     // Example for LongerUnion
     let a_longerunion = 100000000000000000000000000000000000_u128.into_longerunion();
-    let size_usize = a_longerunion.length_in_bits();
-    println!("The size of u128 is {} bits.", size_usize);
-    assert_eq!(size_usize, 128_usize);
-    let size_usize = small_uint_length_in_bits_func(a_longerunion);
-    println!("The size of u128 is {} bits.", size_usize);
-    assert_eq!(size_usize, 128_usize);
+    let size_u32 = a_longerunion.length_in_bits();
+    println!("The size of u128 is {} bits.", size_u32);
+    assert_eq!(size_u32, 128_u32);
+    let size_u32 = small_uint_length_in_bits_func(a_longerunion);
+    println!("The size of u128 is {} bits.", size_u32);
+    assert_eq!(size_u32, 128_u32);
 
     // Example for SizeUnion
     let a_sizeunion = 10000000000000000_usize.into_sizeunion();
-    let size_usize = a_sizeunion.length_in_bits();
-    println!("The size of u64 is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
-    let size_usize = small_uint_length_in_bits_func(a_sizeunion);
-    println!("The size of u64 is {} bits.", size_usize);
-    assert_eq!(size_usize, 64_usize);
+    let size_u32 = a_sizeunion.length_in_bits();
+    println!("The size of u64 is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
+    let size_u32 = small_uint_length_in_bits_func(a_sizeunion);
+    println!("The size of u64 is {} bits.", size_u32);
+    assert_eq!(size_u32, 64_u32);
     println!("--------------------------------------");
 }
 
-fn small_uint_length_in_bits_func<T: cryptocol::number::SmallUInt>(num: T) -> usize
+fn small_uint_length_in_bits_func<T: cryptocol::number::SmallUInt>(num: T) -> u32
 {
     num.length_in_bits()
 }

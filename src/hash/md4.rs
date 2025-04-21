@@ -586,10 +586,14 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
         type MessageType = u32;
         const SHIFT_NUM: usize = 6;
         const CHUNK_NUM: usize = 16;
+        let mut block: [MessageType; CHUNK_NUM] = [0; CHUNK_NUM];
         self.initialize();
         let length_done = (length_in_bytes >> SHIFT_NUM) as usize;
         for i in 0..length_done
-            { self.update(unsafe { from_raw_parts(message.add(i << SHIFT_NUM) as *const MessageType, CHUNK_NUM) } ); }
+        {
+            unsafe { copy_nonoverlapping(message.add(i << SHIFT_NUM) as *const u8, block.as_mut_ptr() as *mut u8, CHUNK_NUM * 4); }
+            self.update(&block);
+        }
         self.finalize(unsafe { message.add(length_done << SHIFT_NUM) }, length_in_bytes);
     }
 
@@ -726,7 +730,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     pub fn digest_array<T, const M: usize>(&mut self, message: &[T; M])
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
-        self.digest(message.as_ptr() as *const u8, (M * T::size_in_bytes()) as u64);
+        self.digest(message.as_ptr() as *const u8, (M as u32 * T::size_in_bytes()) as u64);
     }
 
     // pub fn digest_vec<T>(&mut self, message: &Vec<T>)
@@ -772,7 +776,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     pub fn digest_vec<T>(&mut self, message: &Vec<T>)
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
-        self.digest(message.as_ptr() as *const u8, (message.len() * T::size_in_bytes()) as u64);
+        self.digest(message.as_ptr() as *const u8, (message.len() as u32 * T::size_in_bytes()) as u64);
     }
 
     // pub fn ruminate(&mut self, n: usize, message: *const u8, length_in_bytes: u64)
@@ -959,7 +963,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     pub fn ruminate_array<T, const M: usize>(&mut self, n: usize, message: &[T; M])
     where T: SmallUInt + Copy + Clone
     {
-        self.ruminate(n, message.as_ptr() as *const u8, (M * T::size_in_bytes()) as u64);
+        self.ruminate(n, message.as_ptr() as *const u8, (M as u32 * T::size_in_bytes()) as u64);
     }
 
     // pub fn ruminate_vec<T>(&mut self, n: usize, message: &Vec<T>)
@@ -1005,7 +1009,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     pub fn ruminate_vec<T>(&mut self, n: usize, message: &Vec<T>)
     where T: SmallUInt + Copy + Clone
     {
-        self.ruminate(n, message.as_ptr() as *const u8, (message.len() * T::size_in_bytes()) as u64);
+        self.ruminate(n, message.as_ptr() as *const u8, (message.len() as u32 * T::size_in_bytes()) as u64);
     }
 
     // pub fn get_hash_value(&self, hash_value: *mut u8, length: usize)
@@ -1227,9 +1231,9 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         let res = self.get_hash_value_in_array();
-        let out_size = T::size_in_bytes() * M;
+        let out_size = T::size_in_bytes() * M as u32;
         let length = if out_size < 16 {out_size} else {16};
-        unsafe { copy_nonoverlapping(res.as_ptr() as *const u8, out as *mut T as *mut u8, length); }
+        unsafe { copy_nonoverlapping(res.as_ptr() as *const u8, out as *mut T as *mut u8, length as usize); }
     }
 
     // pub fn tangle(&mut self, tangling: u64)

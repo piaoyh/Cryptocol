@@ -25,7 +25,7 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl
     (LongerUnion) => {
         impl SmallUInt for LongerUnion
         {
-            const BYTES: usize = u128::BITS as usize / 8;
+            const BITS: u32 = u128::BITS;
             const MIN: Self = LongerUnion::new();
             const MAX: Self = LongerUnion::new_with(u128::MAX);
             const ONE: Self = LongerUnion::new_with(1);
@@ -36,7 +36,7 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl
     (LongUnion) => {
         impl SmallUInt for LongUnion
         {
-            const BYTES: usize = u64::BITS as usize / 8;
+            const BITS: u32 = u64::BITS;
             const MIN: Self = LongUnion::new();
             const MAX: Self = LongUnion::new_with(u64::MAX);
             const ONE: Self = LongUnion::new_with(1);
@@ -47,7 +47,7 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl
     (IntUnion) => {
         impl SmallUInt for IntUnion
         {
-            const BYTES: usize = u32::BITS as usize / 8;
+            const BITS: u32 = u32::BITS;
             const MIN: Self = IntUnion::new();
             const MAX: Self = IntUnion::new_with(u32::MAX);
             const ONE: Self = IntUnion::new_with(1);
@@ -58,7 +58,7 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl
     (ShortUnion) => {
         impl SmallUInt for ShortUnion
         {
-            const BYTES: usize = u16::BITS as usize / 8;
+            const BITS: u32 = u16::BITS;
             const MIN: Self = ShortUnion::new();
             const MAX: Self = ShortUnion::new_with(u16::MAX);
             const ONE: Self = ShortUnion::new_with(1);
@@ -69,7 +69,7 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl
     (SizeUnion) => {
         impl SmallUInt for SizeUnion
         {
-            const BYTES: usize = usize::BITS as usize / 8;
+            const BITS: u32 = usize::BITS;
             const MIN: Self = SizeUnion::new();
             const MAX: Self = SizeUnion::new_with(usize::MAX);
             const ONE: Self = SizeUnion::new_with(1);
@@ -667,13 +667,13 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl_ {
             /// only the bit specified by the argument bit_pos to be 1.
             /// [Read more](trait@SmallUInt#tymethod.generate_check_bits)
             /// in detail.
-            #[inline] fn generate_check_bits(bit_pos: usize) -> Option<Self>    { if bit_pos < Self::size_in_bits() { Some(Self::generate_check_bits_(bit_pos)) } else { None } }
+            #[inline] fn generate_check_bits(bit_pos: u32) -> Option<Self>    { if bit_pos < Self::size_in_bits() { Some(Self::generate_check_bits_(bit_pos)) } else { None } }
 
             /// Constucts a new `SmallUInt` which has the value zero and sets
             /// only the bit specified by the argument bit_pos to be 1.
             /// [Read more](trait@SmallUInt#tymethod.generate_check_bits_)
             /// in detail.
-            #[inline] fn generate_check_bits_(bit_pos: usize) -> Self    { Self::new_with(Self::one().get() << bit_pos) }
+            #[inline] fn generate_check_bits_(bit_pos: u32) -> Self    { Self::new_with(Self::one().get() << bit_pos) }
 
             /// Checks whether or not `Self` is an odd number.
             /// [Read more](trait@SmallUInt#tymethod.is_odd) in detail.
@@ -691,12 +691,12 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl_ {
             /// Checks whether or not the bit of `self` specified by `bit_pos`
             /// is set one.
             /// [Read more](trait@SmallUInt#tymethod.is_bit_set) in detail.
-            #[inline] fn is_bit_set(self, bit_pos: usize) -> Option<bool>  { if bit_pos < Self::size_in_bits() { Some(self.is_bit_set_(bit_pos)) } else { None } }
+            #[inline] fn is_bit_set(self, bit_pos: u32) -> Option<bool>  { if bit_pos < Self::size_in_bits() { Some(self.is_bit_set_(bit_pos)) } else { None } }
 
             /// Checks whether or not the bit of `self` specified by `bit_pos`
             /// is set one.
             /// [Read more](trait@SmallUInt#tymethod.is_bit_set_) in detail.
-            #[inline] fn is_bit_set_(self, bit_pos: usize) -> bool  { self.get() & Self::generate_check_bits_(bit_pos).get() != 0 }
+            #[inline] fn is_bit_set_(self, bit_pos: u32) -> bool  { self.get() & Self::generate_check_bits_(bit_pos).get() != 0 }
 
             /// Sets `Self`-type number to be maximum value in which all bits
             /// are set to be `1`.
@@ -711,7 +711,7 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl_ {
             /// value in which all bits of `size_in_bits`-bit long lower part
             /// are set to be `1`.
             /// [Read more](trait@SmallUInt#tymethod.set_submax) in detail.
-            fn set_submax(&mut self, size_in_bits: usize)
+            fn set_submax(&mut self, size_in_bits: u32)
             {
                 if size_in_bits >= self.length_in_bits()
                     { self.set_max(); }
@@ -739,19 +739,19 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl_ {
 
             /// Returns the size of `Self` in bytes
             /// [Read more](trait@SmallUInt#tymethod.size_in_bytes) in detail.
-            #[inline] fn size_in_bytes() -> usize   { size_of::<Self>() }
+            #[inline] fn size_in_bytes() -> u32 { Self::BITS / 8 }
 
             /// Returns the size of `Self` in bits
             /// [Read more](trait@SmallUInt#tymethod.size_in_bits) in detail.
-            #[inline] fn size_in_bits() -> usize    { size_of::<Self>() * 8 }
+            #[inline] fn size_in_bits() -> u32  { Self::BITS }
 
             /// Returns the size of `self` in bytes
             /// [Read more](trait@SmallUInt#tymethod.length_in_bytes) in detail.
-            #[inline] fn length_in_bytes(self) -> usize    { size_of_val(&self) }
+            #[inline] fn length_in_bytes(self) -> u32   { size_of_val(&self) as u32 }
 
             /// Returns the size of `self` in bits
             /// [Read more](trait@SmallUInt#tymethod.length_in_bits) in detail.
-            #[inline] fn length_in_bits(self) -> usize  { size_of_val(&self) * 8 }
+            #[inline] fn length_in_bits(self) -> u32    { size_of_val(&self) as u32 * 8 }
         // }
     }
 }

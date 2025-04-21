@@ -721,7 +721,7 @@ pub trait ECB_PKCS7<T> : Sized
     fn encrypt_vec<U>(&mut self, message: &Vec<U>, cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt(message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
+        self.encrypt(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_vec_into_vec<U, V>(&mut self, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
@@ -785,7 +785,7 @@ pub trait ECB_PKCS7<T> : Sized
     fn encrypt_vec_into_vec<U, V>(&mut self, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_vec(message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_vec(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, message: &Vec<U>, cipher: &mut [V; N]) -> u64
@@ -863,7 +863,7 @@ pub trait ECB_PKCS7<T> : Sized
     fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, message: &Vec<U>, cipher: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_array(message.as_ptr() as *const u8, (message.len() * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_array(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_array<U, const N: usize>(&mut self, message: &[U; N], cipher: *mut u8) -> u64
@@ -938,7 +938,7 @@ pub trait ECB_PKCS7<T> : Sized
     fn encrypt_array<U, const N: usize>(&mut self, message: &[U; N], cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt(message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
+        self.encrypt(message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, message: &[U; N], cipher: &mut Vec<V>) -> u64
@@ -1004,7 +1004,7 @@ pub trait ECB_PKCS7<T> : Sized
     fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, message: &[U; N], cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_vec(message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_vec(message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, message: &[U; N], cipher: &mut [V; M]) -> u64
@@ -1084,7 +1084,7 @@ pub trait ECB_PKCS7<T> : Sized
     fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, message: &[U; N], cipher: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_array(message.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_array(message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn decrypt(&mut self, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64;
@@ -1514,7 +1514,7 @@ pub trait ECB_PKCS7<T> : Sized
     fn decrypt_vec<U>(&mut self, cipher: &Vec<U>, message: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt(cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt(cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_vec_into_vec<U, V>(&mut self, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
@@ -1599,7 +1599,7 @@ pub trait ECB_PKCS7<T> : Sized
     fn decrypt_vec_into_vec<U, V>(&mut self, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_vec(cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_vec(cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, cipher: &Vec<U>, message: &mut [V; N]) -> u64
@@ -1691,7 +1691,7 @@ pub trait ECB_PKCS7<T> : Sized
     fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, cipher: &Vec<U>, message: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_array(cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_array(cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_vec_into_string<U>(&mut self, cipher: &Vec<U>, message: &mut String) -> u64
@@ -1766,7 +1766,7 @@ pub trait ECB_PKCS7<T> : Sized
     fn decrypt_vec_into_string<U>(&mut self, cipher: &Vec<U>, message: &mut String) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_string(cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_string(cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_array<U, const N: usize>(&mut self, cipher: &[U; N], message: *mut u8) -> u64
@@ -1860,7 +1860,7 @@ pub trait ECB_PKCS7<T> : Sized
     fn decrypt_array<U, const N: usize>(&mut self, cipher: &[U; N], message: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt(cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt(cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, cipher: &[U; N], message: &mut Vec<V>) -> u64
@@ -1946,7 +1946,7 @@ pub trait ECB_PKCS7<T> : Sized
     fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, cipher: &[U; N], message: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_vec(cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_vec(cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, cipher: &[U; N], message: &mut [V; M]) -> u64
@@ -2040,7 +2040,7 @@ pub trait ECB_PKCS7<T> : Sized
     fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, cipher: &[U; N], message: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_array(cipher.as_ptr() as *const u8, (N * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_array(cipher.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_array_into_string<U, const N: usize>(&mut self, cipher: &[U; N], message: &mut String) -> u64
@@ -2116,6 +2116,6 @@ pub trait ECB_PKCS7<T> : Sized
     fn decrypt_array_into_string<U, const N: usize>(&mut self, cipher: &[U; N], message: &mut String) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_string(cipher.as_ptr() as *const u8, (cipher.len() * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_string(cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 }

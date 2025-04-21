@@ -20,7 +20,7 @@ macro_rules! SmallUInt_methods_for_uint_impl
     (u128) => {
         impl SmallUInt for u128
         {
-            const BYTES: usize = u128::BITS as usize / 8;
+            const BITS: u32 = u128::BITS;
             const MIN: Self = u128::MIN;
             const MAX: Self = u128::MAX;
             const ONE: Self = 1_u128;
@@ -31,7 +31,7 @@ macro_rules! SmallUInt_methods_for_uint_impl
     (u64) => {
         impl SmallUInt for u64
         {
-            const BYTES: usize = u64::BITS as usize / 8;
+            const BITS: u32 = u64::BITS;
             const MIN: Self = u64::MIN;
             const MAX: Self = u64::MAX;
             const ONE: Self = 1_u64;
@@ -42,7 +42,7 @@ macro_rules! SmallUInt_methods_for_uint_impl
     (u32) => {
         impl SmallUInt for u32
         {
-            const BYTES: usize = u32::BITS as usize / 8;
+            const BITS: u32 = u32::BITS;
             const MIN: Self = u32::MIN;
             const MAX: Self = u32::MAX;
             const ONE: Self = 1_u32;
@@ -53,7 +53,7 @@ macro_rules! SmallUInt_methods_for_uint_impl
     (u16) => {
         impl SmallUInt for u16
         {
-            const BYTES: usize = u16::BITS as usize / 8;
+            const BITS: u32 = u16::BITS;
             const MIN: Self = u16::MIN;
             const MAX: Self = u16::MAX;
             const ONE: Self = 1_u16;
@@ -64,7 +64,7 @@ macro_rules! SmallUInt_methods_for_uint_impl
     (u8) => {
         impl SmallUInt for u8
         {
-            const BYTES: usize = u8::BITS as usize / 8;
+            const BITS: u32 = u8::BITS;
             const MIN: Self = u8::MIN;
             const MAX: Self = u8::MAX;
             const ONE: Self = 1_u8;
@@ -75,7 +75,7 @@ macro_rules! SmallUInt_methods_for_uint_impl
     (usize) => {
         impl SmallUInt for usize
         {
-            const BYTES: usize = usize::BITS as usize / 8;
+            const BITS: u32 = usize::BITS;
             const MIN: Self = usize::MIN;
             const MAX: Self = usize::MAX;
             const ONE: Self = 1_usize;
@@ -251,7 +251,7 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
                 let mut low = zero;
                 let mut high = zero;
                 let mut overflow: bool;
-                let mut bit_check = Self::one() << (Self::size_in_bits() - 1 - rhs.leading_zeros() as usize);
+                let mut bit_check = Self::one() << (Self::size_in_bits() - 1 - rhs.leading_zeros());
                 let adder = self;
                 while bit_check != 0
                 {
@@ -483,7 +483,7 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
             {
                 // _isqrt(self)
                 let mut adder;
-                let mut highest = (Self::size_in_bits() - self.leading_zeros() as usize) >> 1;
+                let mut highest = (Self::size_in_bits() - self.leading_zeros()) >> 1;
                 let mut high;
                 let mut low;
                 let mut mid;
@@ -607,7 +607,7 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
             fn iroot(self, exp: Self) -> Self
             {
                 let mut adder;
-                let mut highest = (Self::size_in_bits() - self.leading_zeros() as usize) / (exp as usize);
+                let mut highest = (Self::size_in_bits() - self.leading_zeros()) / (exp as u32);
                 let mut high;
                 let mut low;
                 let mut mid;
@@ -1007,13 +1007,13 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
             /// only the bit specified by the argument bit_pos to be 1.
             /// [Read more](trait@SmallUInt#tymethod.generate_check_bits)
             /// in detail.
-            #[inline] fn generate_check_bits(bit_pos: usize) -> Option<Self>    { if bit_pos < Self::size_in_bits() { Some(Self::generate_check_bits_(bit_pos)) } else { None } }
+            #[inline] fn generate_check_bits(bit_pos: u32) -> Option<Self>    { if bit_pos < Self::size_in_bits() { Some(Self::generate_check_bits_(bit_pos)) } else { None } }
 
             /// Constucts a new `SmallUInt` which has the value zero and sets
             /// only the bit specified by the argument bit_pos to be 1.
             /// [Read more](trait@SmallUInt#tymethod.generate_check_bits_)
             /// in detail.
-            #[inline] fn generate_check_bits_(bit_pos: usize) -> Self    { Self::one() << bit_pos }
+            #[inline] fn generate_check_bits_(bit_pos: u32) -> Self    { Self::one() << bit_pos }
 
             /// Checks whether or not `Self` is an odd number.
             /// [Read more](trait@SmallUInt#tymethod.is_odd) in detail.
@@ -1031,12 +1031,12 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
             /// Checks whether or not the bit of `self` specified by `bit_pos`
             /// is set one.
             /// [Read more](trait@SmallUInt#tymethod.is_bit_set) in detail.
-            #[inline] fn is_bit_set(self, bit_pos: usize) -> Option<bool>  { if bit_pos < Self::size_in_bits() { Some(self & Self::generate_check_bits_(bit_pos) != 0) } else { None } }
+            #[inline] fn is_bit_set(self, bit_pos: u32) -> Option<bool>  { if bit_pos < Self::size_in_bits() { Some(self & Self::generate_check_bits_(bit_pos) != 0) } else { None } }
 
             /// Checks whether or not the bit of `self` specified by `bit_pos`
             /// is set one.
             /// [Read more](trait@SmallUInt#tymethod.is_bit_set_) in detail.
-            #[inline] fn is_bit_set_(self, bit_pos: usize) -> bool  { self & Self::generate_check_bits_(bit_pos) != 0 }
+            #[inline] fn is_bit_set_(self, bit_pos: u32) -> bool  { self & Self::generate_check_bits_(bit_pos) != 0 }
 
             /// Sets `Self`-type number to be maximum value in which all bits
             /// are set to be `1`.
@@ -1051,7 +1051,7 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
             /// value in which all bits of `size_in_bits`-bit long lower part
             /// are set to be `1`.
             /// [Read more](trait@SmallUInt#tymethod.set_submax) in detail.
-            fn set_submax(&mut self, size_in_bits: usize)
+            fn set_submax(&mut self, size_in_bits: u32)
             {
                 if size_in_bits >= self.length_in_bits()
                     { self.set_max(); }
@@ -1079,19 +1079,19 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
 
             /// Returns the size of `Self` in bytes
             /// [Read more](trait@SmallUInt#tymethod.size_in_bytes) in detail.
-            #[inline] fn size_in_bytes() -> usize   { Self::BITS as usize / 8 }
+            #[inline] fn size_in_bytes() -> u32 { Self::BITS / 8 }
 
             /// Returns the size of `Self` in bits
             /// [Read more](trait@SmallUInt#tymethod.size_in_bits) in detail.
-            #[inline] fn size_in_bits() -> usize    { Self::BITS as usize }
+            #[inline] fn size_in_bits() -> u32  { Self::BITS }
 
             /// Returns the size of `self` in bytes
             /// [Read more](trait@SmallUInt#tymethod.length_in_bytes) in detail.
-            #[inline] fn length_in_bytes(self) -> usize    { size_of_val(&self) }
+            #[inline] fn length_in_bytes(self) -> u32   { size_of_val(&self) as u32 }
 
             /// Returns the size of `self` in bits
             /// [Read more](trait@SmallUInt#tymethod.length_in_bits) in detail.
-            #[inline] fn length_in_bits(self) -> usize     { size_of_val(&self) * 8 }
+            #[inline] fn length_in_bits(self) -> u32    { size_of_val(&self) as u32 * 8 }
         // }
     }
 }

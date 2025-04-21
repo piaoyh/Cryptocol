@@ -458,7 +458,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         let adder = self.clone();
         let size_t_bits = T::size_in_bits();
         let mut chunk = N - 1 - rhs.leading_zero_elements() as usize;
-        let mut piece = T::size_in_bits() - 1 - rhs.get_num_(chunk).leading_zeros() as usize;
+        let mut piece = T::size_in_bits() - 1 - rhs.get_num_(chunk).leading_zeros();
         self.set_zero();
         loop
         {
@@ -513,7 +513,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         let size_t_bits = T::size_in_bits();
         let mut multiply_first = |num: T| {
             let mut bit_check = one;
-            bit_check <<= T::usize_as_smalluint(size_t_bits - 1);
+            bit_check <<= T::u32_as_smalluint(size_t_bits - 1);
             while (bit_check != zero) && (bit_check & num == zero)
                 { bit_check >>= one; }
 
@@ -542,7 +542,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
                 return;
             }
             let mut bit_check = one;
-            bit_check <<= T::usize_as_smalluint(size_t_bits - 1);
+            bit_check <<= T::u32_as_smalluint(size_t_bits - 1);
             while bit_check != zero
             {
                 *self <<= 1;

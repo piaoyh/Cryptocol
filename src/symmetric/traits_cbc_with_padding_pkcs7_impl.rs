@@ -313,14 +313,15 @@ S756, S757, S758, S759, S760, S761, S762, S763>
     {
         let mut progress = 0_u64;
         let mut encoded = iv;
+        let mut block = 0_u64;
         for _ in 0..length_in_bytes >> 3    // length_in_bytes >> 3 == length_in_bytes / 8
         {
-            let block = unsafe { *(message.add(progress as usize) as *const u64 ) };
+            unsafe { copy_nonoverlapping(message.add(progress as usize) as *const u8, (&mut block) as *mut u64 as *mut u8, 8); }
             encoded = self.encrypt_u64(block ^ encoded);
             unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
             progress += 8;
         }
-        let mut block = 0_u64;
+        block = 0_u64;
         let mut block_union = LongUnion::new_with(0x_08_08_08_08__08_08_08_08);
         if progress != length_in_bytes
         {
@@ -354,12 +355,12 @@ S756, S757, S758, S759, S760, S761, S762, S763>
     {
         let mut progress = 0_u64;
         let mut decoded: u64;
-        let mut block: u64;
+        let mut block = 0_u64;
         if length_in_bytes > 8
         {
             for _ in 0..(length_in_bytes >> 3) - 1  // length_in_bytes >> 3 == length_in_bytes / 8
             {
-                block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
+                unsafe { copy_nonoverlapping(cipher.add(progress as usize) as *const u8, (&mut block) as *mut u64 as *mut u8, 8); }
                 decoded = iv ^ self.decrypt_u64(block);
                 iv = block;
                 unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), 8); }
@@ -367,7 +368,7 @@ S756, S757, S758, S759, S760, S761, S762, S763>
             }
         }
 
-        block = unsafe { *(cipher.add(progress as usize) as *const u64 ) };
+        unsafe { copy_nonoverlapping(cipher.add(progress as usize) as *const u8, (&mut block) as *mut u64 as *mut u8, 8); }
         decoded = iv ^ self.decrypt_u64(block);
         let decoded_union = LongUnion::new_with(decoded);
         let padding_bytes = decoded_union.get_ubyte_(7);
