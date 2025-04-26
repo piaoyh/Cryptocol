@@ -6,7 +6,7 @@
 // This file may not be copied, modified, or distributed
 // except according to those terms.
 
-// #![allow(missing_docs)]
+#![allow(missing_docs)]
 // #![allow(rustdoc::missing_doc_code_examples)]
 // #![warn(missing_docs)]
 // #![warn(rustdoc::missing_doc_code_examples)]
@@ -26,7 +26,14 @@ use crate::number::{ SmallUInt, IntUnion, LongUnion };
 
 macro_rules! run_register {
     ($STATE:expr, $LFSR:expr) => {
-        (($STATE >> 1) | ((($STATE & $LFSR).count_ones() as u8) << 7), $STATE & 1)
+        (($STATE >> 1) | ((($STATE & $LFSR).count_ones() as u8) << 7), $STATE & 1 == 1)
+        // {
+        //     let mut state = $STATE << 1;
+        //     let msb = $STATE & 0b_1000_0000;
+        //     if msb != 0
+        //         { state ^= $LFSR }
+        //     (state, state & 0b_0000_0001 == 1)
+        // }
     };
 }
 
@@ -34,7 +41,7 @@ macro_rules! make_RC {
     ($T:ty, $ROUNDS:expr, $LFSR:expr) => {
         {
             let mut union_A = A::<$T, $ROUNDS> { U128: [0_u128; ROUNDS] };
-            let WIDTH = <$T>::BITS as usize / 8;
+            let WIDTH = <$T>::BITS as usize;
             let mut RC = [<$T>::MIN; ROUNDS];
             let mut bit = [0_usize; 7];
             let mut j = 0_usize;
@@ -44,7 +51,7 @@ macro_rules! make_RC {
                 j += 1;
             }
             let mut state = 1_u8;
-            let mut output: u8;
+            let mut output: bool;
             let mut i = 0_usize;
             while i < $ROUNDS
             {
@@ -52,16 +59,16 @@ macro_rules! make_RC {
                 while j < 7_usize
                 {
                     (state, output) = run_register!(state, $LFSR);
-                    if output != 0
+                    if output
                     {
                         unsafe {
                             match WIDTH
                             {
-                                16 =>   { union_A.U128[i] |= 1_u128 << bit[j]; },
-                                8 =>    { union_A.U64[i] |= 1_u64 << bit[j]; },
-                                4 =>    { union_A.U32[i] |= 1_u32 << bit[j]; },
-                                2 =>    { union_A.U16[i] |= 1_u16 << bit[j]; },
-                                1 =>    { union_A.U8[i] |= 1_u8 << bit[j]; },
+                                128 =>  { union_A.U128[i] |= 1_u128 << bit[j]; },
+                                64 =>   { union_A.U64[i] |= 1_u64 << bit[j]; },
+                                32 =>   { union_A.U32[i] |= 1_u32 << bit[j]; },
+                                16 =>   { union_A.U16[i] |= 1_u16 << bit[j]; },
+                                8 =>    { union_A.U8[i] |= 1_u8 << bit[j]; },
                                 _ =>    {},
                             }
                         }
@@ -91,20 +98,21 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     #[allow(non_snake_case)] U8:    [u8; ROUNDS],
 }
 
-#[allow(non_camel_case_types)]
-pub type SHAKE_128 = Keccak_Generic<64, 168, false>;
 
 #[allow(non_camel_case_types)]
-pub type SHAKE_256 = Keccak_Generic<64, 136, false>;
+pub type SHAKE_128 = Keccak_Generic<168, 1>;
 
 #[allow(non_camel_case_types)]
-pub type SHA3_224 = Keccak_Generic<28, 144>;
+pub type SHAKE_256 = Keccak_Generic<136, 1>;
 
 #[allow(non_camel_case_types)]
-pub type SHA3_256 = Keccak_Generic<32, 136>;
+pub type SHA3_224 = Keccak_Generic<144>;
 
 #[allow(non_camel_case_types)]
-pub type SHA3_384 = Keccak_Generic<48, 104>;
+pub type SHA3_256 = Keccak_Generic<136>;
+
+#[allow(non_camel_case_types)]
+pub type SHA3_384 = Keccak_Generic<104>;
 
 #[allow(non_camel_case_types)]
 pub type SHA3_512 = Keccak_Generic;
@@ -221,20 +229,10 @@ pub type SHA3_512 = Keccak_Generic;
 /// for Big-endian CPUs with your own full responsibility.
 #[derive(Debug, Clone)]
 #[allow(non_camel_case_types)]
-pub struct Keccak_Generic<const N: usize = 64, const RATE: usize = 72, const PADDING: bool = true,
+pub struct Keccak_Generic<const RATE: usize = 72, const PADDING: usize = 0,
         const ROUNDS: usize = 24, T = u64, const LFSR: u8 = 0b_0111_0001,
-        const THETA_LEFT: usize = 1, const THETA_RIGHT: usize = 1, const THETA_RR1: u32 = 1,
-        const RHO_NEXT1: usize = 1, const RHO_NEXT2: usize = 2,
-        const RHO_RC_00: u16 = 000, const RHO_RC_01: u16 = 036, const RHO_RC_02: u16 = 003,
-        const RHO_RC_03: u16 = 105, const RHO_RC_04: u16 = 210,
-        const RHO_RC_10: u16 = 001, const RHO_RC_11: u16 = 300, const RHO_RC_12: u16 = 010,
-        const RHO_RC_13: u16 = 045, const RHO_RC_14: u16 = 066,
-        const RHO_RC_20: u16 = 190, const RHO_RC_21: u16 = 006, const RHO_RC_22: u16 = 171,
-        const RHO_RC_23: u16 = 015, const RHO_RC_24: u16 = 253,
-        const RHO_RC_30: u16 = 028, const RHO_RC_31: u16 = 055, const RHO_RC_32: u16 = 153,
-        const RHO_RC_33: u16 = 021, const RHO_RC_34: u16 = 120,
-        const RHO_RC_40: u16 = 091, const RHO_RC_41: u16 = 276, const RHO_RC_42: u16 = 231,
-        const RHO_RC_43: u16 = 136, const RHO_RC_44: u16 = 078,
+        const THETA_SUB: usize = 1, const THETA_ADD: usize = 1, const THETA_ROT: u32 = 1,
+        const RHO_MUL_X: usize = 2, const RHO_MUL_Y: usize = 3, const RHO_T: u32 = 24,
         const PI_MUL_X: usize = 1, const PI_MUL_Y: usize = 3,
         const CHI_ADD_1: usize = 1, const CHI_ADD_2: usize = 2>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -245,54 +243,28 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     state: [[T; 5]; 5],
 }
 
-impl<const N: usize, const RATE: usize, const PADDING: bool, const ROUNDS: usize, T, const LFSR: u8,
-    const THETA_LEFT: usize, const THETA_RIGHT: usize, const THETA_RR1: u32,
-    const RHO_NEXT1: usize, const RHO_NEXT2: usize,
-    const RHO_RC_00: u16, const RHO_RC_01: u16, const RHO_RC_02: u16,
-    const RHO_RC_03: u16, const RHO_RC_04: u16,
-    const RHO_RC_10: u16, const RHO_RC_11: u16, const RHO_RC_12: u16,
-    const RHO_RC_13: u16, const RHO_RC_14: u16,
-    const RHO_RC_20: u16, const RHO_RC_21: u16, const RHO_RC_22: u16,
-    const RHO_RC_23: u16, const RHO_RC_24: u16,
-    const RHO_RC_30: u16, const RHO_RC_31: u16, const RHO_RC_32: u16,
-    const RHO_RC_33: u16, const RHO_RC_34: u16,
-    const RHO_RC_40: u16, const RHO_RC_41: u16, const RHO_RC_42: u16,
-    const RHO_RC_43: u16, const RHO_RC_44: u16,
+impl<const RATE: usize, const PADDING: usize, const ROUNDS: usize, T, const LFSR: u8,
+    const THETA_SUB: usize, const THETA_ADD: usize, const THETA_ROT: u32,
+    const RHO_MUL_X: usize, const RHO_MUL_Y: usize, const RHO_T: u32,
     const PI_MUL_X: usize, const PI_MUL_Y: usize,
     const CHI_ADD_1: usize, const CHI_ADD_2: usize>
-Keccak_Generic<N, RATE, PADDING, ROUNDS, T, LFSR,
-                THETA_LEFT, THETA_RIGHT, THETA_RR1,
-                RHO_NEXT1, RHO_NEXT2,
-                RHO_RC_00, RHO_RC_01, RHO_RC_02, RHO_RC_03, RHO_RC_04,
-                RHO_RC_10, RHO_RC_11, RHO_RC_12, RHO_RC_13, RHO_RC_14,
-                RHO_RC_20, RHO_RC_21, RHO_RC_22, RHO_RC_23, RHO_RC_24,
-                RHO_RC_30, RHO_RC_31, RHO_RC_32, RHO_RC_33, RHO_RC_34,
-                RHO_RC_40, RHO_RC_41, RHO_RC_42, RHO_RC_43, RHO_RC_44,
-                PI_MUL_X, PI_MUL_Y, CHI_ADD_1, CHI_ADD_2
-                >
+Keccak_Generic<RATE, PADDING, ROUNDS, T, LFSR,
+                THETA_SUB, THETA_ADD, THETA_ROT,
+                RHO_MUL_X, RHO_MUL_Y, RHO_T,
+                PI_MUL_X, PI_MUL_Y, CHI_ADD_1, CHI_ADD_2>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
         + Shl<Output = T> 
 {
     const RC: [T; ROUNDS] = make_RC!(T, ROUNDS, LFSR);
-    const R: [[u8; 5]; 5] = [
-            [ (RHO_RC_00 % T::BITS as u16) as u8, (RHO_RC_01 % T::BITS as u16) as u8,
-              (RHO_RC_02 % T::BITS as u16) as u8, (RHO_RC_03 % T::BITS as u16) as u8,
-              (RHO_RC_04 % T::BITS as u16) as u8 ],
-            [ (RHO_RC_10 % T::BITS as u16) as u8, (RHO_RC_11 % T::BITS as u16) as u8,
-              (RHO_RC_12 % T::BITS as u16) as u8, (RHO_RC_13 % T::BITS as u16) as u8,
-              (RHO_RC_14 % T::BITS as u16) as u8 ],
-            [ (RHO_RC_20 % T::BITS as u16) as u8, (RHO_RC_21 % T::BITS as u16) as u8,
-              (RHO_RC_22 % T::BITS as u16) as u8, (RHO_RC_23 % T::BITS as u16) as u8,
-              (RHO_RC_24 % T::BITS as u16) as u8 ],
-            [ (RHO_RC_30 % T::BITS as u16) as u8, (RHO_RC_31 % T::BITS as u16) as u8,
-              (RHO_RC_32 % T::BITS as u16) as u8, (RHO_RC_33 % T::BITS as u16) as u8,
-              (RHO_RC_34 % T::BITS as u16) as u8 ],
-            [ (RHO_RC_40 % T::BITS as u16) as u8, (RHO_RC_41 % T::BITS as u16) as u8,
-              (RHO_RC_42 % T::BITS as u16) as u8, (RHO_RC_43 % T::BITS as u16) as u8,
-              (RHO_RC_44 % T::BITS as u16) as u8 ]
-        ];
+    const SEPARATOR: u8 = match PADDING
+                            {
+                                0 => { 0b_0000_0110 },
+                                1 => { 0b_0001_1111 },
+                                _ => { 0b_0000_0001 },
+                            };
+    const TAIL: u8 = 0b_1000_0000;
 
 
     // pub fn new() -> Self
@@ -318,21 +290,62 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     #[inline]
     pub fn digest_string(&mut self, message: &String)
     {
-        self.digest(message.as_ptr(), message.len() as u64);
+        self.absorb(message.as_ptr(), message.len() as u64);
     }
 
     #[inline]
     pub fn digest_array<U, const M: usize>(&mut self, message: &[U; M])
     where U: SmallUInt + Copy + Clone
     {
-        self.digest(message.as_ptr() as *const u8, (M as u32 * U::size_in_bytes()) as u64);
+        self.absorb(message.as_ptr() as *const u8, (M as u32 * U::size_in_bytes()) as u64);
     }
 
     #[inline]
     pub fn digest_vec<U>(&mut self, message: &Vec<T>)
     where U: SmallUInt + Copy + Clone
     {
-        self.digest(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64);
+        self.absorb(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64);
+    }
+
+    pub fn get_hash_value_in_array<const M: usize>(&mut self) -> [u8; M]
+    {
+        let mut out = [0_u8; M];
+        self.push_hash_value_in_array(&mut out);
+        out
+    }
+
+    pub fn get_hash_value_in_vec<const M: usize>(&mut self) -> Vec<u8>
+    {
+        let mut out = Vec::<u8>::new();
+        let arr: [u8; M] = self.get_hash_value_in_array();
+        for it in arr
+            { out.push(it); }
+        out
+    }
+
+    pub fn get_hash_value_in_string(&mut self, length_in_bytes: usize) -> String
+    {
+        let chunk_num = length_in_bytes / RATE;
+        let rest_num = length_in_bytes % RATE;
+        let mut txt = String::new();
+        for _ in 0..chunk_num
+        {
+            let hash_code = self.squeeze();
+            txt.push_str(Self::read_hash_value_in_hexadecimal(&hash_code).as_str());
+        }
+        if rest_num != 0
+        {
+            let hash_code = self.squeeze();
+            let mut chs = Self::read_hash_value_in_hexadecimal(&hash_code);
+            chs.truncate(rest_num << 1);
+            txt.push_str(chs.as_str());
+        }
+        txt
+    }
+
+    pub fn push_hash_value_in_array<const M: usize>(&mut self, hash_value: &mut [u8; M])
+    {
+        self.get_hash_value(hash_value.as_mut_ptr(), M);
     }
 
     pub fn get_hash_value(&mut self, hash_value: *mut u8, length_in_bytes: usize)
@@ -351,38 +364,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
     }
 
-    pub fn get_hash_value_in_string(&mut self, length_in_bytes: usize) -> String
-    {
-        let chunk_num = length_in_bytes / RATE;
-        let rest_num = length_in_bytes % RATE;
-        let mut txt = String::new();
-        for i in 0..chunk_num
-        {
-            let hash_code = self.squeeze();
-            txt.push_str(Self::read_hash_value_in_hexadecimal(&hash_code).as_str());
-        }
-        if rest_num != 0
-        {
-            let hash_code = self.squeeze();
-            let mut chs = Self::read_hash_value_in_hexadecimal(&hash_code);
-            chs.truncate(rest_num << 1);
-            txt.push_str(chs.as_str());
-        }
-        txt
-    }
-
     pub fn read_hash_value_in_hexadecimal<const M: usize>(hash: &[u8; M]) -> String
     {
-        const BYTES: usize = 8;
         let mut txt = String::new();
         for i in 0..M
         {
             let byte = hash[i];
-            for j in 0..BYTES
-            {
-                txt.push(Self::to_char(byte >> 4));
-                txt.push(Self::to_char(byte & 0b1111));
-            }
+            txt.push(Self::to_char(byte >> 4));
+            txt.push(Self::to_char(byte & 0b1111));
         }
         txt
     }
@@ -396,10 +385,37 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         for round in 0..ROUNDS
         {
             self.theta();
-            self.rho_pi_chi();
+            self.rho();
+            self.pi();
+            self.chi();
             self.iota(round);
         }
         block
+    }
+
+    pub fn absorb_str(&mut self, message: &str)
+    {
+        self.absorb(message.as_ptr(), message.len() as u64);
+    }
+
+    #[inline]
+    pub fn absorb_string(&mut self, message: &String)
+    {
+        self.absorb(message.as_ptr(), message.len() as u64);
+    }
+
+    #[inline]
+    pub fn absorb_array<U, const M: usize>(&mut self, message: &[U; M])
+    where U: SmallUInt + Copy + Clone
+    {
+        self.absorb(message.as_ptr() as *const u8, (M as u32 * U::size_in_bytes()) as u64);
+    }
+
+    #[inline]
+    pub fn absorb_vec<U>(&mut self, message: &Vec<T>)
+    where U: SmallUInt + Copy + Clone
+    {
+        self.absorb(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64);
     }
 
     // pub fn absorb(&mut self, message: *const u8, length_in_bytes: usize)
@@ -409,13 +425,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         let chunk_num = length_in_bytes as usize / RATE;
         self.initialize_state();
         for i in 0..chunk_num
-            { self.absorb_block(unsafe { message.add(i * RATE) }); }
+            { self.absorb_block(unsafe { message.add(i * RATE) }); } 
 
         let rest = length_in_bytes as usize % RATE;
         let mut padded = [0_u8; RATE];
         unsafe { copy_nonoverlapping(message.add(RATE * chunk_num), padded.as_mut_ptr(), rest); }
-        padded[rest] = if PADDING { 0b_0110_0000 } else { 0b_1111_1000};
-        padded[RATE - 1] |= 1_u8;
+        padded[rest] = Self::SEPARATOR;
+        padded[RATE - 1] |= Self::TAIL;
         self.absorb_block(padded.as_ptr());
     }
 
@@ -423,7 +439,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// Initialize state array to be all zeros.
     fn initialize_state(&mut self)
     {
-        unsafe { write_bytes(self.state.as_mut_ptr(), 0, 5 * 5); }
+        unsafe { write_bytes(self.state.as_mut_ptr() as *mut T, 0, 5 * 5); }
         // for y in 0..5
         // {
         //     for x in 0..5
@@ -435,12 +451,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// The block of length, `RATE` bytes, will be absorbed.
     fn absorb_block(&mut self, block: *const u8)
     {
-        self.feed_block_to_state(block);
+        self.feed_block_to_state(block);  print!("After feed "); self._show_state();
         for round in 0..ROUNDS
         {
-            self.theta();
-            self.rho_pi_chi();
-            self.iota(round);
+            self.theta();   print!("After theta {} ", round); self._show_state();
+            self.rho();     print!("After rho {} ", round); self._show_state();
+            self.pi();      print!("After pi {} ", round); self._show_state();
+            self.chi();     print!("After chi {} ", round); self._show_state();
+            self.iota(round);   print!("After iota {} ", round); self._show_state();
         }
     }
 
@@ -451,13 +469,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         let mut state = [[T::MIN; 5]; 5];
         unsafe { copy_nonoverlapping(block, state.as_mut_ptr() as *mut u8, RATE); }
-        let limit_y = RATE / 5;
+
+        let nominator = (T::BITS / 8) as usize * 5;
+        let limit_y = RATE / nominator;
         for y in 0..limit_y
         {
             for x in 0..5_usize
                 { self.state[y][x] ^= state[y][x]; }
         }
-        let limit_x = RATE % 5;
+        let mut limit_x = (RATE % nominator) / (T::BITS as usize / 8);
+        if (RATE % nominator) % (T::BITS as usize / 8) != 0
+            { limit_x += 1; }
         for x in 0..limit_x
             { self.state[limit_y][x] ^= state[limit_y][x]; }
     }
@@ -485,8 +507,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         let mut d = [T::zero(); 5];
         for i in 0..5_usize
         {
-            d[i] = c[i.modular_sub(THETA_LEFT, 5)]
-                 ^ c[i.modular_add(THETA_RIGHT, 5)].rotate_right(THETA_RR1);
+            d[i] = c[i.modular_sub(THETA_SUB, 5)]
+                 ^ c[i.modular_add(THETA_ADD, 5)].rotate_left(THETA_ROT);
         }
 
         for y in 0..5_usize
@@ -496,7 +518,20 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
     }
 
-    fn rho_pi_chi(&mut self)
+    fn rho(&mut self)
+    {
+        let (mut x, mut y) = (1_usize, 0_usize);
+        for t in 0..RHO_T
+        {
+            let rot = (t + 1) * (t + 2) / 2;
+            self.state[y][x] = self.state[y][x].rotate_left(rot);
+            let x2 = x.modular_mul(RHO_MUL_X, 5);
+            let y3 = y.modular_mul(RHO_MUL_Y, 5);
+            (x, y) = (y, x2.modular_add(y3, 5));
+        }
+    }
+
+    fn pi(&mut self)
     {
         let mut array= [[T::MIN; 5]; 5];
         for y in 0..5_usize
@@ -505,23 +540,27 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             {
                 let x1 = x.modular_mul(PI_MUL_X, 5);
                 let y3 = y.modular_mul(PI_MUL_Y, 5);
-                let row = x1.modular_add(y3, 5);
-                // pi step                      // rho step
-                array[row][y] = self.state[y][x].rotate_right(Self::R[x][y] as u32);
+                let xy = x1.modular_add(y3, 5);
+                array[y][x] = self.state[x][xy];
             }
         }
+        self.state = array;
+    }
 
-        // chi step
+    fn chi(&mut self)
+    {
+        let mut array= [[T::MIN; 5]; 5];
         for y in 0..5_usize
         {
             for x in 0..5_usize
             {
-                let a = array[y][x];
-                let b = !array[y][x.modular_add(CHI_ADD_1, 5)];
-                let c = array[y][x.modular_add(CHI_ADD_2, 5)];
-                self.state[y][x] = a ^ (b & c);
+                let a = self.state[y][x];
+                let b = !self.state[y][x.modular_add(CHI_ADD_1, 5)];
+                let c = self.state[y][x.modular_add(CHI_ADD_2, 5)];
+                array[y][x] = a ^ (b & c);
             }
         }
+        self.state = array;
     }
 
     #[inline]
@@ -564,4 +603,35 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         else
             { ('A' as u8 - 10 + nibble) as char }
     }
+
+
+
+    // For test
+    #[inline] pub fn _initialize_state(&mut self)   { self.initialize_state(); }
+    #[inline] pub fn _feed_block_to_state(&mut self, block: *const u8)  { self.feed_block_to_state(block); }
+    #[inline] pub fn _absorb_block(&mut self, block: *const u8)         { self.absorb_block(block); }
+    #[inline] pub fn _theta(&mut self)  { self.theta(); }
+    #[inline] pub fn _rho(&mut self)    { self.rho(); }
+    #[inline] pub fn _pi(&mut self)     { self.pi(); }
+    #[inline] pub fn _chi(&mut self)    { self.chi(); }
+    #[inline] pub fn _iota(&mut self, round: usize) { self.iota(round); }
+    #[inline] pub fn _show_state(&self)
+    {
+        println!("State: ");
+        for y in 0..5
+        {
+            for x in 0..5
+            {
+                let u = LongUnion::new_with(self.state[y][x].into_u64());
+                for i in 0..8
+                {
+                    print!("{:02X} ", u.get_ubyte_(i));
+                }
+                print!("  ");
+                if (x + y * 5)  & 1 == 1
+                    { println!(); }
+            }
+        }
+        println!();println!();
+    } 
 }

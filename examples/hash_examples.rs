@@ -25,11 +25,9 @@ pub fn main()
     hash_sha2_512_t_256_main();
     hash_sha2_512_t_224_main();
 
-    // let mut reg: u8 = 1;
-    // let mut st: u8 = 0b_0111_0001;
-    // let mut and = reg & st;
-    // let res = ((reg >> 1) | ((and.count_ones() as u8) << 7), reg & 1);
-    
+/*
+    println!("======================");
+
     fn register(reg: u8, rule: u8) -> (u8, u8)
     {
         ((reg >> 1) | (((reg & rule).count_ones() as u8) << 7), reg & 1)
@@ -92,6 +90,27 @@ pub fn main()
                 0x00008002, 0x00000080, 0x0000800A, 0x8000000A,
                 0x80008081, 0x00008080, 0, 0, 0, 0 ];
     assert_eq!(rc, r);
+
+    println!("======================");
+*/
+
+
+    println!("======================");
+    use cryptocol::hash::SHA3_224;
+    let mut sha3 = SHA3_224::new();
+    // let mut block = [0u8; 144];
+    // block[0] = 0b10101100;
+    // sha3._initialize_state();
+    // sha3._feed_block_to_state(block.as_ptr());
+    // sha3._theta();
+    // sha3._rho_pi_chi();
+    // sha3._iota(1);
+    // sha3._show_state();
+    
+    sha3.absorb_str("");
+    let txt = sha3.get_hash_value_in_string(224 / 8);
+    println!("sha3 = {}", txt);
+    assert_eq!(txt, "6B4E03423667DBB73B6E15454F0EB1ABD4597F9A1B078E3F5B5A6BC7");
 }
 
 fn hash_md4_main()
