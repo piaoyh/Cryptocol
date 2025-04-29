@@ -13,10 +13,8 @@
 
 use std::fmt::{ self, Debug, Display, Formatter };
 use std::ptr::copy_nonoverlapping;
-use std::slice::from_raw_parts;
 
-use crate::number::{ LongUnion, LongerUnion };
-use crate::number::SmallUInt;
+use crate::number::{ SmallUInt, LongUnion };
 
 
 /// You have freedom of changing t, A5A5A5A5A5A5A5A5, H0 ~ H7, and ROUND

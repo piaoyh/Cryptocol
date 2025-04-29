@@ -76,12 +76,9 @@
 //! - [X] SHA-2 hash algorithms based on 512/t bits
 //!     --- Includes 512/256, SHA-512/224, and their expanded versions.
 //!     [`SHA2_512_t_Generic`](hash/sha2_512_t/struct.SHA2_512_t_Generic.html#struct.SHA2_512_t_Generic)
-//! - [ ] SHA-3 (SHA3-224)
-//! - [ ] SHA-3 (SHA3-256)
-//! - [ ] SHA-3 (SHA3-384)
-//! - [ ] SHA-3 (SHA3-512)
-//! - [ ] SHA-3 (SHAKE 128)
-//! - [ ] SHA-3 (SHAKE 256)
+//! - [ ] SHA-3 and Keccak hash algorithms based on 8/16/32/64 bits
+//!     --- Includes SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE 128, SHAKE 256, and their expanded versions.
+//!     [`Keccak_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/keccak/struct.Keccak_Generic.html#struct.Keccak_Generic)
 //! 
 //! ## Symmetric-key Algorithms for the Encryption/Decryption of digital data
 //! - [X] DES symmetric-key encryption/decryption algorithm and the traits and its implementations of Operation modes and padding bits for DES_Generic
@@ -131,7 +128,7 @@
 //! the version number 1.0.0.0 will be given. After that whenever another
 //! functionality is added to this crate, the version number will get higher
 //! beyond 1.0.0.0. Before the version number 1.0.0.0, the maximum version
-//! number will be 0.25.x.x since there are all twenty-five functionalities
+//! number will be 0.20.x.x since there are all twenty-five functionalities
 //! listed above. So, for example, even if the version number is 0.5.0.0,
 //! it does not mean that 50% of all functionalities are implemented.
 

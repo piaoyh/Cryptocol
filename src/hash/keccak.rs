@@ -13,15 +13,11 @@
 
 
 use std::ptr::{ copy_nonoverlapping, write_bytes };
-use std::ptr::addr_of_mut;
-use std::slice::from_raw_parts;
 use std::fmt::{ self, Debug, Display, Formatter };
-use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
-                Shl, ShlAssign, Shr, ShrAssign, 
-                Add, AddAssign, Sub, SubAssign, Mul, MulAssign,
-                Div, DivAssign, Rem, RemAssign };
+use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign,
+                BitXor, BitXorAssign, Not, Shl };
 
-use crate::number::{ SmallUInt, IntUnion, LongUnion };
+use crate::number::{ SmallUInt, LongUnion };
 
 
 macro_rules! run_register {
@@ -100,6 +96,21 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
 
 #[allow(non_camel_case_types)]
+pub type BIG_KECCAK = Keccak_Generic<72, 2, 26, u128>;
+
+#[allow(non_camel_case_types)]
+pub type KECCAK_224 = Keccak_Generic<144, 2>;
+
+#[allow(non_camel_case_types)]
+pub type KECCAK_256 = Keccak_Generic<136, 2>;
+
+#[allow(non_camel_case_types)]
+pub type KECCAK_384 = Keccak_Generic<104, 2>;
+
+#[allow(non_camel_case_types)]
+pub type KECCAK_512 = Keccak_Generic<72, 2>;
+
+#[allow(non_camel_case_types)]
 pub type SHAKE_128 = Keccak_Generic<168, 1>;
 
 #[allow(non_camel_case_types)]
@@ -119,18 +130,29 @@ pub type SHA3_512 = Keccak_Generic;
 
 
 /// A Keccak message-digest algorithm that lossily compresses data of arbitrary
-/// length into a 128-bit hash value, and its flexible variants that allows
+/// length into a any-bit hash value, and its flexible variants that allows
 /// you to develop your own `Keccak`-based hash algorithms
 /// 
 /// # Introduction
-/// 
-/// # Vulnerability
-/// There have been several attacks against Keccak
-/// but they are all incomplete attacks.
-/// Read [more](https://en.wikipedia.org/wiki/SHA-2#Cryptanalysis_and_validation)
+/// SHA stands for Secure Hash Algorithm, and SHA-3 means the third version of
+/// SHA. The National Institute of Standards and Technology (NIST) released
+/// SHA-3 as one of the standards of secure hash algorithms on August 5, 2015.
+/// NIST is an agency of the United States Department of Commerce whose mission
+/// is to promote American innovation and industrial competitiveness.
+/// SHA-1 has been broken by Google on 23rd, February, 2017. SHA-1 uses
+/// Merkle–Damgård construction. And, SHA-2 also uses same construction. So,
+/// NIST wanted to provide another secure hash algorithm that uses the
+/// construction other than Merkle–Damgård construction just in case SHA-2
+/// will be broken too. In 2006, NIST started to organize the NIST hash
+/// function competition to create a new hash standard so-called SHA-3. Finally,
+/// Keccak was chosen as SHA-3 after changing Keccak algorithm a little bit.
+/// SHA-2 has not been broken yet. As of 2022, NIST has no plan to withdraw
+/// or remove SHA-2. You can directly substitute SHA-3 for SHA-2 in current
+/// applications, if necessary, to significantly improve the robustness.
 /// 
 /// # Use of Keccak or SHA3 and their variants
-/// You can use Keccak and its variants for cryptograpic purposes such as:
+/// You can use Keccak or SHA3 and its variants for cryptograpic purposes
+/// such as:
 /// - Generating IDs
 /// - Integrity test
 /// - Storing passwords
@@ -139,60 +161,82 @@ pub type SHA3_512 = Keccak_Generic;
 /// - Implementing proof of work for block chain.
 /// - Study of hash algorithms
 /// - Cryptanalysis Research to find the weakness of SHA-3 and Keccak
-/// construction which SHA3 family uses
+///   construction which SHA3 family uses
 /// 
 /// # Generic Parameters
 /// You can create your own expanded version of Keccak by changing the generic
 /// parameters.
+/// - RATE : The parameter `RATE` is in bytes though it is usually written in
+///   bits in most of the documents. `RATE` determines how many bytes the
+///   message will be absorbed at once.
+///   If `RATE` is `72`, it is for SHA3-512.
+///   If `RATE` is `104`, it is for SHA3-384.
+///   If `RATE` is `136`, it is for either SHA3-256 or SHAKE-256.
+///   If `RATE` is `144`, it is for SHA3-224.
+///   If `RATE` is `168`, it is for SHAKE-128.
+///   However, you can freely choose any number for `RATE` to create your own
+///   hash algorithms. The default value is `72` for SHA3-512.
+/// - PADDING: The parameter `PADDING` determines padding way. Only `0`, `1`,
+///   `2` are available for the parameter `PADDING`.
+///   If `PADDING` is `0`, domain separator bits `01` are appended, and the
+///   start bits of padding `1` is appended, and the necessary `0`s are added,
+///   and then `1` is appended in order to make the length of the message be a
+///   multiple of `RATE` for SHA-3 standard.
+///   If `PADDING` is `1`, domain separator bits `1111` are appended, and
+///   the start bits of padding `1` is appended, and the necessary `0`s are
+///   added, and then `1` is appended in order to make the length of the
+///   message be a multiple of `RATE` for SHAKE standard.
+///   If `PADDING` is `2`, the start bits of padding `1` is appended without
+///   domain separator bits, and the necessary `0`s are appended, and then `1`
+///   is appended in order to make the length of the message be a multiple of
+///   `RATE` for Keccak standard.
+///   The default value is `0` for for SHA-3 standard.
+/// - ROUNDS : The parameter `ROUNDS` determines how many rounds the digesting
+///   steps are repeated. Usually, for the official SHA3 and SHAKE,
+///   `ROUNDS` is 24. So, the default value is `24` for SHA3 and SHAKE.
 /// - T : The parameter `T` is the datatype of the unit block to process. It
 ///   is one of `u8`, `u16`, `u32`, `u64`, and `u128`.
-/// - RATE : The parameter `RATE` is in bytes though it is usually written in
-///   bits in most of the document. `RATE` means how many bytes the message
-///   will be absorbed at once.
-/// - PADDING: The parameter `PADDING` is whether or not the domain separate
-///   bits is `01` for SHA-3 style. So, if `PADDING` is `true`, the domain
-///   separate bits is `01` for SHA-3. If `PADDING` is `false`, the domain
-///   bits is `1111` for SHAKE.45
+///   Usually, for the official SHA3 and SHAKE, `T` is `u64`.
+///   So, the default value is `24` for SHA3 and SHAKE.
+/// - LFSR : The parameter `LFSR` is the 8-bit linear feedback shift register.
+///   It is expressed in the form of polynormial such as x^8 + x^6 + x^5 + x^4
+///   + 1 (= x^0). The highest order term x^8 indicates 8-bit register. The
+///   exponents 6, 5, 4, and 0 means the bits of the register to be taken, such
+///   as 6th, 5th, 4th and 0th bits. The taken bits will be eXclusive ORed with
+///   one another to get one-bit result. And then, the LSB (Least Segnificant
+///   bit) is taken and the linear feedback shift register is rotated right with
+///   feeding the one-bit result to the MSB (Most Segnificant bit). The taken
+///   LSB is the output of the linear feedback shift register. You can change
+///   which bits will be XORed. The the behaviour of the linear feedback shift
+///   register will be changed. For example, if the polinormial of the linear
+///   feedback shift register is x^8 + x^6 + x^5 + x^4 + 1, the value of the
+///   parameter `LFSR` is 0b_0111_0001. And, if `LFSR` is 0b_1101_0100, the
+///   linear feedback shift register has the polinormial x^7 + x^6 + x^4 + x^2.
+///   The default value of `LFSR` is 0b_0111_0001 for official SHA3 and SHAKE.
+/// - THETA_SUB : The default value of `THETA_SUB` is 1.
+/// - THETA_ADD : The default value of `THETA_ADD` is 1.
+/// - THETA_ROT : The default value of `THETA_ROT` is 1.
+/// - RHO_MUL_X : The default value of `RHO_MUL_X` is 2.
+/// - RHO_MUL_Y : The default value of `RHO_MUL_Y` is 3.
+/// - RHO_T : The default value of `RHO_T` is 24,
+/// - PI_MUL_X : The default value of `PI_MUL_X` is 1.
+/// - PI_MUL_Y : The default value of `PI_MUL_Y` is 3.
+/// - CHI_ADD_1 : The default value of `THETA_ROT` is 1.
+/// - CHI_ADD_2 : The default value of `CHI_ADD_2` is 2.
 /// 
-/// 
-/// , where w is the number of bits for one
-///   block. If w is 32 for 32-bit width, L is 5. If w is 64 for 64-bit width,
-///   L is 6. If w is 128 for 128-bit width, L is 7. L can be up to 7 because
-///   Rust support up to 128-bit integer for primitive data type, but normally
-///   L is chosen to be 6 for 64-bit width. SHA-3 chose 6 for L.
-/// - N : the size of output. N cannot be 0 or greater than 4. If N is 4, the
-/// output is 128 bits, while if N is 1, the output is 32 bits.
-/// - H0 ~ H3 : the initial hash values, four u32 values.
-/// The default values of H0, H1, H2, and H3 are 0x67452301, 0xefcdab89,
-/// 0x98badcfe, and 0x10325476, respectively (in little endian representation).
-/// - ROUND : the number of rounds. The default value of it is `48` (= 16 * 3).
-/// - K0 ~ K2 : the added values in hashing process, three u32 values.
-/// The default values of K0, K1, and K2 are 0x00000000, 0x5A827999, and
-/// 0x6ED9EBA1, respectively (in little endian representation).
-/// 0x5A827999 is a 32-bit constant of the square root of 2 in little endian
-/// prepresentation.
-/// 0x6ED9EBA1 is a 32-bit constant of the square root of 3 in little endian
-/// prepresentation.
-/// - R00 ~ R03, R10 ~ R13, and R20 ~ R23 : the amounts of rotate left in the
-/// hashing process.
-/// The default values of R00, R01, R02, and R03 are 3, 7, 11, and 19, respectively.
-/// The default values of R10, R11, R12, and R13 are 3, 5, 9, and 13, respectively.
-/// The default values of R20, R11, R12, and R23 are 3, 9, 11, and 15, respecively.
-/// 
-/// About the parameters and their default values,
-/// read [more](https://datatracker.ietf.org/doc/html/rfc1320)
-/// and/or watch [this video](https://www.youtube.com/watch?v=JIhZWgJA-9o)
-/// to learn SHA-1 more in detail.
+/// Watch [this video](https://www.youtube.com/watch?v=JWskjzgiIa4)
+/// to learn SHA-3 more in detail.
 /// 
 /// # Security of your own expanded version
-/// Your own algrorithm based on MD4 may be stronger or weaker than official
-/// MD4. Unless you seriously checked the cryptographic security of your own
-/// algorithms, it is hard to assume that your own alogrithms are stronger
-/// than the official Keccak.
-/// 
+/// Your own algrorithm based on Keccak may be stronger or weaker than official
+/// SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE-128, SHAKE-256, and other
+/// Keccak variants. Unless you seriously checked the cryptographic security of
+/// your own algorithms, it is hard to assume that your own alogrithms are
+/// stronger than the official SHA3-224, SHA3-256, SHA3-384, SHA3-512,
+/// SHAKE-128, SHAKE-256, and other Keccak variants.
 /// 
 /// # Reference
-/// Read [more](https://en.wikipedia.org/wiki/MD4) about MD4 in detail.
+/// Read [more](https://en.wikipedia.org/wiki/SHA-3) about SHA-3 in detail.
 /// 
 /// # Quick Start
 /// In order to use the module Keccak, you don't have to import (or use)
@@ -255,7 +299,7 @@ Keccak_Generic<RATE, PADDING, ROUNDS, T, LFSR,
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + Shl<Output = T> 
+        + Shl<Output = T>
 {
     const RC: [T; ROUNDS] = make_RC!(T, ROUNDS, LFSR);
     const SEPARATOR: u8 = match PADDING
@@ -451,14 +495,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// The block of length, `RATE` bytes, will be absorbed.
     fn absorb_block(&mut self, block: *const u8)
     {
-        self.feed_block_to_state(block);  print!("After feed "); self._show_state();
+        self.feed_block_to_state(block);
         for round in 0..ROUNDS
         {
-            self.theta();   print!("After theta {} ", round); self._show_state();
-            self.rho();     print!("After rho {} ", round); self._show_state();
-            self.pi();      print!("After pi {} ", round); self._show_state();
-            self.chi();     print!("After chi {} ", round); self._show_state();
-            self.iota(round);   print!("After iota {} ", round); self._show_state();
+            self.theta();
+            self.rho();
+            self.pi();
+            self.chi();
+            self.iota(round);
         }
     }
 
@@ -606,32 +650,150 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
 
 
-    // For test
-    #[inline] pub fn _initialize_state(&mut self)   { self.initialize_state(); }
-    #[inline] pub fn _feed_block_to_state(&mut self, block: *const u8)  { self.feed_block_to_state(block); }
-    #[inline] pub fn _absorb_block(&mut self, block: *const u8)         { self.absorb_block(block); }
-    #[inline] pub fn _theta(&mut self)  { self.theta(); }
-    #[inline] pub fn _rho(&mut self)    { self.rho(); }
-    #[inline] pub fn _pi(&mut self)     { self.pi(); }
-    #[inline] pub fn _chi(&mut self)    { self.chi(); }
-    #[inline] pub fn _iota(&mut self, round: usize) { self.iota(round); }
-    #[inline] pub fn _show_state(&self)
-    {
-        println!("State: ");
-        for y in 0..5
-        {
-            for x in 0..5
-            {
-                let u = LongUnion::new_with(self.state[y][x].into_u64());
-                for i in 0..8
-                {
-                    print!("{:02X} ", u.get_ubyte_(i));
-                }
-                print!("  ");
-                if (x + y * 5)  & 1 == 1
-                    { println!(); }
-            }
-        }
-        println!();println!();
-    } 
+    ///////////////////// For test
+    // #[inline] pub fn _initialize_state(&mut self)   { self.initialize_state(); }
+    // #[inline] pub fn _feed_block_to_state(&mut self, block: *const u8)  { self.feed_block_to_state(block); }
+    // #[inline] pub fn _absorb_block(&mut self, block: *const u8)         { self.absorb_block(block); }
+    // #[inline] pub fn _theta(&mut self)  { self.theta(); }
+    // #[inline] pub fn _rho(&mut self)    { self.rho(); }
+    // #[inline] pub fn _pi(&mut self)     { self.pi(); }
+    // #[inline] pub fn _chi(&mut self)    { self.chi(); }
+    // #[inline] pub fn _iota(&mut self, round: usize) { self.iota(round); }
+    // #[inline] pub fn _show_state(&self)
+    // {
+    //     println!("State: ");
+    //     for y in 0..5
+    //     {
+    //         for x in 0..5
+    //         {
+    //             let u = LongUnion::new_with(self.state[y][x].into_u64());
+    //             for i in 0..8
+    //             {
+    //                 print!("{:02X} ", u.get_ubyte_(i));
+    //             }
+    //             print!("  ");
+    //             if (x + y * 5)  & 1 == 1
+    //                 { println!(); }
+    //         }
+    //     }
+    //     println!();println!();
+    // }
 }
+
+
+
+
+/*
+impl<const RATE: usize, const PADDING: usize, const ROUNDS: usize, T, const LFSR: u8,
+    const THETA_SUB: usize, const THETA_ADD: usize, const THETA_ROT: u32,
+    const RHO_MUL_X: usize, const RHO_MUL_Y: usize, const RHO_T: u32,
+    const PI_MUL_X: usize, const PI_MUL_Y: usize,
+    const CHI_ADD_1: usize, const CHI_ADD_2: usize>
+Display for Keccak_Generic<RATE, PADDING, ROUNDS, T, LFSR,
+                THETA_SUB, THETA_ADD, THETA_ROT,
+                RHO_MUL_X, RHO_MUL_Y, RHO_T,
+                PI_MUL_X, PI_MUL_Y, CHI_ADD_1, CHI_ADD_2>
+where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+        + Shl<Output = T>
+{
+    /// Formats the value using the given formatter.
+    /// You will hardly use this method directly.
+    /// Automagically the function `to_string()` will be implemented. So, you
+    /// can use the function `to_string()`, and you can also print the SHA-1
+    /// object in the macro `println!()` directly for example.
+    /// `f` is a buffer, this method must write the formatted string into it.
+    /// [Read more](https://doc.rust-lang.org/core/fmt/trait.Display.html#tymethod.fmt)
+    ///
+    /// # Example 1 for SHA2_256 for to_string()
+    /// ```
+    /// use cryptocol::hash::SHA2_256;
+    /// let mut hash = SHA2_256::new();
+    /// let txt = "Display::fmt() automagically implement to_string().";
+    /// hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash.to_string());
+    /// assert_eq!(hash.to_string(), "46577469D8A5CBCA1AC874A5350E4FACD318A468046816B066117D51DB9D1640");
+    /// ```
+    ///
+    /// # Example 2 for SHA2_256_Expanded for to_string()
+    /// ```
+    /// use cryptocol::hash::SHA2_256_Expanded;
+    /// type MySHA2 = SHA2_256_Expanded<0x1111_1111, 0x4444_4444, 0x8888_8888, 0xcccc_cccc, 0xffff_ffff, 160>;
+    /// let mut my_hash = MySHA2::new();
+    /// let txt = "Display::fmt() automagically implement to_string().";
+    /// my_hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash.to_string());
+    /// assert_eq!(my_hash.to_string(), "6DED905D80768EE8F19D76233902E6CA1417B23A89845C2DA9127FEDD7CCDB5C");
+    /// ```
+    ///
+    /// # Example 3 for SHA2_224 for to_string()
+    /// ```
+    /// use cryptocol::hash::SHA2_224;
+    /// let mut hash = SHA2_224::new();
+    /// let txt = "Display::fmt() automagically implement to_string().";
+    /// hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash.to_string());
+    /// assert_eq!(hash.to_string(), "979DB3C5F63C2FBB32A72804A991534EB38884EB5B9131AE0EE3A496");
+    /// ```
+    ///
+    /// # Example 4 for SHA2_224_Expanded for to_string()
+    /// ```
+    /// use cryptocol::hash::SHA2_224_Expanded;
+    /// type MySHA2 = SHA2_224_Expanded<128>;
+    /// let mut my_hash = MySHA2::new();
+    /// let txt = "Display::fmt() automagically implement to_string().";
+    /// my_hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash.to_string());
+    /// assert_eq!(my_hash.to_string(), "136C899347821BCC7529F3B42C0A9E3E997E156B1E5E081F57BBB15E");
+    /// ```
+    ///
+    /// # Example 5 for SHA2_256 for the macro println!()
+    /// ```
+    /// use cryptocol::hash::SHA2_256;
+    /// let mut hash = SHA2_256::new();
+    /// let txt = "Display::fmt() enables the object to be printed in the macro println!() directly for example.";
+    /// hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+    /// assert_eq!(hash.to_string(), "B8338443431AB13309330A8064AF039E39F90CAC334CF8EA1FF0640646AB121C");
+    /// ```
+    ///
+    /// # Example 6 for SHA2_256_Expanded for the macro println!()
+    /// ```
+    /// use cryptocol::hash::SHA2_256_Expanded;
+    /// type MySHA2 = SHA2_256_Expanded<0x1111_1111, 0x4444_4444, 0x8888_8888, 0xcccc_cccc, 0xffff_ffff, 160>;
+    /// let mut my_hash = MySHA2::new();
+    /// let txt = "Display::fmt() enables the object to be printed in the macro println!() directly for example.";
+    /// my_hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+    /// assert_eq!(my_hash.to_string(), "EF27B2954B124469ACD614F1DE4E99B30C418194B614EE19361674F64F60189C");
+    /// ```
+    ///
+    /// # Example 7 for SHA2_224 for the macro println!()
+    /// ```
+    /// use cryptocol::hash::SHA2_224;
+    /// let mut hash = SHA2_224::new();
+    /// let txt = "Display::fmt() enables the object to be printed in the macro println!() directly for example.";
+    /// hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+    /// assert_eq!(hash.to_string(), "E333EE19A56FCDCCB05957F2B6FB0AD1EA11D7B6258DF28DCE3B526B");
+    /// ```
+    ///
+    /// # Example 8 for SHA2_224_Expanded for the macro println!()
+    /// ```
+    /// use cryptocol::hash::SHA2_224_Expanded;
+    /// type MySHA2 = SHA2_224_Expanded<128>;
+    /// let mut my_hash = MySHA2::new();
+    /// let txt = "Display::fmt() enables the object to be printed in the macro println!() directly for example.";
+    /// my_hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
+    /// assert_eq!(my_hash.to_string(), "849F654BAFF41D3025DE982EC410F8EC6991FFD6E5BF4047F45082F6");
+    /// ```
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result
+    {
+        // `write!` is like `format!`, but it will write the formatted string
+        // into a buffer (the first argument)
+        write!(f, "{}", self.get_hash_value_in_string())
+    }
+}
+*/

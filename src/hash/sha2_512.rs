@@ -12,10 +12,9 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 use std::ptr::copy_nonoverlapping;
-use std::slice::from_raw_parts;
 use std::fmt::{ self, Debug, Display, Formatter };
 
-use crate::number::{ SmallUInt, LongUnion, LongerUnion };
+use crate::number::{ SmallUInt, LongUnion };
 
 
 /// You have freedom of changing H0 ~ H7, and ROUND for SHA-2-512.

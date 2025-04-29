@@ -12,7 +12,6 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 use std::ptr::copy_nonoverlapping;
-use std::slice::from_raw_parts;
 use std::fmt::{ self, Debug, Display, Formatter };
 
 use crate::number::{ SmallUInt, IntUnion, LongUnion };
