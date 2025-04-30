@@ -479,6 +479,78 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         self.absorb_block(padded.as_ptr());
     }
 
+    // pub fn tangle(&mut self, tangling: u64)
+    /// Tangles the hash value
+    /// 
+    /// # Argument
+    /// u64 constants to tangle the hash value
+    /// 
+    /// # Features
+    /// It is for using this struct as random number generator.
+    /// 
+    /// # Example 1 for SHA2_512
+    /// ```
+    /// use cryptocol::hash::SHA2_512;
+    /// let mut hash = SHA2_512::new();
+    /// let txt = "TANGLING";
+    /// hash.digest_str(txt);
+    /// println!("Msg =\t\"{}\"\nHash =\t{:016X?}", txt, hash.get_hash_value_in_array());
+    /// assert_eq!(format!("{:016X?}", hash.get_hash_value_in_array()), "[070B6A9457F65DD9, A7D2C2326CE14E8A, E870D6939FE02E39, 5CFEEDCA96BF3BA3, 013FFB332B3F51F3, B1D4E16355DBE0A9, E998240787066535, 1D5F597F04F84820]");
+    /// hash.tangle(1);
+    /// println!("Hash =\t{:016X?}", hash.get_hash_value_in_array());
+    /// assert_eq!(format!("{:016X?}", hash.get_hash_value_in_array()), "[4780AEEAD19D5962, C55EAFBA7590FB70, CA6587899B2B276F, 55361EC5C9568667, FFD38C58FF62C288, 5E96A9FFC6B17704, 6D3885C75FE9B667, BFDA80D1514F38E5]");
+    /// hash.tangle(1);
+    /// println!("Hash =\t{:016X?}", hash.get_hash_value_in_array());
+    /// assert_eq!(format!("{:016X?}", hash.get_hash_value_in_array()), "[D7FFE2BEEB81D532, EA420969761C4DAA, 8EE930740ABBBE3E, 0DC90C0705AE5F38, E91531243615F994, 174C4F96168FBFC4, 06373FFDD9C66A16, 910560A5898E3728]");
+    /// ```
+    /// 
+    /// # Example 2 for SHA2_512_Expanded
+    /// ```
+    /// use cryptocol::hash::SHA2_512_Expanded;
+    /// type MySHA2 = SHA2_512_Expanded<0x1111_1111_1111_1111, 0x3333_3333_3333_3333, 0x5555_5555_5555_5555, 0x7777_7777_7777_7777, 0x9999_9999_9999_9999, 0xbbbb_bbbb_bbbb_bbbb, 0xdddd_dddd_dddd_dddd, 0xffff_ffff_ffff_ffff, 160>;
+    /// let txt = "TANGLING";
+    /// ```
+    /// 
+    /// # Example 3 for SHA2_384
+    /// ```
+    /// use cryptocol::hash::SHA2_384;
+    /// let mut hash = SHA2_384::new();
+    /// let txt = "TANGLING";
+    /// ```
+    /// 
+    /// # Example 4 for SHA2_384_Expanded
+    /// ```
+    /// use cryptocol::hash::SHA2_384_Expanded;
+    /// type MySHA2 = SHA2_384_Expanded<160>;
+    /// let mut my_hash = MySHA2::new();
+    /// let txt = "TANGLING";
+    /// ```
+    /// 
+    /// # Example 5 for SHA2_512_256
+    /// ```
+    /// use cryptocol::hash::SHA2_512_256;
+    /// let mut hash = SHA2_512_256::new();
+    /// let txt = "TANGLING";
+    /// hash.digest_str(txt);
+    /// ```
+    /// 
+    /// # Example 6 for SHA2_512_256_Expanded
+    /// ```
+    /// use cryptocol::hash::SHA2_512_256_Expanded;
+    /// type MySHA2 = SHA2_512_256_Expanded<160>;
+    /// let mut my_hash = MySHA2::new();
+    /// let txt = "TANGLING";
+    /// ```
+    #[inline]
+    pub fn tangle(&mut self, tangling: u64)
+    {
+        let mut rate = [0_u8; RATE];
+        let count = if RATE < 8 { RATE } else { 8 }; 
+        unsafe { copy_nonoverlapping(&tangling as *const u64 as *const u8, rate.as_mut_ptr(), count); }
+        m[8] = tangling;
+        self.absorb_block(rate.as_ptr());
+    }
+
     // fn initialize_state(&mut self)
     /// Initialize state array to be all zeros.
     fn initialize_state(&mut self)

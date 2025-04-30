@@ -15,6 +15,7 @@
 use std::fmt::{ Debug, Display };
 use std::ops::*;
 use std::cmp::{ PartialEq, PartialOrd};
+use std::ptr::copy_nonoverlapping;
 use std::time::{ SystemTime, UNIX_EPOCH };
 use std::collections::hash_map::RandomState;
 use std::hash::{ BuildHasher, Hasher };
@@ -23,36 +24,34 @@ use std::hash::{ BuildHasher, Hasher };
 #[cfg(not(target_family = "windows"))] use std::io::Read;
 
 use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt };
-use crate::hash::{ MD4, MD5, SHA0, SHA1, SHA2_256, SHA2_512 };
+use crate::hash::{ MD4, MD5, SHA0, SHA1, SHA2_256, SHA2_512,
+                    SHA3_256, SHA3_512, SHAKE_128 };
 use crate::random::{ Random_Engine, AnyNumber_Engine_C };
 use crate::symmetric::DES;
 
 
-
-
-
 /// The type `Random` which is a random number generator and is a synonym of
-/// [`Random_SHA2_512`](type@Random_SHA2_512) at the moment. It means `Random`
-/// uses a hash algorithm SHA-2-512. It is cryptographically securer than its
+/// [`Random_SHA3_512`](type@Random_SHA3_512) at the moment. It means `Random`
+/// uses a hash algorithm SHA-3-512. It is cryptographically securer than its
 /// counterpart type `Any` and a bit slower than [`Any`](type@Any).
-/// _In the near future, `Random` may be silently changed to use SHA-3-512
-/// alogrithm and to be a synonym of `Random_SHA3_512` when `Random_SHA3_512`
-/// is implemented._ If you want to keep using SHA2_512 for a pseudo-random
-/// number generator, you may want to use Random_SHA2_512. If you are happy
+/// _In the near future, `Random` may be silently changed to use Chacha20
+/// alogrithm and to be a synonym of `Random_Chacha20` when `Random_Chacha20`
+/// is implemented._ If you want to keep using SHA3_512 for a pseudo-random
+/// number generator, you may want to use Random_SHA3_512. If you are happy
 /// that you will automatically use the better algotrithm in the future,
 /// you may want to use `Random`.
-pub type Random = Random_SHA2_512;
+pub type Random = Random_SHA3_512;
 
 /// The type `Any` which is a random number generator and is a synonym of
-/// [`Any_SHA2_256`](type@Any_SHA2_256) at the moment. It means `Any` uses
-/// a hash algorithm SHA-2-256. It is cryptographically less secure than its
+/// [`Any_SHAKE_128`](type@Any_SHAKE_128) at the moment. It means `Any` uses
+/// a hash algorithm SHAKE-128. It is cryptographically less secure than its
 /// counterpart struct `Random` and a bit faster than [`Random`](type@Random).
 /// _In the near future, `Any` may be silently changed to have better algorithm_
-/// If you want to keep using SHA2_256 for a pseudo-random number generator,
-/// you may want to use Any_SHA2_256. If you are happy that you will
+/// If you want to keep using SHAKE_128 for a pseudo-random number generator,
+/// you may want to use Any_SHAKE_128. If you are happy that you will
 /// automatically use the better algotrithm in the future, you may want
 /// to use `Any`.
-pub type Any = Any_SHA2_256;
+pub type Any = Any_SHAKE_128;
 
 /// The type `Any_Num` which is a random number generator and is a synonym of
 /// [`Any_Num_C`](type@Any_Num_C) at the moment. It means `Any_Num` uses a
@@ -2236,8 +2235,20 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             + BitXor<Output=T> + BitXorAssign + Not<Output=T>
             + PartialEq + PartialOrd
     {
-        for i in 0..N
-            { out[i] = self.random_uint::<T>(); }
+        self.produce_aux();
+        self.produce_seed();
+        let mut tsize = T::size_in_bytes() as usize * N;
+        let asize = u64::size_in_bytes() as usize * 8;
+        while tsize > 0
+        {
+            let mut array = self.aux_array.clone();
+            for i in 0..8
+                { array[i] ^= self.seed_array[i]; }
+            let count = if tsize < asize { tsize } else { asize };
+            unsafe { copy_nonoverlapping(array.as_ptr() as *const u8, out.as_mut_ptr() as *mut u8, count); }
+            self.produce_seed();
+            tsize -= count;
+        }
     }
 
     // pub fn random_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
@@ -2309,7 +2320,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             + BitXor<Output=T> + BitXorAssign + Not<Output=T>
             + PartialEq + PartialOrd
     {
-        BigUInt::<T, N>::from_array(self.random_array::<T, N>().clone())
+        BigUInt::<T, N>::from_array(self.random_array::<T, N>()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    )
     }
 
     // pub fn random_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
@@ -3222,6 +3233,74 @@ impl Random_SHA2_512
     pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<100>   // COUNT = 2^256 because of hashing one time for each random number generation
     {
         Random_Generic::<100>::new_with_generators_seeds(SHA2_512::new(), SHA2_512::new(), seed, aux)
+    }
+}
+
+/// The type `Any_SHA3_256` which is a pseudo-random number generator using
+/// a hash algorithm SHA-3-256. It is a specific version of the generic struct
+#[allow(non_camel_case_types)] 
+pub struct Any_SHA3_256 {}
+impl Any_SHA3_256
+{
+    pub fn new() -> Random_Generic<170141183460469231731687303715884105727>   // COUNT = 2^128 / 2 because of hashing 2 times for each random number generation
+    {
+        Random_Generic::<170141183460469231731687303715884105727>::new_with(SHA3_256::new(), SHA3_256::new())
+    }
+
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<170141183460469231731687303715884105727>   // COUNT = 2^128 / 2 because of hashing 2 times for each random number generation
+    {
+        Random_Generic::<170141183460469231731687303715884105727>::new_with_generators_seeds(SHA3_256::new(), SHA3_256::new(), seed, aux)
+    }
+}
+
+/// The type `Any_SHA3_512` which is a pseudo-random number generator using
+/// a hash algorithm SHA-3-512. It is a specific version of the generic struct
+#[allow(non_camel_case_types)] 
+pub struct Any_SHA3_512 {}
+impl Any_SHA3_512
+{
+    pub fn new() -> Random_Generic<340282366920938463463374607431768211455>   // COUNT = min(2^256, u128::MAX) because of hashing one time for each random number generation
+    {
+        Random_Generic::<340282366920938463463374607431768211455>::new_with(SHA3_512::new(), SHA3_512::new())
+    }
+
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<340282366920938463463374607431768211455>   // COUNT = min(2^256, u128::MAX) because of hashing one time for each random number generation
+    {
+        Random_Generic::<340282366920938463463374607431768211455>::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), seed, aux)
+    }
+}
+
+/// The type `Random_SHA3` which is a pseudo-random number generator using
+/// a hash algorithm SHA-3. It is a specific version of the generic struct
+#[allow(non_camel_case_types)] 
+pub struct Random_SHA3_512 {}
+impl Random_SHA3_512
+{
+    pub fn new() -> Random_Generic<100>   // COUNT = 2^256 because of hashing one time for each random number generation
+    {
+        Random_Generic::<100>::new_with(SHA3_512::new(), SHA3_512::new())
+    }
+
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<100>   // COUNT = 2^256 because of hashing one time for each random number generation
+    {
+        Random_Generic::<100>::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), seed, aux)
+    }
+}
+
+/// The type `Any_SHAKE_128` which is a pseudo-random number generator using
+/// a hash algorithm SHAKE-128. It is a specific version of the generic struct
+#[allow(non_camel_case_types)] 
+pub struct Any_SHAKE_128 {}
+impl Any_SHAKE_128
+{
+    pub fn new() -> Random_Generic<170141183460469231731687303715884105727>   // COUNT = 2^128 / 2 because of hashing 2 times for each random number generation
+    {
+        Random_Generic::<170141183460469231731687303715884105727>::new_with(SHAKE_128::new(), SHAKE_128::new())
+    }
+
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<170141183460469231731687303715884105727>   // COUNT = 2^128 / 2 because of hashing 2 times for each random number generation
+    {
+        Random_Generic::<170141183460469231731687303715884105727>::new_with_generators_seeds(SHAKE_128::new(), SHAKE_128::new(), seed, aux)
     }
 }
 
