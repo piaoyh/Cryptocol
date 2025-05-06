@@ -1142,6 +1142,14 @@ impl SizeUnion
     // #[cfg(target_pointer_width = "128")]    crate::number::get_set_longer_fit!();
 
     crate::number::integer_union_methods!(usize);
+
+    // pub fn as_ptr(&self) -> *const usize
+    /// Returns its pointer as *const usize
+    #[inline] pub fn as_ptr(&self) -> *const usize { unsafe { self.ubyte.as_ptr() as *const usize } }
+
+    // pub fn as_mut_ptr(&self) -> *mut usize
+    /// Returns its pointer as *mut usize
+    #[inline] pub fn as_mut_ptr(&mut self) -> *mut usize { unsafe { self.ubyte.as_mut_ptr() as *mut usize } }
 }
 
 

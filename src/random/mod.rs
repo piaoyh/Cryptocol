@@ -318,6 +318,9 @@ pub mod trait_impl_for_sha2_256;
 /// The module that contains implementation of trait Random_Engine for SHA2_512
 pub mod trait_impl_for_sha2_512;
 
+/// The module that contains implementation of trait Random_Engine for SHA3
+pub mod trait_impl_for_sha3;
+
 /// The module that contains implementation of trait Random_Engine for AnyNumber
 pub mod trait_impl_for_any_number;
 

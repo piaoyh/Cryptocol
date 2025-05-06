@@ -442,6 +442,14 @@ impl IntUnion
     // #[cfg(target_pointer_width = "8")]      crate::number::get_set_usize!(4);
 
     crate::number::integer_union_methods!(u32);
+
+    // pub fn as_ptr(&self) -> *const u32
+    /// Returns its pointer as *const u32
+    #[inline] pub fn as_ptr(&self) -> *const u32 { unsafe { self.ubyte.as_ptr() as *const u32 } }
+
+    // pub fn as_mut_ptr(&self) -> *mut u32
+    /// Returns its pointer as *mut u32
+    #[inline] pub fn as_mut_ptr(&mut self) -> *mut u32 { unsafe { self.ubyte.as_mut_ptr() as *mut u32 } }
 }
 
 

@@ -20,7 +20,6 @@ use std::time::{ SystemTime, UNIX_EPOCH };
 use std::collections::hash_map::RandomState;
 use std::hash::{ BuildHasher, Hasher };
 #[cfg(not(target_family = "windows"))] use std::fs::File;
-#[cfg(not(target_family = "windows"))] use std::ptr::copy_nonoverlapping;
 #[cfg(not(target_family = "windows"))] use std::io::Read;
 
 use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt };

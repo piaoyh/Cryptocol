@@ -363,6 +363,14 @@ impl ShortUnion
     #[cfg(target_pointer_width = "16")] crate::number::get_set_size_fit!();
 
     crate::number::integer_union_methods!(u16);
+
+    // pub fn as_ptr(&self) -> *const u16
+    /// Returns its pointer as *const u16
+    #[inline] pub fn as_ptr(&self) -> *const u16 { unsafe { self.ubyte.as_ptr() as *const u16 } }
+
+    // pub fn as_mut_ptr(&self) -> *mut u16
+    /// Returns its pointer as *mut u16
+    #[inline] pub fn as_mut_ptr(&mut self) -> *mut u16 { unsafe { self.ubyte.as_mut_ptr() as *mut u16 } }
 }
 
 

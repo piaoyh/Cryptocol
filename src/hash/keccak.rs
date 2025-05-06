@@ -17,7 +17,19 @@ use std::fmt::{ self, Debug, Display, Formatter };
 use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign,
                 BitXor, BitXorAssign, Not, Shl };
 
-use crate::number::{ SmallUInt, LongUnion };
+use crate::number::{ LongUnion, LongerUnion, SharedArrays, SharedValues, SmallUInt };
+
+
+#[allow(non_camel_case_types)]
+pub struct KECCAK_CONST {}
+
+impl KECCAK_CONST
+{
+    pub const SHA3: usize   = 0;    // SHA-3
+    pub const SHAKE: usize  = 1;    // SHAKE
+    pub const CSHAKE: usize = 2;    // cSHAKE
+    pub const KECCAK: usize = 3;    // KECCAK
+}
 
 
 macro_rules! run_register {
@@ -36,9 +48,9 @@ macro_rules! run_register {
 macro_rules! make_RC {
     ($T:ty, $ROUNDS:expr, $LFSR:expr) => {
         {
-            let mut union_A = A::<$T, $ROUNDS> { U128: [0_u128; ROUNDS] };
-            let WIDTH = <$T>::BITS as usize;
-            let mut RC = [<$T>::MIN; ROUNDS];
+            #[allow(non_snake_case)] let mut union_A = A::<$T, $ROUNDS> { U128: [0_u128; ROUNDS] };
+            #[allow(non_snake_case)] let WIDTH = <$T>::BITS as usize;
+            #[allow(non_snake_case)] let mut RC = [<$T>::MIN; ROUNDS];
             let mut bit = [0_usize; 7];
             let mut j = 0_usize;
             while j < 7_usize
@@ -80,41 +92,48 @@ macro_rules! make_RC {
 }
 
 
+#[allow(non_snake_case)]
 union A<T, const ROUNDS: usize>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
         + Shl<Output = T>
 {
-    #[allow(non_snake_case)] RC:    [T; ROUNDS],
-    #[allow(non_snake_case)] U128:  [u128; ROUNDS],
-    #[allow(non_snake_case)] U64:   [u64; ROUNDS],
-    #[allow(non_snake_case)] U32:   [u32; ROUNDS],
-    #[allow(non_snake_case)] U16:   [u16; ROUNDS],
-    #[allow(non_snake_case)] U8:    [u8; ROUNDS],
+    RC:    [T; ROUNDS],
+    U128:  [u128; ROUNDS],
+    U64:   [u64; ROUNDS],
+    U32:   [u32; ROUNDS],
+    U16:   [u16; ROUNDS],
+    U8:    [u8; ROUNDS],
 }
 
 
 #[allow(non_camel_case_types)]
-pub type BIG_KECCAK = Keccak_Generic<72, 2, 26, u128>;
+pub type BIG_KECCAK = Keccak_Generic<72, {KECCAK_CONST::KECCAK}, 26, u128>;
 
 #[allow(non_camel_case_types)]
-pub type KECCAK_224 = Keccak_Generic<144, 2>;
+pub type KECCAK_224 = Keccak_Generic<144, {KECCAK_CONST::KECCAK}>;
 
 #[allow(non_camel_case_types)]
-pub type KECCAK_256 = Keccak_Generic<136, 2>;
+pub type KECCAK_256 = Keccak_Generic<136, {KECCAK_CONST::KECCAK}>;
 
 #[allow(non_camel_case_types)]
-pub type KECCAK_384 = Keccak_Generic<104, 2>;
+pub type KECCAK_384 = Keccak_Generic<104, {KECCAK_CONST::KECCAK}>;
 
 #[allow(non_camel_case_types)]
-pub type KECCAK_512 = Keccak_Generic<72, 2>;
+pub type KECCAK_512 = Keccak_Generic<72, {KECCAK_CONST::KECCAK}>;
 
 #[allow(non_camel_case_types)]
-pub type SHAKE_128 = Keccak_Generic<168, 1>;
+pub type cSHAKE_128 = Keccak_Generic<168, {KECCAK_CONST::CSHAKE}>;
 
 #[allow(non_camel_case_types)]
-pub type SHAKE_256 = Keccak_Generic<136, 1>;
+pub type cSHAKE_256 = Keccak_Generic<136, {KECCAK_CONST::CSHAKE}>;
+
+#[allow(non_camel_case_types)]
+pub type SHAKE_128 = Keccak_Generic<168, {KECCAK_CONST::SHAKE}>;
+
+#[allow(non_camel_case_types)]
+pub type SHAKE_256 = Keccak_Generic<136, {KECCAK_CONST::SHAKE}>;
 
 #[allow(non_camel_case_types)]
 pub type SHA3_224 = Keccak_Generic<144>;
@@ -146,6 +165,11 @@ pub type SHA3_512 = Keccak_Generic;
 /// will be broken too. In 2006, NIST started to organize the NIST hash
 /// function competition to create a new hash standard so-called SHA-3. Finally,
 /// Keccak was chosen as SHA-3 after changing Keccak algorithm a little bit.
+/// SHA-3 uses a sponge construction, which consists of two phases: an absortion
+/// phase and a squeezing phase. It digests a message in the absortion phase
+/// while it produces the hash value of an arbitrary length of the message in
+/// the squeezing phase. You can repeatedly squeeze the hash values and use them
+/// as pseudo-random numbers, too.
 /// SHA-2 has not been broken yet. As of 2022, NIST has no plan to withdraw
 /// or remove SHA-2. You can directly substitute SHA-3 for SHA-2 in current
 /// applications, if necessary, to significantly improve the robustness.
@@ -158,6 +182,7 @@ pub type SHA3_512 = Keccak_Generic;
 /// - Storing passwords
 /// - Digital Signature
 /// - Key generation
+/// - Generating the cryptographically secure pseudo-random numbers
 /// - Implementing proof of work for block chain.
 /// - Study of hash algorithms
 /// - Cryptanalysis Research to find the weakness of SHA-3 and Keccak
@@ -176,20 +201,26 @@ pub type SHA3_512 = Keccak_Generic;
 ///   If `RATE` is `168`, it is for SHAKE-128.
 ///   However, you can freely choose any number for `RATE` to create your own
 ///   hash algorithms. The default value is `72` for SHA3-512.
-/// - PADDING: The parameter `PADDING` determines padding way. Only `0`, `1`,
-///   `2` are available for the parameter `PADDING`.
-///   If `PADDING` is `0`, domain separator bits `01` are appended, and the
-///   start bits of padding `1` is appended, and the necessary `0`s are added,
-///   and then `1` is appended in order to make the length of the message be a
-///   multiple of `RATE` for SHA-3 standard.
-///   If `PADDING` is `1`, domain separator bits `1111` are appended, and
-///   the start bits of padding `1` is appended, and the necessary `0`s are
-///   added, and then `1` is appended in order to make the length of the
-///   message be a multiple of `RATE` for SHAKE standard.
-///   If `PADDING` is `2`, the start bits of padding `1` is appended without
-///   domain separator bits, and the necessary `0`s are appended, and then `1`
-///   is appended in order to make the length of the message be a multiple of
-///   `RATE` for Keccak standard.
+/// - PADDING: The parameter `PADDING` determines padding way. Only
+///   KECCAK_CONST::SHA3 (= `0`), KECCAK_CONST::SHAKE (= `1`),
+///   KECCAK_CONST::CSHAKE (= `2`), and KECCAK_CONST::KECCAK (= `3`) are
+///   available for the parameter `PADDING`.
+///   If `PADDING` is KECCAK_CONST::SHA3 or `0`, domain separator bits `01`
+///   are appended, and the start bits of padding `1` is appended, and the
+///   necessary `0`s are added, and then `1` is appended in order to make the
+///   length of the message be a multiple of `RATE`. It is for SHA-3 standard.
+///   If `PADDING` is KECCAK_CONST::SHAKE or `1`, domain separator bits `1111`
+///   are appended, and the start bits of padding `1` is appended, and the
+///   necessary `0`s are added, and then `1` is appended in order to make the
+///   length of the message be a multiple of `RATE`. It is for SHAKE standard.
+///   If `PADDING` is KECCAK_CONST::CSHAKE or `2`, domain separator bits `00`
+///   are appended, and the start bits of padding `1` is appended, and the
+///   necessary `0`s are added, and then `1` is appended in order to make the
+///   length of the message be a multiple of `RATE`. It is for cSHAKE standard.
+///   If `PADDING` is KECCAK_CONST::KECCAK or `3`, the start bits of padding `1`
+///   is appended without domain separator bits, and the necessary `0`s are
+///   appended, and then `1` is appended in order to make the length of the
+///   message be a multiple of `RATE`. It is for Keccak standard.
 ///   The default value is `0` for for SHA-3 standard.
 /// - ROUNDS : The parameter `ROUNDS` determines how many rounds the digesting
 ///   steps are repeated. Usually, for the official SHA3 and SHAKE,
@@ -304,12 +335,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     const RC: [T; ROUNDS] = make_RC!(T, ROUNDS, LFSR);
     const SEPARATOR: u8 = match PADDING
                             {
-                                0 => { 0b_0000_0110 },
-                                1 => { 0b_0001_1111 },
-                                _ => { 0b_0000_0001 },
+                                KECCAK_CONST::SHA3 => { 0b_0000_0110 },  // SHA-3
+                                KECCAK_CONST::SHAKE => { 0b_0001_1111 },  // SHAKE
+                                KECCAK_CONST::CSHAKE => { 0b_0000_0100 },  // cSHAKE
+                                _ => { 0b_0000_0001 },  // KECCAK
                             };
     const TAIL: u8 = 0b_1000_0000;
-
+    
 
     // pub fn new() -> Self
     /// Creates the new object of `Self`.
@@ -350,6 +382,41 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         self.absorb(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64);
     }
+
+
+
+    #[inline]
+    pub fn digest_customized(&mut self, filename: *const u8, filename_length_in_bytes: u64, user: *const u8, user_length_in_bytes: u64, message: *const u8, length_in_bytes: u64)
+    {
+        self.absorb(message, length_in_bytes);
+    }
+    
+    #[inline]
+    pub fn digest_str_customized(&mut self, message: &str)
+    {
+        self.absorb(message.as_ptr(), message.len() as u64);
+    }
+
+    #[inline]
+    pub fn digest_string_customized(&mut self, message: &String)
+    {
+        self.absorb(message.as_ptr(), message.len() as u64);
+    }
+
+    #[inline]
+    pub fn digest_array_customized<U, const M: usize>(&mut self, message: &[U; M])
+    where U: SmallUInt + Copy + Clone
+    {
+        self.absorb(message.as_ptr() as *const u8, (M as u32 * U::size_in_bytes()) as u64);
+    }
+
+    #[inline]
+    pub fn digest_vec_customized<U>(&mut self, message: &Vec<T>)
+    where U: SmallUInt + Copy + Clone
+    {
+        self.absorb(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64);
+    }
+
 
     pub fn get_hash_value_in_array<const M: usize>(&mut self) -> [u8; M]
     {
@@ -466,14 +533,122 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// Digests the message.
     pub fn absorb(&mut self, message: *const u8, length_in_bytes: u64)
     {
-        let chunk_num = length_in_bytes as usize / RATE;
         self.initialize_state();
-        for i in 0..chunk_num
-            { self.absorb_block(unsafe { message.add(i * RATE) }); } 
-
+        let mut count = 0_usize;
         let rest = length_in_bytes as usize % RATE;
+        let length = length_in_bytes as usize - rest;
+        while count < length
+        {
+            self.absorb_block(unsafe { message.add(count) });
+            count += RATE;
+        }
+
         let mut padded = [0_u8; RATE];
-        unsafe { copy_nonoverlapping(message.add(RATE * chunk_num), padded.as_mut_ptr(), rest); }
+        unsafe { copy_nonoverlapping(message.add(count), padded.as_mut_ptr(), rest); }
+        padded[rest] = Self::SEPARATOR;
+        padded[RATE - 1] |= Self::TAIL;
+        self.absorb_block(padded.as_ptr());
+    }
+
+    // pub fn absorb_str_customized(&mut self, function_name: &str, user_defined: &str, message: &str)
+    /// Digests the message with filename string and user-defined string.
+    #[inline]
+    pub fn absorb_str_customized(&mut self, function_name: &str, user_defined: &str, message: &str)
+    {
+        self.absorb_customized(function_name.as_ptr(), function_name.len() as u64,
+                                user_defined.as_ptr(), user_defined.len() as u64,
+                                message.as_ptr(), message.len() as u64);
+    }
+
+    // pub fn absorb_string_customized(&mut self, function_name: &String, user_defined: &String, message: &String)
+    /// Digests the message with filename string and user-defined string.
+    #[inline]
+    pub fn absorb_string_customized(&mut self, function_name: &String, user_defined: &String, message: &String)
+    {
+        self.absorb_customized(function_name.as_ptr(), function_name.len() as u64,
+                                user_defined.as_ptr(), user_defined.len() as u64,
+                                message.as_ptr(), message.len() as u64);
+    }
+
+    // pub fn absorb_array_customized<U, const K: usize, const L: usize, const M: usize>(&mut self, function_name: &[U; K], user_defined: &[U; L], message: &[U; M])
+    /// Digests the message with filename string and user-defined string.
+    #[inline]
+    pub fn absorb_array_customized<U, const K: usize, const L: usize, const M: usize>(&mut self, function_name: &[U; K], user_defined: &[U; L], message: &[U; M])
+    where U: SmallUInt + Copy + Clone
+    {
+        self.absorb_customized(function_name.as_ptr() as *const u8, K as u64 * U::size_in_bytes() as u64,
+                                user_defined.as_ptr() as *const u8, L as u64 * U::size_in_bytes() as u64,
+                                message.as_ptr() as *const u8, M as u64 * U::size_in_bytes() as u64);
+    }
+
+    // pub fn absorb_vec_customized<U>(&mut self, function_name: &Vec<U>, user_defined: &Vec<U>, message: &Vec<U>)
+    /// Digests the message with filename string and user-defined string.
+    #[inline]
+    pub fn absorb_vec_customized<U>(&mut self, function_name: &Vec<U>, user_defined: &Vec<U>, message: &Vec<U>)
+    where U: SmallUInt + Copy + Clone
+    {
+        self.absorb_customized(function_name.as_ptr() as *const u8, function_name.len() as u64 * U::size_in_bytes() as u64,
+                                user_defined.as_ptr() as *const u8, user_defined.len() as u64 * U::size_in_bytes() as u64,
+                                message.as_ptr() as *const u8, message.len() as u64 * U::size_in_bytes() as u64);
+    }
+
+    // pub fn absorb_customized(&mut self, filename: *const u8, filename_length_in_bytes: u64, user: *const u8, user_length_in_bytes: u64, message: *const u8, length_in_bytes: u64)
+    /// Digests the message with filename string and user-defined string.
+    pub fn absorb_customized(&mut self, function_name: *const u8, function_name_length_in_bytes: u64,
+                                user_defined: *const u8, user_defined_length_in_bytes: u64,
+                                message: *const u8, length_in_bytes: u64)
+    {
+        if function_name_length_in_bytes == 0 && user_defined_length_in_bytes == 0
+        {
+            if PADDING == KECCAK_CONST::CSHAKE
+            {
+                let mut shake 
+                    = Keccak_Generic::<RATE, {KECCAK_CONST::SHAKE}, ROUNDS, T, LFSR,
+                                        THETA_SUB, THETA_ADD, THETA_ROT,
+                                        RHO_MUL_X, RHO_MUL_Y, RHO_T,
+                                        PI_MUL_X, PI_MUL_Y, CHI_ADD_1, CHI_ADD_2>::new();
+                shake.absorb(message, length_in_bytes);
+                self.state = shake.state;
+            }
+            else
+            {
+                self.absorb(message, length_in_bytes);
+            }
+            return;
+        }
+
+        let mut prefix = Self::encode_left(RATE as u64);
+        prefix.append(&mut Self::encode_string(function_name, function_name_length_in_bytes));
+        prefix.append(&mut Self::encode_string(user_defined, user_defined_length_in_bytes));
+
+        self.initialize_state();
+        let mut count = 0_usize;
+        let mut length = prefix.len();
+        let mut rest = length % RATE;
+        length -= rest;
+        while count < length
+        {
+            self.absorb_block( unsafe { prefix.as_ptr().add(count) } );
+            count += RATE;
+        }
+        if rest != 0
+        {
+            let mut block = [0_u8; RATE];
+            unsafe { copy_nonoverlapping(prefix.as_ptr().add(count), block.as_mut_ptr(), rest); }
+            self.absorb_block(block.as_ptr());
+        }
+
+        count = 0_usize;
+        rest = length_in_bytes as usize % RATE;
+        length = length_in_bytes as usize - rest;
+        while count < length
+        {
+            self.absorb_block(unsafe { message.add(count) });
+            count += RATE;
+        }
+
+        let mut padded = [0_u8; RATE];
+        unsafe { copy_nonoverlapping(message.add(count), padded.as_mut_ptr(), rest); }
         padded[rest] = Self::SEPARATOR;
         padded[RATE - 1] |= Self::TAIL;
         self.absorb_block(padded.as_ptr());
@@ -547,8 +722,54 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         let mut rate = [0_u8; RATE];
         let count = if RATE < 8 { RATE } else { 8 }; 
         unsafe { copy_nonoverlapping(&tangling as *const u64 as *const u8, rate.as_mut_ptr(), count); }
-        m[8] = tangling;
         self.absorb_block(rate.as_ptr());
+    }
+
+    fn encode_string(txt: *const u8, txt_length_in_bytes: u64) -> Vec<u8>
+    {
+        let mut res = Self::encode_left(txt_length_in_bytes << 3);
+        for i in 0..txt_length_in_bytes as usize
+            { res.push( unsafe { *txt.add(i) } ) }
+            // { res.push( unsafe { (*txt.add(i)).reverse_bits() } ) }
+        res
+    }
+
+    fn encode_left(length: u64) -> Vec<u8>
+    {
+        let size = LongUnion::new_with(length);
+        let mut prefix = Vec::<u8>::new();
+        if length <= u8::MAX as u64
+        {
+            prefix.push(1_u8);
+            prefix.push(size.get_ubyte_(0));
+        }
+        else if length <= u16::MAX as u64
+        {
+            prefix.push(2_u8);
+            prefix.push(size.get_ubyte_(1));
+            prefix.push(size.get_ubyte_(0));
+        }
+        else if length <= u32::MAX as u64
+        {
+            prefix.push(4_u8);
+            prefix.push(size.get_ubyte_(3));
+            prefix.push(size.get_ubyte_(2));
+            prefix.push(size.get_ubyte_(1));
+            prefix.push(size.get_ubyte_(0));
+        }
+        else
+        {
+            prefix.push(8_u8);
+            prefix.push(size.get_ubyte_(7));
+            prefix.push(size.get_ubyte_(6));
+            prefix.push(size.get_ubyte_(5));
+            prefix.push(size.get_ubyte_(4));
+            prefix.push(size.get_ubyte_(3));
+            prefix.push(size.get_ubyte_(2));
+            prefix.push(size.get_ubyte_(1));
+            prefix.push(size.get_ubyte_(0));
+        };
+        prefix        
     }
 
     // fn initialize_state(&mut self)
@@ -570,13 +791,46 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         self.feed_block_to_state(block);
         for round in 0..ROUNDS
         {
-            self.theta();
-            self.rho();
-            self.pi();
-            self.chi();
-            self.iota(round);
+            self.theta();       //self.check(round, "theta");
+            self.rho();         //self.check(round, "rho");
+            self.pi();          //self.check(round, "pi");
+            self.chi();         //self.check(round, "chi");
+            self.iota(round);   //self.check(round, "iota");
         }
     }
+
+    pub fn check(&self, round: usize, txt: &str)
+    {
+        let mut bblock = [0_u8; 25 * 8];
+        unsafe { copy_nonoverlapping(self.state.as_ptr() as *const u8, bblock.as_mut_ptr() as *mut u8, bblock.len()); }
+        print!("{} {} state = ", round, txt);
+        for j in 0..12
+        {
+            for i in 0..16
+                { print!("{:02X?} ", bblock[j * 16 + i]); }
+            println!();
+        }
+        for i in 0..8
+            { print!("{:02X?} ", bblock[12 * 16 + i]); }
+        println!();
+    }
+
+    pub fn check_pad(&self, pad: &[u8; RATE])
+    {
+        let mut bblock = [0_u8; 25 * 8];
+        unsafe { copy_nonoverlapping(pad.as_ptr() as *const u8, bblock.as_mut_ptr() as *mut u8, pad.len()); }
+        print!("PAD = ");
+        for j in 0..12
+        {
+            for i in 0..16
+                { print!("{:02X?} ", bblock[j * 16 + i]); }
+            println!();
+        }
+        for i in 0..8
+            { print!("{:02X?} ", bblock[12 * 16 + i]); }
+        println!();
+    }
+
 
     // fn feed_message_to_state(&mut self, message: *const u8)
     /// The message will be absorbed `RATE` bytes by `RATE` bytes.

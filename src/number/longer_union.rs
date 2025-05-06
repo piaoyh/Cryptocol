@@ -692,6 +692,14 @@ impl LongerUnion
     // #[cfg(target_pointer_width = "8")]      crate::number::get_set_size!(16);
     
     crate::number::integer_union_methods!(u128);
+
+    // pub fn as_ptr(&self) -> *const u128
+    /// Returns its pointer as *const u128
+    #[inline] pub fn as_ptr(&self) -> *const u128 { unsafe { self.ubyte.as_ptr() as *const u128 } }
+
+    // pub fn as_mut_ptr(&self) -> *mut u128
+    /// Returns its pointer as *mut u128
+    #[inline] pub fn as_mut_ptr(&mut self) -> *mut u128 { unsafe { self.ubyte.as_mut_ptr() as *mut u128 } }
 }
 
 

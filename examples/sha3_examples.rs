@@ -25,6 +25,8 @@ pub fn main()
     keccak_256();
     keccak_384();
     keccak_512();
+    cshake_128();
+    cshake_256();
 }
 
 fn sha3_rc()
@@ -118,10 +120,11 @@ fn sha3_224()
     use cryptocol::hash::SHA3_224;
 
     let mut sha3 = SHA3_224::new();
-    sha3.absorb_str("");
+    let data = [0xA3_u8; 8 * 25];
+    sha3.absorb_array(&data);
     let txt = sha3.get_hash_value_in_string(224 / 8);
     println!("sha3 = {}", txt);
-    assert_eq!(txt, "6B4E03423667DBB73B6E15454F0EB1ABD4597F9A1B078E3F5B5A6BC7");
+    assert_eq!(txt, "9376816ABA503F72F96CE7EB65AC095DEEE3BE4BF9BBC2A1CB7E11E0");
     println!("======================");
 }
 
@@ -239,5 +242,44 @@ fn keccak_512()
     let txt = keccak.get_hash_value_in_string(512 / 8);
     println!("keccak = {}", txt);
     assert_eq!(txt, "0EAB42DE4C3CEB9235FC91ACFFE746B29C29A8C366B7C60E4E67C466F36A4304C00FA9CAF9D87976BA469BCBE06713B435F091EF2769FB160CDAB33D3670680E");
+    println!("======================");
+}
+
+fn cshake_128()
+{
+    println!("cshake_128");
+    use cryptocol::hash::cSHAKE_128;
+    
+    let mut shake = cSHAKE_128::new();
+    shake.absorb_vec_customized(&"".to_string().into_bytes(), &"Email Signature".to_string().into_bytes(), &vec![0_u8, 1, 2, 3]);
+    let txt = shake.get_hash_value_in_string(256/8);//1024 / 8);
+    println!("cSHAKE = {}", txt);
+    assert_eq!(txt, "C1C36925B6409A04F1B504FCBCA9D82B4017277CB5ED2B2065FC1D3814D5AAF5");
+    
+    let mut data = Vec::<u8>::new();
+    for i in 0..200
+        { data.push(i as u8); }
+    shake.absorb_vec_customized(&"".to_string().into_bytes(), &"Email Signature".to_string().into_bytes(), &data);
+    let txt = shake.get_hash_value_in_string(256/8);//1024 / 8);
+    println!("cSHAKE = {}", txt);
+    assert_eq!(txt, "C5221D50E4F822D96A2E8881A961420F294B7B24FE3D2094BAED2C6524CC166B");
+
+    shake.absorb_str_customized("PARK", "Youngho", "In the beginning God created the heavens and the earth.");
+    let txt = shake.get_hash_value_in_string(256/8);//1024 / 8);
+    println!("cSHAKE = {}", txt);
+    assert_eq!(txt, "25685E3E59672612F86AB24E418EB610B6F5F7D299E1B315FD9B59BD698A4AC9");
+    println!("======================");
+}
+
+fn cshake_256()
+{
+    println!("cshake_256");
+    use cryptocol::hash::cSHAKE_256;
+    
+    let mut shake = cSHAKE_256::new();
+    shake.absorb_str_customized("PARK", "Youngho", "In the beginning God created the heavens and the earth.");
+    let txt = shake.get_hash_value_in_string(1024 / 8);
+    println!("cSHAKE = {}", txt);
+    assert_eq!(txt, "490561E775E7CCF90084522B6D8F9DDFAF087C198ABC788737DAC198795242A29B520951D09E8096C441EF88EB53B48AC43B2E7FF9416CF9F32A897BA2EE99FC0F8A5035976095398016C145E839B3CFF5590FA7BD94F953ED09477AB8B35F686FA89C85A8B6379F4CD372F2DAF7B749E310820815A564F5C7D275308DE7FBCB");
     println!("======================");
 }

@@ -545,6 +545,14 @@ impl LongUnion
     // #[cfg(target_pointer_width = "8")]      crate::number::get_set_usize!(8);
 
     crate::number::integer_union_methods!(u64);
+
+    // pub fn as_ptr(&self) -> *const u64
+    /// Returns its pointer as *const u64
+    #[inline] pub fn as_ptr(&self) -> *const u64 { unsafe { self.ubyte.as_ptr() as *const u64 } }
+
+    // pub fn as_mut_ptr(&self) -> *mut u64
+    /// Returns its pointer as *mut u64
+    #[inline] pub fn as_mut_ptr(&mut self) -> *mut u64 { unsafe { self.ubyte.as_mut_ptr() as *mut u64 } }
 }
 
 
