@@ -20,26 +20,27 @@ use std::time::{ SystemTime, UNIX_EPOCH };
 use std::collections::hash_map::RandomState;
 use std::hash::{ BuildHasher, Hasher };
 #[cfg(not(target_family = "windows"))] use std::fs::File;
+#[cfg(not(target_family = "windows"))] use std::ptr::copy_nonoverlapping;
 #[cfg(not(target_family = "windows"))] use std::io::Read;
 
 use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt };
 use crate::hash::{ MD4, MD5, SHA0, SHA1, SHA2_256, SHA2_512,
-                    SHA3_256, SHA3_512, SHAKE_128 };
+                    SHA3_256, SHA3_512, SHAKE_128, BIG_KECCAK };
 use crate::random::{ Random_Engine, AnyNumber_Engine_C };
 use crate::symmetric::DES;
 
 
 /// The type `Random` which is a random number generator and is a synonym of
-/// [`Random_SHA3_512`](type@Random_SHA3_512) at the moment. It means `Random`
-/// uses a hash algorithm SHA-3-512. It is cryptographically securer than its
-/// counterpart type `Any` and a bit slower than [`Any`](type@Any).
+/// [`Random_BIG_KECCAK`](type@Random_BIG_KECCAK) at the moment. It means
+/// `Random` uses a hash algorithm Random_BIG_KECCAK. It is cryptographically
+/// securer than its counterpart type `Any` and a bit slower than [`Any`](type@Any).
 /// _In the near future, `Random` may be silently changed to use Chacha20
 /// alogrithm and to be a synonym of `Random_Chacha20` when `Random_Chacha20`
-/// is implemented._ If you want to keep using SHA3_512 for a pseudo-random
-/// number generator, you may want to use Random_SHA3_512. If you are happy
+/// is implemented._ If you want to keep using BIG_KECCAK for a pseudo-random
+/// number generator, you may want to use Random_BIG_KECCAK. If you are happy
 /// that you will automatically use the better algotrithm in the future,
 /// you may want to use `Random`.
-pub type Random = Random_SHA3_512;
+pub type Random = Random_BIG_KECCAK;
 
 /// The type `Any` which is a random number generator and is a synonym of
 /// [`Any_SHAKE_128`](type@Any_SHAKE_128) at the moment. It means `Any` uses
@@ -3269,8 +3270,8 @@ impl Any_SHA3_512
     }
 }
 
-/// The type `Random_SHA3` which is a pseudo-random number generator using
-/// a hash algorithm SHA-3. It is a specific version of the generic struct
+/// The type `Random_SHA3_512` which is a pseudo-random number generator using
+/// a hash algorithm SHA-3-512. It is a specific version of the generic struct
 #[allow(non_camel_case_types)] 
 pub struct Random_SHA3_512 {}
 impl Random_SHA3_512
@@ -3300,6 +3301,23 @@ impl Any_SHAKE_128
     pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<170141183460469231731687303715884105727>   // COUNT = 2^128 / 2 because of hashing 2 times for each random number generation
     {
         Random_Generic::<170141183460469231731687303715884105727>::new_with_generators_seeds(SHAKE_128::new(), SHAKE_128::new(), seed, aux)
+    }
+}
+
+/// The type `BIG_KECCAK` which is a pseudo-random number generator using
+/// a hash algorithm BIG_KECCAK. It is a specific version of the generic struct
+#[allow(non_camel_case_types)] 
+pub struct Random_BIG_KECCAK {}
+impl Random_BIG_KECCAK
+{
+    pub fn new() -> Random_Generic<100>   // COUNT = 100 because of hashing one time for each random number generation
+    {
+        Random_Generic::<100>::new_with(BIG_KECCAK::new(), BIG_KECCAK::new())
+    }
+
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<100>   // COUNT = 100 because of hashing one time for each random number generation
+    {
+        Random_Generic::<100>::new_with_generators_seeds(BIG_KECCAK::new(), BIG_KECCAK::new(), seed, aux)
     }
 }
 

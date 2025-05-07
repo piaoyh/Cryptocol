@@ -63,7 +63,6 @@ fn ndes_new_with_keys()
 fn ndes_new_with_keys_u64()
 {
     println!("ndes_new_with_keys_u64()");
-    use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ BigCryptor64, DES };
 

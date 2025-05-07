@@ -37,6 +37,7 @@ fn sha3_rc()
         ((reg >> 1) | (((reg & rule).count_ones() as u8) << 7), reg & 1)
     }
 
+    #[allow(non_snake_case)]
     fn make_rc(L: usize) -> [u128; 26]
     {
         let ROUNDS: usize = 12 + 2 * L;
@@ -46,7 +47,7 @@ fn sha3_rc()
         for j in 0..7_usize
             { bit[j] = ((1_usize << j) - 1) % WIDTH; }
         let mut state = 1_u8;
-        let mut output = 0_u8;
+        let mut output;
         for i in 0..ROUNDS
         {
             for j in 0..7_usize
@@ -252,7 +253,7 @@ fn cshake_128()
     
     let mut shake = cSHAKE_128::new();
     shake.absorb_vec_customized(&"".to_string().into_bytes(), &"Email Signature".to_string().into_bytes(), &vec![0_u8, 1, 2, 3]);
-    let txt = shake.get_hash_value_in_string(256/8);//1024 / 8);
+    let txt = shake.get_hash_value_in_string(256 / 8);
     println!("cSHAKE = {}", txt);
     assert_eq!(txt, "C1C36925B6409A04F1B504FCBCA9D82B4017277CB5ED2B2065FC1D3814D5AAF5");
     
@@ -260,12 +261,12 @@ fn cshake_128()
     for i in 0..200
         { data.push(i as u8); }
     shake.absorb_vec_customized(&"".to_string().into_bytes(), &"Email Signature".to_string().into_bytes(), &data);
-    let txt = shake.get_hash_value_in_string(256/8);//1024 / 8);
+    let txt = shake.get_hash_value_in_string(256 / 8);
     println!("cSHAKE = {}", txt);
     assert_eq!(txt, "C5221D50E4F822D96A2E8881A961420F294B7B24FE3D2094BAED2C6524CC166B");
 
     shake.absorb_str_customized("PARK", "Youngho", "In the beginning God created the heavens and the earth.");
-    let txt = shake.get_hash_value_in_string(256/8);//1024 / 8);
+    let txt = shake.get_hash_value_in_string(256 / 8);
     println!("cSHAKE = {}", txt);
     assert_eq!(txt, "25685E3E59672612F86AB24E418EB610B6F5F7D299E1B315FD9B59BD698A4AC9");
     println!("======================");

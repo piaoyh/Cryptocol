@@ -150,10 +150,18 @@ use crate::number::{ ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
 /// Only use this crate for big-endian CPUs with your own full responsibility.
 pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
 {
+    /// The data type size of the corresponding actual data type.
     const BITS: u32;
+    
+    /// The minmum value of the corresponding actual data type.
     const MIN: Self;
+
+    /// The maximum value of the corresponding actual data type.
     const MAX: Self;
+
+    /// The value, `one`, of the corresponding actual data type.
     const ONE: Self;
+    
 
     /***** ADDITION *****/
 

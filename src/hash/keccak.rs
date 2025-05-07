@@ -17,7 +17,7 @@ use std::fmt::{ self, Debug, Display, Formatter };
 use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign,
                 BitXor, BitXorAssign, Not, Shl };
 
-use crate::number::{ LongUnion, LongerUnion, SharedArrays, SharedValues, SmallUInt };
+use crate::number::{ SmallUInt, LongUnion };
 
 
 #[allow(non_camel_case_types)]
@@ -386,35 +386,35 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
 
     #[inline]
-    pub fn digest_customized(&mut self, filename: *const u8, filename_length_in_bytes: u64, user: *const u8, user_length_in_bytes: u64, message: *const u8, length_in_bytes: u64)
+    pub fn digest_customized(&mut self, function_name: *const u8, function_name_length_in_bytes: u64, user_defined: *const u8, user_defined_length_in_bytes: u64, message: *const u8, length_in_bytes: u64)
     {
-        self.absorb(message, length_in_bytes);
+        self.absorb_customized(function_name, function_name_length_in_bytes, user_defined, user_defined_length_in_bytes, message, length_in_bytes);
     }
     
     #[inline]
-    pub fn digest_str_customized(&mut self, message: &str)
+    pub fn digest_str_customized(&mut self, function_name: &str, user_defined: &str, message: &str)
     {
-        self.absorb(message.as_ptr(), message.len() as u64);
+        self.absorb_str_customized(function_name, user_defined, message);
     }
 
     #[inline]
-    pub fn digest_string_customized(&mut self, message: &String)
+    pub fn digest_string_customized(&mut self, function_name: &String, user_defined: &String, message: &String)
     {
-        self.absorb(message.as_ptr(), message.len() as u64);
+        self.absorb_string_customized(function_name, user_defined, message);
     }
 
     #[inline]
-    pub fn digest_array_customized<U, const M: usize>(&mut self, message: &[U; M])
-    where U: SmallUInt + Copy + Clone
+    pub fn digest_array_customized<U, V, W, const L: usize, const M: usize, const N: usize>(&mut self, function_name: &[U; L], user_defined: &[V; M], message: &[W; N])
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone, W: SmallUInt + Copy + Clone
     {
-        self.absorb(message.as_ptr() as *const u8, (M as u32 * U::size_in_bytes()) as u64);
+        self.absorb_array_customized(function_name, user_defined, message);
     }
 
     #[inline]
-    pub fn digest_vec_customized<U>(&mut self, message: &Vec<T>)
-    where U: SmallUInt + Copy + Clone
+    pub fn digest_vec_customized<U, V, W>(&mut self, function_name: &Vec<U>, user_defined: &Vec<V>, message: &Vec<W>)
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone, W: SmallUInt + Copy + Clone
     {
-        self.absorb(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64);
+        self.absorb_vec_customized(function_name, user_defined, message);
     }
 
 
@@ -516,14 +516,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     #[inline]
-    pub fn absorb_array<U, const M: usize>(&mut self, message: &[U; M])
+    pub fn absorb_array<U, const N: usize>(&mut self, message: &[U; N])
     where U: SmallUInt + Copy + Clone
     {
-        self.absorb(message.as_ptr() as *const u8, (M as u32 * U::size_in_bytes()) as u64);
+        self.absorb(message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64);
     }
 
     #[inline]
-    pub fn absorb_vec<U>(&mut self, message: &Vec<T>)
+    pub fn absorb_vec<U>(&mut self, message: &Vec<U>)
     where U: SmallUInt + Copy + Clone
     {
         self.absorb(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64);
@@ -573,23 +573,23 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     // pub fn absorb_array_customized<U, const K: usize, const L: usize, const M: usize>(&mut self, function_name: &[U; K], user_defined: &[U; L], message: &[U; M])
     /// Digests the message with filename string and user-defined string.
     #[inline]
-    pub fn absorb_array_customized<U, const K: usize, const L: usize, const M: usize>(&mut self, function_name: &[U; K], user_defined: &[U; L], message: &[U; M])
-    where U: SmallUInt + Copy + Clone
+    pub fn absorb_array_customized<U, V, W, const L: usize, const M: usize, const N: usize>(&mut self, function_name: &[U; L], user_defined: &[V; M], message: &[W; N])
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone, W: SmallUInt + Copy + Clone
     {
-        self.absorb_customized(function_name.as_ptr() as *const u8, K as u64 * U::size_in_bytes() as u64,
-                                user_defined.as_ptr() as *const u8, L as u64 * U::size_in_bytes() as u64,
-                                message.as_ptr() as *const u8, M as u64 * U::size_in_bytes() as u64);
+        self.absorb_customized(function_name.as_ptr() as *const u8, L as u64 * U::size_in_bytes() as u64,
+                                user_defined.as_ptr() as *const u8, M as u64 * V::size_in_bytes() as u64,
+                                message.as_ptr() as *const u8, N as u64 * W::size_in_bytes() as u64);
     }
 
     // pub fn absorb_vec_customized<U>(&mut self, function_name: &Vec<U>, user_defined: &Vec<U>, message: &Vec<U>)
     /// Digests the message with filename string and user-defined string.
     #[inline]
-    pub fn absorb_vec_customized<U>(&mut self, function_name: &Vec<U>, user_defined: &Vec<U>, message: &Vec<U>)
-    where U: SmallUInt + Copy + Clone
+    pub fn absorb_vec_customized<U, V, W>(&mut self, function_name: &Vec<U>, user_defined: &Vec<V>, message: &Vec<W>)
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone, W: SmallUInt + Copy + Clone
     {
         self.absorb_customized(function_name.as_ptr() as *const u8, function_name.len() as u64 * U::size_in_bytes() as u64,
-                                user_defined.as_ptr() as *const u8, user_defined.len() as u64 * U::size_in_bytes() as u64,
-                                message.as_ptr() as *const u8, message.len() as u64 * U::size_in_bytes() as u64);
+                                user_defined.as_ptr() as *const u8, user_defined.len() as u64 * V::size_in_bytes() as u64,
+                                message.as_ptr() as *const u8, message.len() as u64 * W::size_in_bytes() as u64);
     }
 
     // pub fn absorb_customized(&mut self, filename: *const u8, filename_length_in_bytes: u64, user: *const u8, user_length_in_bytes: u64, message: *const u8, length_in_bytes: u64)
@@ -799,38 +799,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
     }
 
-    pub fn check(&self, round: usize, txt: &str)
-    {
-        let mut bblock = [0_u8; 25 * 8];
-        unsafe { copy_nonoverlapping(self.state.as_ptr() as *const u8, bblock.as_mut_ptr() as *mut u8, bblock.len()); }
-        print!("{} {} state = ", round, txt);
-        for j in 0..12
-        {
-            for i in 0..16
-                { print!("{:02X?} ", bblock[j * 16 + i]); }
-            println!();
-        }
-        for i in 0..8
-            { print!("{:02X?} ", bblock[12 * 16 + i]); }
-        println!();
-    }
-
-    pub fn check_pad(&self, pad: &[u8; RATE])
-    {
-        let mut bblock = [0_u8; 25 * 8];
-        unsafe { copy_nonoverlapping(pad.as_ptr() as *const u8, bblock.as_mut_ptr() as *mut u8, pad.len()); }
-        print!("PAD = ");
-        for j in 0..12
-        {
-            for i in 0..16
-                { print!("{:02X?} ", bblock[j * 16 + i]); }
-            println!();
-        }
-        for i in 0..8
-            { print!("{:02X?} ", bblock[12 * 16 + i]); }
-        println!();
-    }
-
 
     // fn feed_message_to_state(&mut self, message: *const u8)
     /// The message will be absorbed `RATE` bytes by `RATE` bytes.
@@ -852,17 +820,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             { limit_x += 1; }
         for x in 0..limit_x
             { self.state[limit_y][x] ^= state[limit_y][x]; }
-    }
-
-    fn convert_state_to_message(&mut self) -> Vec<T>
-    {
-        let mut message = Vec::<T>::new();
-        for y in 0..5
-        {
-            for x in 0..5
-                { message.push(self.state[x][y]); }
-        }
-        message
     }
 
     fn theta(&mut self)
@@ -985,7 +942,19 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     // #[inline] pub fn _pi(&mut self)     { self.pi(); }
     // #[inline] pub fn _chi(&mut self)    { self.chi(); }
     // #[inline] pub fn _iota(&mut self, round: usize) { self.iota(round); }
-    // #[inline] pub fn _show_state(&self)
+    //
+    // fn convert_state_to_message(&mut self) -> Vec<T>
+    // {
+    //     let mut message = Vec::<T>::new();
+    //     for y in 0..5
+    //     {
+    //         for x in 0..5
+    //             { message.push(self.state[x][y]); }
+    //     }
+    //     message
+    // }
+    //
+    // pub fn _show_state(&self)
     // {
     //     println!("State: ");
     //     for y in 0..5
@@ -1003,6 +972,38 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     //         }
     //     }
     //     println!();println!();
+    // }
+    //
+    // pub fn _check(&self, round: usize, txt: &str)
+    // {
+    //     let mut bblock = [0_u8; 25 * 8];
+    //     unsafe { copy_nonoverlapping(self.state.as_ptr() as *const u8, bblock.as_mut_ptr() as *mut u8, bblock.len()); }
+    //     print!("{} {} state = ", round, txt);
+    //     for j in 0..12
+    //     {
+    //         for i in 0..16
+    //             { print!("{:02X?} ", bblock[j * 16 + i]); }
+    //         println!();
+    //     }
+    //     for i in 0..8
+    //         { print!("{:02X?} ", bblock[12 * 16 + i]); }
+    //     println!();
+    // }
+    //
+    // pub fn _check_pad(&self, pad: &[u8; RATE])
+    // {
+    //     let mut bblock = [0_u8; 25 * 8];
+    //     unsafe { copy_nonoverlapping(pad.as_ptr() as *const u8, bblock.as_mut_ptr() as *mut u8, pad.len()); }
+    //     print!("PAD = ");
+    //     for j in 0..12
+    //     {
+    //         for i in 0..16
+    //             { print!("{:02X?} ", bblock[j * 16 + i]); }
+    //         println!();
+    //     }
+    //     for i in 0..8
+    //         { print!("{:02X?} ", bblock[12 * 16 + i]); }
+    //     println!();
     // }
 }
 
