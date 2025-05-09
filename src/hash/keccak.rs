@@ -108,44 +108,1031 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 }
 
 
-#[allow(non_camel_case_types)]
-pub type BIG_KECCAK = Keccak_Generic<72, {KECCAK_CONST::KECCAK}, 26, u128>;
 
+/// BIG_KECCAK_224 is non-standard hash alogrithm
+/// but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 224) = 448 bits
+/// - The parameter R = B (= 3200) - C (= 448) = 2752 bits (= 344 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_KECCAK_224 = Keccak_Generic<344, {KECCAK_CONST::KECCAK}, 26, u128>;
+
+/// BIG_KECCAK_256 is non-standard hash alogrithm
+/// but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 256) = 512 bits
+/// - The parameter R = B (= 3200) - C (= 512) = 2688 bits (= 336 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_KECCAK_256 = Keccak_Generic<336, {KECCAK_CONST::KECCAK}, 26, u128>;
+
+/// BIG_KECCAK_384 is non-standard hash alogrithm
+/// but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 384) = 768 bits
+/// - The parameter R = B (= 3200) - C (= 768) = 2432 bits (= 304 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_KECCAK_384 = Keccak_Generic<304, {KECCAK_CONST::KECCAK}, 26, u128>;
+
+/// BIG_KECCAK_512 is non-standard hash alogrithm
+/// but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 512) = 1024 bits
+/// - The parameter R = B (= 3200) - C (= 1024) = 2176 bits (= 272 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_KECCAK_512 = Keccak_Generic<272, {KECCAK_CONST::KECCAK}, 26, u128>;
+
+/// BIG_KECCAK_768 is non-standard hash alogrithm
+/// but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 768) = 1536 bits
+/// - The parameter R = B (= 3200) - C (= 1536) = 1664 bits (= 208 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_KECCAK_768 = Keccak_Generic<208, {KECCAK_CONST::KECCAK}, 26, u128>;
+
+/// BIG_KECCAK_1024 is non-standard hash alogrithm
+/// but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 1024) = 2048 bits
+/// - The parameter R = B (= 3200) - C (= 2048) = 1152 bits (= 144 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_KECCAK_1024 = Keccak_Generic<144, {KECCAK_CONST::KECCAK}, 26, u128>;
+
+/// BIG_KECCAK_1536 is non-standard hash alogrithm
+/// but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 1536) = 3072 bits
+/// - The parameter R = B (= 3200) - C (= 3072) = 128 bits (= 16 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_KECCAK_1536 = Keccak_Generic<16, {KECCAK_CONST::KECCAK}, 26, u128>;
+
+/// BIG_cSHAKE_128 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X security level (= 128) = 256 bits
+/// - The parameter R = B (= 3200) - C (= 256) = 2944 bits (= 368 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_cSHAKE_128 = Keccak_Generic<368, {KECCAK_CONST::CSHAKE}, 26, u128>;
+
+/// BIG_cSHAKE_224 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 224) = 448 bits
+/// - The parameter R = B (= 3200) - C (= 448) = 2752 bits (= 344 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_cSHAKE_224 = Keccak_Generic<344, {KECCAK_CONST::CSHAKE}, 26, u128>;
+
+/// BIG_cSHAKE_256 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X security level (= 256) = 512 bits
+/// - The parameter R = B (= 3200) - C (= 512) = 2688 bits (= 336 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_cSHAKE_256 = Keccak_Generic<336, {KECCAK_CONST::CSHAKE}, 26, u128>;
+
+/// BIG_cSHAKE_384 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X security level (= 384) = 768 bits
+/// - The parameter R = B (= 3200) - C (= 768) = 2432 bits (= 304 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_cSHAKE_384 = Keccak_Generic<304, {KECCAK_CONST::CSHAKE}, 26, u128>;
+
+/// BIG_cSHAKE_512 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X security level (= 512) = 1024 bits
+/// - The parameter R = B (= 3200) - C (= 1024) = 2176 bits (= 272 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_cSHAKE_512 = Keccak_Generic<272, {KECCAK_CONST::CSHAKE}, 26, u128>;
+
+/// BIG_cSHAKE_768 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X security level (= 768) = 1536 bits
+/// - The parameter R = B (= 3200) - C (= 1536) = 1664 bits (= 208 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_cSHAKE_768 = Keccak_Generic<208, {KECCAK_CONST::CSHAKE}, 26, u128>;
+
+/// BIG_cSHAKE_1024 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X security level (= 1024) = 2048 bits
+/// - The parameter R = B (= 3200) - C (= 2048) = 1152 bits (= 144 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_cSHAKE_1024 = Keccak_Generic<144, {KECCAK_CONST::CSHAKE}, 26, u128>;
+
+/// BIG_cSHAKE_1536 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X security level (= 1536) = 3072 bits
+/// - The parameter R = B (= 3200) - C (= 3072) = 128 bits (= 16 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_cSHAKE_1536 = Keccak_Generic<16, {KECCAK_CONST::CSHAKE}, 26, u128>;
+
+/// BIG_SHAKE_128 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X security level (= 128) = 256 bits
+/// - The parameter R = B (= 3200) - C (= 256) = 2944 bits (= 368 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHAKE_128 = Keccak_Generic<368, {KECCAK_CONST::SHAKE}, 26, u128>;
+
+/// BIG_SHAKE_224 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 224) = 448 bits
+/// - The parameter R = B (= 3200) - C (= 448) = 2752 bits (= 344 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHAKE_224 = Keccak_Generic<344, {KECCAK_CONST::SHAKE}, 26, u128>;
+
+/// BIG_SHAKE_256 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X security level (= 256) = 512 bits
+/// - The parameter R = B (= 3200) - C (= 512) = 2688 bits (= 336 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHAKE_256 = Keccak_Generic<336, {KECCAK_CONST::SHAKE}, 26, u128>;
+
+/// BIG_SHAKE_384 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X security level (= 384) = 768 bits
+/// - The parameter R = B (= 3200) - C (= 768) = 2432 bits (= 304 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHAKE_384 = Keccak_Generic<304, {KECCAK_CONST::SHAKE}, 26, u128>;
+
+/// BIG_SHAKE_512 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X security level (= 512) = 1024 bits
+/// - The parameter R = B (= 3200) - C (= 1024) = 2176 bits (= 272 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHAKE_512 = Keccak_Generic<272, {KECCAK_CONST::SHAKE}, 26, u128>;
+
+/// BIG_SHAKE_768 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 768) = 1536 bits
+/// - The parameter R = B (= 3200) - C (= 1536) = 1664 bits (= 208 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHAKE_768 = Keccak_Generic<208, {KECCAK_CONST::SHAKE}, 26, u128>;
+
+/// BIG_SHAKE_1024 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X security level (= 1024) = 2048 bits
+/// - The parameter R = B (= 3200) - C (= 2048) = 1152 bits (= 144 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHAKE_1024 = Keccak_Generic<144, {KECCAK_CONST::SHAKE}, 26, u128>;
+
+/// BIG_SHAKE_1536 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X security level (= 1536) = 3072 bits
+/// - The parameter R = B (= 3200) - C (= 3072) = 128 bits (= 16 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHAKE_1536 = Keccak_Generic<16, {KECCAK_CONST::SHAKE}, 26, u128>;
+
+/// BIG_SHA3_224 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 224) = 448 bits
+/// - The parameter R = B (= 3200) - C (= 448) = 2752 bits (= 344 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHA3_224 = Keccak_Generic<344, {KECCAK_CONST::SHA3}, 26, u128>;
+
+/// BIG_SHA3_256 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 256) = 512 bits
+/// - The parameter R = B (= 3200) - C (= 512) = 2688 bits (= 336 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHA3_256 = Keccak_Generic<336, {KECCAK_CONST::SHA3}, 26, u128>;
+
+/// BIG_SHA3_384 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 384) = 768 bits
+/// - The parameter R = B (= 3200) - C (= 768) = 2432 bits (= 304 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHA3_384 = Keccak_Generic<304, {KECCAK_CONST::SHA3}, 26, u128>;
+
+/// BIG_SHA3_512 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 512) = 1024 bits
+/// - The parameter R = B (= 3200) - C (= 1024) = 2176 bits (= 272 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHA3_512 = Keccak_Generic<272, {KECCAK_CONST::SHA3}, 26, u128>;
+
+/// BIG_SHA3_768 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 768) = 1536 bits
+/// - The parameter R = B (= 3200) - C (= 1536) = 1664 bits (= 208 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHA3_768 = Keccak_Generic<208, {KECCAK_CONST::SHA3}, 26, u128>;
+
+/// BIG_SHA3_1024 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 1024) = 2048 bits
+/// - The parameter R = B (= 3200) - C (= 2048) = 1152 bits (= 144 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHA3_1024 = Keccak_Generic<144, {KECCAK_CONST::SHA3}, 26, u128>;
+
+/// BIG_SHA3_1536 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 7
+/// - The parameter W = 2 ^ L (= 7) = 128 bits which means `u128`
+/// - The parameter B = 25 X W (= 128) = 3200 bits (= 400 bytes)
+///   which is the whole size of the state, ```[[u128; 5]; 5]```
+/// - The parameter C = 2 X output length (= 1536) = 3072 bits
+/// - The parameter R = B (= 3200) - C (= 3072) = 128 bits (= 16 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 7) = 26 rounds
+#[allow(non_camel_case_types)]
+pub type BIG_SHA3_1536 = Keccak_Generic<16, {KECCAK_CONST::SHA3}, 26, u128>;
+
+/// Keccak-224 is non-standard hash alogrithm but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X output length (= 224) = 448 bits
+/// - The parameter R = B (= 1600) - C (= 448) = 1152 bits (= 144 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
 #[allow(non_camel_case_types)]
 pub type KECCAK_224 = Keccak_Generic<144, {KECCAK_CONST::KECCAK}>;
 
+/// Keccak-256 is non-standard hash alogrithm but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X output length (= 256) = 512 bits
+/// - The parameter R = B (= 1600) - C (= 512) = 1088 bits (= 136 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
 #[allow(non_camel_case_types)]
 pub type KECCAK_256 = Keccak_Generic<136, {KECCAK_CONST::KECCAK}>;
 
+/// Keccak-384 is non-standard hash alogrithm but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X output length (= 384) = 768 bits
+/// - The parameter R = B (= 1600) - C (= 768) = 832 bits (= 104 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
 #[allow(non_camel_case_types)]
 pub type KECCAK_384 = Keccak_Generic<104, {KECCAK_CONST::KECCAK}>;
 
+/// Keccak-512 is non-standard hash alogrithm but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X output length (= 512) = 1024 bits
+/// - The parameter R = B (= 1600) - C (= 1024) = 576 bits (= 72 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
 #[allow(non_camel_case_types)]
 pub type KECCAK_512 = Keccak_Generic<72, {KECCAK_CONST::KECCAK}>;
 
+/// Keccak-768 is non-standard hash alogrithm but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X output length (= 768) = 1536 bits
+/// - The parameter R = B (= 1600) - C (= 1536) = 64 bits (= 8 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+#[allow(non_camel_case_types)]
+pub type KECCAK_768 = Keccak_Generic<8, {KECCAK_CONST::KECCAK}>;
+
+/// cSHAKE-128 is one of the SHA-3 family members
+/// which is standard hash alogrithms.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X security level (= 128) = 256 bits
+/// - The parameter R = B (= 1600) - C (= 256) = 1344 bits (= 168 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
 #[allow(non_camel_case_types)]
 pub type cSHAKE_128 = Keccak_Generic<168, {KECCAK_CONST::CSHAKE}>;
 
+/// cSHAKE-224 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X security level (= 224) = 448 bits
+/// - The parameter R = B (= 1600) - C (= 448) = 1152 bits (= 144 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+#[allow(non_camel_case_types)]
+pub type cSHAKE_224 = Keccak_Generic<144, {KECCAK_CONST::CSHAKE}>;
+
+/// cSHAKE-256 is one of the SHA-3 family members
+/// which is standard hash alogrithms.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X security level (= 256) = 512 bits
+/// - The parameter R = B (= 1600) - C (= 512) = 1088 bits (= 136 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
 #[allow(non_camel_case_types)]
 pub type cSHAKE_256 = Keccak_Generic<136, {KECCAK_CONST::CSHAKE}>;
 
+/// cSHAKE_384 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X security level (= 384) = 768 bits
+/// - The parameter R = B (= 1600) - C (= 768) = 832 bits (= 104 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+#[allow(non_camel_case_types)]
+pub type cSHAKE_384 = Keccak_Generic<104, {KECCAK_CONST::CSHAKE}>;
+
+/// cSHAKE_512 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X security level (= 512) = 1024 bits
+/// - The parameter R = B (= 1600) - C (= 1024) = 576 bits (= 72 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+#[allow(non_camel_case_types)]
+pub type cSHAKE_512 = Keccak_Generic<72, {KECCAK_CONST::CSHAKE}>;
+
+/// cSHAKE_768 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X security level (= 768) = 1536 bits
+/// - The parameter R = B (= 1600) - C (= 1536) = 64 bits (= 8 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+#[allow(non_camel_case_types)]
+pub type cSHAKE_768 = Keccak_Generic<8, {KECCAK_CONST::CSHAKE}>;
+
+/// SHAKE-128 is one of the SHA-3 family members
+/// which is standard hash alogrithms.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X security level (= 128) = 256 bits
+/// - The parameter R = B (= 1600) - C (= 256) = 1344 bits (= 168 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
 #[allow(non_camel_case_types)]
 pub type SHAKE_128 = Keccak_Generic<168, {KECCAK_CONST::SHAKE}>;
 
+/// SHAKE-224 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X security level (= 224) = 448 bits
+/// - The parameter R = B (= 1600) - C (= 448) = 1152 bits (= 144 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+#[allow(non_camel_case_types)]
+pub type SHAKE_224 = Keccak_Generic<144, {KECCAK_CONST::SHAKE}>;
+
+/// SHAKE-256 is one of the SHA-3 family members
+/// which is standard hash alogrithms.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X security level (= 256) = 512 bits
+/// - The parameter R = B (= 1600) - C (= 512) = 1088 bits (= 136 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
 #[allow(non_camel_case_types)]
 pub type SHAKE_256 = Keccak_Generic<136, {KECCAK_CONST::SHAKE}>;
 
+/// SHAKE_384 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X security level (= 384) = 768 bits
+/// - The parameter R = B (= 1600) - C (= 768) = 832 bits (= 104 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+#[allow(non_camel_case_types)]
+pub type SHAKE_384 = Keccak_Generic<104, {KECCAK_CONST::SHAKE}>;
+
+/// SHAKE_512 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X security level (= 512) = 1024 bits
+/// - The parameter R = B (= 1600) - C (= 1024) = 576 bits (= 72 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+#[allow(non_camel_case_types)]
+pub type SHAKE_512 = Keccak_Generic<72, {KECCAK_CONST::SHAKE}>;
+
+/// SHAKE_768 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X security level (= 768) = 1536 bits
+/// - The parameter R = B (= 1600) - C (= 1536) = 64 bits (= 8 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+#[allow(non_camel_case_types)]
+pub type SHAKE_768 = Keccak_Generic<8, {KECCAK_CONST::SHAKE}>;
+
+/// SHA-3-224 is one of the SHA-3 family members
+/// which is standard hash alogrithms.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X output length (= 224) = 448 bits
+/// - The parameter R = B (= 1600) - C (= 448) = 1152 bits (= 144 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
 #[allow(non_camel_case_types)]
 pub type SHA3_224 = Keccak_Generic<144>;
 
+/// SHA-3-256 is one of the SHA-3 family members
+/// which is standard hash alogrithms.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X output length (= 256) = 512 bits
+/// - The parameter R = B (= 1600) - C (= 512) = 1088 bits (= 136 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
 #[allow(non_camel_case_types)]
 pub type SHA3_256 = Keccak_Generic<136>;
 
+/// SHA-3-384 is one of the SHA-3 family members
+/// which is standard hash alogrithms.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X output length (= 384) = 768 bits
+/// - The parameter R = B (= 1600) - C (= 768) = 832 bits (= 104 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
 #[allow(non_camel_case_types)]
 pub type SHA3_384 = Keccak_Generic<104>;
 
+/// SHA-3-512 is one of the SHA-3 family members
+/// which is standard hash alogrithms.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X output length (= 512) = 1024 bits
+/// - The parameter R = B (= 1600) - C (= 1024) = 576 bits (= 72 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
 #[allow(non_camel_case_types)]
 pub type SHA3_512 = Keccak_Generic;
+
+/// SHA3_768 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 6
+/// - The parameter W = 2 ^ L (= 6) = 64 bits which means `u64`
+/// - The parameter B = 25 X W (=64) = 1600 bits (= 200 bytes)
+///   which is the whole size of the state, ```[[u64; 5]; 5]```
+/// - The parameter C = 2 X output length (= 768) = 1536 bits
+/// - The parameter R = B (= 1600) - C (= 1536) = 64 bits (= 8 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+#[allow(non_camel_case_types)]
+pub type SHA3_768 = Keccak_Generic<8>;
+
+/// SMALL_KECCAK_224 is non-standard hash alogrithm
+/// but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 5
+/// - The parameter W = 2 ^ L (= 5) = 32 bits which means `u32`
+/// - The parameter B = 25 X W (=32) = 800 bits (= 100 bytes)
+///   which is the whole size of the state, ```[[u32; 5]; 5]```
+/// - The parameter C = 2 X output length (= 224) = 448 bits
+/// - The parameter R = B (= 800) - C (= 448) = 352 bits (= 44 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 5) = 22 rounds
+#[allow(non_camel_case_types)]
+pub type SMALL_KECCAK_224 = Keccak_Generic<39, {KECCAK_CONST::KECCAK}, 22, u32>;
+
+/// SMALL_KECCAK_256 is non-standard hash alogrithm
+/// but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 5
+/// - The parameter W = 2 ^ L (= 5) = 32 bits which means `u32`
+/// - The parameter B = 25 X W (=32) = 800 bits (= 100 bytes)
+///   which is the whole size of the state, ```[[u32; 5]; 5]```
+/// - The parameter C = 2 X output length (= 256) = 512 bits
+/// - The parameter R = B (= 800) - C (= 512) = 288 bits (= 36 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 5) = 22 rounds
+#[allow(non_camel_case_types)]
+pub type SMALL_KECCAK_256 = Keccak_Generic<36, {KECCAK_CONST::KECCAK}, 22, u32>;
+
+/// SMALL_KECCAK_384 is non-standard hash alogrithm
+/// but one of the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 5
+/// - The parameter W = 2 ^ L (= 5) = 32 bits which means `u32`
+/// - The parameter B = 25 X W (=32) = 800 bits (= 100 bytes)
+///   which is the whole size of the state, ```[[u32; 5]; 5]```
+/// - The parameter C = 2 X output length (= 384) = 768 bits
+/// - The parameter R = B (= 800) - C (= 768) = 32 bits (= 4 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 5) = 22 rounds
+#[allow(non_camel_case_types)]
+pub type SMALL_KECCAK_384 = Keccak_Generic<4, {KECCAK_CONST::KECCAK}, 22, u32>;
+
+/// SMALL_cSHAKE_128 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 5
+/// - The parameter W = 2 ^ L (= 5) = 32 bits which means `u32`
+/// - The parameter B = 25 X W (=32) = 800 bits (= 100 bytes)
+///   which is the whole size of the state, ```[[u32; 5]; 5]```
+/// - The parameter C = 2 X security level (= 128) = 256 bits
+/// - The parameter R = B (= 800) - C (= 256) = 544 bits (= 68 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 5) = 22 rounds
+#[allow(non_camel_case_types)]
+pub type SMALL_cSHAKE_128 = Keccak_Generic<68, {KECCAK_CONST::CSHAKE}, 22, u32>;
+
+/// SMALL_cSHAKE_224 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 5
+/// - The parameter W = 2 ^ L (= 5) = 32 bits which means `u32`
+/// - The parameter B = 25 X W (=32) = 800 bits (= 100 bytes)
+///   which is the whole size of the state, ```[[u32; 5]; 5]```
+/// - The parameter C = 2 X output length (= 224) = 448 bits
+/// - The parameter R = B (= 800) - C (= 448) = 352 bits (= 44 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 5) = 22 rounds
+#[allow(non_camel_case_types)]
+pub type SMALL_cSHAKE_224 = Keccak_Generic<39, {KECCAK_CONST::CSHAKE}, 22, u32>;
+
+/// SMALL_cSHAKE_256 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 5
+/// - The parameter W = 2 ^ L (= 5) = 32 bits which means `u32`
+/// - The parameter B = 25 X W (=32) = 800 bits (= 100 bytes)
+///   which is the whole size of the state, ```[[u32; 5]; 5]```
+/// - The parameter C = 2 X security level (= 256) = 512 bits
+/// - The parameter R = B (= 800) - C (= 512) = 288 bits (= 36 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 5) = 22 rounds
+#[allow(non_camel_case_types)]
+pub type SMALL_cSHAKE_256 = Keccak_Generic<36, {KECCAK_CONST::CSHAKE}, 22, u32>;
+
+/// SMALL_SHAKE_128 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 5
+/// - The parameter W = 2 ^ L (= 5) = 32 bits which means `u32`
+/// - The parameter B = 25 X W (=32) = 800 bits (= 100 bytes)
+///   which is the whole size of the state, ```[[u32; 5]; 5]```
+/// - The parameter C = 2 X security level (= 128) = 256 bits
+/// - The parameter R = B (= 800) - C (= 256) = 544 bits (= 68 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 5) = 22 rounds
+#[allow(non_camel_case_types)]
+pub type SMALL_SHAKE_128 = Keccak_Generic<68, {KECCAK_CONST::SHAKE}, 22, u32>;
+
+/// SMALL_SHAKE_224 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 5
+/// - The parameter W = 2 ^ L (= 5) = 32 bits which means `u32`
+/// - The parameter B = 25 X W (=32) = 800 bits (= 100 bytes)
+///   which is the whole size of the state, ```[[u32; 5]; 5]```
+/// - The parameter C = 2 X output length (= 224) = 448 bits
+/// - The parameter R = B (= 800) - C (= 448) = 352 bits (= 44 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 5) = 22 rounds
+#[allow(non_camel_case_types)]
+pub type SMALL_SHAKE_224 = Keccak_Generic<39, {KECCAK_CONST::SHAKE}, 22, u32>;
+
+/// SMALL_SHAKE_256 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 5
+/// - The parameter W = 2 ^ L (= 5) = 32 bits which means `u32`
+/// - The parameter B = 25 X W (=32) = 800 bits (= 100 bytes)
+///   which is the whole size of the state, ```[[u32; 5]; 5]```
+/// - The parameter C = 2 X security level (= 256) = 512 bits
+/// - The parameter R = B (= 800) - C (= 512) = 288 bits (= 36 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 5) = 22 rounds
+#[allow(non_camel_case_types)]
+pub type SMALL_SHAKE_256 = Keccak_Generic<36, {KECCAK_CONST::SHAKE}, 22, u32>;
+
+/// SMALL_SHA3_224 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 5
+/// - The parameter W = 2 ^ L (= 5) = 32 bits which means `u32`
+/// - The parameter B = 25 X W (=32) = 800 bits (= 100 bytes)
+///   which is the whole size of the state, ```[[u32; 5]; 5]```
+/// - The parameter C = 2 X output length (= 224) = 448 bits
+/// - The parameter R = B (= 800) - C (= 448) = 352 bits (= 44 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 5) = 22 rounds
+#[allow(non_camel_case_types)]
+pub type SMALL_SHA3_224 = Keccak_Generic<39, {KECCAK_CONST::SHA3}, 22, u32>;
+
+/// SMALL_SHA3_256 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 5
+/// - The parameter W = 2 ^ L (= 5) = 32 bits which means `u32`
+/// - The parameter B = 25 X W (=32) = 800 bits (= 100 bytes)
+///   which is the whole size of the state, ```[[u32; 5]; 5]```
+/// - The parameter C = 2 X output length (= 256) = 448 bits
+/// - The parameter R = B (= 800) - C (= 512) = 288 bits (= 36 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 5) = 22 rounds
+#[allow(non_camel_case_types)]
+pub type SMALL_SHA3_256 = Keccak_Generic<36, {KECCAK_CONST::SHA3}, 22, u32>;
+
+/// SMALL_SHA3_384 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 5
+/// - The parameter W = 2 ^ L (= 5) = 32 bits which means `u32`
+/// - The parameter B = 25 X W (=32) = 800 bits (= 100 bytes)
+///   which is the whole size of the state, ```[[u32; 5]; 5]```
+/// - The parameter C = 2 X output length (= 384) = 768 bits
+/// - The parameter R = B (= 800) - C (= 768) = 32 bits (= 4 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 5) = 22 rounds
+#[allow(non_camel_case_types)]
+pub type SMALL_SHA3_384 = Keccak_Generic<4, {KECCAK_CONST::SHA3}, 22, u32>;
+
+/// SMALLER_KECCAK_128 is non-standard hash alogrithm
+/// but one of the Keccak family members.
+/// __This hash algorithm is NOT cryptographically secure so that you are not
+/// encouraged to use this hash algorithm for serious purpose.__
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 4
+/// - The parameter W = 2 ^ L (= 4) = 16 bits which means `u16`
+/// - The parameter B = 25 X W (= 16) = 400 bits (= 50 bytes)
+///   which is the whole size of the state, ```[[u16; 5]; 5]```
+/// - The parameter C = 2 X output length (= 128) = 256 bits
+/// - The parameter R = B (= 400) - C (= 256) = 144 bits (= 18 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 4) = 20 rounds
+#[allow(non_camel_case_types)]
+pub type SMALLER_KECCAK_128 = Keccak_Generic<18, {KECCAK_CONST::KECCAK}, 20, u16>;
+
+/// SMALLER_cSHAKE_128 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 4
+/// - The parameter W = 2 ^ L (= 4) = 16 bits which means `u16`
+/// - The parameter B = 25 X W (= 16) = 400 bits (= 50 bytes)
+///   which is the whole size of the state, ```[[u16; 5]; 5]```
+/// - The parameter C = 2 X security level (= 128) = 256 bits
+/// - The parameter R = B (= 400) - C (= 256) = 144 bits (= 18 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 4) = 20 rounds
+#[allow(non_camel_case_types)]
+pub type SMALLER_cSHAKE_128 = Keccak_Generic<18, {KECCAK_CONST::CSHAKE}, 20, u16>;
+
+/// SMALLER_SHAKE_128 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 4
+/// - The parameter W = 2 ^ L (= 4) = 16 bits which means `u16`
+/// - The parameter B = 25 X W (= 16) = 400 bits (= 50 bytes)
+///   which is the whole size of the state, ```[[u16; 5]; 5]```
+/// - The parameter C = 2 X security level (= 128) = 256 bits
+/// - The parameter R = B (= 400) - C (= 256) = 144 bits (= 18 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 4) = 20 rounds
+#[allow(non_camel_case_types)]
+pub type SMALLER_SHAKE_128 = Keccak_Generic<18, {KECCAK_CONST::SHAKE}, 20, u16>;
+
+/// SMALLER_SHA3_128 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members.
+/// __This hash algorithm is NOT cryptographically secure so that you are not
+/// encouraged to use this hash algorithm for serious purpose.__
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 4
+/// - The parameter W = 2 ^ L (= 4) = 16 bits which means `u16`
+/// - The parameter B = 25 X W (= 16) = 400 bits (= 50 bytes)
+///   which is the whole size of the state, ```[[u16; 5]; 5]```
+/// - The parameter C = 2 X output length (= 128) = 256 bits
+/// - The parameter R = B (= 400) - C (= 256) = 144 bits (= 18 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 4) = 20 rounds
+#[allow(non_camel_case_types)]
+pub type SMALLER_SHA3_128 = Keccak_Generic<18, {KECCAK_CONST::SHA3}, 20, u16>;
+
+/// TINY_KECCAK_64 is non-standard hash alogrithm
+/// but one of the Keccak family members. It is a toy version of Keccak or for
+/// education purpose.
+/// __This hash algorithm is NOT cryptographically secure so that you are not
+/// encouraged to use this hash algorithm for serious purpose.__ It won't be
+/// hard for you to find the pre-image collision that has the same hash code.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 3
+/// - The parameter W = 2 ^ L (= 3) = 8 bits which means `u8`
+/// - The parameter B = 25 X W (= 8) = 200 bits (= 25 bytes)
+///   which is the whole size of the state, ```[[u8; 5]; 5]```
+/// - The parameter C = 2 X output length (= 64) = 128 bits
+/// - The parameter R = B (= 200) - C (= 128) = 72 bits (= 9 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 3) = 18 rounds
+#[allow(non_camel_case_types)]
+pub type TINY_KECCAK_64 = Keccak_Generic<9, {KECCAK_CONST::KECCAK}, 18, u8>;
+
+/// TINY_cSHAKE_64 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members. It is a toy version of cSHAKE or for
+/// education purpose.
+/// __This hash algorithm is NOT cryptographically secure so that you are not
+/// encouraged to use this hash algorithm for serious purpose.__ It won't be
+/// hard for you to find the pre-image collision that has the same hash code.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 3
+/// - The parameter W = 2 ^ L (= 3) = 8 bits which means `u8`
+/// - The parameter B = 25 X W (= 8) = 200 bits (= 25 bytes)
+///   which is the whole size of the state, ```[[u8; 5]; 5]```
+/// - The parameter C = 2 X security level (= 64) = 128 bits
+/// - The parameter R = B (= 200) - C (= 128) = 72 bits (= 9 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 3) = 18 rounds
+#[allow(non_camel_case_types)]
+pub type TINY_cSHAKE_64 = Keccak_Generic<9, {KECCAK_CONST::CSHAKE}, 18, u8>;
+
+/// TINY_SHAKE_64 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members. It is a toy version of SHAKE or for
+/// education purpose.
+/// __This hash algorithm is NOT cryptographically secure so that you are not
+/// encouraged to use this hash algorithm for serious purpose.__ It won't be
+/// hard for you to find the pre-image collision that has the same hash code.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 3
+/// - The parameter W = 2 ^ L (= 3) = 8 bits which means `u8`
+/// - The parameter B = 25 X W (= 8) = 200 bits (= 25 bytes)
+///   which is the whole size of the state, ```[[u8; 5]; 5]```
+/// - The parameter C = 2 X security level (= 64) = 128 bits
+/// - The parameter R = B (= 200) - C (= 128) = 72 bits (= 9 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 3) = 18 rounds
+#[allow(non_camel_case_types)]
+pub type TINY_SHAKE_64 = Keccak_Generic<9, {KECCAK_CONST::SHAKE}, 18, u8>;
+
+/// TINY_SHA3_64 is non-standard hash alogrithm which is created by
+/// expanding the Keccak family members. It is a toy version of SHA3 or for
+/// education purpose.
+/// __This hash algorithm is NOT cryptographically secure so that you are not
+/// encouraged to use this hash algorithm for serious purpose.__ It won't be
+/// hard for you to find the pre-image collision that has the same hash code.
+/// According to the
+/// [descryption](https://keccak.team/keccak_specs_summary.html) about Keccak:
+/// - The parameter L = 3
+/// - The parameter W = 2 ^ L (= 3) = 8 bits which means `u8`
+/// - The parameter B = 25 X W (= 8) = 200 bits (= 25 bytes)
+///   which is the whole size of the state, ```[[u8; 5]; 5]```
+/// - The parameter C = 2 X output length (= 64) = 128 bits
+/// - The parameter R = B (= 200) - C (= 128) = 72 bits (= 9 bytes)
+/// - The number of Rounds is 12 + 2 X L (= 3) = 18 rounds
+#[allow(non_camel_case_types)]
+pub type TINY_SHA3_64 = Keccak_Generic<9, {KECCAK_CONST::SHA3}, 18, u8>;
+
+
 
 
 /// A Keccak message-digest algorithm that lossily compresses data of arbitrary
@@ -244,64 +1231,215 @@ pub type SHA3_512 = Keccak_Generic;
 ///   parameter `LFSR` is 0b_0111_0001. And, if `LFSR` is 0b_1101_0100, the
 ///   linear feedback shift register has the polinormial x^7 + x^6 + x^4 + x^2.
 ///   The default value of `LFSR` is 0b_0111_0001 for official SHA3 and SHAKE.
-/// - THETA_SUB : The default value of `THETA_SUB` is 1.
-/// - THETA_ADD : The default value of `THETA_ADD` is 1.
-/// - THETA_ROT : The default value of `THETA_ROT` is 1.
-/// - RHO_MUL_X : The default value of `RHO_MUL_X` is 2.
-/// - RHO_MUL_Y : The default value of `RHO_MUL_Y` is 3.
-/// - RHO_T : The default value of `RHO_T` is 24,
-/// - PI_MUL_X : The default value of `PI_MUL_X` is 1.
-/// - PI_MUL_Y : The default value of `PI_MUL_Y` is 3.
-/// - CHI_ADD_1 : The default value of `THETA_ROT` is 1.
-/// - CHI_ADD_2 : The default value of `CHI_ADD_2` is 2.
+/// - THETA_SUB : The parameter `THETA_SUB` is what will be subtracted from an
+///   index (modular subtraction) of the state register in a theta step.
+///   By changing this parameter, you can change the theta step.
+///   The default value of `THETA_SUB` is 1.
+/// - THETA_ADD : The parameter `THETA_ADD` is what will be added to an
+///   index (modular addition) of the state register in a theta step.
+///   By changing this parameter, you can change the theta step.
+///   The default value of `THETA_ADD` is 1.
+/// - THETA_ROT : The parameter `THETA_ROT` is how many bits the state register
+///   will be rotated to the left (in little endianness) in a theta step.
+///   By changing this parameter, you can change the theta step.
+///   The default value of `THETA_ROT` is 1.
+/// - RHO_MUL_X : The parameter `RHO_MUL_X` is what will be multiplied to an
+///   index (modular multiplication) of the state register in a rho step.
+///   By changing this parameter, you can change the rho step.
+///   The default value of `RHO_MUL_X` is 2.
+/// - RHO_MUL_Y : The parameter `RHO_MUL_Y` is what will be multiplied to an
+///   index (modular multiplication) of the state register in a rho step.
+///   By changing this parameter, you can change the rho step.
+///   The default value of `RHO_MUL_Y` is 3.
+/// - RHO_T : The parameter `RHO_T` is how many bits according to the formular
+///   `(t + 1) * (t + 2) / 2` and how many times to rotate the state register
+///   in a rho step. By changing this parameter, you can change the rho step.
+///   The default value of `RHO_T` is 24,
+/// - PI_MUL_X : The parameter `PI_MUL_X` is what will be multiplied to an
+///   index (modular multiplication) of the state register in a pi step.
+///   By changing this parameter, you can change the pi step.
+///   The default value of `PI_MUL_X` is 1.
+/// - PI_MUL_Y : The parameter `PI_MUL_Y` is what will be multiplied to an
+///   index (modular multiplication) of the state register in a pi step.
+///   By changing this parameter, you can change the pi step.
+///   The default value of `PI_MUL_Y` is 3.
+/// - CHI_ADD_1 : The parameter `CHI_ADD_1` is what will be added to an
+///   index (modular addition) of the state register in a chi step.
+///   By changing this parameter, you can change the chi step.
+///   The default value of `THETA_ROT` is 1.
+/// - CHI_ADD_2 : The parameter `THETA_ADD` is what will be added to an
+///   index (modular addition) of the state register in a chi step.
+///   By changing this parameter, you can change the chi step.
+///   The default value of `CHI_ADD_2` is 2.
 /// 
 /// Watch [this video](https://www.youtube.com/watch?v=JWskjzgiIa4)
 /// to learn SHA-3 more in detail.
 /// 
 /// # Security of your own expanded version
 /// Your own algrorithm based on Keccak may be stronger or weaker than official
-/// SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE-128, SHAKE-256, and other
-/// Keccak variants. Unless you seriously checked the cryptographic security of
-/// your own algorithms, it is hard to assume that your own alogrithms are
-/// stronger than the official SHA3-224, SHA3-256, SHA3-384, SHA3-512,
-/// SHAKE-128, SHAKE-256, and other Keccak variants.
+/// SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE-128, SHAKE-256, cSHAKE-128,
+/// cSHAKE-256, and other Keccak variants. Unless you seriously checked the
+/// cryptographic security of your own algorithms, it is hard to assume that
+/// your own alogrithms are stronger than the official SHA3-224, SHA3-256,
+/// SHA3-384, SHA3-512, SHAKE-128, SHAKE-256, cSHAKE-128, cSHAKE-256, and other
+/// Keccak variants.
 /// 
 /// # Reference
 /// Read [more](https://en.wikipedia.org/wiki/SHA-3) about SHA-3 in detail.
 /// 
 /// # Quick Start
 /// In order to use the module Keccak, you don't have to import (or use)
-/// cryptocol::hash::keccak::* directly because the module cryptocol::hash::keccak
-/// is re-exported. All you have to do is only import Keccak, Keccak_Expanded,
-/// Keccak_Generic_HR_fixed and/or Keccak_Generic in the module cryptocol::hash.
-/// Example 1 shows how to import structs Keccak, Keccak_Expanded,
-/// Keccak_Generic_HR_fixed and/or Keccak_Generic. Plus, what you have to know is
-/// these. All the types (or structs) are the specific versions of Keccak_Generic.
-/// Actually, Keccak is a specific version of Keccak_Expanded. Keccak_Expanded and
-/// Keccak_Generic_HR_fixed are specific versions of Keccak_Generic.
+/// cryptocol::hash::keccak::* directly because the module
+/// cryptocol::hash::keccak is re-exported. All you have to do is only import
+/// SHA3_512, SHA3_384, SHA3_256, SHA3_224, SHAKE_256, SHAKE_128, cSHAKE_256,
+/// cSHAKE_128, Keccak_512, Keccak_384, Keccak_256, and Keccak_224, and/or other
+/// variants of Keccak_Generic in the module cryptocol::hash.
 /// 
-/// ## Example 1
-/// ```
-/// use cryptocol::hash::Keccak;
-/// use cryptocol::hash::Keccak;
-/// use cryptocol::hash::Keccak_Generic_HR_fixed;
-/// use cryptocol::hash::Keccak_Generic;
-/// ```
-/// Then, you create Keccak object by the method Keccak::new(). Now, you are ready to
-/// use all provided methods to hash any data. If you want to hash a string,
-/// for example, you can use the method absorb_str(). Then, the Keccak object that
-/// you created will contain its hash value. You can use the macro println!(),
-/// for instance, to print on a commandline screen by `println!("{}", hash)`
-/// where hash is the Keccak object. Example 2 shows how to use MD4 struct quickly.
+/// Example 1 shows how to import types SHA3_512, SHA3_384, SHA3_256,
+/// SHA3_224, SHAKE_256, SHAKE_128, cSHAKE_256, cSHAKE_128, Keccak_512,
+/// Keccak_384, Keccak_256, and Keccak_224, and/or other variants of
+/// Keccak_Generic. Plus, what you have to know is these. All the types (or
+/// structs) are the specific versions of Keccak_Generic.
+/// Actually, SHA3_512 is a specific versions of Keccak_Generic, for example.
 /// 
-/// ## Example 2
+/// ## Example 1 for SHA-3 standard family
 /// ```
+/// use cryptocol::hash::SHA3_512;
+/// use cryptocol::hash::SHA3_384;
+/// use cryptocol::hash::SHA3_256;
+/// use cryptocol::hash::SHA3_224;
+/// use cryptocol::hash::SHAKE_256;
+/// use cryptocol::hash::SHAKE_128;
+/// use cryptocol::hash::cSHAKE_256;
+/// use cryptocol::hash::cSHAKE_128;
+/// use cryptocol::hash::KECCAK_512;
+/// use cryptocol::hash::KECCAK_384;
+/// use cryptocol::hash::KECCAK_256;
+/// use cryptocol::hash::KECCAK_224;
 /// ```
 /// 
-/// # Big-endian issue
-/// It is just experimental for Big Endian CPUs. So, you are not encouraged
-/// to use it for Big Endian CPUs for serious purpose. Only use this crate
-/// for Big-endian CPUs with your own full responsibility.
+/// ## Example 2 for Keccak family
+/// ```
+/// use cryptocol::hash::KECCAK_512;
+/// use cryptocol::hash::KECCAK_384;
+/// use cryptocol::hash::KECCAK_256;
+/// use cryptocol::hash::KECCAK_224;
+/// use cryptocol::hash::BIG_KECCAK_1536;
+/// use cryptocol::hash::BIG_KECCAK_1024;
+/// use cryptocol::hash::BIG_KECCAK_768;
+/// use cryptocol::hash::BIG_KECCAK_512;
+/// use cryptocol::hash::BIG_KECCAK_384;
+/// use cryptocol::hash::BIG_KECCAK_256;
+/// use cryptocol::hash::BIG_KECCAK_224;
+/// use cryptocol::hash::BIG_KECCAK_128;
+/// use cryptocol::hash::SMALL_KECCAK_224;
+/// use cryptocol::hash::SMALL_KECCAK_256;
+/// use cryptocol::hash::SMALL_KECCAK_384;
+/// use cryptocol::hash::SMALLER_KECCAK_128;
+/// use cryptocol::hash::TINY_KECCAK_64;
+/// ```
+/// 
+/// ## Example 3 for Keccak-expanded versions
+/// ```
+/// use cryptocol::hash::SHA3_768;
+/// use cryptocol::hash::SHAKE_224;
+/// use cryptocol::hash::SHAKE_384;
+/// use cryptocol::hash::SHAKE_768;
+/// use cryptocol::hash::cSHAKE_224;
+/// use cryptocol::hash::cSHAKE_384;
+/// use cryptocol::hash::cSHAKE_768;
+/// use cryptocol::hash::BIG_SHA3_128;
+/// use cryptocol::hash::BIG_SHA3_256;
+/// use cryptocol::hash::BIG_SHA3_384;
+/// use cryptocol::hash::BIG_SHA3_512;
+/// use cryptocol::hash::BIG_SHA3_768;
+/// use cryptocol::hash::BIG_SHA3_1024;
+/// use cryptocol::hash::BIG_SHA3_1536;
+/// use cryptocol::hash::BIG_SHAKE_128;
+/// use cryptocol::hash::BIG_SHAKE_256;
+/// use cryptocol::hash::BIG_SHAKE_384;
+/// use cryptocol::hash::BIG_SHAKE_512;
+/// use cryptocol::hash::BIG_SHAKE_768;
+/// use cryptocol::hash::BIG_SHAKE_1024;
+/// use cryptocol::hash::BIG_SHAKE_1536;
+/// use cryptocol::hash::BIG_cSHAKE_128;
+/// use cryptocol::hash::BIG_cSHAKE_256;
+/// use cryptocol::hash::BIG_cSHAKE_384;
+/// use cryptocol::hash::BIG_cSHAKE_512;
+/// use cryptocol::hash::BIG_cSHAKE_768;
+/// use cryptocol::hash::BIG_cSHAKE_1024;
+/// use cryptocol::hash::BIG_cSHAKE_1536;
+/// use cryptocol::hash::SMALL_SHA3_224;
+/// use cryptocol::hash::SMALL_SHA3_256;
+/// use cryptocol::hash::SMALL_SHA3_384;
+/// use cryptocol::hash::SMALL_SHAKE_128;
+/// use cryptocol::hash::SMALL_SHAKE_224;
+/// use cryptocol::hash::SMALL_SHAKE_256;
+/// use cryptocol::hash::SMALL_cSHAKE_128;
+/// use cryptocol::hash::SMALL_cSHAKE_224;
+/// use cryptocol::hash::SMALL_cSHAKE_256;
+/// use cryptocol::hash::SMALLER_SHA3_128;
+/// use cryptocol::hash::SMALLER_SHAKE_128;
+/// use cryptocol::hash::SMALLER_cSHAKE_128;
+/// use cryptocol::hash::TINY_SHA3_64;
+/// use cryptocol::hash::TINY_SHAKE_64;
+/// use cryptocol::hash::TINY_cSHAKE_64;
+/// ```
+/// 
+/// Then, you create SHA3_512 object by the method SHA3_512::new(), for example.
+/// Now, you are ready to use all provided methods to hash any data. If you want
+/// to hash a string, for example, you can use the method absorb_str(). Then,
+/// the SHA3_512 object that you created will contain its hash value. You can
+/// use the macro println!(), for instance, to print on a commandline screen by
+/// `println!("{}", hash)` where hash is the SHA3_512 object. Example 4 shows
+/// how to use SHA3_512.
+/// 
+/// ## Example 4
+/// ```
+/// use cryptocol::hash::SHA3_512;
+/// let mut hash = SHA3_512::new();
+/// 
+/// let mut txt = "";
+/// hash.digest_str(txt);
+/// let hash_value = hash.get_hash_value_in_string();
+/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash_value);
+/// assert_eq!(hash_value, "A69F73CCA23A9AC5C8B567DC185A756E97C982164FE25859E0D1DCC1475C80A615B2123AF1F5F94C11E3E9402C3AC558F500199D95B6D3E301758586281DCD26");
+/// 
+/// let txt_stirng = String::from("A");
+/// hash.digest_string(&txt_stirng);
+/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt_stirng, hash);
+/// assert_eq!(hash.to_string(), "F5F0EAA9CA3FD0C4E0D72A3471E4B71EDAABE2D01C4B25E16715004ED91E663A1750707CC9F04430F19B995F4ABA21B0EC878FC5C4EB838A18DF5BF9FDC949DF");
+/// 
+/// let txt_array = ['W' as u8, 'o' as u8, 'w' as u8];
+/// hash.digest_array(&txt_array);
+/// println!("Msg =\t\"{:?}\"\nHash =\t{}\n", txt_array, hash);
+/// assert_eq!(hash.get_hash_value_in_string(), "4D8225A3EC677F44F3489B04925989BB18A9873446C8C122AC76019527E7A2324BD07D3CE5404649050F9DA05EEE8A6F2B64FDB05EA98BB77770A668D167EE0D");
+/// 
+/// txt = "The length of this message is forty-eight bytes.";
+/// hash.digest_str(txt);
+/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
+/// assert_eq!(hash.to_string(), "D3409ADAF35CF0D99EA0742BF50F84C6000F4B8CE84C76920CDADA6A077F4D274834AFADC43480D063CFD42E71860319F8436B7EDDFB03D682222A1AE1EA7B0E");
+/// 
+/// txt = "The unit of the message length is not byte but bit.";
+/// hash.digest_str(txt);
+/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
+/// assert_eq!(hash.get_hash_value_in_string(), "1D617BEE99571A8725B1D349F005B306B34637FDCF3D672D9311CA24083161697CDFFCC959C9FAFB7D75994653D37A8A097011C3F7700A0A4173364CAD6CB65A");
+/// 
+/// txt = "This algorithm SHA3-512 is being tested with this message the length of which is one hundred eleven bytes long.";
+/// hash.digest_str(txt);
+/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
+/// assert_eq!(hash.to_string(), "A78FF3E9862D7962D20A350F60D67F6DC56D4996DDEFEEF5F23962F89B55F6E26140741D1ADE9C99F1CC2828F4A2CBD8D1E3EE17B1A07E28BD764667BF09DA72");
+/// 
+/// txt = "This algorithm SHA3-512 is being tested for this message the length of which is one hundred sixty-four long so as to check whether or not this algorithm works well.";
+/// hash.digest_str(txt);
+/// println!("Msg =\t\"{}\"\nHash =\t{}\n", txt, hash);
+/// assert_eq!(hash.get_hash_value_in_string(), "3DD5B04FF485CA54787706E8CFCF6DBB57DD84452520575348960639EAE467D235858E00D038A0C88F56CF04FD39EC5B889B9D54B3F5F1C31D36A2050CF7C0CB");
+/// 
+/// txt = "This algorithm SHA3-512 is being tested with this message the length of which is two hundred ninety-one long so that whether or not this algorithm works well is checked.  The message is 'Do you see a man skilled in his work? He will serve before kings; he will not serve before obscure men.'";
+/// hash.digest_str(txt);
+/// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+/// assert_eq!(hash.to_string(), "0A77A1191A768A1D0D7BF280F105D6399C2B8DE2280EF4BE307F99DDFC6A8895C8262A536405680DD01CC3699D5186043E406AE3FE01287A977EA4121F85BF53");
+/// ```
 #[derive(Debug, Clone)]
 #[allow(non_camel_case_types)]
 pub struct Keccak_Generic<const RATE: usize = 72, const PADDING: usize = 0,
@@ -341,16 +1479,76 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
                                 _ => { 0b_0000_0001 },  // KECCAK
                             };
     const TAIL: u8 = 0b_1000_0000;
+    const OUPUT_LENGTH: usize = (T::BITS as usize / 8 * 25 - RATE) / 2;
     
 
     // pub fn new() -> Self
     /// Creates the new object of `Self`.
+    /// 
+    /// # Output
+    /// A new object of `Self`.
+    /// 
+    /// # Example 1 for SHA3_512
+    /// ```
+    /// use cryptocol::hash::SHA3_512;
+    /// let hash = SHA3_512::new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.new)
     #[inline]
     pub fn new() -> Self
     {
         Self { state: [[T::MIN; 5]; 5] }
     }
 
+    // pub fn digest(&mut self, message: *const u8, length_in_bytes: u64)
+    /// Computes hash value.
+    /// 
+    /// # Features
+    /// This function has the generalized interface (pointer, `*const u8`)
+    /// so as to enable other functions to wrap this function with any
+    /// convenient interface for uses. So, this function is usually not called
+    /// directly in Rust. This function is provided to be called from other
+    /// programming languages such as C/C++.
+    /// 
+    /// # Arguments
+    /// - `message` is pointer to const u8.
+    /// - `length_in_bytes` is the size of message in the unit of bytes, and
+    ///   its data type is `u64`.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to compute of the hash value of a string slice,
+    ///   you are highly recommended to use the method
+    ///   [digest_str()](struct@Keccak_Generic#method.digest_str)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of String
+    ///   object, you are highly recommended to use the method
+    ///   [digest_string()](struct@Keccak_Generic#method.digest_string)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Array
+    ///   object, you are highly recommended to use the method
+    ///   [digest_array()](struct@Keccak_Generic#method.digest_array)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Vec
+    ///   object, you are highly recommended to use the method
+    ///   [digest_vec()](struct@Keccak_Generic#method.digest_array)
+    ///   rather than this method.
+    ///
+    /// # Example 1 for SHA3_256
+    /// ```
+    /// use cryptocol::hash::SHA3_256;
+    /// let mut hash = SHA3_256::new();
+    /// let txt = "This is an example of the method digest().";
+    /// hash.digest(txt.as_ptr(), txt.len() as u64);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
+    /// assert_eq!(hash.to_string(), "065B40EFFE93C55937ACA0C23D7A35387E0FDCA478C49D13255A59F685A2A53C");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.digest)
     #[inline]
     pub fn digest(&mut self, message: *const u8, length_in_bytes: u64)
     {
@@ -382,8 +1580,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         self.absorb(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64);
     }
-
-
 
     #[inline]
     pub fn digest_customized(&mut self, function_name: *const u8, function_name_length_in_bytes: u64, user_defined: *const u8, user_defined_length_in_bytes: u64, message: *const u8, length_in_bytes: u64)
@@ -417,24 +1613,37 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         self.absorb_vec_customized(function_name, user_defined, message);
     }
 
-
-    pub fn get_hash_value_in_array<const M: usize>(&mut self) -> [u8; M]
+    pub fn get_hash_value_in_array<const N: usize>(&mut self) -> [u8; N]
     {
-        let mut out = [0_u8; M];
+        let mut out = [0_u8; N];
         self.push_hash_value_in_array(&mut out);
         out
     }
 
-    pub fn get_hash_value_in_vec<const M: usize>(&mut self) -> Vec<u8>
+    pub fn get_hash_value_in_vec(&mut self) -> Vec<u8>
     {
         let mut out = Vec::<u8>::new();
-        let arr: [u8; M] = self.get_hash_value_in_array();
+        out.resize(Self::OUPUT_LENGTH, 0);
+        self.get_hash_value(out.as_mut_ptr(), Self::OUPUT_LENGTH);
+        out
+    }
+
+    pub fn get_hash_code_in_vec<const N: usize>(&mut self) -> Vec<u8>
+    {
+        let mut out = Vec::<u8>::new();
+        let arr: [u8; N] = self.get_hash_value_in_array();
         for it in arr
             { out.push(it); }
         out
     }
 
-    pub fn get_hash_value_in_string(&mut self, length_in_bytes: usize) -> String
+    #[inline]
+    pub fn get_hash_value_in_string(&mut self) -> String
+    {
+        self.get_hash_code_in_string(Self::OUPUT_LENGTH)
+    }
+
+    pub fn get_hash_code_in_string(&mut self, length_in_bytes: usize) -> String
     {
         let chunk_num = length_in_bytes / RATE;
         let rest_num = length_in_bytes % RATE;
@@ -454,9 +1663,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         txt
     }
 
-    pub fn push_hash_value_in_array<const M: usize>(&mut self, hash_value: &mut [u8; M])
+    pub fn push_hash_value_in_array<const N: usize>(&mut self, hash_value: &mut [u8; N])
     {
-        self.get_hash_value(hash_value.as_mut_ptr(), M);
+        self.get_hash_value(hash_value.as_mut_ptr(), N);
     }
 
     pub fn get_hash_value(&mut self, hash_value: *mut u8, length_in_bytes: usize)
@@ -475,10 +1684,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
     }
 
-    pub fn read_hash_value_in_hexadecimal<const M: usize>(hash: &[u8; M]) -> String
+    pub fn read_hash_value_in_hexadecimal<const N: usize>(hash: &[u8; N]) -> String
     {
         let mut txt = String::new();
-        for i in 0..M
+        for i in 0..N
         {
             let byte = hash[i];
             txt.push(Self::to_char(byte >> 4));
@@ -791,11 +2000,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         self.feed_block_to_state(block);
         for round in 0..ROUNDS
         {
-            self.theta();       //self.check(round, "theta");
-            self.rho();         //self.check(round, "rho");
-            self.pi();          //self.check(round, "pi");
-            self.chi();         //self.check(round, "chi");
-            self.iota(round);   //self.check(round, "iota");
+            self.theta();       // self._check(round, "theta");
+            self.rho();         // self._check(round, "rho");
+            self.pi();          // self._check(round, "pi");
+            self.chi();         // self._check(round, "chi");
+            self.iota(round);   // self._check(round, "iota");
         }
     }
 
@@ -942,7 +2151,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     // #[inline] pub fn _pi(&mut self)     { self.pi(); }
     // #[inline] pub fn _chi(&mut self)    { self.chi(); }
     // #[inline] pub fn _iota(&mut self, round: usize) { self.iota(round); }
-    //
+    
     // fn convert_state_to_message(&mut self) -> Vec<T>
     // {
     //     let mut message = Vec::<T>::new();
@@ -953,7 +2162,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     //     }
     //     message
     // }
-    //
+    
     // pub fn _show_state(&self)
     // {
     //     println!("State: ");
@@ -973,7 +2182,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     //     }
     //     println!();println!();
     // }
-    //
+    
     // pub fn _check(&self, round: usize, txt: &str)
     // {
     //     let mut bblock = [0_u8; 25 * 8];
@@ -989,7 +2198,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     //         { print!("{:02X?} ", bblock[12 * 16 + i]); }
     //     println!();
     // }
-    //
+    
     // pub fn _check_pad(&self, pad: &[u8; RATE])
     // {
     //     let mut bblock = [0_u8; 25 * 8];
@@ -1010,7 +2219,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
 
 
-/*
+
 impl<const RATE: usize, const PADDING: usize, const ROUNDS: usize, T, const LFSR: u8,
     const THETA_SUB: usize, const THETA_ADD: usize, const THETA_ROT: u32,
     const RHO_MUL_X: usize, const RHO_MUL_Y: usize, const RHO_T: u32,
@@ -1120,7 +2329,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         // `write!` is like `format!`, but it will write the formatted string
         // into a buffer (the first argument)
-        write!(f, "{}", self.get_hash_value_in_string())
+        let mut me = self.clone();
+        write!(f, "{}", me.get_hash_value_in_string())
     }
 }
-*/

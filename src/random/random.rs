@@ -25,22 +25,26 @@ use std::hash::{ BuildHasher, Hasher };
 
 use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt };
 use crate::hash::{ MD4, MD5, SHA0, SHA1, SHA2_256, SHA2_512,
-                    SHA3_256, SHA3_512, SHAKE_128, BIG_KECCAK };
+                    SHA3_256, SHA3_512, SHAKE_128, BIG_KECCAK_1024 };
 use crate::random::{ Random_Engine, AnyNumber_Engine_C };
 use crate::symmetric::DES;
 
 
+
+const SECURE_COUNT: u128 = u16::MAX as u128;
+
+
 /// The type `Random` which is a random number generator and is a synonym of
-/// [`Random_BIG_KECCAK`](type@Random_BIG_KECCAK) at the moment. It means
-/// `Random` uses a hash algorithm Random_BIG_KECCAK. It is cryptographically
-/// securer than its counterpart type `Any` and a bit slower than [`Any`](type@Any).
-/// _In the near future, `Random` may be silently changed to use Chacha20
-/// alogrithm and to be a synonym of `Random_Chacha20` when `Random_Chacha20`
-/// is implemented._ If you want to keep using BIG_KECCAK for a pseudo-random
-/// number generator, you may want to use Random_BIG_KECCAK. If you are happy
-/// that you will automatically use the better algotrithm in the future,
-/// you may want to use `Random`.
-pub type Random = Random_BIG_KECCAK;
+/// [`Random_BIG_KECCAK_1024`](type@Random_BIG_KECCAK_1024) at the moment.
+/// It means `Random` uses a hash algorithm Random_BIG_KECCAK_1024. It is
+/// cryptographically securer than its counterpart type `Any` and a bit slower
+/// than [`Any`](type@Any). _In the near future, `Random` may be silently
+/// changed to use Chacha20 alogrithm and to be a synonym of `Random_Chacha20`
+/// when `Random_Chacha20` is implemented._ If you want to keep using
+/// BIG_KECCAK_1024 for a pseudo-random number generator, you may want to use
+/// Random_BIG_KECCAK_1024. If you are happy that you will automatically use
+/// the better algotrithm in the future, you may want to use `Random`.
+pub type Random = Random_BIG_KECCAK_1024;
 
 /// The type `Any` which is a random number generator and is a synonym of
 /// [`Any_SHAKE_128`](type@Any_SHAKE_128) at the moment. It means `Any` uses
@@ -190,7 +194,7 @@ pub type Any_Num = Any_Num_C;
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)]
-pub struct Random_Generic<const COUNT: u128 = 170141183460469231731687303715884105727>
+pub struct Random_Generic<const COUNT: u128 = {u128::MAX}>
 {
     seed_generator: Box<dyn Random_Engine>,
     aux_generator: Box<dyn Random_Engine>,
@@ -3122,14 +3126,14 @@ impl<const COUNT: u128> Random_Generic<COUNT>
 pub struct Any_MD4 {}
 impl Any_MD4
 {
-    pub fn new() -> Random_Generic<16383>   // COUNT = 2^18 / 4 because of hashing 4 times for each random number generation
+    pub fn new() -> Random_Generic<{u64::MAX as u128}>
     {
-        Random_Generic::<16383>::new_with(MD4::new(), MD4::new())
+        Random_Generic::<{u64::MAX as u128}>::new_with(MD4::new(), MD4::new())
     }
 
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<16383>   // COUNT = 2^18 / 4 because of hashing 4 times for each random number generation
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}>
     {
-        Random_Generic::<16383>::new_with_generators_seeds(MD4::new(), MD4::new(), seed, aux)
+        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seeds(MD4::new(), MD4::new(), seed, aux)
     }
 }
 
@@ -3139,14 +3143,14 @@ impl Any_MD4
 pub struct Any_MD5 {}
 impl Any_MD5
 {
-    pub fn new() -> Random_Generic<16383>   // COUNT = 2^18 / 4 because of hashing 4 times for each random number generation
+    pub fn new() -> Random_Generic<{u64::MAX as u128}>
     {
-        Random_Generic::<16383>::new_with(MD5::new(), MD5::new())
+        Random_Generic::<{u64::MAX as u128}>::new_with(MD5::new(), MD5::new())
     }
 
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<16383>   // COUNT = 2^18 / 4 because of hashing 4 times for each random number generation
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}>
     {
-        Random_Generic::<16383>::new_with_generators_seeds(MD5::new(), MD5::new(), seed, aux)
+        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seeds(MD5::new(), MD5::new(), seed, aux)
     }
 }
 
@@ -3156,14 +3160,14 @@ impl Any_MD5
 pub struct Any_SHA0 {}
 impl Any_SHA0
 {
-    pub fn new() -> Random_Generic<2147483647>   // COUNT = 2^33 / 4 because of hashing 4 times for each random number generation
+    pub fn new() -> Random_Generic<{u64::MAX as u128}>
     {
-        Random_Generic::<2147483647>::new_with(SHA0::new(), SHA0::new())
+        Random_Generic::<{u64::MAX as u128}>::new_with(SHA0::new(), SHA0::new())
     }
 
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<2147483647>   // COUNT = 2^33 / 4 because of hashing 4 times for each random number generation
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}>
     {
-        Random_Generic::<2147483647>::new_with_generators_seeds(SHA0::new(), SHA0::new(), seed, aux)
+        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seeds(SHA0::new(), SHA0::new(), seed, aux)
     }
 }
 
@@ -3174,14 +3178,14 @@ impl Any_SHA0
 pub struct Any_SHA1 {}
 impl Any_SHA1
 {
-    pub fn new() -> Random_Generic<4611686018427387903>   // COUNT = 2^63 / 4 because of hashing 4 times for each random number generation
+    pub fn new() -> Random_Generic<{u64::MAX as u128}>
     {
-        Random_Generic::<4611686018427387903>::new_with(SHA1::new(), SHA1::new())
+        Random_Generic::<{u64::MAX as u128}>::new_with(SHA1::new(), SHA1::new())
     }
 
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<4611686018427387903>   // COUNT = 2^63 / 4 because of hashing 4 times for each random number generation
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}>
     {
-        Random_Generic::<4611686018427387903>::new_with_generators_seeds(SHA1::new(), SHA1::new(), seed, aux)
+        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seeds(SHA1::new(), SHA1::new(), seed, aux)
     }
 }
 
@@ -3191,14 +3195,14 @@ impl Any_SHA1
 pub struct Any_SHA2_256 {}
 impl Any_SHA2_256
 {
-    pub fn new() -> Random_Generic<170141183460469231731687303715884105727>   // COUNT = 2^128 / 2 because of hashing 2 times for each random number generation
+    pub fn new() -> Random_Generic
     {
-        Random_Generic::<170141183460469231731687303715884105727>::new_with(SHA2_256::new(), SHA2_256::new())
+        Random_Generic::new_with(SHA2_256::new(), SHA2_256::new())
     }
 
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<170141183460469231731687303715884105727>   // COUNT = 2^128 / 2 because of hashing 2 times for each random number generation
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
     {
-        Random_Generic::<170141183460469231731687303715884105727>::new_with_generators_seeds(SHA2_256::new(), SHA2_256::new(), seed, aux)
+        Random_Generic::new_with_generators_seeds(SHA2_256::new(), SHA2_256::new(), seed, aux)
     }
 }
 
@@ -3208,14 +3212,14 @@ impl Any_SHA2_256
 pub struct Any_SHA2_512 {}
 impl Any_SHA2_512
 {
-    pub fn new() -> Random_Generic<340282366920938463463374607431768211455>   // COUNT = min(2^256, u128::MAX) because of hashing one time for each random number generation
+    pub fn new() -> Random_Generic
     {
-        Random_Generic::<340282366920938463463374607431768211455>::new_with(SHA2_512::new(), SHA2_512::new())
+        Random_Generic::new_with(SHA2_512::new(), SHA2_512::new())
     }
 
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<340282366920938463463374607431768211455>   // COUNT = min(2^256, u128::MAX) because of hashing one time for each random number generation
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
     {
-        Random_Generic::<340282366920938463463374607431768211455>::new_with_generators_seeds(SHA2_512::new(), SHA2_512::new(), seed, aux)
+        Random_Generic::new_with_generators_seeds(SHA2_512::new(), SHA2_512::new(), seed, aux)
     }
 }
 
@@ -3225,14 +3229,14 @@ impl Any_SHA2_512
 pub struct Random_SHA2_512 {}
 impl Random_SHA2_512
 {
-    pub fn new() -> Random_Generic<100>   // COUNT = 2^256 because of hashing one time for each random number generation
+    pub fn new() -> Random_Generic<SECURE_COUNT>
     {
-        Random_Generic::<100>::new_with(SHA2_512::new(), SHA2_512::new())
+        Random_Generic::<SECURE_COUNT>::new_with(SHA2_512::new(), SHA2_512::new())
     }
 
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<100>   // COUNT = 2^256 because of hashing one time for each random number generation
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
     {
-        Random_Generic::<100>::new_with_generators_seeds(SHA2_512::new(), SHA2_512::new(), seed, aux)
+        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(SHA2_512::new(), SHA2_512::new(), seed, aux)
     }
 }
 
@@ -3242,14 +3246,14 @@ impl Random_SHA2_512
 pub struct Any_SHA3_256 {}
 impl Any_SHA3_256
 {
-    pub fn new() -> Random_Generic<170141183460469231731687303715884105727>   // COUNT = 2^128 / 2 because of hashing 2 times for each random number generation
+    pub fn new() -> Random_Generic
     {
-        Random_Generic::<170141183460469231731687303715884105727>::new_with(SHA3_256::new(), SHA3_256::new())
+        Random_Generic::new_with(SHA3_256::new(), SHA3_256::new())
     }
 
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<170141183460469231731687303715884105727>   // COUNT = 2^128 / 2 because of hashing 2 times for each random number generation
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
     {
-        Random_Generic::<170141183460469231731687303715884105727>::new_with_generators_seeds(SHA3_256::new(), SHA3_256::new(), seed, aux)
+        Random_Generic::new_with_generators_seeds(SHA3_256::new(), SHA3_256::new(), seed, aux)
     }
 }
 
@@ -3259,14 +3263,14 @@ impl Any_SHA3_256
 pub struct Any_SHA3_512 {}
 impl Any_SHA3_512
 {
-    pub fn new() -> Random_Generic<340282366920938463463374607431768211455>   // COUNT = min(2^256, u128::MAX) because of hashing one time for each random number generation
+    pub fn new() -> Random_Generic
     {
-        Random_Generic::<340282366920938463463374607431768211455>::new_with(SHA3_512::new(), SHA3_512::new())
+        Random_Generic::new_with(SHA3_512::new(), SHA3_512::new())
     }
 
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<340282366920938463463374607431768211455>   // COUNT = min(2^256, u128::MAX) because of hashing one time for each random number generation
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
     {
-        Random_Generic::<340282366920938463463374607431768211455>::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), seed, aux)
+        Random_Generic::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), seed, aux)
     }
 }
 
@@ -3276,14 +3280,14 @@ impl Any_SHA3_512
 pub struct Random_SHA3_512 {}
 impl Random_SHA3_512
 {
-    pub fn new() -> Random_Generic<100>   // COUNT = 2^256 because of hashing one time for each random number generation
+    pub fn new() -> Random_Generic<SECURE_COUNT>
     {
-        Random_Generic::<100>::new_with(SHA3_512::new(), SHA3_512::new())
+        Random_Generic::<SECURE_COUNT>::new_with(SHA3_512::new(), SHA3_512::new())
     }
 
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<100>   // COUNT = 2^256 because of hashing one time for each random number generation
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
     {
-        Random_Generic::<100>::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), seed, aux)
+        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), seed, aux)
     }
 }
 
@@ -3293,31 +3297,31 @@ impl Random_SHA3_512
 pub struct Any_SHAKE_128 {}
 impl Any_SHAKE_128
 {
-    pub fn new() -> Random_Generic<170141183460469231731687303715884105727>   // COUNT = 2^128 / 2 because of hashing 2 times for each random number generation
+    pub fn new() -> Random_Generic
     {
-        Random_Generic::<170141183460469231731687303715884105727>::new_with(SHAKE_128::new(), SHAKE_128::new())
+        Random_Generic::new_with(SHAKE_128::new(), SHAKE_128::new())
     }
 
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<170141183460469231731687303715884105727>   // COUNT = 2^128 / 2 because of hashing 2 times for each random number generation
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
     {
-        Random_Generic::<170141183460469231731687303715884105727>::new_with_generators_seeds(SHAKE_128::new(), SHAKE_128::new(), seed, aux)
+        Random_Generic::new_with_generators_seeds(SHAKE_128::new(), SHAKE_128::new(), seed, aux)
     }
 }
 
-/// The type `BIG_KECCAK` which is a pseudo-random number generator using
-/// a hash algorithm BIG_KECCAK. It is a specific version of the generic struct
+/// The type `BIG_KECCAK_1024` which is a pseudo-random number generator using
+/// a hash algorithm BIG_KECCAK_1024. It is a specific version of the generic struct
 #[allow(non_camel_case_types)] 
-pub struct Random_BIG_KECCAK {}
-impl Random_BIG_KECCAK
+pub struct Random_BIG_KECCAK_1024 {}
+impl Random_BIG_KECCAK_1024
 {
-    pub fn new() -> Random_Generic<100>   // COUNT = 100 because of hashing one time for each random number generation
+    pub fn new() -> Random_Generic<SECURE_COUNT>
     {
-        Random_Generic::<100>::new_with(BIG_KECCAK::new(), BIG_KECCAK::new())
+        Random_Generic::<SECURE_COUNT>::new_with(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new())
     }
 
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<100>   // COUNT = 100 because of hashing one time for each random number generation
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
     {
-        Random_Generic::<100>::new_with_generators_seeds(BIG_KECCAK::new(), BIG_KECCAK::new(), seed, aux)
+        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed, aux)
     }
 }
 
@@ -3439,14 +3443,14 @@ impl Random_BIG_KECCAK
 pub struct Any_Num_C {}
 impl Any_Num_C
 {
-    pub fn new() -> Random_Generic<2147483647>   // COUNT = u32::MAX
+    pub fn new() -> Random_Generic<{u32::MAX as u128}>
     {
-        Random_Generic::<2147483647>::new_with(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new())
+        Random_Generic::<{u32::MAX as u128}>::new_with(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new())
     }
 
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<2147483647>   // COUNT = u32::MAX
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>   // COUNT = u32::MAX
     {
-        Random_Generic::<2147483647>::new_with_generators_seeds(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed, aux)
+        Random_Generic::<{u32::MAX as u128}>::new_with_generators_seeds(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed, aux)
     }
 }
 

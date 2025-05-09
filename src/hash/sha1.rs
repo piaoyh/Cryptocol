@@ -1,4 +1,4 @@
-// Copyright 2023, 2024 PARK Youngho.
+// Copyright 2023, 2024, 2025 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -445,7 +445,7 @@ pub type SHA0 = SHA1_Generic<5, 0x67452301, 0xefcdab89,
 /// Then, the SHA1 object that you created will contain its hash value. You can
 /// use the macro println!() for instance to print on a commandline screen by
 /// `println!("{}", hash)` where hash is the SHA1 object.
-/// Example 2 shows how to use SHA1 quickly.
+/// Example 2 shows how to use SHA1.
 /// 
 /// ## Example 2 for SHA-1
 /// ```
@@ -495,7 +495,7 @@ pub type SHA0 = SHA1_Generic<5, 0x67452301, 0xefcdab89,
 /// assert_eq!(hash.to_string(), "BB2C79F551B95963ECE49D40F8A92349BF66CAE7");
 /// ```
 /// 
-/// Example 3 shows how to use SHA0 quickly.
+/// Example 3 shows how to use SHA0.
 /// 
 /// ## Example 3 for SHA-0
 /// ```
