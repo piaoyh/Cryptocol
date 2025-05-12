@@ -106,7 +106,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     ///   rather than this method.
     /// - If you want to compute of the hash value of the content of Vec
     ///   object, you are highly recommended to use the method
-    ///   [digest_vec()](struct@MD4_Generic#method.digest_array)
+    ///   [digest_vec()](struct@MD4_Generic#method.digest_vec)
     ///   rather than this method.
     ///
     /// # Example 1 for MD4
@@ -155,7 +155,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     ///   rather than this method.
     /// - If you want to compute of the hash value of the content of Vec
     ///   object, you are highly recommended to use the method
-    ///   [digest_vec()](struct@MD4_Generic#method.digest_array)
+    ///   [digest_vec()](struct@MD4_Generic#method.digest_vec)
     ///   rather than this method.
     /// - If you want to use this method from other programming languages such
     ///   as C/C++, you are highly recommended to use the method
@@ -199,20 +199,20 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of a string slice,
-    /// you are highly recommended to use the method
-    /// [digest_str()](struct@MD4_Generic#method.digest_str)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [digest_str()](struct@MD4_Generic#method.digest_str)
+    ///   rather than this method.
     /// - If you want to compute of the hash value of the content of Array
-    /// object, you are highly recommended to use the method
-    /// [digest_array()](struct@MD4_Generic#method.digest_array)
-    /// rather than this method.
+    ///   object, you are highly recommended to use the method
+    ///   [digest_array()](struct@MD4_Generic#method.digest_array)
+    ///   rather than this method.
     /// - If you want to compute of the hash value of the content of Vec
-    /// object, you are highly recommended to use the method
-    /// [digest_vec()](struct@MD4_Generic#method.digest_array)
-    /// rather than this method.
+    ///   object, you are highly recommended to use the method
+    ///   [digest_vec()](struct@MD4_Generic#method.digest_vec)
+    ///   rather than this method.
     /// - If you want to use this method from other programming languages such
-    /// as C/C++, you are highly recommended to use the method
-    /// [digest()](struct@MD4_Generic#method.digest) rather than this method.
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [digest()](struct@MD4_Generic#method.digest) rather than this method.
     ///
     /// # Example 1 for MD4
     /// ```
@@ -252,20 +252,20 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of a string slice,
-    /// you are highly recommended to use the method
-    /// [digest_str()](struct@MD4_Generic#method.digest_str)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [digest_str()](struct@MD4_Generic#method.digest_str)
+    ///   rather than this method.
     /// - If you want to compute of the hash value of the content of String
-    /// object, you are highly recommended to use the method
-    /// [digest_string()](struct@MD4_Generic#method.digest_string)
-    /// rather than this method.
+    ///   object, you are highly recommended to use the method
+    ///   [digest_string()](struct@MD4_Generic#method.digest_string)
+    ///   rather than this method.
     /// - If you want to compute of the hash value of the content of Vec
-    /// object, you are highly recommended to use the method
-    /// [digest_vec()](struct@MD4_Generic#method.digest_array)
-    /// rather than this method.
+    ///   object, you are highly recommended to use the method
+    ///   [digest_vec()](struct@MD4_Generic#method.digest_vec)
+    ///   rather than this method.
     /// - If you want to use this method from other programming languages such
-    /// as C/C++, you are highly recommended to use the method
-    /// [digest()](struct@MD4_Generic#method.digest) rather than this method.
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [digest()](struct@MD4_Generic#method.digest) rather than this method.
     ///
     /// # Example 1 for MD4
     /// ```
@@ -306,20 +306,20 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of a string slice,
-    /// you are highly recommended to use the method
-    /// [digest_str()](struct@MD4_Generic#method.digest_str)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [digest_str()](struct@MD4_Generic#method.digest_str)
+    ///   rather than this method.
     /// - If you want to compute of the hash value of the content of String
-    /// object, you are highly recommended to use the method
-    /// [digest_string()](struct@MD4_Generic#method.digest_string)
-    /// rather than this method.
+    ///   object, you are highly recommended to use the method
+    ///   [digest_string()](struct@MD4_Generic#method.digest_string)
+    ///   rather than this method.
     /// - If you want to compute of the hash value of the content of Array
-    /// object, you are highly recommended to use the method
-    /// [digest_array()](struct@MD4_Generic#method.digest_array)
-    /// rather than this method.
+    ///   object, you are highly recommended to use the method
+    ///   [digest_array()](struct@MD4_Generic#method.digest_array)
+    ///   rather than this method.
     /// - If you want to use this method from other programming languages such
-    /// as C/C++, you are highly recommended to use the method
-    /// [digest()](struct@MD4_Generic#method.digest) rather than this method.
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [digest()](struct@MD4_Generic#method.digest) rather than this method.
     ///
     /// # Example 1 for MD4
     /// ```

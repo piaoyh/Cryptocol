@@ -77,7 +77,7 @@
 //!     --- Includes 512/256, SHA-512/224, and their expanded versions.
 //!     [`SHA2_512_t_Generic`](hash/sha2_512_t/struct.SHA2_512_t_Generic.html#struct.SHA2_512_t_Generic)
 //! - [ ] SHA-3 and Keccak hash algorithms based on 8/16/32/64 bits
-//!     --- Includes SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE 128, SHAKE 256, and their expanded versions.
+//!     --- Includes SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE 128, SHAKE 256, cSHAKE-128, cSHAKE-256, Keccak family and their expanded versions.
 //!     [`Keccak_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/keccak/struct.Keccak_Generic.html#struct.Keccak_Generic)
 //! 
 //! ## Symmetric-key Algorithms for the Encryption/Decryption of digital data
