@@ -2125,17 +2125,17 @@ SHA2_512_Generic<N, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
     /// 
     /// # Counterpart Methods
     /// - If you want to get the hash value in the form of String object,
-    /// you are highly recommended to use the method
-    /// [get_hash_value_string()](struct@SHA2_512_Generic#method.get_hash_value_string)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [get_hash_value_string()](struct@SHA2_512_Generic#method.get_hash_value_string)
+    ///   rather than this method.
     /// - If you want to get the hash value in the form of array object,
-    /// you are highly recommended to use the method
-    /// [get_hash_value_in_array()](struct@SHA2_512_Generic#method.get_hash_value_in_array)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [get_hash_value_in_array()](struct@SHA2_512_Generic#method.get_hash_value_in_array)
+    ///   rather than this method.
     /// - If you want to get the hash value in the form of Vec object,
-    /// you are highly recommended to use the method
-    /// [get_hash_value_in_vec()](struct@SHA2_512_Generic#method.get_hash_value_in_vec)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [get_hash_value_in_vec()](struct@SHA2_512_Generic#method.get_hash_value_in_vec)
+    ///   rather than this method.
     /// 
     /// # Example 1 for SHA2_512
     /// ```
@@ -2239,17 +2239,17 @@ SHA2_512_Generic<N, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
     /// 
     /// # Counterpart Methods
     /// - If you want to get the hash value in the form of array object,
-    /// you are highly recommended to use the method
-    /// [get_hash_value_in_array()](struct@SHA2_512_Generic#method.get_hash_value_in_array)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [get_hash_value_in_array()](struct@SHA2_512_Generic#method.get_hash_value_in_array)
+    ///   rather than this method.
     /// - If you want to get the hash value in the form of Vec object,
-    /// you are highly recommended to use the method
-    /// [get_hash_value_in_vec()](struct@SHA2_512_Generic#method.get_hash_value_in_vec)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [get_hash_value_in_vec()](struct@SHA2_512_Generic#method.get_hash_value_in_vec)
+    ///   rather than this method.
     /// - If you want to use this method from other programming languages such
-    /// as C/C++, you are highly recommended to use the method
-    /// [get_hash_value()](struct@SHA2_512_Generic#method.get_hash_value)
-    /// rather than this method.
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [get_hash_value()](struct@SHA2_512_Generic#method.get_hash_value)
+    ///   rather than this method.
     /// 
     /// # Example 1 for SHA2_512
     /// ```
@@ -2347,17 +2347,17 @@ SHA2_512_Generic<N, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
     /// 
     /// # Counterpart Methods
     /// - If you want to get the hash value in the form of String object,
-    /// you are highly recommended to use the method
-    /// [get_hash_value_string()](struct@SHA2_512_Generic#method.get_hash_value_string)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [get_hash_value_string()](struct@SHA2_512_Generic#method.get_hash_value_string)
+    ///   rather than this method.
     /// - If you want to get the hash value in the form of Vec object,
-    /// you are highly recommended to use the method
-    /// [get_hash_value_in_vec()](struct@SHA2_512_Generic#method.get_hash_value_in_vec)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [get_hash_value_in_vec()](struct@SHA2_512_Generic#method.get_hash_value_in_vec)
+    ///   rather than this method.
     /// - If you want to use this method from other programming languages such
-    /// as C/C++, you are highly recommended to use the method
-    /// [get_hash_value()](struct@SHA2_512_Generic#method.get_hash_value)
-    /// rather than this method.
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [get_hash_value()](struct@SHA2_512_Generic#method.get_hash_value)
+    ///   rather than this method.
     /// 
     /// # Example 1 for SHA2_512
     /// ```
@@ -2442,17 +2442,17 @@ SHA2_512_Generic<N, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
     /// 
     /// # Counterpart Methods
     /// - If you want to get the hash value in the form of String object,
-    /// you are highly recommended to use the method
-    /// [get_hash_value_string()](struct@SHA2_512_Generic#method.get_hash_value_string)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [get_hash_value_string()](struct@SHA2_512_Generic#method.get_hash_value_string)
+    ///   rather than this method.
     /// - If you want to get the hash value in the form of array object,
-    /// you are highly recommended to use the method
-    /// [get_hash_value_in_array()](struct@SHA2_512_Generic#method.get_hash_value_in_array)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [get_hash_value_in_array()](struct@SHA2_512_Generic#method.get_hash_value_in_array)
+    ///   rather than this method.
     /// - If you want to use this method from other programming languages such
-    /// as C/C++, you are highly recommended to use the method
-    /// [get_hash_value()](struct@SHA2_512_Generic#method.get_hash_value)
-    /// rather than this method.
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [get_hash_value()](struct@SHA2_512_Generic#method.get_hash_value)
+    ///   rather than this method.
     /// 
     /// # Example 1 for SHA2_512
     /// ```

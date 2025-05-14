@@ -248,7 +248,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// This method is the wrapper of the method `absorb_str()`
     /// for consistancy with other hash functions.
     /// 
-    /// # Argument
+    /// # Arguments
     /// - `message` is of type `&str`.
     /// 
     /// # Counterpart Methods
@@ -360,7 +360,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// This method is the wrapper of the method `absorb_string()`
     /// for consistancy with other hash functions.
     /// 
-    /// # Argument
+    /// # Arguments
     /// - `message` is of the type `&String`.
     /// 
     /// # Counterpart Methods
@@ -472,25 +472,25 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// This method is the wrapper of the method `absorb_array()`
     /// for consistancy with other hash functions.
     /// 
-    /// # Argument
+    /// # Arguments
     /// - `message` is of the type `&[U; N]`.
     /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of a string slice,
     ///   you are highly recommended to use the method
-    ///   [digest_str()](struct@MD4_Generic#method.digest_str)
+    ///   [digest_str()](struct@Keccak_Generic#method.digest_str)
     ///   rather than this method.
     /// - If you want to compute of the hash value of the content of String
     ///   object, you are highly recommended to use the method
-    ///   [digest_string()](struct@MD4_Generic#method.digest_string)
+    ///   [digest_string()](struct@Keccak_Generic#method.digest_string)
     ///   rather than this method.
     /// - If you want to compute of the hash value of the content of Vec
     ///   object, you are highly recommended to use the method
-    ///   [digest_vec()](struct@MD4_Generic#method.digest_vec)
+    ///   [digest_vec()](struct@Keccak_Generic#method.digest_vec)
     ///   rather than this method.
     /// - If you want to use this method from other programming languages such
     ///   as C/C++, you are highly recommended to use the method
-    ///   [digest()](struct@MD4_Generic#method.digest) rather than this method.
+    ///   [digest()](struct@Keccak_Generic#method.digest) rather than this method.
     ///
     /// # Example 1 for SHA3_256
     /// ```
@@ -585,25 +585,25 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// This method is the wrapper of the method `absorb_array()`
     /// for consistancy with other hash functions.
     /// 
-    /// # Argument
+    /// # Arguments
     /// - `message` is of the type `&Vec<U>`.
     /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of a string slice,
     ///   you are highly recommended to use the method
-    ///   [digest_str()](struct@MD4_Generic#method.digest_str)
+    ///   [digest_str()](struct@Keccak_Generic#method.digest_str)
     ///   rather than this method.
     /// - If you want to compute of the hash value of the content of String
     ///   object, you are highly recommended to use the method
-    ///   [digest_string()](struct@MD4_Generic#method.digest_string)
+    ///   [digest_string()](struct@Keccak_Generic#method.digest_string)
     ///   rather than this method.
     /// - If you want to compute of the hash value of the content of Array
     ///   object, you are highly recommended to use the method
-    ///   [digest_array()](struct@MD4_Generic#method.digest_array)
+    ///   [digest_array()](struct@Keccak_Generic#method.digest_array)
     ///   rather than this method.
     /// - If you want to use this method from other programming languages such
     ///   as C/C++, you are highly recommended to use the method
-    ///   [digest()](struct@MD4_Generic#method.digest) rather than this method.
+    ///   [digest()](struct@Keccak_Generic#method.digest) rather than this method.
     ///
     /// # Example 1 for SHA3_256
     /// ```
@@ -706,10 +706,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - `function_name` is pointer to const u8, which contains function name,
     ///   but it is reserved for NIST use. You are supposed to give null string
     ///   for `function name`. You may want to use `user_defined` instead.
-    ///   However, for all the types other than cSHAKE, you can you
-    ///   `function_name` because NIST reserved `function_name` and
-    ///   `function_name_length_in_bytes` only for cSHAKE. You can freely use
-    ///   this method for expanded versions of struct `Keccak_Generic`.
+    ///   However, for all the types other than cSHAKE, you can freely use
+    ///   this method of the expanded versions of struct `Keccak_Generic` for
+    ///   your own purpose.
     /// - `function_name_length_in_bytes` is the size of `function_name` in the
     ///   unit of bytes, and its data type is `u64`, but it is reserved
     ///   for NIST use. You are supposed to give `0` for
@@ -850,16 +849,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// Computes hash value.
     /// 
     /// # Features
-    /// This method is the wrapper of the method `absorb_str_customized()`
+    /// This method is the wrapper of the method `absorb_string_customized()`
     /// .
-    /// # Argument
+    /// # Arguments
     /// - `function_name` is of type `&str`, which contains function name,
     ///   but it is reserved for NIST use. You are supposed to give null string
     ///   for `function name`. You may want to use `user_defined` instead.
-    ///   However, for all the types other than cSHAKE, you can you
-    ///   `function_name` because NIST reserved `function_name` and
-    ///   `function_name_length_in_bytes` only for cSHAKE. You can freely use
-    ///   this method for expanded versions of struct `Keccak_Generic`.
+    ///   However, for all the types other than cSHAKE, you can freely use
+    ///   this method of the expanded versions of struct `Keccak_Generic` for
+    ///   your own purpose.
     /// - `user_defined` is of type `&str`, which contains a string for
     ///   your special use.
     /// - `message` is of type `&str`.
@@ -985,16 +983,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// Computes hash value.
     /// 
     /// # Features
-    /// This method is the wrapper of the method `absorb_str_customized()`
+    /// This method is the wrapper of the method `absorb_string_customized()`
     /// .
-    /// # Argument
+    /// # Arguments
     /// - `function_name` is of type `&String`, which contains function name,
-    ///   but it is reserved for NIST use. You are supposed to give null string8
+    ///   but it is reserved for NIST use. You are supposed to give null string
     ///   for `function name`. You may want to use `user_defined` instead.
-    ///   However, for all the types other than cSHAKE, you can you
-    ///   `function_name` because NIST reserved `function_name` and
-    ///   `function_name_length_in_bytes` only for cSHAKE. You can freely use
-    ///   this method for expanded versions of struct `Keccak_Generic`.
+    ///   However, for all the types other than cSHAKE, you can freely use
+    ///   this method of the expanded versions of struct `Keccak_Generic` for
+    ///   your own purpose.
     /// - `user_defined` is of type `&String`, which contains a string for
     ///   your special use.
     /// - `message` is of type `&String`.
@@ -1109,11 +1106,576 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     /// assert_eq!(hash.to_string(), "C6FCC447C8ADCB04AA7229D3884A19EC6D5C44E96AA0AB62651CD0A8D71EFA2C24317F3DFFB3ABE3CA27D8686382C7C094DF464820671C4C841E04AB3A6F2CDB");
     /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.digest_string_customized)
     #[inline]
     pub fn digest_string_customized(&mut self, function_name: &String, user_defined: &String, message: &String)
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn digest_array_customized<U, V, W, const L: usize, const M: usize, const N: usize>(&mut self, function_name: &[U; L], user_defined: &[V; M], message: &[W; N])
+    /// Computes hash value.
+    /// 
+    /// # Features
+    /// This method is the wrapper of the method `absorb_array_customized()`
+    /// .
+    /// # Arguments
+    /// - `function_name` is of type `&[U; L]`, which contains function name,
+    ///   but it is reserved for NIST use. You are supposed to give null string
+    ///   for `function name`. You may want to use `user_defined` instead.
+    ///   However, for all the types other than cSHAKE, you can freely use
+    ///   this method for expanded versions of struct `Keccak_Generic`.
+    /// - `user_defined` is of type `&[V; M]`, which contains a string for
+    ///   your special use.
+    /// - `message` is of the type `&[W; N]`.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to compute of the hash value of a string slice,
+    ///   you are highly recommended to use the method
+    ///   [digest_str_customized()](struct@Keccak_Generic#method.digest_str_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of String
+    ///   object, you are highly recommended to use the method
+    ///   [digest_string_customized()](struct@Keccak_Generic#method.digest_string_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Vec
+    ///   object, you are highly recommended to use the method
+    ///   [digest_vec_customized()](struct@Keccak_Generic#method.digest_vec_customized)
+    ///   rather than this method.
+    /// - If you want to use this method from other programming languages such
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [digest_customized()](struct@Keccak_Generic#method.digest_customized)
+    ///   rather than this method.
+    ///
+    /// # Example 1 for cSHAKE_256
+    /// ```
+    /// use cryptocol::hash::cSHAKE_256;
+    /// let mut hash = cSHAKE_256::new();
+    /// let user_defined = [1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = [ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_array_customized(&[0_u8; 0], &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "FE5EBE3F5007EDCE865F7DC425531F0C493E18168835722CCC0F11CE66F1423061C202BE0B1D0528DE0D763A3097A090B62115392769305D1FF32588A78CCEE9");
+    /// ```
+    ///
+    /// # Example 2 for BIG_cSHAKE_256
+    /// ```
+    /// use cryptocol::hash::BIG_cSHAKE_256;
+    /// let mut hash = BIG_cSHAKE_256::new();
+    /// let function_name = [0xFFFF_u16, 0xEEEE, 0xDDDD, 0xCCCC];
+    /// let user_defined = [1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = [ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_array_customized(&function_name, &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "9C0EA4C581AB1E0235F18794F34C9BB1A022CA5841A74ADE62BC416B75EF0F2E4D063572823B101D2021273D6C98AF6501037FD0BE0DB8AB463FB822AE48ABA6");
+    /// ```
+    ///
+    /// # Example 3 for SMALL_cSHAKE_256
+    /// ```
+    /// use cryptocol::hash::SMALL_cSHAKE_256;
+    /// let mut hash = SMALL_cSHAKE_256::new();
+    /// let function_name = [0xFFFF_u16, 0xEEEE, 0xDDDD, 0xCCCC];
+    /// let user_defined = [1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = [ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_array_customized(&function_name, &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "20739EB80A727D4D6E87E4DDFF0223A24831686BF535BCD1007600DD0E08ED3854AF5C5355C1076C7AA9CD464D5EB1D6BFCA881BCFAF88AABE5F851F3368AD59");
+    /// ```
+    ///
+    /// # Example 4 for SMALLER_cSHAKE_128
+    /// ```
+    /// use cryptocol::hash::SMALLER_cSHAKE_128;
+    /// let mut hash = SMALLER_cSHAKE_128::new();
+    /// let function_name = [0xFFFF_u16, 0xEEEE, 0xDDDD, 0xCCCC];
+    /// let user_defined = [1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = [ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_array_customized(&function_name, &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "A336A171E044424D36267946F342A36377AFE1C3EFE6A5BB3C74A7C806B7AADE");
+    /// ```
+    ///
+    /// # Example 5 for TINY_cSHAKE_64
+    /// ```
+    /// use cryptocol::hash::TINY_cSHAKE_64;
+    /// let mut hash = TINY_cSHAKE_64::new();
+    /// let function_name = [0xFFFF_u16, 0xEEEE, 0xDDDD, 0xCCCC];
+    /// let user_defined = [1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = [ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_array_customized(&function_name, &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "D407B5886144579C87CF5A4AC8706FAB");
+    /// ```
+    ///
+    /// # Example 6 for SHA3_256
+    /// ```
+    /// use cryptocol::hash::SHA3_256;
+    /// let mut hash = SHA3_256::new();
+    /// let function_name = [0xFFFF_u16, 0xEEEE, 0xDDDD, 0xCCCC];
+    /// let user_defined = [1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = [ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_array_customized(&function_name, &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "372B387ECFB8C90E97E601C1D5C7E6D21CD9A78E3B608E7C9FC3083D7F04D29B");
+    /// ```
+    ///
+    /// # Example 7 for SHAKE_256
+    /// ```
+    /// use cryptocol::hash::SHAKE_256;
+    /// let mut hash = SHAKE_256::new();
+    /// let function_name = [0xFFFF_u16, 0xEEEE, 0xDDDD, 0xCCCC];
+    /// let user_defined = [1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = [ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_array_customized(&function_name, &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "2141502E2CA8EC7B5B9E1D872A7B4399403FAAF83A428E63A1716696B6777D04C4108288F5CA09ADB2D9954062BADBF9ACCD251967F475E9A757C68B9824BA8D");
+    /// ```
+    ///
+    /// # Example 8 for KECCAK_256
+    /// ```
+    /// use cryptocol::hash::KECCAK_256;
+    /// let mut hash = KECCAK_256::new();
+    /// let function_name = [0xFFFF_u16, 0xEEEE, 0xDDDD, 0xCCCC];
+    /// let user_defined = [1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = [ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_array_customized(&function_name, &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "83AA5FEAA9B371B8C3CB5EA7C509951E2C586DB5B117B1AEF7F2BC8A65A13E65");
+    /// ```
+    #[inline]
+    pub fn digest_array_customized<U, V, W, const L: usize, const M: usize, const N: usize>(&mut self, function_name: &[U; L], user_defined: &[V; M], message: &[W; N])
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone, W: SmallUInt + Copy + Clone
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn digest_vec_customized<U, V, W>(&mut self, function_name: &Vec<U>, user_defined: &Vec<V>, message: &Vec<W>)
+    /// Computes hash value.
+    /// 
+    /// # Features
+    /// This method is the wrapper of the method `absorb_vec_customized()`
+    /// .
+    /// # Arguments
+    /// - `function_name` is of type `&[U; L]`, which contains function name,
+    ///   but it is reserved for NIST use. You are supposed to give null string
+    ///   for `function name`. You may want to use `user_defined` instead.
+    ///   However, for all the types other than cSHAKE, you can freely use
+    ///   this method for expanded versions of struct `Keccak_Generic`.
+    /// - `user_defined` is of type `&[V; M]`, which contains a string for
+    ///   your special use.
+    /// - `message` is of the type `&[W; N]`.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to compute of the hash value of a string slice,
+    ///   you are highly recommended to use the method
+    ///   [digest_str_customized()](struct@Keccak_Generic#method.digest_str_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of String
+    ///   object, you are highly recommended to use the method
+    ///   [digest_string_customized()](struct@Keccak_Generic#method.digest_string_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Vec
+    ///   object, you are highly recommended to use the method
+    ///   [digest_array_customized()](struct@Keccak_Generic#method.digest_array_customized)
+    ///   rather than this method.
+    /// - If you want to use this method from other programming languages such
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [digest_customized()](struct@Keccak_Generic#method.digest_customized)
+    ///   rather than this method.
+    ///
+    /// # Example 1 for cSHAKE_256
+    /// ```
+    /// use cryptocol::hash::cSHAKE_256;
+    /// let mut hash = cSHAKE_256::new();
+    /// let user_defined = vec![1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = vec![ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_vec_customized(&vec![0_u8; 0], &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "FE5EBE3F5007EDCE865F7DC425531F0C493E18168835722CCC0F11CE66F1423061C202BE0B1D0528DE0D763A3097A090B62115392769305D1FF32588A78CCEE9");
+    /// ```
+    /// 
+    /// # Example 2 for BIG_cSHAKE_256
+    /// ```
+    /// let mut hash = BIG_cSHAKE_256::new();
+    /// let function_name = vec![0xFFFF_u16, 0xEEEE, 0xDDDD, 0xCCCC];
+    /// let user_defined = vec![1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = vec![ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_vec_customized(&function_name, &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "9C0EA4C581AB1E0235F18794F34C9BB1A022CA5841A74ADE62BC416B75EF0F2E4D063572823B101D2021273D6C98AF6501037FD0BE0DB8AB463FB822AE48ABA6");
+    /// ```
+    /// 
+    /// # Example 3 for SMALL_cSHAKE_256
+    /// ```
+    /// use cryptocol::hash::SMALL_cSHAKE_256;
+    /// let mut hash = SMALL_cSHAKE_256::new();
+    /// let function_name = vec![0xFFFF_u16, 0xEEEE, 0xDDDD, 0xCCCC];
+    /// let user_defined = vec![1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = vec![ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_vec_customized(&function_name, &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "20739EB80A727D4D6E87E4DDFF0223A24831686BF535BCD1007600DD0E08ED3854AF5C5355C1076C7AA9CD464D5EB1D6BFCA881BCFAF88AABE5F851F3368AD59");
+    /// ```
+    /// 
+    /// # Example 4 for SMALLER_cSHAKE_128
+    /// ```
+    /// use cryptocol::hash::SMALLER_cSHAKE_128;
+    /// let mut hash = SMALLER_cSHAKE_128::new();
+    /// let function_name = vec![0xFFFF_u16, 0xEEEE, 0xDDDD, 0xCCCC];
+    /// let user_defined = vec![1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = vec![ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_vec_customized(&function_name, &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "A336A171E044424D36267946F342A36377AFE1C3EFE6A5BB3C74A7C806B7AADE");
+    /// ```
+    /// 
+    /// # Example 5 for TINY_cSHAKE_64
+    /// ```
+    /// use cryptocol::hash::TINY_cSHAKE_64;
+    /// let mut hash = TINY_cSHAKE_64::new();
+    /// let function_name = vec![0xFFFF_u16, 0xEEEE, 0xDDDD, 0xCCCC];
+    /// let user_defined = vec![1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = vec![ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_vec_customized(&function_name, &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "D407B5886144579C87CF5A4AC8706FAB");
+    /// ```
+    /// 
+    /// # Example 6 for SHA3_256
+    /// ```
+    /// use cryptocol::hash::SHA3_256;
+    /// let mut hash = SHA3_256::new();
+    /// let function_name = vec![0xFFFF_u16, 0xEEEE, 0xDDDD, 0xCCCC];
+    /// let user_defined = vec![1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = vec![ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_vec_customized(&function_name, &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "372B387ECFB8C90E97E601C1D5C7E6D21CD9A78E3B608E7C9FC3083D7F04D29B");
+    /// ```
+    /// 
+    /// # Example 7 for SHAKE_256
+    /// ```
+    /// use cryptocol::hash::SHAKE_256;
+    /// let mut hash = SHAKE_256::new();
+    /// let function_name = vec![0xFFFF_u16, 0xEEEE, 0xDDDD, 0xCCCC];
+    /// let user_defined = vec![1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = vec![ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_vec_customized(&function_name, &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "2141502E2CA8EC7B5B9E1D872A7B4399403FAAF83A428E63A1716696B6777D04C4108288F5CA09ADB2D9954062BADBF9ACCD251967F475E9A757C68B9824BA8D");
+    /// ```
+    /// 
+    /// # Example 8 for KECCAK_256
+    /// ```
+    /// use cryptocol::hash::KECCAK_256;
+    /// let mut hash = KECCAK_256::new();
+    /// let function_name = vec![0xFFFF_u16, 0xEEEE, 0xDDDD, 0xCCCC];
+    /// let user_defined = vec![1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = vec![ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.digest_vec_customized(&function_name, &user_defined, &data);
+    /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
+    /// assert_eq!(hash.to_string(), "83AA5FEAA9B371B8C3CB5EA7C509951E2C586DB5B117B1AEF7F2BC8A65A13E65");
+    /// ```
+    #[inline]
+    pub fn digest_vec_customized<U, V, W>(&mut self, function_name: &Vec<U>, user_defined: &Vec<V>, message: &Vec<W>)
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone, W: SmallUInt + Copy + Clone
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn get_hash_value_in_array<const N: usize>(&mut self) -> [u8; N]
+    /// Returns a hash value in the form of array object.
+    /// 
+    /// # Output
+    /// A hash value in the form of array object [u8; N] where `N` is a generic
+    /// parameter.
+    /// 
+    /// # Features
+    /// This method depends on the generic parameter `N`.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to get the hash value in the form of String object,
+    ///   you are highly recommended to use the method
+    ///   [get_hash_value_string()](struct@Keccak_Generic#method.get_hash_value_string)
+    ///   rather than this method.
+    /// - If you want to get the hash value in the form of Vec object,
+    ///   you are highly recommended to use the method
+    ///   [get_hash_value_in_vec()](struct@Keccak_Generic#method.get_hash_value_in_vec)
+    ///   rather than this method.
+    /// - If you want to use this method from other programming languages such
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [get_hash_value()](struct@Keccak_Generic#method.get_hash_value)
+    ///   rather than this method.
+    /// 
+    /// # Example 1 for SHA3_512
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::SHA3_512;
+    /// let mut hash = SHA3_512::new();
+    /// let txt = "This is an example of the method get_hash_value_in_array().";
+    /// hash.digest_str(txt);
+    /// let hash_value = hash.get_hash_value_in_array::<64>();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "4387084DCE64950435EC8196096E6F64FBAEC92755840886F67F6FC60D18A519C02A20614DD4D6218AB6837D3CE46288A2BF1AA17ECDD63117F908161989A90D");
+    /// ```
+    /// 
+    /// # Example 2 for SHAKE_128
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::SHAKE_128;
+    /// let mut hash = SHAKE_128::new();
+    /// let txt = "This is an example of the method get_hash_value_in_array().";
+    /// hash.digest_str(txt);
+    /// let hash_value: [u8; 32] = hash.get_hash_value_in_array();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "D6E9DF5CC717C5AF08969E6D1CA3224953BD1F220920D9E67D6381AA537CAD92");
+    /// ```
+    /// 
+    /// # Example 3 for cSHAKE_128
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::cSHAKE_128;
+    /// let mut hash = cSHAKE_128::new();
+    /// let txt = "This is an example of the method get_hash_value_in_array().";
+    /// hash.digest_str_customized("", "On my purpose", txt);
+    /// let hash_value = hash.get_hash_value_in_array::<32>();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "602EE11896CE2A9BEF0E5E18557E2DC19B8A9F5A722644560B89C19561FC8279");
+    /// ```
+    /// 
+    /// # Example 4 for KECCAK_224
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::KECCAK_224;
+    /// let mut hash = KECCAK_224::new();
+    /// let txt = "This is an example of the method get_hash_value_in_array().";
+    /// hash.digest_str(txt);
+    /// let hash_value: [u8; 56] = hash.get_hash_value_in_array();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "DF8028EB204ACB170349A9EED0A739C6C6C4C598DEF5F61E0E66397E5E02E986E38D107D27F467BCA2873B0CC193628E347B8489A2085720");
+    /// ```
+    /// 
+    /// # Example 5 for BIG_cSHAKE_1024
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::BIG_cSHAKE_1024;
+    /// let mut hash = BIG_cSHAKE_1024::new();
+    /// let txt = "This is an example of the method get_hash_value_in_array().";
+    /// hash.digest_str_customized("", "On my purpose", txt);
+    /// let hash_value = hash.get_hash_value_in_array::<300>();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "9BCC9E0FFF3924D2919918A3F68713F02D7B44D5F55D06DAB69E1E35F2FB7422CFA675D7E7715D38E65FAC2256EE7CC7CEF69C0AC25F6F868275584FAD95B7F21D24D95CA0CADB075D68192DCBB241F4775EBA09C72108EAD1CEDBB7BB2EC1ED0C19078DB37B1F364848580A74BF3E1F77D44403F1C63DC7197FCBE7BD05C53FFFD4374F1A48A2E8650B5E13DEABB27109CCB0E468ED71766A09D4687DEA8D4498E895E8E2B074B0E9AA1157AE72FBBC2543D78F2A3C2974AFB35D38CEF3692558837FC410493A0DC166BD99ABA040DF90CF1CD635F91E231E3251B0F1392BF5E03BA1FB99CDBD0310D25CF4A31600679FF18C96C16F487D9C9DACFF095BDCF26E5AC652DE274A723AD41A7D1AD06D5E2E9DC73E6702112E5EEC1FA155D1402AE554D92E678E3CB153C2E353");
+    /// ```
+    /// 
+    /// # Example 6 for SMALL_SHA3_256
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::SMALL_SHA3_256;
+    /// let mut hash = SMALL_SHA3_256::new();
+    /// let txt = "This is an example of the method get_hash_value_in_array().";
+    /// hash.digest_str(txt);
+    /// let hash_value: [u8; 70] = hash.get_hash_value_in_array();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "BB0CE4DE7D50B05CF5B794CB069F73CB5D4D7175C700AD108EAF2067513AB96FEBD9A2F32C5D18788D15E0FA178D3A4ABB5817E821DFD7571212BBEED72D90C15F713401B072");
+    /// ```
+    /// 
+    /// # Example 7 for SMALLER_SHAKE_128
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::SMALLER_SHAKE_128;
+    /// let mut hash = SMALLER_SHAKE_128::new();
+    /// let txt = "This is an example of the method get_hash_value_in_array().";
+    /// hash.digest_str_customized("", "On my purpose", txt);
+    /// let hash_value = hash.get_hash_value_in_array::<40>();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "F4C9A3EC5A340C4FBF9ECC211E13930FD96EB190CD2FA7DCCDEF1CAAB0D3B2F49AD7CF5350000453");
+    /// ```
+    /// 
+    /// # Example 8 for TINY_SHA3_64
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::TINY_SHA3_64;
+    /// let mut hash = TINY_SHA3_64::new();
+    /// let txt = "This is an example of the method get_hash_value_in_array().";
+    /// hash.digest_str(txt);
+    /// let hash_value: [u8; 10] = hash.get_hash_value_in_array();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "3B59168F8A5A42D59208");
+    /// ```
+    pub fn get_hash_value_in_array<const N: usize>(&mut self) -> [u8; N]
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn get_hash_value_in_vec(&mut self) -> Vec<u8>
+    /// Returns a hash value in the form of Vec<u8> object.
+    /// 
+    /// # Output
+    /// A hash value in the form of Vec<u8> object.
+    /// 
+    /// # Features
+    /// The length of output hash value is automatically determined to be:
+    /// - `T::BITS as usize / 8 * 25 - RATE`
+    ///   if `Self` is SHAKE family or cSHAKE family
+    /// - `(T::BITS as usize / 8 * 25 - RATE) / 2`
+    ///   if `Self` is SHA3 family or Keccak family.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to get the hash value in the form of String object,
+    ///   you are highly recommended to use the method
+    ///   [get_hash_value_string()](struct@Keccak_Generic#method.get_hash_value_string)
+    ///   rather than this method.
+    /// - If you want to get the hash value in the form of Vec object,
+    ///   you are highly recommended to use the method
+    ///   [get_hash_value_in_array()](struct@Keccak_Generic#method.get_hash_value_in_array)
+    ///   rather than this method.
+    /// - If you want to use this method from other programming languages such
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [get_hash_value()](struct@Keccak_Generic#method.get_hash_value)
+    ///   rather than this method.
+    /// 
+    /// # Example 1 for SHA3_224
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::SHA3_224;
+    /// let mut hash = SHA3_224::new();
+    /// let txt = "This is an example of the method get_hash_value_in_vec().";
+    /// hash.digest_str(txt);
+    /// let hash_value = hash.get_hash_value_in_vec();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "49FA84569FC01A4FD42DC7D6A892A61539AA14761FDC679A14A8A365");
+    /// ```
+    /// 
+    /// # Example 2 for SHAKE_256
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::SHAKE_256;
+    /// let mut hash = SHAKE_256::new();
+    /// let txt = "This is an example of the method get_hash_value_in_vec().";
+    /// hash.digest_str(txt);
+    /// let hash_value = hash.get_hash_value_in_vec();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "7CD7F1ABBEFDCE9ACB5D4AF5AF766F7C72141453561AD2A80D2080085F06C7FF77C50CC90E0CEAA6D357183383500FF3DEF6B9AD495A8FE5F7CA253171159277");
+    /// ```
+    /// 
+    /// # Example 3 for cSHAKE_256
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::cSHAKE_256;
+    /// let mut hash = cSHAKE_256::new();
+    /// let txt = "This is an example of the method get_hash_value_in_vec().";
+    /// hash.digest_str_customized("", "On my purpose", txt);
+    /// let hash_value = hash.get_hash_value_in_vec();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "54E8FF89028EBA8EFB8418687CF3867D0221B3DD3DEEE5DDA992164D4B82B939A39E898AAE726676F8BBCCB9B352BC1A9B68ABEA80D2C47F8ABA0D0762F11E5F");
+    /// ```
+    /// 
+    /// # Example 4 for KECCAK_384
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::KECCAK_384;
+    /// let mut hash = KECCAK_384::new();
+    /// let txt = "This is an example of the method get_hash_value_in_vec().";
+    /// hash.digest_str(txt);
+    /// let hash_value = hash.get_hash_value_in_vec();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "1D7E5E5E173B19CF67B7678801AA913526F808B6E0742B20688B1BD8A5B5A11C640015B23D10FDC3BABD60DF5A410545");
+    /// ```
+    /// 
+    /// # Example 5 for BIG_SHAKE_1024
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::BIG_SHAKE_1024;
+    /// let mut hash = BIG_SHAKE_1024::new();
+    /// let txt = "This is an example of the method get_hash_value_in_vec().";
+    /// hash.digest_str_customized("", "On my purpose", txt);
+    /// let hash_value = hash.get_hash_value_in_vec();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "19A04F56959889991B6A2573080FD8FEBFA4E7E17F5F9D95DBA85CD486DE52B9E35C1EADE0D54A1EE280A4E66D7BD55466C915BAFCD5C28349EC17A6BAE454F7358266C6D4AE81F7FC7D2C3C4AAACA221838F9355A6555234B0A4106EA1A18AF319C1721190371E23F5C8BFF14F58550AC372705587744B8A769D4DEA6BC69DD6D00642EB8D7F85A4A1FB64E8461B54C2285A9B17DF0A3ECE3D6BB3B53C38BE032277E0BA71B0EE296D541924EB069E8B8C12666E6F6ECA4E19B19B096E44F5CA0258A7E59C7D9D52C6227B4661AED780BF835246EA5963382368838AFB44BF0E89E088E28C818F7143334DD922B711E5C94E02135383C5C64EF6B8615258A90");
+    /// ```
+    /// 
+    /// # Example 6 for SMALL_SHAKE_256
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::SMALL_SHAKE_256;
+    /// let mut hash = SMALL_SHAKE_256::new();
+    /// let txt = "This is an example of the method get_hash_value_in_vec().";
+    /// hash.digest_str(txt);
+    /// let hash_value = hash.get_hash_value_in_vec();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "D907949D69AE3FD395BECD8E997749FB58992008C989F5ADC5FA3DA555EBC2A598B513C699A301D0621CF47FC433FAEB22D13132E741295548E6FDCBD37084AA");
+    /// ```
+    /// 
+    /// # Example 7 for SMALLER_SHA3_128
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::SMALLER_SHA3_128;
+    /// let mut hash = SMALLER_SHA3_128::new();
+    /// let txt = "This is an example of the method get_hash_value_in_vec().";
+    /// hash.digest_str(txt);
+    /// let hash_value = hash.get_hash_value_in_vec();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "2244DF8EDDE0F4911FAE0297685C722C");
+    /// ```
+    /// 
+    /// # Example 8 for TINY_KECCAK_64
+    /// ```
+    /// use std::io::Write;
+    /// use cryptocol::hash::TINY_KECCAK_64;
+    /// let mut hash = TINY_KECCAK_64::new();
+    /// let txt = "This is an example of the method get_hash_value_in_vec().";
+    /// hash.digest_str(txt);
+    /// let hash_value = hash.get_hash_value_in_vec();
+    /// let mut hs = String::new();
+    /// for h in hash_value
+    ///     { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "CC87D4276259419C");
+    /// ```
+    pub fn get_hash_value_in_vec(&mut self) -> Vec<u8>
     {
         unimplemented!(); // Dummy code for documentation
     }

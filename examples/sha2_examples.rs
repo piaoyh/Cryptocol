@@ -1453,7 +1453,7 @@ fn sha2_512_get_hash_value_in_string()
 fn sha2_512_get_hash_value_in_array()
 {
     println!("sha2_512_get_hash_value_in_array");
-    // # Example for SHA2_512
+    // Example for SHA2_512
     use cryptocol::hash::SHA2_512;
     let mut hash = SHA2_512::new();
     let txt = "This is an example of the method get_hash_value_in_array().";
