@@ -1352,32 +1352,32 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     /// A flag to represent whether or not overflow happened
     /// during previous operations..
-    const OVERFLOW: u8          = 0b0000_0001;
+    pub(super) const OVERFLOW: u8   = 0b0000_0001;
 
     /// A flag to represent whether or not underflow happened
     /// during previous operations.
-    const UNDERFLOW: u8         = 0b0000_0010;
+    pub(super) const UNDERFLOW: u8  = 0b0000_0010;
     
     /// A flag to represent whether or not the value became extremely big
     /// for some reasons such as `divided-by-zero` during previous operations.
-    const INFINITY: u8          = 0b0000_0100;
+    pub(super) const INFINITY: u8   = 0b0000_0100;
 
     /// A flag to represent whether or not divided-by-zero happened during
     /// previous operations.
-    const DIVIDED_BY_ZERO: u8   = 0b0000_1000;
+    pub(super) const DIVIDED_BY_ZERO: u8    = 0b0000_1000;
 
     /// A flag to represent whether or not the value cannot be defined.
     /// For example, the result of `0 / 0` will be undefined so that the flag
     /// `UNDEFINED` will be set.
-    const UNDEFINED: u8         = 0b0001_0000;
+    pub(super) const UNDEFINED: u8  = 0b0001_0000;
 
     /// A flag to represent whether or not a bit `1` is pushed out during
     /// previous shift-left operations.
-    const LEFT_CARRY: u8        = 0b0010_0000;
+    pub(super) const LEFT_CARRY: u8 = 0b0010_0000;
 
     /// A flag to represent whether or not a bit `1` is pushed out during
     /// previous shift-right operations.
-    const RIGHT_CARRY: u8       = 0b0100_0000;
+    pub(super) const RIGHT_CARRY: u8    = 0b0100_0000;
 
 
     #[allow(non_upper_case_globals)]
@@ -1823,7 +1823,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.from_biguint)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.from_biguint)
     #[inline]
     pub fn from_biguint<U, const M: usize>(biguint: &BigUInt<U, M>) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -2061,7 +2061,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.from_string)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.from_string)
     #[inline]
     pub fn from_string(txt: &str) -> Result<Self, NumberErr>
     {
@@ -2155,7 +2155,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.from_str_radix)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.from_str_radix)
     pub fn from_str_radix(txt: &str, radix: u32) -> Result<Self, NumberErr>
     {
         if (radix < 2) || (radix > 10 + 26 + 26)
@@ -2245,7 +2245,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.generate_check_bits)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.generate_check_bits)
     pub fn generate_check_bits(bit_pos: u32) -> Option<Self>
     {
         if bit_pos < Self::size_in_bits()
@@ -2291,7 +2291,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.generate_check_bits_)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.generate_check_bits_)
     pub fn generate_check_bits_(bit_pos: u32) -> Self
     {
         let mut check_bits = Self::zero();
@@ -2446,7 +2446,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.turn_check_bits)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.turn_check_bits)
     pub fn turn_check_bits(&mut self, bit_pos: u32)
     {
         let size_t_bits = T::size_in_bits();
@@ -2507,7 +2507,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_bit_set)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_bit_set)
     pub fn is_bit_set(&self, bit_pos: u32) -> Option<bool>
     {
         if (bit_pos / T::size_in_bits()) >= N as u32
@@ -2556,7 +2556,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_bit_set_)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_bit_set_)
     pub fn is_bit_set_(&self, bit_pos: u32) -> bool
     {
         let size_t_bits = T::size_in_bits();
@@ -2693,7 +2693,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.get_num)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.get_num)
     pub fn get_num(&self, i: usize) -> Option<T>
     {
         if i < N
@@ -2741,7 +2741,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.get_num_)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.get_num_)
     #[inline]
     pub fn get_num_(&self, i: usize) -> T
     {
@@ -2805,7 +2805,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.set_num)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.set_num)
     pub fn set_num(&mut self, i: usize, val: T) -> bool
     {
         if i < N
@@ -2876,7 +2876,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.set_num_)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.set_num_)
     #[inline]
     pub const fn set_num_(&mut self, i: usize, val: T)
     {
@@ -3096,7 +3096,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_zero)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_zero)
     pub fn is_zero(&self) -> bool
     {
         for i in 0..N
@@ -3170,7 +3170,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_one)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_one)
     pub fn is_one(&self) -> bool
     {
         if self.get_num_(0) != T::one()
@@ -3211,7 +3211,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_zero_or_one)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_zero_or_one)
     pub fn is_zero_or_one(&self) -> bool
     {
         if self.get_num_(0) > T::one()
@@ -3382,7 +3382,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_max)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_max)
     pub fn is_max(&self) -> bool
     {
         for i in 0..N
@@ -3654,7 +3654,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_odd)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_odd)
     #[inline]
     pub fn is_odd(&self) -> bool
     {
@@ -3682,7 +3682,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_even)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_even)
     #[inline]
     pub fn is_even(&self) -> bool
     {
@@ -3711,7 +3711,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_msb_set)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.is_msb_set)
     #[inline]
     pub fn is_msb_set(&self) -> bool
     {
@@ -4084,7 +4084,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.partial_cmp_uint)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.partial_cmp_uint)
     pub fn partial_cmp_uint<U>(&self, other: U) -> Option<Ordering>
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4157,7 +4157,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.lt_uint)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.lt_uint)
     #[inline]
     pub fn lt_uint<U>(&self, other: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -4204,7 +4204,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.gt_uint)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.gt_uint)
     #[inline]
     pub fn gt_uint<U>(&self, other: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -4251,7 +4251,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.le_uint)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.le_uint)
     #[inline]
     pub fn le_uint<U>(&self, other: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -4298,7 +4298,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.ge_uint)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.ge_uint)
     #[inline]
     pub fn ge_uint<U>(&self, other: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -4344,7 +4344,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.eq_uint)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.eq_uint)
     pub fn eq_uint<U>(&self, other: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4402,7 +4402,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.partial_cmp)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.partial_cmp)
     #[cfg(target_endian = "little")]
     pub fn partial_cmp(&self, other: &Self) -> Option<Ordering>
     {
@@ -4451,7 +4451,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.lt)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.lt)
     #[inline]
     pub fn lt(&self, other: &Self) -> bool
     {
@@ -4490,7 +4490,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.gt)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.gt)
     #[inline]
     pub fn gt(&self, other: &Self) -> bool
     {
@@ -4529,7 +4529,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.le)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.le)
     #[inline]
     pub fn le(&self, other: &Self) -> bool
     {
@@ -4568,7 +4568,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.ge)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.ge)
     #[inline]
     pub fn ge(&self, other: &Self) -> bool
     {
@@ -4606,7 +4606,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.eq)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.eq)
     pub fn eq(&self, other: &Self) -> bool
     {
         for idx in 0..N
@@ -4685,7 +4685,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.carrying_add_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.carrying_add_uint)
     pub fn carrying_add_uint<U>(&self, rhs: U, carry: bool) -> (Self, bool)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4770,7 +4770,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.carrying_add_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.carrying_add_assign_uint)
     pub fn carrying_add_assign_uint<U>(&mut self, rhs: U, carry: bool) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4860,7 +4860,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_add_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_add_uint)
     pub fn wrapping_add_uint<U>(&self, rhs: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4942,7 +4942,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_add_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_add_assign_uint)
     #[inline]
     pub fn wrapping_add_assign_uint<U>(&mut self, rhs: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -5008,7 +5008,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_add_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_add_uint)
     pub fn overflowing_add_uint<U>(&self, rhs: U) -> (Self, bool)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5087,7 +5087,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_add_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_add_assign_uint)
     pub fn overflowing_add_assign_uint<U>(&mut self, rhs: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5159,7 +5159,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_add_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_add_uint)
     pub fn modular_add_uint<U>(&self, rhs: U, modulo: &Self) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5244,7 +5244,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_add_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_add_assign_uint)
     pub fn modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5258,179 +5258,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         biguint_modular_calc_assign!(self, Self::common_modular_add_assign_uint, rhs, modulo);
     }
 
-    // pub fn panic_free_modular_add_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be added to `self`, and primitive unsigned integer
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the modulo-sum (`self` + `rhs`) % `modulo` with wrapping
-    /// (modular) addition at `modulo`.
-    /// 
-    /// # Features
-    /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally returns the remainder of `sum` divided by `modulo`.
-    /// - Wrapping (modular) addition at `modulo`.
-    /// - The differences between this method `panic_free_modular_add_uint()`
-    ///   and the method `wrapping_add_uint()` are, first, where
-    ///   wrapping around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_add_uint()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_add_uint()` sets
-    ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `modulo` | return value | flags       |
-    /// |----------|--------------|-------------|
-    /// | 0 or 1   | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_modular_add()](struct@BigUInt#method.panic_free_modular_add)
-    /// is proper rather than this method `panic_free_modular_add_uint()`.
-    /// 
-    /// # Example 1 for a normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = U256::from_string("76801874298166903427690031858186486050853753882811946569946433649006").unwrap();
-    /// let m = a_biguint.wrapping_add_uint(2_u8);
-    /// let rhs = 1_u8;
-    /// let res = a_biguint.panic_free_modular_add_uint(rhs, &m);
-    /// println!("{} + {} = {} (mod {})", a_biguint, rhs, res, m);
-    /// assert_eq!(res.to_string(), "76801874298166903427690031858186486050853753882811946569946433649007");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_modular_add_uint)
-    pub fn panic_free_modular_add_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_add_assign_uint, rhs, modulo);
-    }
-
-    // pub fn panic_free_modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
-    /// and then, assigns the result back to `self`.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be added to `self`, and primitive unsigned integer
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally assigns the remainder of `sum` divided by `modulo`
-    ///   to `self` back.
-    /// - Wrapping (modular) addition at `modulo`.
-    /// - The differences between this method
-    ///   `panic_free_modular_add_assign_uint()` and the method
-    ///   `wrapping_add_assign_uint()` are, first, where wrapping
-    ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_add_assign_uint()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_add_assign_uint()` sets
-    ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of `self`
-    ///   will be set and `self` will have the value `0`.
-    /// - In summary, `self` and its flags will be set as follows:
-    /// 
-    /// | `modulo` | result value (self) | flags       |
-    /// |----------|---------------------|-------------|
-    /// | 0 or 1   | 0                   | `UNDEFINED` |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [panic_free_modular_add_assign_uint()](struct@BigUInt#method.panic_free_modular_add_assign_uint)
-    /// is proper rather than this method.
-    /// 
-    /// # Example 1 for a normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = U256::from_string("768018742981669034276900318581864860508537538828119465699464336490060").unwrap();
-    /// let m = a_biguint.wrapping_add_uint(2_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "768018742981669034276900318581864860508537538828119465699464336490060");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// 
-    /// let rhs = 1_u8;
-    /// a_biguint.panic_free_modular_add_assign_uint(rhs, &m);
-    /// println!("After a_biguint.panic_free_modular_add_assign_uint({}, &m), a_biguint = {}", rhs, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "768018742981669034276900318581864860508537538828119465699464336490061");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_modular_add_assign_uint)
-    pub fn panic_free_modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        panic_free_modular_calc_assign!(self, Self::common_modular_add_assign_uint, rhs, modulo);
-    }
-
-    fn common_modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    pub(super) fn common_modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
             + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
@@ -5490,7 +5318,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         self.set_all_flags(flags);
     }
 
-
+    // pub(super) use Self::common_modular_add_assign_uint;
 
     /*** SUBTRACTION ***/
 
@@ -5557,7 +5385,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.borrowing_sub_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.borrowing_sub_uint)
     pub fn borrowing_sub_uint<U>(&self, rhs: U, borrow: bool) -> (Self, bool)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5644,7 +5472,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.borrowing_sub_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.borrowing_sub_assign_uint)
     pub fn borrowing_sub_assign_uint<U>(&mut self, rhs: U, borrow: bool) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5732,7 +5560,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_sub_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_sub_uint)
     pub fn wrapping_sub_uint<U>(&self, rhs: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5814,7 +5642,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_sub_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_sub_assign_uint)
     #[inline]
     pub fn wrapping_sub_assign_uint<U>(&mut self, rhs: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -5881,7 +5709,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_sub_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_sub_uint)
     pub fn overflowing_sub_uint<U>(&self, rhs: U) -> (Self, bool)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5961,7 +5789,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_sub_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_sub_assign_uint)
     pub fn overflowing_sub_assign_uint<U>(&mut self, rhs: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -6034,7 +5862,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_sub_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_sub_uint)
     pub fn modular_sub_uint<U>(&self, rhs: U, modulo: &Self) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -6118,7 +5946,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_sub_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_sub_assign_uint)
     pub fn modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -6132,180 +5960,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         biguint_modular_calc_assign!(self, Self::common_modular_sub_assign_uint, rhs, modulo);
     }
 
-    // pub fn panic_free_modular_sub_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be added to `self`, and primitive unsigned integer
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the modulo-difference (`self` - `rhs`) % `modulo` with
-    /// wrapping (modular) subtraction at `modulo`.
-    /// 
-    /// # Features
-    /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
-    ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
-    /// - The differences between this method `panic_free_modular_sub_uint()`
-    ///   and the method `wrapping_sub_uint()` are, first, where
-    ///   wrapping around happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_sub_uint()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub_uint()` sets
-    ///   `UNDERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `modulo` | return value | flags       |
-    /// |----------|--------------|-------------|
-    /// | 0 or 1   | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_modular_sub()](struct@BigUInt#method.panic_free_modular_sub)
-    /// is proper rather than this method `panic_free_modular_sub_uint()`.
-    /// 
-    /// # Example 1 for a normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = U256::from_uint(2_u8);
-    /// let m = U256::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let rhs = 1_u8;
-    /// let res = a_biguint.panic_free_modular_sub_uint(rhs, &m);
-    /// println!("{} - {} = {} (mod {})", a_biguint, rhs, res, m);
-    /// assert_eq!(res.to_string(), "1");
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_modular_sub_uint)
-    pub fn panic_free_modular_sub_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_sub_assign_uint, rhs, modulo);
-    }
-
-    // pub fn panic_free_modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
-    /// and then, assigns the result back to `self`.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be added to `self`, and primitive unsigned integer
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
-    ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
-    /// - The differences between this method
-    ///   `panic_free_modular_sub_assign_uint()` and the method
-    ///   `wrapping_sub_assign_uint()` are, first, where wrapping
-    ///   around happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_sub_assign_uint()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub_assign_uint()` sets
-    ///   `UNDERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of `self`
-    ///   will be set and `self` will have the value `0`.
-    /// - In summary, `self` and its flags will be set as follows:
-    /// 
-    /// | `modulo` | result value (self) | flags       |
-    /// |----------|---------------------|-------------|
-    /// | 0 or 1   | 0                   | `UNDEFINED` |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   underflow occurred even once before this current operation or
-    ///   `UNDERFLOW` flag is already set before this current operation,
-    ///   the `UNDERFLOW` flag is not changed even if this current operation
-    ///   does not cause underflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [panic_free_modular_sub_assign_uint()](struct@BigUInt#method.panic_free_modular_sub_assign_uint)
-    /// is proper rather than this method.
-    /// 
-    /// # Example 1 for a normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = UU32::from_uint(2_u8);
-    /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let rhs = 1_u8;
-    /// 
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "2");
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// a_biguint.panic_free_modular_sub_assign_uint(rhs, &m);
-    /// println!("After a_biguint.modular_sub_assign_uint({}, &m), a_biguint = {}", rhs, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "1");
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_modular_sub_assign_uint)
-    pub fn panic_free_modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        panic_free_modular_calc_assign!(self, Self::common_modular_sub_assign_uint, rhs, modulo);
-    }
-
-    fn common_modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    pub(super) fn common_modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
             + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
@@ -6408,7 +6063,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.abs_diff_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.abs_diff_uint)
     pub fn abs_diff_uint<U>(&self, other: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -6533,7 +6188,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.carrying_mul_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.carrying_mul_uint)
     pub fn carrying_mul_uint<U>(&self, rhs: U, carry: Self) -> (Self, Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -6661,7 +6316,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.carrying_mul_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.carrying_mul_assign_uint)
     pub fn carrying_mul_assign_uint<U>(&mut self, rhs: U, carry: Self) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -6746,7 +6401,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.widening_mul_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.widening_mul_uint)
     pub fn widening_mul_uint<U>(&self, rhs: U) -> (Self, Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -6839,7 +6494,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.widening_mul_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.widening_mul_assign_uint)
     pub fn widening_mul_assign_uint<U>(&mut self, rhs: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -6976,7 +6631,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_mul_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_mul_uint)
     pub fn wrapping_mul_uint<U>(&self, rhs: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -7053,7 +6708,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_mul_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_mul_assign_uint)
     pub fn wrapping_mul_assign_uint<U>(&mut self, rhs: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -7179,7 +6834,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_mul_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_mul_uint)
     pub fn overflowing_mul_uint<U>(&self, rhs: U) -> (Self, bool)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -7261,7 +6916,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_mul_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_mul_assign_uint)
     pub fn overflowing_mul_assign_uint<U>(&mut self, rhs: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -7352,7 +7007,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_mul_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_mul_uint)
     pub fn modular_mul_uint<U>(&self, rhs: U, modulo: &Self) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -7437,7 +7092,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_mul_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_mul_assign_uint)
     pub fn modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -7451,179 +7106,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         biguint_modular_calc_assign!(self, Self::common_modular_mul_assign_uint, rhs, modulo);
     }
 
-    // pub fn panic_free_modular_mul_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be multiplied to `self`, and primitive unsigned integer
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the modulo-product (`self` * `rhs`) % `modulo` with wrapping
-    /// (modular) multiplication at `modulo`.
-    /// 
-    /// # Features
-    /// - It takes the multiplication (= `product`) of `self` and `rhs`,
-    ///   and then finally returns the remainder of `product`
-    ///   divided by `modulo`.
-    /// - Wrapping (modular) multiplication at `modulo`.
-    /// - The differences of between this method `modular_mul_uint()` and the
-    ///   method `wrapping_mul_uint()` are, first, where wrapping around
-    ///   happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_mul_uint()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul_uint()` sets `OVERFLOW`
-    ///   flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `modulo` | return value | flags       |
-    /// |----------|--------------|-------------|
-    /// | 0 or 1   | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_modular_mul()](struct@BigUInt#method.panic_free_modular_mul)
-    /// is proper rather than this method `panic_free_modular_mul_uint()`.
-    /// 
-    /// # Example 1 for a normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let a_biguint = U256::from_string("31858186486050853753882811946768018742981669034276900586487291375468285").unwrap();
-    /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let mul_uint = 5_u8;
-    /// let res = a_biguint.panic_free_modular_mul_uint(mul_uint, &m);
-    /// println!("{} * {} = {} (mod {})", a_biguint, mul_uint, res, m);
-    /// assert_eq!(res.to_string(), "159290932430254268769414059733840093714908345171384502932436456877341425");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_modular_mul_uint)
-    pub fn panic_free_modular_mul_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_mul_assign_uint, rhs, modulo);
-    }
-
-    // pub fn panic_free_modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
-    /// and then assigns the result back to `self`.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be multiplied to `self`, and primitive unsigned integer
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - It takes the multiplication (= `product`) of `self` and `rhs`,
-    ///   and then finally returns the remainder of `product`
-    ///   divided by `modulo`.
-    /// - Wrapping (modular) multiplication at `modulo`.
-    /// - The differences between this method
-    ///   `panic_free_modular_mul_assign_uint()` and the method
-    ///   `wrapping_mul_assign_uint()` are, first, where wrapping
-    ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_mul_assign_uint()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul_assign_uint()` sets
-    ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of `self`
-    ///   will be set and `self` will have the value `0`.
-    /// - In summary, `self` and its flags will be set as follows:
-    /// 
-    /// | `modulo` | result value (self) | flags       |
-    /// |----------|---------------------|-------------|
-    /// | 0 or 1   | 0                   | `UNDEFINED` |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [panic_free_modular_mul_assign_uint()](struct@BigUInt#method.panic_free_modular_mul_assign_uint)
-    /// is proper rather than this method.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let mut a_biguint = U256::from_string("31858186486050853753882811946768018742981669034276900586487291375468285").unwrap();
-    /// let mul_uint = 5_u8;
-    /// 
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// a_biguint.panic_free_modular_mul_assign_uint(mul_uint, &m);
-    /// println!("After a_biguint.modular_mul_assign_uint(mul_uint, &m), a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "159290932430254268769414059733840093714908345171384502932436456877341425");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_modular_mul_assign_uint)
-    pub fn panic_free_modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        panic_free_modular_calc_assign!(self, Self::common_modular_mul_assign_uint, rhs, modulo);
-    }
-
-    fn common_modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    pub(super) fn common_modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
             + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
@@ -7692,7 +7175,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     /*** DIVISION ***/
 
-    fn common_divide_fully_uint<U>(&self, rhs: U) -> (Self, U)
+    pub(super) fn common_divide_fully_uint<U>(&self, rhs: U) -> (Self, U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
             + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
@@ -7796,7 +7279,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.divide_fully_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.divide_fully_uint)
     pub fn divide_fully_uint<U>(&self, rhs: U) -> (Self, U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -7810,107 +7293,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         if rhs.is_zero()
             { panic!(); }
         self.common_divide_fully_uint(rhs)
-    }
-
-    // pub fn panic_free_divide_fully_uint<U>(&self, rhs: U) -> (Self, Self)
-    /// Divides `self` by `rhs`,
-    /// and returns a tuple of a quotient and a remainder.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of primitive unsigned integral data type
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns tuple of a quotient and a remainder.
-    /// The quotient is of `Self` type, and the remainder is of the primitive
-    /// unsigned integral data type such as `u8`, `u16`, `u32`, `u64`,
-    /// and `u128`.
-    /// 
-    /// # Features
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - If 'self' is zero and `rhs` is non-zero,
-    ///   this method returns (zero, zero).
-    /// - If both `rhs` and 'self' are zero, the quotient will be zero,
-    ///   and its flags `UNDEFINED` and `DIVIDED_BY_ZERO` will be set,
-    ///   and the remainder will be zero,
-    ///   and its flag `DIVIDED_BY_ZERO` will be set.
-    /// - If `rhs` is zero and 'self' is non-zero, the quotient will have
-    ///   the maximum value of `Self`, and its flags `INFINITY` and
-    ///   `DIVIDED_BY_ZERO` will be set,
-    ///   and the remainder` will be zero,
-    ///   and its flag `DIVIDED_BY_ZERO` will be set.
-    /// - In summary, the quotient, the remainder and their flags
-    ///   will be set as follows:
-    /// 
-    /// | `rhs` | `self` | `quotient` | flags of `quotient`            | `remainder` | flags of `remainder` |
-    /// |-------|--------|------------|--------------------------------|-------------|----------------------|
-    /// | 0     | 0      | 0          | `UNDEFINED`, `DIVIDED_BY_ZERO` | 0           | `DIVIDED_BY_ZERO`    |
-    /// | 0     | != 0   | max        | `INFINITY`, `DIVIDED_BY_ZERO`  | 0           | `DIVIDED_BY_ZERO`    |
-    /// 
-    /// - This function is the base function for all the methods
-    ///   panic_free_*_div_uint(), panic_free_*_div_assign_uint(),
-    ///   panic_free_*_rem_uint(), and panic_free_*_rem_assign_uint().
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_divide_fully()](struct@BigUInt#method.panic_free_divide_fully)
-    /// is proper rather than this method `panic_free_divide_fully_uint()`.
-    /// 
-    /// # Example 1 for a normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let dividend = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = 87_u8;
-    /// let (quotient, remainder) = dividend.panic_free_divide_fully_uint(divisor);
-    /// println!("{} / {} => quotient = {} , remainder = {}", dividend, divisor, quotient, remainder);
-    /// assert_eq!(quotient.to_string(), "1419043551905275201680884938348044216837079832");
-    /// assert_eq!(quotient.is_overflow(), false);
-    /// assert_eq!(quotient.is_underflow(), false);
-    /// assert_eq!(quotient.is_infinity(), false);
-    /// assert_eq!(quotient.is_undefined(), false);
-    /// assert_eq!(quotient.is_divided_by_zero(), false);
-    /// assert_eq!(quotient.is_left_carry(), false);
-    /// assert_eq!(quotient.is_right_carry(), false);
-    /// 
-    /// assert_eq!(remainder.to_string(), "8");
-    /// assert_eq!(remainder.is_overflow(), false);
-    /// assert_eq!(remainder.is_underflow(), false);
-    /// assert_eq!(remainder.is_infinity(), false);
-    /// assert_eq!(remainder.is_undefined(), false);
-    /// assert_eq!(remainder.is_divided_by_zero(), false);
-    /// assert_eq!(remainder.is_left_carry(), false);
-    /// assert_eq!(remainder.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_divide_fully_uint)
-    pub fn panic_free_divide_fully_uint<U>(&self, rhs: U) -> (Self, Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        if rhs.is_zero()
-        {
-            if_rhs_is_zero!(self, rhs);
-        }
-        else
-        {
-            let (q, rem) = self.common_divide_fully_uint(rhs);
-            let r = Self::from_uint(rem);
-            (q, r)
-        }
     }
 
     // pub fn wrapping_div_uint<U>(&self, rhs: U) -> Self
@@ -7968,7 +7350,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_div_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_div_uint)
     pub fn wrapping_div_uint<U>(&self, rhs: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -8044,7 +7426,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_div_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_div_assign_uint)
     pub fn wrapping_div_assign_uint<U>(&mut self, rhs: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -8110,7 +7492,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_div_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_div_uint)
     pub fn overflowing_div_uint<U>(&self, rhs: U) -> (Self, bool)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -8191,7 +7573,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_div_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_div_assign_uint)
     pub fn overflowing_div_assign_uint<U>(&mut self, rhs: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -8203,165 +7585,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + PartialEq + PartialOrd
     {
         overflowing_calc_assign!(self, Self::wrapping_div_assign_uint, rhs);
-    }
-
-    // pub fn panic_free_div_uint<U>(&self, rhs: U) -> Self
-    /// Divides `self` by `rhs`, and returns the quotient.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of primitive unsigned integral data type
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    ///
-    /// # Output
-    /// It returns a quotient of `BigUInt` type,
-    /// and the quotient would never overflow. 
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - __It does not panic__ while the counterpart method
-    ///   `wrapping_div_uint()` will panic if `rhs` is zero.
-    /// - If `rhs` is zero and `self` is not zero, the quotient will have
-    ///   maximum value of `BigUInt` and the flags of the quotient,
-    ///   `INFINITY` and `DIVIDED_BY_ZERO` will be set.
-    /// - If `rhs` is zero and `self` is zero, the quotient will have
-    ///   value `zero` of `BigUInt` type and the flags of the quotient,
-    ///   `DIVIDED_BY_ZERO` and `UNDEFINED` will be set.
-    /// - In summary, the quotient and its flags will be set as follows:
-    /// 
-    /// | `rhs` | `self` | `quotient` | flags of `quotient`            |
-    /// |-------|--------|------------|--------------------------------|
-    /// | 0     | 0      | 0          | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0     | != 0   | max        | `INFINITY`, `DIVIDED_BY_ZERO`  |
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_div_uint()](struct@BigUInt#method.panic_free_div_uint)
-    /// is a bit faster than this method `wrapping_div()`.
-    /// If `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_div_uint()](struct@BigUInt#method.panic_free_div_uint).
-    /// 
-    /// # Example 1 for a normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = 87_u8;
-    /// let quotient = dividend.panic_free_div_uint(divisor);
-    /// println!("{} / {} = {}", dividend, divisor, quotient);
-    /// assert_eq!(quotient.to_string(), "1419043551905275201680884938348044216837079832");
-    /// assert_eq!(quotient.is_overflow(), false);
-    /// assert_eq!(quotient.is_underflow(), false);
-    /// assert_eq!(quotient.is_infinity(), false);
-    /// assert_eq!(quotient.is_divided_by_zero(), false);
-    /// assert_eq!(quotient.is_undefined(), false);
-    /// assert_eq!(quotient.is_left_carry(), false);
-    /// assert_eq!(quotient.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_div_uint)
-    pub fn panic_free_div_uint<U>(&self, rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc_div!(self, Self::panic_free_divide_fully_uint, rhs);
-    }
-
-    // pub fn panic_free_div_assign_uint<U>(&mut self, rhs: U)
-    /// Divides `self` by `rhs`, and assigns the quotient to `self` back.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of primitive unsigned integral data type
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - __It does not panic__ while the counterpart method
-    ///   `wrapping_div_uint()` will panic if `rhs` is zero.
-    /// - If `rhs` is zero and `self` is not zero, the quotient will have
-    ///   maximum value of `BigUInt` and the flags of `self`,
-    ///   `INFINITY` and `DIVIDED_BY_ZERO` will be set.
-    /// - If `rhs` is zero and `self` is zero, the quotient will have
-    ///   value `zero` of `BigUInt` type and the flags of `self`,
-    ///   `DIVIDED_BY_ZERO` and `UNDEFINED` will be set.
-    /// - In summary, the quotient and its flags will be set as follows:
-    /// 
-    /// | `rhs` | `self` | `quotient` (= `self`) | flags of `quotient`            |
-    /// |-------|--------|-----------------------|--------------------------------|
-    /// | 0     | 0      | 0                     | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0     | != 0   | max                   | `INFINITY`, `DIVIDED_BY_ZERO`  |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_div_assign()](struct@BigUInt#method.panic_free_div_assign)
-    /// is proper rather than this method `panic_free_div_assign_uint()`.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let divisor = 87_u8;
-    /// a_biguint.panic_free_div_assign_uint(divisor);
-    /// println!("After a_biguint.panic_free_div_assign_uint(&divisor),\na_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_div_assign_uint)
-    pub fn panic_free_div_assign_uint<U>(&mut self, rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        panic_free_calc_div_rem_assign!(self, Self::panic_free_div_uint, rhs);
     }
 
     // pub fn modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
@@ -8416,7 +7639,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_div_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_div_uint)
     pub fn modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -8492,7 +7715,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_div_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_div_assign_uint)
     pub fn modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -8525,254 +7748,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         if rhs.length_in_bytes() > T::size_in_bytes()
         {
             self.modular_div_assign(&Self::from_uint(mrhs), modulo);
-        }
-        else if modulo.gt_uint(rhs)
-        {
-            self.wrapping_div_assign_uint(mrhs);
-        }
-        else
-        {
-            let modu = modulo.into_uint::<U>();
-            let mself = self.into_uint::<U>().wrapping_rem(modu);
-            self.set_uint(mself.wrapping_div(mrhs));
-        }
-        self.set_flag_bit(flags);
-    }
-
-    // pub fn panic_free_modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and returns the quotient.
-    /// 
-    /// # Arguments
-    /// - `rhs` divides `self`, and is of primitive unsigned integral data type
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the quotient of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
-    /// 
-    /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    ///   and then finally returns the quotient of `rd1` divided by `rd2`.
-    /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, the quotient will have the value `zero` and
-    ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, the quotient will have the value `zero` and
-    ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is zero or multiple of `modulo` then, the
-    ///   quotient will have the value `zero`, and `UNDEFINED` and
-    ///   `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is not zero, and `modulo` is neither zero nor
-    ///   one, the quotient will have the max value and `INFINITY`, and
-    ///   `DIVIDED_BY_ZERO` flags will be set.
-    /// - In summary, the quotients and the flags will be set as follows:
-    /// 
-    /// | `modulo` | `rhs`               | `self`              | quotient | flags                          |
-    /// |----------|---------------------|---------------------|----------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | >= 0                | 0        | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0 (mod `modulo`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | >= 2     | 0 (mod `modulo`)    | != 0 (mod `modulo`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_modular_div()](struct@BigUInt#method.panic_free_modular_div)
-    /// is proper rather than this method `panic_free_modular_div_uint()`.
-    /// 
-    /// # Example 1 for a normal case for modulo >= 2 and dividend != 0 and divisor != 0
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = 128_u8;
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.modular_div_uint(divisor, &modulo);
-    /// println!("{} / {} = {}", dividend, divisor, quotient);
-    /// assert_eq!(quotient.to_string(), "3");
-    /// assert_eq!(quotient.is_overflow(), false);
-    /// assert_eq!(quotient.is_underflow(), false);
-    /// assert_eq!(quotient.is_infinity(), false);
-    /// assert_eq!(quotient.is_divided_by_zero(), false);
-    /// assert_eq!(quotient.is_undefined(), false);
-    /// assert_eq!(quotient.is_left_carry(), false);
-    /// assert_eq!(quotient.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_modular_div_uint)
-    pub fn panic_free_modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_div_assign_uint, rhs, modulo);
-    }
-
-    // pub fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and assigns the quotient back to `self`.
-    /// 
-    /// # Arguments
-    /// - `rhs` divides `self`, and is of primitive unsigned integral data type
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    ///   and then finally assigns the quotient of `rd1` divided by `rd2`
-    ///   back to `self`.
-    /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, the quotient will have the value `zero` and
-    ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, the quotient will have the value `zero` and
-    ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is zero or multiple of `modulo` then, the
-    ///   quotient will have the value `zero`, and `UNDEFINED` and
-    ///   `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is not zero, and `modulo` is neither zero nor
-    ///   one, the quotient will have the max value and `INFINITY`, and
-    ///   `DIVIDED_BY_ZERO` flags will be set.
-    /// - In summary, the quotients and the flags will be set as follows:
-    /// 
-    /// | `modulo` | `rhs`               | `self`              | quotient | flags                          |
-    /// |----------|---------------------|---------------------|----------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | >= 0                | 0        | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0 (mod `modulo`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | >= 2     | 0 (mod `modulo`)    | != 0 (mod `modulo`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [panic_free_modular_div_assign()](struct@BigUInt#method.panic_free_modular_div_assign)
-    /// is proper rather than this method.
-    /// 
-    /// # Example 1 for a normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = 128_u8;
-    /// let modulo = UU32::from_uint(100_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// a_biguint.panic_free_modular_div_assign_uint(divisor, &modulo);
-    /// println!("After a_biguint.modular_div_assign_uint({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "3");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_modular_div_assign_uint)
-    pub fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        let mut terminated = false;
-        let mut mrhs = rhs;
-        if !modulo.is_zero_or_one()
-        {
-            if *self >= *modulo
-            {
-                self.wrapping_rem_assign(modulo);
-                self.reset_all_flags();
-            }
-            if modulo.le_uint(rhs)
-            {
-                let modu = modulo.into_uint::<U>();
-                mrhs = rhs.wrapping_rem(modu);
-            }
-        }
-
-        if mrhs.is_zero()
-        {
-            if self.is_zero()
-            {
-                self.set_zero();
-                self.set_flag_bit(Self::UNDEFINED | Self::DIVIDED_BY_ZERO);
-            }
-            else
-            {
-                self.set_max();
-                self.set_flag_bit(Self::INFINITY | Self::DIVIDED_BY_ZERO);
-            }
-            terminated = true;
-        }
-        if modulo.is_zero_or_one()
-        {
-            self.set_zero();
-            self.set_undefined();
-            return;
-        }
-        if terminated
-            { return; }
-
-        let flags = self.get_all_flags();
-        if *self >= *modulo
-        {
-            self.wrapping_rem_assign(modulo);
-            self.reset_all_flags();
-        }
-
-        if mrhs.length_in_bytes() > T::size_in_bytes()
-        {
-            self.modular_div_assign(&Self::from_uint(rhs), modulo);
         }
         else if modulo.gt_uint(rhs)
         {
@@ -8835,7 +7810,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_rem_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_rem_uint)
     pub fn wrapping_rem_uint<U>(&self, rhs: U) -> U
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -8912,7 +7887,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_rem_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_rem_assign_uint)
     pub fn wrapping_rem_assign_uint<U>(&mut self, rhs: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -8975,7 +7950,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_rem_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_rem_uint)
     pub fn overflowing_rem_uint<U>(&self, rhs: U) -> (U, bool)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -9056,7 +8031,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_rem_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_rem_assign_uint)
     pub fn overflowing_rem_assign_uint<U>(&mut self, rhs: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -9069,156 +8044,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         self.wrapping_rem_assign_uint(rhs);
         false
-    }
-
-    // pub fn panic_free_rem_uint<U>(&self, rhs: U) -> Self
-    /// Divides `self` by `rhs`, and returns the remainder.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of primitive unsigned integral data type
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    ///
-    /// # Output
-    /// It returns a remainder of `BigUInt` type,
-    /// and the remainder would never overflow. 
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - __It does not panic__ while the counterpart method
-    ///   `wrapping_rem_uint()` will panic if `rhs` is zero.
-    /// - If `rhs` is `zero`, `self` will be `zero` and the `DIVIDED_BY_ZERO` flag
-    ///   of `self` will be set.
-    /// - In summary, the remainder and its flags will be set as follows:
-    /// 
-    /// | `rhs` | `remainder` (= `self`) | flags of `remainder` |
-    /// |-------|------------------------|----------------------|
-    /// | 0     | 0                      | `DIVIDED_BY_ZERO`    |
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_rem_uint()](struct@BigUInt#method.panic_free_rem_uint)
-    /// is a bit faster than this method `wrapping_rem()`.
-    /// If `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_rem_uint()](struct@BigUInt#method.panic_free_rem_uint).
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let dividend = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = 87_u8;
-    /// let remainder = dividend.panic_free_rem_uint(divisor);
-    /// println!("{} % {} = {}", dividend, divisor, remainder);
-    /// assert_eq!(remainder.to_string(), "8");
-    /// assert_eq!(remainder.is_overflow(), false);
-    /// assert_eq!(remainder.is_underflow(), false);
-    /// assert_eq!(remainder.is_infinity(), false);
-    /// assert_eq!(remainder.is_divided_by_zero(), false);
-    /// assert_eq!(remainder.is_undefined(), false);
-    /// assert_eq!(remainder.is_left_carry(), false);
-    /// assert_eq!(remainder.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_rem_uint)
-    pub fn panic_free_rem_uint<U>(&self, rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc_rem!(self, Self::panic_free_divide_fully_uint, rhs);
-    }
-
-    // pub fn panic_free_rem_assign_uint<U>(&mut self, rhs: U)
-    /// Divides `self` by `rhs`, and assigns the remainder to `self` back.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of primitive unsigned integral data type
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - __It does not panic__ while the counterpart method
-    ///   `wrapping_rem_uint()` will panic if `rhs` is zero.
-    /// - If `rhs` is `zero`, the remainder is `zero` and the flag
-    ///   `DIVIDED_BY_ZERO` of `remainder` will be set.
-    /// - In summary, the remainder and its flags will be set as follows:
-    /// 
-    /// | `rhs` | `remainder` | flags of `remainder` |
-    /// |-------|-------------|----------------------|
-    /// | 0     |  0          | `DIVIDED_BY_ZERO`    |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_rem_assign()](struct@BigUInt#method.panic_free_rem_assign)
-    /// is proper rather than this method `panic_free_rem_assign_uint()`.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let divisor = 87_u8;
-    /// a_biguint.wrapping_rem_assign_uint(divisor);
-    /// println!("After a_biguint.wrapping_rem_assign_uint({}), a_biguint = {}", divisor, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "8");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_rem_assign_uint)
-    pub fn panic_free_rem_assign_uint<U>(&mut self, rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        panic_free_calc_div_rem_assign!(self, Self::panic_free_rem_uint, rhs);
     }
 
     // pub fn modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> U
@@ -9266,7 +8091,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_rem_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_rem_uint)
     pub fn modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> U
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -9344,7 +8169,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_rem_assign_uint)
+    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_rem_assign_uint)
     pub fn modular_rem_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -9383,234 +8208,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             self.wrapping_rem_assign_uint(rhs);
         }
         else    // if (U::size_in_bytes() <= T::size_in_bytes()) && (modulo <= rhs)
-        {
-            let modu = modulo.into_uint::<U>();
-            let mself = self.into_uint::<U>().wrapping_rem(modu);
-            self.set_uint(mself.wrapping_rem(mrhs));
-        }
-        self.set_flag_bit(flags);
-    }
-
-    // pub fn panic_free_modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and returns the remainder.
-    /// 
-    /// # Arguments
-    /// - `rhs` divides `self`, and is of primitive unsigned integral data type
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the remainder of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
-    /// 
-    /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    ///   and then finally returns the remainder of `rd1` divided by `rd2`.
-    /// - Overflow will not happen.
-    /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, the remainder will have the value `zero` and
-    ///   `DIVIDED_BY_ZERO` flag of the remainder will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, the remainder will have the value `zero` and
-    ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo` then, the remainder will have the value `zero` and
-    ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - In summary, the remainder and the flags will be set as follows:
-    /// 
-    /// | `modulo` | `rhs`               | remainder | flags                          |
-    /// |----------|---------------------|-----------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | 0         | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | 0         | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0         | `DIVIDED_BY_ZERO`              |
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_modular_rem()](struct@BigUInt#method.panic_free_modular_rem)
-    /// is proper rather than this method `panic_free_modular_rem_uint()`.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = 128_u8;
-    /// let modulo = U256::from_uint(100_u8);
-    /// let remainder = dividend.panic_free_modular_rem_uint(divisor, &modulo);
-    /// println!("{} % {} = {} (mod {})", dividend, divisor, remainder, modulo);
-    /// assert_eq!(remainder.to_string(), "8");
-    /// assert_eq!(remainder.is_overflow(), false);
-    /// assert_eq!(remainder.is_underflow(), false);
-    /// assert_eq!(remainder.is_infinity(), false);
-    /// assert_eq!(remainder.is_undefined(), false);
-    /// assert_eq!(remainder.is_divided_by_zero(), false);
-    /// assert_eq!(remainder.is_left_carry(), false);
-    /// assert_eq!(remainder.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_modular_rem_uint)
-    pub fn panic_free_modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_rem_assign_uint, rhs, modulo);
-    }
-
-    // pub fn panic_free_modular_rem_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and assigns the remainder back to `self`.
-    /// 
-    /// # Arguments
-    /// - `rhs` divides `self`, and is of primitive unsigned integral data type
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    ///   and then finally assigns the remainder of `rd1` divided by `rd2`
-    ///   back to `self`.
-    /// - Overflow will not happen.
-    /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, `self` will have the value `zero` and its
-    ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, `self` will have the value `zero` and its
-    ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo` then, `self` will have the value `zero` and its
-    ///   `DIVIDED_BY_ZERO` flag will be set.
-    /// - In summary, `self` and its flags will be set as follows:
-    /// 
-    /// | `modulo` | `rhs`               | remainder (= `self`) | flags                          |
-    /// |----------|---------------------|----------------------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | 0                    | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | 0                    | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0                    | `DIVIDED_BY_ZERO`              |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [panic_free_modular_rem_assign()](struct@BigUInt#method.panic_free_modular_rem_assign)
-    /// is proper rather than this method.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let divisor = 128_u8;
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_rem_assign_uint(divisor, &modulo);
-    /// println!("After a_biguint.modular_rem_assign_uint({}), a_biguint = {}", divisor, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "8");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.panic_free_modular_rem_assign_uint)
-    pub fn panic_free_modular_rem_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        let mut terminated = false;
-        let mut mrhs = rhs;
-        let flags = self.get_all_flags();
-        if !modulo.is_zero_or_one()
-        {
-            if *self >= *modulo
-            {
-                self.wrapping_rem_assign(modulo);
-                self.reset_all_flags();
-            }
-            if modulo.le_uint(rhs)
-            {
-                let modu = modulo.into_uint::<U>();
-                mrhs = rhs.wrapping_rem(modu);
-            }
-        }
-
-        if mrhs.is_zero()
-        {
-            self.set_zero();
-            self.set_divided_by_zero();
-            terminated = true;
-        }
-        if modulo.is_zero_or_one()
-        {
-            if !terminated
-                { self.set_zero(); }
-            self.set_undefined();
-            terminated = true;
-        }
-        if terminated
-        {
-            self.set_flag_bit(flags);
-            return;
-        }
-
-        if rhs.length_in_bytes() > T::size_in_bytes()
-        {
-            self.panic_free_modular_rem_assign(&Self::from_uint(rhs), modulo);
-        }
-        else if modulo.gt_uint(rhs)
-        {
-            self.wrapping_rem_assign_uint(rhs);
-        }
-        else    // if (U::size_in_bytes() <= T::size_in_bytes()) && (*self < modulo <= rhs)
         {
             let modu = modulo.into_uint::<U>();
             let mself = self.into_uint::<U>().wrapping_rem(modu);
@@ -9675,7 +8272,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.pow_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.pow_uint)
     pub fn pow_uint<U>(&self, exp: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -9752,7 +8349,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.pow_assign_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.pow_assign_uint)
     pub fn pow_assign_uint<U>(&mut self, exp: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -9764,161 +8361,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + PartialEq + PartialOrd
     {
         general_pow_assign!(self, Self::common_pow_assign_uint, exp);
-    }
-
-    // pub fn panic_free_pow_uint<U>(&self, exp: U) -> Self
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`,
-    /// and returns the result. The type `U` has the trait `SmallUInt`.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is a primitive unsigned
-    /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the result of `self` raised to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - If overflowing happens, the `OVERFLOW` flag of the return value will
-    ///   be set.
-    /// - If both `self` and `exp` are `zero`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return will have the value `0`.
-    /// - In summary, the result value and its flags will be set as follows:
-    /// 
-    /// | `self` | `exp` | return value | flags       |
-    /// |--------|-------|--------------|-------------|
-    /// | 0      | 0     | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// - If `exp` is bigger than `u128`, the method
-    ///   [panic_free_pow()](struct@BigUInt#method.panic_free_pow)
-    ///   is proper rather than this method `panic_free_pow_uint()`.
-    /// - If you need to know whether or not overflow occurs, use the method
-    ///   [overflowing_pow_uint()](struct@BigUInt#method.overflowing_pow_uint).
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = UU32::from_uint(10_u8);
-    /// let exp = 30_u8;
-    /// let res = a_biguint.panic_free_pow_uint(exp);
-    /// println!("{} ** {} = {}", a_biguint, exp, res);
-    /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_pow_uint)
-    pub fn panic_free_pow_uint<U>(&self, exp: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_pow_assign_uint, exp);
-    }
-
-    // pub fn panic_free_pow_assign_uint<U>(&self, exp: U) -> Self
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`,
-    /// and assign the result to `self` back.
-    /// The type `U` has the trait `SmallUInt`.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is a primitive unsigned
-    /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - It calls wrapping_pow() internally.
-    /// - If overflowing happens, the `OVERFLOW` flag of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// - If both `self` and `exp` are `zero`, the `UNDEFINED` flag of `self`
-    ///   will be set and the result value (= `self`) will have the value `0`.
-    /// - In summary, the result value and its flags will be set as follows:
-    /// 
-    /// | `self` | `exp` | result value | flags       |
-    /// |--------|-------|--------------|-------------|
-    /// | 0      | 0     | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// - If `exp` is bigger than `u128`, the method
-    ///   [panic_free_pow_assign()](struct@BigUInt#method.panic_free_pow_assign)
-    ///   is proper rather than this method `panic_free_pow_assign_uint()`.
-    /// - If you need to know whether or not overflow occurs, use the method
-    ///   [overflowing_pow_assign_uint()](struct@BigUInt#method.overflowing_pow_assign_uint).
-    /// 
-    /// # Example 1
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = U256::from_uint(10_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let exp = 10_u8;
-    /// a_biguint.panic_free_pow_assign_uint(exp);
-    /// println!("After a_biguint.panic_free_pow_assign_uint({}), a_biguint = {}", exp, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "10000000000");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_pow_assign_uint)
-    pub fn panic_free_pow_assign_uint<U>(&mut self, exp: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        panic_free_calc_pow_assign!(self, Self::common_pow_assign_uint, exp);
     }
 
     // pub fn wrapping_pow_uint<U>(&self, exp: U) -> Self
@@ -9978,7 +8420,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.wrapping_pow_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.wrapping_pow_uint)
     pub fn wrapping_pow_uint<U>(&self, exp: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -10058,7 +8500,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.wrapping_pow_assign_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.wrapping_pow_assign_uint)
     pub fn wrapping_pow_assign_uint<U>(&mut self, exp: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -10072,7 +8514,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         general_pow_assign!(self, Self::common_pow_assign_uint, exp);
     }
 
-    fn common_pow_assign_uint<U>(&mut self, exp: U)
+    pub(super) fn common_pow_assign_uint<U>(&mut self, exp: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
             + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
@@ -10166,7 +8608,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow_uint)
     pub fn overflowing_pow_uint<U>(&self, exp: U) -> (Self, bool)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -10251,7 +8693,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow_assign_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow_assign_uint)
     pub fn overflowing_pow_assign_uint<U>(&mut self, exp: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -10320,7 +8762,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow_uint)
     pub fn modular_pow_uint<U>(&self, exp: U, modulo: &Self) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -10399,7 +8841,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow_assign_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow_assign_uint)
     pub fn modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -10424,190 +8866,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         self.common_modular_pow_assign_uint(mexp, modulo);
     }
 
-    // pub fn panic_free_modular_pow_uint<U>(&self, exp: U, modulo: &Self) -> Self
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
-    /// and returns the result. The type `U` has the trait `SmallUInt`.
-    /// 
-    /// # Arguments
-    /// - `exp` is the power to raise `self` to, and is a primitive unsigned
-    ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
-    ///    and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the result of `self` raised to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - If overflowing (wrapping around at `modulo`) happens,
-    ///   the `OVERFLOW` flag of the return value will be set.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - If both `self` and `exp` are `zero`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `modulo` | `self` | `exp` | return value | flags       |
-    /// |----------|--------|-------|--------------|-------------|
-    /// | 0 or 1   | >= 0   | >= 0  | 0            | `UNDEFINED` |
-    /// | > 1      | 0      | 0     | 0            | `UNDEFINED` |
-    /// 
-    /// 
-    /// # Counterpart Method
-    /// If `exp` is bigger than `u128`, use the method
-    /// [panic_free_modular_pow()](struct@BigUInt#method.panic_free_modular_pow)
-    /// instead.
-    /// 
-    /// # Example 1 for Noraml case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let a_biguint = U256::from_uint(10_u8);
-    /// let exp = 30_u8;
-    /// let modulo = U256::halfmax();
-    /// let res = a_biguint.modular_pow_uint(exp, &modulo);
-    /// println!("{} ** {} (mod {}) = {}", a_biguint, exp, modulo, res);
-    /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.carrying_add_assign_uint)
-    pub fn panic_free_modular_pow_uint<U>(&self, exp: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_pow_assign_uint, exp, modulo);
-    }
-
-    // pub fn panic_free_modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
-    /// and assign the result to `self` back.
-    /// The type `U` has the trait `SmallUInt`.
-    /// 
-    /// # Arguments
-    /// - `exp` is the power to raise `self` to, and is a primitive unsigned
-    ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
-    ///    and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - If both `self` and `exp` are `zero`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `modulo` | `self` | `exp` | result value | flags       |
-    /// |----------|--------|-------|--------------|-------------|
-    /// | 0 or 1   | >= 0   | >= 0  | 0            | `UNDEFINED` |
-    /// | > 1      | 0      | 0     | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// If `exp` is bigger than `u128`, the method
-    /// [panic_free_modular_pow_assign()](struct@BigUInt#method.panic_free_modular_pow_assign)
-    /// is proper rather than this method.
-    /// 
-    /// # Example 1 for Noraml case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let mut a_biguint = U256::from_uint(10_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let exp = 30_u8;
-    /// let modulo = U256::halfmax();
-    /// a_biguint.panic_free_modular_pow_assign_uint(exp, &modulo);
-    /// println!("After a_biguint.panic_free_modular_pow_assign_uint({}, {}), a_biguint = {}", exp, modulo, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_modular_pow_assign_uint)
-    pub fn panic_free_modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        if modulo.is_zero_or_one() || (self.is_zero() && exp.is_zero())
-        {
-            self.set_zero();
-            self.set_undefined();
-            return;
-        }
-        if *self >= *modulo
-            { self.wrapping_rem_assign(modulo); }
-        let mut mexp = exp;
-        if modulo.le_uint(exp)
-        {
-            let modu = modulo.into_uint::<U>();
-            mexp = exp.wrapping_rem(modu);
-        }
-        if self.is_zero() && mexp.is_zero()
-        {
-            self.set_zero();
-            self.set_undefined();
-            return;
-        }
-        self.common_modular_pow_assign_uint(mexp, modulo);
-    }
-
-    fn common_modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
+    pub(super) fn common_modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
             + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
@@ -10670,7 +8929,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.iroot_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.iroot_uint)
     pub fn iroot_uint<U>(&self, exp: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -10747,7 +9006,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.iroot_assign_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.iroot_assign_uint)
     pub fn iroot_assign_uint<U>(&mut self, exp: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -10761,83 +9020,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         calc_to_calc_assign!(self, Self::iroot_uint, exp);
     }
 
-    // pub fn panic_free_iroot_uint<U>(&self, exp: U) -> Self
-    /// Calculates the `exp`-th root of `self`, rounded down,
-    /// and returns the result value.
-    ///
-    /// # Arguments
-    /// `exp` is the power of the root of `self` and is a primitive
-    /// unsigned integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `exp` is `0`, it will panic.
-    /// 
-    /// # Output
-    /// If the exact value of `exp`-th root of `self` can be expressed with
-    /// `Self`-typed unsigned integer, it will be returned.
-    /// Otherwise, the `Self`-typed biggest unsigned integer that is
-    /// less than the exact value of `exp`-th root of `self` will be returned.
-    /// 
-    /// # Features
-    /// - If `exp` is greater than zero and `self` is greater than 1,
-    ///   the result of this method is never greater than `self`.
-    ///   So, this method never causes overflow.
-    /// - If `exp` is zero and `self` is either zero or one,
-    ///   the return value will be zero and 
-    ///   the flags `UNDEFINED` of the return value will be set.
-    /// - If `exp` is zero and `self` is greater than one, the return value
-    ///   will be the maximum and the flags `UNDEFINED`, and `INFINITY`
-    ///   of the return value will be set.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `exp` | `self` | return value | flags                   |
-    /// |-------|--------|--------------|-------------------------|
-    /// | 0     | 0 or 1 | 0            | `UNDEFINED`             |
-    /// | 0     | >= 2   | max          | `INFINITY`, `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// If `exp` is bigger than `u128`, the method
-    /// [panic_free_iroot()](struct@BigUInt#method.panic_free_iroot)
-    /// is proper rather than this method.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
-    /// let exp = 8_u8;
-    /// let res = a_biguint.panic_free_iroot_uint(exp);
-    /// println!("The {}-th root of {} is {}.", exp, a_biguint, res);
-    /// assert_eq!(res.to_string(), "100000000");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_iroot_uint)
-    pub fn panic_free_iroot_uint<U>(&self, exp: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        general_panic_free_calc_iroot!(self, Self::common_iroot_uint, exp);
-    }
-
-    fn common_iroot_uint<U>(&self, exp: U) -> Self
+    pub(super) fn common_iroot_uint<U>(&self, exp: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
             + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
@@ -10909,92 +9092,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
     }
 
-    // pub fn panic_free_iroot_assign_uint<U>(&mut self, exp: U)
-    /// Calculates the `exp`-th root of `self`, rounded down,
-    /// and assigns the result back to `self`.
-    ///
-    /// # Arguments
-    /// `exp` is the power of the root of `self` and is a primitive
-    /// unsigned integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - `self` will be the exp-th root of `self` or biggest value under the
-    ///   exp-th root of `self`.
-    /// - The result of this method is never greater than `self` and so
-    ///   never causes overflow.
-    /// - If `exp` is greater than zero and `self` is greater than 1, `self`
-    ///   will never be greater than `self` and so it never causes overflow.
-    /// - If `exp` is zero and `self` is either zero or one, `self` will be
-    ///   zero and the flags `UNDEFINED` of the return value will be set.
-    /// - If `exp` is zero and `self` is greater than one, `self` will be the
-    ///   maximum and the flags `UNDEFINED` and `INFINITY` of `self` will be
-    ///   set.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `exp` | `self` | result | flags                   |
-    /// |-------|--------|--------|-------------------------|
-    /// | 0     | 0 or 1 | 0      | `UNDEFINED`             |
-    /// | 0     | >= 2   | max    | `INFINITY`, `UNDEFINED` |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `exp` is bigger than `u128`, the method
-    /// [panic_free_iroot_assign()](struct@BigUInt#method.panic_free_iroot_assign)
-    /// is proper rather than this method.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let exp = 8_u8;
-    /// a_biguint.panic_free_iroot_assign_uint(exp);
-    /// println!("After a_biguint.panic_free_iroot_assign_uint({}), a_biguint = {}.", exp, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "100000000");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_iroot_assign_uint)
-    pub fn panic_free_iroot_assign_uint<U>(&mut self, exp: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        calc_to_calc_assign!(self, Self::panic_free_iroot_uint, exp);
-    }
-
     // pub fn ilog_uint<U>(&self, base: U) -> Self
     /// Calculates the logarithm of the number with respect to `base`,
     /// rounded down, and returns the result.
@@ -11042,7 +9139,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog_uint)
     pub fn ilog_uint<U>(&self, base: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -11108,7 +9205,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog_assign_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog_assign_uint)
     pub fn ilog_assign_uint<U>(&mut self, base: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -11122,83 +9219,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         calc_to_calc_assign!(self, Self::ilog_uint, base);
     }
 
-    // pub fn panic_free_ilog_uint<U>(&self, base: U) -> Self
-    /// Calculates the logarithm of the number with respect to `base`,
-    /// rounded down, and returns the result.
-    ///
-    /// # Arguments
-    /// `base` is the base of logarithm of `self`, and is a primitive unsigned
-    /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// `base` should be greater than 1.
-    ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the logarithm of the number with respect to `base`,
-    /// rounded down.
-    /// 
-    /// # Features
-    /// - If `self` is zero, the return value will be zero and the flag
-    ///   `UNDEFINED` of the return value will be set.
-    /// - If `self` is one and `base` is either zero or one, the return
-    ///   value will be zero and the flag `UNDEFINED` of the return
-    ///   value will be set.
-    /// - If `self` is greater than 1 and `base` is either zero or one, the return
-    ///   value will be maximum value and the flags `UNDEFINED` and `INFINITY`
-    ///   of the return value will be set.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `self` | `base` | result | flags                   |
-    /// |--------|--------|--------|-------------------------|
-    /// | 0      | --     | 0      | `UNDEFINED`             |
-    /// | 1      | 0 or 1 | 0      | `UNDEFINED`             |
-    /// | >= 2   | 0 or 1 | max    | `UNDEFINED`, `INFINITY` |
-    /// 
-    /// # Counterpart Methods
-    /// This method might not be optimized owing to implementation details.
-    /// [panic_free_ilog2()](struct@BigUInt#method.panic_free_ilog2)
-    /// can produce results more efficiently for base 2, and
-    /// [panic_free_ilog10()](struct@BigUInt#method.panic_free_ilog10)
-    /// can produce results more efficiently for base 10.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
-    /// let base = 1_0000_0000_0000_0000_0000_0000_0000_0000_u128;
-    /// let res = a_biguint.panic_free_ilog_uint(base);
-    /// println!("The logarithm of {} with respect to {} is {}.", a_biguint, base, res);
-    /// assert_eq!(res.to_string(), "2");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_ilog_uint)
-    pub fn panic_free_ilog_uint<U>(&self, base: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        general_panic_free_calc_ilog!(self, Self::common_ilog_uint, base);
-    }
-
-    fn common_ilog_uint<U>(&self, base: U) -> Self
+    pub(super) fn common_ilog_uint<U>(&self, base: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
             + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
@@ -11209,86 +9230,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + PartialEq + PartialOrd
     {
         general_calc_common_ilog!(self, Self::wrapping_div_assign_uint, base);
-    }
-
-    // pub fn panic_free_ilog_assign_uint<U>(&mut self, base: U)
-    /// Calculates the logarithm of the number with respect to `base`,
-    /// rounded down, and assigns the result back to `self`.
-    ///
-    /// # Arguments
-    /// `base` is the base of logarithm of `self`, and is a primitive unsigned
-    /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// `base` should be greater than 1.
-    ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - If `self` is zero, the result will be zero and the flag
-    ///   `UNDEFINED` of `self` will be set.
-    /// - If `self` is one and `base` is either zero or one, the result
-    ///   will be zero and the flag `UNDEFINED` of `self` will be set.
-    /// - If `self` is greater than 1 and `base` is either zero or one,
-    ///   the result will be maximum value and the flags `UNDEFINED`
-    ///   and `INFINITY` of `self` will be set.
-    /// - In summary, the result and the flags of `self` will be set as follows:
-    /// 
-    /// | `self` | `base` | result | flags                   |
-    /// |--------|--------|--------|-------------------------|
-    /// | 0      | --     | 0      | `UNDEFINED`             |
-    /// | 1      | 0 or 1 | 0      | `UNDEFINED`             |
-    /// | >= 2   | 0 or 1 | max    | `UNDEFINED`, `INFINITY` |
-    /// 
-    /// # Counterpart Methods
-    /// This method might not be optimized owing to implementation details.
-    /// [panic_free_ilog2_assign()](struct@BigUInt#method.panic_free_ilog2_assign)
-    /// can produce results more efficiently for base 2, and
-    /// [panic_free_ilog10_assign()](struct@BigUInt#method.panic_free_ilog10_assign)
-    /// can produce results more efficiently for base 10.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let base = 1_0000_0000_0000_0000_0000_0000_0000_0000_u128;
-    /// a_biguint.panic_free_ilog_assign_uint(base);
-    /// println!("After a_biguint.panic_free_ilog_assign_uint({}),\na_biguint = {}.", base, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "2");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_ilog_assign_uint)
-    pub fn panic_free_ilog_assign_uint<U>(&mut self, base: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        calc_to_calc_assign!(self, Self::panic_free_ilog_uint, base);
     }
 
 
@@ -11345,7 +9286,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd_uint)
     pub fn gcd_uint<U>(&self, other: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -11417,7 +9358,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd_assign_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd_assign_uint)
     pub fn gcd_assign_uint<U>(&mut self, other: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -11431,170 +9372,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         calc_to_calc_assign!(self, Self::gcd_uint, other);
     }
 
-    // pub fn panic_free_gcd_uint<U>(&self, other: U) -> Self
-    /// Calculates the greatest common divisor of `self` and `other`,
-    /// and returns the result.
-    /// If you would like to know greatest common divisor more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Greatest_common_divisor).
-    /// 
-    /// # Argument
-    /// The greatest common diviser of `self` and `other` is calculated.
-    /// `other` is a primitive unsigned integer such as `u8`, `u16`, `u32`,
-    /// `u64`, and `u128`.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns The greatest common diviser of `self` and `other`.
-    /// 
-    /// # Features
-    /// - Both `self` and `other` should natural numbers. So, if either `self`
-    ///   or `other` is zero, getting greatest common diviser is meaningless.
-    ///   In this case, this method returns zero,
-    ///   and sets `UNDEFINED` flag of the return value.
-    /// - If either `self` or `other` is zero, the return value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - If both `self` and `other` is zero, the return value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `self` | `other` | return value | flags       |
-    /// |--------|---------|--------------|-------------|
-    /// | 0      | >= 1    | 0            | `UNDEFINED` |
-    /// | >= 1   | 0       | 0            | `UNDEFINED` |
-    /// | 0      | 0       | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_gcd()](struct@BigUInt#method.panic_free_gcd)
-    /// is proper rather than this method `panic_free_gcd_uint()`.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let a_biguint = U256::from_string("111112222233333444445555566666777778888899999").unwrap();
-    /// let b_biguint = 77777666665555544444333332222211111_u128;
-    /// let c_biguint = a_biguint.panic_free_gcd_uint(b_biguint);
-    /// println!("The greatest common divisor of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
-    /// assert_eq!(c_biguint.to_string(), "11111");
-    /// assert_eq!(c_biguint.is_overflow(), false);
-    /// assert_eq!(c_biguint.is_underflow(), false);
-    /// assert_eq!(c_biguint.is_infinity(), false);
-    /// assert_eq!(c_biguint.is_undefined(), false);
-    /// assert_eq!(c_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(c_biguint.is_left_carry(), false);
-    /// assert_eq!(c_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_gcd_uint)
-    pub fn panic_free_gcd_uint<U>(&self, other: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        if self.is_zero() || other.is_zero()
-        {
-            let mut res = Self::zero();
-            res.set_undefined();
-            res
-        }
-        else
-        {
-            self.common_gcd_uint(other)
-        }
-    }
-
-    // pub fn panic_free_gcd_assign_uint<U>(&mut self, other: U)
-    /// Calculates the greatest common divisor of `self` and `other`,
-    /// and assigns the result back to `self`.
-    /// If you would like to know greatest common divisor more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Greatest_common_divisor).
-    /// 
-    /// # Argument
-    /// The greatest common diviser of `self` and `other` is calculated.
-    /// `other` is a primitive unsigned integer such as `u8`, `u16`, `u32`,
-    /// `u64`, and `u128`.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Both `self` and `other` should natural numbers. So, if either `self`
-    ///   or `other` is zero, getting greatest common diviser is meaningless.
-    ///   In this case, this method assigns zero to `self`,
-    ///   and sets `UNDEFINED` flag of the return value.
-    /// - If either `self` or `other` is zero, the result value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - If both `self` and `other` is zero, the result value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - In summary, the result value and its flags will be set as follows:
-    /// 
-    /// | `self` | `other` | result value | flags       |
-    /// |--------|---------|--------------|-------------|
-    /// | 0      | >= 1    | 0            | `UNDEFINED` |
-    /// | >= 1   | 0       | 0            | `UNDEFINED` |
-    /// | 0      | 0       | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_gcd_assign()](struct@BigUInt#method.panic_free_gcd_assign)
-    /// is proper rather than this method `panic_free_gcd_assign_uint()`.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let mut a_biguint = U256::from_string("111112222233333444445555566666777778888899999").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let b_biguint = 77777666665555544444333332222211111_u128;
-    /// a_biguint.panic_free_gcd_assign_uint(b_biguint);
-    /// println!("After a_biguint.panic_free_gcd_assign_uint(), a_biguint = {}.", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "11111");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_gcd_assign_uint)
-    pub fn panic_free_gcd_assign_uint<U>(&mut self, other: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        calc_to_calc_assign!(self, Self::panic_free_gcd_uint, other);
-    }
-
-    fn common_gcd_uint<U>(&self, other: U) -> Self
+    pub(super) fn common_gcd_uint<U>(&self, other: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
             + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
@@ -11668,7 +9446,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm_uint)
     pub fn lcm_uint<U>(&self, other: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -11740,7 +9518,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm_assign_uint)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm_assign_uint)
     pub fn lcm_assign_uint<U>(&mut self, other: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -11752,167 +9530,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + PartialEq + PartialOrd
     {
         calc_to_calc_assign!(self, Self::lcm_uint, other);
-    }
-
-    // pub fn panic_free_lcm_uint<U>(&self, other: U) -> Self
-    /// Calculates the least common multiple of `self` and `other`,
-    /// and returns the result.
-    /// If you would like to know greatest common divisor more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Least_common_multiple).
-    /// 
-    /// # Argument
-    /// The least common multiple of `self` and `other` is calculated.
-    /// `other` is of `Self` type.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns The least common multiple of `self` and `other`.
-    /// 
-    /// # Features
-    /// - Both `self` and `other` should natural numbers. So, if either `self`
-    ///   or `other` is zero, getting least common multiple is meaningless.
-    ///   In this case, this method returns zero,
-    ///   and sets `UNDEFINED` flag of the return value.
-    /// - If either `self` or `other` is zero, the return value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - If both `self` and `other` is zero, the return value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `self` | `other` | return value | flags       |
-    /// |--------|---------|--------------|-------------|
-    /// | 0      | >= 1    | 0            | `UNDEFINED` |
-    /// | >= 1   | 0       | 0            | `UNDEFINED` |
-    /// | 0      | 0       | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_lcm()](struct@BigUInt#method.panic_free_lcm)
-    /// is proper rather than this method `panic_free_lcm_uint()`.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let a_biguint = U256::from_string("1111122222333334444455555666667777788888").unwrap();
-    /// let b_biguint = 77777666665555544444333332222211111_u128;
-    /// let c_biguint = a_biguint.panic_free_lcm_uint(b_biguint);
-    /// println!("The least common multiple of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
-    /// assert_eq!(c_biguint.to_string(), "7777922224222246666944447444475555866662777741110777774888865555388888");
-    /// assert_eq!(c_biguint.is_overflow(), false);
-    /// assert_eq!(c_biguint.is_underflow(), false);
-    /// assert_eq!(c_biguint.is_infinity(), false);
-    /// assert_eq!(c_biguint.is_undefined(), false);
-    /// assert_eq!(c_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(c_biguint.is_left_carry(), false);
-    /// assert_eq!(c_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_lcm_uint)
-    pub fn panic_free_lcm_uint<U>(&self, other: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        if self.is_zero() || other.is_zero()
-        {
-            let mut res = Self::zero();
-            res.set_undefined();
-            res
-        }
-        else
-        {
-            self.wrapping_div(&self.gcd_uint(other)).wrapping_mul_uint(other)
-        }
-    }
-
-    // pub fn panic_free_lcm_assign_uint<U>(&mut self, other: U)
-    /// Calculates the least common multiple of `self` and `other`,
-    /// and assigns the result back to `self`.
-    /// If you would like to know least common multiple more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Least_common_multiple).
-    /// 
-    /// # Argument
-    /// The least common multiple of `self` and `other` is calculated.
-    /// `other` is of `Self` type.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Both `self` and `other` should natural numbers. So, if either `self`
-    ///   or `other` is zero, getting least common multiple is meaningless.
-    ///   In this case, this method assigns zero to `self`,
-    ///   and sets `UNDEFINED` flag of the return value.
-    /// - If either `self` or `other` is zero, the result value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - If both `self` and `other` is zero, the result value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - In summary, the result value and its flags will be set as follows:
-    /// 
-    /// | `self` | `other` | result value | flags       |
-    /// |--------|---------|--------------|-------------|
-    /// | 0      | >= 1    | 0            | `UNDEFINED` |
-    /// | >= 1   | 0       | 0            | `UNDEFINED` |
-    /// | 0      | 0       | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_lcm_assign()](struct@BigUInt#method.panic_free_lcm_assign)
-    /// is proper rather than this method `panic_free_lcm_assign_uint()`.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U256::from_string("1111122222333334444455555666667777788888").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let b_biguint = 77777666665555544444333332222211111_u128;
-    /// a_biguint.panic_free_lcm_assign_uint(b_biguint);
-    /// println!("After a_biguint.panic_free_lcm_assign_uint(), a_biguint = {}.", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "7777922224222246666944447444475555866662777741110777774888865555388888");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_lcm_assign_uint)
-    pub fn panic_free_lcm_assign_uint<U>(&mut self, other: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        calc_to_calc_assign!(self, Self::panic_free_lcm_uint, other);
     }
 
 
@@ -11997,7 +9614,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ``` 
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.carrying_add)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.carrying_add)
     pub fn carrying_add(&self, rhs: &Self, carry: bool) -> (Self, bool)
     {
         carrying_calc!(self, Self::carrying_add_assign, rhs, carry);
@@ -12135,7 +9752,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.carrying_add_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.carrying_add_assign)
     pub fn carrying_add_assign(&mut self, rhs: &Self, carry: bool) -> bool
     {
         let mut c = carry;
@@ -12218,7 +9835,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_add)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_add)
     pub fn wrapping_add(&self, rhs: &Self) -> Self
     {
         let (res, _) = self.carrying_add(rhs, false); 
@@ -12288,7 +9905,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_add_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_add_assign)
     #[inline]
     pub fn wrapping_add_assign(&mut self, rhs: &Self)
     {
@@ -12349,7 +9966,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_add)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_add)
     pub fn overflowing_add(&self, rhs: &Self) -> (Self, bool)
     {
         overflowing_calc!(self, Self::overflowing_add_assign, rhs);
@@ -12424,7 +10041,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_add_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_add_assign)
     pub fn overflowing_add_assign(&mut self, rhs: &Self) -> bool
     {
         overflowing_calc_assign!(self, Self::wrapping_add_assign, rhs);
@@ -12490,7 +10107,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_add)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_add)
     pub fn modular_add(&self, rhs: &Self, modulo: &Self) -> Self
     {
         biguint_calc_assign_to_calc!(self, Self::modular_add_assign, rhs, modulo);
@@ -12568,170 +10185,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_add_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_add_assign)
     pub fn modular_add_assign(&mut self, rhs: &Self, modulo: &Self)
     {
         biguint_modular_calc_assign!(self, Self::common_modular_add_assign, rhs, modulo);
     }
 
-    // pub fn panic_free_modular_add(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
-    ///   and is of `Self`-typed.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the modulo-sum (`self` + `rhs`) % `modulo` with wrapping
-    /// (modular) addition at `modulo`.
-    /// 
-    /// # Features
-    /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally returns the remainder of `sum` divided by `modulo`.
-    /// - Wrapping (modular) addition at `modulo`.
-    /// - The differences between this method `panic_free_modular_add()` and
-    ///   the method `wrapping_add()` are, first, where wrapping around
-    ///   happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_add()` wraps wraps around at `maximum value + 1`.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo`, while the method `wrapping_add()` sets `OVERFLOW`
-    ///   flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `modulo` | return value | flags       |
-    /// |----------|--------------|-------------|
-    /// | 0 or 1   | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_modular_add_uint()](struct@BigUInt#method.panic_free_modular_add_uint)
-    /// is a bit faster than this method `panic_free_modular_add()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_modular_add_uint()](struct@BigUInt#method.panic_free_modular_add_uint).
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = U256::from_string("76801874298166903427690031858186486050853753882811946569946433649006").unwrap();
-    /// let m = a_biguint.wrapping_add_uint(2_u8); // == 76801874298166903427690031858186486050853753882811946569946433649008
-    /// let one = U256::one();
-    /// let res = a_biguint.panic_free_modular_add(&one, &m);
-    /// println!("{} + {} = {}", a_biguint, one, res);
-    /// assert_eq!(res.to_string(), "76801874298166903427690031858186486050853753882811946569946433649007");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_modular_add)
-    pub fn panic_free_modular_add(&self, rhs: &Self, modulo: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_add_assign, rhs, modulo);
-    }
-
-    // pub fn panic_free_modular_add_assign(&mut self, rhs: &Self, modulo: &Self)
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
-    /// and then, assigns the result back to `self`.
-    /// 
-    /// # Arguments
-    /// -`rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
-    ///   and is of `Self`-typed.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally assigns the remainder of `sum` divided by `modulo`
-    ///   to `self` back.
-    /// - Wrapping (modular) addition at `modulo`.
-    /// - The differences between this method `panic_free_modular_add_assign()`
-    ///   and the method `wrapping_add_assign()` are, first, where wrapping
-    ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_add_assign()` wraps around at maximum value.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo`, while the method `wrapping_add_assign()` sets
-    ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of `self`
-    ///   will be set and `self` will have the value `0`.
-    /// - In summary, `self` and its flags will be set as follows:
-    /// 
-    /// | `modulo` | result value (self) | flags       |
-    /// |----------|---------------------|-------------|
-    /// | 0 or 1   | 0                   | `UNDEFINED` |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// - The method
-    /// [panic_free_modular_add_assign_uint()](struct@BigUInt#method.panic_free_modular_add_assign_uint)
-    /// is a bit faster than this method `panic_free_modular_add_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_modular_add_assign_uint()](struct@BigUInt#method.panic_free_modular_add_assign_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = U256::from_string("768018742981669034276900318581864860508537538828119465699464336490060").unwrap();
-    /// println!("Originally, a = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let m = a_biguint.wrapping_add_uint(2_u8); // == 768018742981669034276900318581864860508537538828119465699464336490062
-    /// let one = U256::one();
-    /// a_biguint.panic_free_modular_add_assign(&one, &m);
-    /// println!("After a_biguint.panic_free_modular_add_assign(&U256::one(), &m), a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "768018742981669034276900318581864860508537538828119465699464336490061");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_modular_add_assign)
-    pub fn panic_free_modular_add_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        panic_free_modular_calc_assign!(self, Self::common_modular_add_assign, rhs, modulo);
-    }
-
-    fn common_modular_add_assign(&mut self, rhs: &Self, modulo: &Self)
+    pub(super) fn common_modular_add_assign(&mut self, rhs: &Self, modulo: &Self)
     {
         let mut flags = self.get_all_flags();
         if *self >= *modulo
@@ -12843,7 +10303,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.borrowing_sub)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.borrowing_sub)
     pub fn borrowing_sub(&self, rhs: &Self, borrow: bool) -> (Self, bool)
     {
         carrying_calc!(self, Self::borrowing_sub_assign, rhs, borrow);
@@ -12930,7 +10390,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.borrowing_sub_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.borrowing_sub_assign)
     pub fn borrowing_sub_assign(&mut self, rhs: &Self, borrow: bool) -> bool
     {
         let mut	b = borrow;
@@ -13006,7 +10466,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_sub)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_sub)
     pub fn wrapping_sub(&self, rhs: &Self) -> Self
     {
         let (res, _) = self.borrowing_sub(rhs, false);
@@ -13074,7 +10534,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_sub_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_sub_assign)
     #[inline]
     pub fn wrapping_sub_assign(&mut self, rhs: &Self)
     {
@@ -13135,7 +10595,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_sub)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_sub)
     pub fn overflowing_sub(&self, rhs: &Self) -> (Self, bool)
     {
         overflowing_calc!(self, Self::overflowing_sub_assign, rhs);
@@ -13208,7 +10668,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_sub_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_sub_assign)
     pub fn overflowing_sub_assign(&mut self, rhs: &Self) -> bool
     {
         underflowing_calc_assign!(self, Self::wrapping_sub_assign, rhs);
@@ -13275,7 +10735,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_sub)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_sub)
     pub fn modular_sub(&self, rhs: &Self, modulo: &Self) -> Self
     {
         biguint_calc_assign_to_calc!(self, Self::modular_sub_assign, rhs, modulo);
@@ -13353,171 +10813,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_sub_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_sub_assign)
     pub fn modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)
     {
         biguint_modular_calc_assign!(self, Self::common_modular_sub_assign, rhs, modulo);
     }
 
-    // pub fn panic_free_modular_sub(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
-    /// 
-    /// # Arguments
-    /// -`rhs` is to be subtracted from `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the modulo-sum (`self` + `rhs`) % `modulo` with wrapping
-    /// (modular) addition at `modulo`.
-    /// 
-    /// # Features
-    /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
-    ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
-    /// - The differences between this method `panic_free_modular_sub()`
-    ///   and the method `wrapping_sub()` are, first, where
-    ///   wrapping around happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_sub()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub()` sets `UNDERFLOW`
-    ///   flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `modulo` | return value | flags       |
-    /// |----------|--------------|-------------|
-    /// | 0 or 1   | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_modular_sub_uint()](struct@BigUInt#method.panic_free_modular_sub_uint)
-    /// is a bit faster than this method `panic_free_modular_sub()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_modular_sub_uint()](struct@BigUInt#method.panic_free_modular_sub_uint).
-    /// 
-    /// # Example 1 for Normal Case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = U256::from_uint(2_u8);
-    /// let m = U256::from_string("10000000000000000000000000000000000000000000000000000000000000000000").unwrap();
-    /// let one = U256::one();
-    /// let res = a_biguint.panic_free_modular_sub(&one, &m);
-    /// println!("{} - {} = {} (mod {})", a_biguint, one, res, m);
-    /// assert_eq!(res.to_string(), "1");
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_modular_sub)
-    pub fn panic_free_modular_sub(&self, rhs: &Self, modulo: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_sub_assign, rhs, modulo);
-    }
-
-    // pub fn panic_free_modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
-    /// and then, assigns the result back to `self`.
-    /// 
-    /// # Arguments
-    /// -`rhs` is to be subtracted from `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
-    ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
-    /// - The differences between this method `panic_free_modular_sub_assign()`
-    ///    and the method `wrapping_sub_assign()` are, first, where wrapping
-    ///   around happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_sub_assign()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub_assign()` sets `UNDERFLOW`
-    ///   flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of `self`
-    ///   will be set and `self` will have the value `0`.
-    /// - In summary, `self` and its flags will be set as follows:
-    /// 
-    /// | `modulo` | result value (self) | flags       |
-    /// |----------|---------------------|-------------|
-    /// | 0 or 1   | 0                   | `UNDEFINED` |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   underflow occurred even once before this current operation or
-    ///   `UNDERFLOW` flag is already set before this current operation,
-    ///   the `UNDERFLOW` flag is not changed even if this current operation
-    ///   does not cause underflow.
-    /// 
-    /// # Counterpart Method
-    /// - The method
-    /// [panic_free_modular_sub_assign()](struct@BigUInt#method.panic_free_modular_sub_assign)
-    /// is a bit faster than this method `panic_free_modular_sub_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_modular_sub_assign_uint()](struct@BigUInt#method.panic_free_modular_sub_assign_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = UU32::from_uint(2_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let rhs = UU32::one();
-    /// a_biguint.panic_free_modular_sub_assign(&rhs, &m);
-    /// println!("After a_biguint.panic_free_modular_sub_assign({}, &m), a_biguint = {}", rhs, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "1");
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_modular_sub_assign)
-    pub fn panic_free_modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        panic_free_modular_calc_assign!(self, Self::common_modular_sub_assign, rhs, modulo);
-    }
-
-    fn common_modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)
+    pub(super) fn common_modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)
     {
         let mut flags = self.get_all_flags();
         self.wrapping_rem_assign(modulo);
@@ -13717,7 +11019,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.carrying_mul)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.carrying_mul)
     pub fn carrying_mul(&self, rhs: &Self, carry: Self) -> (Self, Self)
     {
         let mut low = Self::from_array(self.get_number().clone());
@@ -13993,7 +11295,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.widening_mul)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.widening_mul)
     pub fn widening_mul(&self, rhs: &Self) -> (Self, Self)
     {
         let mut low = Self::from_array(self.get_number().clone());
@@ -14079,7 +11381,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.widening_mul_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.widening_mul_assign)
     #[inline]
     pub fn widening_mul_assign(&mut self, rhs: &Self) -> Self
     {
@@ -14261,7 +11563,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_mul)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_mul)
     pub fn wrapping_mul(&self, rhs: &Self) -> Self
     {
         biguint_calc_assign_to_calc!(self, Self::wrapping_mul_assign, rhs);
@@ -14330,7 +11632,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_mul_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_mul_assign)
     #[inline]
     pub fn wrapping_mul_assign(&mut self, rhs: &Self)
     {
@@ -14510,7 +11812,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_mul)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_mul)
     pub fn overflowing_mul(&self, rhs: &Self) -> (Self, bool)
     {
         overflowing_calc!(self, Self::overflowing_mul_assign, rhs);
@@ -14586,7 +11888,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_mul_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_mul_assign)
     pub fn overflowing_mul_assign(&mut self, rhs: &Self) -> bool
     {
         overflowing_calc_assign!(self, Self::wrapping_mul_assign, rhs);
@@ -14653,7 +11955,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_mul)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_mul)
     pub fn modular_mul(&self, rhs: &Self, modulo: &Self) -> Self
     {
         biguint_calc_assign_to_calc!(self, Self::modular_mul_assign, rhs, modulo);
@@ -14731,172 +12033,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_mul_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_mul_assign)
     pub fn modular_mul_assign(&mut self, rhs: &Self, modulo: &Self)
     {
         biguint_modular_calc_assign!(self, Self::common_modular_mul_assign, rhs, modulo);
     }
 
-    // pub fn panic_free_modular_mul(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be multiplied to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the modulo-product (`self` * `rhs`) % `modulo` with wrapping
-    /// (modular) multiplication at `modulo`.
-    /// 
-    /// # Features
-    /// - It takes the multiplication (= `product`) of `self` and `rhs`,
-    ///   and then finally returns the remainder of `product`
-    ///   divided by `modulo`.
-    /// - Wrapping (modular) multiplication at `modulo`.
-    /// - The differences of between this method `modular_mul()` and the
-    ///   method `wrapping_mul()` are, first, where wrapping around
-    ///   happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_mul()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul()` sets `OVERFLOW`
-    ///   flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `modulo` | return value | flags       |
-    /// |----------|--------------|-------------|
-    /// | 0 or 1   | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_modular_mul_uint()](struct@BigUInt#method.panic_free_modular_mul_uint)
-    /// is a bit faster than this method `panic_free_modular_mul()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_modular_mul_uint()](struct@BigUInt#method.panic_free_modular_mul_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let a_biguint = U256::from_string("31858186486050853753882811946768018742981669034276900586487291375468285").unwrap();
-    /// let mul_biguint = UU32::from_uint(5_u8);
-    /// let res = a_biguint.panic_free_modular_mul(&mul_biguint, &m);
-    /// println!("{} * {} = {} (mod {})", a_biguint, mul_biguint, res, m);
-    /// assert_eq!(res.to_string(), "159290932430254268769414059733840093714908345171384502932436456877341425");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_modular_mul)
-    pub fn panic_free_modular_mul(&self, rhs: &Self, modulo: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_mul_assign, rhs, modulo);
-    }
-
-    // pub fn panic_free_modular_mul_assign(&self, rhs: &Self, modulo: &Self)
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
-    /// and then assigns the result back to `self`.
-    /// 
-    /// # Arguments
-    /// -`rhs` is to be multiplied to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - It takes the multiplication (= `product`) of `self` and `rhs`,
-    ///   and then finally returns the remainder of `product`
-    ///   divided by `modulo`.
-    /// - Wrapping (modular) multiplication at `modulo`.
-    /// - The differences between this method
-    ///   `panic_free_modular_mul_assign()` and the method
-    ///   `wrapping_mul_assign()` are, first, where wrapping
-    ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_mul_assign()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul_assign()` sets
-    ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
-    ///   return value will be set and the result value will have the value `0`.
-    /// - In summary, the result value and its flags will be set as follows:
-    /// 
-    /// | `modulo` | result value (self) | flags       |
-    /// |----------|---------------------|-------------|
-    /// | 0 or 1   | 0                   | `UNDEFINED` |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_modular_mul_assign_uint()](struct@BigUInt#method.panic_free_modular_mul_assign_uint)
-    /// is a bit faster than this method `panic_free_modular_mul_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_modular_mul_assign_uint()](struct@BigUInt#method.panic_free_modular_mul_assign_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let mut a_biguint = U256::from_string("31858186486050853753882811946768018742981669034276900586487291375468285").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// 
-    /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let mul_biguint = UU32::from_uint(5_u8);
-    /// a_biguint.modular_mul_assign(&mul_biguint, &m);
-    /// println!("After a_biguint.modular_mul_assign(&mul_biguint, &m), a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "159290932430254268769414059733840093714908345171384502932436456877341425");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_modular_mul_assign)
-    pub fn panic_free_modular_mul_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        panic_free_modular_calc_assign!(self, Self::common_modular_mul_assign, rhs, modulo);
-    }
-
-    fn common_modular_mul_assign(&mut self, rhs: &Self, modulo: &Self)
+    pub(super) fn common_modular_mul_assign(&mut self, rhs: &Self, modulo: &Self)
     {
         let mut flags = self.get_all_flags();
         if *self >= *modulo
@@ -14925,7 +12068,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     /*** DIVISION ***/
 
-    fn common_divide_fully(&self, rhs: &Self) -> (Self, Self)
+    pub(super) fn common_divide_fully(&self, rhs: &Self) -> (Self, Self)
     {
         if self.is_zero()
             { return (Self::zero(), Self::zero()); }
@@ -15018,99 +12161,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.divide_fully)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.divide_fully)
     pub fn divide_fully(&self, rhs: &Self) -> (Self, Self)
     {
         if rhs.is_zero()
             { panic!(); }
         self.common_divide_fully(rhs)
-    }
-
-    // pub fn panic_free_divide_fully(&self, rhs: &Self) -> (Self, Self)
-    /// Divides `self` by `rhs`,
-    /// and returns a tuple of a quotient and a remainder.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns a tuple of a quotient and a remainder.
-    /// Both the quotient and the remainder are of `BigUInt` type.
-    /// 
-    /// # Features
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - If 'self' is zero and `rhs` is non-zero,
-    ///   this method returns (zero, zero).
-    /// - If both `rhs` and 'self' are zero, the quotient will be zero,
-    ///   and its flags `UNDEFINED` and `DIVIDED_BY_ZERO` will be set,
-    ///   and the remainder will be zero,
-    ///   and its flag `DIVIDED_BY_ZERO` will be set.
-    /// - If `rhs` is zero and 'self' is non-zero, the quotient will have
-    ///   the maximum value of `Self`, and its flags `INFINITY` and
-    ///   `DIVIDED_BY_ZERO` will be set,
-    ///   and the remainder` will be zero,
-    ///   and its flag `DIVIDED_BY_ZERO` will be set.
-    /// - In summary, the quotient, the remainder and their flags
-    ///   will be set as follows:
-    /// 
-    /// | `rhs` | `self` | `quotient` | flags of `quotient`            | `remainder` | flags of `remainder` |
-    /// |-------|--------|------------|--------------------------------|-------------|----------------------|
-    /// | 0     | 0      | 0          | `UNDEFINED`, `DIVIDED_BY_ZERO` | 0           | `DIVIDED_BY_ZERO`    |
-    /// | 0     | != 0   | max        | `INFINITY`, `DIVIDED_BY_ZERO`  | 0           | `DIVIDED_BY_ZERO`    |
-    /// 
-    /// - This function is the base function for all the methods
-    ///   panic_free_*_div(), panic_free_*_div_assign(),
-    ///   panic_free_*_rem(), and panic_free_*_rem_assign().
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_divide_fully_uint()](struct@BigUInt#method.panic_free_divide_fully_uint)
-    /// is a bit faster than this method `panic_free_divide_fully()`.
-    /// If `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_divide_fully_uint()](struct@BigUInt#method.panic_free_divide_fully_uint).
-    /// 
-    /// # Example 1 for a normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let dividend = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = 87_u8;
-    /// let (quotient, remainder) = dividend.panic_free_divide_fully_uint(divisor);
-    /// println!("{} / {} => quotient = {} , remainder = {}", dividend, divisor, quotient, remainder);
-    /// assert_eq!(quotient.to_string(), "1419043551905275201680884938348044216837079832");
-    /// assert_eq!(remainder.to_string(), "8");
-    /// assert_eq!(quotient.is_overflow(), false);
-    /// assert_eq!(quotient.is_underflow(), false);
-    /// assert_eq!(quotient.is_infinity(), false);
-    /// assert_eq!(quotient.is_undefined(), false);
-    /// assert_eq!(quotient.is_divided_by_zero(), false);
-    /// assert_eq!(quotient.is_left_carry(), false);
-    /// assert_eq!(quotient.is_right_carry(), false);
-    /// 
-    /// assert_eq!(remainder.is_overflow(), false);
-    /// assert_eq!(remainder.is_underflow(), false);
-    /// assert_eq!(remainder.is_infinity(), false);
-    /// assert_eq!(remainder.is_undefined(), false);
-    /// assert_eq!(remainder.is_divided_by_zero(), false);
-    /// assert_eq!(remainder.is_left_carry(), false);
-    /// assert_eq!(remainder.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_divide_fully)
-    pub fn panic_free_divide_fully(&self, rhs: &Self) -> (Self, Self)
-    {
-        if rhs.is_zero()
-            { if_rhs_is_zero!(self, rhs); }
-        else
-            { self.common_divide_fully(rhs) }
     }
 
     // pub fn wrapping_div(&self, rhs: &Self) -> Self
@@ -15170,7 +12226,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_div)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_div)
     pub fn wrapping_div(&self, rhs: &Self) -> Self
     {
         biguint_calc_assign_to_calc_div!(self, Self::divide_fully, rhs);
@@ -15239,7 +12295,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_div_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_div_assign)
     pub fn wrapping_div_assign(&mut self, rhs: &Self)
     {
         calc_to_calc_assign!(self, Self::wrapping_div, rhs);
@@ -15300,7 +12356,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_div)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_div)
     pub fn overflowing_div(&self, rhs: &Self) -> (Self, bool)
     {
         overflowing_calc_div!(self, Self::divide_fully, rhs);
@@ -15375,155 +12431,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_div_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_div_assign)
     pub fn overflowing_div_assign(&mut self, rhs: &Self) -> bool
     {
         overflowing_calc_assign!(self, Self::wrapping_div_assign, rhs);
-    }
-
-    // pub fn panic_free_div(&self, rhs: &Self) -> Self
-    /// Divides `self` by `rhs`, and returns the quotient.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    ///
-    /// # Output
-    /// It returns a quotient of `BigUInt` type,
-    /// and the quotient would never overflow. 
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - __It does not panic__ while the counterpart method
-    ///   `wrapping_div()` will panic if `rhs` is zero.
-    /// - If `rhs` is zero and `self` is not zero, the quotient will have
-    ///   maximum value of `BigUInt` and the flags of the quotient,
-    ///   `INFINITY` and `DIVIDED_BY_ZERO` will be set.
-    /// - If `rhs` is zero and `self` is zero, the quotient will have
-    ///   value `zero` of `BigUInt` type and the flags of the quotient,
-    ///   `DIVIDED_BY_ZERO` and `UNDEFINED` will be set.
-    /// - In summary, the quotient and its flags will be set as follows:
-    /// 
-    /// | `rhs` | `self` | `quotient` | flags of `quotient`            |
-    /// |-------|--------|------------|--------------------------------|
-    /// | 0     | 0      | 0          | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0     | != 0   | max        | `INFINITY`, `DIVIDED_BY_ZERO`  |
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_div_uint()](struct@BigUInt#method.panic_free_div_uint)
-    /// is a bit faster than this method `panic_free_div()`.
-    /// If `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_div_uint()](struct@BigUInt#method.panic_free_div_uint).
-    /// 
-    /// # Example 1 for a normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = U256::from_uint(87_u8);
-    /// let quotient = dividend.panic_free_div(&divisor);
-    /// println!("{} / {} = {}", dividend, divisor, quotient);
-    /// assert_eq!(quotient.to_string(), "1419043551905275201680884938348044216837079832");
-    /// assert_eq!(quotient.is_overflow(), false);
-    /// assert_eq!(quotient.is_underflow(), false);
-    /// assert_eq!(quotient.is_infinity(), false);
-    /// assert_eq!(quotient.is_undefined(), false);
-    /// assert_eq!(quotient.is_divided_by_zero(), false);
-    /// assert_eq!(quotient.is_left_carry(), false);
-    /// assert_eq!(quotient.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_div)
-    pub fn panic_free_div(&self, rhs: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc_div!(self, Self::panic_free_divide_fully, rhs);
-    }
-
-    // pub fn panic_free_div_assign(&mut self, rhs: &Self)
-    /// Divides `self` by `rhs`, and assigns the quotient to `self` back.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - __It does not panic__ while the counterpart method
-    ///   `wrapping_div_uint()` will panic if `rhs` is zero.
-    /// - If `rhs` is zero and `self` is not zero, the quotient will have
-    ///   maximum value of `BigUInt` and the flags of `self`,
-    ///   `INFINITY` and `DIVIDED_BY_ZERO` will be set.
-    /// - If `rhs` is zero and `self` is zero, the quotient will have
-    ///   value `zero` of `BigUInt` type and the flags of `self`,
-    ///   `DIVIDED_BY_ZERO` and `UNDEFINED` will be set.
-    /// - In summary, the quotient and its flags will be set as follows:
-    /// 
-    /// | `rhs` | `self` | `quotient` (= `self`) | flags of `quotient`            |
-    /// |-------|--------|-----------------------|--------------------------------|
-    /// | 0     | 0      | 0                     | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0     | != 0   | max                   | `INFINITY`, `DIVIDED_BY_ZERO`  |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_div_assign_uint()](struct@BigUInt#method.panic_free_div_assign_uint)
-    /// is a bit faster than this method `panic_free_div_assign()`.
-    /// If `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_div_assign_uint()](struct@BigUInt#method.panic_free_div_assign_uint).
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let divisor = UU32::from_uint(87_u8);
-    /// a_biguint.panic_free_div_assign(&divisor);
-    /// println!("After a_biguint.panic_free_div_assign(&divisor),\na_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "1419043551905275201680884938348044216837079832");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_div_assign)
-    pub fn panic_free_div_assign(&mut self, rhs: &Self)
-    {
-        panic_free_calc_div_rem_assign!(self, Self::panic_free_div, rhs);
     }
 
     // pub fn modular_div(&self, rhs: &Self, modulo: &Self) -> Self
@@ -15580,7 +12491,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_div)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_div)
     pub fn modular_div(&self, rhs: &Self, modulo: &Self) -> Self
     {
         biguint_calc_assign_to_calc!(self, Self::modular_div_assign, rhs, modulo);
@@ -15650,226 +12561,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_div_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_div_assign)
     pub fn modular_div_assign(&mut self, rhs: &Self, modulo: &Self)
     {
         self.wrapping_rem_assign(modulo);
         self.wrapping_div_assign(&rhs.wrapping_rem(modulo));
     }
-
-    // pub fn panic_free_modular_div(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and returns the quotient.
-    /// 
-    /// # Arguments
-    /// - `rhs` divides `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the quotient of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
-    /// 
-    /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    ///   and then finally returns the quotient of `rd1` divided by `rd2`.
-    /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, the quotient will have the value `zero` and
-    ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, the quotient will have the value `zero` and
-    ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is zero or multiple of `modulo` then, the
-    ///   quotient will have the value `zero`, and `UNDEFINED` and
-    ///   `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is not zero, and `modulo` is neither zero nor
-    ///   one, the quotient will have the max value and `INFINITY`, and
-    ///   `DIVIDED_BY_ZERO` flags will be set.
-    /// - In summary, the quotients and the flags will be set as follows:
-    /// 
-    /// | `modulo` | `rhs`               | `self`              | quotient | flags                          |
-    /// |----------|---------------------|---------------------|----------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | >= 0                | 0        | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0 (mod `modulo`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | >= 2     | 0 (mod `modulo`)    | != 0 (mod `modulo`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_modular_div_uint()](struct@BigUInt#method.panic_free_modular_div_uint)
-    /// is a bit faster than this method `modular_div()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_modular_div_uint()](struct@BigUInt#method.panic_free_modular_div_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
-    /// assert_eq!(quotient.to_string(), "3");
-    /// assert_eq!(quotient.is_overflow(), false);
-    /// assert_eq!(quotient.is_underflow(), false);
-    /// assert_eq!(quotient.is_infinity(), false);
-    /// assert_eq!(quotient.is_undefined(), false);
-    /// assert_eq!(quotient.is_divided_by_zero(), false);
-    /// assert_eq!(quotient.is_left_carry(), false);
-    /// assert_eq!(quotient.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_modular_div)
-    pub fn panic_free_modular_div(&self, rhs: &Self, modulo: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_div_assign, rhs, modulo);
-    }
-
-    // pub fn panic_free_modular_div_assign(&mut self, rhs: &Self, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and assigns the quotient back to `self`.
-    /// 
-    /// # Arguments
-    /// - `rhs` divides `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    ///   and then finally assigns the quotient of `rd1` divided by `rd2`
-    ///   back to `self`.
-    /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, the quotient will have the value `zero` and
-    ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, the quotient will have the value `zero` and
-    ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is zero or multiple of `modulo` then, the
-    ///   quotient will have the value `zero`, and `UNDEFINED` and
-    ///   `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is not zero, and `modulo` is neither zero nor
-    ///   one, the quotient will have the max value and `INFINITY`, and
-    ///   `DIVIDED_BY_ZERO` flags will be set.
-    /// - In summary, the quotients and the flags will be set as follows:
-    /// 
-    /// | `modulo` | `rhs`               | `self`              | quotient | flags                          |
-    /// |----------|---------------------|---------------------|----------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | >= 0                | 0        | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0 (mod `modulo`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | >= 2     | 0 (mod `modulo`)    | != 0 (mod `modulo`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_modular_div_assign_uint()](struct@BigUInt#method.panic_free_modular_div_assign_uint)
-    /// is a bit faster than this method `panic_free_modular_div_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_modular_div_assign_uint()](struct@BigUInt#method.panic_free_modular_div_assign_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let divisor = UU32::from_uint(128_u8);
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "3");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_modular_div_assign)
-    pub fn panic_free_modular_div_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        let mut terminated = false;
-        let mut mrhs = rhs.clone();
-        let flags = self.get_all_flags();
-        if !modulo.is_zero_or_one()
-        {
-            if *self >= *modulo
-            {
-                self.wrapping_rem_assign(modulo);
-                self.reset_all_flags();
-            }
-            if modulo.le(rhs)
-                { mrhs.wrapping_rem_assign(modulo); }
-        }
-
-        if mrhs.is_zero()
-        {
-            if self.is_zero()
-            {
-                self.set_zero();
-                self.set_flag_bit(Self::UNDEFINED | Self::DIVIDED_BY_ZERO);
-            }
-            else
-            {
-                self.set_max();
-                self.set_flag_bit(Self::INFINITY | Self::DIVIDED_BY_ZERO);
-            }
-            terminated = true;
-        }
-        if modulo.is_zero_or_one()
-        {
-            self.set_zero();
-            self.set_undefined();
-            return;
-        }
-        if terminated
-            { return; }
-
-        self.wrapping_div_assign(&mrhs);
-        self.set_flag_bit(flags);
-    } 
 
     // pub fn wrapping_rem(&self, rhs: &Self) -> Self
     /// Divides `self` by `rhs`, and returns the remainder.
@@ -15928,7 +12625,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_rem)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_rem)
     pub fn wrapping_rem(&self, rhs: &Self) -> Self
     {
         biguint_calc_assign_to_calc_rem!(self, Self::divide_fully, rhs);
@@ -15999,7 +12696,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_rem_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_rem_assign)
     pub fn wrapping_rem_assign(&mut self, rhs: &Self)
     {
         calc_to_calc_assign!(self, Self::wrapping_rem, rhs);
@@ -16060,7 +12757,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_rem)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_rem)
     pub fn overflowing_rem(&self, rhs: &Self) -> (Self, bool)
     {
         overflowing_calc_rem!(self, Self::divide_fully, rhs);
@@ -16135,145 +12832,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_rem_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_rem_assign)
     pub fn overflowing_rem_assign(&mut self, rhs: &Self) -> bool
     {
         overflowing_calc_assign!(self, Self::wrapping_rem_assign, rhs);
-    }
-
-    // pub fn panic_free_rem(&self, rhs: &Self) -> Self
-    /// Divides `self` by `rhs`, and returns the remainder.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    ///
-    /// # Output
-    /// It returns a remainder of `BigUInt` type,
-    /// and the remainder would never overflow. 
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - __It does not panic__ while the counterpart method
-    ///   `wrapping_rem()` will panic if `rhs` is zero.
-    /// - If `rhs` is `zero`, the remainder is `zero` and the flag
-    ///   `DIVIDED_BY_ZERO` of `remainder` will be set.
-    /// - In summary, the remainder and its flags will be set as follows:
-    /// 
-    /// | `rhs` | `remainder` | flags of `remainder` |
-    /// |-------|-------------|----------------------|
-    /// | 0     |  0          | `DIVIDED_BY_ZERO`    |
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_rem_uint()](struct@BigUInt#method.panic_free_rem_uint)
-    /// is a bit faster than this method `panic_free_rem()`.
-    /// If `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_rem_uint()](struct@BigUInt#method.panic_free_rem_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let dividend = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = UU32::from_uint(87_u8);
-    /// let remainder = dividend.panic_free_rem(&divisor);
-    /// println!("{} % {} = {}", dividend, divisor, remainder);
-    /// assert_eq!(remainder.to_string(), "8");
-    /// assert_eq!(remainder.is_overflow(), false);
-    /// assert_eq!(remainder.is_underflow(), false);
-    /// assert_eq!(remainder.is_infinity(), false);
-    /// assert_eq!(remainder.is_divided_by_zero(), false);
-    /// assert_eq!(remainder.is_undefined(), false);
-    /// assert_eq!(remainder.is_left_carry(), false);
-    /// assert_eq!(remainder.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_rem)
-    pub fn panic_free_rem(&self, rhs: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc_rem!(self, Self::panic_free_divide_fully, rhs);
-    }
-
-    // pub fn panic_free_rem_assign(&mut self, rhs: &Self)
-    /// Divides `self` by `rhs`, and assigns the remainder to `self` back.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - __It does not panic__ while the counterpart method
-    ///   `wrapping_rem_uint()` will panic if `rhs` is zero.
-    /// - If `rhs` is `zero`, `self` will be `zero` and the `DIVIDED_BY_ZERO` flag
-    ///   of `self` will be set.
-    /// - In summary, the remainder and its flags will be set as follows:
-    /// 
-    /// | `rhs` | `remainder` (= `self`) | flags of `remainder` |
-    /// |-------|------------------------|----------------------|
-    /// | 0     | 0                      | `DIVIDED_BY_ZERO`    |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_rem_assign_uint()](struct@BigUInt#method.panic_free_rem_assign_uint)
-    /// is a bit faster than this method `panic_free_rem_assign()`.
-    /// If `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_rem_assign_uint()](struct@BigUInt#method.panic_free_rem_assign_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let mut a_biguint = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let divisor = U256::from_uint(87_u8);
-    /// a_biguint.panic_free_rem_assign(&divisor);
-    /// println!("After a_biguint.panic_free_rem_assign({}), a_biguint = {}", divisor, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "8");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_rem_assign)
-    pub fn panic_free_rem_assign(&mut self, rhs: &Self)
-    {
-        panic_free_calc_div_rem_assign!(self, Self::panic_free_rem, rhs);
     }
 
     // pub fn modular_rem(&self, rhs: &Self, modulo: &Self) -> Self
@@ -16330,7 +12892,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_rem)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_rem)
     pub fn modular_rem(&self, rhs: &Self, modulo: &Self) -> Self
     {
         biguint_calc_assign_to_calc!(self, Self::modular_rem_assign, rhs, modulo);
@@ -16400,211 +12962,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_rem_assign)
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_rem_assign)
     pub fn modular_rem_assign(&mut self, rhs: &Self, modulo: &Self)
     {
         self.wrapping_rem_assign(modulo);
         self.wrapping_rem_assign(&rhs.wrapping_rem(modulo));
-    }
-
-    // pub fn panic_free_modular_rem(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and returns the remainder.
-    /// 
-    /// # Arguments
-    /// - `rhs` divides `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the remainder of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
-    /// 
-    /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    ///   and then finally returns the remainder of `rd1` divided by `rd2`.
-    /// - Overflow will not happen.
-    /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, the remainder will have the value `zero` and
-    ///   `DIVIDED_BY_ZERO` flag of the remainder will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, the remainder will have the value `zero` and
-    ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo` then, the remainder will have the value `zero` and
-    ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - In summary, the remainder and the flags will be set as follows:
-    /// 
-    /// | `modulo` | `rhs`               | remainder | flags                          |
-    /// |----------|---------------------|-----------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | 0         | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | 0         | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0         | `DIVIDED_BY_ZERO`              |
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_modular_rem_uint()](struct@BigUInt#method.panic_free_modular_rem_uint)
-    /// is a bit faster than this method `modular_rem()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_modular_rem_uint()](struct@BigUInt#method.panic_free_modular_rem_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// let remainder = dividend.panic_free_modular_rem(&divisor, &modulo);
-    /// println!("{} % {} = {} (mod {})", dividend, divisor, remainder, modulo);
-    /// assert_eq!(remainder.to_string(), "8");
-    /// assert_eq!(remainder.is_overflow(), false);
-    /// assert_eq!(remainder.is_underflow(), false);
-    /// assert_eq!(remainder.is_infinity(), false);
-    /// assert_eq!(remainder.is_undefined(), false);
-    /// assert_eq!(remainder.is_divided_by_zero(), false);
-    /// assert_eq!(remainder.is_left_carry(), false);
-    /// assert_eq!(remainder.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.carrying_mul)
-    pub fn panic_free_modular_rem(&self, rhs: &Self, modulo: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_rem_assign, rhs, modulo);
-    }
-
-    // pub fn panic_free_modular_rem_assign(&self, rhs: &Self, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and assigns the remainder back to `self`.
-    /// 
-    /// # Arguments
-    /// - `rhs` divides `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    ///   and then finally assigns the remainder of `rd1` divided by `rd2`
-    ///   back to `self`.
-    /// - Overflow will not happen.
-    /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, `self` will have the value `zero` and its
-    ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, `self` will have the value `zero` and its
-    ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo` then, `self` will have the value `zero` and its
-    ///   `DIVIDED_BY_ZERO` flag will be set.
-    /// - In summary, `self` and its flags will be set as follows:
-    /// 
-    /// | `modulo` | `rhs`               | remainder (= `self`) | flags                          |
-    /// |----------|---------------------|----------------------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | 0                    | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | 0                    | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0                    | `DIVIDED_BY_ZERO`              |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_modular_rem_assign_uint()](struct@BigUInt#method.panic_free_modular_rem_assign_uint)
-    /// is a bit faster than this method `panic_free_modular_rem_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [panic_free_modular_rem_assign_uint()](struct@BigUInt#method.panic_free_modular_rem_assign_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let divisor = UU32::from_uint(128_u8);
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_rem_assign(&divisor, &modulo);
-    /// println!("After a_biguint.modular_rem_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "8");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_modular_rem_assign)
-    pub fn panic_free_modular_rem_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        let mut terminated = false;
-        let mut mrhs = rhs.clone();
-        let flags = self.get_all_flags();
-        if !modulo.is_zero_or_one()
-        {
-            if *self >= *modulo
-            {
-                self.wrapping_rem_assign(modulo);
-                self.reset_all_flags();
-            }
-            if *rhs >= *modulo
-                { mrhs = rhs.wrapping_rem(modulo); }
-        }
-
-        if mrhs.is_zero()
-        {
-            self.set_zero();
-            self.set_divided_by_zero();
-            terminated = true;
-        }
-        if modulo.is_zero_or_one()
-        {
-            if !terminated
-                { self.set_zero(); }
-            self.set_undefined();
-            terminated = true;
-        }
-        if terminated
-        {
-            self.set_flag_bit(flags);
-            return;
-        }
-
-        self.wrapping_rem_assign(&mrhs);
-        self.set_flag_bit(flags);
     }
 
 
@@ -16646,7 +13008,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.next_power_of_two)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.next_power_of_two)
     pub fn next_power_of_two(&self) -> Self
     {
         biguint_calc_assign_to_calc!(self, Self::next_power_of_two_assign);
@@ -16696,7 +13058,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.next_power_of_two_assign)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.next_power_of_two_assign)
     pub fn next_power_of_two_assign(&mut self)
     {
         if !self.is_power_of_two()
@@ -16734,7 +13096,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.is_power_of_two)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.is_power_of_two)
     #[inline]
     pub fn is_power_of_two(&self) -> bool
     {
@@ -16794,7 +13156,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.pow)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.pow)
     pub fn pow(&self, exp: &Self) -> Self
     {
         biguint_calc_assign_to_calc!(self, Self::pow_assign, exp);
@@ -16862,146 +13224,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.pow_assign)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.pow_assign)
     pub fn pow_assign(&mut self, exp: &Self)
     {
         general_pow_assign!(self, Self::common_pow_assign, exp);
-    }
-
-    // pub fn panic_free_pow(&mut self, exp: &Self) -> Self
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`,
-    /// and returns the result.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the result of `self` raised to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - If overflowing happens, the `OVERFLOW` flag of the return value will
-    ///   be set.
-    /// - If both `self` and `exp` are `zero`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return will have the value `0`.
-    /// - In summary, the result value and its flags will be set as follows:
-    /// 
-    /// | `self` | `exp` | return value | flags       |
-    /// |--------|-------|--------------|-------------|
-    /// | 0      | 0     | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// The method [panic_free_pow_uint()](struct@BigUInt#method.panic_free_pow_uint)
-    /// is more efficient than this method `panic_free_pow()` when the exponent
-    /// `exp` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `exp` is the primitive unsigned integral data type number,
-    /// use the method [panic_free_pow_uint()](struct@BigUInt#method.panic_free_pow_uint).
-    /// 
-    /// # Example 1 for normal exponentiation
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let a_biguint = UU32::from_uint(10_u8);
-    /// let exp = UU32::from_uint(30_u8);
-    /// let res = a_biguint.panic_free_pow(&exp);
-    /// println!("{} ** {} = {}", a_biguint, exp, res);
-    /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_pow)
-    pub fn panic_free_pow(&self, exp: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_pow_assign, exp);
-    }
-
-    // pub fn panic_free_pow_assign(&mut self, exp: &Self) -> Self
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`,
-    /// and assign the result to `self` back.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - If overflowing happens, the `OVERFLOW` flag of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// - If both `self` and `exp` are `zero`, the `UNDEFINED` flag of `self`
-    ///   will be set and the result value (= `self`) will have the value `0`.
-    /// - In summary, the result value and its flags will be set as follows:
-    /// 
-    /// | `self` | `exp` | result value | flags       |
-    /// |--------|-------|--------------|-------------|
-    /// | 0      | 0     | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// The method [panic_free_pow_assign_uint()](struct@BigUInt#method.panic_free_pow_assign_uint)
-    /// is more efficient than this method `panic_free_pow_assign()` when the
-    /// exponent `exp` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `exp` is the primitive unsigned integral data type number, use
-    /// the method [pow_assign_uint()](struct@BigUInt#method.pow_assign_uint).
-    /// 
-    /// # Example 1 for normal exponentiation
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let mut a_biguint = U256::from_uint(10_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let exp = U256::from_uint(30_u8);
-    /// a_biguint.panic_free_pow_assign(&exp);
-    /// println!("After a_biguint.panic_free_pow_assign({}), a_biguint = {}", exp, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_pow_assign)
-    pub fn panic_free_pow_assign(&mut self, exp: &Self)
-    {
-        panic_free_calc_pow_assign!(self, Self::common_pow_assign, exp);
     }
 
     // pub fn wrapping_pow(&mut self, exp: &Self) -> Self
@@ -17061,7 +13287,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.wrapping_pow)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.wrapping_pow)
     pub fn wrapping_pow(&self, exp: &Self) -> Self
     {
         biguint_calc_assign_to_calc!(self, Self::wrapping_pow_assign, exp);
@@ -17133,13 +13359,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.wrapping_pow_assign)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.wrapping_pow_assign)
     pub fn wrapping_pow_assign(&mut self, exp: &Self)
     {
         general_pow_assign!(self, Self::common_pow_assign, exp);
     }
 
-    fn common_pow_assign(&mut self, exp: &Self)
+    pub(super) fn common_pow_assign(&mut self, exp: &Self)
     {
         if self.is_zero_or_one()
             { return; }
@@ -17226,7 +13452,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow)
     pub fn overflowing_pow(&self, exp: &Self) -> (Self, bool)
     {
         overflowing_calc!(self, Self::overflowing_pow_assign, exp);
@@ -17307,7 +13533,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow_assign)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow_assign)
     pub fn overflowing_pow_assign(&mut self, exp: &Self) -> bool
     {
         overflowing_calc_assign!(self, Self::pow_assign, exp);
@@ -17371,7 +13597,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow)
     pub fn modular_pow(&self, exp: &Self, modulo: &Self) -> Self
     {
         biguint_calc_assign_to_calc!(self, Self::modular_pow_assign, exp, modulo);
@@ -17444,7 +13670,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow_assign)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow_assign)
     pub fn modular_pow_assign(&mut self, exp: &Self, modulo: &Self)
     {
         if modulo.is_zero_or_one() || (self.is_zero() && exp.is_zero())
@@ -17462,173 +13688,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         self.common_modular_pow_assign(&mexp, modulo);
     }
 
-    // pub fn panic_free_modular_pow(&self, exp: &Self, modulo: &Self) -> Self
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
-    /// and returns the result.
-    /// 
-    /// # Arguments
-    /// - `exp` is the power to raise `self` to, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
-    ///    and is of `&Self` type.
-    ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the result of `self` raised to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - If overflowing (wrapping around at `modulo`) happens,
-    ///   the `OVERFLOW` flag of the return value will be set.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - If both `self` and `exp` are `zero`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `modulo` | `self` | `exp` | return value | flags       |
-    /// |----------|--------|-------|--------------|-------------|
-    /// | 0 or 1   | >= 0   | >= 0  | 0            | `UNDEFINED` |
-    /// | > 1      | 0      | 0     | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// The method [panic_free_modular_pow_uint()](struct@BigUInt#method.panic_free_modular_pow_uint)
-    /// is more efficient than this method `panic_free_modular_pow()` when the
-    /// exponent `exp` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `exp` is the primitive unsigned integral data type number,
-    /// use the method [panic_free_modular_pow_uint()](struct@BigUInt#method.panic_free_modular_pow_uint).
-    /// 
-    /// # Example 1 for Noraml case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let a_biguint = UU32::from_uint(10_u8);
-    /// let exp = UU32::from_uint(30_u8);
-    /// let modulo = UU32::halfmax();
-    /// let res = a_biguint.panic_free_modular_pow(&exp, &modulo);
-    /// println!("{} ** {} = {} (mod {})", a_biguint, exp, res, modulo);
-    /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_modular_pow)
-    pub fn panic_free_modular_pow(&self, exp: &Self, modulo: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_pow_assign, exp, modulo);
-    }
-
-    // pub fn panic_free_modular_pow_assign(&mut self, exp: &Self, modulo: &Self)
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
-    /// and assign the result to `self` back.
-    /// 
-    /// # Arguments
-    /// - `exp` is the power to raise `self` to, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
-    ///    and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - If both `self` and `exp` are `zero`, the `UNDEFINED` flag of the
-    ///   return value will be set and the return value will have the value `0`.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `modulo` | `self` | `exp` | result value | flags       |
-    /// |----------|--------|-------|--------------|-------------|
-    /// | 0 or 1   | >= 0   | >= 0  | 0            | `UNDEFINED` |
-    /// | > 1      | 0      | 0     | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// The method [panic_free_modular_pow_assign_uint()](struct@BigUInt#method.panic_free_modular_pow_assign_uint)
-    /// is more efficient than this method `panic_free_modular_pow_assign()`
-    /// when the exponent `exp` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `exp` is the primitive unsigned integral data type number,
-    /// use the method [panic_free_modular_pow_assign_uint()](struct@BigUInt#method.panic_free_modular_pow_assign_uint).
-    /// 
-    /// # Example 1 for Noraml case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U256::from_uint(10_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let exp = U256::from_uint(30_u8);
-    /// let modulo = U256::halfmax();
-    /// a_biguint.panic_free_modular_pow_assign(&exp, &modulo);
-    /// println!("After a_biguint.panic_free_modular_pow_assign({}, {}), a_biguint = {}", exp, modulo, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_modular_pow_assign)
-    pub fn panic_free_modular_pow_assign(&mut self, exp: &Self, modulo: &Self)
-    {
-        if modulo.is_zero_or_one() || (self.is_zero() && exp.is_zero())
-        {
-            self.set_zero();
-            self.set_undefined();
-            return;
-        }
-        if *self >= *modulo
-            { self.wrapping_rem_assign(modulo); }
-        let mut mexp = exp.clone();
-        if *modulo <= *exp
-            { mexp.wrapping_rem_assign(&modulo); }
-        if self.is_zero() && mexp.is_zero()
-        {
-            self.set_zero();
-            self.set_undefined();
-            return;
-        }
-        self.common_modular_pow_assign(&mexp, modulo);
-    }
-
-    fn common_modular_pow_assign(&mut self, exp: &Self, modulo: &Self)
+    pub(super) fn common_modular_pow_assign(&mut self, exp: &Self, modulo: &Self)
     {
         general_modular_calc_pow_assign!(self, 1, exp, modulo);
     }
@@ -17685,7 +13745,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_pow)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_pow)
     pub fn iroot(&self, exp: &Self) -> Self
     {
         general_calc_iroot!(self, Self::common_iroot, exp);
@@ -17755,168 +13815,18 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.iroot_assign)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.iroot_assign)
     pub fn iroot_assign(&mut self, exp: &Self)
     {
         calc_to_calc_assign!(self, Self::iroot, exp);
     }
 
-    // pub fn panic_free_iroot(&self, exp: &Self) -> Self
-    /// Calculates the `exp`-th root of `self`, rounded down,
-    /// and returns the result value.
-    ///
-    /// # Arguments
-    /// `exp` is the power of the root of `self`, and is of `&Self` type.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `exp` is `0`, it will panic.
-    /// 
-    /// # Output
-    /// If the exact value of `exp`-th root of `self` can be expressed with
-    /// `Self`-typed unsigned integer, it will be returned.
-    /// Otherwise, the `Self`-typed biggest unsigned integer that is
-    /// less than the exact value of `exp`-th root of `self` will be returned.
-    /// 
-    /// # Features
-    /// - If `exp` is greater than zero and `self` is greater than 1,
-    ///   the result of this method is never greater than `self`.
-    ///   So, this method never causes overflow.
-    /// - If `exp` is zero and `self` is either zero or one,
-    ///   the return value will be zero and 
-    ///   the flags `UNDEFINED` of the return value will be set.
-    /// - If `exp` is zero and `self` is greater than one, the return value
-    ///   will be the maximum and the flags `UNDEFINED`, and `INFINITY`
-    ///   of the return value will be set.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `exp` | `self` | return value | flags                   |
-    /// |-------|--------|--------------|-------------------------|
-    /// | 0     | 0 or 1 | 0            | `UNDEFINED`             |
-    /// | 0     | >= 2   | max          | `INFINITY`, `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_iroot_uint()](struct@BigUInt#method.panic_free_iroot_uint)
-    /// is a bit faster than this method `panic_free_iroot()`.
-    /// So, if `rhs` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128, use the method
-    /// [panic_free_iroot_uint()](struct@BigUInt#method.panic_free_iroot_uint).
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
-    /// let exp = U256::from_uint(8_u8);
-    /// let res = a_biguint.panic_free_iroot(&exp);
-    /// println!("The {}-th root of {} is {}.", exp, a_biguint, res);
-    /// assert_eq!(res.to_string(), "100000000");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_iroot)
-    pub fn panic_free_iroot(&self, exp: &Self) -> Self
-    {
-        general_panic_free_calc_iroot!(self, Self::common_iroot, exp);
-    }
-
-    fn common_iroot(&self, exp: &Self) -> Self
+    pub(super) fn common_iroot(&self, exp: &Self) -> Self
     {
         if exp.gt_uint(u128::MAX)
             { Self::one() }
         else
             { self.common_iroot_uint(exp.into_u128()) }
-    }
-
-    // pub fn panic_free_iroot_assign(&mut self, exp: &Self)
-    /// Calculates the `exp`-th root of `self`, rounded down,
-    /// and assigns the result back to `self`.
-    ///
-    /// # Arguments
-    /// `exp` is the power of the root of `self`, and is of `&Self` type.
-    ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - `self` will be the exp-th root of `self` or biggest value under the
-    ///   exp-th root of `self`.
-    /// - The result of this method is never greater than `self` and so
-    ///   never causes overflow.
-    /// - If `exp` is greater than zero and `self` is greater than 1, `self`
-    ///   will never be greater than `self` and so it never causes overflow.
-    /// - If `exp` is zero and `self` is either zero or one, `self` will be
-    ///   zero and the flags `UNDEFINED` of the return value will be set.
-    /// - If `exp` is zero and `self` is greater than one, `self` will be the
-    ///   maximum and the flags `UNDEFINED` and `INFINITY` of `self` will be
-    ///   set.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `exp` | `self` | result | flags                   |
-    /// |-------|--------|--------|-------------------------|
-    /// | 0     | 0 or 1 | 0      | `UNDEFINED`             |
-    /// | 0     | >= 2   | max    | `INFINITY`, `UNDEFINED` |
-    /// 
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [panic_free_iroot_assign_uint()](struct@BigUInt#method.panic_free_iroot_assign_uint)
-    /// is a bit faster than this method `panic_free_iroot_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128, use the method
-    /// [panic_free_iroot_assign_uint()](struct@BigUInt#method.panic_free_iroot_assign_uint).
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let exp = U256::from_uint(8_u8);
-    /// a_biguint.panic_free_iroot_assign(&exp);
-    /// println!("After a_biguint.panic_free_iroot_assign({}), a_biguint = {}.", exp, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "100000000");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_iroot_assign)
-    pub fn panic_free_iroot_assign(&mut self, exp: &Self)
-    {
-        calc_to_calc_assign!(self, Self::panic_free_iroot, exp);
     }
 
     // pub fn isqrt(&self) -> Self
@@ -17957,7 +13867,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.isqrt)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.isqrt)
     pub fn isqrt(&self) -> Self
     {
         if self.is_zero()
@@ -18019,7 +13929,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.isqrt_assign)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.isqrt_assign)
     pub fn isqrt_assign(&mut self)
     {
         calc_to_calc_assign!(self, Self::isqrt);
@@ -18071,7 +13981,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog)
     pub fn ilog(&self, base: &Self) -> Self
     {
         general_calc_ilog!(self, Self::common_ilog, base);
@@ -18128,153 +14038,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog_assign)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog_assign)
     pub fn ilog_assign(&mut self, base: &Self)
     {
         calc_to_calc_assign!(self, Self::ilog, base);
     }
 
-    // pub fn panic_free_ilog(&self, base: &Self) -> Self
-    /// Calculates the logarithm of the number with respect to `base`,
-    /// rounded down, and returns the result.
-    ///
-    /// # Arguments
-    /// `base` is the base of logarithm of `self`, and is of `Self` type.
-    /// `base` should be greater than 1.
-    ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    ///
-    /// # Output
-    /// It returns the logarithm of the number with respect to `base`,
-    /// rounded down.
-    ///
-    /// # Features
-    /// - If `self` is zero, the return value will be zero and the flag
-    ///   `UNDEFINED` of the return value will be set.
-    /// - If `self` is one and `base` is either zero or one, the return
-    ///   value will be zero and the flag `UNDEFINED` of the return
-    ///   value will be set.
-    /// - If `self` is greater than 1 and `base` is either zero or one, the return
-    ///   value will be maximum value and the flags `UNDEFINED` and `INFINITY`
-    ///   of the return value will be set.
-    /// - In summary, the return value and its flags will be set as follows:
-    ///
-    /// | `self` | `base` | result | flags                   |
-    /// |--------|--------|--------|-------------------------|
-    /// | 0      | --     | 0      | `UNDEFINED`             |
-    /// | 1      | 0 or 1 | 0      | `UNDEFINED`             |
-    /// | >= 2   | 0 or 1 | max    | `UNDEFINED`, `INFINITY` |
-    ///
-    /// # Counterpart Methods
-    /// This method might not be optimized owing to implementation details.
-    /// [panic_free_ilog2()](struct@BigUInt#method.panic_free_ilog2)
-    /// can produce results more efficiently for base 2, and
-    /// [panic_free_ilog10()](struct@BigUInt#method.panic_free_ilog10)
-    /// can produce results more efficiently for base 10.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
-    /// let base = U256::from_uint(1_0000_0000_0000_0000_0000_0000_0000_0000_u128);
-    /// let res = a_biguint.panic_free_ilog(&base);
-    /// println!("The logarithm of {} with respect to {} is {}.", a_biguint, base, res);
-    /// assert_eq!(res.to_string(), "2");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_ilog)
-    pub fn panic_free_ilog(&self, base: &Self) -> Self
-    {
-        general_panic_free_calc_ilog!(self, Self::common_ilog, base);
-    }
-
-    fn common_ilog(&self, base: &Self) -> Self
+    pub(super) fn common_ilog(&self, base: &Self) -> Self
     {
         general_calc_common_ilog!(self, Self::wrapping_div_assign, base);
-    }
-
-    // pub fn panic_free_ilog_assign(&mut self, base: &Self)
-    /// Calculates the logarithm of the number with respect to `base`,
-    /// rounded down, and assigns the result back to `self`.
-    ///
-    /// # Arguments
-    /// `base` is the base of logarithm of `self`, and is of `Self` type.
-    /// `base` should be greater than 1.
-    ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    ///
-    /// # Features
-    /// - If `self` is zero, the result will be zero and the flag
-    ///   `UNDEFINED` of `self` will be set.
-    /// - If `self` is one and `base` is either zero or one, the result
-    ///   will be zero and the flag `UNDEFINED` of `self` will be set.
-    /// - If `self` is greater than 1 and `base` is either zero or one,
-    ///   the result will be maximum value and the flags `UNDEFINED`
-    ///   and `INFINITY` of `self` will be set.
-    /// - In summary, the result and the flags of `self` will be set as follows:
-    ///
-    /// | `self` | `base` | result | flags                   |
-    /// |--------|--------|--------|-------------------------|
-    /// | 0      | --     | 0      | `UNDEFINED`             |
-    /// | 1      | 0 or 1 | 0      | `UNDEFINED`             |
-    /// | >= 2   | 0 or 1 | max    | `UNDEFINED`, `INFINITY` |
-    ///
-    /// # Counterpart Methods
-    /// This method might not be optimized owing to implementation details.
-    /// [panic_free_ilog2_assign()](struct@BigUInt#method.panic_free_ilog2_assign)
-    /// can produce results more efficiently for base 2, and
-    /// [panic_free_ilog10_assign()](struct@BigUInt#method.panic_free_ilog10_assign)
-    /// can produce results more efficiently for base 10.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let base = U256::from_uint(1_0000_0000_0000_0000_0000_0000_0000_0000_u128);
-    /// a_biguint.panic_free_ilog_assign(&base);
-    /// println!("After a_biguint.panic_free_ilog_assign({}),\na_biguint = {}.", base, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "2");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_ilog_assign)
-    pub fn panic_free_ilog_assign(&mut self, base: &Self)
-    {
-        calc_to_calc_assign!(self, Self::panic_free_ilog, base);
     }
 
     // pub fn ilog2(&self) -> Self
@@ -18314,7 +14086,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog2)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog2)
     pub fn ilog2(&self) -> Self
     {
         if self.is_zero()
@@ -18366,115 +14138,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog2_assign)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog2_assign)
     pub fn ilog2_assign(&mut self)
     {
         calc_to_calc_assign!(self, Self::ilog2);
-    }
-
-    // pub fn panic_free_ilog2(&self) -> Self
-    /// Returns the base 2 logarithm of the number, rounded down.
-    ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the base 2 logarithm of the number, rounded down.
-    /// 
-    /// # Features
-    /// If `self` is zero, the return value will be zero and the flag
-    /// `UNDEFINED` of the return value will be set.
-    /// 
-    /// # Counterpart Methods
-    /// This method is optimized for base 2;
-    /// [ilog_uint()](struct@BigUInt#method.ilog_uint)
-    /// can produce results of the base other than 2, and
-    /// [ilog10()](struct@BigUInt#method.ilog10)
-    /// can produce results more efficiently for base 10.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let a_biguint = U256::from_uint(64_u8);
-    /// let res = a_biguint.panic_free_ilog2();
-    /// println!("The base 2 logarithm of {} is {}.", a_biguint, res);
-    /// assert_eq!(res.to_string(), "6");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_ilog2)
-    pub fn panic_free_ilog2(&self) -> Self
-    {
-        if self.is_zero()
-        {
-            let mut res = Self::zero();
-            res.set_undefined();
-            return res;
-        }
-        Self::from_uint(self.length_in_bits() as u64 - self.leading_zeros() as u64 - 1_u64)
-    }
-
-    // pub fn panic_free_ilog2_assign(&mut self)
-    /// Calculates the base 2 logarithm of the number, rounded down,
-    /// and assigns back to `self`.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// If `self` is zero, the result will be zero and the flag
-    /// `UNDEFINED` of `self` will be set.
-    /// 
-    /// # Counterpart Methods
-    /// This method is optimized for base 2;
-    /// [ilog_assign_uint()](struct@BigUInt#method.ilog_assign_uint)
-    /// can produce results of the base other than 2, and
-    /// [ilog10_assign()](struct@BigUInt#method.ilog10_assign)
-    /// can produce results more efficiently for base 10.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let mut a_biguint = U256::from_uint(64_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// a_biguint.ilog2_assign();
-    /// println!("After a_biguint.ilog2_assign(),\na_biguint = {}.", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "6");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_ilog2_assign)
-    pub fn panic_free_ilog2_assign(&mut self)
-    {
-        calc_to_calc_assign!(self, Self::panic_free_ilog2);
     }
 
     // pub fn ilog10(&self) -> Self
@@ -18514,7 +14181,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog10)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog10)
     #[inline]
     pub fn ilog10(&self) -> Self
     {
@@ -18566,7 +14233,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog10_assign)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog10_assign)
     #[inline]
     pub fn ilog10_assign(&mut self)
     {
@@ -18574,113 +14241,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         // For the future upgrade, the following code is remained.
         // let flag = self.get_all_flags();
         // let log10 = self.ilog10();
-        // self.set_number(log10.get_number());
-        // self.set_flag_bit(flag);
-    }
-
-    // pub fn panic_free_ilog10(&self) -> Self
-    /// Returns the base 10 logarithm of the number, rounded down.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// If `self` is zero, the return value will be zero and the flag
-    /// `UNDEFINED` of the return value will be set.
-    /// 
-    /// # Output
-    /// It returns the base 10 logarithm of the number, rounded down.
-    /// 
-    /// # Counterpart Methods
-    /// This method is optimized for base 10;
-    /// [painc_free_ilog_uint()](struct@BigUInt#method.painc_free_ilog_uint)
-    /// can produce results of the base other than 10, and
-    /// [painc_free_ilog2()](struct@BigUInt#method.painc_free_ilog2)
-    /// can produce results more efficiently for base 10.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let a_biguint = U256::from_uint(10000_u32);
-    /// let res = a_biguint.panic_free_ilog10();
-    /// println!("The base 10 logarithm of {} is {}.", a_biguint, res);
-    /// assert_eq!(res.to_string(), "4");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_ilog10)
-    #[inline]
-    pub fn panic_free_ilog10(&self) -> Self
-    {
-        self.panic_free_ilog_uint(10_u8)
-    }
-
-    // pub fn panic_free_ilog10_assign(&mut self)
-    /// Calculates the base 10 logarithm of the number, rounded down,
-    /// and assigns back to `self`.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// If `self` is zero, the result will be zero and the flag
-    /// `UNDEFINED` of `self` will be set.
-    /// 
-    /// # Counterpart Methods
-    /// This method is not optimized for base 10 but provides convenience
-    /// for base 10;
-    /// [panic_free_ilog_assign_uint()](struct@BigUInt#method.panic_free_ilog_assign_uint)
-    /// can produce results of the base other than 10, and
-    /// [panic_free_ilog2_assign()](struct@BigUInt#method.panic_free_ilog2_assign)
-    /// can produce results more efficiently for base 2.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let mut a_biguint = U256::from_uint(10000_u32);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// a_biguint.panic_free_ilog10_assign();
-    /// println!("After a_biguint.panic_free_ilog10_assign(),\na_biguint = {}.", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "4");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_ilog10_assign)
-    #[inline]
-    pub fn panic_free_ilog10_assign(&mut self)
-    {
-        self.panic_free_ilog_assign_uint(10_u8);
-        // For the future upgrade, the following code is remained.
-        // let flag = self.get_all_flags();
-        // let log10 = self.panic_free_ilog10();
         // self.set_number(log10.get_number());
         // self.set_flag_bit(flag);
     }
@@ -18741,7 +14301,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd)
     pub fn gcd(&self, other: &Self) -> Self
     {
         if self.is_zero() || other.is_zero()
@@ -18807,164 +14367,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd_assign)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd_assign)
     pub fn gcd_assign(&mut self, other: &Self)
     {
         calc_to_calc_assign!(self, Self::gcd, other);
     }
 
-    // pub fn panic_free_gcd(&self, other: &Self) -> Self
-    /// Calculates the greatest common divisor of `self` and `other`,
-    /// and returns the result.
-    /// If you would like to know greatest common divisor more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Greatest_common_divisor).
-    /// 
-    /// # Argument
-    /// The greatest common diviser of `self` and `other` is calculated.
-    /// `other` is of `Self` type.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns The greatest common diviser of `self` and `other`.
-    /// 
-    /// # Features
-    /// - Both `self` and `other` should natural numbers. So, if either `self`
-    ///   or `other` is zero, getting greatest common diviser is meaningless.
-    ///   In this case, this method returns zero,
-    ///   and sets `UNDEFINED` flag of the return value.
-    /// - If either `self` or `other` is zero, the return value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - If both `self` and `other` is zero, the return value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `self` | `other` | return value | flags       |
-    /// |--------|---------|--------------|-------------|
-    /// | 0      | >= 1    | 0            | `UNDEFINED` |
-    /// | >= 1   | 0       | 0            | `UNDEFINED` |
-    /// | 0      | 0       | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// The method [panic_free_gcd_uint()](struct@BigUInt#method.panic_free_gcd_uint)
-    /// is more efficient than this method `panic_free_gcd()`
-    /// when the exponent `other` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [panic_free_gcd_uint()](struct@BigUInt#method.panic_free_gcd_uint).
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let a_biguint = U256::from_string("12345678911111222223333344444555556666677777888889999900000").unwrap();
-    /// let b_biguint = U256::from_string("99999888887777766666555554444433333222221111100000123456789").unwrap();
-    /// let c_biguint = a_biguint.panic_free_gcd(&b_biguint);
-    /// println!("The greatest common divisor of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
-    /// assert_eq!(c_biguint.to_string(), "27");
-    /// assert_eq!(c_biguint.is_overflow(), false);
-    /// assert_eq!(c_biguint.is_underflow(), false);
-    /// assert_eq!(c_biguint.is_infinity(), false);
-    /// assert_eq!(c_biguint.is_undefined(), false);
-    /// assert_eq!(c_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(c_biguint.is_left_carry(), false);
-    /// assert_eq!(c_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_gcd)
-    pub fn panic_free_gcd(&self, other: &Self) -> Self
-    {
-        if self.is_zero() || other.is_zero()
-        {
-            let mut res = Self::zero();
-            res.set_undefined();
-            res
-        }
-        else
-        {
-            self.common_gcd(other)
-        }
-    }
-
-    // pub fn panic_free_gcd_assign(&mut self, other: &Self)
-    /// Calculates the greatest common divisor of `self` and `other`,
-    /// and assigns the result back to `self`.
-    /// If you would like to know greatest common divisor more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Greatest_common_divisor).
-    /// 
-    /// # Argument
-    /// The greatest common diviser of `self` and `other` is calculated.
-    /// `other` is of `Self` type.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Both `self` and `other` should natural numbers. So, if either `self`
-    ///   or `other` is zero, getting greatest common diviser is meaningless.
-    ///   In this case, this method assigns zero to `self`,
-    ///   and sets `UNDEFINED` flag of the return value.
-    /// - If either `self` or `other` is zero, the result value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - If both `self` and `other` is zero, the result value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - In summary, the result value and its flags will be set as follows:
-    /// 
-    /// | `self` | `other` | result value | flags       |
-    /// |--------|---------|--------------|-------------|
-    /// | 0      | >= 1    | 0            | `UNDEFINED` |
-    /// | >= 1   | 0       | 0            | `UNDEFINED` |
-    /// | 0      | 0       | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// The method [panic_free_gcd_assign_uint()](struct@BigUInt#method.panic_free_gcd_assign_uint)
-    /// is more efficient than this method `panic_free_gcd_assign()`
-    /// when the exponent `other` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [panic_free_gcd_assign_uint()](struct@BigUInt#method.panic_free_gcd_assign_uint).
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let mut a_biguint = U256::from_string("12345678911111222223333344444555556666677777888889999900000").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let b_biguint = U256::from_string("99999888887777766666555554444433333222221111100000123456789").unwrap();
-    /// a_biguint.panic_free_gcd_assign(&b_biguint);
-    /// println!("After a_biguint.panic_free_gcd_assign(), a_biguint = {}.", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "27");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_gcd_assign)
-    pub fn panic_free_gcd_assign(&mut self, other: &Self)
-    {
-        calc_to_calc_assign!(self, Self::panic_free_gcd, other);
-    }
-
-    fn common_gcd(&self, other: &Self) -> Self
+    pub(super) fn common_gcd(&self, other: &Self) -> Self
     {
         let mut x = self.clone();
         let mut y = Self::from_biguint(other);
@@ -19030,7 +14439,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm)
     pub fn lcm(&self, other: &Self) -> Self
     {
         if self.is_zero() || other.is_zero()
@@ -19096,162 +14505,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm_assign)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm_assign)
     pub fn lcm_assign(&mut self, other: &Self)
     {
         calc_to_calc_assign!(self, Self::lcm, other);
     }
 
-    // pub fn panic_free_lcm(&self, other: &Self) -> Self
-    /// Calculates the least common multiple of `self` and `other`,
-    /// and returns the result.
-    /// If you would like to know greatest common divisor more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Least_common_multiple).
-    /// 
-    /// # Argument
-    /// The least common multiple of `self` and `other` is calculated.
-    /// `other` is of `Self` type.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns The least common multiple of `self` and `other`.
-    /// 
-    /// # Features
-    /// - Both `self` and `other` should natural numbers. So, if either `self`
-    ///   or `other` is zero, getting greatest common diviser is meaningless.
-    ///   In this case, this method returns zero,
-    ///   and sets `UNDEFINED` flag of the return value.
-    /// - If either `self` or `other` is zero, the return value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - If both `self` and `other` is zero, the return value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - In summary, the return value and its flags will be set as follows:
-    /// 
-    /// | `self` | `other` | return value | flags       |
-    /// |--------|---------|--------------|-------------|
-    /// | 0      | >= 1    | 0            | `UNDEFINED` |
-    /// | >= 1   | 0       | 0            | `UNDEFINED` |
-    /// | 0      | 0       | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// The method [lcm_uint()](struct@BigUInt#method.lcm_uint)
-    /// is more efficient than this method `lcm()`
-    /// when the exponent `other` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [lcm_uint()](struct@BigUInt#method.lcm_uint).
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let a_biguint = U256::from_string("11111222223333344444555556666677777").unwrap();
-    /// let b_biguint = U256::from_string("77777666665555544444333332222211111").unwrap();
-    /// let c_biguint = a_biguint.panic_free_lcm(&b_biguint);
-    /// println!("The least common multiple of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
-    /// assert_eq!(c_biguint.to_string(), "77779222242222466669444474444755552444414444166664222202222077777");
-    /// assert_eq!(c_biguint.is_overflow(), false);
-    /// assert_eq!(c_biguint.is_underflow(), false);
-    /// assert_eq!(c_biguint.is_infinity(), false);
-    /// assert_eq!(c_biguint.is_undefined(), false);
-    /// assert_eq!(c_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(c_biguint.is_left_carry(), false);
-    /// assert_eq!(c_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_lcm)
-    pub fn panic_free_lcm(&self, other: &Self) -> Self
-    {
-        if self.is_zero() || other.is_zero()
-        {
-            let mut res = Self::zero();
-            res.set_undefined();
-            res
-        }
-        else
-        {
-            self.wrapping_div(&self.gcd(&other)).wrapping_mul(&other)
-        }
-    }
-
-    // pub fn panic_free_lcm_assign(&mut self, other: &Self)
-    /// Calculates the greatest common divisor of `self` and `other`,
-    /// and assigns the result back to `self`.
-    /// If you would like to know greatest common divisor more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Least_common_multiple).
-    /// 
-    /// # Argument
-    /// The greatest common diviser of `self` and `other` is calculated.
-    /// `other` is of `Self` type.
-    ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Both `self` and `other` should natural numbers. So, if either `self`
-    ///   or `other` is zero, getting least common multiple is meaningless.
-    ///   In this case, this method assigns zero to `self`,
-    ///   and sets `UNDEFINED` flag of the return value.
-    /// - If either `self` or `other` is zero, the result value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - If both `self` and `other` is zero, the result value will be zero,
-    ///   and its `UNDEFINED` flag will be set.
-    /// - In summary, the result value and its flags will be set as follows:
-    /// 
-    /// | `self` | `other` | result value | flags       |
-    /// |--------|---------|--------------|-------------|
-    /// | 0      | >= 1    | 0            | `UNDEFINED` |
-    /// | >= 1   | 0       | 0            | `UNDEFINED` |
-    /// | 0      | 0       | 0            | `UNDEFINED` |
-    /// 
-    /// # Counterpart Method
-    /// The method [gcd_assign_uint()](struct@BigUInt#method.gcd_assign_uint)
-    /// is more efficient than this method `gcd_assign()`
-    /// when the exponent `other` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [gcd_assign_uint()](struct@BigUInt#method.gcd_assign_uint).
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U256::from_string("11111222223333344444555556666677777").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let b_biguint = U256::from_string("77777666665555544444333332222211111").unwrap();
-    /// a_biguint.panic_free_lcm_assign(&b_biguint);
-    /// println!("After a_biguint.panic_free_lcm_assign(), a_biguint = {}.", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "77779222242222466669444474444755552444414444166664222202222077777");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_lcm_assign)
-    pub fn panic_free_lcm_assign(&mut self, other: &Self)
-    {
-        calc_to_calc_assign!(self, Self::panic_free_lcm, other);
-    }
 
     /*** METHODS FOR PRIME NUMBER TEST ***/
 
@@ -19307,7 +14566,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.is_prime_using_miller_rabin)
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.is_prime_using_miller_rabin)
     pub fn is_prime_using_miller_rabin(&self, repetition: usize) -> bool
     {
         if self.is_uint(2_u8) ||  self.is_uint(3_u8)
@@ -19415,7 +14674,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.shift_left)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.shift_left)
     pub fn shift_left<U>(&self, n: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -19479,7 +14738,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.shift_left_assign)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.shift_left_assign)
     pub fn shift_left_assign<U>(&mut self, n: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -19583,7 +14842,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.shift_right)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.shift_right)
     pub fn shift_right<U>(&self, n: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -19647,7 +14906,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.shift_right_assign)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.shift_right_assign)
     pub fn shift_right_assign<U>(&mut self, n: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -19749,7 +15008,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.rotate_left)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.rotate_left)
     #[inline]
     pub fn rotate_left<U>(&self, n: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -19812,7 +15071,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.rotate_left_assign)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.rotate_left_assign)
     #[inline]
     pub fn rotate_left_assign<U>(&mut self, n: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -19870,7 +15129,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.rotate_right)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.rotate_right)
     #[inline]
     pub fn rotate_right<U>(&self, n: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -19933,7 +15192,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.rotate_right_assign)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.rotate_right_assign)
     #[inline]
     pub fn rotate_right_assign<U>(&mut self, n: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -19984,7 +15243,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.and)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.and)
     pub fn and(&self, rhs: &Self) -> Self
     {
         biguint_calc_assign_to_calc!(self, Self::and_assign, rhs);
@@ -20032,7 +15291,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.and_assign)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.and_assign)
     pub fn and_assign(&mut self, rhs: &Self)
     {
         bitcalc!(self, &, rhs);
@@ -20074,7 +15333,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.iroot_assign)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.iroot_assign)
     pub fn or(&self, rhs: &Self) -> Self
     {
         biguint_calc_assign_to_calc!(self, Self::or_assign, rhs);
@@ -20122,7 +15381,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.or_assign)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.or_assign)
     pub fn or_assign(&mut self, rhs: &Self)
     {
         bitcalc!(self, |, rhs);
@@ -20163,7 +15422,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.xor)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.xor)
     pub fn xor(&self, rhs: &Self) -> Self
     {
         biguint_calc_assign_to_calc!(self, Self::xor_assign, rhs);
@@ -20211,7 +15470,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.xor_assign)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.xor_assign)
     pub fn xor_assign(&mut self, rhs: &Self)
     {
         bitcalc!(self, ^, rhs);
@@ -20246,7 +15505,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.flip)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.flip)
     pub fn flip(&self) -> Self
     {
         let mut res = self.clone();
@@ -20372,7 +15631,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.reverse_bits)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.reverse_bits)
     pub fn reverse_bits(&self) -> Self
     {
         let mut res = self.clone();
@@ -20420,7 +15679,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.reverse_bits_assign)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.reverse_bits_assign)
     pub fn reverse_bits_assign(&mut self)
     {
         let mut low: T;
@@ -20471,7 +15730,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.swap_bytes)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.swap_bytes)
     pub fn swap_bytes(&self) -> Self
     {
         let mut res = self.clone();
@@ -20519,7 +15778,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.swap_bytes_assign)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.swap_bytes_assign)
     pub fn swap_bytes_assign(&mut self)
     {
         for i in 0..N/2
@@ -20604,7 +15863,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_biguint)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_biguint)
     #[inline]
     pub fn into_biguint<U, const M: usize>(&self) -> BigUInt<U, M>
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -20665,7 +15924,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_uint)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_uint)
     pub fn into_uint<U>(&self) -> U
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -20727,7 +15986,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_u128)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_u128)
     pub fn into_u128(&self) -> u128
     {
         let mut num = LongerUnion::new();
@@ -20787,7 +16046,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_u64)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_u64)
     pub fn into_u64(&self) -> u64
     {
         let mut num = LongerUnion::new();
@@ -20844,7 +16103,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_u32)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_u32)
     pub fn into_u32(&self) -> u32
     {
         let mut num = LongerUnion::new();
@@ -20898,7 +16157,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_u16)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_u16)
     pub fn into_u16(&self) -> u16
     {
         let mut num = LongerUnion::new();
@@ -20949,7 +16208,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_u8)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_u8)
     #[inline]
     pub fn into_u8(&self) -> u8
     {
@@ -20989,7 +16248,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_usize)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_usize)
     #[inline]
     pub fn into_usize(&self) -> usize
     {
@@ -21036,7 +16295,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_be)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_be)
     #[inline]
     pub fn to_be(&self) -> Self
     {
@@ -21084,7 +16343,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_be_assign)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_be_assign)
     #[inline]
     pub fn to_be_assign(&mut self)
     {
@@ -21128,7 +16387,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_be_bytes)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_be_bytes)
     #[inline]
     pub fn to_be_bytes(&self) -> [T; N]
     {
@@ -21171,7 +16430,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_le)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_le)
     #[inline]
     pub fn to_le(&self) -> Self
     {
@@ -21218,7 +16477,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_le_assign)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_le_assign)
     #[inline]
     pub fn to_le_assign(&mut self)
     {
@@ -21258,7 +16517,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_le_bytes)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_le_bytes)
     #[inline]
     pub fn to_le_bytes(&self) -> [T; N]
     {
@@ -21339,7 +16598,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_string_with_radix_and_stride_and_delimiter)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_string_with_radix_and_stride_and_delimiter)
     pub fn to_string_with_radix_and_stride_and_delimiter(&self, radix: usize, stride: usize, delimiter: &str) -> Result<String, NumberErr>
     {
         let res = self.to_string_with_radix_and_stride(radix, stride);
@@ -21418,7 +16677,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_string_with_radix_and_stride)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_string_with_radix_and_stride)
     pub fn to_string_with_radix_and_stride(&self, radix: usize, stride: usize) -> Result<String, NumberErr>
     {
         if (radix < 2) || (radix > 10 + 26 + 26)
@@ -21516,7 +16775,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_string_with_radix)
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.to_string_with_radix)
     pub fn to_string_with_radix(&self, radix: usize) -> Result<String, NumberErr>
     {
         if (radix < 2) || (radix > 10 + 26 + 26)
@@ -21549,7 +16808,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     /***** FLAG MANIPULATION *****/
 
-    // fn set_flag_bit(&mut self, flag: u8)
+    // pub(super) fn set_flag_bit(&mut self, flag: u8)
     /// Sets flag bits that `flag` indicates to be `1`.
     /// 
     /// # Arguments
@@ -21564,12 +16823,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// If `size_of::<T>() * N` <= `128`, this method may panic
     /// or its behavior may be undefined though it may not panic.
     #[inline]
-    fn set_flag_bit(&mut self, flag: u8)
+    pub(super) fn set_flag_bit(&mut self, flag: u8)
     {
         self.flag |= flag;
     }
 
-    // fn reset_flag_bit(&mut self, flag: u8)
+    // pub(super) fn reset_flag_bit(&mut self, flag: u8)
     /// Resets flag bits that `flag` indicates to be `0`.
     /// 
     /// # Arguments
@@ -21581,7 +16840,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// If `size_of::<T>() * N` <= `128`, this method may panic
     /// or its behavior may be undefined though it may not panic.
     #[inline]
-    fn reset_flag_bit(&mut self, flag: u8)
+    pub(super) fn reset_flag_bit(&mut self, flag: u8)
     {
         self.flag &= !flag;
     }
@@ -21603,7 +16862,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         (self.flag & flag) != 0
     }
 
-    // fn get_all_flags(&self) -> u8
+    // pub(super) fn get_all_flags(&self) -> u8
     /// Gets all the flag bits.
     ///
     /// # Output
@@ -21651,12 +16910,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     #[inline]
-    fn get_all_flags(&self) -> u8
+    pub(super) fn get_all_flags(&self) -> u8
     {
         self.flag
     }
 
-    // fn set_all_flags(&mut self, flag: u8)
+    // pub(super) fn set_all_flags(&mut self, flag: u8)
     /// Sets all flag bits indicated by `flag` to be `1`.
     /// 
     /// # Panics
@@ -21709,12 +16968,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     #[inline]
-    fn set_all_flags(&mut self, flag: u8)
+    pub(super) fn set_all_flags(&mut self, flag: u8)
     {
         self.flag = flag;
     }
 
-    // fn reset_all_flags(&mut self)
+    // pub(super) fn reset_all_flags(&mut self)
     /// Resets all flag bits to be `0`.
     /// 
     /// # Panics
@@ -21758,7 +17017,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     #[inline]
-    fn reset_all_flags(&mut self)
+    pub(super) fn reset_all_flags(&mut self)
     {
         self.flag = 0;
     }

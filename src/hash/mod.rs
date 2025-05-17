@@ -42,6 +42,7 @@
 //! - SHA-2 hash algorithms based on 256 bits --- Includes SHA-256, SHA-224, and their expanded versions. [`SHA2_Generic_256`](struct@SHA2_256_Generic)
 //! - SHA-2 hash algorithms based on 512 bits --- Includes SHA-512, SHA-384, SHA-512/256, and their expanded versions. [`SHA2_512_Generic`](struct@SHA2_512_Generic)
 //! - SHA-2 hash algorithms based on 512/t bits --- Includes 512/256, SHA-512/224, and their expanded versions. [`SHA2_512_t_Generic`](struct@SHA2_512_t_Generic)
+//! - Keccak hash algorithms --- Includes SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE-128, SHAKE-256, cSHAKE-128, cSHAKE-256, Keccak-224, Keccak-256, Keccak-384, Keccak-512, and their expanded versions. [`Keccak_Generic`](struct@Keccak_Generic)
 //! 
 //! # QUICK START
 //! - For `MD4`, read [here](struct@MD4_Generic#quick-start).
@@ -50,6 +51,7 @@
 //! - For `SHA-256`, read [here](struct@SHA2_256_Generic#quick-start).
 //! - For `SHA-512`, read [here](struct@SHA2_512_Generic#quick-start).
 //! - For `SHA-512/t`, read [here](struct@SHA2_512_t_Generic#quick-start).
+//! - For `Keccak`, read [here](struct@Keccak_Generic#quick-start).
 //! 
 //! # Simple but Useful Applications using cryptocol
 //! - For `MD4`, try [this](struct@MD4_Generic#a-simple-but-useful-application-using-cryptocol).
@@ -58,6 +60,7 @@
 //! - For `SHA-256`, try [this](struct@SHA2_256_Generic#a-simple-but-useful-application-using-cryptocol).
 //! - For `SHA-512`, try [this](struct@SHA2_512_Generic#a-simple-but-useful-application-using-cryptocol).
 //! - For `SHA-512/t`, try [this](struct@SHA2_512_t_Generic#a-simple-but-useful-application-using-cryptocol).
+//! - For `SHA3-512`, try [this](struct@Keccak_Generic#a-simple-but-useful-application-using-cryptocol).
 //! 
 //! The following application is made by combining above all applications.
 //! 
@@ -95,6 +98,7 @@
 //!         "sha2_512_256" => { print_hash_value(&args[2][..], SHA2_512_256::new(), &args[3][..]); },
 //!         "sha2_384" => { print_hash_value(&args[2][..], SHA2_384::new(), &args[3][..]); },
 //!         "sha2_512_t_224" => { print_hash_value(&args[2][..], SHA2_512_t_224::new(), &args[3][..]); },
+//!         "sha3_512" => { print_hash_value(&args[2][..], SHA3_512::new(), &args[3][..]); },
 //!         _ => { help(); },
 //!     }
 //! }
@@ -182,6 +186,7 @@
 //!     println!("sha2_512_256      : SHA2_512_256 algorithm");
 //!     println!("sha2_384          : SHA2_384 algorithm");
 //!     println!("sha2_512_t_224    : SHA2_512_t_224 algorithm\n");
+//!     println!("sha3_512          : SHA3_512 algorithm");
 //!     println!("options           description");
 //!     println!("--text, -t        : <source> is a text to get a hash code.");
 //!     println!("                    The text should be enclosed by ' or \".");
@@ -224,6 +229,7 @@
 //! impl_hash_for!{SHA2_512}
 //! impl_hash_for!{SHA2_512_256}
 //! impl_hash_for!{SHA2_512_t_224}
+//! impl_hash_for!{SHA3_512}
 //! ```
 
 mod md4;
@@ -241,3 +247,10 @@ pub use sha2_256::*;
 pub use sha2_512::*;
 pub use sha2_512_t::*;
 pub use keccak::*;
+
+/// keccak.rs was too big because of documentation and plenty of examples
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to all the *.rs in documentation folder.
+mod documentation;
+pub use documentation::*;

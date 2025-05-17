@@ -1,5 +1,78 @@
 # Breaking Changes
 
+## Breaking changes from ver. 0.11.5 to ver. 0.11.6
+
+| Methods                                                                                  |
+|------------------------------------------------------------------------------------------|
+| fn panic_free_modular_add_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
+| fn panic_free_modular_add_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)              |
+| fn panic_free_modular_sub_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
+| fn panic_free_modular_sub_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)              |
+| fn panic_free_modular_mul_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
+| fn panic_free_modular_mul_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)              |
+| fn panic_free_divide_fully_uint<U\>(&self, rhs: U) -> (Self, Self)                       |
+| fn panic_free_div_uint<U\>(&self, rhs: U) -> Self                                        |
+| fn panic_free_div_assign_uint<U\>(&mut self, rhs: U)                                     |
+| fn panic_free_modular_div_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
+| fn panic_free_modular_div_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)              |
+| fn panic_free_rem_uint<U\>(&self, rhs: U) -> Self                                        |
+| fn panic_free_rem_assign_uint<U\>(&mut self, rhs: U)                                     |
+| fn panic_free_modular_rem_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
+| fn panic_free_modular_rem_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)              |
+| fn panic_free_pow_uint<U\>(&self, exp: U) -> Self                                        |
+| fn panic_free_pow_assign_uint<U\>(&mut self, exp: U)                                     |
+| fn panic_free_modular_pow_uint<U\>(&self, exp: U, modulo: &Self) -> Self                 |
+| fn panic_free_modular_pow_assign_uint<U\>(&mut self, exp: U, modulo: &Self)              |
+| fn panic_free_iroot_uint<U\>(&self, exp: U) -> Self                                      |
+| fn panic_free_iroot_assign_uint<U\>(&mut self, exp: U)                                   |
+| fn panic_free_ilog_uint<U\>(&self, base: U) -> Self                                      |
+| fn panic_free_ilog_assign_uint<U\>(&mut self, base: U)                                   |
+| fn panic_free_gcd_uint<U\>(&self, other: U) -> Self                                      |
+| fn panic_free_gcd_assign_uint<U\>(&mut self, other: U)                                   |
+| fn panic_free_lcm_uint<U\>(&self, other: U) -> Self                                      |
+| fn panic_free_lcm_assign_uint<U\>(&mut self, other: U)                                   |
+| fn panic_free_modular_add(&self, rhs: &Self, modulo: &Self) -> Self                      |
+| fn panic_free_modular_add_assign(&mut self, rhs: &Self, modulo: &Self)                   |
+| fn panic_free_modular_sub(&self, rhs: &Self, modulo: &Self) -> Self                      |
+| fn panic_free_modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)                   |
+| fn panic_free_modular_mul(&self, rhs: &Self, modulo: &Self) -> Self                      |
+| fn panic_free_modular_mul_assign(&mut self, rhs: &Self, modulo: &Self)                   |
+| fn panic_free_divide_fully(&self, rhs: &Self) -> (Self, Self)                            |
+| fn panic_free_div(&self, rhs: &Self) -> Self                                             |
+| fn panic_free_div_assign(&mut self, rhs: &Self)                                          |
+| fn panic_free_modular_div(&self, rhs: &Self, modulo: &Self) -> Self                      |
+| fn panic_free_modular_div_assign(&mut self, rhs: &Self, modulo: &Self)                   |
+| fn panic_free_rem(&self, rhs: &Self) -> Self                                             |
+| fn panic_free_rem_assign(&mut self, rhs: &Self)                                          |
+| fn panic_free_modular_rem(&self, rhs: &Self, modulo: &Self) -> Self                      |
+| fn panic_free_modular_rem_assign(&mut self, rhs: &Self, modulo: &Self)                   |
+| fn panic_free_pow(&self, exp: &Self) -> Self                                             |
+| fn panic_free_pow_assign(&mut self, exp: &Self)                                          |
+| fn panic_free_modular_pow(&self, exp: &Self, modulo: &Self) -> Self                      |
+| fn panic_free_modular_pow_assign(&mut self, exp: &Self, modulo: &Self)                   |
+| fn panic_free_iroot(&self, exp: &Self) -> Self                                           |
+| fn panic_free_iroot_assign(&mut self, exp: &Self)                                        |
+| fn panic_free_ilog(&self, base: &Self) -> Self                                           |
+| fn panic_free_ilog_assign(&mut self, base: &Self)                                        |
+| fn panic_free_ilog2(&self) -> Self                                                       |
+| fn panic_free_ilog2_assign(&mut self)                                                    |
+| fn panic_free_ilog10(&self) -> Self                                                      |
+| fn panic_free_ilog10_assign(&mut self)                                                   |
+| fn panic_free_gcd(&self, other: &Self) -> Self                                           |
+| fn panic_free_gcd_assign(&mut self, other: &Self)                                        |
+| fn panic_free_lcm(&self, other: &Self) -> Self                                           |
+| fn panic_free_lcm_assign(&mut self, other: &Self)                                        |
+| fn panic_free_next_multiple_of_uint<U\>(&self, rhs: U) -> Self                           |
+| fn panic_free_next_multiple_of_assign_uint<U\>(&mut self, rhs: U)                        |
+| fn panic_free_modular_next_multiple_of_uint<U\>(&self, rhs: U, modulo: &Self) -> Self    |
+| fn panic_free_modular_next_multiple_of_assign_uint<U\>(&mut self, rhs: U, modulo: &Self) |
+| fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self                                |
+| fn panic_free_next_multiple_of_assign(&mut self, rhs: &Self)                             |
+| fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self         |
+| fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)      |
+
+- The methods above have been moved from struct BigUInt or trait BigUInt_More to trait BigUInt_Panic_Free because docs.rs failed in generating struct.bigUInt.html.
+
 ## Breaking changes from ver. 0.11.2 to ver. 0.11.3
 
 ### Contant BYTES in trait SmallUInt

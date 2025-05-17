@@ -24,7 +24,7 @@ use crate::number::SmallUInt;
 
 
 /// # Introduction
-/// Trait `BigInt_More` is for BigUInt
+/// Trait `BigUInt_More` is for BigUInt
 ///
 /// # Quick start
 /// In order to use this trait, you have to import (use)
@@ -110,7 +110,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.checked_add_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.checked_add_uint)
         fn checked_add_uint<U>(&self, rhs: U) -> Option<Self>
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -168,7 +168,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.unchecked_add_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.unchecked_add_uint)
         fn unchecked_add_uint<U>(&self, rhs: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -225,7 +225,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_add_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_add_uint)
         fn saturating_add_uint<U>(&self, rhs: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -292,7 +292,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_add_assign_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_add_assign_uint)
         fn saturating_add_assign_uint<U>(&mut self, rhs: U)
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -360,7 +360,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.safe_add_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.safe_add_uint)
         fn safe_add_uint<U>(&self, rhs: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -440,7 +440,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.safe_add_assign_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.safe_add_assign_uint)
         fn safe_add_assign_uint<U>(&mut self, rhs: U)
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -510,7 +510,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.checked_sub_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.checked_sub_uint)
         fn checked_sub_uint<U>(&self, rhs: U) -> Option<Self>
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -568,7 +568,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.unchecked_sub_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.unchecked_sub_uint)
         fn unchecked_sub_uint<U>(&self, rhs: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -625,7 +625,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_sub_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_sub_uint)
         fn saturating_sub_uint<U>(&self, rhs: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -692,7 +692,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_sub_assign_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_sub_assign_uint)
         fn saturating_sub_assign_uint<U>(&mut self, rhs: U)
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -762,7 +762,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.safe_sub_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.safe_sub_uint)
         fn safe_sub_uint<U>(&self, rhs: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -842,7 +842,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.safe_sub_assign_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.safe_sub_assign_uint)
         fn safe_sub_assign_uint<U>(&mut self, rhs: U)
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -911,7 +911,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.checked_mul_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.checked_mul_uint)
         fn checked_mul_uint<U>(&self, rhs: U) -> Option<Self>
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -969,7 +969,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.unchecked_mul_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.unchecked_mul_uint)
         fn unchecked_mul_uint<U>(&self, rhs: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1027,7 +1027,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_mul_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_mul_uint)
         fn saturating_mul_uint<U>(&self, rhs: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1093,7 +1093,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_mul_assign_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_mul_assign_uint)
         fn saturating_mul_assign_uint<U>(&mut self, rhs: U)
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1164,7 +1164,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.safe_mul_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.safe_mul_uint)
         fn safe_mul_uint<U>(&self, rhs: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1245,7 +1245,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.safe_mul_assign_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.safe_mul_assign_uint)
         fn safe_mul_assign_uint<U>(&mut self, rhs: U)
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1316,7 +1316,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.checked_div_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.checked_div_uint)
         fn checked_div_uint<U>(&self, rhs: U) -> Option<Self>
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1373,7 +1373,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.unchecked_div_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.unchecked_div_uint)
         fn unchecked_div_uint<U>(&self, rhs: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1436,7 +1436,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_div_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_div_uint)
         fn saturating_div_uint<U>(&self, rhs: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1505,7 +1505,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_div_assign_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_div_assign_uint)
         fn saturating_div_assign_uint<U>(&mut self, rhs: U)
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1565,7 +1565,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.checked_rem_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.checked_rem_uint)
         fn checked_rem_uint<U>(&self, rhs: U) -> Option<U>
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1615,7 +1615,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.unchecked_rem_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.unchecked_rem_uint)
         fn unchecked_rem_uint<U>(&self, rhs: U) -> U
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1668,7 +1668,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_rem_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_rem_uint)
         fn saturating_rem_uint<U>(&self, rhs: U) -> U
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1737,7 +1737,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_rem_assign_uint)
+        /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.saturating_rem_assign_uint)
         fn saturating_rem_assign_uint<U>(&mut self, rhs: U)
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1808,7 +1808,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.checked_add)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.checked_add)
         fn checked_add(&self, rhs: &Self) -> Option<Self>;
 
         // fn unchecked_add(&self, rhs: &Self) -> Self
@@ -1861,7 +1861,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.unchecked_add)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.unchecked_add)
         fn unchecked_add(&self, rhs: &Self) -> Self;
 
         // fn saturating_add(&self, rhs: &Self) -> Self
@@ -1912,7 +1912,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_add)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_add)
         fn saturating_add(&self, rhs: &Self) -> Self;
 
         // fn saturating_add_assign(&mut self, rhs: &Self)
@@ -1973,7 +1973,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_add_assign)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_add_assign)
         fn saturating_add_assign(&mut self, rhs: &Self);
 
         // fn safe_add(& self, rhs: &Self) -> Self
@@ -2036,7 +2036,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.safe_add)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.safe_add)
         fn safe_add(&self, rhs: &Self) -> Self;
 
         // fn safe_add_assign(&mut self, rhs: &Self)
@@ -2110,7 +2110,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.safe_add_assign)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.safe_add_assign)
         fn safe_add_assign(&mut self, rhs: &Self);
 
 
@@ -2172,7 +2172,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.checked_sub)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.checked_sub)
         fn checked_sub(&self, rhs: &Self) -> Option<Self>;
 
         // fn unchecked_sub(&self, rhs: &Self) -> Self
@@ -2224,7 +2224,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.unchecked_sub)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.unchecked_sub)
         fn unchecked_sub(&self, rhs: &Self) -> Self;
 
         // fn saturating_sub(&self, rhs: &Self) -> Self
@@ -2276,7 +2276,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_sub)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_sub)
         fn saturating_sub(&self, rhs: &Self) -> Self;
 
         // fn saturating_sub_assign(&mut self, rhs: &Self)
@@ -2337,7 +2337,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_sub_assign)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_sub_assign)
         fn saturating_sub_assign(&mut self, rhs: &Self);
 
         // fn safe_sub(&self, rhs: &Self) -> Self
@@ -2402,7 +2402,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.safe_sub)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.safe_sub)
         fn safe_sub(&self, rhs: &Self) -> Self;
 
         // fn safe_sub_assign(&mut self, rhs: &Self)
@@ -2476,7 +2476,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.safe_sub_assign)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.safe_sub_assign)
         fn safe_sub_assign(&mut self, rhs: &Self);
 
 
@@ -2538,7 +2538,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.checked_mul)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.checked_mul)
         fn checked_mul(&self, rhs: &Self) -> Option<Self>;
 
         // fn unchecked_mul(&self, rhs: &Self) -> Self
@@ -2589,7 +2589,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.unchecked_mul)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.unchecked_mul)
         fn unchecked_mul(&self, rhs: &Self) -> Self
         {
                 self.checked_mul(rhs).unwrap()
@@ -2643,7 +2643,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.carrying_add_assign_uint)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.carrying_add_assign_uint)
         fn saturating_mul(&self, rhs: &Self) -> Self;
 
         // fn saturating_mul_assign(&mut self, rhs: &Self)
@@ -2700,7 +2700,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_mul_assign)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_mul_assign)
         fn saturating_mul_assign(&mut self, rhs: &Self);
 
         // fn safe_mul(& self, rhs: &Self) -> Self
@@ -2765,7 +2765,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.safe_mul)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.safe_mul)
         fn safe_mul(&self, rhs: &Self) -> Self;
 
         // fn safe_mul_assign(&mut self, rhs: &Self)
@@ -2839,7 +2839,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.safe_mul_assign)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.safe_mul_assign)
         fn safe_mul_assign(&mut self, rhs: &Self);
 
 
@@ -2904,7 +2904,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.checked_div)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.checked_div)
         fn checked_div(&self, rhs: &Self) -> Option<Self>;
 
         // fn unchecked_div(&self, rhs: &Self) -> Self
@@ -2955,7 +2955,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.unchecked_div)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.unchecked_div)
         fn unchecked_div(&self, rhs: &Self) -> Self;
 
         // fn saturating_div(&self, rhs: &Self) -> Self
@@ -3009,7 +3009,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_div)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_div)
         fn saturating_div(&self, rhs: &Self) -> Self;
 
         // fn saturating_div_assign(&mut self, rhs: &Self)
@@ -3072,7 +3072,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_div_assign)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_div_assign)
         fn saturating_div_assign(&mut self, rhs: &Self);
 
         // fn checked_rem(&self, rhs: &Self) -> Option<Self>
@@ -3133,7 +3133,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.checked_rem)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.checked_rem)
         fn checked_rem(&self, rhs: &Self) -> Option<Self>;
 
         // fn unchecked_rem(&self, rhs: &Self) -> Self
@@ -3184,7 +3184,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.unchecked_rem)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.unchecked_rem)
         fn unchecked_rem(&self, rhs: &Self) -> Self;
 
         // fn saturating_rem(&self, rhs: &Self) -> Self
@@ -3238,7 +3238,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_rem)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_rem)
         fn saturating_rem(&self, rhs: &Self) -> Self;
 
         // fn saturating_rem_assign(&mut self, rhs: &Self)
@@ -3301,7 +3301,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_rem_assign)
+        /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.saturating_rem_assign)
         fn saturating_rem_assign(&mut self, rhs: &Self);
 
 
@@ -3358,7 +3358,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.next_multiple_of_uint)
+        /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.next_multiple_of_uint)
         fn next_multiple_of_uint<U>(&self, rhs: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -3428,143 +3428,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.next_multiple_of_assign_uint)
+        /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.next_multiple_of_assign_uint)
         fn next_multiple_of_assign_uint<U>(&mut self, rhs: U)
-        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-                + Rem<Output=U> + RemAssign
-                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-                + PartialEq + PartialOrd;
-
-        // fn panic_free_next_multiple_of_uint<U>(&self, rhs: U) -> Self
-        /// Calculates the smallest value greater than or equal to `self`,
-        /// which is a multiple of `rhs`, and returns the result.
-        /// 
-        /// # Arguments
-        /// `rhs` is the base of multiple, and is a primitive unsigned integer
-        /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-        ///
-        /// # Panics
-        /// If `size_of::<T>() * N` <= `128`, this method may panic
-        /// or its behavior may be undefined though it may not panic.
-        /// 
-        /// # Output
-        /// - It returns the smallest value greater than or equal to `self`,
-        ///   which is a multiple of `rhs`.
-        ///   However, if overflow occurs, it returns the value wrapped around.
-        /// - If `rhs` is zero, the `UNDEFINED` flag will be set and it returns
-        ///   `zero`.
-        /// 
-        /// # Features
-        /// - The result will be the smallest value greater than or equal to self,
-        ///   which is a multiple of `rhs`. However, if overflow occurs,
-        ///   the result will be the value wrapped around.
-        /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
-        ///   of the return value will be set.
-        /// 
-        /// # Counterpart Method
-        /// If `rhs` is bigger than `u128`, the method
-        /// [panic_free_next_multiple_of()](#tymethod.panic_free_next_multiple_of)
-        /// is proper rather than this method `panic_free_next_multiple_of_uint()`.
-        /// 
-        /// # Example 1
-        /// ```
-        /// use std::str::FromStr;
-        /// use cryptocol::number::BigUint_More;
-        /// use cryptocol::define_utypes_with;
-        /// define_utypes_with!(u128);
-        /// 
-        /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
-        /// let num = 586478_u32;
-        /// let multiple = a_biguint.next_multiple_of_uint(num);
-        /// println!("The next multiple of {} is {}", a_biguint, multiple);
-        /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123697594");
-        /// assert_eq!(multiple.is_overflow(), false);
-        /// assert_eq!(multiple.is_underflow(), false);
-        /// assert_eq!(multiple.is_infinity(), false);
-        /// assert_eq!(multiple.is_divided_by_zero(), false);
-        /// assert_eq!(multiple.is_undefined(), false);
-        /// assert_eq!(multiple.is_left_carry(), false);
-        /// assert_eq!(multiple.is_right_carry(), false);
-        /// ```
-        /// 
-        /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.panic_free_next_multiple_of_uint)
-        fn panic_free_next_multiple_of_uint<U>(&self, rhs: U) -> Self
-        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-                + Rem<Output=U> + RemAssign
-                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-                + PartialEq + PartialOrd;
-
-        // fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
-        /// Calculates the smallest value greater than or equal to `self`,
-        /// which is a multiple of `rhs`, and assigns the result to `self` back.
-        /// 
-        /// # Arguments
-        /// `rhs` is the base of multiple, and is a primitive unsigned integer
-        /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-        ///
-        /// # Panics
-        /// If `size_of::<T>() * N` <= `128`, this method may panic
-        /// or its behavior may be undefined though it may not panic.
-        /// 
-        /// # Features
-        /// - `self` will be the smallest value greater than or equal to `self`,
-        ///   which is a multiple of `rhs`.
-        ///   However, if overflow occurs, `self` will be the value wrapped around.
-        /// - If `rhs` is zero, the `UNDEFINED` flag will be set and `self`
-        ///   will be `zero`.
-        /// - All the flags are historical, which means, for example, if an
-        ///   overflow occurred even once before this current operation or
-        ///   `OVERFLOW` flag is already set before this current operation,
-        ///   the `OVERFLOW` flag is not changed even if this current operation
-        ///   does not cause overflow.
-        /// 
-        /// # Counterpart Method
-        /// If `rhs` is bigger than `u128`, the method
-        /// [panic_free_next_multiple_of_assign()](#tymethod.panic_free_next_multiple_of_assign)
-        /// is proper rather than this method `panic_free_next_multiple_of_assign_uint()`.
-        /// 
-        /// # Example 1
-        /// ```
-        /// use std::str::FromStr;
-        /// use cryptocol::number::BigUint_More;
-        /// use cryptocol::define_utypes_with;
-        /// define_utypes_with!(u32);
-        /// 
-        /// let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
-        /// let num = 586478_u32;
-        /// println!("Originally, a_biguint = {}", a_biguint);
-        /// assert_eq!(a_biguint.is_overflow(), false);
-        /// assert_eq!(a_biguint.is_underflow(), false);
-        /// assert_eq!(a_biguint.is_infinity(), false);
-        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-        /// assert_eq!(a_biguint.is_undefined(), false);
-        /// assert_eq!(a_biguint.is_left_carry(), false);
-        /// assert_eq!(a_biguint.is_right_carry(), false);
-        /// 
-        /// a_biguint.next_multiple_of_assign_uint(num);
-        /// println!("After a_biguint.next_multiple_of_assign_uint({}), a_biguint = {}", num, a_biguint);
-        /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123697594");
-        /// assert_eq!(a_biguint.is_overflow(), false);
-        /// assert_eq!(a_biguint.is_underflow(), false);
-        /// assert_eq!(a_biguint.is_infinity(), false);
-        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-        /// assert_eq!(a_biguint.is_undefined(), false);
-        /// assert_eq!(a_biguint.is_left_carry(), false);
-        /// assert_eq!(a_biguint.is_right_carry(), false);
-        /// ```
-        /// 
-        /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.panic_free_next_multiple_of_assign_uint)
-        fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
                 + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
@@ -3636,7 +3501,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.modular_next_multiple_of_uint)
+        /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.modular_next_multiple_of_uint)
         fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -3722,178 +3587,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.modular_next_multiple_of_assign_uint)
+        /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.modular_next_multiple_of_assign_uint)
         fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-                + Rem<Output=U> + RemAssign
-                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-                + PartialEq + PartialOrd;
-    
-        // fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-        /// Calculates the smallest value greater than or equal to `self`,
-        /// which is a multiple of `rhs`, wrapping around at `modulo`,
-        /// and returns the result.
-        /// 
-        /// # Arguments
-        /// - `rhs` is the base of multiple, and is a primitive unsigned integer
-        ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-        /// - `modulo` is the divisor to divide the result of the calculation of
-        ///   the smallest value greater than or equal to `self`,
-        ///   which is a multiple of `rhs`, and is of `&Self` type.
-        ///
-        /// # Panics
-        /// If `size_of::<T>() * N` <= `128`, this method may panic
-        /// or its behavior may be undefined though it may not panic.
-        /// 
-        /// # Output
-        /// - It returns the smallest value greater than or equal to `self`,
-        ///   which is a multiple of `rhs`, wrapping around at `modulo`. So,
-        ///   if overflow occurs, it returns the value wrapped around at `modulo`.
-        /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
-        ///   of the return value will be set.
-        /// - If `modulo` is either `zero` or `one`, it returns `zero` and
-        ///   the `UNDEFINED` flag of the return value will be set.
-        /// 
-        /// # Features
-        /// - Wrapping (modular) arround at `modulo`.
-        /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
-        ///   of the return value will be set.
-        /// - If `modulo` is either `zero` or `one`, it returns `zero` and
-        ///   the `UNDEFINED` flag of the return value will be set.
-        /// - The differences between this method
-        ///   `panic_free_modular_next_multiple_of_uint()`
-        ///   and the method `panic_free_next_multiple_of_uint()` are, first,
-        ///   where wrapping around happens, and, second, when `OVERFLOW` flag is
-        ///   set. First, this method wraps araound at `modulo` while the method
-        ///   `panic_free_next_multiple_of_uint()` wraps araound at `maximum
-        ///   value + 1`. Second, this method set `OVERFLOW` flag when wrapping
-        ///   around happens at `modulo` while the method
-        ///   `panic_free_next_multiple_of_uint()` sets the `OVERFLOW` flag
-        ///   when wrapping around happens.
-        /// 
-        /// # Counterpart Method
-        /// If `rhs` is bigger than `u128`, the method
-        /// [next_multiple_of()](#tymethod.next_multiple_of)
-        /// is proper rather than this method `next_multiple_of_uint()`.
-        /// 
-        /// # Example 1 for normal case
-        /// ```
-        /// use std::str::FromStr;
-        /// use cryptocol::number::BigUint_More;
-        /// use cryptocol::define_utypes_with;
-        /// define_utypes_with!(u8);
-        /// 
-        /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
-        /// let num = 100_u8;
-        /// let modulo = a_biguint.wrapping_add_uint(200_u8);
-        /// let multiple = a_biguint.panic_free_modular_next_multiple_of_uint(num, &modulo);
-        /// println!("The next multiple of {} is {}", a_biguint, multiple);
-        /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123456800");
-        /// assert_eq!(multiple.is_overflow(), false);
-        /// assert_eq!(multiple.is_underflow(), false);
-        /// assert_eq!(multiple.is_infinity(), false);
-        /// assert_eq!(multiple.is_divided_by_zero(), false);
-        /// assert_eq!(multiple.is_undefined(), false);
-        /// assert_eq!(multiple.is_left_carry(), false);
-        /// assert_eq!(multiple.is_right_carry(), false);
-        /// ```
-        /// 
-        /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.panic_free_modular_next_multiple_of_uint)
-        fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-        where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-                + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-                + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-                + Rem<Output=U> + RemAssign
-                + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-                + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-                + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-                + PartialEq + PartialOrd;
-    
-        // fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-        /// Calculates the smallest value greater than or equal to `self`,
-        /// which is a multiple of `rhs`, wrapping around at `modulo`,
-        /// and assigns the result to `self` back.
-        /// 
-        /// # Arguments
-        /// - `rhs` is the base of multiple, and is a primitive unsigned integer
-        ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-        /// - `modulo` is the divisor to divide the result of the calculation of
-        ///   the smallest value greater than or equal to `self`,
-        ///   which is a multiple of `rhs`, and is of `&Self` type.
-        ///
-        /// # Panics
-        /// If `size_of::<T>() * N` <= `128`, this method may panic
-        /// or its behavior may be undefined though it may not panic.
-        /// 
-        /// # Features
-        /// - Wrapping (modular) arround at `modulo`.
-        /// - `self` will be the smallest value greater than or equal to `self`,
-        ///   which is a multiple of `rhs`, wrapping around at `modulo`. So, if
-        ///   overflow occurs, `self` will be the value wrapped around at `modulo`.
-        /// - If `rhs` is zero, it assigns `zero` to `self` back
-        ///   and the `UNDEFINED` flag of `self` will be set.
-        /// - If `modulo` is either `zero` or `one`, it assigns `zero`
-        ///   to `self` back and the `UNDEFINED` flag of `self` will be set.
-        /// - The differences between this method
-        ///   `panic_free_modular_next_multiple_of_assign_uint()`
-        ///   and the method `panic_free_next_multiple_of_assign_uint()` are, first,
-        ///   where wrapping around happens, and, second, when `OVERFLOW` flag is
-        ///   set. First, this method wraps araound at `modulo` while the method
-        ///   `panic_free_next_multiple_of_assign_uint()` wraps araound at `maximum
-        ///   value + 1`. Second, this method set `OVERFLOW` flag when wrapping
-        ///   around happens at `modulo` while the method
-        ///   `panic_free_next_multiple_of_assign_uint()` sets the `OVERFLOW` flag
-        ///   when wrapping around happens.
-        /// - All the flags are historical, which means, for example, if an
-        ///   overflow occurred even once before this current operation or
-        ///   `OVERFLOW` flag is already set before this current operation,
-        ///   the `OVERFLOW` flag is not changed even if this current operation
-        ///   does not cause overflow.
-        /// 
-        /// # Counterpart Method
-        /// If `rhs` is bigger than `u128`, the method
-        /// [panic_free_modular_next_multiple_of_assign()](#tymethod.panic_free_modular_next_multiple_of_assign)
-        /// is proper rather than this method `panic_free_modular_next_multiple_of_assign_uint()`.
-        /// 
-        /// # Example 1 for normal case
-        /// ```
-        /// use std::str::FromStr;
-        /// use cryptocol::number::BigUint_More;
-        /// use cryptocol::define_utypes_with;
-        /// define_utypes_with!(u16);
-        /// 
-        /// let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
-        /// println!("Originally, a_biguint = {}", a_biguint);
-        /// assert_eq!(a_biguint.is_overflow(), false);
-        /// assert_eq!(a_biguint.is_underflow(), false);
-        /// assert_eq!(a_biguint.is_infinity(), false);
-        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-        /// assert_eq!(a_biguint.is_undefined(), false);
-        /// assert_eq!(a_biguint.is_left_carry(), false);
-        /// assert_eq!(a_biguint.is_right_carry(), false);
-        /// 
-        /// let num = 100_u8;
-        /// let modulo = a_biguint.wrapping_add_uint(200_u8);
-        /// a_biguint.panic_free_modular_next_multiple_of_assign_uint(num, &modulo);
-        /// println!("After a_biguint.modular_next_multiple_of_assign_uint({}), a_biguint = {}", num, a_biguint);
-        /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123456800");
-        /// assert_eq!(a_biguint.is_overflow(), false);
-        /// assert_eq!(a_biguint.is_underflow(), false);
-        /// assert_eq!(a_biguint.is_infinity(), false);
-        /// assert_eq!(a_biguint.is_undefined(), false);
-        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-        /// assert_eq!(a_biguint.is_left_carry(), false);
-        /// assert_eq!(a_biguint.is_right_carry(), false);
-        /// ```
-        /// 
-        /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.panic_free_modular_next_multiple_of_assign_uint)
-        fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
                 + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
@@ -3946,7 +3641,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.is_multiple_of_uint)
+        /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.is_multiple_of_uint)
         fn is_multiple_of_uint<U>(&self, rhs: U) -> bool
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4013,7 +3708,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.next_multiple_of)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.next_multiple_of)
         fn next_multiple_of(&self, rhs: &Self) -> Self;
 
         // fn next_multiple_of_assign(&mut self, rhs: &Self)
@@ -4077,131 +3772,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.next_multiple_of_assign)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.next_multiple_of_assign)
         fn next_multiple_of_assign(&mut self, rhs: &Self);
-
-        // fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self
-        /// Calculates the smallest value greater than or equal to `self`,
-        /// which is a multiple of `rhs`, and returns the result.
-        /// 
-        /// # Arguments
-        /// `rhs` is the base of multiple, and is of `&Self` type.
-        ///
-        /// # Panics
-        /// If `size_of::<T>() * N` <= `128`, this method may panic
-        /// or its behavior may be undefined though it may not panic.
-        /// 
-        /// # Output
-        /// - It returns the smallest value greater than or equal to `self`,
-        ///   which is a multiple of `rhs`.
-        ///   However, if overflow occurs, it returns the value wrapped around.
-        /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
-        ///   of the return value will be set.
-        /// 
-        /// # Features
-        /// - The result will be the smallest value greater than or equal to self,
-        ///   which is a multiple of `rhs`. However, if overflow occurs,
-        ///   the result will be the value wrapped around.
-        /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
-        ///   of the return value will be set.
-        /// 
-        /// # Counterpart Method
-        /// The method
-        /// [panic_free_next_multiple_of_uint()](#tymethod.panic_free_next_multiple_of_uint)
-        /// is a bit faster than this method `panic_free_next_multiple_of()`.
-        /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-        /// u32, u64, and u128, use the method
-        /// [panic_free_next_multiple_of_uint()](#tymethod.panic_free_next_multiple_of_uint).
-        /// 
-        /// # Example 1
-        /// ```
-        /// use std::str::FromStr;
-        /// use cryptocol::number::BigUint_More;
-        /// use cryptocol::define_utypes_with;
-        /// define_utypes_with!(u32);
-        /// 
-        /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
-        /// let num = U256::from(586478_u32);
-        /// let multiple = a_biguint.panic_free_next_multiple_of(&num);
-        /// println!("The next multiple of {} is {}", a_biguint, multiple);
-        /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123697594");
-        /// assert_eq!(multiple.is_overflow(), false);
-        /// assert_eq!(multiple.is_underflow(), false);
-        /// assert_eq!(multiple.is_infinity(), false);
-        /// assert_eq!(multiple.is_divided_by_zero(), false);
-        /// assert_eq!(multiple.is_undefined(), false);
-        /// assert_eq!(multiple.is_left_carry(), false);
-        /// assert_eq!(multiple.is_right_carry(), false);
-        /// ```
-        /// 
-        /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_next_multiple_of)
-        fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self;
-
-        // fn panic_free_next_multiple_of_assign(&mut self, rhs: &Self)
-        /// Calculates the smallest value greater than or equal to `self`,
-        /// which is a multiple of `rhs`, and assigns the result to `self` back.
-        /// 
-        /// # Arguments
-        /// `rhs` is the base of multiple, and is of `&Self` type.
-        ///
-        /// # Panics
-        /// If `size_of::<T>() * N` <= `128`, this method may panic
-        /// or its behavior may be undefined though it may not panic.
-        /// 
-        /// # Features
-        /// - `self` will be the smallest value greater than or equal to `self`,
-        ///   which is a multiple of `rhs`.
-        ///   However, if overflow occurs, `self` will be the value wrapped around.
-        /// - If `rhs` is zero, the `UNDEFINED` flag will be set and `self`
-        ///   will be `zero`.
-        /// - All the flags are historical, which means, for example, if an
-        ///   overflow occurred even once before this current operation or
-        ///   `OVERFLOW` flag is already set before this current operation,
-        ///   the `OVERFLOW` flag is not changed even if this current operation
-        ///   does not cause overflow.
-        /// 
-        /// # Counterpart Method
-        /// The method
-        /// [panic_free_next_multiple_of_assign_uint()](#tymethod.panic_free_next_multiple_of_assign_uint)
-        /// is a bit faster than this method `panic_free_next_multiple_of_assign()`.
-        /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-        /// u32, u64, and u128, use the method
-        /// [panic_free_next_multiple_of_assign_uint()](#tymethod.panic_free_next_multiple_of_assign_uint).
-        /// 
-        /// # Example 1
-        /// ```
-        /// use std::str::FromStr;
-        /// use cryptocol::number::BigUint_More;
-        /// use cryptocol::define_utypes_with;
-        /// define_utypes_with!(u64);
-        /// 
-        /// let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
-        /// let num = UU32::from(586478_u32);
-        /// println!("Originally, a_biguint = {}", a_biguint);
-        /// assert_eq!(a_biguint.is_overflow(), false);
-        /// assert_eq!(a_biguint.is_underflow(), false);
-        /// assert_eq!(a_biguint.is_infinity(), false);
-        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-        /// assert_eq!(a_biguint.is_undefined(), false);
-        /// assert_eq!(a_biguint.is_left_carry(), false);
-        /// assert_eq!(a_biguint.is_right_carry(), false);
-        /// 
-        /// a_biguint.panic_free_next_multiple_of_assign(&num);
-        /// println!("After a_biguint.next_multiple_of_assign({}), a_biguint = {}", num, a_biguint);
-        /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123697594");
-        /// assert_eq!(a_biguint.is_overflow(), false);
-        /// assert_eq!(a_biguint.is_underflow(), false);
-        /// assert_eq!(a_biguint.is_infinity(), false);
-        /// assert_eq!(a_biguint.is_undefined(), false);
-        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-        /// assert_eq!(a_biguint.is_left_carry(), false);
-        /// assert_eq!(a_biguint.is_right_carry(), false);
-        /// ```
-        /// 
-        /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_next_multiple_of_assign)
-        fn panic_free_next_multiple_of_assign(&mut self, rhs: &Self);
 
         // fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
         /// Calculates the smallest value greater than or equal to `self`,
@@ -4267,7 +3839,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_next_multiple_of)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_next_multiple_of)
         fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self;
 
         // fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)
@@ -4345,161 +3917,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_next_multiple_of_assign)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_next_multiple_of_assign)
         fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self);
-
-        // fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
-        /// Calculates the smallest value greater than or equal to `self`,
-        /// which is a multiple of `rhs`, wrapping around at `modulo`,
-        /// and returns the result.
-        /// 
-        /// # Arguments
-        /// - `rhs` is the base of multiple, and is of `&Self` type.
-        /// - `modulo` is the divisor to divide the result of the calculation of
-        ///   the smallest value greater than or equal to `self`,
-        ///   which is a multiple of `rhs`, and is of `&Self` type.
-        ///
-        /// # Panics
-        /// If `size_of::<T>() * N` <= `128`, this method may panic
-        /// or its behavior may be undefined though it may not panic.
-        /// 
-        /// # Output
-        /// - It returns the smallest value greater than or equal to `self`,
-        ///   which is a multiple of `rhs`, wrapping around at `modulo`. So,
-        ///   if overflow occurs, it returns the value wrapped around at `modulo`.
-        /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
-        ///   of the return value will be set.
-        /// - If `modulo` is either `zero` or `one`, it returns `zero` and
-        ///   the `UNDEFINED` flag of the return value will be set.
-        /// 
-        /// # Feature
-        /// - Wrapping (modular) arround at `modulo`.
-        /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
-        ///   of the return value will be set.
-        /// - If `modulo` is either `zero` or `one`, it returns `zero` and
-        ///   the `UNDEFINED` flag of the return value will be set.
-        /// - The differences between this method
-        ///   `panic_free_modular_next_multiple_of()` and the method
-        ///   `panic_free_next_multiple_of()` are, first, where wrapping around
-        ///   happens, and, second, when `OVERFLOW` flag is set.
-        ///   First, this method wraps around at `modulo` while the method
-        ///   `panic_free_next_multiple_of()` wraps around at `maximum value + 1`.
-        ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-        ///   at `modulo` while the method `panic_free_next_multiple_of()` sets
-        ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-        /// 
-        /// # Counterpart Method
-        /// The method
-        /// [panic_free_modular_next_multiple_of_uint()](#tymethod.panic_free_modular_next_multiple_of_uint)
-        /// is a bit faster than this method `panic_free_modular_next_multiple_of()`.
-        /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-        /// u32, u64, and u128, use the method
-        /// [panic_free_modular_next_multiple_of_uint()](#tymethod.panic_free_modular_next_multiple_of_uint).
-        /// 
-        /// # Example 1 for Normal case
-        /// ```
-        /// use std::str::FromStr;
-        /// use cryptocol::number::BigUint_More;
-        /// use cryptocol::define_utypes_with;
-        /// define_utypes_with!(u16);
-        /// 
-        /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
-        /// let num = U256::from(100_u8);
-        /// let modulo = a_biguint.wrapping_add_uint(200_u8);
-        /// let multiple = a_biguint.panic_free_modular_next_multiple_of(&num, &modulo);
-        /// println!("The next multiple of {} is {}", a_biguint, multiple);
-        /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123456800");
-        /// assert_eq!(multiple.is_overflow(), false);
-        /// assert_eq!(multiple.is_underflow(), false);
-        /// assert_eq!(multiple.is_infinity(), false);
-        /// assert_eq!(multiple.is_divided_by_zero(), false);
-        /// assert_eq!(multiple.is_undefined(), false);
-        /// assert_eq!(multiple.is_left_carry(), false);
-        /// assert_eq!(multiple.is_right_carry(), false);
-        /// ```
-        /// 
-        /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_modular_next_multiple_of)
-        fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self;
-
-        // fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)
-        /// Calculates the smallest value greater than or equal to `self`,
-        /// which is a multiple of `rhs`, wrapping around at `modulo`,
-        /// and assigns the result to `self` back.
-        /// 
-        /// # Arguments
-        /// - `rhs` is the base of multiple, and is of `&Self` type.
-        /// - `modulo` is the divisor to divide the result of the calculation of
-        ///   the smallest value greater than or equal to `self`,
-        ///   which is a multiple of `rhs`, and is of `&Self` type.
-        ///
-        /// # Panics
-        /// If `size_of::<T>() * N` <= `128`, this method may panic
-        /// or its behavior may be undefined though it may not panic.
-        /// 
-        /// # Features
-        /// - Wrapping (modular) arround at `modulo`.
-        /// - `self` will be the smallest value greater than or equal to `self`,
-        ///   which is a multiple of `rhs`, wrapping around at `modulo`. So, if
-        ///   overflow occurs, `self` will be the value wrapped around at `modulo`.
-        /// - If `rhs` is zero, it assigns `zero` to `self` back
-        ///   and the `UNDEFINED` flag of `self` will be set.
-        /// - If `modulo` is either `zero` or `one`, it assigns `zero`
-        ///   to `self` back and the `UNDEFINED` flag of `self` will be set.
-        /// - The differences between this method
-        ///   `panic_free_modular_next_multiple_of_assign()`
-        ///   and the method `panic_free_next_multiple_of_assign()` are, first,
-        ///   where wrapping around happens, and, second, when `OVERFLOW` flag is
-        ///   set. First, this method wraps araound at `modulo` while the method
-        ///   `panic_free_next_multiple_of_assign()` wraps araound at `maximum
-        ///   value + 1`. Second, this method set `OVERFLOW` flag when wrapping
-        ///   around happens at `modulo` while the method
-        ///   `panic_free_next_multiple_of_assign()` sets the `OVERFLOW` flag
-        ///   when wrapping around happens.
-        /// - All the flags are historical, which means, for example, if an
-        ///   overflow occurred even once before this current operation or
-        ///   `OVERFLOW` flag is already set before this current operation,
-        ///   the `OVERFLOW` flag is not changed even if this current operation
-        ///   does not cause overflow.
-        /// 
-        /// # Counterpart Method
-        /// The method
-        /// [panic_free_modular_next_multiple_of_assign_uint()](#tymethod.panic_free_modular_next_multiple_of_assign_uint)
-        /// is a bit faster than this method `panic_free_modular_next_multiple_of_assign()`.
-        /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-        /// u32, u64, and u128, use the method
-        /// [panic_free_modular_next_multiple_of_assign_uint()](#tymethod.panic_free_modular_next_multiple_of_assign_uint).
-        /// 
-        /// # Example 1 for Normal case
-        /// ```
-        /// use std::str::FromStr;
-        /// use cryptocol::number::BigUint_More;
-        /// use cryptocol::define_utypes_with;
-        /// define_utypes_with!(u32);
-        /// 
-        /// let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
-        /// println!("Originally, a_biguint = {}", a_biguint);
-        /// assert_eq!(a_biguint.is_overflow(), false);
-        /// assert_eq!(a_biguint.is_underflow(), false);
-        /// assert_eq!(a_biguint.is_infinity(), false);
-        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-        /// assert_eq!(a_biguint.is_undefined(), false);
-        /// 
-        /// let num = UU32::from(100_u8);
-        /// let modulo = a_biguint.wrapping_add_uint(200_u8);
-        /// a_biguint.panic_free_modular_next_multiple_of_assign(&num, &modulo);
-        /// println!("After a_biguint.modular_next_multiple_of_assign({}), a_biguint = {}", num, a_biguint);
-        /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123456800");
-        /// assert_eq!(a_biguint.is_overflow(), false);
-        /// assert_eq!(a_biguint.is_underflow(), false);
-        /// assert_eq!(a_biguint.is_infinity(), false);
-        /// assert_eq!(a_biguint.is_undefined(), false);
-        /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-        /// ```
-        /// 
-        /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.panic_free_modular_next_multiple_of_assign)
-        fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self);
 
         // fn is_multiple_of(&self, rhs: &Self) -> bool
         /// Returns `true` if `self` is a multiple of `rhs`, and `false` otherwise.
@@ -4546,7 +3965,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.is_multiple_of)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.is_multiple_of)
         fn is_multiple_of(&self, rhs: &Self) -> bool;
 
 
@@ -4601,7 +4020,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.midpoint_uint)
+        /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.midpoint_uint)
         fn midpoint_uint<U>(&self, rhs: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4665,7 +4084,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.midpoint_assign_uint)
+        /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.midpoint_assign_uint)
         fn midpoint_assign_uint<U>(&mut self, rhs: U)
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4726,7 +4145,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.midpoint)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.midpoint)
         fn midpoint(&self, rhs: &Self) -> Self;
 
         // pub fn midpoint_assign(&mut self, rhs: &Self)
@@ -4784,7 +4203,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.midpoint_assign)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.midpoint_assign)
         fn midpoint_assign(&mut self, rhs: &Self);
 
 
@@ -4851,7 +4270,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_pow_uint)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_pow_uint)
         fn checked_pow_uint<U>(&self, exp: U) -> Option<Self>
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4913,7 +4332,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.unchecked_pow_uint)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.unchecked_pow_uint)
         fn unchecked_pow_uint<U>(&self, exp: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -4976,7 +4395,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.saturating_pow_uint)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.saturating_pow_uint)
         fn saturating_pow_uint<U>(&self, exp: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5046,7 +4465,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.saturating_pow_assign_uint)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.saturating_pow_assign_uint)
         fn saturating_pow_assign_uint<U>(&mut self, exp: U)
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5116,7 +4535,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.checked_iroot_uint)
+        /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.checked_iroot_uint)
         fn checked_iroot_uint<U>(&self, exp: U) -> Option<Self>
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5178,7 +4597,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.unchecked_iroot_uint)
+        /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.unchecked_iroot_uint)
         fn unchecked_iroot_uint<U>(&self, exp: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5243,7 +4662,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.checked_ilog_uint)
+        /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.checked_ilog_uint)
         fn checked_ilog_uint<U>(&self, base: U) -> Option<Self>
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5302,7 +4721,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.unchecked_ilog_uint)
+        /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.unchecked_ilog_uint)
         fn unchecked_ilog_uint<U>(&self, base: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -5377,7 +4796,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_pow)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_pow)
         fn checked_pow(&self, exp: &Self) -> Option<Self>;
 
         // fn unchecked_pow(&self, exp: &Self) -> Self
@@ -5431,7 +4850,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.unchecked_pow)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.unchecked_pow)
         fn unchecked_pow(&self, exp: &Self) -> Self;
 
         // fn saturating_pow(&self, exp: &Self) -> Self
@@ -5487,7 +4906,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.saturating_pow)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.saturating_pow)
         fn saturating_pow(&self, exp: &Self) -> Self;
 
         // fn saturating_pow_assign(&mut self, exp: &Self)
@@ -5551,7 +4970,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.saturating_pow_assign)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.saturating_pow_assign)
         fn saturating_pow_assign(&mut self, exp: &Self);
         
         // fn checked_iroot(&self, exp: &Self) -> Option<Self>
@@ -5612,7 +5031,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_iroot)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_iroot)
         fn checked_iroot(&self, exp: &Self) -> Option<Self>;
 
         // fn unchecked_iroot(&self, exp: &Self) -> Self
@@ -5668,7 +5087,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.unchecked_iroot)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.unchecked_iroot)
         fn unchecked_iroot(&self, exp: &Self) -> Self;
 
         // fn checked_ilog(&self, base: &Self) -> Self
@@ -5724,7 +5143,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_ilog)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_ilog)
         fn checked_ilog(&self, base: &Self) -> Option<Self>;
 
         // fn unchecked_ilog(&self, base: &Self) -> Self
@@ -5819,7 +5238,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_ilog2)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_ilog2)
         fn checked_ilog2(&self) -> Option<Self>;
 
         // fn unchecked_ilog2(&self) -> Self
@@ -5860,7 +5279,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_other_calculation/struct.BigUInt.html#method.unchecked_ilog2)
+        /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.unchecked_ilog2)
         fn unchecked_ilog2(&self) -> Self;
 
         // fn checked_ilog10(&self) -> Option<Self>
@@ -6005,7 +5424,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.checked_shift_left)
+        /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.checked_shift_left)
         fn checked_shift_left<U>(&self, n: U) -> Option<Self>
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -6064,7 +5483,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.unchecked_shift_left)
+        /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.unchecked_shift_left)
         fn unchecked_shift_left<U>(&self, n: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -6131,7 +5550,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.checked_shift_right)
+        /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.checked_shift_right)
         fn checked_shift_right<U>(&self, n: U) -> Option<Self>
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -6190,7 +5609,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         /// ```
         /// 
         /// # For more examples,
-        /// click [here](../documentation/big_uint_basic_operation/struct.BigUInt.html#method.unchecked_shift_right)
+        /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.unchecked_shift_right)
         fn unchecked_shift_right<U>(&self, n: U) -> Self
         where U: SmallUInt + Copy + Clone + Display + Debug + ToString
                 + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign

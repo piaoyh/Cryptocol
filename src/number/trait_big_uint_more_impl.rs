@@ -78,7 +78,7 @@ macro_rules! safe_calc_assign {
 
 
 
-fn common_next_multiple_of_assign_uint<T, U, const N: usize>(me: &mut BigUInt<T, N>, rhs: U)
+pub(super) fn common_next_multiple_of_assign_uint<T, U, const N: usize>(me: &mut BigUInt<T, N>, rhs: U)
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
@@ -109,7 +109,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 }
 
-fn common_modular_next_multiple_of_assign_uint<T, U, const N: usize>(me: &mut BigUInt<T, N>, rhs: U, modulo: &BigUInt<T, N>)
+pub(super) fn common_modular_next_multiple_of_assign_uint<T, U, const N: usize>(me: &mut BigUInt<T, N>, rhs: U, modulo: &BigUInt<T, N>)
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
@@ -149,7 +149,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 }
 
-fn common_next_multiple_of_assign<T, const N: usize>(me: &mut BigUInt<T, N>, rhs: &BigUInt<T, N>)
+pub(super) fn common_next_multiple_of_assign<T, const N: usize>(me: &mut BigUInt<T, N>, rhs: &BigUInt<T, N>)
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
@@ -164,7 +164,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         { me.wrapping_add_assign(&rhs.wrapping_sub(&r)); }
 }
 
-fn common_modular_next_multiple_of_assign<T, const N: usize>(me: &mut BigUInt<T, N>, rhs: &BigUInt<T, N>, modulo: &BigUInt<T, N>)
+pub(super) fn common_modular_next_multiple_of_assign<T, const N: usize>(me: &mut BigUInt<T, N>, rhs: &BigUInt<T, N>, modulo: &BigUInt<T, N>)
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
@@ -745,40 +745,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         common_next_multiple_of_assign_uint(self, rhs);
     }
 
-    fn panic_free_next_multiple_of_uint<U>(&self, rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_next_multiple_of_assign_uint, rhs);
-    }
-
-    fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        if rhs == U::zero()
-        {
-            self.set_zero();
-            self.set_undefined();
-        }
-        else
-        {
-            common_next_multiple_of_assign_uint(self, rhs);
-        }
-    }
-
     fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -803,48 +769,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + PartialEq + PartialOrd
     {
         biguint_modular_calc_assign!(self, common_modular_next_multiple_of_assign_uint, rhs, modulo);
-    }
-
-    fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_next_multiple_of_assign_uint, rhs, modulo);
-    }
-
-    fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        if modulo.is_zero_or_one() || rhs.is_zero()
-        {
-            self.set_zero();
-            self.set_undefined();
-            return;
-        }
-        else if modulo.le_uint(rhs)
-        {
-            let modu = modulo.into_uint::<U>();
-            if rhs.wrapping_rem(modu).is_zero()
-            {
-                self.set_zero();
-                self.set_undefined();
-                return;
-            }
-        }
-        common_modular_next_multiple_of_assign_uint(self, rhs, modulo);
     }
 
     fn is_multiple_of_uint<U>(&self, rhs: U) -> bool
@@ -875,22 +799,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         common_next_multiple_of_assign(self, rhs);
     }
 
-    fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_next_multiple_of_assign, rhs);
-    }
-
-    fn panic_free_next_multiple_of_assign(&mut self, rhs: &Self)
-    {
-        if rhs.is_zero()
-        {
-            self.set_zero();
-            self.set_undefined();
-            return;
-        }
-        common_next_multiple_of_assign(self, rhs);
-    }
-
     fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
     {
         biguint_calc_assign_to_calc!(self, Self::modular_next_multiple_of_assign, rhs, modulo);
@@ -899,22 +807,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)
     {
         biguint_modular_calc_assign!(self, common_modular_next_multiple_of_assign, rhs, modulo);
-    }
-
-    fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_next_multiple_of_assign, rhs, modulo);
-    }
-
-    fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        if modulo.is_zero_or_one() || rhs.is_zero() || rhs.wrapping_rem(modulo).is_zero()
-        {
-            self.set_zero();
-            self.set_undefined();
-            return;
-        }
-        common_modular_next_multiple_of_assign(self, rhs, modulo);
     }
 
     fn is_multiple_of(&self, rhs: &Self) -> bool

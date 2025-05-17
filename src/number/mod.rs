@@ -107,6 +107,8 @@
 //! and LargeInt.
 //! - `BigUInt` --- a big-sized _unsigned_ integer with user-defined _fixed_ size.
 //!   [Read more](struct@BigUInt)
+//! - `BigUInt_Panic_Free` --- an auxiliary big-sized _unsigned_ integer with
+//!   user-defined _fixed_ size. [Read more](trait@BigUInt_Panic_Free)
 //! - `BigUInt_More` --- an auxiliary big-sized _unsigned_ integer with
 //!   user-defined _fixed_ size. [Read more](trait@BigUInt_More)
 //! - `BigSInt` --- a big-sized _signed_ integer with user-defined _fixed_ size.
@@ -148,16 +150,11 @@ mod shared_arrays;
 mod big_uint;
 
 /// Additional methods for BigUInt
+mod trait_big_uint_panic_free;
 mod trait_big_uint_more;
 mod number_errors;
 mod macros_for_types;
 mod macros_for_integer_unions;
-
-/// big_uint.rs was too big because of documentation and plenty of examples
-/// So, in order to provide documentation without `docs.rs`'s failing
-/// generating documentation, dummy codes were made and documentation and
-/// examples were moved to all the *.rs in documentation folder.
-mod documentation;
 
 /// Implementaion of trait SmallUInt for u8, u16, u32, u64, u128, and usize
 mod trait_small_uint_for_unsigned_impl;
@@ -171,11 +168,15 @@ mod traits_for_big_uint_impl;
 /// Implementaion of BigUInt_More trait for BigUInt
 mod trait_big_uint_more_impl;
 
+/// Implementaion of BigUInt_Panic_Free trait for BigUInt
+mod trait_big_uint_panic_free_impl;
+
 
 
 pub use small_uint::*;
 pub use small_sint::*;
 pub use trait_big_uint_more::*;
+pub use trait_big_uint_panic_free::*;
 pub use short_union::*;
 pub use int_union::*;
 pub use long_union::*;
@@ -187,6 +188,14 @@ pub use big_uint::*;
 pub use number_errors::*;
 use macros_for_integer_unions::*;
 
+
+
+/// big_uint.rs was too big because of documentation and plenty of examples
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to all the *.rs in documentation folder.
+mod documentation;
+pub use documentation::*;
 
 
 /********** FOR BIG-ENDIANNESS ONLY **********/
