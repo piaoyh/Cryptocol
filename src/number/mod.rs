@@ -107,10 +107,18 @@
 //! and LargeInt.
 //! - `BigUInt` --- a big-sized _unsigned_ integer with user-defined _fixed_ size.
 //!   [Read more](struct@BigUInt)
-//! - `BigUInt_Panic_Free` --- an auxiliary big-sized _unsigned_ integer with
-//!   user-defined _fixed_ size. [Read more](trait@BigUInt_Panic_Free)
 //! - `BigUInt_More` --- an auxiliary big-sized _unsigned_ integer with
-//!   user-defined _fixed_ size. [Read more](trait@BigUInt_More)
+//!   user-defined _fixed_ size. It includes extra methods
+//!   [Read more](trait@BigUInt_More)
+//! - `BigUInt_Modular` --- an auxiliary big-sized _unsigned_ integer with
+//!   user-defined _fixed_ size. It includes modular-related methods
+//!   [Read more](trait@BigUInt_Modular)
+//! - `BigUInt_Panic_Free` --- an auxiliary big-sized _unsigned_ integer with
+//!   user-defined _fixed_ size. It includes panic-free-related methods
+//!   [Read more](trait@BigUInt_Panic_Free)
+//! - `BigUInt_Prime` --- an auxiliary big-sized _unsigned_ integer with
+//!   user-defined _fixed_ size. It includes prime number-related methods
+//!   [Read more](trait@BigUInt_Prime)
 //! - `BigSInt` --- a big-sized _signed_ integer with user-defined _fixed_ size.
 //! - `LargeInt` --- a big-sized _signed_ integer with _variable_ size.
 //! 

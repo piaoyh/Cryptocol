@@ -49,9 +49,23 @@
 //! - [X] Fixed Sized Big Unsigned Integer Operation --- You can find most of
 //!       the methods you need for big integer calculation at
 //!       [`BigUInt`](number/big_uint/struct.BigUInt.html#struct.BigUInt).
-//! - [X] Auxiliary Fixed Sized Big Unsigned Integer Operation --- If you don't
-//!       find what you need at [`BigUInt`](number/big_uint/struct.BigUInt.html#struct.BigUInt),
-//!       you may find it at [`BigUInt_More`](number/trait_big_uint_more/trait.BigUInt_More.html#trait.BigUInt_More).
+//! - [X] Auxiliary Fixed Sized Big Unsigned Integer Operations --- If you don't
+//!       find what you need at
+//!       [`BigUInt`](number/big_uint/struct.BigUInt.html#struct.BigUInt),
+//!       you may find it at
+//!       [`BigUInt_More`](number/trait_big_uint_more/trait.BigUInt_More.html#trait.BigUInt_More).
+//!       You can't find modular-related methods at
+//!       [`BigUInt`](number/big_uint/struct.BigUInt.html#struct.BigUInt),
+//!       but you may find them at
+//!       [`BigUInt_Modular`](number/trait_big_uint_modular/trait.BigUInt_Modular.html#trait.BigUInt_Modular).
+//!       You can't find panic-free-releated methods at
+//!       [`BigUInt`](number/big_uint/struct.BigUInt.html#struct.BigUInt),
+//!       but you may find it at
+//!       [`BigUInt_Panic_Free`](number/trait_big_uint_panic_free/trait.BigUInt_Panic_Free.html#trait.BigUInt_Panic_Free).
+//!       You can't find prime number-related methods at
+//!       [`BigUInt`](number/big_uint/struct.BigUInt.html#struct.BigUInt),
+//!       you may find it at
+//!       [`BigUInt_Prime`](number/trait_big_uint_prime/trait.BigUInt_Prime.html#trait.BigUInt_Prime).
 // ! - [ ] Fixed Sized Big Signed Integer Operation --- BigSInt
 // !    _--> Thinking about postponing to Roadmap for ver. 2.0_
 // ! - [ ] Variable Sized Big Signed Integer Operation --- LargeInt

@@ -93,6 +93,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u8);
     /// 
     /// let a_biguint = U256::from_string("76801874298166903427690031858186486050853753882811946569946433649006").unwrap();
@@ -165,6 +166,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u16);
     /// 
     /// let mut a_biguint = U256::from_string("768018742981669034276900318581864860508537538828119465699464336490060").unwrap();
@@ -245,6 +247,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u8);
     /// 
     /// let a_biguint = U256::from_string("76801874298166903427690031858186486050853753882811946569946433649006").unwrap();
@@ -311,6 +314,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u16);
     /// 
     /// let mut a_biguint = U256::from_string("768018742981669034276900318581864860508537538828119465699464336490060").unwrap();
@@ -386,6 +390,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u8);
     /// 
     /// let a_biguint = U256::from_uint(2_u8);
@@ -458,6 +463,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u16);
     /// 
     /// let mut a_biguint = UU32::from_uint(2_u8);
@@ -539,6 +545,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for Normal Case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u8);
     /// 
     /// let a_biguint = U256::from_uint(2_u8);
@@ -605,6 +612,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for Normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u16);
     /// 
     /// let mut a_biguint = UU32::from_uint(2_u8);
@@ -680,6 +688,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u32);
     /// 
     /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
@@ -752,6 +761,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u64);
     /// 
     /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
@@ -834,6 +844,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for Normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u32);
     /// 
     /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
@@ -900,6 +911,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for Normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u64);
     /// 
     /// let mut a_biguint = U256::from_string("31858186486050853753882811946768018742981669034276900586487291375468285").unwrap();
@@ -968,6 +980,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u32);
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
@@ -1032,6 +1045,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u64);
     /// 
     /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
@@ -1106,6 +1120,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u32);
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
@@ -1164,6 +1179,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u128);
     /// 
     /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
@@ -1228,6 +1244,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u8);
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
@@ -1285,6 +1302,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u16);
     /// 
     /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
@@ -1359,6 +1377,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u16);
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
@@ -1417,6 +1436,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u32);
     /// 
     /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
@@ -1488,6 +1508,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for Noraml case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u32);
     /// 
     /// let a_biguint = U256::from_uint(10_u8);
@@ -1556,6 +1577,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u64);
     /// 
     /// let mut a_biguint = U256::from_uint(10_u8);
@@ -1633,6 +1655,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for Noraml case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u128);
     /// 
     /// let a_biguint = UU32::from_uint(10_u8);
@@ -1694,6 +1717,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for Noraml case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u128);
     /// 
     /// let mut a_biguint = U256::from_uint(10_u8);
@@ -1770,8 +1794,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
-    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u8);
     /// 
     /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -1790,7 +1814,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.modular_next_multiple_of_uint)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_next_multiple_of_uint)
     fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1847,8 +1871,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
-    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u16);
     /// 
     /// let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();
@@ -1876,7 +1900,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.modular_next_multiple_of_assign_uint)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_next_multiple_of_assign_uint)
     fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1931,8 +1955,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for Normal case
     /// ```
     /// use std::str::FromStr;
-    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u128);
     /// 
     /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
@@ -2002,8 +2026,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for Normal case
     /// ```
     /// use std::str::FromStr;
-    /// use cryptocol::number::BigUint_More;
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Modular;
     /// define_utypes_with!(u8);
     /// 
     /// let mut a_biguint = UU32::from_str("123456789012345678901234567890123456789").unwrap();

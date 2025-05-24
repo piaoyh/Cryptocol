@@ -114,22 +114,6 @@
 
 - The methods above have been moved from struct BigUInt to trait BigUInt_Prime because docs.rs failed in generating struct.bigUInt.html.
 
-| Methods                                                                       |
-|-------------------------------------------------------------------------------|
-| fn iroot(&self, exp: &Self) -> Self                                           |
-| fn iroot_assign(&mut self, exp: &Self)                                        |
-| fn ilog(&self, base: &Self) -> Self                                           |
-| fn ilog_assign(&mut self, base: &Self)                                        |
-| fn ilog2(&self) -> Self                                                       |
-| fn ilog2_assign(&mut self)                                                    |
-| fn ilog10(&self) -> Self                                                      |
-| fn ilog10_assign(&mut self)                                                   |
-| fn next_multiple_of_uint<U\>(&self, rhs: U) -> Self                           |
-| fn next_multiple_of_assign_uint<U\>(&mut self, rhs: U)                        |
-| fn next_multiple_of(&self, rhs: &Self) -> Self                                |
-| fn next_multiple_of_assign(&mut self, rhs: &Self)                             |
-
-- The methods above have been moved from struct BigUInt or trait BigUInt_More to trait BigUInt_Prime because docs.rs failed in generating struct.bigUInt.html.
 
 ## Breaking changes from ver. 0.11.2 to ver. 0.11.3
 

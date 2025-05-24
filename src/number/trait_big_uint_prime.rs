@@ -56,7 +56,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 {
     /*** METHODS FOR MISCELLANEOUS ARITHMETIC OPERATIONS ***/
 
-    // gn gcd_uint<U>(&self, other: &U) -> Self
+    // fn gcd_uint<U>(&self, other: &U) -> Self
     /// Calculates the greatest common divisor of `self` and `other`,
     /// and returns the result.
     /// If you would like to know greatest common divisor more in detail,
@@ -107,7 +107,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd_uint)
+    /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.gcd_uint)
     fn gcd_uint<U>(&self, other: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -148,6 +148,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Prime;
     /// define_utypes_with!(u64);
     /// 
     /// let mut a_biguint = U256::from_string("111112222233333444445555566666777778888899999").unwrap();
@@ -174,7 +175,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd_assign_uint)
+    /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.gcd_assign_uint)
     fn gcd_assign_uint<U>(&mut self, other: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -221,6 +222,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Prime;
     /// define_utypes_with!(u16);
     /// 
     /// let a_biguint = U256::from_string("1111122222333334444455555666667777788888").unwrap();
@@ -238,7 +240,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm_uint)
+    /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.lcm_uint)
     fn lcm_uint<U>(&self, other: U) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -279,6 +281,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Prime;
     /// define_utypes_with!(u32);
     /// 
     /// let mut a_biguint = U256::from_string("1111122222333334444455555666667777788888").unwrap();
@@ -305,7 +308,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm_assign_uint)
+    /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.lcm_assign_uint)
     fn lcm_assign_uint<U>(&mut self, other: U)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -351,6 +354,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Prime;
     /// define_utypes_with!(u32);
     /// 
     /// let a_biguint = U256::from_string("12345678911111222223333344444555556666677777888889999900000").unwrap();
@@ -368,7 +372,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd)
+    /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.gcd)
     fn gcd(&self, other: &Self) -> Self;
 
     // fn gcd_assign(&mut self, other: &Self)
@@ -403,6 +407,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Prime;
     /// define_utypes_with!(u64);
     /// 
     /// let mut a_biguint = U256::from_string("12345678911111222223333344444555556666677777888889999900000").unwrap();
@@ -429,7 +434,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd_assign)
+    /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.gcd_assign)
     fn gcd_assign(&mut self, other: &Self);
 
     // fn lcm(&self, other: &Self) -> Self
@@ -467,6 +472,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Prime;
     /// define_utypes_with!(u16);
     /// 
     /// let a_biguint = U256::from_string("11111222223333344444555556666677777").unwrap();
@@ -484,7 +490,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm)
+    /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.lcm)
     fn lcm(&self, other: &Self) -> Self;
 
     // fn lcm_assign(&mut self, other: &Self)
@@ -519,6 +525,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Prime;
     /// define_utypes_with!(u32);
     /// 
     /// let mut a_biguint = U256::from_string("11111222223333344444555556666677777").unwrap();
@@ -545,7 +552,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm_assign)
+    /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.lcm_assign)
     fn lcm_assign(&mut self, other: &Self);
 
 
@@ -594,6 +601,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Example 1 for prime numer case
     /// ```
     /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Prime;
     /// define_utypes_with!(u8);
     /// 
     /// let a_biguint = U512::from_string("262586890850443215026048316017358917147061433899850397175592679960211511929529269359755816708006242574764016656012965410420527921966695199932942678613269").unwrap();
@@ -603,6 +611,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.is_prime_using_miller_rabin)
+    /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.is_prime_using_miller_rabin)
     fn is_prime_using_miller_rabin(&self, repetition: usize) -> bool;
 }
