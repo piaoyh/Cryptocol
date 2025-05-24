@@ -10,13 +10,14 @@
 // #![warn(missing_docs)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
-use std::ptr::{ copy_nonoverlapping, write_bytes };
-use std::fmt::{ self, Debug, Display, Formatter };
+use std::fmt::{ Debug, Display };
 use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign,
                 BitXor, BitXorAssign, Not, Shl };
 
-use crate::number::{ SmallUInt, LongUnion };
+use crate::number::SmallUInt;
 
+#[allow(non_camel_case_types)]
+#[allow(dead_code)]
 pub struct Keccak_Generic<const RATE: usize = 72, const PADDING: usize = 0,
         const ROUNDS: usize = 24, T = u64, const LFSR: u8 = 0b_0111_0001,
         const THETA_SUB: usize = 1, const THETA_ADD: usize = 1, const THETA_ROT: u32 = 1,
@@ -235,7 +236,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     /// assert_eq!(hash.to_string(), "7804DAFDFCDB1CE0");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn digest(&mut self, message: *const u8, length_in_bytes: u64)
     {
         unimplemented!(); // Dummy code for documentation
@@ -347,7 +348,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     /// assert_eq!(hash.to_string(), "31CC3393C108D5C4");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn digest_str(&mut self, message: &str)
     {
         unimplemented!(); // Dummy code for documentation
@@ -459,7 +460,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     /// assert_eq!(hash.to_string(), "8D9972AC977AFEB67D374022892588C8");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn digest_string(&mut self, message: &String)
     {
         unimplemented!(); // Dummy code for documentation
@@ -571,7 +572,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
     /// assert_eq!(hash.to_string(), "30A8CD9FEB02319FF224968B7A885D15");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn digest_array<U, const N: usize>(&mut self, message: &[U; N])
     where U: SmallUInt + Copy + Clone
     {
@@ -684,7 +685,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
     /// assert_eq!(hash.to_string(), "30A8CD9FEB02319FF224968B7A885D15");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn digest_vec<U>(&mut self, message: &Vec<U>)
     where U: SmallUInt + Copy + Clone
     {
@@ -839,7 +840,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     /// assert_eq!(hash.to_string(), "F9D24FB9D6F617C993B9F155457683E0D4B26F7FC646C00A7E349FFB");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn digest_customized(&mut self, function_name: *const u8, function_name_length_in_bytes: u64, user_defined: *const u8, user_defined_length_in_bytes: u64, message: *const u8, length_in_bytes: u64)
     {
         unimplemented!(); // Dummy code for documentation
@@ -973,7 +974,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     /// assert_eq!(hash.to_string(), "067791E671F1493BF93A2E1EAAD460E0FDF2176EA744FC433568C013A9F299C5");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn digest_str_customized(&mut self, function_name: &str, user_defined: &str, message: &str)
     {
         unimplemented!(); // Dummy code for documentation
@@ -1106,7 +1107,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     /// assert_eq!(hash.to_string(), "C6FCC447C8ADCB04AA7229D3884A19EC6D5C44E96AA0AB62651CD0A8D71EFA2C24317F3DFFB3ABE3CA27D8686382C7C094DF464820671C4C841E04AB3A6F2CDB");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn digest_string_customized(&mut self, function_name: &String, user_defined: &String, message: &String)
     {
         unimplemented!(); // Dummy code for documentation
@@ -1240,7 +1241,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
     /// assert_eq!(hash.to_string(), "83AA5FEAA9B371B8C3CB5EA7C509951E2C586DB5B117B1AEF7F2BC8A65A13E65");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn digest_array_customized<U, V, W, const L: usize, const M: usize, const N: usize>(&mut self, function_name: &[U; L], user_defined: &[V; M], message: &[W; N])
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone, W: SmallUInt + Copy + Clone
     {
@@ -1374,7 +1375,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("Msg =\t\"{:?}\"\nHash =\t{}", data, hash);
     /// assert_eq!(hash.to_string(), "83AA5FEAA9B371B8C3CB5EA7C509951E2C586DB5B117B1AEF7F2BC8A65A13E65");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn digest_vec_customized<U, V, W>(&mut self, function_name: &Vec<U>, user_defined: &Vec<V>, message: &Vec<W>)
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone, W: SmallUInt + Copy + Clone
     {
@@ -1524,6 +1525,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
     /// assert_eq!(hs, "3B59168F8A5A42D59208");
     /// ```
+    #[allow(unused_variables)]
     pub fn get_hash_value_in_array<const N: usize>(&mut self) -> [u8; N]
     {
         unimplemented!(); // Dummy code for documentation
@@ -1675,6 +1677,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
     /// assert_eq!(hs, "CC87D4276259419C");
     /// ```
+    #[allow(unused_variables)]
     pub fn get_hash_value_in_vec(&mut self) -> Vec<u8>
     {
         unimplemented!(); // Dummy code for documentation

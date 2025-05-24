@@ -22,7 +22,7 @@ use std::hash::{ BuildHasher, Hasher };
 #[cfg(not(target_family = "windows"))] use std::fs::File;
 #[cfg(not(target_family = "windows"))] use std::io::Read;
 
-use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt };
+use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime };
 use crate::hash::{ MD4, MD5, SHA0, SHA1, SHA2_256, SHA2_512,
                     SHA3_256, SHA3_512, SHAKE_128, BIG_KECCAK_1024 };
 use crate::random::{ Random_Engine, AnyNumber_Engine_C };

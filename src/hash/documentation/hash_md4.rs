@@ -11,11 +11,9 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use std::ptr::copy_nonoverlapping;
-use std::slice::from_raw_parts;
 use std::fmt::{ self, Debug, Display, Formatter };
 
-use crate::number::{ SmallUInt, IntUnion, LongUnion };
+use crate::number::{ SmallUInt, IntUnion };
 
 /// md4.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
@@ -23,6 +21,7 @@ use crate::number::{ SmallUInt, IntUnion, LongUnion };
 /// examples were moved to hash_md4.rs.
 #[derive(Debug, Clone)]
 #[allow(non_camel_case_types)]
+#[allow(dead_code)]
 pub struct MD4_Generic<const N: usize = 4,
         const H0: u32 = 0x67452301, const H1: u32 = 0xefcdab89,
         const H2: u32 = 0x98badcfe, const H3: u32 = 0x10325476, const ROUND: usize = 48,
@@ -129,6 +128,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     /// assert_eq!(my_hash.to_string(), "B2F465006DCBA147BCE76D7EB8B564E1");
     /// ```
+    #[allow(unused_variables)]
     pub fn digest(&mut self, message: *const u8, length_in_bytes: u64)
     {
         unimplemented!(); // Dummy code for documentation
@@ -181,7 +181,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     /// assert_eq!(my_hash.to_string(), "719A1EB0F5077837BB408434B7AAD81E");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn digest_str(&mut self, message: &str)
     {
         unimplemented!(); // Dummy code for documentation
@@ -234,7 +234,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     /// assert_eq!(my_hash.to_string(), "FD42F7479ED133619D877BB1E6C8A084");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn digest_string(&mut self, message: &String)
     {
         unimplemented!(); // Dummy code for documentation
@@ -287,7 +287,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t{:?}\nHash =\t{}", data, my_hash);
     /// assert_eq!(my_hash.to_string(), "3011AFFDE0C322C2CCEE632FE39AF16D");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn digest_array<T, const M: usize>(&mut self, message: &[T; M])
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
@@ -341,7 +341,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t{:?}\nHash =\t{}", data, my_hash);
     /// assert_eq!(my_hash.to_string(), "3011AFFDE0C322C2CCEE632FE39AF16D");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn digest_vec<T>(&mut self, message: &Vec<T>)
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
@@ -400,6 +400,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
     /// assert_eq!(hash.to_string(), "A1608F7E4052E267B3233862FD5C1C41");
     /// ```
+    #[allow(unused_variables)]
     pub fn ruminate(&mut self, n: usize, message: *const u8, length_in_bytes: u64)
     {
         unimplemented!(); // Dummy code for documentation
@@ -452,7 +453,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     /// assert_eq!(my_hash.to_string(), "534F1EC44D4B2CEF12B7A9A81941D9A8");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn ruminate_str(&mut self, n: usize, message: &str)
     {
         unimplemented!(); // Dummy code for documentation
@@ -505,7 +506,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     /// assert_eq!(my_hash.to_string(), "EFB3B63FC1DBF3852F469D4EA0E8D517");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn ruminate_string(&mut self, n: usize, message: &String)
     {
         unimplemented!(); // Dummy code for documentation
@@ -558,7 +559,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t{:?}\nHash =\t{}", data, my_hash);
     /// assert_eq!(my_hash.to_string(), "27F598D17E6DFBA0A0713F3262D34FFC");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn ruminate_array<T, const M: usize>(&mut self, n: usize, message: &[T; M])
     where T: SmallUInt + Copy + Clone
     {
@@ -612,7 +613,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t{:?}\nHash =\t{}", data, my_hash);
     /// assert_eq!(my_hash.to_string(), "AFC96A14952E9FB9D6D7C7A1FD3D4C2E");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn ruminate_vec<T>(&mut self, n: usize, message: &Vec<T>)
     where T: SmallUInt + Copy + Clone
     {
@@ -671,6 +672,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t\"{}\"\nHash =\t{:02X?}", txt, hash_value);
     /// assert_eq!(format!("{:02X?}", hash_value), "[02, 43, 79, C6, 08, F1, CA, 30, C0, 75, 5C, 6C, 07, AD, 76, 72]");
     /// ```
+    #[allow(unused_variables)]
     pub fn get_hash_value(&self, hash_value: *mut u8, length: usize)
     {
         unimplemented!(); // Dummy code for documentation
@@ -716,6 +718,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash.get_hash_value_in_string());
     /// assert_eq!(my_hash.get_hash_value_in_string(), "626192ACD80D62D8966ACE89AE439E76");
     /// ```
+    #[allow(unused_variables)]
     pub fn get_hash_value_in_string(&self) -> String
     {
         unimplemented!(); // Dummy code for documentation
@@ -765,6 +768,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t\"{}\"\nHash =\t{:08X?}", txt, my_hash.get_hash_value_in_array());
     /// assert_eq!(format!("{:08X?}", my_hash.get_hash_value_in_array()), "[2CFB0798, 77AA2A27, 602B457E, AD3B964C]");
     /// ```
+    #[allow(unused_variables)]
     pub fn get_hash_value_in_array(&self) -> [u32; N]
     {
         unimplemented!(); // Dummy code for documentation
@@ -810,7 +814,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t\"{}\"\nHash =\t{:08X?}", txt, my_hash.get_hash_value_in_vec());
     /// assert_eq!(format!("{:08X?}", my_hash.get_hash_value_in_vec()), "[440664DA, 49687C74, C0536C83, 192830D8]");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn get_hash_value_in_vec(&self) -> Vec<u32>
     {
         unimplemented!(); // Dummy code for documentation
@@ -850,6 +854,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t\"{}\"\nHash =\t{:08X?}", txt, hash_code);
     /// assert_eq!(format!("{:08X?}", hash_code), "[1411D15D, 37BBE0DF, 1EAF8DA5, AC822C42]");
     /// ```
+    #[allow(unused_variables)]
     pub fn put_hash_value_in_array<T, const M: usize>(&self, out: &mut [T; M])
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
@@ -897,7 +902,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Hash =\t{:08X?}", my_hash.get_hash_value_in_array());
     /// assert_eq!(format!("{:08X?}", my_hash.get_hash_value_in_array()), "[A5C900D1, 388193FA, B2C0ED53, 4DE71DDE]");
     /// ```
-    #[inline]
+    #[allow(unused_variables)]
     pub fn tangle(&mut self, tangling: u64)
     {
         unimplemented!(); // Dummy code for documentation
@@ -963,6 +968,7 @@ Display for MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, my_hash);
     /// assert_eq!(my_hash.to_string(), "745B42127EC2479032923F2EE368FD92");
     /// ```
+    #[allow(unused_variables)]
     fn fmt(&self, f: &mut Formatter) -> fmt::Result
     {
         unimplemented!(); // Dummy code for documentation

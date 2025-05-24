@@ -213,46 +213,49 @@ macro_rules! carrying_calc
     // (res, c)
 }
 
-macro_rules! overflowing_calc
+macro_rules! biguint_overflowing_calc
 {
     ($me:expr, $func:expr, $rhs:expr) => {
         let mut res = Self::from_array($me.get_number().clone());
         let current_overflow = $func(&mut res, $rhs);
         return (res, current_overflow);
     }
-    // overflowing_calc!(self, Self::overflowing_add_assign_uint, rhs);
+    // biguint_overflowing_calc!(self, Self::overflowing_add_assign_uint, rhs);
     //
     // let mut res = Self::from_array(self.get_number().clone());
     // let current_overflow = res.overflowing_add_assign_uint(rhs);
     // (res, current_overflow)
 }
+pub(super) use biguint_overflowing_calc;
 
-macro_rules! overflowing_calc_div
+macro_rules! biguint_overflowing_calc_div
 {
     ($me:expr, $func:expr, $rhs:expr) => {
         let (quotient, _) = $func($me, $rhs);
         return (quotient, false);
     }
-    // overflowing_calc_div!(self, Self::divide_fully_uint, rhs);
+    // biguint_overflowing_calc_div!(self, Self::divide_fully_uint, rhs);
     //
     // let (quotient, _) = self.divide_fully_uint(rhs);
     // let overflow = quotient.is_overflow();
     // (quotient, overflow)
 }
+pub(super) use biguint_overflowing_calc_div;
 
-macro_rules! overflowing_calc_rem
+macro_rules! biguint_overflowing_calc_rem
 {
     ($me:expr, $func:expr, $rhs:expr) => {
         let (_, remainder) = $func($me, $rhs);
         return (remainder, false);
     }
-    // overflowing_calc_rem!(self, Self::divide_fully_uint, rhs);
+    // biguint_overflowing_calc_rem!(self, Self::divide_fully_uint, rhs);
     //
     // let (_, remainder) = self.divide_fully_uint(rhs);
     // (remainder, false)
 }
+pub(super) use biguint_overflowing_calc_rem;
 
-macro_rules! overflowing_calc_assign
+macro_rules! biguint_overflowing_calc_assign
 {
     ($me:expr, $func:expr, $rhs:expr) => {
         let flags = $me.get_all_flags();
@@ -262,7 +265,7 @@ macro_rules! overflowing_calc_assign
         $me.set_flag_bit(flags);
         return current_overflow;
     }
-    // overflowing_calc_assign!(self, Self::wrapping_add_assign_uint, rhs);
+    // biguint_overflowing_calc_assign!(self, Self::wrapping_add_assign_uint, rhs);
     //
     // let flags = self.get_all_flags();
     // self.reset_all_flags();
@@ -271,6 +274,7 @@ macro_rules! overflowing_calc_assign
     // self.set_flag_bit(flags);
     // current_overflow
 }
+pub(super) use biguint_overflowing_calc_assign;
 
 macro_rules! underflowing_calc_assign
 {
@@ -355,14 +359,14 @@ macro_rules! biguint_calc_assign_to_calc_rem
 }
 pub(super) use biguint_calc_assign_to_calc_rem;
 
-macro_rules! calc_to_calc_assign
+macro_rules! biguint_calc_to_calc_assign
 {
     ($me:expr, $func:expr) => {
         let res = $func($me);
         $me.set_number(res.get_number());
         $me.set_all_flags(res.get_all_flags());
     };
-    // calc_to_calc_assign!(self, Self::ilog2);
+    // biguint_calc_to_calc_assign!(self, Self::ilog2);
     //
     // let res = self.ilog2();
     // self.set_number(res.get_number());
@@ -373,12 +377,13 @@ macro_rules! calc_to_calc_assign
         $me.set_number(res.get_number());
         $me.set_all_flags(res.get_all_flags());
     }
-    // calc_to_calc_assign!(self, Self::wrapping_div_uint, rhs);
+    // biguint_calc_to_calc_assign!(self, Self::wrapping_div_uint, rhs);
     //
     // let res = self.wrapping_div_uint(rhs);
     // self.set_number(res.get_number());
     // self.set_all_flags(res.get_all_flags());
 }
+pub(super) use biguint_calc_to_calc_assign;
 
 macro_rules! biguint_saturating_calc_assign
 {
@@ -448,97 +453,6 @@ macro_rules! biguint_checked_calc
 }
 pub(super) use biguint_checked_calc;
 
-macro_rules! biguint_modular_calc_assign
-{
-    ($me:expr, $func:expr, $rhs:expr, $modulo:expr) => {
-        if $modulo.is_zero_or_one()
-            { panic!(); }
-        $func($me, $rhs, $modulo);
-    }
-    // biguint_modular_calc_assign!(self, Self::common_modular_add_assign_uint, rhs, modulo);
-    //
-    // if modulo.is_zero_or_one()
-    //     { panic!(); }
-    // self.common_modular_add_assign_uint(rhs, modulo);
-}
-pub(super) use biguint_modular_calc_assign;
-
-macro_rules! panic_free_modular_calc_assign
-{
-    ($me:expr, $func:expr, $rhs:expr, $modulo:expr) => {
-        if $modulo.is_zero_or_one()
-        {
-            $me.set_zero();
-            $me.set_undefined();
-        }
-        else
-        {
-            $func($me, $rhs, $modulo);
-        }
-    }
-    // panic_free_modular_calc_assign!(self, Self::common_modular_add_assign_uint, rhs, modulo);
-    //
-    // if modulo.is_zero_or_one()
-    // {
-    //     self.set_undefined();
-    //     self.set_zero();
-    // }
-    // else
-    // {
-    //     self.common_modular_add_assign(rhs, modulo);
-    // }
-}
-
-macro_rules! panic_free_calc_div_rem_assign
-{
-    ($me:expr, $func:expr, $rhs:expr) => {
-        let res = $func($me, $rhs);
-        $me.set_number(res.get_number());
-        $me.set_flag_bit(res.get_all_flags());
-    }
-    // panic_free_calc_div_rem_assign!(self, Self::panic_free_div_uint, rhs);
-    //
-    // let res = self.panic_free_div_uint(rhs);
-    // self.set_number(res.get_number());
-    // self.set_flag_bit(res.get_all_flags());
-}
-
-macro_rules! if_rhs_is_zero
-{
-    ($me:expr, $rhs:expr) => {
-        let mut q: Self;
-        let mut r = Self::zero();
-        r.set_all_flags(Self::DIVIDED_BY_ZERO);
-        if Self::is_zero($me)
-        {
-            q = Self::zero();
-            q.set_all_flags(Self::UNDEFINED | Self::DIVIDED_BY_ZERO);
-        }
-        else
-        {
-            q = Self::max();
-            q.set_all_flags(Self::INFINITY | Self::DIVIDED_BY_ZERO);
-        }
-        return (q, r);
-    }
-    // if_rhs_is_zero!(self, rhs);
-    //
-    // let mut q: Self;
-    // let mut r = Self::zero();
-    // r.set_all_flags(Self::DIVIDED_BY_ZERO);
-    // if self.is_zero()
-    // {
-    //     q = Self::zero();
-    //     q.set_all_flags(Self::UNDEFINED | Self::DIVIDED_BY_ZERO);
-    // }
-    // else
-    // {
-    //     q = Self::max();
-    //     q.set_all_flags(Self::INFINITY | Self::DIVIDED_BY_ZERO);
-    // }
-    // return (q, r);
-}
-
 macro_rules! general_pow_assign
 {
     ($me:expr, $func:expr, $exp:expr) => {
@@ -551,58 +465,6 @@ macro_rules! general_pow_assign
     // if self.is_zero() && exp.is_zero()
     //     { panic!(); }
     // self.common_pow_assign(exp);
-}
-
-macro_rules! panic_free_calc_pow_assign
-{
-    ($me:expr, $func:expr, $exp:expr) => {
-        if $me.is_zero() && $exp.is_zero()
-        {
-            $me.set_zero();
-            $me.set_undefined();
-            return;
-        }
-        $func($me, $exp);
-    }
-    // panic_free_calc_pow_assign!(self, Self::common_pow_assign_uint, exp);
-    //
-    // if self.is_zero() && exp.is_zero()
-    // {
-    //     self.set_zero();
-    //     self.set_undefined();
-    //     return;
-    // }
-    // self.common_pow_assign_uint(exp);
-}
-
-macro_rules! general_modular_calc_pow_assign
-{
-    ($me:expr, $one:expr, $exp:expr, $modulo:expr) => {
-        let mut res = Self::one();
-        let mut mexp = $exp.clone();
-        while !mexp.is_zero()
-        {
-            if mexp.is_odd()
-                { res.modular_mul_assign($me, $modulo); }
-            $me.modular_mul_assign(&$me.clone(), $modulo);
-            mexp >>= $one;
-        }
-        $me.set_number(res.get_number());
-        $me.set_flag_bit(res.get_all_flags());
-    }
-    // general_modular_calc_pow_assign!(self, 1, exp, modulo);
-    //
-    // let mut res = Self::one();
-    // let mut mexp = exp.clone();
-    // while !mexp.is_zero()
-    // {
-    //     if mexp.is_odd()
-    //         { res.modular_mul_assign(self, modulo); }
-    //     self.modular_mul_assign(&self.clone(), modulo);
-    //     mexp >>= 1;
-    // }
-    // self.set_number(res.get_number());
-    // self.set_flag_bit(res.get_all_flags());
 }
 
 macro_rules! general_calc_iroot
@@ -663,68 +525,6 @@ macro_rules! general_calc_iroot
     // }
 }
 
-macro_rules! general_panic_free_calc_iroot
-{
-    ($me:expr, $func:expr, $exp:expr) => {
-        if $exp.is_zero()
-        {
-            let mut res;
-            if $me.is_zero_or_one()
-            {
-                res = Self::zero();
-                res.set_undefined();
-            }
-            else
-            {
-                res = Self::max();
-                res.set_all_flags(Self::UNDEFINED | Self::INFINITY);
-            }
-            return res;
-        }
-        else if $me.is_zero()
-        {
-            return Self::zero();
-        }
-        else if $me.is_one()
-        {
-            return Self::one();
-        }
-        else
-        {
-            return $func($me, $exp);
-        }
-    }
-    // general_panic_free_calc_iroot!(self, Self::common_iroot, exp);
-    //
-    // if exp.is_zero()
-    // {
-    //     let mut res;
-    //     if self.is_zero_or_one()
-    //     {
-    //         res = Self::zero();
-    //         res.set_undefined();
-    //     }
-    //     else
-    //     {
-    //         res = Self::max();
-    //         res.set_all_flags(Self::UNDEFINED | Self::INFINITY);
-    //     }
-    //     res
-    // }
-    // else if self.is_zero()
-    // {
-    //     Self::zero()
-    // }
-    // else if self.is_one()
-    // {
-    //     Self::one()
-    // }
-    // else
-    // {
-    //     self.common_iroot(exp)
-    // }
-}
-
 macro_rules! general_calc_common_ilog
 {
     ($me:expr, $func:expr, $base:expr) => {
@@ -766,59 +566,6 @@ macro_rules! general_calc_ilog
     //
     // if self.is_zero() || base.is_zero_or_one()
     //     { panic!(); }
-    // self.common_ilog_uint(base)
-}
-
-macro_rules! general_panic_free_calc_ilog
-{
-    ($me:expr, $func:expr, $base:expr) => {
-        if $me.is_zero()
-        {
-            let mut res = Self::zero();
-            res.set_undefined();
-            return res;
-        }
-        else if $me.is_one()
-        {
-            if $base.is_zero_or_one()
-            {
-                let mut res = Self::zero();
-                res.set_undefined();
-                return res;
-            }
-        }
-        else if $base.is_zero_or_one()
-        {
-            let mut res = Self::max();
-            res.set_flag_bit(Self::INFINITY | Self::UNDEFINED);
-            return res;
-        }
-        return $func($me, $base);
-    }
-    // general_panic_free_calc_ilog!(self, Self::common_ilog_uint, base);
-    //
-    // if self.is_zero()
-    // {
-    //     let mut res = Self::zero();
-    //     res.set_undefined();
-    //     return res;
-    // }
-    // else if sekf.is_one()
-    // {
-    //     if $base.is_zero_or_one()
-    //     {
-    //         let mut res = Self::zero();
-    //         res.set_undefined();
-    //         return res;
-    //     }
-    // }
-    // else if $base.is_zero_or_one()
-    // {
-    //     let mut res = Self::max();
-    //     res.set_infinity();
-    //     res.set_undefined();
-    //     return res;
-    // }
     // self.common_ilog_uint(base)
 }
 
@@ -5019,7 +4766,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        overflowing_calc!(self, Self::overflowing_add_assign_uint, rhs);
+        biguint_overflowing_calc!(self, Self::overflowing_add_assign_uint, rhs);
     }
 
     // pub fn overflowing_add_assign_uint<U>(&mut self, rhs: U) -> bool
@@ -5098,227 +4845,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        overflowing_calc_assign!(self, Self::wrapping_add_assign_uint, rhs);
+        biguint_overflowing_calc_assign!(self, Self::wrapping_add_assign_uint, rhs);
     }
 
-    // pub fn modular_add_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be added to `self`, and primitive unsigned integer
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
-    /// 
-    /// # Output
-    /// It returns the modulo-sum (`self` + `rhs`) % `modulo` with wrapping
-    /// (modular) addition at `modulo`.
-    /// 
-    /// # Features
-    /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally returns the remainder of `sum` divided by `modulo`.
-    /// - Wrapping (modular) addition at `modulo`.
-    /// - The differences between this method `modular_add_uint()` and the
-    ///   method `wrapping_add_uint()` are, first, where wrapping around
-    ///   happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_add_uint()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_add_uint()` sets `OVERFLOW`
-    ///   flag when wrapping around happens at `maximum value + 1`.
-    /// 
-    /// # Counterpart Methods
-    /// - If `rhs` is bigger than `u128`, the method
-    ///   [modular_add()](struct@BigUInt#method.modular_add)
-    ///   is proper rather than this method `modular_add_uint()`.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let a_biguint = U256::from_string("76801874298166903427690031858186486050853753882811946569946433649006").unwrap();
-    /// let m = a_biguint.wrapping_add_uint(2_u8); // == 76801874298166903427690031858186486050853753882811946569946433649008
-    /// let rhs = 1_u8;
-    /// let res = a_biguint.modular_add_uint(rhs, &m);
-    /// println!("{} + {} = {}(mod {})", a_biguint, rhs, res, m);
-    /// assert_eq!(res.to_string(), "76801874298166903427690031858186486050853753882811946569946433649007");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_add_uint)
-    pub fn modular_add_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-
-    {
-        biguint_calc_assign_to_calc!(self, Self::modular_add_assign_uint, rhs, modulo);
-    }
-
-    // pub fn modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
-    /// and then, assigns the result back to `self`.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be added to `self`, and primitive unsigned integer
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
-    /// 
-    /// # Features
-    /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally assigns the remainder of `sum` divided by `modulo`
-    ///   to `self` back.
-    /// - Wrapping (modular) addition at `modulo`.
-    /// - The differences between this method `modular_add_assign_uint()` and
-    ///   the method `wrapping_add_assign_uint()` are, first, where wrapping
-    ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_add_assign_uint()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_add_assign_uint()` sets
-    ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation, the
-    ///   `OVERFLOW` flag is not changed even if this current operation does
-    ///    not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [modular_add_assign()](struct@BigUInt#method.modular_add_assign)
-    /// is proper rather than this method.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let mut a_biguint = U256::from_string("768018742981669034276900318581864860508537538828119465699464336490060").unwrap();
-    /// let m = a_biguint.wrapping_add_uint(2_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let rhs = 1_u8;
-    /// a_biguint.modular_add_assign_uint(rhs, &m);
-    /// println!("After a_biguint.modular_add_assign_uint({}, &m), a_biguint = {}", rhs, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "768018742981669034276900318581864860508537538828119465699464336490061");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_add_assign_uint)
-    pub fn modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_modular_calc_assign!(self, Self::common_modular_add_assign_uint, rhs, modulo);
-    }
-
-    pub(super) fn common_modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        let mut flags = self.get_all_flags();
-        if *self >= *modulo
-        {
-            self.wrapping_rem_assign(modulo);
-            self.reset_all_flags();
-        }
-
-        if rhs.length_in_bytes() > T::size_in_bytes()  // && (module <= rhs)
-        {
-            self.common_modular_add_assign(&Self::from_uint(rhs), modulo);
-        }
-        else if modulo.gt_uint(rhs)
-        {
-            if !rhs.is_zero()
-            {
-                let diff = modulo.wrapping_sub_uint(rhs);
-                if *self >= diff
-                {
-                    self.wrapping_sub_assign(&diff);
-                    flags |= Self::OVERFLOW;
-                }
-                else    // if *self < diff
-                {
-                    self.wrapping_add_assign_uint(rhs);
-                }
-            }
-        }
-        else    // if (U::size_in_bytes() <= T::size_in_bytes()) && (self < module <= rhs)
-        {
-            let modu = modulo.into_uint::<U>();
-            let mrhs = rhs.wrapping_rem(modu);
-            if !mrhs.is_zero()
-            {
-                let mut mself = self.into_uint::<U>();
-                let diff = modu.wrapping_sub(mrhs);
-                if mself >= diff
-                {
-                    mself = mself.wrapping_sub(diff);
-                    flags |= Self::OVERFLOW;
-                }
-                else    // if mself < diff
-                {
-                    mself = mself.wrapping_add(rhs);
-                }
-                self.set_uint(mself);
-            }
-        }
-        self.set_all_flags(flags);
-    }
-
-    // pub(super) use Self::common_modular_add_assign_uint;
 
     /*** SUBTRACTION ***/
 
@@ -5720,7 +5249,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        overflowing_calc!(self, Self::overflowing_sub_assign_uint, rhs);
+        biguint_overflowing_calc!(self, Self::overflowing_sub_assign_uint, rhs);
     }
 
     // pub fn overflowing_add_assign_uint<U>(&mut self, rhs: U) -> bool
@@ -5801,222 +5330,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + PartialEq + PartialOrd
     {
         underflowing_calc_assign!(self, Self::wrapping_sub_assign_uint, rhs);
-    }
-
-    // pub fn modular_sub_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be subtracted from `self`, and primitive unsigned
-    ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
-    /// 
-    /// # Output
-    /// It returns the modulo-difference (`self` - `rhs`) % `modulo` with
-    /// wrapping (modular) subtraction at `modulo`.
-    /// 
-    /// # Features
-    /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
-    ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
-    /// - The differences between this method `modular_sub_uint()` and the
-    ///   method `wrapping_sub_uint()` are, first, where wrapping around
-    ///   happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_sub_uint()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub_uint()` sets `UNDERFLOW`
-    ///   flag when wrapping around happens at `maximum value + 1`.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [modular_sub()](struct@BigUInt#method.modular_sub)
-    /// is proper rather than this method `modular_sub_uint()`.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let a_biguint = U256::from_uint(2_u8);
-    /// let m = U256::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let rhs = 1_u8;
-    /// let res = a_biguint.modular_sub_uint(rhs, &m);
-    /// println!("{} - {} = {}(mod {})", a_biguint, rhs, res, m);
-    /// assert_eq!(res.to_string(), "1");
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_sub_uint)
-    pub fn modular_sub_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc!(self, Self::modular_sub_assign_uint, rhs, modulo);
-    }
-
-    // pub fn modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
-    /// and then, assigns the result back to `self`.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be subtracted from `self`, and primitive unsigned
-    ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
-    /// 
-    /// # Features
-    /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
-    ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
-    /// - The differences between this method `modular_sub_assign_uint()` and
-    ///   the method `wrapping_sub_assign_uint()` are, first, where wrapping
-    ///   around happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_sub_assign_uint()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub_assign_uint()` sets
-    ///   `UNDERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   underflow occurred even once before this current operation or
-    ///   `UNDERFLOW` flag is already set before this current operation, the
-    ///   `UNDERFLOW` flag is not changed even if this current operation does
-    ///    not cause underflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [modular_sub_assign()](struct@BigUInt#method.modular_sub_assign)
-    /// is proper rather than this method.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let mut a_biguint = UU32::from_uint(2_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let rhs = 1_u8;
-    /// a_biguint.modular_sub_assign_uint(rhs, &m);
-    /// println!("After a_biguint.modular_sub_assign_uint({}, &m), a_biguint = {}", rhs, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "1");
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_sub_assign_uint)
-    pub fn modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_modular_calc_assign!(self, Self::common_modular_sub_assign_uint, rhs, modulo);
-    }
-
-    pub(super) fn common_modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        let mut flags = self.get_all_flags();
-        if *self >= *modulo
-        {
-            self.wrapping_rem_assign(modulo);
-            self.reset_all_flags();
-        }
-
-        if rhs.length_in_bytes() > T::size_in_bytes()  // if rhs.length_in_bytes() > T::size_in_bytes() && (module <= rhs)
-        {
-            self.common_modular_sub_assign(&Self::from_uint(rhs), modulo);
-        }
-        else if modulo.gt_uint(rhs)
-        {
-            if !rhs.is_zero()
-            {
-                if self.ge_uint(rhs)    // if *self >= rhs
-                {
-                    self.wrapping_sub_assign_uint(rhs);
-                }
-                else    // if *self < rhs
-                {
-                    let diff = modulo.wrapping_sub_uint(rhs);
-                    self.wrapping_add_assign(&diff);
-                    flags |= Self::UNDERFLOW;
-                }
-            }
-        }
-        else    // if (U::size_in_bytes() <= T::size_in_bytes()) && (self < module <= rhs)
-        {
-            let modu = modulo.into_uint::<U>();
-            let mrhs = rhs.wrapping_rem(modu);
-            if !mrhs.is_zero()
-            {
-                let mself = self.into_uint::<U>().modular_sub(mrhs, modu);
-                if mself >= mrhs
-                {
-                    self.set_uint(mself.wrapping_sub(mrhs));
-                }
-                else    // if mself < rhs
-                {
-                    let diff = modu.wrapping_sub(mrhs);
-                    self.set_uint(mself.wrapping_add(diff));
-                    flags |= Self::UNDERFLOW;
-                }
-            }
-        }
-        self.set_flag_bit(flags);
     }
 
     // pub fn abs_diff_uint<U>(&self, other: U) -> Self
@@ -6845,7 +6158,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        overflowing_calc!(self, Self::overflowing_mul_assign_uint, rhs);
+        biguint_overflowing_calc!(self, Self::overflowing_mul_assign_uint, rhs);
     }
 
     // pub fn overflowing_mul_assign_uint<U>(&mut self, rhs: U) -> bool
@@ -6927,7 +6240,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        overflowing_calc_assign!(self, Self::wrapping_mul_assign_uint, rhs);
+        biguint_overflowing_calc_assign!(self, Self::wrapping_mul_assign_uint, rhs);
     }
 
     /*
@@ -6947,229 +6260,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     //     BigUInt::<T, M>::new()
     // }
     */
-
-    // pub fn modular_mul_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be multiplied to `self`, and primitive unsigned integer
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
-    /// 
-    /// # Output
-    /// It returns the modulo-product (`self` * `rhs`) % `modulo` with wrapping
-    /// (modular) multiplication at `modulo`.
-    /// 
-    /// # Features
-    /// - It takes the multiplication (= `product`) of `self` and `rhs`,
-    ///   and then finally returns the remainder of `product`
-    ///   divided by `modulo`.
-    /// - Wrapping (modular) multiplication at `modulo`.
-    /// - The differences of between this method `modular_mul_uint()` and the
-    ///   method `wrapping_mul_uint()` are, first, where wrapping around
-    ///   happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_mul_uint()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul_uint()` sets `OVERFLOW`
-    ///   flag when wrapping around happens at `maximum value + 1`.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [modular_mul()](struct@BigUInt#method.modular_mul)
-    /// is proper rather than this method `modular_mul_uint()`.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let a_biguint = U256::from_string("31858186486050853753882811946768018742981669034276900586487291375468285").unwrap();
-    /// let mul_uint = 5_u8;
-    /// let res = a_biguint.modular_mul_uint(mul_uint, &m);
-    /// println!("{} * {} = {}", a_biguint, mul_uint, res);
-    /// assert_eq!(res.to_string(), "159290932430254268769414059733840093714908345171384502932436456877341425");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_mul_uint)
-    pub fn modular_mul_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc!(self, Self::modular_mul_assign_uint, rhs, modulo);
-    }
-
-    // pub fn modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
-    /// and then, assigns the result back to `self`.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be added to `self`, and primitive unsigned integer
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
-    /// 
-    /// # Features
-    /// - It takes the multiplication (= `product`) of `self` and `rhs`,
-    ///   and then finally assigns the remainder of `product` divided
-    ///   by `modulo` to `self` back.
-    /// - Wrapping (modular) multiplication at `modulo`.
-    /// - The differences between this method `modular_mul_assign_uint()` and
-    ///   the method `wrapping_mul_assign_uint()` are, first, where wrapping
-    ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_mul_assign_uint()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul_assign_uint()` sets
-    ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation, the
-    ///   `OVERFLOW` flag is not changed even if this current operation does
-    ///    not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [modular_mul_assign()](struct@BigUInt#method.modular_mul_assign)
-    /// is proper rather than this method.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let mut a_biguint = U256::from_string("31858186486050853753882811946768018742981669034276900586487291375468285").unwrap();
-    /// 
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let mul_uint = 5_u8;
-    /// a_biguint.modular_mul_assign_uint(mul_uint, &m);
-    /// println!("After a_biguint.modular_mul_assign_uint(mul_uint, &m), a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "159290932430254268769414059733840093714908345171384502932436456877341425");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_mul_assign_uint)
-    pub fn modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_modular_calc_assign!(self, Self::common_modular_mul_assign_uint, rhs, modulo);
-    }
-
-    pub(super) fn common_modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        let mut flags = self.get_all_flags();
-        if *self >= *modulo
-        {
-            self.wrapping_rem_assign(modulo);
-            self.reset_all_flags();
-        }
-
-        if !self.is_zero()
-        {
-            if U::size_in_bytes() > T::size_in_bytes()
-            {
-                self.common_modular_mul_assign(&Self::from_uint(rhs), modulo);
-            }
-            else if modulo.gt_uint(rhs)
-            {
-                let mut mrhs = T::num::<U>(rhs);
-                let mut res = Self::zero();
-                while mrhs > T::zero()
-                {
-                    if mrhs.is_odd()
-                        { res.modular_add_assign(self, modulo); }
-                    self.modular_add_assign(&self.clone(), modulo);
-                    mrhs >>= T::one();
-                }
-                *self = res;
-            }
-            else    // if (U::size_in_bytes() <= T::size_in_bytes()) && (self < module <= rhs)
-            {
-                let modu = modulo.into_uint::<U>();
-                let mrhs = rhs.wrapping_rem(modu);
-                if mrhs.is_zero()
-                {
-                    self.set_zero();
-                }
-                else
-                {
-                    let mself = self.into_uint::<U>();
-                    let new_mself = mself.modular_mul(mrhs, modu);
-                    self.set_uint(new_mself);
-                    if mself > new_mself
-                    {
-                        flags |= Self::OVERFLOW;
-                    }
-                    else
-                    {
-                        let r = mself.overflowing_mul(mrhs);
-                        if (r.0 >= modu) || r.1
-                            { flags |= Self::OVERFLOW; }
-                    }
-                }
-            }
-        }
-        self.set_flag_bit(flags);
-    }
 
 
 
@@ -7437,7 +6527,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        calc_to_calc_assign!(self, Self::wrapping_div_uint, rhs);
+        biguint_calc_to_calc_assign!(self, Self::wrapping_div_uint, rhs);
     }
 
     // pub fn overflowing_div_uint<U>(&self, rhs: U) -> (Self, bool)
@@ -7503,7 +6593,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        overflowing_calc_div!(self, Self::divide_fully_uint, rhs);
+        biguint_overflowing_calc_div!(self, Self::divide_fully_uint, rhs);
     }
 
     // pub fn overflowing_div_assign_uint<U>(&mut self, rhs: U) -> bool
@@ -7584,182 +6674,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        overflowing_calc_assign!(self, Self::wrapping_div_assign_uint, rhs);
-    }
-
-    // pub fn modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and returns the quotient.
-    /// 
-    /// # Arguments
-    /// - `rhs` divides `self`, and is of primitive unsigned integral data type
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either zero or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either zero or one, it will panic.
-    /// 
-    /// # Output
-    /// It returns the quotient of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
-    /// 
-    /// # Features
-    /// It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    /// and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    /// and then finally returns the quotient of `rd1` divided by `rd2`.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [modular_div()](struct@BigUInt#method.modular_div)
-    /// is proper rather than this method `modular_div_uint()`.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = 128_u8;
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.modular_div_uint(divisor, &modulo);
-    /// println!("{} / {} = {}", dividend, divisor, quotient);
-    /// assert_eq!(quotient.to_string(), "3");
-    /// assert_eq!(quotient.is_overflow(), false);
-    /// assert_eq!(quotient.is_underflow(), false);
-    /// assert_eq!(quotient.is_infinity(), false);
-    /// assert_eq!(quotient.is_divided_by_zero(), false);
-    /// assert_eq!(quotient.is_undefined(), false);
-    /// assert_eq!(quotient.is_left_carry(), false);
-    /// assert_eq!(quotient.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_div_uint)
-    pub fn modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc!(self, Self::modular_div_assign_uint, rhs, modulo);
-    }
-
-    // pub fn modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and assigns the quotient back to `self`.
-    /// 
-    /// # Arguments
-    /// - `rhs` divides `self`, and is of primitive unsigned integral data type
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either zero or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either zero or one, it will panic.
-    /// 
-    /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    ///   and then finally returns the quotient of `rd1` divided by `rd2`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [modular_div_assign()](struct@BigUInt#method.modular_div_assign)
-    /// is proper rather than this method.
-    /// 
-    /// # Example 1 for a normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let divisor = 128_u8;
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.modular_div_assign_uint(divisor, &modulo);
-    /// println!("After a_biguint.modular_div_assign_uint({}), a_biguint = {}", divisor, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "3");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_div_assign_uint)
-    pub fn modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        if modulo.is_zero_or_one() | rhs.is_zero()
-            { panic!(); }
-
-        let mut mrhs = rhs;
-        if modulo.le_uint(rhs)
-        {
-            let modu = modulo.into_uint::<U>();
-            mrhs = rhs.wrapping_rem(modu);
-            if mrhs.is_zero()
-                { panic!(); }
-        }
-
-        let flags = self.get_all_flags();   
-        if *self >= *modulo
-        {
-            self.wrapping_rem_assign(modulo);
-            self.reset_all_flags();
-        }
-
-        if rhs.length_in_bytes() > T::size_in_bytes()
-        {
-            self.modular_div_assign(&Self::from_uint(mrhs), modulo);
-        }
-        else if modulo.gt_uint(rhs)
-        {
-            self.wrapping_div_assign_uint(mrhs);
-        }
-        else
-        {
-            let modu = modulo.into_uint::<U>();
-            let mself = self.into_uint::<U>().wrapping_rem(modu);
-            self.set_uint(mself.wrapping_div(mrhs));
-        }
-        self.set_flag_bit(flags);
+        biguint_overflowing_calc_assign!(self, Self::wrapping_div_assign_uint, rhs);
     }
 
     // pub fn wrapping_rem_uint<U>(&self, rhs: U) -> Self
@@ -7961,7 +6876,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        overflowing_calc_rem!(self, Self::divide_fully_uint, rhs);
+        biguint_overflowing_calc_rem!(self, Self::divide_fully_uint, rhs);
     }
 
     // pub fn overflowing_rem_assign_uint<U>(&mut self, rhs: U) -> bool
@@ -8044,176 +6959,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         self.wrapping_rem_assign_uint(rhs);
         false
-    }
-
-    // pub fn modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> U
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and returns the remainder.
-    /// 
-    /// # Arguments
-    /// - `rhs` divides `self`, and is of primitive unsigned integral data type
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either zero or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either zero or one, it will panic.
-    /// 
-    /// # Output
-    /// It returns the remainder of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
-    /// 
-    /// # Features
-    /// It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    /// and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    /// and then finally returns the remainder of `rd1` divided by `rd2`.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [modular_rem()](struct@BigUInt#method.modular_rem)
-    /// is proper rather than this method `modular_rem_uint()`.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = 128_u8;
-    /// let modulo = U256::from_uint(100_u8);
-    /// let remainder = dividend.modular_rem_uint(divisor, &modulo);
-    /// println!("{} % {} = {} (mod {})", dividend, divisor, remainder, modulo);
-    /// assert_eq!(remainder.to_string(), "8");
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_rem_uint)
-    pub fn modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> U
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        let mut res = Self::from_array(self.get_number().clone());
-        res.modular_rem_assign_uint(rhs, modulo);
-        res.into_uint::<U>()
-    }
-
-    // pub fn modular_rem_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and assigns the remainder back to `self`.
-    /// 
-    /// # Arguments
-    /// - `rhs` divides `self`, and is of primitive unsigned integral data type
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either zero or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either zero or one, it will panic.
-    /// 
-    /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    ///   and then finally returns the remainder of `rd1` divided by `rd2`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [modular_rem_assign()](struct@BigUInt#method.modular_rem_assign)
-    /// is proper rather than this method.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let divisor = 128_u8;
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.modular_rem_assign_uint(divisor, &modulo);
-    /// println!("After a_biguint.modular_rem_assign_uint({}), a_biguint = {}", divisor, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "8");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_rem_assign_uint)
-    pub fn modular_rem_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        if modulo.is_zero_or_one() | rhs.is_zero()
-            { panic!(); }
-
-        let mut mrhs = rhs;
-        if modulo.le_uint(rhs)
-        {
-            let modu = modulo.into_uint::<U>();
-            mrhs = rhs.wrapping_rem(modu);
-            if mrhs.is_zero()
-                { panic!(); }
-        }
-
-        let flags = self.get_all_flags();   
-        if *self >= *modulo
-        {
-            self.wrapping_rem_assign(modulo);
-            self.reset_all_flags();
-        }
-
-        if rhs.length_in_bytes() > T::size_in_bytes()  // if rhs.length_in_bytes() > T::size_in_bytes() && (module <= rhs)
-        {
-            self.modular_rem_assign(&Self::from_uint(rhs), modulo);
-        }
-        else if modulo.gt_uint(rhs)
-        {
-            self.wrapping_rem_assign_uint(rhs);
-        }
-        else    // if (U::size_in_bytes() <= T::size_in_bytes()) && (modulo <= rhs)
-        {
-            let modu = modulo.into_uint::<U>();
-            let mself = self.into_uint::<U>().wrapping_rem(modu);
-            self.set_uint(mself.wrapping_rem(mrhs));
-        }
-        self.set_flag_bit(flags);
     }
 
 
@@ -8619,7 +7364,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        overflowing_calc!(self, Self::overflowing_pow_assign_uint, exp);
+        biguint_overflowing_calc!(self, Self::overflowing_pow_assign_uint, exp);
     }
     
     // pub fn overflowing_pow_assign_uint<U>(&mut self, exp: U) -> bool
@@ -8704,179 +7449,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        overflowing_calc_assign!(self, Self::pow_assign_uint, exp);
-    }
-
-    // pub fn modular_pow_uint<U>(&self, exp: U, modulo: &Self) -> Self
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
-    /// and returns the result. The type `U` has the trait `SmallUInt`.
-    /// 
-    /// # Arguments
-    /// - `exp` is the power to raise `self` to, and is a primitive unsigned
-    ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
-    ///    and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either zero or one, this method will panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Output
-    /// It returns the result of `self` raised to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - If overflowing (wrapping around at `modulo`) happens,
-    ///   the `OVERFLOW` flag of the return value will be set.
-    /// 
-    /// # Counterpart Method
-    /// If `exp` is bigger than `u128`, use the method
-    /// [modular_pow()](struct@BigUInt#method.modular_pow) instead.
-    /// 
-    /// # Example 1 for Noraml case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = U256::from_uint(10_u8);
-    /// let exp = 30_u8;
-    /// let modulo = U256::halfmax();
-    /// let res = a_biguint.modular_pow_uint(exp, &modulo);
-    /// println!("{} ** {} (mod {}) = {}", a_biguint, exp, modulo, res);
-    /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow_uint)
-    pub fn modular_pow_uint<U>(&self, exp: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc!(self, Self::modular_pow_assign_uint, exp, modulo);
-    }
-
-    // pub fn modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
-    /// and assign the result to `self` back.
-    /// The type `U` has the trait `SmallUInt`.
-    ///
-    /// # Arguments
-    /// - `exp` is the power to raise `self` to and is a primitive unsigned
-    ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
-    ///    and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either zero or one, this method will panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - If overflowing (wrapping around at `modulo`) happens,
-    ///   the `OVERFLOW` flag of the return value will be set.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `exp` is bigger than `u128`, the method
-    /// [modular_pow_assign()](struct@BigUInt#method.modular_pow_assign)
-    /// is proper rather than this method.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = U256::from_uint(10_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let exp = 30_u8;
-    /// let modulo = U256::halfmax();
-    /// a_biguint.modular_pow_assign_uint(exp, &modulo);
-    /// println!("After a_biguint.modular_pow_assign_uint({}), a_biguint = {}", exp, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow_assign_uint)
-    pub fn modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        if modulo.is_zero_or_one() || (self.is_zero() && exp.is_zero())
-            { panic!(); }
-        if *self >= *modulo
-            { self.wrapping_rem_assign(modulo); }
-        let mexp =
-            if modulo.le_uint(exp)
-                { exp.wrapping_rem(modulo.into_uint::<U>()) }
-            else
-                { exp };
-        if self.is_zero() && mexp.is_zero()
-            { panic!(); }
-        self.common_modular_pow_assign_uint(mexp, modulo);
-    }
-
-    pub(super) fn common_modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        general_modular_calc_pow_assign!(self, U::u8_as_smalluint(1), exp, modulo);
+        biguint_overflowing_calc_assign!(self, Self::pow_assign_uint, exp);
     }
 
     // pub fn iroot_uint<U>(&self, exp: U) -> Self
@@ -9017,7 +7590,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        calc_to_calc_assign!(self, Self::iroot_uint, exp);
+        biguint_calc_to_calc_assign!(self, Self::iroot_uint, exp);
     }
 
     pub(super) fn common_iroot_uint<U>(&self, exp: U) -> Self
@@ -9216,7 +7789,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + BitXor<Output=U> + BitXorAssign + Not<Output=U>
             + PartialEq + PartialOrd
     {
-        calc_to_calc_assign!(self, Self::ilog_uint, base);
+        biguint_calc_to_calc_assign!(self, Self::ilog_uint, base);
     }
 
     pub(super) fn common_ilog_uint<U>(&self, base: U) -> Self
@@ -9234,306 +7807,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
 
 
-    /***** METHODS FOR MISCELLANEOUS ARITHMETIC OPERATIONS *****/
-
-    // pub fn gcd_uint<U>(&self, other: &U) -> Self
-    /// Calculates the greatest common divisor of `self` and `other`,
-    /// and returns the result.
-    /// If you would like to know greatest common divisor more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Greatest_common_divisor).
-    /// 
-    /// # Argument
-    /// The greatest common diviser of `self` and `other` is calculated.
-    /// `other` is a primitive unsigned integer such as `u8`, `u16`, `u32`,
-    /// `u64`, and `u128`.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If either `self` or `other` is zero, it will panic.
-    /// - If both `self` and `other` is zero, it will panic.
-    /// 
-    /// # Output
-    /// It returns The greatest common diviser of `self` and `other`.
-    /// 
-    /// # Features
-    /// Both `self` and `other` should natural numbers. So, if either `self`
-    /// or `other` is zero, getting greatest common diviser is meaningless.
-    /// In this case, this method will panic.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [gcd()](struct@BigUInt#method.gcd)
-    /// is proper rather than this method `gcd_uint()`.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = U256::from_string("111112222233333444445555566666777778888899999").unwrap();
-    /// let b_biguint = 77777666665555544444333332222211111_u128;
-    /// let c_biguint = a_biguint.gcd_uint(b_biguint);
-    /// println!("The greatest common divisor of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
-    /// assert_eq!(c_biguint.to_string(), "11111");
-    /// assert_eq!(c_biguint.is_overflow(), false);
-    /// assert_eq!(c_biguint.is_underflow(), false);
-    /// assert_eq!(c_biguint.is_infinity(), false);
-    /// assert_eq!(c_biguint.is_undefined(), false);
-    /// assert_eq!(c_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(c_biguint.is_left_carry(), false);
-    /// assert_eq!(c_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd_uint)
-    pub fn gcd_uint<U>(&self, other: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        if self.is_zero() || other.is_zero()
-            { panic!(); }
-        self.common_gcd_uint(other)
-    }
-
-    // pub fn gcd_assign_uint<U>(&mut self, other: U)
-    /// Calculates the greatest common divisor of `self` and `other`,
-    /// and assigns the result back to `self`.
-    /// If you would like to know greatest common divisor more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Greatest_common_divisor).
-    /// 
-    /// # Argument
-    /// The greatest common diviser of `self` and `other` is calculated.
-    /// `other` is a primitive unsigned integer such as `u8`, `u16`, `u32`,
-    /// `u64`, and `u128`.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If either `self` or `other` is zero, it will panic.
-    /// - If both `self` and `other` is zero, it will panic.
-    /// 
-    /// # Features
-    /// Both `self` and `other` should natural numbers. So, if either `self`
-    /// or `other` is zero, getting greatest common diviser is meaningless.
-    /// In this case, this method will panic.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [gcd_assign()](struct@BigUInt#method.gcd_assign)
-    /// is proper rather than this method `gcd_assign_uint()`.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = U256::from_string("111112222233333444445555566666777778888899999").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let b_biguint = 77777666665555544444333332222211111_u128;
-    /// a_biguint.gcd_assign_uint(b_biguint);
-    /// println!("After a_biguint.gcd_assign_uint(), a_biguint = {}.", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "11111");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd_assign_uint)
-    pub fn gcd_assign_uint<U>(&mut self, other: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        calc_to_calc_assign!(self, Self::gcd_uint, other);
-    }
-
-    pub(super) fn common_gcd_uint<U>(&self, other: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        let mut y = self.wrapping_rem_uint(other);
-        let mut x = other;
-        while !y.is_zero()
-        {
-            let t = y;
-            y = x.wrapping_rem(y);
-            x = t;
-        }
-        Self::from_uint(x)
-    }
-
-    // pub fn lcm_uint<U>(&self, other: U) -> Self
-    /// Calculates the least common multiple of `self` and `other`,
-    /// and returns the result.
-    /// If you would like to know greatest common divisor more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Least_common_multiple).
-    /// 
-    /// # Argument
-    /// The least common multiple of `self` and `other` is calculated.
-    /// `other` is a primitive unsigned integer such as `u8`, `u16`, `u32`,
-    /// `u64`, and `u128`.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If either `self` or `other` is zero, it will panic.
-    /// - If both `self` and `other` is zero, it will panic.
-    /// 
-    /// # Output
-    /// It returns The least common multiple of `self` and `other`.
-    /// 
-    /// # Features
-    /// Both `self` and `other` should natural numbers. So, if either `self`
-    /// or `other` is zero, getting least common multiple is meaningless.
-    /// In this case, this method will panic.
-    /// 
-    /// # Counterpart Method
-    /// The method [lcm_uint()](struct@BigUInt#method.lcm_uint)
-    /// is more efficient than this method `lcm()`
-    /// when the exponent `other` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [lcm_uint()](struct@BigUInt#method.lcm_uint).
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let a_biguint = U256::from_string("1111122222333334444455555666667777788888").unwrap();
-    /// let b_biguint = 77777666665555544444333332222211111_u128;
-    /// let c_biguint = a_biguint.lcm_uint(b_biguint);
-    /// println!("The least common multiple of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
-    /// assert_eq!(c_biguint.to_string(), "7777922224222246666944447444475555866662777741110777774888865555388888");
-    /// assert_eq!(c_biguint.is_overflow(), false);
-    /// assert_eq!(c_biguint.is_underflow(), false);
-    /// assert_eq!(c_biguint.is_infinity(), false);
-    /// assert_eq!(c_biguint.is_undefined(), false);
-    /// assert_eq!(c_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(c_biguint.is_left_carry(), false);
-    /// assert_eq!(c_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm_uint)
-    pub fn lcm_uint<U>(&self, other: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        if self.is_zero() || other.is_zero()
-           { panic!(); }
-        self.wrapping_div(&self.gcd_uint(other)).wrapping_mul_uint(other)
-    }
-
-    // pub fn lcm_assign_uint<U>(&mut self, other: U)
-    /// Calculates the least common multiple of `self` and `other`,
-    /// and assigns the result back to `self`.
-    /// If you would like to know least common multiple more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Least_common_multiple).
-    /// 
-    /// # Argument
-    /// The least common multiple of `self` and `other` is calculated.
-    /// `other` is a primitive unsigned integer such as `u8`, `u16`, `u32`,
-    /// `u64`, and `u128`.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If either `self` or `other` is zero, it will panic.
-    /// - If both `self` and `other` is zero, it will panic.
-    /// 
-    /// # Features
-    /// Both `self` and `other` should natural numbers. So, if either `self`
-    /// or `other` is zero, getting least common multiple is meaningless.
-    /// In this case, this method will panic.
-    /// 
-    /// # Counterpart Method
-    /// If `other` is bigger than `u128`, the method
-    /// [lcm_assign()](struct@BigUInt#method.lcm_assign)
-    /// is proper rather than this method `lcm_assign_uint()`.
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let mut a_biguint = U256::from_string("1111122222333334444455555666667777788888").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let b_biguint = 77777666665555544444333332222211111_u128;
-    /// a_biguint.lcm_assign_uint(b_biguint);
-    /// println!("After a_biguint.lcm_assign_uint(), a_biguint = {}.", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "7777922224222246666944447444475555866662777741110777774888865555388888");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm_assign_uint)
-    pub fn lcm_assign_uint<U>(&mut self, other: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        calc_to_calc_assign!(self, Self::lcm_uint, other);
-    }
-
-
-
+    
     /***** ARITHMATIC OPERATIONS WITH BIGUINT *****/
 
     /*** ADDITION ***/
@@ -9969,7 +8243,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_add)
     pub fn overflowing_add(&self, rhs: &Self) -> (Self, bool)
     {
-        overflowing_calc!(self, Self::overflowing_add_assign, rhs);
+        biguint_overflowing_calc!(self, Self::overflowing_add_assign, rhs);
     }
 
     // pub fn overflowing_add_assign(&mut self, rhs: &Self) -> bool
@@ -10044,181 +8318,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_add_assign)
     pub fn overflowing_add_assign(&mut self, rhs: &Self) -> bool
     {
-        overflowing_calc_assign!(self, Self::wrapping_add_assign, rhs);
-    }
-
-    // pub fn modular_add(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
-    /// 
-    /// # Output
-    /// It returns the modulo-sum (`self` + `rhs`) % `modulo` with wrapping
-    /// (modular) addition at `modulo`.
-    /// 
-    /// # Features
-    /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally returns the remainder of `sum` divided by `modulo`.
-    /// - Wrapping (modular) addition at `modulo`.
-    /// - The differences between this method `modular_add()` and the method
-    ///   `wrapping_add()` are, first, where wrapping around happens,
-    ///   and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_add()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_add()` sets `OVERFLOW`
-    ///   flag when wrapping around happens at `maximum value + 1`.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [modular_add_uint()](struct@BigUInt#method.modular_add_uint)
-    /// is a bit faster than this method `modular_add()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_add_uint()](struct@BigUInt#method.modular_add_uint).
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let a_biguint = U256::from_string("76801874298166903427690031858186486050853753882811946569946433649006").unwrap();
-    /// let m = a_biguint.wrapping_add_uint(2_u8); // == 76801874298166903427690031858186486050853753882811946569946433649008
-    /// let one = U256::one();
-    /// let res = a_biguint.modular_add(&one, &m);
-    /// println!("{} + {} = {}", a_biguint, one, res);
-    /// assert_eq!(res.to_string(), "76801874298166903427690031858186486050853753882811946569946433649007");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_add)
-    pub fn modular_add(&self, rhs: &Self, modulo: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::modular_add_assign, rhs, modulo);
-    }
-
-    // pub fn modular_add_assign(&mut self, rhs: &Self, modulo: &Self)
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
-    /// and then, assigns the result back to `self`.
-    /// 
-    /// # Arguments
-    /// -`rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
-    ///   and is of `&Self` typed.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
-    /// 
-    /// # Features
-    /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally assigns the remainder of `sum` divided by `modulo`
-    ///   to `self` back.
-    /// - Wrapping (modular) addition at `modulo`.
-    /// - The differences between this method `modular_add_assign_uint()` and
-    ///   the method `wrapping_add_assign_uint()` are, first, where wrapping
-    ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_add_assign()` wraps around at `maximum value + 1`.
-    ///   Second, this method set `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_add_assign()` sets
-    ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [modular_add_assign_uint()](struct@BigUInt#method.modular_add_assign_uint)
-    /// is a bit faster than this method `modular_add_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_add_assign_uint()](struct@BigUInt#method.modular_add_assign_uint).
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let mut a_biguint = U256::from_string("768018742981669034276900318581864860508537538828119465699464336490060").unwrap();
-    /// println!("Originally, a = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let m = a_biguint.wrapping_add_uint(2_u8); // == 768018742981669034276900318581864860508537538828119465699464336490062
-    /// let one = U256::one();
-    /// a_biguint.modular_add_assign(&one, &m);
-    /// println!("After a_biguint.modular_add_assign_uint(&U256::one(), &m), a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "768018742981669034276900318581864860508537538828119465699464336490061");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_add_assign)
-    pub fn modular_add_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        biguint_modular_calc_assign!(self, Self::common_modular_add_assign, rhs, modulo);
-    }
-
-    pub(super) fn common_modular_add_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        let mut flags = self.get_all_flags();
-        if *self >= *modulo
-            { self.wrapping_rem_assign(modulo); }
-
-        let _rhs: Self;
-        let mrhs: &Self;
-        if *rhs >= *modulo
-        {
-            _rhs = rhs.wrapping_rem(modulo);
-            mrhs = &_rhs;
-        }
-        else
-        {
-            mrhs = rhs;
-        }
-        let diff = modulo.wrapping_sub(mrhs);
-        if *self >= diff
-        {
-            self.wrapping_sub_assign(&diff);
-            flags |= Self::OVERFLOW;
-        }
-        else
-        {
-            self.wrapping_add_assign(mrhs);
-        }
-        self.set_all_flags(flags);
+        biguint_overflowing_calc_assign!(self, Self::wrapping_add_assign, rhs);
     }
 
 
@@ -10598,7 +8698,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_sub)
     pub fn overflowing_sub(&self, rhs: &Self) -> (Self, bool)
     {
-        overflowing_calc!(self, Self::overflowing_sub_assign, rhs);
+        biguint_overflowing_calc!(self, Self::overflowing_sub_assign, rhs);
     }
 
     // pub fn overflowing_sub_assign(&mut self, rhs: &Self) -> bool
@@ -10672,186 +8772,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     pub fn overflowing_sub_assign(&mut self, rhs: &Self) -> bool
     {
         underflowing_calc_assign!(self, Self::wrapping_sub_assign, rhs);
-    }
-
-    // pub fn modular_sub(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be added to `self`, and is of `&Self` type..
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
-    /// 
-    /// # Output
-    /// It returns the modulo-difference (`self` - `rhs`) % `modulo` with
-    /// wrapping (modular) subtraction at `modulo`.
-    /// 
-    /// # Features
-    /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
-    ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
-    /// - The differences between this method `modular_sub()` and the
-    ///   method `wrapping_sub()` are, first, where wrapping around
-    ///   happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_sub()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub()` sets `UNDERFLOW`
-    ///   flag when wrapping around happens at `maximum value + 1`.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [modular_sub_uint()](struct@BigUInt#method.modular_sub_uint)
-    /// is a bit faster than this method `modular_sub()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_sub_uint()](struct@BigUInt#method.modular_sub_uint).
-    /// 
-    /// # Example 1 for Normal Case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let a_biguint = U256::from_uint(2_u8);
-    /// let m = U256::from_string("10000000000000000000000000000000000000000000000000000000000000000000").unwrap();
-    /// let one = U256::one();
-    /// let res = a_biguint.modular_sub(&one, &m);
-    /// println!("{} - {} = {} (mod {})", a_biguint, one, res, m);
-    /// assert_eq!(res.to_string(), "1");
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_sub)
-    pub fn modular_sub(&self, rhs: &Self, modulo: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::modular_sub_assign, rhs, modulo);
-    }
-
-    // pub fn modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
-    /// and then, assigns the result back to `self`.
-    /// 
-    /// # Arguments
-    /// -`rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
-    /// 
-    /// # Features
-    /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
-    ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
-    /// - The differences between this method `modular_sub_assign()` and
-    ///   the method `wrapping_sub_assign()` are, first, where wrapping
-    ///   around happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_sub_assign()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub_assign()` sets
-    ///   `UNDERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   underflow occurred even once before this current operation or
-    ///   `UNDERFLOW` flag is already set before this current operation, the
-    ///   `UNDERFLOW` flag is not changed even if this current operation does
-    ///    not cause underflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [modular_sub_assign_uint()](struct@BigUInt#method.modular_sub_assign_uint)
-    /// is a bit faster than this method `modular_sub_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_sub_assign_uint()](struct@BigUInt#method.modular_sub_assign_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let mut a_biguint = UU32::from_uint(2_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let rhs = UU32::one();
-    /// a_biguint.modular_sub_assign(&rhs, &m);
-    /// println!("After a_biguint.modular_sub_assign({}, &m), a_biguint = {}", rhs, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "1");
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_sub_assign)
-    pub fn modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        biguint_modular_calc_assign!(self, Self::common_modular_sub_assign, rhs, modulo);
-    }
-
-    pub(super) fn common_modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        let mut flags = self.get_all_flags();
-        self.wrapping_rem_assign(modulo);
-        if *rhs < *modulo    // In this case, it does not cause cloning for performance.
-        {
-            // let mrhs = rhs.clone(); // Does not clone for performance
-            if *self >= *rhs
-            {
-                self.wrapping_sub_assign(rhs);
-            }
-            else    // if *self < *rhs
-            {
-                let diff = modulo.wrapping_sub(rhs);
-                self.wrapping_add_assign(&diff);
-                flags |= Self::UNDERFLOW;
-            }
-        }
-        else    // if *rhs >= *modulo
-        {
-            let mrhs = rhs.wrapping_rem(modulo);
-            if *self >= mrhs
-            {
-                self.wrapping_sub_assign(&mrhs);
-            }
-            else
-            {
-                let diff = modulo.wrapping_sub(&mrhs);
-                self.wrapping_add_assign(&diff);
-                flags |= Self::UNDERFLOW;
-            }
-        }
-        self.set_all_flags(flags);
     }
 
     // pub fn abs_diff(&self, other: &Self) -> Self
@@ -11815,7 +9735,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_mul)
     pub fn overflowing_mul(&self, rhs: &Self) -> (Self, bool)
     {
-        overflowing_calc!(self, Self::overflowing_mul_assign, rhs);
+        biguint_overflowing_calc!(self, Self::overflowing_mul_assign, rhs);
     }
 
     // pub fn overflowing_mul_assign(&mut self, rhs: &Self) -> bool
@@ -11891,177 +9811,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_mul_assign)
     pub fn overflowing_mul_assign(&mut self, rhs: &Self) -> bool
     {
-        overflowing_calc_assign!(self, Self::wrapping_mul_assign, rhs);
-    }
-
-    // pub fn modular_mul(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
-    /// 
-    /// # Arguments
-    /// - `rhs` is to be multiplied to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
-    /// 
-    /// # Output
-    /// It returns the modulo-product (`self` * `rhs`) % `modulo` with wrapping
-    /// (modular) multiplication at `modulo`.
-    /// 
-    /// # Features
-    /// - It takes the multiplication (= `product`) of `self` and `rhs`,
-    ///   and then finally returns the remainder of `product`
-    ///   divided by `modulo`.
-    /// - Wrapping (modular) multiplication at `modulo`.
-    /// - The differences between this method `modular_mul()` and the method
-    ///   `wrapping_mul()` are, first, where wrapping around happens,
-    ///   and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_mul()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul()` sets `OVERFLOW`
-    ///   flag when wrapping around happens at `maximum value + 1`.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [modular_mul_uint()](struct@BigUInt#method.modular_mul_uint)
-    /// is a bit faster than this method `modular_mul()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_mul_uint()](struct@BigUInt#method.modular_mul_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let a_biguint = U256::from_string("31858186486050853753882811946768018742981669034276900586487291375468285").unwrap();
-    /// let mul_biguint = UU32::from_uint(5_u8);
-    /// let res = a_biguint.modular_mul(&mul_biguint, &m);
-    /// println!("{} * {} = {} (mod {})", a_biguint, mul_biguint, res, m);
-    /// assert_eq!(res.to_string(), "159290932430254268769414059733840093714908345171384502932436456877341425");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_mul)
-    pub fn modular_mul(&self, rhs: &Self, modulo: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::modular_mul_assign, rhs, modulo);
-    }
-
-    // pub fn modular_mul_assign(&self, rhs: &Self, modulo: &Self)
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
-    /// and then, assigns the result back to `self`.
-    /// 
-    /// # Arguments
-    /// -`rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
-    /// 
-    /// # Features
-    /// - It takes the multiplication (= `product`) of `self` and `rhs`,
-    ///   and then finally assigns the remainder of `product` divided
-    ///   by `modulo` to `self` back.
-    /// - Wrapping (modular) multiplication at `modulo`.
-    /// - The differences between this method `modular_mul_assign()` and
-    ///   the method `wrapping_mul_assign()` are, first, where wrapping
-    ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
-    ///   `wrapping_mul_assign()` wraps around at `maximum value + 1`.
-    ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul_assign()` sets
-    ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [modular_mul_assign_uint()](struct@BigUInt#method.modular_mul_assign_uint)
-    /// is a bit faster than this method `modular_mul_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_mul_assign_uint()](struct@BigUInt#method.modular_mul_assign_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = U256::from_string("31858186486050853753882811946768018742981669034276900586487291375468285").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let m = UU32::from_string("76801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
-    /// let mul_biguint = UU32::from_uint(5_u8);
-    /// a_biguint.modular_mul_assign(&mul_biguint, &m);
-    /// println!("After a_biguint.modular_mul_assign(&mul_biguint, &m), a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "159290932430254268769414059733840093714908345171384502932436456877341425");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_mul_assign)
-    pub fn modular_mul_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        biguint_modular_calc_assign!(self, Self::common_modular_mul_assign, rhs, modulo);
-    }
-
-    pub(super) fn common_modular_mul_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        let mut flags = self.get_all_flags();
-        if *self >= *modulo
-            { self.wrapping_rem_assign(modulo); }
-
-        if !self.is_zero()
-        {
-            let mut mrhs = rhs.wrapping_rem(modulo);
-            let mut res = Self::zero();
-            let zero = Self::zero();
-            while mrhs > zero
-            {
-                if mrhs.is_odd()
-                    { res.modular_add_assign(self, modulo); }
-                self.modular_add_assign(&self.clone(), modulo);
-                mrhs.shift_right_assign(1_u8);
-            }
-            self.set_number(res.get_number());
-            if res.is_overflow()
-                { flags |= Self::OVERFLOW; }
-        }
-        self.set_all_flags(flags);
+        biguint_overflowing_calc_assign!(self, Self::wrapping_mul_assign, rhs);
     }
 
 
@@ -12298,7 +10048,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_div_assign)
     pub fn wrapping_div_assign(&mut self, rhs: &Self)
     {
-        calc_to_calc_assign!(self, Self::wrapping_div, rhs);
+        biguint_calc_to_calc_assign!(self, Self::wrapping_div, rhs);
     }
 
     // pub fn overflowing_div(&self, rhs: &Self) -> (Self, bool)
@@ -12359,7 +10109,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_div)
     pub fn overflowing_div(&self, rhs: &Self) -> (Self, bool)
     {
-        overflowing_calc_div!(self, Self::divide_fully, rhs);
+        biguint_overflowing_calc_div!(self, Self::divide_fully, rhs);
     }
 
     // pub fn overflowing_div_assign(&mut self, rhs: &Self) -> bool
@@ -12434,138 +10184,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_div_assign)
     pub fn overflowing_div_assign(&mut self, rhs: &Self) -> bool
     {
-        overflowing_calc_assign!(self, Self::wrapping_div_assign, rhs);
-    }
-
-    // pub fn modular_div(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and returns the quotient.
-    /// 
-    /// # Arguments
-    /// - `rhs` divides `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either zero or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either zero or one, it will panic.
-    /// 
-    /// # Output
-    /// It returns the quotient of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
-    /// 
-    /// # Features
-    /// It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    /// and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    /// and then finally returns the quotient of `rd1` divided by `rd2`.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [modular_div_uint()](struct@BigUInt#method.modular_div_uint)
-    /// is a bit faster than this method `modular_div()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_div_uint()](struct@BigUInt#method.modular_div_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
-    /// assert_eq!(quotient.to_string(), "3");
-    /// assert_eq!(quotient.is_overflow(), false);
-    /// assert_eq!(quotient.is_underflow(), false);
-    /// assert_eq!(quotient.is_infinity(), false);
-    /// assert_eq!(quotient.is_undefined(), false);
-    /// assert_eq!(quotient.is_divided_by_zero(), false);
-    /// assert_eq!(quotient.is_left_carry(), false);
-    /// assert_eq!(quotient.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_div)
-    pub fn modular_div(&self, rhs: &Self, modulo: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::modular_div_assign, rhs, modulo);
-    }
-
-    // pub fn modular_div_assign(&self, rhs: &Self, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and assigns the quotient back to `self`.
-    /// 
-    /// # Arguments
-    /// -`rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either zero or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either zero or one, it will panic.
-    /// 
-    /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    ///   and then finally returns the quotient of `rd1` divided by `rd2`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [modular_div_assign_uint()](struct@BigUInt#method.modular_div_assign_uint)
-    /// is a bit faster than this method `modular_mul_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_div_assign_uint()](struct@BigUInt#method.modular_div_assign_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let divisor = UU32::from_uint(128_u8);
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.modular_div_assign({}, {}),\na_biguint = {}", divisor, modulo, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "3");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_div_assign)
-    pub fn modular_div_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        self.wrapping_rem_assign(modulo);
-        self.wrapping_div_assign(&rhs.wrapping_rem(modulo));
+        biguint_overflowing_calc_assign!(self, Self::wrapping_div_assign, rhs);
     }
 
     // pub fn wrapping_rem(&self, rhs: &Self) -> Self
@@ -12699,7 +10318,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.wrapping_rem_assign)
     pub fn wrapping_rem_assign(&mut self, rhs: &Self)
     {
-        calc_to_calc_assign!(self, Self::wrapping_rem, rhs);
+        biguint_calc_to_calc_assign!(self, Self::wrapping_rem, rhs);
     }
 
     // pub fn overflowing_rem(&self, rhs: &Self) -> (Self, bool)
@@ -12760,7 +10379,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_rem)
     pub fn overflowing_rem(&self, rhs: &Self) -> (Self, bool)
     {
-        overflowing_calc_rem!(self, Self::divide_fully, rhs);
+        biguint_overflowing_calc_rem!(self, Self::divide_fully, rhs);
     }
 
     // pub fn overflowing_rem_assign(&mut self, rhs: &Self) -> bool
@@ -12835,138 +10454,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.overflowing_rem_assign)
     pub fn overflowing_rem_assign(&mut self, rhs: &Self) -> bool
     {
-        overflowing_calc_assign!(self, Self::wrapping_rem_assign, rhs);
-    }
-
-    // pub fn modular_rem(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and returns the remainder.
-    /// 
-    /// # Arguments
-    /// - `rhs` divides `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either `zero` or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either `zero` or `one`, it will panic.
-    /// 
-    /// # Output
-    /// It returns the remainder of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
-    /// 
-    /// # Features
-    /// It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    /// and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    /// and then finally returns the remainder of `rd1` divided by `rd2`.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [modular_rem_uint()](struct@BigUInt#method.modular_rem_uint)
-    /// is a bit faster than this method `modular_rem()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_rem_uint()](struct@BigUInt#method.modular_rem_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// let remainder = dividend.modular_rem(&divisor, &modulo);
-    /// println!("{} % {} = {} (mod {})", dividend, divisor, remainder, modulo);
-    /// assert_eq!(remainder.to_string(), "8");
-    /// assert_eq!(remainder.is_overflow(), false);
-    /// assert_eq!(remainder.is_underflow(), false);
-    /// assert_eq!(remainder.is_infinity(), false);
-    /// assert_eq!(remainder.is_divided_by_zero(), false);
-    /// assert_eq!(remainder.is_undefined(), false);
-    /// assert_eq!(remainder.is_left_carry(), false);
-    /// assert_eq!(remainder.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_rem)
-    pub fn modular_rem(&self, rhs: &Self, modulo: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::modular_rem_assign, rhs, modulo);
-    }
-
-    // pub fn modular_rem_assign(&self, rhs: &Self, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
-    /// and assigns the remainder back to `self`.
-    /// 
-    /// # Arguments
-    /// -`rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
-    ///   and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either zero or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either zero or one, it will panic.
-    /// 
-    /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
-    ///   and then finally returns the remainder of `rd1` divided by `rd2`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [modular_rem_assign_uint()](struct@BigUInt#method.modular_rem_assign_uint)
-    /// is a bit faster than this method `modular_mul_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_rem_assign_uint()](struct@BigUInt#method.modular_rem_assign_uint).
-    /// 
-    /// # Example 1 for Normal case
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let divisor = UU32::from_uint(128_u8);
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.modular_rem_assign(&divisor, &modulo);
-    /// println!("After a_biguint.modular_rem_assign({}), a_biguint = {}", divisor, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "8");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_rem_assign)
-    pub fn modular_rem_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        self.wrapping_rem_assign(modulo);
-        self.wrapping_rem_assign(&rhs.wrapping_rem(modulo));
+        biguint_overflowing_calc_assign!(self, Self::wrapping_rem_assign, rhs);
     }
 
 
@@ -13455,7 +10943,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow)
     pub fn overflowing_pow(&self, exp: &Self) -> (Self, bool)
     {
-        overflowing_calc!(self, Self::overflowing_pow_assign, exp);
+        biguint_overflowing_calc!(self, Self::overflowing_pow_assign, exp);
     }
 
     // pub fn overflowing_pow_assign(&mut self, exp: &Self) -> bool
@@ -13536,161 +11024,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow_assign)
     pub fn overflowing_pow_assign(&mut self, exp: &Self) -> bool
     {
-        overflowing_calc_assign!(self, Self::pow_assign, exp);
-    }
-
-    // pub fn modular_pow(&self, exp: &Self, modulo: &Self) -> Self
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
-    /// and returns the result.
-    /// 
-    /// # Arguments
-    /// - `exp` is the power to raise `self` to, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
-    ///    and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either zero or one, this method will panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Output
-    /// It returns the result of `self` raised to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - If overflowing (wrapping around at `modulo`) happens,
-    ///   the `OVERFLOW` flag of the return value will be set.
-    /// 
-    /// # Counterpart Method
-    /// The method [modular_pow_uint()](struct@BigUInt#method.modular_pow_uint)
-    /// is more efficient than this method `modular_pow()` when the exponent
-    /// `exp` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `rhs` is the primitive unsigned integral data type number,
-    /// use the method [modular_pow_uint()](struct@BigUInt#method.modular_pow_uint).
-    /// 
-    /// # Example 1 for Noraml case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let a_biguint = UU32::from_uint(10_u8);
-    /// let exp = UU32::from_uint(30_u8);
-    /// let modulo = UU32::halfmax();
-    /// let res = a_biguint.modular_pow(&exp, &modulo);
-    /// println!("{} ** {} (mod {}) = {}", a_biguint, exp, modulo, res);
-    /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow)
-    pub fn modular_pow(&self, exp: &Self, modulo: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::modular_pow_assign, exp, modulo);
-    }
-
-    // pub fn modular_pow_assign(&mut self, exp: &Self, modulo: &Self)
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
-    /// and assign the result to `self` back.
-    /// 
-    /// # Arguments
-    /// - `exp` is the power to raise `self` to, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
-    ///    and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either zero or one, this method will panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - If overflowing (wrapping around at `modulo`) happens,
-    ///   the `OVERFLOW` flag of the return value will be set.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method [modular_pow_assign_uint()](struct@BigUInt#method.modular_pow_assign_uint)
-    /// is more efficient than this method `modular_pow_assign()`
-    /// when the exponent `exp` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `exp` is the primitive unsigned integral data type number,
-    /// use the method [modular_pow_assign_uint()](struct@BigUInt#method.modular_pow_assign_uint).
-    /// 
-    /// # Example 1 for Noraml case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U256::from_uint(10_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let exp = U256::from_uint(30_u8);
-    /// let modulo = U256::halfmax();
-    /// a_biguint.modular_pow_assign(&exp, &modulo);
-    /// println!("After a_biguint.modular_pow_assign({}), a_biguint = {}", exp, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow_assign)
-    pub fn modular_pow_assign(&mut self, exp: &Self, modulo: &Self)
-    {
-        if modulo.is_zero_or_one() || (self.is_zero() && exp.is_zero())
-            { panic!(); }
-        if *self >= *modulo
-            { self.wrapping_rem_assign(modulo); }
-        let mexp =
-            if *modulo <= *exp
-                { exp.wrapping_rem(modulo) }
-            else
-                { exp.clone() };
-        if self.is_zero() && mexp.is_zero()
-            { panic!(); }
-        
-        self.common_modular_pow_assign(&mexp, modulo);
-    }
-
-    pub(super) fn common_modular_pow_assign(&mut self, exp: &Self, modulo: &Self)
-    {
-        general_modular_calc_pow_assign!(self, 1, exp, modulo);
+        biguint_overflowing_calc_assign!(self, Self::pow_assign, exp);
     }
 
     // pub fn iroot(&self, exp: &Self) -> Self
@@ -13818,7 +11152,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.iroot_assign)
     pub fn iroot_assign(&mut self, exp: &Self)
     {
-        calc_to_calc_assign!(self, Self::iroot, exp);
+        biguint_calc_to_calc_assign!(self, Self::iroot, exp);
     }
 
     pub(super) fn common_iroot(&self, exp: &Self) -> Self
@@ -13932,7 +11266,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.isqrt_assign)
     pub fn isqrt_assign(&mut self)
     {
-        calc_to_calc_assign!(self, Self::isqrt);
+        biguint_calc_to_calc_assign!(self, Self::isqrt);
     }
 
     // pub fn ilog(&self, base: &Self) -> Self
@@ -14041,7 +11375,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog_assign)
     pub fn ilog_assign(&mut self, base: &Self)
     {
-        calc_to_calc_assign!(self, Self::ilog, base);
+        biguint_calc_to_calc_assign!(self, Self::ilog, base);
     }
 
     pub(super) fn common_ilog(&self, base: &Self) -> Self
@@ -14141,7 +11475,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog2_assign)
     pub fn ilog2_assign(&mut self)
     {
-        calc_to_calc_assign!(self, Self::ilog2);
+        biguint_calc_to_calc_assign!(self, Self::ilog2);
     }
 
     // pub fn ilog10(&self) -> Self
@@ -14245,387 +11579,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         // self.set_flag_bit(flag);
     }
 
-
     
-    /***** METHODS FOR MISCELLANEOUS ARITHMETIC OPERATIONS *****/
-
-    // pub fn gcd(&self, other: &Self) -> Self
-    /// Calculates the greatest common divisor of `self` and `other`,
-    /// and returns the result.
-    /// If you would like to know greatest common divisor more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Greatest_common_divisor).
-    /// 
-    /// # Argument
-    /// The greatest common diviser of `self` and `other` is calculated.
-    /// `other` is of `Self` type.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If either `self` or `other` is zero, it will panic.
-    /// - If both `self` and `other` is zero, it will panic.
-    /// 
-    /// # Output
-    /// It returns The greatest common diviser of `self` and `other`.
-    /// 
-    /// # Features
-    /// Both `self` and `other` should natural numbers. So, if either `self`
-    /// or `other` is zero, getting greatest common diviser is meaningless.
-    /// In this case, this method will panic.
-    /// 
-    /// # Counterpart Method
-    /// The method [gcd_uint()](struct@BigUInt#method.gcd_uint)
-    /// is more efficient than this method `gcd()`
-    /// when the exponent `other` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [gcd_uint()](struct@BigUInt#method.gcd_uint).
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let a_biguint = U256::from_string("12345678911111222223333344444555556666677777888889999900000").unwrap();
-    /// let b_biguint = U256::from_string("99999888887777766666555554444433333222221111100000123456789").unwrap();
-    /// let c_biguint = a_biguint.gcd(&b_biguint);
-    /// println!("The greatest common divisor of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
-    /// assert_eq!(c_biguint.to_string(), "27");
-    /// assert_eq!(c_biguint.is_overflow(), false);
-    /// assert_eq!(c_biguint.is_underflow(), false);
-    /// assert_eq!(c_biguint.is_infinity(), false);
-    /// assert_eq!(c_biguint.is_undefined(), false);
-    /// assert_eq!(c_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(c_biguint.is_left_carry(), false);
-    /// assert_eq!(c_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd)
-    pub fn gcd(&self, other: &Self) -> Self
-    {
-        if self.is_zero() || other.is_zero()
-            { panic!(); }
-        self.common_gcd(other)
-    }
-
-    // pub fn gcd_assign(&mut self, other: &Self)
-    /// Calculates the greatest common divisor of `self` and `other`,
-    /// and assigns the result back to `self`.
-    /// If you would like to know greatest common divisor more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Greatest_common_divisor).
-    /// 
-    /// # Argument
-    /// The greatest common diviser of `self` and `other` is calculated.
-    /// `other` is of `Self` type.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If either `self` or `other` is zero, it will panic.
-    /// - If both `self` and `other` is zero, it will panic.
-    /// 
-    /// # Features
-    /// Both `self` and `other` should natural numbers. So, if either `self`
-    /// or `other` is zero, getting greatest common diviser is meaningless.
-    /// In this case, this method will panic.
-    /// 
-    /// # Counterpart Method
-    /// The method [gcd_assign_uint()](struct@BigUInt#method.gcd_assign_uint)
-    /// is more efficient than this method `gcd_assign()`
-    /// when the exponent `other` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [gcd_assign_uint()](struct@BigUInt#method.gcd_assign_uint).
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = U256::from_string("12345678911111222223333344444555556666677777888889999900000").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let b_biguint = U256::from_string("99999888887777766666555554444433333222221111100000123456789").unwrap();
-    /// a_biguint.gcd_assign(&b_biguint);
-    /// println!("After a_biguint.gcd_assign(), a_biguint = {}.", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "27");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.gcd_assign)
-    pub fn gcd_assign(&mut self, other: &Self)
-    {
-        calc_to_calc_assign!(self, Self::gcd, other);
-    }
-
-    pub(super) fn common_gcd(&self, other: &Self) -> Self
-    {
-        let mut x = self.clone();
-        let mut y = Self::from_biguint(other);
-        let mut t: Self;
-        while !y.is_zero()
-        {
-            t = y;
-            y = x.wrapping_rem(&t);
-            x = t;
-        }
-        x
-    }
-
-    // pub fn lcm(&self, other: &Self) -> Self
-    /// Calculates the least common multiple of `self` and `other`,
-    /// and returns the result.
-    /// If you would like to know greatest common divisor more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Least_common_multiple).
-    /// 
-    /// # Argument
-    /// The least common multiple of `self` and `other` is calculated.
-    /// `other` is of `Self` type.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If either `self` or `other` is zero, it will panic.
-    /// - If both `self` and `other` is zero, it will panic.
-    /// 
-    /// # Output
-    /// It returns The least common multiple of `self` and `other`.
-    /// 
-    /// # Features
-    /// Both `self` and `other` should natural numbers. So, if either `self`
-    /// or `other` is zero, getting least common multiple is meaningless.
-    /// In this case, this method will panic.
-    /// 
-    /// # Counterpart Method
-    /// The method [lcm_uint()](struct@BigUInt#method.lcm_uint)
-    /// is more efficient than this method `lcm()`
-    /// when the exponent `other` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [lcm_uint()](struct@BigUInt#method.lcm_uint).
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let a_biguint = U256::from_string("11111222223333344444555556666677777").unwrap();
-    /// let b_biguint = U256::from_string("77777666665555544444333332222211111").unwrap();
-    /// let c_biguint = a_biguint.lcm(&b_biguint);
-    /// println!("The least common multiple of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
-    /// assert_eq!(c_biguint.to_string(), "77779222242222466669444474444755552444414444166664222202222077777");
-    /// assert_eq!(c_biguint.is_overflow(), false);
-    /// assert_eq!(c_biguint.is_underflow(), false);
-    /// assert_eq!(c_biguint.is_infinity(), false);
-    /// assert_eq!(c_biguint.is_undefined(), false);
-    /// assert_eq!(c_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(c_biguint.is_left_carry(), false);
-    /// assert_eq!(c_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm)
-    pub fn lcm(&self, other: &Self) -> Self
-    {
-        if self.is_zero() || other.is_zero()
-           { panic!(); }
-        self.wrapping_div(&self.gcd(&other)).wrapping_mul(&other)
-    }
-
-    // pub fn lcm_assign(&mut self, other: &Self)
-    /// Calculates the greatest common divisor of `self` and `other`,
-    /// and assigns the result back to `self`.
-    /// If you would like to know greatest common divisor more in detail,
-    /// read [here](https://en.wikipedia.org/wiki/Least_common_multiple).
-    /// 
-    /// # Argument
-    /// The greatest common diviser of `self` and `other` is calculated.
-    /// `other` is of `Self` type.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If either `self` or `other` is zero, it will panic.
-    /// - If both `self` and `other` is zero, it will panic.
-    /// 
-    /// # Features
-    /// Both `self` and `other` should natural numbers. So, if either `self`
-    /// or `other` is zero, getting greatest common diviser is meaningless.
-    /// In this case, this method will panic.
-    /// 
-    /// # Counterpart Method
-    /// The method [gcd_assign_uint()](struct@BigUInt#method.gcd_assign_uint)
-    /// is more efficient than this method `gcd_assign()`
-    /// when the exponent `other` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [gcd_assign_uint()](struct@BigUInt#method.gcd_assign_uint).
-    /// 
-    /// # Example 1 for normal case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let mut a_biguint = U256::from_string("11111222223333344444555556666677777").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let b_biguint = U256::from_string("77777666665555544444333332222211111").unwrap();
-    /// a_biguint.lcm_assign(&b_biguint);
-    /// println!("After a_biguint.lcm_assign(), a_biguint = {}.", a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "77779222242222466669444474444755552444414444166664222202222077777");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.lcm_assign)
-    pub fn lcm_assign(&mut self, other: &Self)
-    {
-        calc_to_calc_assign!(self, Self::lcm, other);
-    }
-
-
-    /*** METHODS FOR PRIME NUMBER TEST ***/
-
-    // pub fn is_prime_using_miller_rabin(&self, repetition: usize) -> bool
-    /// Tests a `BigUInt`-type object to find whether or not it is a
-    /// primne number.
-    /// 
-    /// # Arguments
-    /// The argument `repetition` defines how many times it tests whether or
-    /// not `self` is a prime number. Usually, `5` is given to repetition`
-    /// in order to achieve 99.9% accuracy.
-    /// 
-    /// # Output
-    /// It returns `true` if it is a primne number.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Features
-    /// - It uses the method `test_miller_rabin()` which uses
-    ///   [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
-    /// - If this test results in composite number, the tested number is surely
-    ///   a composite number. If this test results in prime number,
-    ///   the probability that the tested number is not a prime number is
-    ///   (1/4) ^ `repeatition`.
-    ///   So, if `repeatition` is two and it results in prime number the
-    ///   probability that the tested number is not a prime number is
-    ///   1/16 (= 1/4 * 1/4). Therefore, if you test any number with
-    ///   `repeatition` (= 5) and they all result in a prime number,
-    ///   it is 99.9% that the number is a prime number.
-    /// - However, for performance, if the number is less than 10000,
-    ///   it does not use Miller-Rabin alogrithm but deterministic algorithm
-    ///   so that the argument `repetition` is meaningless.
-    /// - If the number is less than u32::MAX (= 4294967295_u32),
-    ///   3 is enough for `repetition` for 100% certainty for determination of
-    ///   prime number. This method tests the number with 2, 7, and 61.
-    /// - If the number is less than u64::MAX (= 18446744073709551615_u64),
-    ///   7 is enough for `repetition` for 100% certainty for determination of
-    ///   prime number. This method tests the number with 2, 325, 9375, 28178,
-    ///   450775, 9780504, and 1795265022.
-    ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Example 1 for prime numer case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let a_biguint = U512::from_string("262586890850443215026048316017358917147061433899850397175592679960211511929529269359755816708006242574764016656012965410420527921966695199932942678613269").unwrap();
-    /// let b = a_biguint.is_prime_using_miller_rabin(5_usize);
-    /// println!("{} is {}a prime number", a_biguint, if b {""} else {"not "});
-    /// assert_eq!(b, true);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.is_prime_using_miller_rabin)
-    pub fn is_prime_using_miller_rabin(&self, repetition: usize) -> bool
-    {
-        if self.is_uint(2_u8) ||  self.is_uint(3_u8)
-            { return true; }
-
-        if self.is_zero_or_one() || self.is_even()
-            { return false; }
-        
-        if self.le_uint(u128::MAX)
-        {
-            let small_self = self.into_u128();
-            return small_self.is_prime_using_miller_rabin(repetition);
-        }
-
-        let a_list = [2_u64, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37];
-        let len = a_list.len();
-        let common = if len < repetition { len } else { repetition };
-        let mut i = 0;
-        while i < common
-        {
-            if !self.test_miller_rabin(&Self::from_uint(a_list[i]))
-                { return false; }
-            i += 1;
-        }
-
-        let mut a = a_list[len-1] + 2;
-        for _ in i..repetition
-        {
-            if !self.test_miller_rabin(&Self::from_uint(a))
-                { return false; }
-            a += 1;
-        }
-        true
-    }
- 
-    /// Performs Millar Rabin method with a number less than `self`.
-    fn test_miller_rabin(&self, a: &Self) -> bool
-    {
-        let self_minus_one = self.wrapping_sub_uint(1_u8);
-        let mut d = self_minus_one.clone();
-        let mut s = 0_u64;
-        while d.is_even()
-        {
-            d.shift_right_assign(1_u8);
-            s += 1;
-        }
-        let mut x = a.modular_pow(&d, self);
-        if x == self_minus_one || x.is_one()
-            { return true; }
-        for _ in 0..s-1
-        {
-            x.modular_pow_assign_uint(2_u8, self);
-            if x == self_minus_one
-                { return true; }
-        }
-        false
-    }
-
-
 
     /***** METHODS FOR BIT OPERATION *****/
 

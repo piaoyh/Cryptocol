@@ -21,7 +21,7 @@ use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, 
 use crate::number::{ SmallUInt, BigUInt, BigUInt_More };
 use crate::number::{ biguint_calc_assign_to_calc, biguint_checked_calc,
                      biguint_calc_assign_to_calc_div, biguint_calc_assign_to_calc_rem,
-                     biguint_saturating_calc_assign, biguint_modular_calc_assign };
+                     biguint_saturating_calc_assign };
 
 
 macro_rules! saturating_calc_sub_assign
@@ -109,46 +109,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 }
 
-pub(super) fn common_modular_next_multiple_of_assign_uint<T, U, const N: usize>(me: &mut BigUInt<T, N>, rhs: U, modulo: &BigUInt<T, N>)
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd,
-    U: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-        + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-        + Rem<Output=U> + RemAssign
-        + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-        + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-        + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-        + PartialEq + PartialOrd
-{
-    if *me >= *modulo
-        { me.wrapping_rem_assign(modulo); }
-
-    if U::size_in_bytes() > T::size_in_bytes()
-    {
-        common_next_multiple_of_assign(me, &BigUInt::from_uint(rhs));
-    }
-    else if modulo.gt_uint(rhs)
-    {
-        let diff = me.wrapping_rem_uint(rhs);
-        if !diff.is_zero()
-            { me.modular_add_assign_uint(rhs - diff, modulo); }
-    }
-    else    // if U::size_in_bytes() <= T::size_in_bytes() and modulo <= rhs
-    {
-        let trhs = T::num(rhs);
-        let diff = me.wrapping_rem_uint(trhs);
-        if !diff.is_zero()
-            { me.modular_add_assign_uint(trhs - diff, modulo); }
-    }
-}
-
 pub(super) fn common_next_multiple_of_assign<T, const N: usize>(me: &mut BigUInt<T, N>, rhs: &BigUInt<T, N>)
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -162,27 +122,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     let r = me.wrapping_rem(rhs);
     if !r.is_zero()
         { me.wrapping_add_assign(&rhs.wrapping_sub(&r)); }
-}
-
-pub(super) fn common_modular_next_multiple_of_assign<T, const N: usize>(me: &mut BigUInt<T, N>, rhs: &BigUInt<T, N>, modulo: &BigUInt<T, N>)
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
-{
-    me.wrapping_rem_assign(modulo);
-    let mrhs;
-    if rhs.ge(modulo)
-        { mrhs = rhs.wrapping_rem(modulo); }
-    else
-        { mrhs = rhs.clone(); }
-    let r = me.wrapping_rem(&mrhs);
-    if !r.is_zero()
-        { me.modular_add_assign(&mrhs.wrapping_sub(&r), modulo); }
 }
 
 
@@ -745,32 +684,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         common_next_multiple_of_assign_uint(self, rhs);
     }
 
-    fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_calc_assign_to_calc!(self, Self::modular_next_multiple_of_assign_uint, rhs, modulo);
-    }
-
-    fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
-    {
-        biguint_modular_calc_assign!(self, common_modular_next_multiple_of_assign_uint, rhs, modulo);
-    }
-
     fn is_multiple_of_uint<U>(&self, rhs: U) -> bool
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -797,16 +710,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         if rhs.is_zero()
             { panic!(); }
         common_next_multiple_of_assign(self, rhs);
-    }
-
-    fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
-    {
-        biguint_calc_assign_to_calc!(self, Self::modular_next_multiple_of_assign, rhs, modulo);
-    }
-
-    fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)
-    {
-        biguint_modular_calc_assign!(self, common_modular_next_multiple_of_assign, rhs, modulo);
     }
 
     fn is_multiple_of(&self, rhs: &Self) -> bool

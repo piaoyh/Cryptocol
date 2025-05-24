@@ -4,12 +4,6 @@
 
 | Methods                                                                                  |
 |------------------------------------------------------------------------------------------|
-| fn panic_free_modular_add_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
-| fn panic_free_modular_add_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)              |
-| fn panic_free_modular_sub_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
-| fn panic_free_modular_sub_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)              |
-| fn panic_free_modular_mul_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
-| fn panic_free_modular_mul_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)              |
 | fn panic_free_divide_fully_uint<U\>(&self, rhs: U) -> (Self, Self)                       |
 | fn panic_free_div_uint<U\>(&self, rhs: U) -> Self                                        |
 | fn panic_free_div_assign_uint<U\>(&mut self, rhs: U)                                     |
@@ -72,6 +66,70 @@
 | fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)      |
 
 - The methods above have been moved from struct BigUInt or trait BigUInt_More to trait BigUInt_Panic_Free because docs.rs failed in generating struct.bigUInt.html.
+
+| Methods                                                                       |
+|-------------------------------------------------------------------------------|
+| fn modular_add_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
+| fn modular_add_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)              |
+| fn modular_sub_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
+| fn modular_sub_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)              |
+| fn modular_mul_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
+| fn modular_mul_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)              |
+| fn modular_div_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
+| fn modular_div_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)              |
+| fn modular_rem_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
+| fn modular_rem_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)              |
+| fn modular_pow_uint<U\>(&self, exp: U, modulo: &Self) -> Self                 |
+| fn modular_pow_assign_uint<U\>(&mut self, exp: U, modulo: &Self)              |
+| fn modular_add(&self, rhs: &Self, modulo: &Self) -> Self                      |
+| fn modular_add_assign(&mut self, rhs: &Self, modulo: &Self)                   |
+| fn modular_sub(&self, rhs: &Self, modulo: &Self) -> Self                      |
+| fn modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)                   |
+| fn modular_mul(&self, rhs: &Self, modulo: &Self) -> Self                      |
+| fn modular_mul_assign(&mut self, rhs: &Self, modulo: &Self)                   |
+| fn modular_div(&self, rhs: &Self, modulo: &Self) -> Self                      |
+| fn modular_div_assign(&mut self, rhs: &Self, modulo: &Self)                   |
+| fn modular_rem(&self, rhs: &Self, modulo: &Self) -> Self                      |
+| fn modular_rem_assign(&mut self, rhs: &Self, modulo: &Self)                   |
+| fn modular_pow(&self, exp: &Self, modulo: &Self) -> Self                      |
+| fn modular_pow_assign(&mut self, exp: &Self, modulo: &Self)                   |
+| fn modular_next_multiple_of_uint<U\>(&self, rhs: U, modulo: &Self) -> Self    |
+| fn modular_next_multiple_of_assign_uint<U\>(&mut self, rhs: U, modulo: &Self) |
+| fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self         |
+| fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)      |
+
+- The methods above have been moved from struct BigUInt or trait BigUInt_More to trait BigUInt_Modular because docs.rs failed in generating struct.bigUInt.html.
+
+| Methods                                                                       |
+|-------------------------------------------------------------------------------|
+| fn gcd_uint<U\>(&self, other: U) -> Self                                      |
+| fn gcd_assign_uint<U\>(&mut self, other: U)                                   |
+| fn lcm_uint<U\>(&self, other: U) -> Self                                      |
+| fn lcm_assign_uint<U\>(&mut self, other: U)                                   |
+| fn gcd(&self, other: &Self) -> Self                                           |
+| fn gcd_assign(&mut self, other: &Self)                                        |
+| fn lcm(&self, other: &Self) -> Self                                           |
+| fn lcm_assign(&mut self, other: &Self)                                        |
+| fn is_prime_using_miller_rabin(&self, repetition: usize) -> bool              |
+
+- The methods above have been moved from struct BigUInt to trait BigUInt_Prime because docs.rs failed in generating struct.bigUInt.html.
+
+| Methods                                                                       |
+|-------------------------------------------------------------------------------|
+| fn iroot(&self, exp: &Self) -> Self                                           |
+| fn iroot_assign(&mut self, exp: &Self)                                        |
+| fn ilog(&self, base: &Self) -> Self                                           |
+| fn ilog_assign(&mut self, base: &Self)                                        |
+| fn ilog2(&self) -> Self                                                       |
+| fn ilog2_assign(&mut self)                                                    |
+| fn ilog10(&self) -> Self                                                      |
+| fn ilog10_assign(&mut self)                                                   |
+| fn next_multiple_of_uint<U\>(&self, rhs: U) -> Self                           |
+| fn next_multiple_of_assign_uint<U\>(&mut self, rhs: U)                        |
+| fn next_multiple_of(&self, rhs: &Self) -> Self                                |
+| fn next_multiple_of_assign(&mut self, rhs: &Self)                             |
+
+- The methods above have been moved from struct BigUInt or trait BigUInt_More to trait BigUInt_Prime because docs.rs failed in generating struct.bigUInt.html.
 
 ## Breaking changes from ver. 0.11.2 to ver. 0.11.3
 
