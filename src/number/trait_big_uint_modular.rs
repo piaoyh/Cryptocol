@@ -87,8 +87,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Methods
     /// - If `rhs` is bigger than `u128`, the method
-    ///   [modular_add()](struct@BigUInt#method.modular_add)
+    ///   [modular_add()](trait@BigUInt_Modular#tymethod.modular_add)
     ///   is proper rather than this method `modular_add_uint()`.
+    /// - In order to use any one of
+    ///   [panic_free_modular_add_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_add_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -112,7 +115,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_add_uint)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_add_uint)
     fn modular_add_uint<U>(&self, rhs: U, modulo: &Self) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -159,9 +162,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///    not cause overflow.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [modular_add_assign()](struct@BigUInt#method.modular_add_assign)
-    /// is proper rather than this method.
+    /// - If `rhs` is bigger tham `ui128`, the method
+    ///   [modular_add_assign()](trait@BigUInt_Modular#tymethod.modular_add_assign)
+    ///   is proper rather than this method.
+    /// - In order to use any one of
+    ///   [panic_free_modular_add_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_add_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -194,7 +200,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_add_assign_uint)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_add_assign_uint)
     fn modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -237,12 +243,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [modular_add_uint()](struct@BigUInt#method.modular_add_uint)
-    /// is a bit faster than this method `modular_add()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_add_uint()](struct@BigUInt#method.modular_add_uint).
+    /// - The method
+    ///   [modular_add_uint()](trait@BigUInt_Modular#tymethod.modular_add_uint)
+    ///   is a bit faster than this method `modular_add()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [modular_add_uint()](trait@BigUInt_Modular#tymethod.modular_add_uint).
+    /// - In order to use any one of
+    ///   [panic_free_modular_add()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_add),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -266,7 +275,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_add)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_add)
     fn modular_add(&self, rhs: &Self, modulo: &Self) -> Self;
 
     // fn modular_add_assign(&mut self, rhs: &Self, modulo: &Self)
@@ -304,12 +313,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause overflow.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [modular_add_assign_uint()](struct@BigUInt#method.modular_add_assign_uint)
-    /// is a bit faster than this method `modular_add_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_add_assign_uint()](struct@BigUInt#method.modular_add_assign_uint).
+    /// - The method
+    ///   [modular_add_assign_uint()](trait@BigUInt_Modular#tymethod.modular_add_assign_uint)
+    ///   is a bit faster than this method `modular_add_assign()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [modular_add_assign_uint()](trait@BigUInt_Modular#tymethod.modular_add_assign_uint).
+    /// - In order to use any one of
+    ///   [panic_free_modular_add_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_add_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -342,7 +354,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_add_assign)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_add_assign)
     fn modular_add_assign(&mut self, rhs: &Self, modulo: &Self);
 
 
@@ -383,9 +395,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [modular_sub()](struct@BigUInt#method.modular_sub)
-    /// is proper rather than this method `modular_sub_uint()`.
+    /// - If `rhs` is bigger than `u128`, the method
+    ///   [modular_sub()](trait@BigUInt_Modular#tymethod.modular_sub)
+    ///   is proper rather than this method `modular_sub_uint()`.
+    /// - In order to use any one of
+    ///   [panic_free_modular_sub_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_sub_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -409,7 +424,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_sub_uint)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_sub_uint)
     fn modular_sub_uint<U>(&self, rhs: U, modulo: &Self) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -456,9 +471,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///    not cause underflow.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [modular_sub_assign()](struct@BigUInt#method.modular_sub_assign)
-    /// is proper rather than this method.
+    /// - If `rhs` is bigger tham `ui128`, the method
+    ///   [modular_sub_assign()](trait@BigUInt_Modular#tymethod.modular_sub_assign)
+    ///   is proper rather than this method.
+    /// - In order to use any one of
+    ///   [panic_free_modular_sub_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_sub_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -491,7 +509,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_sub_assign_uint)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_sub_assign_uint)
     fn modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -535,12 +553,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [modular_sub_uint()](struct@BigUInt#method.modular_sub_uint)
-    /// is a bit faster than this method `modular_sub()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_sub_uint()](struct@BigUInt#method.modular_sub_uint).
+    /// - The method
+    ///   [modular_sub_uint()](trait@BigUInt_Modular#tymethod.modular_sub_uint)
+    ///   is a bit faster than this method `modular_sub()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [modular_sub_uint()](trait@BigUInt_Modular#tymethod.modular_sub_uint).
+    /// - In order to use any one of
+    ///   [panic_free_modular_sub()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_sub),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for Normal Case
     /// ```
@@ -564,7 +585,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_sub)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_sub)
     fn modular_sub(&self, rhs: &Self, modulo: &Self) -> Self;
 
     // fn modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)
@@ -602,12 +623,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///    not cause underflow.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [modular_sub_assign_uint()](struct@BigUInt#method.modular_sub_assign_uint)
-    /// is a bit faster than this method `modular_sub_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_sub_assign_uint()](struct@BigUInt#method.modular_sub_assign_uint).
+    /// - The method
+    ///   [modular_sub_assign_uint()](trait@BigUInt_Modular#tymethod.modular_sub_assign_uint)
+    ///   is a bit faster than this method `modular_sub_assign()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [modular_sub_assign_uint()](trait@BigUInt_Modular#tymethod.modular_sub_assign_uint).
+    /// - In order to use any one of
+    ///   [panic_free_modular_sub_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_sub_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -640,7 +664,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_sub_assign)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_sub_assign)
     fn modular_sub_assign(&mut self, rhs: &Self, modulo: &Self);
 
 
@@ -681,9 +705,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [modular_mul()](struct@BigUInt#method.modular_mul)
-    /// is proper rather than this method `modular_mul_uint()`.
+    /// - If `rhs` is bigger than `u128`, the method
+    ///   [modular_mul()](trait@BigUInt_Modular#tymethod.modular_mul)
+    ///   is proper rather than this method `modular_mul_uint()`.
+    /// - In order to use any one of
+    ///   [panic_free_modular_mul_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_mul_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -707,7 +734,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_mul_uint)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_mul_uint)
     fn modular_mul_uint<U>(&self, rhs: U, modulo: &Self) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -754,9 +781,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///    not cause overflow.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [modular_mul_assign()](struct@BigUInt#method.modular_mul_assign)
-    /// is proper rather than this method.
+    /// - If `rhs` is bigger tham `ui128`, the method
+    ///   [modular_mul_assign()](trait@BigUInt_Modular#tymethod.modular_mul_assign)
+    ///   is proper rather than this method.
+    /// - In order to use any one of
+    ///   [panic_free_modular_mul_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_mul_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -790,7 +820,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_mul_assign_uint)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_mul_assign_uint)
     fn modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -834,12 +864,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [modular_mul_uint()](struct@BigUInt#method.modular_mul_uint)
-    /// is a bit faster than this method `modular_mul()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_mul_uint()](struct@BigUInt#method.modular_mul_uint).
+    /// - The method
+    ///   [modular_mul_uint()](trait@BigUInt_Modular#tymethod.modular_mul_uint)
+    ///   is a bit faster than this method `modular_mul()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [modular_mul_uint()](trait@BigUInt_Modular#tymethod.modular_mul_uint).
+    /// - In order to use any one of
+    ///   [panic_free_modular_mul()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_mul),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -863,7 +896,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_mul)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_mul)
     fn modular_mul(&self, rhs: &Self, modulo: &Self) -> Self;
 
     // fn modular_mul_assign(&self, rhs: &Self, modulo: &Self)
@@ -901,12 +934,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause overflow.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [modular_mul_assign_uint()](struct@BigUInt#method.modular_mul_assign_uint)
-    /// is a bit faster than this method `modular_mul_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_mul_assign_uint()](struct@BigUInt#method.modular_mul_assign_uint).
+    /// - The method
+    ///   [modular_mul_assign_uint()](trait@BigUInt_Modular#tymethod.modular_mul_assign_uint)
+    ///   is a bit faster than this method `modular_mul_assign()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [modular_mul_assign_uint()](trait@BigUInt_Modular#tymethod.modular_mul_assign_uint).
+    /// - In order to use any one of
+    ///   [panic_free_modular_mul_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_mul_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -939,7 +975,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_mul_assign)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_mul_assign)
     fn modular_mul_assign(&mut self, rhs: &Self, modulo: &Self);
 
 
@@ -972,9 +1008,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// and then finally returns the quotient of `rd1` divided by `rd2`.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [modular_div()](struct@BigUInt#method.modular_div)
-    /// is proper rather than this method `modular_div_uint()`.
+    /// - If `rhs` is bigger than `u128`, the method
+    ///   [modular_div()](trait@BigUInt_Modular#tymethod.modular_div)
+    ///   is proper rather than this method `modular_div_uint()`.
+    /// - In order to use any one of
+    ///   [panic_free_modular_div_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_div_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -999,7 +1038,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_div_uint)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_div_uint)
     fn modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1037,9 +1076,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause divided_by_zero.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [modular_div_assign()](struct@BigUInt#method.modular_div_assign)
-    /// is proper rather than this method.
+    /// - If `rhs` is bigger tham `ui128`, the method
+    ///   [modular_div_assign()](trait@BigUInt_Modular#tymethod.modular_div_assign)
+    ///   is proper rather than this method.
+    /// - In order to use any one of
+    ///   [panic_free_modular_div_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_div_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for a normal case
     /// ```
@@ -1073,7 +1115,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_div_assign_uint)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_div_assign_uint)
     fn modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1109,12 +1151,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// and then finally returns the quotient of `rd1` divided by `rd2`.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [modular_div_uint()](struct@BigUInt#method.modular_div_uint)
-    /// is a bit faster than this method `modular_div()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_div_uint()](struct@BigUInt#method.modular_div_uint).
+    /// - The method
+    ///   [modular_div_uint()](trait@BigUInt_Modular#tymethod.modular_div_uint)
+    ///   is a bit faster than this method `modular_div()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [modular_div_uint()](trait@BigUInt_Modular#tymethod.modular_div_uint).
+    /// - In order to use any one of
+    ///   [panic_free_modular_div()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_div),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -1139,7 +1184,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_div)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_div)
     fn modular_div(&self, rhs: &Self, modulo: &Self) -> Self;
 
     // fn modular_div_assign(&self, rhs: &Self, modulo: &Self)
@@ -1168,12 +1213,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause divided_by_zero.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [modular_div_assign_uint()](struct@BigUInt#method.modular_div_assign_uint)
-    /// is a bit faster than this method `modular_mul_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_div_assign_uint()](struct@BigUInt#method.modular_div_assign_uint).
+    /// - The method
+    ///   [modular_div_assign_uint()](trait@BigUInt_Modular#tymethod.modular_div_assign_uint)
+    ///   is a bit faster than this method `modular_mul_assign()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [modular_div_assign_uint()](trait@BigUInt_Modular#tymethod.modular_div_assign_uint).
+    /// - In order to use any one of
+    ///   [panic_free_modular_div_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_div_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -1207,7 +1255,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_div_assign)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_div_assign)
     fn modular_div_assign(&mut self, rhs: &Self, modulo: &Self);
 
     // fn modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> U
@@ -1236,9 +1284,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// and then finally returns the remainder of `rd1` divided by `rd2`.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [modular_rem()](struct@BigUInt#method.modular_rem)
-    /// is proper rather than this method `modular_rem_uint()`.
+    /// - If `rhs` is bigger than `u128`, the method
+    ///   [modular_rem()](trait@BigUInt_Modular#tymethod.modular_rem)
+    ///   is proper rather than this method `modular_rem_uint()`.
+    /// - In order to use any one of
+    ///   [panic_free_modular_rem_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_rem_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -1256,7 +1307,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_rem_uint)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_rem_uint)
     fn modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> U
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1294,9 +1345,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause divided_by_zero.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [modular_rem_assign()](struct@BigUInt#method.modular_rem_assign)
-    /// is proper rather than this method.
+    /// - If `rhs` is bigger tham `ui128`, the method
+    ///   [modular_rem_assign()](trait@BigUInt_Modular#tymethod.modular_rem_assign)
+    ///   is proper rather than this method.
+    /// - In order to use any one of
+    ///   [panic_free_modular_rem_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_rem_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -1330,7 +1384,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.modular_rem_assign_uint)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_rem_assign_uint)
     fn modular_rem_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     where U: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
@@ -1366,12 +1420,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// and then finally returns the remainder of `rd1` divided by `rd2`.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [modular_rem_uint()](struct@BigUInt#method.modular_rem_uint)
-    /// is a bit faster than this method `modular_rem()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_rem_uint()](struct@BigUInt#method.modular_rem_uint).
+    /// - The method
+    ///   [modular_rem_uint()](trait@BigUInt_Modular#tymethod.modular_rem_uint)
+    ///   is a bit faster than this method `modular_rem()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [modular_rem_uint()](trait@BigUInt_Modular#tymethod.modular_rem_uint).
+    /// - In order to use any one of
+    ///   [panic_free_modular_rem()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_rem),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -1396,7 +1453,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_rem)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_rem)
     fn modular_rem(&self, rhs: &Self, modulo: &Self) -> Self;
 
     // fn modular_rem_assign(&self, rhs: &Self, modulo: &Self)
@@ -1425,12 +1482,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause divided_by_zero.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [modular_rem_assign_uint()](struct@BigUInt#method.modular_rem_assign_uint)
-    /// is a bit faster than this method `modular_mul_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_rem_assign_uint()](struct@BigUInt#method.modular_rem_assign_uint).
+    /// - The method
+    ///   [modular_rem_assign_uint()](trait@BigUInt_Modular#tymethod.modular_rem_assign_uint)
+    ///   is a bit faster than this method `modular_mul_assign()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [modular_rem_assign_uint()](trait@BigUInt_Modular#tymethod.modular_rem_assign_uint).
+    /// - In order to use any one of
+    ///   [panic_free_modular_rem_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_rem_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -1464,7 +1524,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.modular_rem_assign)
+    /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_rem_assign)
     fn modular_rem_assign(&mut self, rhs: &Self, modulo: &Self);
 
 
@@ -1502,8 +1562,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   the `OVERFLOW` flag of the return value will be set.
     /// 
     /// # Counterpart Method
-    /// If `exp` is bigger than `u128`, use the method
-    /// [modular_pow()](struct@BigUInt#method.modular_pow) instead.
+    /// - If `exp` is bigger than `u128`, use the method
+    ///   [modular_pow()](trait@BigUInt_Modular#tymethod.modular_pow) instead.
+    /// - In order to use any one of
+    ///   [panic_free_modular_pow_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_pow_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for Noraml case
     /// ```
@@ -1570,9 +1633,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause overflow.
     /// 
     /// # Counterpart Method
-    /// If `exp` is bigger than `u128`, the method
-    /// [modular_pow_assign()](struct@BigUInt#method.modular_pow_assign)
-    /// is proper rather than this method.
+    /// - If `exp` is bigger than `u128`, the method
+    ///   [modular_pow_assign()](trait@BigUInt_Modular#tymethod.modular_pow_assign)
+    ///   is proper rather than this method.
+    /// - In order to use any one of
+    ///   [panic_free_modular_pow_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_pow_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -1645,12 +1711,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   the `OVERFLOW` flag of the return value will be set.
     /// 
     /// # Counterpart Method
-    /// The method [modular_pow_uint()](struct@BigUInt#method.modular_pow_uint)
-    /// is more efficient than this method `modular_pow()` when the exponent
-    /// `exp` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `rhs` is the primitive unsigned integral data type number,
-    /// use the method [modular_pow_uint()](struct@BigUInt#method.modular_pow_uint).
+    /// - The method [modular_pow_uint()](trait@BigUInt_Modular#tymethod.modular_pow_uint)
+    ///   is more efficient than this method `modular_pow()` when the exponent
+    ///   `exp` is primitive unsigned integral data type
+    ///   such as u8, u16, u32, u64, and u128.
+    ///   If `rhs` is the primitive unsigned integral data type number,
+    ///   use the method [modular_pow_uint()](trait@BigUInt_Modular#tymethod.modular_pow_uint).
+    /// - In order to use any one of
+    ///   [panic_free_modular_pow()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_pow),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for Noraml case
     /// ```
@@ -1707,12 +1776,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause overflow.
     /// 
     /// # Counterpart Method
-    /// The method [modular_pow_assign_uint()](struct@BigUInt#method.modular_pow_assign_uint)
-    /// is more efficient than this method `modular_pow_assign()`
-    /// when the exponent `exp` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `exp` is the primitive unsigned integral data type number,
-    /// use the method [modular_pow_assign_uint()](struct@BigUInt#method.modular_pow_assign_uint).
+    /// - The method [modular_pow_assign_uint()](trait@BigUInt_Modular#tymethod.modular_pow_assign_uint)
+    ///   is more efficient than this method `modular_pow_assign()`
+    ///   when the exponent `exp` is primitive unsigned integral data type
+    ///   such as u8, u16, u32, u64, and u128.
+    ///   If `exp` is the primitive unsigned integral data type number,
+    ///   use the method [modular_pow_assign_uint()](trait@BigUInt_Modular#tymethod.modular_pow_assign_uint).
+    /// - In order to use any one of
+    ///   [panic_free_modular_pow_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_pow_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for Noraml case
     /// ```
@@ -1787,9 +1859,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [modular_next_multiple_of()](#tymethod.modular_next_multiple_of)
-    /// is proper rather than this method `modular_next_multiple_of_uint()`.
+    /// - If `rhs` is bigger than `u128`, the method
+    ///   [modular_next_multiple_of()](#tymethod.modular_next_multiple_of)
+    ///   is proper rather than this method `modular_next_multiple_of_uint()`.
+    /// - In order to use any one of
+    ///   [panic_free_modular_next_multiple_of_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_next_multiple_of_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -1864,9 +1939,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause overflow.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [next_multiple_of_assign()](#tymethod.next_multiple_of_assign)
-    /// is proper rather than this method `next_multiple_of_assign_uint()`.
+    /// - If `rhs` is bigger than `u128`, the method
+    ///   [next_multiple_of_assign()](#tymethod.next_multiple_of_assign)
+    ///   is proper rather than this method `next_multiple_of_assign_uint()`.
+    /// - In order to use any one of
+    ///   [panic_free_modular_next_multiple_of_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_next_multiple_of_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -1945,12 +2023,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [modular_next_multiple_of_uint()](#tymethod.modular_next_multiple_of_uint)
-    /// is a bit faster than this method `modular_next_multiple_of()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_next_multiple_of_uint()](#tymethod.modular_next_multiple_of_uint).
+    /// - The method
+    ///   [modular_next_multiple_of_uint()](#tymethod.modular_next_multiple_of_uint)
+    ///   is a bit faster than this method `modular_next_multiple_of()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [modular_next_multiple_of_uint()](#tymethod.modular_next_multiple_of_uint).
+    /// - In order to use any one of
+    ///   [panic_free_modular_next_multiple_of()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_next_multiple_of),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -2016,12 +2097,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause overflow.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [modular_next_multiple_of_assign_uint()](#tymethod.modular_next_multiple_of_assign_uint)
-    /// is a bit faster than this method `modular_next_multiple_of_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [modular_next_multiple_of_assign_uint()](#tymethod.modular_next_multiple_of_assign_uint).
+    /// - The method
+    ///   [modular_next_multiple_of_assign_uint()](#tymethod.modular_next_multiple_of_assign_uint)
+    ///   is a bit faster than this method `modular_next_multiple_of_assign()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [modular_next_multiple_of_assign_uint()](#tymethod.modular_next_multiple_of_assign_uint).
+    /// - In order to use any one of
+    ///   [panic_free_modular_next_multiple_of_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_next_multiple_of_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for Normal case
     /// ```

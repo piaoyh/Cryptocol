@@ -83,7 +83,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
-    /// [gcd()](struct@BigUInt#method.gcd)
+    /// [gcd()](trait@BigUInt_Prime#tymethod.gcd)
     /// is proper rather than this method `gcd_uint()`.
     /// 
     /// # Example 1 for normal case
@@ -142,7 +142,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
-    /// [gcd_assign()](struct@BigUInt#method.gcd_assign)
+    /// [gcd_assign()](trait@BigUInt_Prime#tymethod.gcd_assign)
     /// is proper rather than this method `gcd_assign_uint()`.
     /// 
     /// # Example 1 for normal case
@@ -212,12 +212,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// In this case, this method will panic.
     /// 
     /// # Counterpart Method
-    /// The method [lcm_uint()](struct@BigUInt#method.lcm_uint)
+    /// The method [lcm_uint()](trait@BigUInt_Prime#tymethod.lcm_uint)
     /// is more efficient than this method `lcm()`
     /// when the exponent `other` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128.
     /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [lcm_uint()](struct@BigUInt#method.lcm_uint).
+    /// use the method [lcm_uint()](trait@BigUInt_Prime#tymethod.lcm_uint).
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -275,7 +275,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `other` is bigger than `u128`, the method
-    /// [lcm_assign()](struct@BigUInt#method.lcm_assign)
+    /// [lcm_assign()](trait@BigUInt_Prime#tymethod.lcm_assign)
     /// is proper rather than this method `lcm_assign_uint()`.
     /// 
     /// # Example 1 for normal case
@@ -344,12 +344,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// In this case, this method will panic.
     /// 
     /// # Counterpart Method
-    /// The method [gcd_uint()](struct@BigUInt#method.gcd_uint)
+    /// The method [gcd_uint()](trait@BigUInt_Prime#tymethod.gcd_uint)
     /// is more efficient than this method `gcd()`
     /// when the exponent `other` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128.
     /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [gcd_uint()](struct@BigUInt#method.gcd_uint).
+    /// use the method [gcd_uint()](trait@BigUInt_Prime#tymethod.gcd_uint).
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -397,12 +397,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// In this case, this method will panic.
     /// 
     /// # Counterpart Method
-    /// The method [gcd_assign_uint()](struct@BigUInt#method.gcd_assign_uint)
+    /// The method [gcd_assign_uint()](trait@BigUInt_Prime#tymethod.gcd_assign_uint)
     /// is more efficient than this method `gcd_assign()`
     /// when the exponent `other` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128.
     /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [gcd_assign_uint()](struct@BigUInt#method.gcd_assign_uint).
+    /// use the method [gcd_assign_uint()](trait@BigUInt_Prime#tymethod.gcd_assign_uint).
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -462,12 +462,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// In this case, this method will panic.
     /// 
     /// # Counterpart Method
-    /// The method [lcm_uint()](struct@BigUInt#method.lcm_uint)
+    /// The method [lcm_uint()](trait@BigUInt_Prime#tymethod.lcm_uint)
     /// is more efficient than this method `lcm()`
     /// when the exponent `other` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128.
     /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [lcm_uint()](struct@BigUInt#method.lcm_uint).
+    /// use the method [lcm_uint()](trait@BigUInt_Prime#tymethod.lcm_uint).
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -515,12 +515,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// In this case, this method will panic.
     /// 
     /// # Counterpart Method
-    /// The method [gcd_assign_uint()](struct@BigUInt#method.gcd_assign_uint)
+    /// The method [gcd_assign_uint()](trait@BigUInt_Prime#tymethod.gcd_assign_uint)
     /// is more efficient than this method `gcd_assign()`
     /// when the exponent `other` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128.
     /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [gcd_assign_uint()](struct@BigUInt#method.gcd_assign_uint).
+    /// use the method [gcd_assign_uint()](trait@BigUInt_Prime#tymethod.gcd_assign_uint).
     /// 
     /// # Example 1 for normal case
     /// ```

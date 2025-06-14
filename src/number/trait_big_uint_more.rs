@@ -3332,9 +3332,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// the result will be the value wrapped around.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [next_multiple_of()](#tymethod.next_multiple_of)
-    /// is proper rather than this method `next_multiple_of_uint()`.
+    /// - If `rhs` is bigger than `u128`, the method
+    ///   [next_multiple_of()](#tymethod.next_multiple_of)
+    ///   is proper rather than this method `next_multiple_of_uint()`.
+    /// - In order to use any one of
+    ///   [modular_next_multiple_of_uint()](trait.BigUInt_Modular.html#tymethod.modular_next_multiple_of_uint),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    /// - In order to use any one of
+    ///   [panic_free_modular_next_multiple_of_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_next_multiple_of_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -3393,9 +3399,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause overflow.
     /// 
     /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [next_multiple_of_assign()](#tymethod.next_multiple_of_assign)
-    /// is proper rather than this method `next_multiple_of_assign_uint()`.
+    /// - If `rhs` is bigger than `u128`, the method
+    ///   [next_multiple_of_assign()](#tymethod.next_multiple_of_assign)
+    ///   is proper rather than this method `next_multiple_of_assign_uint()`.
+    /// - In order to use any one of
+    ///   [modular_next_multiple_of_assign_uint()](trait.BigUInt_Modular.html#tymethod.modular_next_multiple_of_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    /// - In order to use any one of
+    ///   [panic_free_modular_next_multiple_of_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_next_multiple_of_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -3520,12 +3532,18 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// the result will be the value wrapped around.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [next_multiple_of_uint()](#tymethod.next_multiple_of_uint)
-    /// is a bit faster than this method `next_multiple_of()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [next_multiple_of_uint()](#tymethod.next_multiple_of_uint).
+    /// - The method
+    ///   [next_multiple_of_uint()](#tymethod.next_multiple_of_uint)
+    ///   is a bit faster than this method `next_multiple_of()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [next_multiple_of_uint()](#tymethod.next_multiple_of_uint).
+    /// - In order to use any one of
+    ///   [modular_next_multiple_of()](trait.BigUInt_Modular.html#tymethod.modular_next_multiple_of),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    /// - In order to use any one of
+    ///   [panic_free_modular_next_multiple_of()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_next_multiple_of),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -3575,12 +3593,18 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   does not cause overflow.
     /// 
     /// # Counterpart Method
-    /// The method
-    /// [next_multiple_of_assign_uint()](#tymethod.next_multiple_of_assign_uint)
-    /// is a bit faster than this method `next_multiple_of_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [next_multiple_of_assign_uint()](#tymethod.next_multiple_of_assign_uint).
+    /// - The method
+    ///   [next_multiple_of_assign_uint()](#tymethod.next_multiple_of_assign_uint)
+    ///   is a bit faster than this method `next_multiple_of_assign()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
+    ///   u32, u64, and u128, use the method
+    ///   [next_multiple_of_assign_uint()](#tymethod.next_multiple_of_assign_uint).
+    /// - In order to use any one of
+    ///   [modular_next_multiple_of_assign()](trait.BigUInt_Modular.html#tymethod.modular_next_multiple_of_assign),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    /// - In order to use any one of
+    ///   [panic_free_modular_next_multiple_of_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_next_multiple_of_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```

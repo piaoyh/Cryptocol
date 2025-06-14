@@ -4582,11 +4582,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   is proper rather than this method.
     /// - You may be interested in extra addition methods.
     ///   In order to use any one of
-    ///   [checked_add_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_add_uint),
-    ///   [unchecked_add_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_add_uint),
-    ///   [saturating_add_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_add_uint), and
-    ///   [safe_add_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_add_uint),
+    ///   [checked_add_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_add_uint),
+    ///   [saturating_add_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_add_uint), and
+    ///   [safe_add_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_add_uint),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_add_uint()](trait.BigUInt_Modular.html#tymethod.modular_add_uint),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_add_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_add_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -4655,10 +4660,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - If `rhs` is bigger tham `u128`, the method
     ///   [wrapping_add_assign()](struct@BigUInt#method.wrapping_add_assign)
     ///   is proper rather than this method.
-    /// - You may be interested in extra addition methods. In order to use any one of 
-    ///   [saturating_add_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_add_assign_uint), and
-    ///   [safe_add_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_add_assign_uint),
+    /// - You may be interested in extra addition methods.
+    ///   In order to use any one of 
+    ///   [saturating_add_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_add_assign_uint), and
+    ///   [safe_add_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_add_assign_uint),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_add_assign_uint()](trait.BigUInt_Modular.html#tymethod.modular_add_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_add_assign_uint()](trait.BigUInt_Modular.html#tymethod.panic_free_modular_add_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -5064,11 +5076,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   is proper rather than this method.
     /// - You may be interested in extra subtraction methods.
     ///   In order to use any one of
-    ///   [checked_sub_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_sub_uint),
-    ///   [unchecked_sub_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_sub_uint),
-    ///   [saturating_sub_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_sub_uint), and
-    ///   [safe_sub_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_sub_uint),
+    ///   [checked_sub_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_sub_uint),
+    ///   [unchecked_sub_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_sub_uint),
+    ///   [saturating_sub_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_sub_uint), and
+    ///   [safe_sub_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_sub_uint),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_sub_uint()](trait.BigUInt_Modular.html#tymethod.modular_sub_uint),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_sub_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_sub_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -5138,9 +5156,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   is proper rather than this method.
     /// - You may be interested in extra subtraction methods.
     ///   In order to use any one of 
-    ///   [saturating_sub_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_sub_assign_uint), and
-    ///   [safe_sub_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_sub_assign_uint),
+    ///   [saturating_sub_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_sub_assign_uint), and
+    ///   [safe_sub_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_sub_assign_uint),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_sub_assign_uint()](trait.BigUInt_Modular.html#tymethod.modular_sub_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_sub_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_sub_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -5918,11 +5942,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   is proper rather than this method `wrapping_mul_uint()`.
     /// - You may be interested in extra multiplication methods,
     ///   In order to use any one of 
-    ///   [checked_mul_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_mul_uint),
-    ///   [unchecked_mul_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_mul_uint),
-    ///   [saturating_mul_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_mul_uint), and
-    ///   [safe_mul_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_mul_uint),
+    ///   [checked_mul_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_mul_uint),
+    ///   [unchecked_mul_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_mul_uint),
+    ///   [saturating_mul_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_mul_uint), and
+    ///   [safe_mul_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_mul_uint),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_mul_uint()](trait.BigUInt_Modular.html#tymethod.modular_mul_uint),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_mul_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_mul_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -5986,9 +6016,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   is proper rather than this method.
     /// - You may be interested in extra multiplication methods
     ///   In order to use any one of 
-    ///   [saturating_mul_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_mul_assign_uint), and
-    ///   [safe_mul_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_mul_assign_uint),
+    ///   [saturating_mul_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_mul_assign_uint), and
+    ///   [safe_mul_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_mul_assign_uint),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_mul_assign_uint()](trait.BigUInt_Modular.html#tymethod.modular_mul_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_mul_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_mul_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -6414,10 +6450,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   is proper rather than this method `wrapping_div_uint()`.
     /// - You may be interested in extra division methods,
     ///   In order to use any one of 
-    ///   [checked_div_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_div_uint),
-    ///   [unchecked_div_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_div_uint), and
-    ///   [saturating_div_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_div_uint),
+    ///   [checked_div_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_div_uint),
+    ///   [unchecked_div_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_div_uint), and
+    ///   [saturating_div_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_div_uint),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_div_uint()](trait.BigUInt_Modular.html#tymethod.modular_div_uint),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_div_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_div_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -6484,8 +6526,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   is proper rather than this method `wrapping_div_assign_uint()`.
     /// - You may be interested in extra division methods
     ///   In order to use
-    ///   [saturating_div_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_div_assign_uint),
+    ///   [saturating_div_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_div_assign_uint),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_div_assign_uint()](trait.BigUInt_Modular.html#tymethod.modular_div_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_div_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_div_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -6706,10 +6754,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   is proper rather than this method `wrapping_rem_uint()`.
     /// - You may be interested in extra division methods,
     ///   In order to use any one of 
-    ///   [checked_rem_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_rem_uint),
-    ///   [unchecked_rem_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_rem_uint), and
-    ///   [saturating_rem_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_rem_uint),
+    ///   [checked_rem_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_rem_uint),
+    ///   [unchecked_rem_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_rem_uint), and
+    ///   [saturating_rem_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_rem_uint),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_rem_uint()](trait.BigUInt_Modular.html#tymethod.modular_rem_uint),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_rem_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_rem_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -6769,8 +6823,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   is proper rather than this method `wrapping_rem_assign_uint()`.
     /// - You may be interested in extra division methods
     ///   In order to use any one of 
-    ///   [saturating_rem_assign_uint()](../trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_rem_assign_uint),
+    ///   [saturating_rem_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_rem_assign_uint),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_rem_assign_uint()](trait.BigUInt_Modular.html#tymethod.modular_rem_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_rem_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_rem_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -7140,10 +7200,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [overflowing_pow_uint()](struct@BigUInt#method.overflowing_pow_uint).
     /// - You may be interested in extra exponentiation methods,
     ///   In order to use any one of 
-    ///   [checked_pow_uint()](../trait_big_more/trait.BigUInt_More.html#tymethod.checked_pow_uint),
-    ///   [unchecked_pow_uint()](../trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_pow_uint), and
-    ///   [saturating_pow_uint()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_pow_uint),
+    ///   [checked_pow_uint()](trait_big_more/trait.BigUInt_More.html#tymethod.checked_pow_uint),
+    ///   [unchecked_pow_uint()](trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_pow_uint), and
+    ///   [saturating_pow_uint()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_pow_uint),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_pow_uint()](trait.BigUInt_Modular.html#tymethod.modular_pow_uint),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_pow_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_pow_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -7213,8 +7279,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [overflowing_pow_assign_uint()](struct@BigUInt#method.overflowing_pow_assign_uint).
     /// - You may be interested in extra exponentiation methods
     ///   In order to use 
-    ///   [saturating_pow_assign_uint()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_pow_assign_uint),
+    ///   [saturating_pow_assign_uint()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_pow_assign_uint),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_pow_assign_uint()](trait.BigUInt_Modular.html#tymethod.modular_pow_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_pow_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_pow_assign_uint),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -8083,11 +8155,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [wrapping_add_uint()](struct@BigUInt#method.wrapping_add_uint).
     /// - You may be interested in extra addition methods,
     ///   In order to use any one of 
-    ///   [checked_add()](../trait_big_more/trait.BigUInt_More.html#tymethod.checked_add),
-    ///   [unchecked_add()](../trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_add),
-    ///   [saturating_add()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_add), and
-    ///   [safe_add()](../trait_big_more/trait.BigUInt_More.html#tymethod.safe_add),
+    ///   [checked_add()](trait_big_more/trait.BigUInt_More.html#tymethod.checked_add),
+    ///   [unchecked_add()](trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_add),
+    ///   [saturating_add()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_add), and
+    ///   [safe_add()](trait_big_more/trait.BigUInt_More.html#tymethod.safe_add),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_add()](trait.BigUInt_Modular.html#tymethod.modular_add),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_add()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_add),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -8146,9 +8224,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [wrapping_add_assign_uint()](struct@BigUInt#method.wrapping_add_assign_uint).
     /// - You may be interested in extra addition methods
     ///   In order to use any one of 
-    ///   [saturating_add_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_add_assign), and
-    ///   [safe_add_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.safe_add_assign),
+    ///   [saturating_add_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_add_assign), and
+    ///   [safe_add_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.safe_add_assign),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_add_assign()](trait.BigUInt_Modular.html#tymethod.modular_add_assign),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_add_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_add_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -8541,11 +8625,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [wrapping_sub_uint()](struct@BigUInt#method.wrapping_sub_uint).
     /// - You may be interested in extra subtraction methods,
     ///   In order to use any one of 
-    ///   [checked_sub()](../trait_big_more/trait.BigUInt_More.html#tymethod.checked_sub),
-    ///   [unchecked_sub()](../trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_sub),
-    ///   [saturating_sub()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_sub), and
-    ///   [safe_sub()](../trait_big_more/trait.BigUInt_More.html#tymethod.safe_sub),
+    ///   [checked_sub()](trait_big_more/trait.BigUInt_More.html#tymethod.checked_sub),
+    ///   [unchecked_sub()](trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_sub),
+    ///   [saturating_sub()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_sub), and
+    ///   [safe_sub()](trait_big_more/trait.BigUInt_More.html#tymethod.safe_sub),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_sub()](trait.BigUInt_Modular.html#tymethod.modular_sub),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_sub()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_sub),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -8602,9 +8692,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [wrapping_sub_assign_uint()](struct@BigUInt#method.wrapping_sub_assign_uint).
     /// - You may be interested in extra subtraction methods
     ///   In order to use any one of 
-    ///   [saturating_sub_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_sub_assign), and
-    ///   [safe_sub_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.safe_sub_assign),
+    ///   [saturating_sub_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_sub_assign), and
+    ///   [safe_sub_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.safe_sub_assign),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_sub_assign()](trait.BigUInt_Modular.html#tymethod.modular_sub_assign),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_sub_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_sub_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -9457,11 +9553,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [wrapping_mul_uint()](struct@BigUInt#method.wrapping_mul_uint).
     /// - You may be interested in extra multiplication methods,
     ///   In order to use any one of 
-    ///   [checked_mul()](../trait_big_more/trait.BigUInt_More.html#tymethod.checked_mul),
-    ///   [unchecked_mul()](../trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_mul),
-    ///   [saturating_mul()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_mul), and
-    ///   [safe_mul()](../trait_big_more/trait.BigUInt_More.html#tymethod.safe_mul),
+    ///   [checked_mul()](trait_big_more/trait.BigUInt_More.html#tymethod.checked_mul),
+    ///   [unchecked_mul()](trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_mul),
+    ///   [saturating_mul()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_mul), and
+    ///   [safe_mul()](trait_big_more/trait.BigUInt_More.html#tymethod.safe_mul),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_mul()](trait.BigUInt_Modular.html#tymethod.modular_mul),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_mul()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_mul),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -9519,9 +9621,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [wrapping_mul_assign_uint()](struct@BigUInt#method.wrapping_mul_assign_uint).
     /// - You may be interested in extra multiplication methods
     ///   In order to use any one of 
-    ///   [saturating_mul_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_mul_assign), and
-    ///   [safe_mul_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.safe_mul_assign),
+    ///   [saturating_mul_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_mul_assign), and
+    ///   [safe_mul_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.safe_mul_assign),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_mul_assign()](trait.BigUInt_Modular.html#tymethod.modular_mul_assign),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_mul_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_mul_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -9950,10 +10058,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [wrapping_div_uint()](struct@BigUInt#method.wrapping_div_uint).
     /// - You may be interested in extra division methods,
     ///   In order to use any one of 
-    ///   [checked_div()](../trait_big_more/trait.BigUInt_More.html#tymethod.checked_div),
-    ///   [unchecked_div()](../trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_div), and
-    ///   [saturating_div()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_div),
+    ///   [checked_div()](trait_big_more/trait.BigUInt_More.html#tymethod.checked_div),
+    ///   [unchecked_div()](trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_div), and
+    ///   [saturating_div()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_div),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_div()](trait.BigUInt_Modular.html#tymethod.modular_div),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_div()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_div),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -10014,8 +10128,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [wrapping_div_assign_uint()](struct@BigUInt#method.wrapping_div_assign_uint).
     /// - You may be interested in extra division methods
     ///   In order to use 
-    ///   [saturating_div_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_div_assign),
+    ///   [saturating_div_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_div_assign),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_div_assign()](trait.BigUInt_Modular.html#tymethod.modular_div_assign),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_div_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_div_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -10218,10 +10338,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [wrapping_rem_uint()](struct@BigUInt#method.wrapping_rem_uint).
     /// - You may be interested in extra division methods,
     ///   In order to use any one of 
-    ///   [checked_rem()](../trait_big_more/trait.BigUInt_More.html#tymethod.checked_rem),
-    ///   [unchecked_rem()](../trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_rem), and
-    ///   [saturating_rem()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_rem),
+    ///   [checked_rem()](trait_big_more/trait.BigUInt_More.html#tymethod.checked_rem),
+    ///   [unchecked_rem()](trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_rem), and
+    ///   [saturating_rem()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_rem),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_rem()](trait.BigUInt_Modular.html#tymethod.modular_rem),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_rem()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_rem),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -10282,8 +10408,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   [wrapping_rem_assign_uint()](struct@BigUInt#method.wrapping_rem_assign_uint).
     /// - You may be interested in extra division methods
     ///   In order to use
-    ///   [saturating_rem_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_rem_assign),
+    ///   [saturating_rem_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_rem_assign),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_rem_assign()](trait.BigUInt_Modular.html#tymethod.modular_rem_assign),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_rem_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_rem_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1
     /// ```
@@ -10750,10 +10882,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   use the method [wrapping_pow_uint()](struct@BigUInt#method.wrapping_pow_uint).
     /// - You may be interested in extra exponentiation methods,
     ///   In order to use any one of 
-    ///   [checked_pow()](../trait_big_more/trait.BigUInt_More.html#tymethod.checked_pow),
-    ///   [unchecked_pow()](../trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_pow), and
-    ///   [saturating_pow()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_pow),
+    ///   [checked_pow()](trait_big_more/trait.BigUInt_More.html#tymethod.checked_pow),
+    ///   [unchecked_pow()](trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_pow), and
+    ///   [saturating_pow()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_pow),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_pow()](trait.BigUInt_Modular.html#tymethod.modular_pow),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_pow()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_pow),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for normal exponentiation
     /// ```
@@ -10815,8 +10953,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   the method [wrapping_pow_assign_uint()](struct@BigUInt#method.wrapping_pow_assign_uint).
     /// - You may be interested in extra exponentiation methods
     ///   In order to use 
-    ///   [saturating_pow_assign()](../trait_big_more/trait.BigUInt_More.html#tymethod.saturating_pow_assign),
+    ///   [saturating_pow_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_pow_assign),
     ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_pow_assign()](trait.BigUInt_Modular.html#tymethod.modular_pow_assign),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_pow_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_pow_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
     /// 
     /// # Example 1 for normal exponentiation
     /// ```

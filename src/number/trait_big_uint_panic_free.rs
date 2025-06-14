@@ -95,7 +95,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_modular_add()](struct@BigUInt#method.panic_free_modular_add)
+    /// [panic_free_modular_add()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_add)
     /// is proper rather than this method `panic_free_modular_add_uint()`.
     /// 
     /// # Example 1 for a normal case
@@ -178,7 +178,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger tham `ui128`, the method
-    /// [panic_free_modular_add_assign_uint()](struct@BigUInt#method.panic_free_modular_add_assign_uint)
+    /// [panic_free_modular_add_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_add_assign_uint)
     /// is proper rather than this method.
     /// 
     /// # Example 1 for a normal case
@@ -265,11 +265,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_modular_add_uint()](struct@BigUInt#method.panic_free_modular_add_uint)
+    /// [panic_free_modular_add_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_add_uint)
     /// is a bit faster than this method `panic_free_modular_add()`.
     /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_modular_add_uint()](struct@BigUInt#method.panic_free_modular_add_uint).
+    /// [panic_free_modular_add_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_add_uint).
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -340,11 +340,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// - The method
-    /// [panic_free_modular_add_assign_uint()](struct@BigUInt#method.panic_free_modular_add_assign_uint)
+    /// [panic_free_modular_add_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_add_assign_uint)
     /// is a bit faster than this method `panic_free_modular_add_assign()`.
     /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_modular_add_assign_uint()](struct@BigUInt#method.panic_free_modular_add_assign_uint).
+    /// [panic_free_modular_add_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_add_assign_uint).
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -425,7 +425,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_modular_sub()](struct@BigUInt#method.panic_free_modular_sub)
+    /// [panic_free_modular_sub()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_sub)
     /// is proper rather than this method `panic_free_modular_sub_uint()`.
     /// 
     /// # Example 1 for a normal case
@@ -508,7 +508,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger tham `ui128`, the method
-    /// [panic_free_modular_sub_assign_uint()](struct@BigUInt#method.panic_free_modular_sub_assign_uint)
+    /// [panic_free_modular_sub_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_sub_assign_uint)
     /// is proper rather than this method.
     /// 
     /// # Example 1 for a normal case
@@ -597,11 +597,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_modular_sub_uint()](struct@BigUInt#method.panic_free_modular_sub_uint)
+    /// [panic_free_modular_sub_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_sub_uint)
     /// is a bit faster than this method `panic_free_modular_sub()`.
     /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_modular_sub_uint()](struct@BigUInt#method.panic_free_modular_sub_uint).
+    /// [panic_free_modular_sub_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_sub_uint).
     /// 
     /// # Example 1 for Normal Case
     /// ```
@@ -672,11 +672,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// - The method
-    /// [panic_free_modular_sub_assign()](struct@BigUInt#method.panic_free_modular_sub_assign)
+    /// [panic_free_modular_sub_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_sub_assign)
     /// is a bit faster than this method `panic_free_modular_sub_assign()`.
     /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_modular_sub_assign_uint()](struct@BigUInt#method.panic_free_modular_sub_assign_uint).
+    /// [panic_free_modular_sub_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_sub_assign_uint).
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -757,7 +757,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_modular_mul()](struct@BigUInt#method.panic_free_modular_mul)
+    /// [panic_free_modular_mul()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_mul)
     /// is proper rather than this method `panic_free_modular_mul_uint()`.
     /// 
     /// # Example 1 for a normal case
@@ -840,7 +840,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger tham `ui128`, the method
-    /// [panic_free_modular_mul_assign_uint()](struct@BigUInt#method.panic_free_modular_mul_assign_uint)
+    /// [panic_free_modular_mul_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_mul_assign_uint)
     /// is proper rather than this method.
     /// 
     /// # Example 1 for normal case
@@ -928,11 +928,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_modular_mul_uint()](struct@BigUInt#method.panic_free_modular_mul_uint)
+    /// [panic_free_modular_mul_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_mul_uint)
     /// is a bit faster than this method `panic_free_modular_mul()`.
     /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_modular_mul_uint()](struct@BigUInt#method.panic_free_modular_mul_uint).
+    /// [panic_free_modular_mul_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_mul_uint).
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -1004,11 +1004,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_modular_mul_assign_uint()](struct@BigUInt#method.panic_free_modular_mul_assign_uint)
+    /// [panic_free_modular_mul_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_mul_assign_uint)
     /// is a bit faster than this method `panic_free_modular_mul_assign()`.
     /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_modular_mul_assign_uint()](struct@BigUInt#method.panic_free_modular_mul_assign_uint).
+    /// [panic_free_modular_mul_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_mul_assign_uint).
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -1093,7 +1093,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_divide_fully()](struct@BigUInt#method.panic_free_divide_fully)
+    /// [panic_free_divide_fully()](trait@BigUInt_Panic_Free#tymethod.panic_free_divide_fully)
     /// is proper rather than this method `panic_free_divide_fully_uint()`.
     /// 
     /// # Example 1 for a normal case
@@ -1174,11 +1174,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_div_uint()](struct@BigUInt#method.panic_free_div_uint)
+    /// [panic_free_div_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_div_uint)
     /// is a bit faster than this method `wrapping_div()`.
     /// If `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_div_uint()](struct@BigUInt#method.panic_free_div_uint).
+    /// [panic_free_div_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_div_uint).
     /// 
     /// # Example 1 for a normal case
     /// ```
@@ -1251,7 +1251,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_div_assign()](struct@BigUInt#method.panic_free_div_assign)
+    /// [panic_free_div_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_div_assign)
     /// is proper rather than this method `panic_free_div_assign_uint()`.
     /// 
     /// # Example 1
@@ -1345,7 +1345,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_modular_div()](struct@BigUInt#method.panic_free_modular_div)
+    /// [panic_free_modular_div()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_div)
     /// is proper rather than this method `panic_free_modular_div_uint()`.
     /// 
     /// # Example 1 for a normal case for modulo >= 2 and dividend != 0 and divisor != 0
@@ -1435,7 +1435,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger tham `ui128`, the method
-    /// [panic_free_modular_div_assign()](struct@BigUInt#method.panic_free_modular_div_assign)
+    /// [panic_free_modular_div_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_div_assign)
     /// is proper rather than this method.
     /// 
     /// # Example 1 for a normal case
@@ -1524,11 +1524,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_divide_fully_uint()](struct@BigUInt#method.panic_free_divide_fully_uint)
+    /// [panic_free_divide_fully_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_divide_fully_uint)
     /// is a bit faster than this method `panic_free_divide_fully()`.
     /// If `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_divide_fully_uint()](struct@BigUInt#method.panic_free_divide_fully_uint).
+    /// [panic_free_divide_fully_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_divide_fully_uint).
     /// 
     /// # Example 1 for a normal case
     /// ```
@@ -1599,11 +1599,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_div_uint()](struct@BigUInt#method.panic_free_div_uint)
+    /// [panic_free_div_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_div_uint)
     /// is a bit faster than this method `panic_free_div()`.
     /// If `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_div_uint()](struct@BigUInt#method.panic_free_div_uint).
+    /// [panic_free_div_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_div_uint).
     /// 
     /// # Example 1 for a normal case
     /// ```
@@ -1667,11 +1667,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_div_assign_uint()](struct@BigUInt#method.panic_free_div_assign_uint)
+    /// [panic_free_div_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_div_assign_uint)
     /// is a bit faster than this method `panic_free_div_assign()`.
     /// If `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_div_assign_uint()](struct@BigUInt#method.panic_free_div_assign_uint).
+    /// [panic_free_div_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_div_assign_uint).
     /// 
     /// # Example 1
     /// ```
@@ -1756,11 +1756,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_modular_div_uint()](struct@BigUInt#method.panic_free_modular_div_uint)
+    /// [panic_free_modular_div_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_div_uint)
     /// is a bit faster than this method `modular_div()`.
     /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_modular_div_uint()](struct@BigUInt#method.panic_free_modular_div_uint).
+    /// [panic_free_modular_div_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_div_uint).
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -1840,11 +1840,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_modular_div_assign_uint()](struct@BigUInt#method.panic_free_modular_div_assign_uint)
+    /// [panic_free_modular_div_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_div_assign_uint)
     /// is a bit faster than this method `panic_free_modular_div_assign()`.
     /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_modular_div_assign_uint()](struct@BigUInt#method.panic_free_modular_div_assign_uint).
+    /// [panic_free_modular_div_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_div_assign_uint).
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -1912,11 +1912,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_rem_uint()](struct@BigUInt#method.panic_free_rem_uint)
+    /// [panic_free_rem_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_rem_uint)
     /// is a bit faster than this method `wrapping_rem()`.
     /// If `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_rem_uint()](struct@BigUInt#method.panic_free_rem_uint).
+    /// [panic_free_rem_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_rem_uint).
     /// 
     /// # Example 1
     /// ```
@@ -1984,7 +1984,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_rem_assign()](struct@BigUInt#method.panic_free_rem_assign)
+    /// [panic_free_rem_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_rem_assign)
     /// is proper rather than this method `panic_free_rem_assign_uint()`.
     /// 
     /// # Example 1
@@ -2074,7 +2074,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_modular_rem()](struct@BigUInt#method.panic_free_modular_rem)
+    /// [panic_free_modular_rem()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_rem)
     /// is proper rather than this method `panic_free_modular_rem_uint()`.
     /// 
     /// # Example 1 for normal case
@@ -2159,7 +2159,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger tham `ui128`, the method
-    /// [panic_free_modular_rem_assign()](struct@BigUInt#method.panic_free_modular_rem_assign)
+    /// [panic_free_modular_rem_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_rem_assign)
     /// is proper rather than this method.
     /// 
     /// # Example 1 for normal case
@@ -2235,11 +2235,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_rem_uint()](struct@BigUInt#method.panic_free_rem_uint)
+    /// [panic_free_rem_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_rem_uint)
     /// is a bit faster than this method `panic_free_rem()`.
     /// If `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_rem_uint()](struct@BigUInt#method.panic_free_rem_uint).
+    /// [panic_free_rem_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_rem_uint).
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -2298,11 +2298,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_rem_assign_uint()](struct@BigUInt#method.panic_free_rem_assign_uint)
+    /// [panic_free_rem_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_rem_assign_uint)
     /// is a bit faster than this method `panic_free_rem_assign()`.
     /// If `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_rem_assign_uint()](struct@BigUInt#method.panic_free_rem_assign_uint).
+    /// [panic_free_rem_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_rem_assign_uint).
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -2382,11 +2382,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_modular_rem_uint()](struct@BigUInt#method.panic_free_modular_rem_uint)
+    /// [panic_free_modular_rem_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_rem_uint)
     /// is a bit faster than this method `modular_rem()`.
     /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_modular_rem_uint()](struct@BigUInt#method.panic_free_modular_rem_uint).
+    /// [panic_free_modular_rem_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_rem_uint).
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -2461,11 +2461,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_modular_rem_assign_uint()](struct@BigUInt#method.panic_free_modular_rem_assign_uint)
+    /// [panic_free_modular_rem_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_rem_assign_uint)
     /// is a bit faster than this method `panic_free_modular_rem_assign()`.
     /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
     /// u32, u64, and u128, use the method
-    /// [panic_free_modular_rem_assign_uint()](struct@BigUInt#method.panic_free_modular_rem_assign_uint).
+    /// [panic_free_modular_rem_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_rem_assign_uint).
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -2540,10 +2540,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// - If `exp` is bigger than `u128`, the method
-    ///   [panic_free_pow()](struct@BigUInt#method.panic_free_pow)
+    ///   [panic_free_pow()](trait@BigUInt_Panic_Free#tymethod.panic_free_pow)
     ///   is proper rather than this method `panic_free_pow_uint()`.
     /// - If you need to know whether or not overflow occurs, use the method
-    ///   [overflowing_pow_uint()](struct@BigUInt#method.overflowing_pow_uint).
+    ///   [overflowing_pow_uint()](trait@BigUInt_Panic_Free#tymethod.overflowing_pow_uint).
     /// 
     /// # Example 1
     /// ```
@@ -2613,10 +2613,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// - If `exp` is bigger than `u128`, the method
-    ///   [panic_free_pow_assign()](struct@BigUInt#method.panic_free_pow_assign)
+    ///   [panic_free_pow_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_pow_assign)
     ///   is proper rather than this method `panic_free_pow_assign_uint()`.
     /// - If you need to know whether or not overflow occurs, use the method
-    ///   [overflowing_pow_assign_uint()](struct@BigUInt#method.overflowing_pow_assign_uint).
+    ///   [overflowing_pow_assign_uint()](trait@BigUInt_Panic_Free#tymethod.overflowing_pow_assign_uint).
     /// 
     /// # Example 1
     /// ```
@@ -2700,7 +2700,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `exp` is bigger than `u128`, use the method
-    /// [panic_free_modular_pow()](struct@BigUInt#method.panic_free_modular_pow)
+    /// [panic_free_modular_pow()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_pow)
     /// instead.
     /// 
     /// # Example 1 for Noraml case
@@ -2775,7 +2775,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `exp` is bigger than `u128`, the method
-    /// [panic_free_modular_pow_assign()](struct@BigUInt#method.panic_free_modular_pow_assign)
+    /// [panic_free_modular_pow_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_pow_assign)
     /// is proper rather than this method.
     /// 
     /// # Example 1 for Noraml case
@@ -2852,12 +2852,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// | 0      | 0     | 0            | `UNDEFINED` |
     /// 
     /// # Counterpart Method
-    /// The method [panic_free_pow_uint()](struct@BigUInt#method.panic_free_pow_uint)
+    /// The method [panic_free_pow_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_pow_uint)
     /// is more efficient than this method `panic_free_pow()` when the exponent
     /// `exp` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128.
     /// If `exp` is the primitive unsigned integral data type number,
-    /// use the method [panic_free_pow_uint()](struct@BigUInt#method.panic_free_pow_uint).
+    /// use the method [panic_free_pow_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_pow_uint).
     /// 
     /// # Example 1 for normal exponentiation
     /// ```
@@ -2914,12 +2914,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// | 0      | 0     | 0            | `UNDEFINED` |
     /// 
     /// # Counterpart Method
-    /// The method [panic_free_pow_assign_uint()](struct@BigUInt#method.panic_free_pow_assign_uint)
+    /// The method [panic_free_pow_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_pow_assign_uint)
     /// is more efficient than this method `panic_free_pow_assign()` when the
     /// exponent `exp` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128.
     /// If `exp` is the primitive unsigned integral data type number, use
-    /// the method [pow_assign_uint()](struct@BigUInt#method.pow_assign_uint).
+    /// the method [pow_assign_uint()](trait@BigUInt_Panic_Free#tymethod.pow_assign_uint).
     /// 
     /// # Example 1 for normal exponentiation
     /// ```
@@ -2992,12 +2992,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// | > 1      | 0      | 0     | 0            | `UNDEFINED` |
     /// 
     /// # Counterpart Method
-    /// The method [panic_free_modular_pow_uint()](struct@BigUInt#method.panic_free_modular_pow_uint)
+    /// The method [panic_free_modular_pow_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_pow_uint)
     /// is more efficient than this method `panic_free_modular_pow()` when the
     /// exponent `exp` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128.
     /// If `exp` is the primitive unsigned integral data type number,
-    /// use the method [panic_free_modular_pow_uint()](struct@BigUInt#method.panic_free_modular_pow_uint).
+    /// use the method [panic_free_modular_pow_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_pow_uint).
     /// 
     /// # Example 1 for Noraml case
     /// ```
@@ -3060,12 +3060,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// | > 1      | 0      | 0     | 0            | `UNDEFINED` |
     /// 
     /// # Counterpart Method
-    /// The method [panic_free_modular_pow_assign_uint()](struct@BigUInt#method.panic_free_modular_pow_assign_uint)
+    /// The method [panic_free_modular_pow_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_pow_assign_uint)
     /// is more efficient than this method `panic_free_modular_pow_assign()`
     /// when the exponent `exp` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128.
     /// If `exp` is the primitive unsigned integral data type number,
-    /// use the method [panic_free_modular_pow_assign_uint()](struct@BigUInt#method.panic_free_modular_pow_assign_uint).
+    /// use the method [panic_free_modular_pow_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_pow_assign_uint).
     /// 
     /// # Example 1 for Noraml case
     /// ```
@@ -3141,7 +3141,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `exp` is bigger than `u128`, the method
-    /// [panic_free_iroot()](struct@BigUInt#method.panic_free_iroot)
+    /// [panic_free_iroot()](trait@BigUInt_Panic_Free#tymethod.panic_free_iroot)
     /// is proper rather than this method.
     /// 
     /// # Example 1
@@ -3217,7 +3217,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `exp` is bigger than `u128`, the method
-    /// [panic_free_iroot_assign()](struct@BigUInt#method.panic_free_iroot_assign)
+    /// [panic_free_iroot_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_iroot_assign)
     /// is proper rather than this method.
     /// 
     /// # Example 1
@@ -3300,11 +3300,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_iroot_uint()](struct@BigUInt#method.panic_free_iroot_uint)
+    /// [panic_free_iroot_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_iroot_uint)
     /// is a bit faster than this method `panic_free_iroot()`.
     /// So, if `rhs` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128, use the method
-    /// [panic_free_iroot_uint()](struct@BigUInt#method.panic_free_iroot_uint).
+    /// [panic_free_iroot_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_iroot_uint).
     /// 
     /// # Example 1
     /// ```
@@ -3370,11 +3370,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// The method
-    /// [panic_free_iroot_assign_uint()](struct@BigUInt#method.panic_free_iroot_assign_uint)
+    /// [panic_free_iroot_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_iroot_assign_uint)
     /// is a bit faster than this method `panic_free_iroot_assign()`.
     /// So, if `rhs` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128, use the method
-    /// [panic_free_iroot_assign_uint()](struct@BigUInt#method.panic_free_iroot_assign_uint).
+    /// [panic_free_iroot_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_iroot_assign_uint).
     /// 
     /// # Example 1
     /// ```
@@ -3447,9 +3447,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Methods
     /// This method might not be optimized owing to implementation details.
-    /// [panic_free_ilog2()](struct@BigUInt#method.panic_free_ilog2)
+    /// [panic_free_ilog2()](trait@BigUInt_Panic_Free#tymethod.panic_free_ilog2)
     /// can produce results more efficiently for base 2, and
-    /// [panic_free_ilog10()](struct@BigUInt#method.panic_free_ilog10)
+    /// [panic_free_ilog10()](trait@BigUInt_Panic_Free#tymethod.panic_free_ilog10)
     /// can produce results more efficiently for base 10.
     /// 
     /// # Example 1
@@ -3517,9 +3517,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Methods
     /// This method might not be optimized owing to implementation details.
-    /// [panic_free_ilog2_assign()](struct@BigUInt#method.panic_free_ilog2_assign)
+    /// [panic_free_ilog2_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_ilog2_assign)
     /// can produce results more efficiently for base 2, and
-    /// [panic_free_ilog10_assign()](struct@BigUInt#method.panic_free_ilog10_assign)
+    /// [panic_free_ilog10_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_ilog10_assign)
     /// can produce results more efficiently for base 10.
     /// 
     /// # Example 1
@@ -3600,9 +3600,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///
     /// # Counterpart Methods
     /// This method might not be optimized owing to implementation details.
-    /// [panic_free_ilog2()](struct@BigUInt#method.panic_free_ilog2)
+    /// [panic_free_ilog2()](trait@BigUInt_Panic_Free#tymethod.panic_free_ilog2)
     /// can produce results more efficiently for base 2, and
-    /// [panic_free_ilog10()](struct@BigUInt#method.panic_free_ilog10)
+    /// [panic_free_ilog10()](trait@BigUInt_Panic_Free#tymethod.panic_free_ilog10)
     /// can produce results more efficiently for base 10.
     /// 
     /// # Example 1
@@ -3661,9 +3661,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///
     /// # Counterpart Methods
     /// This method might not be optimized owing to implementation details.
-    /// [panic_free_ilog2_assign()](struct@BigUInt#method.panic_free_ilog2_assign)
+    /// [panic_free_ilog2_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_ilog2_assign)
     /// can produce results more efficiently for base 2, and
-    /// [panic_free_ilog10_assign()](struct@BigUInt#method.panic_free_ilog10_assign)
+    /// [panic_free_ilog10_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_ilog10_assign)
     /// can produce results more efficiently for base 10.
     /// 
     /// # Example 1
@@ -3717,9 +3717,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Methods
     /// This method is optimized for base 2;
-    /// [ilog_uint()](struct@BigUInt#method.ilog_uint)
+    /// [ilog_uint()](trait@BigUInt_Panic_Free#tymethod.ilog_uint)
     /// can produce results of the base other than 2, and
-    /// [ilog10()](struct@BigUInt#method.ilog10)
+    /// [ilog10()](trait@BigUInt_Panic_Free#tymethod.ilog10)
     /// can produce results more efficiently for base 10.
     /// 
     /// # Example 1
@@ -3760,9 +3760,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Methods
     /// This method is optimized for base 2;
-    /// [ilog_assign_uint()](struct@BigUInt#method.ilog_assign_uint)
+    /// [ilog_assign_uint()](trait@BigUInt_Panic_Free#tymethod.ilog_assign_uint)
     /// can produce results of the base other than 2, and
-    /// [ilog10_assign()](struct@BigUInt#method.ilog10_assign)
+    /// [ilog10_assign()](trait@BigUInt_Panic_Free#tymethod.ilog10_assign)
     /// can produce results more efficiently for base 10.
     /// 
     /// # Example 1
@@ -3814,9 +3814,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Methods
     /// This method is optimized for base 10;
-    /// [painc_free_ilog_uint()](struct@BigUInt#method.painc_free_ilog_uint)
+    /// [painc_free_ilog_uint()](trait@BigUInt_Panic_Free#tymethod.painc_free_ilog_uint)
     /// can produce results of the base other than 10, and
-    /// [painc_free_ilog2()](struct@BigUInt#method.painc_free_ilog2)
+    /// [painc_free_ilog2()](trait@BigUInt_Panic_Free#tymethod.painc_free_ilog2)
     /// can produce results more efficiently for base 10.
     /// 
     /// # Example 1
@@ -3858,9 +3858,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Counterpart Methods
     /// This method is not optimized for base 10 but provides convenience
     /// for base 10;
-    /// [panic_free_ilog_assign_uint()](struct@BigUInt#method.panic_free_ilog_assign_uint)
+    /// [panic_free_ilog_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_ilog_assign_uint)
     /// can produce results of the base other than 10, and
-    /// [panic_free_ilog2_assign()](struct@BigUInt#method.panic_free_ilog2_assign)
+    /// [panic_free_ilog2_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_ilog2_assign)
     /// can produce results more efficiently for base 2.
     /// 
     /// # Example 1
@@ -3937,7 +3937,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_gcd()](struct@BigUInt#method.panic_free_gcd)
+    /// [panic_free_gcd()](trait@BigUInt_Panic_Free#tymethod.panic_free_gcd)
     /// is proper rather than this method `panic_free_gcd_uint()`.
     /// 
     /// # Example 1 for normal case
@@ -4007,7 +4007,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_gcd_assign()](struct@BigUInt#method.panic_free_gcd_assign)
+    /// [panic_free_gcd_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_gcd_assign)
     /// is proper rather than this method `panic_free_gcd_assign_uint()`.
     /// 
     /// # Example 1 for normal case
@@ -4088,7 +4088,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_lcm()](struct@BigUInt#method.panic_free_lcm)
+    /// [panic_free_lcm()](trait@BigUInt_Panic_Free#tymethod.panic_free_lcm)
     /// is proper rather than this method `panic_free_lcm_uint()`.
     /// 
     /// # Example 1 for normal case
@@ -4157,7 +4157,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
-    /// [panic_free_lcm_assign()](struct@BigUInt#method.panic_free_lcm_assign)
+    /// [panic_free_lcm_assign()](trait@BigUInt_Panic_Free#tymethod.panic_free_lcm_assign)
     /// is proper rather than this method `panic_free_lcm_assign_uint()`.
     /// 
     /// # Example 1 for normal case
@@ -4238,12 +4238,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// | 0      | 0       | 0            | `UNDEFINED` |
     /// 
     /// # Counterpart Method
-    /// The method [panic_free_gcd_uint()](struct@BigUInt#method.panic_free_gcd_uint)
+    /// The method [panic_free_gcd_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_gcd_uint)
     /// is more efficient than this method `panic_free_gcd()`
     /// when the exponent `other` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128.
     /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [panic_free_gcd_uint()](struct@BigUInt#method.panic_free_gcd_uint).
+    /// use the method [panic_free_gcd_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_gcd_uint).
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -4303,12 +4303,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// | 0      | 0       | 0            | `UNDEFINED` |
     /// 
     /// # Counterpart Method
-    /// The method [panic_free_gcd_assign_uint()](struct@BigUInt#method.panic_free_gcd_assign_uint)
+    /// The method [panic_free_gcd_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_gcd_assign_uint)
     /// is more efficient than this method `panic_free_gcd_assign()`
     /// when the exponent `other` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128.
     /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [panic_free_gcd_assign_uint()](struct@BigUInt#method.panic_free_gcd_assign_uint).
+    /// use the method [panic_free_gcd_assign_uint()](trait@BigUInt_Panic_Free#tymethod.panic_free_gcd_assign_uint).
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -4380,12 +4380,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// | 0      | 0       | 0            | `UNDEFINED` |
     /// 
     /// # Counterpart Method
-    /// The method [lcm_uint()](struct@BigUInt#method.lcm_uint)
+    /// The method [lcm_uint()](trait@BigUInt_Panic_Free#tymethod.lcm_uint)
     /// is more efficient than this method `lcm()`
     /// when the exponent `other` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128.
     /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [lcm_uint()](struct@BigUInt#method.lcm_uint).
+    /// use the method [lcm_uint()](trait@BigUInt_Panic_Free#tymethod.lcm_uint).
     /// 
     /// # Example 1 for normal case
     /// ```
@@ -4444,12 +4444,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// | 0      | 0       | 0            | `UNDEFINED` |
     /// 
     /// # Counterpart Method
-    /// The method [gcd_assign_uint()](struct@BigUInt#method.gcd_assign_uint)
+    /// The method [gcd_assign_uint()](trait@BigUInt_Panic_Free#tymethod.gcd_assign_uint)
     /// is more efficient than this method `gcd_assign()`
     /// when the exponent `other` is primitive unsigned integral data type
     /// such as u8, u16, u32, u64, and u128.
     /// If `other` is the primitive unsigned integral data type number,
-    /// use the method [gcd_assign_uint()](struct@BigUInt#method.gcd_assign_uint).
+    /// use the method [gcd_assign_uint()](trait@BigUInt_Panic_Free#tymethod.gcd_assign_uint).
     /// 
     /// # Example 1 for normal case
     /// ```

@@ -35,7 +35,7 @@ The checked items have already been implemented including documentation __at lea
 
 <!--
 - [ ] Trait SmallUInt and its implementation for primitive data types --- SmallUInt
-    ===> Moved to Roadmap for ver. 2.0
+      ===> Moved to Roadmap for ver. 2.0
 -->
 
 ### Big Numbers: meaningful as itself and also the foundation for Asymmetric-Key Algorithms
@@ -44,20 +44,20 @@ The checked items have already been implemented including documentation __at lea
       You can find most of the methods you need for big integer calculation at
       [`BigUInt`](https://docs.rs/cryptocol/latest/cryptocol/number/big_uint/struct.BigUInt.html#struct.BigUInt).
 - [X] Auxiliary Fixed Sized Big Unsigned Integer Operation --- If you don't find what you need at
-      [`BigUInt`](https://docs.rs/cryptocol/latest/cryptocol/number/big_uint/struct.BigUInt.html#struct.BigUInt), you may find it at [`BigUInt_More`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_more/trait.BigUInt_More.html#trait.BigUInt_More), and [`BigUInt_Panic_Free`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_panic_free/trait.BigUInt_Panic_Free.html#trait.BigUInt_Panic_Free).
+      [`BigUInt`](https://docs.rs/cryptocol/latest/cryptocol/number/big_uint/struct.BigUInt.html#struct.BigUInt), you may find it at [`BigUInt_More`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_more/trait.BigUInt_More.html#trait.BigUInt_More), [`BigUInt_Modular`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_modular/trait.BigUInt_Modular.html#trait.BigUInt_Modular), [`BigUInt_Prime`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_prime/trait.BigUInt_Prime.html#trait.BigUInt_Prime), and [`BigUInt_Panic_Free`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_panic_free/trait.BigUInt_Panic_Free.html#trait.BigUInt_Panic_Free).
 <!--
 - [ ] Fixed Sized Big Signed Integer Operation --- BigSInt
-    ===> Moved to Roadmap for ver. 2.0
+      ===> Moved to Roadmap for ver. 2.0
 - [ ] Variable Sized Big Signed Integer Operation --- LargeInt
-    ===> Moved to Roadmap for ver. 2.0 or higher
+      ===> Moved to Roadmap for ver. 2.0 or higher
 -->
 
 ### Hash Algorithms
 
 <!--
 - [ ] MD2 hash algorithms based on 128 bits
-    --- Includes MD4 and its expanded versions.
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes MD4 and its expanded versions.
+      ===> Moved to Roadmap for ver. 2.0
 -->
 
 - [X] MD4 hash algorithms based on 128 bits --- Includes MD4 and its expanded versions.
@@ -67,8 +67,8 @@ The checked items have already been implemented including documentation __at lea
 
 <!--
 - [ ] MD6 hash algorithms based on 256 bits
-    --- Includes MD4 and its expanded versions.
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes MD4 and its expanded versions.
+      ===> Moved to Roadmap for ver. 2.0
 -->
 
 - [X] SHA-1 hash algorithms based on 160 bits --- 
@@ -89,95 +89,102 @@ The checked items have already been implemented including documentation __at lea
 
 <!--
 - [ ] RIPEMD hash algorithms based on 256 bits
-    --- Includes RIPEMD and its expanded versions.
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes RIPEMD and its expanded versions.
+      ===> Moved to Roadmap for ver. 2.0
 - [ ] BLAKE2 hash algorithms based on 256 bits
-    --- Includes BLAKE2 and its expanded versions.
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes BLAKE2 and its expanded versions.
+      ===> Moved to Roadmap for ver. 2.0
 - [ ] BLAKE3 hash algorithms based on 256 bits
-    --- Includes BLAKE3 and its expanded versions.
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes BLAKE3 and its expanded versions.
+      ===> Moved to Roadmap for ver. 2.0
 -->
 
 ### Symmetric-key Algorithms for the Encryption/Decryption of digital data
 
 <!--
 - [ ] Lucifer symmetric-key encryption/decryption algorithm
-    --- Includes Lucifer and its expanded versions. `Lucifer_Generic`
-    ===> Moved to Roadmap for ver. 2.0
-- [ ] Bluefish symmetric-key encryption/decryption algorithm
-    --- Includes Bluefish and its expanded versions. `Bluefish_Generic`
-    ===> Moved to Roadmap for ver. 2.0
-- [ ] Twofish symmetric-key encryption/decryption algorithm
-    --- Includes Twofish and its expanded versions. `Twofish_Generic`
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes Lucifer and its expanded versions. `Lucifer_Generic`
+      ===> Moved to Roadmap for ver. 2.0
 -->
 
 - [X] DES symmetric-key encryption/decryption algorithm and the traits and its implementations of Operation modes and padding bits for DES_Generic
-    --- Includes DES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
-    [`DES_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/des/struct.DES_Generic.html#struct.DES_Generic),
-    [`ECB_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
-    [`ECB_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
-    [`CBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_PKCS7.html#trait.CBC_PKCS7), [`CBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_ISO.html#trait.CBC_ISO), [`PCBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7), [`PCBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO), [`CFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CFB.html#trait.CFB), [`OFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.OFB.html#trait.OFB), and [`CTR`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CTR.html#trait.CTR).
+      --- Includes DES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
+      [`DES_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/des/struct.DES_Generic.html#struct.DES_Generic),
+      [`ECB_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+      [`ECB_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+      [`CBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_PKCS7.html#trait.CBC_PKCS7),   [`CBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_ISO.html#trait.CBC_ISO),   [`PCBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7), [`PCBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO), [`CFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CFB.html#trait.CFB), [`OFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.OFB.html#trait.OFB), and [`CTR`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CTR.html#trait.CTR).
 - [ ] AES symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for AES_Generic
-    --- Includes AES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `AES_Generic`, `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
-- [ ] BigCryptor64 and BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor64 and BigCryptor128
-    --- Includes 2DES, 3DES, 4DES, etc., 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `NAES`, `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
+      --- Includes AES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `AES_Generic`, `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
 
 <!--
+- [ ] Bluefish symmetric-key encryption/decryption algorithm
+      --- Includes Bluefish and its expanded versions. `Bluefish_Generic`
+      ===> Moved to Roadmap for ver. 2.0
+- [ ] Twofish symmetric-key encryption/decryption algorithm
+      --- Includes Twofish and its expanded versions. `Twofish_Generic`
+      ===> Moved to Roadmap for ver. 2.0
 - [ ] SEED symmetric-key encryption/decryption algorithm
-    --- Includes SEED and its expanded versions. `SEED_Generic`
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes SEED and its expanded versions. `SEED_Generic`
+      ===> Moved to Roadmap for ver. 2.0
 - [ ] HIGHT symmetric-key encryption/decryption algorithm
-    --- Includes HIGHT and its expanded versions. `HIGHT_Generic`
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes HIGHT and its expanded versions. `HIGHT_Generic`
+      ===> Moved to Roadmap for ver. 2.0
 - [ ] ARIA symmetric-key encryption/decryption algorithm
-    --- Includes ARIA and its expanded versions. `ARIA_Generic`
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes ARIA and its expanded versions. `ARIA_Generic`
+      ===> Moved to Roadmap for ver. 2.0
 - [ ] LEA symmetric-key encryption/decryption algorithm
-    --- Includes LEA and its expanded versions. `LEA_Generic`
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes LEA and its expanded versions. `LEA_Generic`
+      ===> Moved to Roadmap for ver. 2.0
 - [ ] RC2 symmetric-key encryption/decryption algorithm
-    --- Includes RC2 and its expanded versions. `RC2_Generic`
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes RC2 and its expanded versions. `RC2_Generic`
+      ===> Moved to Roadmap for ver. 2.0
 - [ ] RC4 symmetric-key encryption/decryption algorithm
-    --- Includes RC4 and its expanded versions. `RC4_Generic`
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes RC4 and its expanded versions. `RC4_Generic`
+      ===> Moved to Roadmap for ver. 2.0
 - [ ] RC5 symmetric-key encryption/decryption algorithm
-    --- Includes RC5 and its expanded versions. `RC5_Generic`
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes RC5 and its expanded versions. `RC5_Generic`
+      ===> Moved to Roadmap for ver. 2.0
 - [ ] RC6 symmetric-key encryption/decryption algorithm
-    --- Includes RC6 and its expanded versions. `RC6_Generic`
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes RC6 and its expanded versions. `RC6_Generic`
+      ===> Moved to Roadmap for ver. 2.0
 - [ ] Salsa20 symmetric-key encryption/decryption algorithm
-    --- Includes Salsa20 and its expanded versions. `Salsa20_Generic`
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes Salsa20 and its expanded versions. `Salsa20_Generic`
+      ===> Moved to Roadmap for ver. 2.0
 - [ ] Chacha20 symmetric-key encryption/decryption algorithm
-    --- Includes Chacha20 and its expanded versions. `Chacha20_Generic`
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes Chacha20 and its expanded versions. `Chacha20_Generic`
+      ===> Moved to Roadmap for ver. 2.0
 - [ ] IDEA symmetric-key encryption/decryption algorithm
-    --- Includes IDEA and its expanded versions. `IDEA_Generic`
-    ===> Moved to Roadmap for ver. 2.0
+      --- Includes IDEA and its expanded versions. `IDEA_Generic`
+      ===> Moved to Roadmap for ver. 2.0
 -->
+
+- [ ] BigCryptor64 and BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor64 and BigCryptor128
+      --- Includes 2DES, 3DES, 4DES, etc., 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `NAES`, `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
 
 ### Pseudo-Random Number Generator Algorithms
 
 - [ ] Pseudo-random number generator ---
-    struct [`Random_Generic`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_Generic.html#struct.Random_Generic) and
-    trait [`Random_Engine`](https://docs.rs/cryptocol/latest/cryptocol/random/trait_random_engine/trait.Random_Engine.html#trait.Random_Engine)
+      struct [`Random_Generic`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_Generic.html#struct.Random_Generic) and
+      trait [`Random_Engine`](https://docs.rs/cryptocol/latest/cryptocol/random/trait_random_engine/trait.Random_Engine.html#trait.Random_Engine)
 - [ ] Pseudo-random number generator engines using hash algorithms ---
-    [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD4.html#struct.Any_MD4),
-    [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD5.html#struct.Any_MD5),
-    [`Any_SHA0`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA0.html#struct.Any_SHA0),
-    [`Any_SHA1`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA1.html#struct.Any_SHA1),
-    [`Any_SHA2_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_256.html#struct.Any_SHA2_256),
-    [`Any_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_512.html#struct.Any_SHA2_512), and
-    [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512).
+      [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD4.html#struct.Any_MD4),
+      [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD5.html#struct.Any_MD5),
+      [`Any_SHA0`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA0.html#struct.Any_SHA0),
+      [`Any_SHA1`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA1.html#struct.Any_SHA1),
+      [`Any_SHA2_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_256.html#struct.Any_SHA2_256),
+      [`Any_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_512.html#struct.Any_SHA2_512),
+      [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512),
+      [`Any_SHA3_256`](random/random/struct.Any_SHA3_256.html#struct.Any_SHA3_256),
+      [`Any_SHA3_512`](random/random/struct.Any_SHA3_512.html#struct.Any_SHA3_512),
+      [`Any_SHAKE_128`](random/random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
+      [`Random_SHA2_512`](random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512).
+      [`Random_SHA3_512`](random/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512), and
+      [`Random_BIG_KECCAK_1024`](random/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024),
 - [ ] Pseudo-random number generator engines using symmetric-key encryption algorithms ---
-    [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES), 
-    `Any_TDES`, `Any_AES`, `Any_TAES`, `Random_AES`, and `Random_TAES`.
+      [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES), 
+      `Any_TDES`, `Any_AES`, `Any_TAES`, `Random_AES`, and `Random_TAES`.
 - [ ] Pseudo-random number generator engines using simple randomization algorithm ---
-    [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Num_C.html#struct.Any_Num_C)
+      [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Num_C.html#struct.Any_Num_C)
 
 ### Asymmetric-key Algorithms for the Encryption/Decryption of digital data
 
