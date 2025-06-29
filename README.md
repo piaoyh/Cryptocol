@@ -32,7 +32,6 @@ The checked items have already been implemented including documentation __at lea
 - [X] Trait SmallUInt, its implementation for primitive data types, and the implementation
       of it for the Unions ---
       [`SmallUInt`](https://docs.rs/cryptocol/latest/cryptocol/number/small_uint/trait.SmallUInt.html#trait.SmallUInt)
-
 <!--
 - [ ] Trait SmallUInt and its implementation for primitive data types --- SmallUInt
       ===> Moved to Roadmap for ver. 2.0
@@ -59,18 +58,15 @@ The checked items have already been implemented including documentation __at lea
       --- Includes MD4 and its expanded versions.
       ===> Moved to Roadmap for ver. 2.0
 -->
-
 - [X] MD4 hash algorithms based on 128 bits --- Includes MD4 and its expanded versions.
       [`MD4_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/md4/struct.MD4_Generic.html#struct.MD4_Generic)
 - [X] MD5 hash algorithms based on 128 bits --- Includes MD5 and its expanded versions.
       [`MD5_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/md5/struct.MD5_Generic.html#struct.MD5_Generic)
-
 <!--
 - [ ] MD6 hash algorithms based on 256 bits
       --- Includes MD4 and its expanded versions.
       ===> Moved to Roadmap for ver. 2.0
 -->
-
 - [X] SHA-1 hash algorithms based on 160 bits --- 
       Includes SHA-1, SHA-0, and their expanded versions.
       [`SHA1_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/sha1/struct.SHA1_Generic.html#struct.SHA1_Generic)
@@ -86,7 +82,6 @@ The checked items have already been implemented including documentation __at lea
 - [ ] SHA-3 and Keccak hash algorithms based on 8/16/32/64 bits --- 
       Includes SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE 128, SHAKE 256, and their expanded versions.
       [`Keccak_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/keccak/struct.Keccak_Generic.html#struct.Keccak_Generic)
-
 <!--
 - [ ] RIPEMD hash algorithms based on 256 bits
       --- Includes RIPEMD and its expanded versions.
@@ -106,7 +101,6 @@ The checked items have already been implemented including documentation __at lea
       --- Includes Lucifer and its expanded versions. `Lucifer_Generic`
       ===> Moved to Roadmap for ver. 2.0
 -->
-
 - [X] DES symmetric-key encryption/decryption algorithm and the traits and its implementations of Operation modes and padding bits for DES_Generic
       --- Includes DES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
       [`DES_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/des/struct.DES_Generic.html#struct.DES_Generic),
@@ -115,7 +109,6 @@ The checked items have already been implemented including documentation __at lea
       [`CBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_PKCS7.html#trait.CBC_PKCS7),   [`CBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_ISO.html#trait.CBC_ISO),   [`PCBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7), [`PCBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO), [`CFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CFB.html#trait.CFB), [`OFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.OFB.html#trait.OFB), and [`CTR`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CTR.html#trait.CTR).
 - [ ] AES symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for AES_Generic
       --- Includes AES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `AES_Generic`, `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
-
 <!--
 - [ ] Bluefish symmetric-key encryption/decryption algorithm
       --- Includes Bluefish and its expanded versions. `Bluefish_Generic`
@@ -194,10 +187,8 @@ The checked items have already been implemented including documentation __at lea
 - [ ] ElGamal
     ===> Moved to Roadmap for ver. 2.0
 -->
-
 - [ ] RSA (Ron Rivest, Adi Shamir, Leonard Adleman)
 - [ ] ECC (Elliptic Curve Cryptosystem)
-
 <!--
 - [ ] Rabin
     ===> Moved to Roadmap for ver. 2.0

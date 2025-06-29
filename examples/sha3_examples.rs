@@ -13,7 +13,7 @@
 
 pub fn main()
 {
-    sha3_rc();
+    // sha3_rc();
     // sha3_develop();
     sha3_quick_start1();
     sha3_quick_start2();
@@ -63,73 +63,73 @@ pub fn main()
     cshake_256();
 }
 
-fn sha3_rc()
-{
-    println!("sha3_rc");
-    fn register(reg: u8, rule: u8) -> (u8, u8)
-    {
-        ((reg >> 1) | (((reg & rule).count_ones() as u8) << 7), reg & 1)
-    }
+// fn sha3_rc()
+// {
+//     println!("sha3_rc");
+//     fn register(reg: u8, rule: u8) -> (u8, u8)
+//     {
+//         ((reg >> 1) | (((reg & rule).count_ones() as u8) << 7), reg & 1)
+//     }
 
-    #[allow(non_snake_case)]
-    fn make_rc(L: usize) -> [u128; 26]
-    {
-        let ROUNDS: usize = 12 + 2 * L;
-        let WIDTH: usize = 1 << L; // = 2_usize.pow(L as u32);
-        let mut RC = [0_u128; 26];
-        let mut bit = [0_usize; 7];
-        for j in 0..7_usize
-            { bit[j] = ((1_usize << j) - 1) % WIDTH; }
-        let mut state = 1_u8;
-        let mut output;
-        for i in 0..ROUNDS
-        {
-            for j in 0..7_usize
-            {
-                (state, output) = register(state, 0b_0111_0001);
-                if output != 0
-                    { RC[i] |= 1_u128 << bit[j]; }
-            }
-        }
-        RC
-    }
+//     #[allow(non_snake_case)]
+//     fn make_rc(L: usize) -> [u128; 26]
+//     {
+//         let ROUNDS: usize = 12 + 2 * L;
+//         let WIDTH: usize = 1 << L; // = 2_usize.pow(L as u32);
+//         let mut RC = [0_u128; 26];
+//         let mut bit = [0_usize; 7];
+//         for j in 0..7_usize
+//             { bit[j] = ((1_usize << j) - 1) % WIDTH; }
+//         let mut state = 1_u8;
+//         let mut output;
+//         for i in 0..ROUNDS
+//         {
+//             for j in 0..7_usize
+//             {
+//                 (state, output) = register(state, 0b_0111_0001);
+//                 if output != 0
+//                     { RC[i] |= 1_u128 << bit[j]; }
+//             }
+//         }
+//         RC
+//     }
 
-    println!("----------------\nL = 6");
-    let rc = make_rc(6);
-    for i in 0..24
-    {
-        println!("RC[{}] = {:#018X}", i, rc[i]);
-    }
+//     println!("----------------\nL = 6");
+//     let rc = make_rc(6);
+//     for i in 0..24
+//     {
+//         println!("RC[{}] = {:#018X}", i, rc[i]);
+//     }
 
-    let r: [u128; 26] = [
-                0x0000000000000001, 0x0000000000008082, 0x800000000000808A, 
-                0x8000000080008000, 0x000000000000808B, 0x0000000080000001, 
-                0x8000000080008081, 0x8000000000008009, 0x000000000000008A, 
-                0x0000000000000088, 0x0000000080008009, 0x000000008000000A, 
-                0x000000008000808B, 0x800000000000008B, 0x8000000000008089, 
-                0x8000000000008003, 0x8000000000008002, 0x8000000000000080, 
-                0x000000000000800A, 0x800000008000000A, 0x8000000080008081, 
-                0x8000000000008080, 0x0000000080000001, 0x8000000080008008,
-                0, 0 ];
-    assert_eq!(rc, r);
+//     let r: [u128; 26] = [
+//                 0x0000000000000001, 0x0000000000008082, 0x800000000000808A, 
+//                 0x8000000080008000, 0x000000000000808B, 0x0000000080000001, 
+//                 0x8000000080008081, 0x8000000000008009, 0x000000000000008A, 
+//                 0x0000000000000088, 0x0000000080008009, 0x000000008000000A, 
+//                 0x000000008000808B, 0x800000000000008B, 0x8000000000008089, 
+//                 0x8000000000008003, 0x8000000000008002, 0x8000000000000080, 
+//                 0x000000000000800A, 0x800000008000000A, 0x8000000080008081, 
+//                 0x8000000000008080, 0x0000000080000001, 0x8000000080008008,
+//                 0, 0 ];
+//     assert_eq!(rc, r);
 
-    println!("---------------\nL = 5");
-    let rc = make_rc(5);
-    for i in 0..22
-    {
-        println!("RC[{}] = {:#010X}", i, rc[i]);
-    }
+//     println!("---------------\nL = 5");
+//     let rc = make_rc(5);
+//     for i in 0..22
+//     {
+//         println!("RC[{}] = {:#010X}", i, rc[i]);
+//     }
 
-    let r: [u128; 26] = [
-                0x00000001, 0x00008082, 0x8000808A, 0x80008000,
-                0x0000808B, 0x80000001, 0x80008081, 0x80008009,
-                0x0000008A, 0x00000088, 0x80008009, 0x8000000A, 
-                0x8000808B, 0x8000008B, 0x80008089, 0x80008003, 
-                0x80008002, 0x80000080, 0x0000800A, 0x8000000A,
-                0x80008081, 0x80008080, 0, 0, 0, 0 ];
-    assert_eq!(rc, r);
-    println!("======================");
-}
+//     let r: [u128; 26] = [
+//                 0x00000001, 0x00008082, 0x8000808A, 0x80008000,
+//                 0x0000808B, 0x80000001, 0x80008081, 0x80008009,
+//                 0x0000008A, 0x00000088, 0x80008009, 0x8000000A, 
+//                 0x8000808B, 0x8000008B, 0x80008089, 0x80008003, 
+//                 0x80008002, 0x80000080, 0x0000800A, 0x8000000A,
+//                 0x80008081, 0x80008080, 0, 0, 0, 0 ];
+//     assert_eq!(rc, r);
+//     println!("======================");
+// }
 
 // fn sha3_develop()
 // {
@@ -149,7 +149,7 @@ fn sha3_rc()
 //     // sha3._show_state();
 //     // let hash = sha3.get_hash_value_in_string();
 //     // println!("hash = {}", hash);
-//     println!("======================");panic!("TEST");
+//     println!("======================");
 // }
 
 #[allow(unused_imports)]
@@ -1318,42 +1318,494 @@ fn sha3_get_hash_value_in_vec()
 fn sha3_get_hash_code_in_vec()
 {
     println!("sha3_get_hash_code_in_vec");
+    use std::io::Write;
+    
+    // Example for SHA3_384
+    use cryptocol::hash::SHA3_384;
+    let mut hash = SHA3_384::new();
+    let txt = "This is an example of the method get_hash_code_in_vec().";
+    hash.digest_str(txt);
+    let hash_value = hash.get_hash_code_in_vec::<48>();
+    let mut hs = String::new();
+    for h in hash_value
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "4DF9726A50546589EDED01B0D6CAF4DB022B382C6B0B6229EAD2F75B743940A0993891C6E38DB84931AAC1EB2CFAC9F8");
 
+    // Example for SHAKE_128
+    use cryptocol::hash::SHAKE_128;
+    let mut hash = SHAKE_128::new();
+    let txt = "This is an example of the method get_hash_code_in_vec().";
+    hash.digest_str(txt);
+    let hash_value = hash.get_hash_code_in_vec::<16>();
+    let mut hs = String::new();
+    for h in hash_value
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "3B3C3672FF31BEE1E2C43CEBDA1E19F2");
+
+    // Example for cSHAKE_128
+    use cryptocol::hash::cSHAKE_128;
+    let mut hash = cSHAKE_128::new();
+    let txt = "This is an example of the method get_hash_code_in_vec().";
+    hash.digest_str_customized("", "On my purpose", txt);
+    let hash_value = hash.get_hash_code_in_vec::<16>();
+    let mut hs = String::new();
+    for h in hash_value
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "4D38EFE9C53011DE5E0A1A8236838A00");
+
+    // Example for KECCAK_512
+    use cryptocol::hash::KECCAK_512;
+    let mut hash = KECCAK_512::new();
+    let txt = "This is an example of the method get_hash_code_in_vec().";
+    hash.digest_str(txt);
+    let hash_value = hash.get_hash_code_in_vec::<64>();
+    let mut hs = String::new();
+    for h in hash_value
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "F1CC061FEFA62EF4E9481717B868A85852561CFDF0803C9E66EBEC4FBB8E05672E5216F697D3BF3A429AB64451259A465CD78F5913435202C42710EEB3510D2A");
+
+    // Example for BIG_SHA3_768
+    use cryptocol::hash::BIG_SHA3_768;
+    let mut hash = BIG_SHA3_768::new();
+    let txt = "This is an example of the method get_hash_code_in_vec().";
+    hash.digest_str_customized("", "On my purpose", txt);
+    let hash_value = hash.get_hash_code_in_vec::<96>();
+    let mut hs = String::new();
+    for h in hash_value
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "60F10FF289A88D8852C6E35B216522AD80E4CA51B3113AE090D9F3A776230B54AD7EE9BA9586B5BB5A36E1CF55DD9ABC92C9C34DF144EE4A75C74ADC378882C970FF0800697E72ECC22CE653A25F8A619107F7A6097DAE12431302983BEDD32A");
+
+    // Example for SMALL_SHAKE_224
+    use cryptocol::hash::SMALL_SHAKE_224;
+    let mut hash = SMALL_SHAKE_224::new();
+    let txt = "This is an example of the method get_hash_code_in_vec().";
+    hash.digest_str(txt);
+    let hash_value = hash.get_hash_code_in_vec::<28>();
+    let mut hs = String::new();
+    for h in hash_value
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "DA7856F7E058BF8785D36983DAD8E0CD63F67B10B55007495CE3E6E1");
+
+    // Example for SMALLER_KECCAK_128
+    use cryptocol::hash::SMALLER_KECCAK_128;
+    let mut hash = SMALLER_KECCAK_128::new();
+    let txt = "This is an example of the method get_hash_code_in_vec().";
+    hash.digest_str(txt);
+    let hash_value = hash.get_hash_code_in_vec::<16>();
+    let mut hs = String::new();
+    for h in hash_value
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "709EE0D2B084AFED94BC774C4F0BE31B");
+
+    // Example for TINY_SHAKE_64
+    use cryptocol::hash::TINY_SHAKE_64;
+    let mut hash = TINY_SHAKE_64::new();
+    let txt = "This is an example of the method get_hash_code_in_vec().";
+    hash.digest_str(txt);
+    let hash_value = hash.get_hash_code_in_vec::<8>();
+    let mut hs = String::new();
+    for h in hash_value
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "4D2CF7FAC386B2B9");
     println!("======================");
 }
 
 fn sha3_get_hash_value_in_string()
 {
     println!("sha3_get_hash_value_in_string");
+    use std::io::Write;
+    
+    // Example for SHA3_256
+    use cryptocol::hash::SHA3_256;
+    let mut hash = SHA3_256::new();
+    let txt = "This is an example of the method get_hash_value_in_string().";
+    hash.digest_str(txt);
+    let hs = hash.get_hash_value_in_string();
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "2075C0B4930865BA252F5BA2A7DF5AC4AF587B9E054B8BCC249CED216AFAA459");
 
+    // Example for SHAKE_256
+    use cryptocol::hash::SHAKE_256;
+    let mut hash = SHAKE_256::new();
+    let txt = "This is an example of the method get_hash_value_in_string().";
+    hash.digest_str(txt);
+    let hs = hash.get_hash_value_in_string();
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "9268E4476035969FA6E0B3D3ECF480B712CAFC6223B3E2C4DF5223B7C84692DEBB9A3FFB7BC411D74ADC58732630CE535F6C71200056DAA49E5FE57DBFFE2E87");
+
+    // Example for cSHAKE_256
+    use cryptocol::hash::cSHAKE_256;
+    let mut hash = cSHAKE_256::new();
+    let txt = "This is an example of the method get_hash_value_in_string().";
+    hash.digest_str_customized("", "On my purpose", txt);
+    let hs = hash.get_hash_value_in_string();
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "30E2B813849025D827C9983EA9EFDC3B072EA6E8EC93548C7EBCB7AF827CBB47EC7A5E3908B88A9596B18B498895906D7876F984963F1B05C67B01C7E6F8900D");
+
+    // Example for KECCAK_256
+    use cryptocol::hash::KECCAK_256;
+    let mut hash = KECCAK_256::new();
+    let txt = "This is an example of the method get_hash_value_in_string().";
+    hash.digest_str(txt);
+    let hs = hash.get_hash_value_in_string();
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "9FCCFF67F1C5D6F4B01FB29E3A2CBFE343A3E1DEC23D05C5C8EE422E6CC548CC");
+
+    // Example for BIG_KECCAK_768
+    use cryptocol::hash::BIG_KECCAK_768;
+    let mut hash = BIG_KECCAK_768::new();
+    let txt = "This is an example of the method get_hash_value_in_string().";
+    hash.digest_str_customized("", "On my purpose", txt);
+    let hs = hash.get_hash_value_in_string();
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "2C9DFD0270B22349579A075211B8A8BD1F0564E2BB686A33C8E6649669F9084957C2581B32DC105C61CC40E074F0B718F2ED61C0F40C72457A56D0C90A77E330D58386AF1D2DF5EBC4D6B1F1E0FD966524F8F1CAD57E2689C35DB8DBC1E3309C");
+
+    // Example for SMALL_KECCAK_256
+    use cryptocol::hash::SMALL_KECCAK_256;
+    let mut hash = SMALL_KECCAK_256::new();
+    let txt = "This is an example of the method get_hash_value_in_string().";
+    hash.digest_str(txt);
+    let hs = hash.get_hash_value_in_string();
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "583DF8ABCD3A5A9A06978441D41C4B0C332C77341EBD2011D6277CAB5AE50AFD");
+
+    // Example for SMALLER_SHAKE_128
+    use cryptocol::hash::SMALLER_SHAKE_128;
+    let mut hash = SMALLER_SHAKE_128::new();
+    let txt = "This is an example of the method get_hash_value_in_string().";
+    hash.digest_str(txt);
+    let hs = hash.get_hash_value_in_string();
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "C3DAB03A198E0EEE5F32D1AA1D880C1A0F9FFCB6433E21F9952579A6F47448B5");
+
+    // Example for TINY_KECCAK_64
+    use cryptocol::hash::TINY_KECCAK_64;
+    let mut hash = TINY_KECCAK_64::new();
+    let txt = "This is an example of the method get_hash_value_in_string().";
+    hash.digest_str(txt);
+    let hs = hash.get_hash_value_in_string();
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "93C59FC524197928");
     println!("======================");
 }
 
 fn sha3_get_hash_code_in_string()
 {
     println!("sha3_get_hash_code_in_string");
+    use std::io::Write;
+    
+    // Example for SHA3_512
+    use cryptocol::hash::SHA3_512;
+    let mut hash = SHA3_512::new();
+    let txt = "This is an example of the method get_hash_code_in_string().";
+    hash.digest_str(txt);
+    let hs = hash.get_hash_code_in_string(64);
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "F9DA1EAB4A2F7204BDA5E06DACDC23D98491CB5E313F7F74594F9852F8122DAFB03A715BE6836B17F6ACD9EC6A1BA12AD8F0C8C221A9BD20D0834AB78C6FB6A7");
 
+    // Example for SHAKE_128
+    use cryptocol::hash::SHAKE_128;
+    let mut hash = SHAKE_128::new();
+    let txt = "This is an example of the method get_hash_code_in_string().";
+    hash.digest_str(txt);
+    let hs = hash.get_hash_code_in_string(16);
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "263E824E0C8D04149616D4F8C5E53567");
+
+    // Example for cSHAKE_128
+    use cryptocol::hash::cSHAKE_128;
+    let mut hash = cSHAKE_128::new();
+    let txt = "This is an example of the method get_hash_code_in_string().";
+    hash.digest_str_customized("", "On my purpose", txt);
+    let hs = hash.get_hash_code_in_string(16);
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "8FFB73ED04238F85C05FC238347A7865");
+
+    // Example for KECCAK_224
+    use cryptocol::hash::KECCAK_224;
+    let mut hash = KECCAK_224::new();
+    let txt = "This is an example of the method get_hash_code_in_string().";
+    hash.digest_str(txt);
+    let hs = hash.get_hash_code_in_string(28);
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "99E3EDC19CAB6F9D10EE88B560EC84DCF9B421DA12BD515F5A3FF38A");
+
+    // Example for BIG_SHAKE_768
+    use cryptocol::hash::BIG_SHAKE_768;
+    let mut hash = BIG_SHAKE_768::new();
+    let txt = "This is an example of the method get_hash_code_in_string().";
+    hash.digest_str_customized("", "On my purpose", txt);
+    let hs = hash.get_hash_code_in_string(96);
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "D2FFC59F9C30C90CB09797E7387F4A7D9307988054C0A7D433CFD8062D0D13C33DE73E59C7A052752569B5ED95144B180D8D07E5DB507861E7672E47388DC6B021D267A1410BBBB5571EAC2EC9901BB1826EED5DDC02B57865428D206C0F77A7");
+
+    // Example for SMALL_SHAKE_224
+    use cryptocol::hash::SMALL_SHAKE_224;
+    let mut hash = SMALL_SHAKE_224::new();
+    let txt = "This is an example of the method get_hash_code_in_string().";
+    hash.digest_str(txt);
+    let hs = hash.get_hash_code_in_string(28);
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "F900A4457D5691B9F55E2E655FBC92CBA5CA29DE49AE61DA93A90540");
+
+    // Example for SMALLER_KECCAK_128
+    use cryptocol::hash::SMALLER_KECCAK_128;
+    let mut hash = SMALLER_KECCAK_128::new();
+    let txt = "This is an example of the method get_hash_code_in_string().";
+    hash.digest_str(txt);
+    let hs = hash.get_hash_code_in_string(16);
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "F3F0A63CBFB028C9779B2AB2CBBA84B0");
+
+    // Example for TINY_SHA3_64
+    use cryptocol::hash::TINY_SHAKE_64;
+    let mut hash = TINY_SHAKE_64::new();
+    let txt = "This is an example of the method get_hash_code_in_string().";
+    hash.digest_str(txt);
+    let hs = hash.get_hash_code_in_string(8);
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "9900A025EB6C8C1A");
     println!("======================");
 }
 
 fn sha3_push_hash_value_in_array()
 {
     println!("sha3_push_hash_value_in_array");
+    use std::io::Write;
+    
+    // Example for SHA3_224
+    use cryptocol::hash::SHA3_224;
+    let mut hash = SHA3_224::new();
+    let txt = "This is an example of the method push_hash_value_in_array().";
+    hash.digest_str(txt);
+    let mut hash_value = [0_u8; 28];
+    hash.push_hash_value_in_array(&mut hash_value);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "84C1FA767D0DB1DF9F886333681641A55253AB934A16B51376A5403C");
 
+    // Example for SHAKE_256
+    use cryptocol::hash::SHAKE_256;
+    let mut hash = SHAKE_256::new();
+    let txt = "This is an example of the method push_hash_value_in_array().";
+    hash.digest_str(txt);
+    let mut hash_value = [0_u8; 32];
+    hash.push_hash_value_in_array(&mut hash_value);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "2543CE197EFAE3CFFCA5BDF1FD54C165CF6D985F082605674FB54B8E637A0F02");
+
+    // Example for cSHAKE_256
+    use cryptocol::hash::cSHAKE_256;
+    let mut hash = cSHAKE_256::new();
+    let txt = "This is an example of the method push_hash_value_in_array().";
+    hash.digest_str_customized("", "On my purpose", txt);
+    let mut hash_value = [0_u8; 32];
+    hash.push_hash_value_in_array(&mut hash_value);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "279E613EA73C29E9EA1262F2F0A25013B175FEDA3BA11C2518F912E5784DF49B");
+
+    // Example for KECCAK_384
+    use cryptocol::hash::KECCAK_384;
+    let mut hash = KECCAK_384::new();
+    let txt = "This is an example of the method push_hash_value_in_array().";
+    hash.digest_str(txt);
+    let mut hash_value = [0_u8; 48];
+    hash.push_hash_value_in_array(&mut hash_value);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "E4B35E50230F73BA59DC699353FD9241E8B367363BEBC7E5B99E4E1B24D548039C43C5D7F44143825EFA69DD1BBE0BAA");
+
+    // Example for BIG_SHA3_512
+    use cryptocol::hash::BIG_SHA3_512;
+    let mut hash = BIG_SHA3_512::new();
+    let txt = "This is an example of the method push_hash_value_in_array().";
+    hash.digest_str_customized("", "On my purpose", txt);
+    let mut hash_value = [0_u8; 64];
+    hash.push_hash_value_in_array(&mut hash_value);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "AE12A8F8E7DAB0ED91CAF577808D47B9DD0904918C80EA4531B7B0E68A21422F0CE281913C227F033BDE13562AA0284CB5CBCFEA240902D2BA6CE20B3E4B8B69");
+
+    // Example for SMALL_SHA3_384
+    use cryptocol::hash::SMALL_SHA3_384;
+    let mut hash = SMALL_SHA3_384::new();
+    let txt = "This is an example of the method push_hash_value_in_array().";
+    hash.digest_str(txt);
+    let mut hash_value = [0_u8; 48];
+    hash.push_hash_value_in_array(&mut hash_value);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "DA8C0DA96CAFD8B0EDEE2C5C42FCB7F9C84BD2CEA4DE557D85148EA24B91E0283B25E8D273D1A2A604433AC3963C99D3");
+
+    // Example for SMALLER_SHAKE_128
+    use cryptocol::hash::SMALLER_SHAKE_128;
+    let mut hash = SMALLER_SHAKE_128::new();
+    let txt = "This is an example of the method push_hash_value_in_array().";
+    hash.digest_str(txt);
+    let mut hash_value = [0_u8; 16];
+    hash.push_hash_value_in_array(&mut hash_value);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "9F562477441E20B3AF95A1CC0BA7AB60");
+
+    // Example for TINY_SHAKE_64
+    use cryptocol::hash::TINY_SHAKE_64;
+    let mut hash = TINY_SHAKE_64::new();
+    let txt = "This is an example of the method push_hash_value_in_array().";
+    hash.digest_str(txt);
+    let mut hash_value = [0_u8; 8];
+    hash.push_hash_value_in_array(&mut hash_value);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "64426F46B9C6CBA2");
     println!("======================");
 }
 
 fn sha3_get_hash_value()
 {
     println!("sha3_get_hash_value");
+    use std::io::Write;
+    
+    // Example for SHA3_384
+    use cryptocol::hash::SHA3_384;
+    let mut hash = SHA3_384::new();
+    let txt = "This is an example of the method get_hash_value().";
+    hash.digest_str(txt);
+    let mut hash_value = [0_u8; 48];
+    hash.get_hash_value(hash_value.as_mut_ptr(), 48);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "96298277B7B1EB85520425DD38DA75B9C1CC5D4CF34FCFAD681C17D0BD9BCEEE02C4D3ED06E9575579BBCD4A2B8614AC");
 
+    // Example for SHAKE_128
+    use cryptocol::hash::SHAKE_128;
+    let mut hash = SHAKE_128::new();
+    let txt = "This is an example of the method get_hash_value().";
+    hash.digest_str(txt);
+    let mut hash_value = [0_u8; 16];
+    hash.get_hash_value(hash_value.as_mut_ptr(), 16);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "21E161B692F48432835D9F47BB23215B");
+
+    // Example for cSHAKE_128
+    use cryptocol::hash::cSHAKE_128;
+    let mut hash = cSHAKE_128::new();
+    let txt = "This is an example of the method get_hash_value().";
+    hash.digest_str_customized("", "On my purpose", txt);
+    let mut hash_value = [0_u8; 16];
+    hash.get_hash_value(hash_value.as_mut_ptr(), 16);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "6F904C59782586500E8ADF61F64E6888");
+
+    // Example for KECCAK_512
+    use cryptocol::hash::KECCAK_512;
+    let mut hash = KECCAK_512::new();
+    let txt = "This is an example of the method get_hash_value().";
+    hash.digest_str(txt);
+    let mut hash_value = [0_u8; 64];
+    hash.get_hash_value(hash_value.as_mut_ptr(), 64);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "980565BE887AB97CAD841C3375418AA787EA7FC99D3577E9B13796662F7AC20D3BCCF25C02941F0790CE7B2EFD65ADB4EE46CD2B82780B44F024A24C48EC4637");
+
+    // Example for BIG_KECCAK_512
+    use cryptocol::hash::BIG_KECCAK_512;
+    let mut hash = BIG_KECCAK_512::new();
+    let txt = "This is an example of the method get_hash_value().";
+    hash.digest_str_customized("", "On my purpose", txt);
+    let mut hash_value = [0_u8; 64];
+    hash.get_hash_value(hash_value.as_mut_ptr(), 64);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "3DE03545158E3402B0970C337E7F064C6797C0B8E47791BEAC64B123552DFC1E96E6B210098A80E9F9073F27D726E446C0380FE226E5BAA5E1CE0B74D109F4E9");
+
+    // Example for SMALL_KECCAK_384
+    use cryptocol::hash::SMALL_KECCAK_384;
+    let mut hash = SMALL_KECCAK_384::new();
+    let txt = "This is an example of the method get_hash_value().";
+    hash.digest_str(txt);
+    let mut hash_value = [0_u8; 48];
+    hash.get_hash_value(hash_value.as_mut_ptr(), 48);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "50A3A87E0EFA0FA419364C9240A0CB19DDB81167908D4AF863725243FE85C3BF02EB48C53B31D05ACE19480558CBE7E1");
+
+    // Example for SMALLER_KECCAK_128
+    use cryptocol::hash::SMALLER_KECCAK_128;
+    let mut hash = SMALLER_KECCAK_128::new();
+    let txt = "This is an example of the method get_hash_value().";
+    hash.digest_str(txt);
+    let mut hash_value = [0_u8; 16];
+    hash.get_hash_value(hash_value.as_mut_ptr(), 48);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "F85CA9D70ECD11D2F2E63CEE5E7C52F4");
+
+    // Example for TINY_KECCAK_64
+    use cryptocol::hash::TINY_KECCAK_64;
+    let mut hash = TINY_KECCAK_64::new();
+    let txt = "This is an example of the method get_hash_value().";
+    hash.digest_str(txt);
+    let mut hash_value = [0_u8; 8];
+    hash.get_hash_value(hash_value.as_mut_ptr(), 48);
+    let mut hs = String::new();
+    for h in hash_value.iter()
+        { unsafe { write!(hs.as_mut_vec(), "{:02X}", h); } }
+    println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    assert_eq!(hs, "D948C3806BC9413F");
     println!("======================");
 }
 
 fn sha3_read_hash_value_in_hexadecimal()
 {
     println!("sha3_read_hash_value_in_hexadecimal");
-
+    use cryptocol::hash::SHA3_256;
+    let hash_value = [01u8, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF, 0x00, 0x11, 0x22, 0x33,0x44, 0x55, 0x66, 0x77];
+    let hs = SHA3_256::read_hash_value_in_hexadecimal(&hash_value);
+    println!("Hash =\t{}", hs);
+    assert_eq!(hs, "0123456789ABCDEF0011223344556677");
     println!("======================");
 }
 
