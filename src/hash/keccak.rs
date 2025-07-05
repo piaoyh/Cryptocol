@@ -1596,6 +1596,123 @@ pub type TINY_SHA3_64 = Keccak_Generic<9, {KECCAK_CONST::SHA3}, 18, u8>;
 /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hash);
 /// assert_eq!(hash.to_string(), "0A77A1191A768A1D0D7BF280F105D6399C2B8DE2280EF4BE307F99DDFC6A8895C8262A536405680DD01CC3699D5186043E406AE3FE01287A977EA4121F85BF53");
 /// ```
+/// 
+/// # Big-endian issue
+/// It is just experimental for Big Endian CPUs. So, you are not encouraged
+/// to use it for Big Endian CPUs for serious purpose. Only use this crate
+/// for Big-endian CPUs with your own full responsibility.
+/// 
+/// # A Simple but Useful Application using cryptocol
+/// The following is the source code of the commandline SHA3 hash value 
+/// extractor using the struct SHA3 of this module. You can get the hash
+/// value from a text or a file. The following source code assumes its
+/// executable file name will be "sha3_app". You can find all the examples
+/// including the following source code in the folder "examples" of this crate.
+/// ```
+/// use std::{ io, env, fs };
+/// use std::io::BufRead;
+/// use std::convert::From;
+/// use cryptocol::hash::SHA3_256;
+/// 
+/// type HASH = SHA3_256;
+/// 
+/// fn main()
+/// {
+///     let args: Vec<String> = env::args().collect();
+///     if args.len() < 3
+///     {
+///         help();
+///         return;
+///     }
+/// 
+///     let arg = &args[1][..];
+///     match arg
+///     {
+///         "--text" | "-t" =>  { get_hash_value_from_text(&args[2][..]); },
+///         "--file" | "-f" =>  { get_hash_value_from_file(&args[2][..]); },
+///         "--check" | "-c" => { check_files(&args[2][..]) },
+///         _ =>  { help(); },
+///     }
+/// }
+/// 
+/// fn get_hash_value_from_text(txt: &str)
+/// {
+///     let mut hash = HASH::new();
+///     hash.digest_str(txt);
+///     println!("Hash value:\t{}", hash.get_hash_value_in_string());
+/// }
+/// 
+/// fn get_hash_value_from_file(file: &str)
+/// {
+///     if let Ok(contents) = fs::read(file)
+///     {
+///         let mut hash = HASH::new();
+///         hash.digest_vec(&contents);
+///         println!("Hash value:\t{}", hash.get_hash_value_in_string());
+///     }
+///     else
+///     {
+///         println!("File Error!");
+///     }
+/// }
+/// 
+/// fn check_files(file_list: &str)
+/// {
+///     let mut reader;
+///     match fs::File::open(file_list)
+///     {
+///         Ok(file) => {
+///                 reader = io::BufReader::new(file);
+///                 let mut line = String::new();
+///                 while let Ok(n) = reader.read_line(&mut line)
+///                 {
+///                     if n == 0
+///                         { break; }
+///                     let txt = line.trim();
+///                     if txt.chars().nth(0).unwrap() == '#'
+///                     { 
+///                         line.clear();
+///                         continue;
+///                     }
+///                     let elem: Vec<&str> = txt.split_whitespace().collect();
+///                     let item = elem[0];
+///                     let h = String::from(elem[1]).to_uppercase();
+///                     if let Ok(contents) = fs::read(item)
+///                     {
+///                         let mut hash = HASH::new();
+///                         hash.digest_vec(&contents);
+///                         if hash.to_string() == h
+///                             { println!("{} ---> OK", item); }
+///                         else
+///                             { println!("{} ---> Corrupted", item); }
+///                     }
+///                     line.clear();
+///                 }
+///             },
+///         _ => {
+///                 println!("File open error");
+///                 return;
+///             }
+///     }
+/// }
+/// 
+/// fn help()
+/// {
+///     println!("This is an SHA3_256 hash value extractor from a text or a file, using cryptocol.");
+///     println!("Usage: sha3_app <option> <source>");
+///     println!("options       description");
+///     println!("--text, -t    : <source> is a text to get a hash code.");
+///     println!("                The text should be enclosed by ' or \".");
+///     println!("--file, -f    : <source> is the name of the file to get a hash code.");
+///     println!("--check, -c   : <source> is the name of the file that contains pairs");
+///     println!("                of file and its hash code.");
+///     println!("--help, -h    : print this help message on screen\n");
+///     println!("Examples:");
+///     println!("\tsha3_app -t 'How are you doing?'");
+///     println!("\tsha3_app -f linuxmint-21.3-cinnamon-64bit.iso");
+///     println!("\tsha3_app -c CHECKSUM");
+/// }
+/// ```
 #[derive(Debug, Clone)]
 #[allow(non_camel_case_types)]
 pub struct Keccak_Generic<const RATE: usize = 72, const PADDING: usize = 0,
@@ -2323,10 +2440,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     // pub fn get_hash_value_in_vec(&mut self) -> Vec<u8>
-    /// Returns a hash value in the form of Vec<u8> object.
+    /// Returns a hash value in the form of `Vec<u8>` object.
     /// 
     /// # Output
-    /// A hash value in the form of Vec<u8> object.
+    /// A hash value in the form of `Vec<u8>` object.
     /// 
     /// # Features
     /// The length of output hash value is automatically determined to be:
@@ -2375,11 +2492,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     // pub fn get_hash_code_in_vec<const N: usize>(&mut self) -> Vec<u8>
-    /// Returns a hash value in the form of Vec<u8> object with the length
+    /// Returns a hash value in the form of `Vec<u8>` object with the length
     /// indicated by generic parameter.
     /// 
     /// # Output
-    /// A hash value in the form of Vec<u8> object.
+    /// A hash value in the form of `Vec<u8>` object.
     /// 
     /// # Features
     /// The length of output hash value should be manually determined

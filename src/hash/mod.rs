@@ -1,4 +1,4 @@
-// Copyright 2023, 2024 PARK Youngho.
+// Copyright 2023, 2024, 2025 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -60,7 +60,7 @@
 //! - For `SHA-256`, try [this](struct@SHA2_256_Generic#a-simple-but-useful-application-using-cryptocol).
 //! - For `SHA-512`, try [this](struct@SHA2_512_Generic#a-simple-but-useful-application-using-cryptocol).
 //! - For `SHA-512/t`, try [this](struct@SHA2_512_t_Generic#a-simple-but-useful-application-using-cryptocol).
-//! - For `SHA3-512`, try [this](struct@Keccak_Generic#a-simple-but-useful-application-using-cryptocol).
+//! - For `SHA3`, try [this](struct@Keccak_Generic#a-simple-but-useful-application-using-cryptocol).
 //! 
 //! The following application is made by combining above all applications.
 //! 
@@ -98,7 +98,7 @@
 //!         "sha2_512_256" => { print_hash_value(&args[2][..], SHA2_512_256::new(), &args[3][..]); },
 //!         "sha2_384" => { print_hash_value(&args[2][..], SHA2_384::new(), &args[3][..]); },
 //!         "sha2_512_t_224" => { print_hash_value(&args[2][..], SHA2_512_t_224::new(), &args[3][..]); },
-//!         "sha3_512" => { print_hash_value(&args[2][..], SHA3_512::new(), &args[3][..]); },
+//!         "sha3" => { print_hash_value(&args[2][..], SHA3_256::new(), &args[3][..]); },
 //!         _ => { help(); },
 //!     }
 //! }
@@ -186,7 +186,7 @@
 //!     println!("sha2_512_256      : SHA2_512_256 algorithm");
 //!     println!("sha2_384          : SHA2_384 algorithm");
 //!     println!("sha2_512_t_224    : SHA2_512_t_224 algorithm\n");
-//!     println!("sha3_512          : SHA3_512 algorithm");
+//!     println!("sha3              : SHA3_256 algorithm");
 //!     println!("options           description");
 //!     println!("--text, -t        : <source> is a text to get a hash code.");
 //!     println!("                    The text should be enclosed by ' or \".");
@@ -195,9 +195,9 @@
 //!     println!("                    of file and its hash code.");
 //!     println!("--help, -h        : print this help message on screen\n");
 //!     println!("Examples:");
-//!     println!("\thash_app sha2_256 -t 'How are you doing?'");
-//!     println!("\thash_app sha2_384 -f linuxmint-21.3-cinnamon-64bit.iso");
-//!     println!("\thash_app sha2_512 -c CHECKSUM");
+//!     println!("\thash_app md5 -t 'How are you doing?'");
+//!     println!("\thash_app sha2_256 -f linuxmint-21.3-cinnamon-64bit.iso");
+//!     println!("\thash_app sha3 -c CHECKSUM");
 //! }
 //! 
 //! trait Hash
@@ -229,7 +229,7 @@
 //! impl_hash_for!{SHA2_512}
 //! impl_hash_for!{SHA2_512_256}
 //! impl_hash_for!{SHA2_512_t_224}
-//! impl_hash_for!{SHA3_512}
+//! impl_hash_for!{SHA3_256}
 //! ```
 
 mod md4;

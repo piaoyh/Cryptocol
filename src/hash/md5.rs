@@ -1,4 +1,4 @@
-// Copyright 2024 PARK Youngho.
+// Copyright 2024, 2025 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -438,6 +438,8 @@ pub type MD5 = MD5_Generic;     // equivalent to `pub type MD5 = MD5_Expanded;`
 /// use std::convert::From;
 /// use cryptocol::hash::MD5;
 /// 
+/// type HASH = MD5;
+/// 
 /// fn main()
 /// {
 ///     let args: Vec<String> = env::args().collect();
@@ -459,7 +461,7 @@ pub type MD5 = MD5_Generic;     // equivalent to `pub type MD5 = MD5_Expanded;`
 /// 
 /// fn get_hash_value_from_text(txt: &str)
 /// {
-///     let mut hash = MD5::new();
+///     let mut hash = HASH::new();
 ///     hash.digest_str(txt);
 ///     println!("Hash value:\t{}", hash.get_hash_value_in_string());
 /// }
@@ -468,7 +470,7 @@ pub type MD5 = MD5_Generic;     // equivalent to `pub type MD5 = MD5_Expanded;`
 /// {
 ///     if let Ok(contents) = fs::read(file)
 ///     {
-///         let mut hash = MD5::new();
+///         let mut hash = HASH::new();
 ///         hash.digest_vec(&contents);
 ///         println!("Hash value:\t{}", hash.get_hash_value_in_string());
 ///     }
@@ -501,7 +503,7 @@ pub type MD5 = MD5_Generic;     // equivalent to `pub type MD5 = MD5_Expanded;`
 ///                     let h = String::from(elem[1]).to_uppercase();
 ///                     if let Ok(contents) = fs::read(item)
 ///                     {
-///                         let mut hash = MD5::new();
+///                         let mut hash = HASH::new();
 ///                         hash.digest_vec(&contents);
 ///                         if hash.to_string() == h
 ///                             { println!("{} ---> OK", item); }

@@ -634,7 +634,7 @@ pub trait CTR<T> : Sized
     ///   Instead, use other safer methods such as
     ///   encrypt_vec_into_*().
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - If `message` is an empty Vec<U> object Vec::<U>::new(),
+    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`,
     ///   nothing will be stored in the memory area that starts from `cipher`.
     /// 
     /// # For DES and its variants
@@ -692,7 +692,7 @@ pub trait CTR<T> : Sized
     ///   it means this method failed in encryption.
     /// 
     /// # Features
-    /// - If `message` is an empty Vec<U> object Vec::<U>::new(),
+    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`,
     ///   nothing will be stored in the `Vec<V>` object `cipher`.
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
@@ -753,7 +753,7 @@ pub trait CTR<T> : Sized
     ///   it means this method failed in encryption.
     /// 
     /// # Features
-    /// - If `message` is an empty Vec<U> object Vec::<U>::new(),
+    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`,
     ///   nothing will be stored in the array `[V; N]` object `cipher`.
     /// - If `V::size_in_bytes() * N` is less than 
     ///   `U::size_in_bytes() * message.len()`'s next multiple of 8,

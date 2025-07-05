@@ -6,49 +6,95 @@
 // This file may not be copied, modified, or distributed
 // except according to those terms.
 
+
+#![allow(unused_imports)]
 // #![allow(missing_docs)]
 // #![allow(rustdoc::missing_doc_code_examples)]
 // #[allow(non_camel_case_types)]
-// #[allow(dead_code)]``
+// #[allow(dead_code)]
+
 pub fn main()
 {
-    biguint_add_uint();
-    biguint_sub_uint();
-    biguint_mul_uint();
-    biguint_div_uint();
-    biguint_rem_uint();
-    biguint_next_multiple_uint();
-    biguint_miscellaneous_arithmatic_operation_uint();
-    biguint_pow_uint();
-    biguint_iroot_uint();
-    biguint_ilog_uint();
+    biguint_more_quick_start();
 
-    biguint_add();
-    biguint_sub();
-    biguint_mul();
-    biguint_div();
-    biguint_rem();
-    biguint_next_multiple();
-    biguint_miscellaneous_arithmatic_operation();
-    biguint_pow();
-    biguint_iroot();
-    biguint_ilog();
-    biguint_shift();
+    biguint_more_add_uint();
+    biguint_more_sub_uint();
+    biguint_more_mul_uint();
+    biguint_more_div_uint();
+    biguint_more_rem_uint();
+    biguint_more_next_multiple_uint();
+    biguint_more_miscellaneous_arithmatic_operation_uint();
+    biguint_more_pow_uint();
+    biguint_more_iroot_uint();
+    biguint_more_ilog_uint();
+
+    biguint_more_add();
+    biguint_more_sub();
+    biguint_more_mul();
+    biguint_more_div();
+    biguint_more_rem();
+    biguint_more_next_multiple();
+    biguint_more_miscellaneous_arithmatic_operation();
+    biguint_more_pow();
+    biguint_more_iroot();
+    biguint_more_ilog();
+    biguint_more_shift();
 }
 
-fn biguint_add_uint()
+fn biguint_more_quick_start()
 {
-    biguint_checked_add_uint();
-    biguint_unchecked_add_uint();
-    biguint_saturating_add_uint();
-    biguint_saturating_add_assign_uint();
-    biguint_safe_add_uint();
-    biguint_safe_add_assign_uint();
+    println!("biguint_more_quick_start");
+    use std::str::FromStr;
+    use cryptocol::define_utypes_with;
+    use cryptocol::number::BigUInt_More;
+    define_utypes_with!(u16);
+
+    let a_biguint = U512::max();
+    let one_biguint = U512::one();
+    let res = a_biguint.checked_add(&one_biguint);
+    match res
+    {
+        Some(r) => {
+                println!("{} + {} = {}, overflow = {}", a_biguint, one_biguint, r, r.is_overflow());
+            },
+        None => {
+                println!("Error: Overflow");
+                assert_eq!(res, None);
+            },
+    }
+
+    let a_biguint = U512::zero();
+    let mut res = a_biguint.saturating_sub(&one_biguint);
+    println!("{} - {} = {}", a_biguint, one_biguint, res);
+    assert_eq!(res.to_string(), "0");
+
+    let a_biguint = U512::from_str("123456789012345678901234567890123456789").unwrap();
+    let num = U512::from(586478_u32);
+    res = a_biguint.next_multiple_of(&num);
+    println!("The next multiple of {} is {}", a_biguint, res);
+    assert_eq!(res.to_string(), "123456789012345678901234567890123697594");
+
+    let a_biguint = U512::from_string("88888666664444422222111112222233333444445555566666777778888899999").unwrap();
+    let b_biguint = U512::from_string("999998888877777666665555544444333332222211111").unwrap();
+    res = a_biguint.midpoint(&b_biguint);
+    println!("The middle point of {} and {} is {}.", a_biguint, b_biguint, res);
+    assert_eq!(res.to_string(), "44444333332222211111555555555555555555555555555555555555555555555");
+    println!("---------------------------");
 }
 
-fn biguint_checked_add_uint()
+fn biguint_more_add_uint()
 {
-    println!("biguint_checked_add_uint");
+    biguint_more_checked_add_uint();
+    biguint_more_unchecked_add_uint();
+    biguint_more_saturating_add_uint();
+    biguint_more_saturating_add_assign_uint();
+    biguint_more_safe_add_uint();
+    biguint_more_safe_add_assign_uint();
+}
+
+fn biguint_more_checked_add_uint()
+{
+    println!("biguint_more_checked_add_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u16);
@@ -101,9 +147,9 @@ fn biguint_checked_add_uint()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_add_uint()
+fn biguint_more_unchecked_add_uint()
 {
-    println!("biguint_unchecked_add_uint");
+    println!("biguint_more_unchecked_add_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u32);
@@ -121,13 +167,13 @@ fn biguint_unchecked_add_uint()
     assert_eq!(res.is_right_carry(), false);
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_unchecked_add_uint();
+    biguint_more_should_panic_unchecked_add_uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_unchecked_add_uint()
+fn biguint_more_should_panic_unchecked_add_uint()
 {
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -137,9 +183,9 @@ fn biguint_should_panic_unchecked_add_uint()
     let _res = _a_biguint.unchecked_add_uint(2_u8);
 }
 
-fn biguint_saturating_add_uint()
+fn biguint_more_saturating_add_uint()
 {
-    println!("biguint_saturating_add_uint");
+    println!("biguint_more_saturating_add_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u64);
@@ -182,9 +228,9 @@ fn biguint_saturating_add_uint()
     println!("---------------------------");
 }
 
-fn biguint_saturating_add_assign_uint()
+fn biguint_more_saturating_add_assign_uint()
 {
-    println!("biguint_saturating_add_assign_uint");
+    println!("biguint_more_saturating_add_assign_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u128);
@@ -257,9 +303,9 @@ fn biguint_saturating_add_assign_uint()
     println!("---------------------------");
 }
 
-fn biguint_safe_add_uint()
+fn biguint_more_safe_add_uint()
 {
-    println!("biguint_safe_add_uint");
+    println!("biguint_more_safe_add_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u128);
@@ -304,13 +350,13 @@ fn biguint_safe_add_uint()
     }
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_safe_add_uint();
+    biguint_more_should_panic_safe_add_uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_safe_add_uint()
+fn biguint_more_should_panic_safe_add_uint()
 {
     #[cfg(debug_assertions)]
     {
@@ -325,9 +371,9 @@ fn biguint_should_panic_safe_add_uint()
     }
 }
 
-fn biguint_safe_add_assign_uint()
+fn biguint_more_safe_add_assign_uint()
 {
-    println!("biguint_safe_add_assign_uint");
+    println!("biguint_more_safe_add_assign_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u8);
@@ -391,13 +437,13 @@ fn biguint_safe_add_assign_uint()
     }
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_safe_add_assign_uint();
+    biguint_more_should_panic_safe_add_assign_uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_safe_add_assign_uint()
+fn biguint_more_should_panic_safe_add_assign_uint()
 {
     #[cfg(debug_assertions)]
     {
@@ -413,19 +459,19 @@ fn biguint_should_panic_safe_add_assign_uint()
 }
 
 
-fn biguint_sub_uint()
+fn biguint_more_sub_uint()
 {
-    biguint_checked_sub_uint();
-    biguint_unchecked_sub_uint();
-    biguint_saturating_sub_uint();
-    biguint_saturating_sub_assign_uint();
-    biguint_safe_sub_uint();
-    biguint_safe_sub_assign_uint();
+    biguint_more_checked_sub_uint();
+    biguint_more_unchecked_sub_uint();
+    biguint_more_saturating_sub_uint();
+    biguint_more_saturating_sub_assign_uint();
+    biguint_more_safe_sub_uint();
+    biguint_more_safe_sub_assign_uint();
 }
 
-fn biguint_checked_sub_uint()
+fn biguint_more_checked_sub_uint()
 {
-    println!("biguint_checked_sub_uint");
+    println!("biguint_more_checked_sub_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u16);
@@ -478,9 +524,9 @@ fn biguint_checked_sub_uint()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_sub_uint()
+fn biguint_more_unchecked_sub_uint()
 {
-    println!("biguint_unchecked_sub_uint");
+    println!("biguint_more_unchecked_sub_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u32);
@@ -491,13 +537,13 @@ fn biguint_unchecked_sub_uint()
     assert_eq!(res.to_string(), "0");
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_unchecked_sub_uint();
+    biguint_more_should_panic_unchecked_sub_uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_unchecked_sub_uint()
+fn biguint_more_should_panic_unchecked_sub_uint()
 {
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -507,9 +553,9 @@ fn biguint_should_panic_unchecked_sub_uint()
     let _res = _a_biguint.unchecked_sub_uint(2_u8);
 }
 
-fn biguint_saturating_sub_uint()
+fn biguint_more_saturating_sub_uint()
 {
-    println!("biguint_saturating_sub_uint");
+    println!("biguint_more_saturating_sub_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u64);
@@ -552,9 +598,9 @@ fn biguint_saturating_sub_uint()
     println!("---------------------------");
 }
 
-fn biguint_saturating_sub_assign_uint()
+fn biguint_more_saturating_sub_assign_uint()
 {
-    println!("biguint_saturating_sub_assign_uint");
+    println!("biguint_more_saturating_sub_assign_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u128);
@@ -627,9 +673,9 @@ fn biguint_saturating_sub_assign_uint()
     println!("---------------------------");
 }
 
-fn biguint_safe_sub_uint()
+fn biguint_more_safe_sub_uint()
 {
-    println!("biguint_wrapping_sub_uint");
+    println!("biguint_more_wrapping_sub_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u8);
@@ -674,13 +720,13 @@ fn biguint_safe_sub_uint()
     }
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_safe_sub_uint();
+    biguint_more_should_panic_safe_sub_uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_safe_sub_uint()
+fn biguint_more_should_panic_safe_sub_uint()
 {
     #[cfg(not(debug_assertions))]
     {
@@ -699,9 +745,9 @@ fn biguint_should_panic_safe_sub_uint()
     }
 }
 
-fn biguint_safe_sub_assign_uint()
+fn biguint_more_safe_sub_assign_uint()
 {
-    println!("biguint_safe_sub_assign_uint");
+    println!("biguint_more_safe_sub_assign_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u16);
@@ -787,13 +833,13 @@ fn biguint_safe_sub_assign_uint()
     }
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_safe_sub_assign_uint();
+    biguint_more_should_panic_safe_sub_assign_uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_safe_sub_assign_uint()
+fn biguint_more_should_panic_safe_sub_assign_uint()
 {
     #[cfg(debug_assertions)]
     {
@@ -812,19 +858,19 @@ fn biguint_should_panic_safe_sub_assign_uint()
     }
 }
 
-fn biguint_mul_uint()
+fn biguint_more_mul_uint()
 {
-    biguint_checked_mul_uint();
-    biguint_unchecked_mul_uint();
-    biguint_saturating_mul_uint();
-    biguint_saturating_mul_assign_uint();
-    biguint_safe_mul_uint();
-    biguint_safe_mul_assign_uint();
+    biguint_more_checked_mul_uint();
+    biguint_more_unchecked_mul_uint();
+    biguint_more_saturating_mul_uint();
+    biguint_more_saturating_mul_assign_uint();
+    biguint_more_safe_mul_uint();
+    biguint_more_safe_mul_assign_uint();
 }
 
-fn biguint_checked_mul_uint()
+fn biguint_more_checked_mul_uint()
 {
-    println!("biguint_checked_mul_uint");
+    println!("biguint_more_checked_mul_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u16);
@@ -861,9 +907,9 @@ fn biguint_checked_mul_uint()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_mul_uint()
+fn biguint_more_unchecked_mul_uint()
 {
-    println!("biguint_unchecked_mul_uint");
+    println!("biguint_more_unchecked_mul_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u32);
@@ -881,13 +927,13 @@ fn biguint_unchecked_mul_uint()
     assert_eq!(res.is_right_carry(), false);
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_unchecked_mul_uint();
+    biguint_more_should_panic_unchecked_mul_uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_unchecked_mul_uint()
+fn biguint_more_should_panic_unchecked_mul_uint()
 {
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -897,9 +943,9 @@ fn biguint_should_panic_unchecked_mul_uint()
     let _res = _a_biguint.unchecked_mul_uint(248_u8);
 }
 
-fn biguint_saturating_mul_uint()
+fn biguint_more_saturating_mul_uint()
 {
-    println!("biguint_saturating_mul_uint");
+    println!("biguint_more_saturating_mul_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u8);
@@ -930,9 +976,9 @@ fn biguint_saturating_mul_uint()
     println!("---------------------------");
 }
 
-fn biguint_saturating_mul_assign_uint()
+fn biguint_more_saturating_mul_assign_uint()
 {
-    println!("biguint_saturating_mul_assign_uint");
+    println!("biguint_more_saturating_mul_assign_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u16);
@@ -981,9 +1027,9 @@ fn biguint_saturating_mul_assign_uint()
     println!("---------------------------");
 }
 
-fn biguint_safe_mul_uint()
+fn biguint_more_safe_mul_uint()
 {
-    println!("biguint_safe_mul_uint");
+    println!("biguint_more_safe_mul_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u16);
@@ -1018,13 +1064,13 @@ fn biguint_safe_mul_uint()
     }
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_safe_mul_3uint();
+    biguint_more_should_panic_safe_mul_3uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_safe_mul_3uint()
+fn biguint_more_should_panic_safe_mul_3uint()
 {
     #[cfg(debug_assertions)]
     {
@@ -1039,9 +1085,9 @@ fn biguint_should_panic_safe_mul_3uint()
     }
 }
 
-fn biguint_safe_mul_assign_uint()
+fn biguint_more_safe_mul_assign_uint()
 {
-    println!("biguint_safe_mul_assign_uint");
+    println!("biguint_more_safe_mul_assign_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u32);
@@ -1096,13 +1142,13 @@ fn biguint_safe_mul_assign_uint()
     }
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_safe_mul_assign_uint();
+    biguint_more_should_panic_safe_mul_assign_uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_safe_mul_assign_uint()
+fn biguint_more_should_panic_safe_mul_assign_uint()
 {
     #[cfg(debug_assertions)]
     {
@@ -1138,17 +1184,17 @@ fn biguint_should_panic_safe_mul_assign_uint()
 }
 
 
-fn biguint_div_uint()
+fn biguint_more_div_uint()
 {
-    biguint_checked_div_uint();
-    biguint_unchecked_div_uint();
-    biguint_saturating_div_uint();
-    biguint_saturating_div_assign_uint();
+    biguint_more_checked_div_uint();
+    biguint_more_unchecked_div_uint();
+    biguint_more_saturating_div_uint();
+    biguint_more_saturating_div_assign_uint();
 }
 
-fn biguint_checked_div_uint()
+fn biguint_more_checked_div_uint()
 {
-    println!("biguint_checked_div_uint");
+    println!("biguint_more_checked_div_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -1222,9 +1268,9 @@ fn biguint_checked_div_uint()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_div_uint()
+fn biguint_more_unchecked_div_uint()
 {
-    println!("biguint_unchecked_div_uint");
+    println!("biguint_more_unchecked_div_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -1257,13 +1303,13 @@ fn biguint_unchecked_div_uint()
     assert_eq!(quotient.is_right_carry(), false);
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_unchecked_div_uint();
+    biguint_more_should_panic_unchecked_div_uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_unchecked_div_uint()
+fn biguint_more_should_panic_unchecked_div_uint()
 {
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
@@ -1279,9 +1325,9 @@ fn biguint_should_panic_unchecked_div_uint()
     let _quotient = _dividend.unchecked_div_uint(_divisor);
 }
 
-fn biguint_saturating_div_uint()
+fn biguint_more_saturating_div_uint()
 {
-    println!("biguint_saturating_div_uint");
+    println!("biguint_more_saturating_div_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -1314,15 +1360,15 @@ fn biguint_saturating_div_uint()
     assert_eq!(quotient.is_right_carry(), false);
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_saturating_div_uint();
+    biguint_more_should_panic_saturating_div_uint();
     println!("---------------------------")
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_saturating_div_uint()
+fn biguint_more_should_panic_saturating_div_uint()
 {
-    println!("biguint_saturating_div_uint");
+    println!("biguint_more_saturating_div_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -1338,9 +1384,9 @@ fn biguint_should_panic_saturating_div_uint()
     println!("---------------------------")
 }
 
-fn biguint_saturating_div_assign_uint()
+fn biguint_more_saturating_div_assign_uint()
 {
-    println!("biguint_saturating_div_assign_uint");
+    println!("biguint_more_saturating_div_assign_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -1391,13 +1437,13 @@ fn biguint_saturating_div_assign_uint()
     assert_eq!(a_biguint.is_right_carry(), false);
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_saturating_div_assign_uint();
+    biguint_more_should_panic_saturating_div_assign_uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_saturating_div_assign_uint()
+fn biguint_more_should_panic_saturating_div_assign_uint()
 {
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
@@ -1416,17 +1462,17 @@ fn biguint_should_panic_saturating_div_assign_uint()
     println!("---------------------------");
 }
 
-fn biguint_rem_uint()
+fn biguint_more_rem_uint()
 {
-    biguint_checked_rem_uint();
-    biguint_unchecked_rem_uint();
-    biguint_saturating_rem_uint();
-    biguint_saturating_rem_assign_uint();
+    biguint_more_checked_rem_uint();
+    biguint_more_unchecked_rem_uint();
+    biguint_more_saturating_rem_uint();
+    biguint_more_saturating_rem_assign_uint();
 }
 
-fn biguint_checked_rem_uint()
+fn biguint_more_checked_rem_uint()
 {
-    println!("biguint_checked_rem_uint");
+    println!("biguint_more_checked_rem_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -1486,9 +1532,9 @@ fn biguint_checked_rem_uint()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_rem_uint()
+fn biguint_more_unchecked_rem_uint()
 {
-    println!("biguint_unchecked_rem_uint");
+    println!("biguint_more_unchecked_rem_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -1507,13 +1553,13 @@ fn biguint_unchecked_rem_uint()
     assert_eq!(remainder.to_string(), "0");
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_unchecked_rem_uint();
+    biguint_more_should_panic_unchecked_rem_uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_unchecked_rem_uint()
+fn biguint_more_should_panic_unchecked_rem_uint()
 {
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
@@ -1529,9 +1575,9 @@ fn biguint_should_panic_unchecked_rem_uint()
     let _remainder = _dividend.unchecked_rem_uint(_divisor);
 }
 
-fn biguint_saturating_rem_uint()
+fn biguint_more_saturating_rem_uint()
 {
-    println!("biguint_saturating_rem_uint");
+    println!("biguint_more_saturating_rem_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -1550,13 +1596,13 @@ fn biguint_saturating_rem_uint()
     assert_eq!(remainder.to_string(), "0");
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_saturating_rem_uint();
+    biguint_more_should_panic_saturating_rem_uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_saturating_rem_uint()
+fn biguint_more_should_panic_saturating_rem_uint()
 {
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
@@ -1572,9 +1618,9 @@ fn biguint_should_panic_saturating_rem_uint()
     let _remainder = _dividend.saturating_rem_uint(_divisor);
 }
 
-fn biguint_saturating_rem_assign_uint()
+fn biguint_more_saturating_rem_assign_uint()
 {
-    println!("biguint_saturating_rem_assign_uint");
+    println!("biguint_more_saturating_rem_assign_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -1625,13 +1671,13 @@ fn biguint_saturating_rem_assign_uint()
     assert_eq!(a_biguint.is_right_carry(), false);
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_saturating_rem_assign_uint();
+    biguint_more_should_panic_saturating_rem_assign_uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_saturating_rem_assign_uint()
+fn biguint_more_should_panic_saturating_rem_assign_uint()
 {
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
@@ -1650,16 +1696,16 @@ fn biguint_should_panic_saturating_rem_assign_uint()
 }
 
 
-fn biguint_next_multiple_uint()
+fn biguint_more_next_multiple_uint()
 {
-    biguint_next_multiple_of_uint();
-    biguint_next_multiple_of_assign_uint();
-    biguint_is_multiple_of_uint();
+    biguint_more_next_multiple_of_uint();
+    biguint_more_next_multiple_of_assign_uint();
+    biguint_more_is_multiple_of_uint();
 }
 
-fn biguint_next_multiple_of_uint()
+fn biguint_more_next_multiple_of_uint()
 {
-    println!("biguint_next_multiple_of_uint");
+    println!("biguint_more_next_multiple_of_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -1692,13 +1738,13 @@ fn biguint_next_multiple_of_uint()
     assert_eq!(multiple.is_right_carry(), false);
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_next_multiple_of_uint();
+    biguint_more_should_panic_next_multiple_of_uint();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_next_multiple_of_uint()
+fn biguint_more_should_panic_next_multiple_of_uint()
 {
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
@@ -1710,9 +1756,9 @@ fn biguint_should_panic_next_multiple_of_uint()
     let _multiple = _a_biguint.next_multiple_of_uint(_num);
 }
 
-fn biguint_next_multiple_of_assign_uint()
+fn biguint_more_next_multiple_of_assign_uint()
 {
-    println!("biguint_next_multiple_of_assign_uint");
+    println!("biguint_more_next_multiple_of_assign_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -1769,9 +1815,9 @@ fn biguint_next_multiple_of_assign_uint()
     println!("---------------------------");
 }
 
-fn biguint_is_multiple_of_uint()
+fn biguint_more_is_multiple_of_uint()
 {
-    println!("biguint_is_multiple_of_uint");
+    println!("biguint_more_is_multiple_of_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -1808,15 +1854,15 @@ fn biguint_is_multiple_of_uint()
 }
 
 
-fn biguint_miscellaneous_arithmatic_operation_uint()
+fn biguint_more_miscellaneous_arithmatic_operation_uint()
 {
-    biguint_midpoint_uint();
-    biguint_midpoint_assign_uint();
+    biguint_more_midpoint_uint();
+    biguint_more_midpoint_assign_uint();
 }
 
-fn biguint_midpoint_uint()
+fn biguint_more_midpoint_uint()
 {
-    println!("biguint_midpoint_uint()");
+    println!("biguint_more_midpoint_uint()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u8);
@@ -1893,9 +1939,9 @@ fn biguint_midpoint_uint()
     println!("---------------------------");
 }
 
-fn biguint_midpoint_assign_uint()
+fn biguint_more_midpoint_assign_uint()
 {
-    println!("biguint_midpoint_uint()");
+    println!("biguint_more_midpoint_uint()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u16);
@@ -2017,17 +2063,17 @@ fn biguint_midpoint_assign_uint()
     println!("---------------------------");
 }
 
-fn biguint_pow_uint()
+fn biguint_more_pow_uint()
 {
-    biguint_checked_pow_uint();
-    biguint_unchecked_pow_uint();
-    biguint_saturating_pow_uint();
-    biguint_saturating_pow_assign_uint();
+    biguint_more_checked_pow_uint();
+    biguint_more_unchecked_pow_uint();
+    biguint_more_saturating_pow_uint();
+    biguint_more_saturating_pow_assign_uint();
 }
 
-fn biguint_checked_pow_uint()
+fn biguint_more_checked_pow_uint()
 {
-    println!("biguint_checked_pow_uint");
+    println!("biguint_more_checked_pow_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u64);
@@ -2115,9 +2161,9 @@ fn biguint_checked_pow_uint()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_pow_uint()
+fn biguint_more_unchecked_pow_uint()
 {
-    println!("biguint_unchecked_pow_uint");
+    println!("biguint_more_unchecked_pow_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u128);
@@ -2173,9 +2219,9 @@ fn biguint_unchecked_pow_uint()
     println!("---------------------------");
 }
 
-fn biguint_saturating_pow_uint()
+fn biguint_more_saturating_pow_uint()
 {
-    println!("biguint_saturating_pow_uint");
+    println!("biguint_more_saturating_pow_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u8);
@@ -2239,9 +2285,9 @@ fn biguint_saturating_pow_uint()
     println!("---------------------------");
 }
 
-fn biguint_saturating_pow_assign_uint()
+fn biguint_more_saturating_pow_assign_uint()
 {
-    println!("biguint_saturating_pow_assign_uint");
+    println!("biguint_more_saturating_pow_assign_uint");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u16);
@@ -2343,15 +2389,15 @@ fn biguint_saturating_pow_assign_uint()
 }
 
 
-fn biguint_iroot_uint()
+fn biguint_more_iroot_uint()
 {
-    biguint_checked_iroot_uint();
-    biguint_unchecked_iroot_uint();
+    biguint_more_checked_iroot_uint();
+    biguint_more_unchecked_iroot_uint();
 }
 
-fn biguint_checked_iroot_uint()
+fn biguint_more_checked_iroot_uint()
 {
-    println!("biguint_checked_iroot_uint");
+    println!("biguint_more_checked_iroot_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -2509,9 +2555,9 @@ fn biguint_checked_iroot_uint()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_iroot_uint()
+fn biguint_more_unchecked_iroot_uint()
 {
-    println!("biguint_unchecked_iroot_uint");
+    println!("biguint_more_unchecked_iroot_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -2613,15 +2659,15 @@ fn biguint_unchecked_iroot_uint()
 }
 
 
-fn biguint_ilog_uint()
+fn biguint_more_ilog_uint()
 {   
-    biguint_checked_ilog_uint();
-    biguint_unchecked_ilog_uint();
+    biguint_more_checked_ilog_uint();
+    biguint_more_unchecked_ilog_uint();
 }
 
-fn biguint_checked_ilog_uint()
+fn biguint_more_checked_ilog_uint()
 {
-    println!("biguint_checked_ilog_uint");
+    println!("biguint_more_checked_ilog_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -2770,9 +2816,9 @@ fn biguint_checked_ilog_uint()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_ilog_uint()
+fn biguint_more_unchecked_ilog_uint()
 {
-    println!("biguint_unchecked_ilog_uint");
+    println!("biguint_more_unchecked_ilog_uint");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -2854,19 +2900,19 @@ fn biguint_unchecked_ilog_uint()
     println!("---------------------------");
 }
 
-fn biguint_add()
+fn biguint_more_add()
 {
-    biguint_checked_add();
-    biguint_unchecked_add();
-    biguint_saturating_add();
-    biguint_saturating_add_assign();
-    biguint_safe_add();
-    biguint_safe_add_assign();
+    biguint_more_checked_add();
+    biguint_more_unchecked_add();
+    biguint_more_saturating_add();
+    biguint_more_saturating_add_assign();
+    biguint_more_safe_add();
+    biguint_more_safe_add_assign();
 }
 
-fn biguint_checked_add()
+fn biguint_more_checked_add()
 {
-    println!("biguint_checked_add");
+    println!("biguint_more_checked_add");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u16);
@@ -2904,9 +2950,9 @@ fn biguint_checked_add()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_add()
+fn biguint_more_unchecked_add()
 {
-    println!("biguint_unchecked_add()");
+    println!("biguint_more_unchecked_add()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u32);
@@ -2931,9 +2977,9 @@ fn biguint_unchecked_add()
     println!("---------------------------");
 }
 
-fn biguint_saturating_add()
+fn biguint_more_saturating_add()
 {
-    println!("biguint_saturating_add");
+    println!("biguint_more_saturating_add");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u64);
@@ -2966,9 +3012,9 @@ fn biguint_saturating_add()
     println!("---------------------------");
 }
 
-fn biguint_saturating_add_assign()
+fn biguint_more_saturating_add_assign()
 {
-    println!("biguint_saturating_add_assign");
+    println!("biguint_more_saturating_add_assign");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u128);
@@ -3019,9 +3065,9 @@ fn biguint_saturating_add_assign()
     println!("---------------------------");
 }
 
-fn biguint_safe_add()
+fn biguint_more_safe_add()
 {
-    println!("biguint_safe_add");
+    println!("biguint_more_safe_add");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u128);
@@ -3069,13 +3115,13 @@ fn biguint_safe_add()
     assert_eq!(res.is_right_carry(), false);
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_safe_add();
+    biguint_more_should_panic_safe_add();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_safe_add()
+fn biguint_more_should_panic_safe_add()
 {
     #[cfg(debug_assertions)]
     {
@@ -3090,9 +3136,9 @@ fn biguint_should_panic_safe_add()
     }
 }
 
-fn biguint_safe_add_assign()
+fn biguint_more_safe_add_assign()
 {
-    println!("biguint_safe_add_assign");
+    println!("biguint_more_safe_add_assign");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u8);
@@ -3156,13 +3202,13 @@ fn biguint_safe_add_assign()
     }
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_safe_add_assign();
+    biguint_more_should_panic_safe_add_assign();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_safe_add_assign()
+fn biguint_more_should_panic_safe_add_assign()
 {
     #[cfg(debug_assertions)]
     {
@@ -3179,19 +3225,19 @@ fn biguint_should_panic_safe_add_assign()
 }
 
 
-fn biguint_sub()
+fn biguint_more_sub()
 {
-    biguint_checked_sub();
-    biguint_unchecked_sub();
-    biguint_saturating_sub();
-    biguint_saturating_sub_assign();
-    biguint_safe_sub();
-    biguint_safe_sub_assign();
+    biguint_more_checked_sub();
+    biguint_more_unchecked_sub();
+    biguint_more_saturating_sub();
+    biguint_more_saturating_sub_assign();
+    biguint_more_safe_sub();
+    biguint_more_safe_sub_assign();
 }
 
-fn biguint_checked_sub()
+fn biguint_more_checked_sub()
 {
-    println!("biguint_checked_sub");
+    println!("biguint_more_checked_sub");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u32);
@@ -3227,9 +3273,9 @@ fn biguint_checked_sub()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_sub()
+fn biguint_more_unchecked_sub()
 {
-    println!("biguint_unchecked_sub");
+    println!("biguint_more_unchecked_sub");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u32);
@@ -3252,9 +3298,9 @@ fn biguint_unchecked_sub()
     println!("---------------------------");
 }
 
-fn biguint_saturating_sub()
+fn biguint_more_saturating_sub()
 {
-    println!("biguint_saturating_sub");
+    println!("biguint_more_saturating_sub");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u64);
@@ -3300,9 +3346,9 @@ fn biguint_saturating_sub()
     println!("---------------------------");
 }
 
-fn biguint_saturating_sub_assign()
+fn biguint_more_saturating_sub_assign()
 {
-    println!("biguint_saturating_sub_assign");
+    println!("biguint_more_saturating_sub_assign");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u128);
@@ -3375,9 +3421,9 @@ fn biguint_saturating_sub_assign()
     println!("---------------------------");
 }
 
-fn biguint_safe_sub()
+fn biguint_more_safe_sub()
 {
-    println!("biguint_safe_sub");
+    println!("biguint_more_safe_sub");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u128);
@@ -3425,13 +3471,13 @@ fn biguint_safe_sub()
     assert_eq!(res.is_right_carry(), false);
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_safe_sub();
+    biguint_more_should_panic_safe_sub();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_safe_sub()
+fn biguint_more_should_panic_safe_sub()
 {
     #[cfg(debug_assertions)]
     {
@@ -3446,9 +3492,9 @@ fn biguint_should_panic_safe_sub()
     }
 }
 
-fn biguint_safe_sub_assign()
+fn biguint_more_safe_sub_assign()
 {
-    println!("biguint_safe_sub_assign");
+    println!("biguint_more_safe_sub_assign");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u8);
@@ -3523,13 +3569,13 @@ fn biguint_safe_sub_assign()
     assert_eq!(a_biguint.is_right_carry(), false);
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_safe_sub_assign();
+    biguint_more_should_panic_safe_sub_assign();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_safe_sub_assign()
+fn biguint_more_should_panic_safe_sub_assign()
 {
     #[cfg(debug_assertions)]
     {
@@ -3564,19 +3610,19 @@ fn biguint_should_panic_safe_sub_assign()
 }
 
 
-fn biguint_mul()
+fn biguint_more_mul()
 {
-    biguint_checked_mul();
-    biguint_unchecked_mul();
-    biguint_saturating_mul();
-    biguint_saturating_mul_assign();
-    biguint_safe_mul();
-    biguint_safe_mul_assign();
+    biguint_more_checked_mul();
+    biguint_more_unchecked_mul();
+    biguint_more_saturating_mul();
+    biguint_more_saturating_mul_assign();
+    biguint_more_safe_mul();
+    biguint_more_safe_mul_assign();
 }
 
-fn biguint_checked_mul()
+fn biguint_more_checked_mul()
 {
-    println!("biguint_checked_mul");
+    println!("biguint_more_checked_mul");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u64);
@@ -3616,9 +3662,9 @@ fn biguint_checked_mul()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_mul()
+fn biguint_more_unchecked_mul()
 {
-    println!("biguint_unchecked_mul");
+    println!("biguint_more_unchecked_mul");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u128);
@@ -3643,9 +3689,9 @@ fn biguint_unchecked_mul()
     println!("---------------------------");
 }
 
-fn biguint_saturating_mul()
+fn biguint_more_saturating_mul()
 {
-    println!("biguint_saturating_mul");
+    println!("biguint_more_saturating_mul");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u8);
@@ -3677,9 +3723,9 @@ fn biguint_saturating_mul()
     println!("---------------------------");
 }
 
-fn biguint_saturating_mul_assign()
+fn biguint_more_saturating_mul_assign()
 {
-    println!("biguint_saturating_mul_assign");
+    println!("biguint_more_saturating_mul_assign");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u16);
@@ -3730,9 +3776,9 @@ fn biguint_saturating_mul_assign()
     println!("---------------------------");
 }
 
-fn biguint_safe_mul()
+fn biguint_more_safe_mul()
 {
-    println!("biguint_safe_mul");
+    println!("biguint_more_safe_mul");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u16);
@@ -3767,13 +3813,13 @@ fn biguint_safe_mul()
     }
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_safe_mul();
+    biguint_more_should_panic_safe_mul();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_safe_mul()
+fn biguint_more_should_panic_safe_mul()
 {
     #[cfg(debug_assertions)]
     {
@@ -3788,9 +3834,9 @@ fn biguint_should_panic_safe_mul()
     }
 }
 
-fn biguint_safe_mul_assign()
+fn biguint_more_safe_mul_assign()
 {
-    println!("biguint_safe_mul_assign");
+    println!("biguint_more_safe_mul_assign");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u32);
@@ -3843,13 +3889,13 @@ fn biguint_safe_mul_assign()
     }
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_safe_mul_assign();
+    biguint_more_should_panic_safe_mul_assign();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_safe_mul_assign()
+fn biguint_more_should_panic_safe_mul_assign()
 {
     #[cfg(debug_assertions)]
     {
@@ -3865,17 +3911,17 @@ fn biguint_should_panic_safe_mul_assign()
 }
 
 
-fn biguint_div()
+fn biguint_more_div()
 {
-    biguint_checked_div();
-    biguint_unchecked_div();
-    biguint_saturating_div();
-    biguint_saturating_div_assign();
+    biguint_more_checked_div();
+    biguint_more_unchecked_div();
+    biguint_more_saturating_div();
+    biguint_more_saturating_div_assign();
 }
 
-fn biguint_checked_div()
+fn biguint_more_checked_div()
 {
-    println!("biguint_checked_div");
+    println!("biguint_more_checked_div");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -3949,9 +3995,9 @@ fn biguint_checked_div()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_div()
+fn biguint_more_unchecked_div()
 {
-    println!("biguint_unchecked_div");
+    println!("biguint_more_unchecked_div");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -3995,9 +4041,9 @@ fn biguint_unchecked_div()
     println!("---------------------------");
 }
 
-fn biguint_saturating_div()
+fn biguint_more_saturating_div()
 {
-    println!("biguint_saturating_div");
+    println!("biguint_more_saturating_div");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -4041,9 +4087,9 @@ fn biguint_saturating_div()
     println!("---------------------------");
 }
 
-fn biguint_saturating_div_assign()
+fn biguint_more_saturating_div_assign()
 {
-    println!("biguint_saturating_div_assign");
+    println!("biguint_more_saturating_div_assign");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -4108,17 +4154,17 @@ fn biguint_saturating_div_assign()
 }
 
 
-fn biguint_rem()
+fn biguint_more_rem()
 {
-    biguint_checked_rem();
-    biguint_unchecked_rem();
-    biguint_saturating_rem();
-    biguint_saturating_rem_assign();
+    biguint_more_checked_rem();
+    biguint_more_unchecked_rem();
+    biguint_more_saturating_rem();
+    biguint_more_saturating_rem_assign();
 }
 
-fn biguint_checked_rem()
+fn biguint_more_checked_rem()
 {
-    println!("biguint_checked_rem");
+    println!("biguint_more_checked_rem");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -4192,9 +4238,9 @@ fn biguint_checked_rem()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_rem()
+fn biguint_more_unchecked_rem()
 {
-    println!("biguint_unchecked_rem");
+    println!("biguint_more_unchecked_rem");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -4238,9 +4284,9 @@ fn biguint_unchecked_rem()
     println!("---------------------------");
 }
 
-fn biguint_saturating_rem()
+fn biguint_more_saturating_rem()
 {
-    println!("biguint_saturating_rem");
+    println!("biguint_more_saturating_rem");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -4284,9 +4330,9 @@ fn biguint_saturating_rem()
     println!("---------------------------");
 }
 
-fn biguint_saturating_rem_assign()
+fn biguint_more_saturating_rem_assign()
 {
-    println!("biguint_saturating_rem_assign");
+    println!("biguint_more_saturating_rem_assign");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -4351,16 +4397,16 @@ fn biguint_saturating_rem_assign()
 }
 
 
-fn biguint_next_multiple()
+fn biguint_more_next_multiple()
 {
-    biguint_next_multiple_of();
-    biguint_next_multiple_of_assign();
-    biguint_is_multiple_of();
+    biguint_more_next_multiple_of();
+    biguint_more_next_multiple_of_assign();
+    biguint_more_is_multiple_of();
 }
 
-fn biguint_next_multiple_of()
+fn biguint_more_next_multiple_of()
 {
-    println!("biguint_next_multiple_of");
+    println!("biguint_more_next_multiple_of");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -4399,9 +4445,9 @@ fn biguint_next_multiple_of()
     println!("---------------------------");
 }
 
-fn biguint_next_multiple_of_assign()
+fn biguint_more_next_multiple_of_assign()
 {
-    println!("biguint_next_multiple_of_assign");
+    println!("biguint_more_next_multiple_of_assign");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -4458,9 +4504,9 @@ fn biguint_next_multiple_of_assign()
     println!("---------------------------");
 }
 
-fn biguint_is_multiple_of()
+fn biguint_more_is_multiple_of()
 {
-    println!("biguint_is_multiple_of()");
+    println!("biguint_more_is_multiple_of()");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -4498,15 +4544,15 @@ fn biguint_is_multiple_of()
 
 
 
-fn biguint_miscellaneous_arithmatic_operation()
+fn biguint_more_miscellaneous_arithmatic_operation()
 {
-    biguint_midpoint();
-    biguint_midpoint_assign();
+    biguint_more_midpoint();
+    biguint_more_midpoint_assign();
 }
 
-fn biguint_midpoint()
+fn biguint_more_midpoint()
 {
-    println!("biguint_midpoint()");
+    println!("biguint_more_midpoint()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u8);
@@ -4583,9 +4629,9 @@ fn biguint_midpoint()
     println!("---------------------------");
 }
 
-fn biguint_midpoint_assign()
+fn biguint_more_midpoint_assign()
 {
-    println!("biguint_midpoint()");
+    println!("biguint_more_midpoint()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u16);
@@ -4708,17 +4754,17 @@ fn biguint_midpoint_assign()
 }
 
 
-fn  biguint_pow()
+fn  biguint_more_pow()
 {
-    biguint_checked_pow();
-    biguint_unchecked_pow();
-    biguint_saturating_pow();
-    biguint_saturating_pow_assign();
+    biguint_more_checked_pow();
+    biguint_more_unchecked_pow();
+    biguint_more_saturating_pow();
+    biguint_more_saturating_pow_assign();
 }
 
-fn biguint_checked_pow()
+fn biguint_more_checked_pow()
 {
-    println!("biguint_checked_pow()");
+    println!("biguint_more_checked_pow()");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -4807,9 +4853,9 @@ fn biguint_checked_pow()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_pow()
+fn biguint_more_unchecked_pow()
 {
-    println!("biguint_unchecked_pow()");
+    println!("biguint_more_unchecked_pow()");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -4870,9 +4916,9 @@ fn biguint_unchecked_pow()
     println!("---------------------------");
 }
 
-fn biguint_saturating_pow()
+fn biguint_more_saturating_pow()
 {
-    println!("biguint_saturating_pow()");
+    println!("biguint_more_saturating_pow()");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -4942,9 +4988,9 @@ fn biguint_saturating_pow()
     println!("---------------------------");
 }
 
-fn biguint_saturating_pow_assign()
+fn biguint_more_saturating_pow_assign()
 {
-    println!("biguint_saturating_pow_assign()");
+    println!("biguint_more_saturating_pow_assign()");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -5043,13 +5089,13 @@ fn biguint_saturating_pow_assign()
     assert_eq!(a_biguint.is_right_carry(), false);
 
     #[cfg(test)] // It will panic.
-    biguint_should_panic_saturating_pow_assign();
+    biguint_more_should_panic_saturating_pow_assign();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_saturating_pow_assign()
+fn biguint_more_should_panic_saturating_pow_assign()
 {
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -5063,15 +5109,15 @@ fn biguint_should_panic_saturating_pow_assign()
 }
 
 
-fn biguint_iroot()
+fn biguint_more_iroot()
 {
-    biguint_checked_iroot();
-    biguint_unchecked_iroot();
+    biguint_more_checked_iroot();
+    biguint_more_unchecked_iroot();
 }
 
-fn biguint_checked_iroot()
+fn biguint_more_checked_iroot()
 {
-    println!("biguint_checked_iroot");
+    println!("biguint_more_checked_iroot");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -5229,9 +5275,9 @@ fn biguint_checked_iroot()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_iroot()
+fn biguint_more_unchecked_iroot()
 {
-    println!("biguint_unchecked_iroot");
+    println!("biguint_more_unchecked_iroot");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -5333,21 +5379,21 @@ fn biguint_unchecked_iroot()
 }
 
 
-fn biguint_ilog()
+fn biguint_more_ilog()
 {
-    biguint_checked_ilog();
-    biguint_unchecked_ilog();
-    biguint_checked_ilog2();
-    biguint_unchecked_ilog2();
-    biguint_checked_ilog10();
-    biguint_unchecked_ilog10();
+    biguint_more_checked_ilog();
+    biguint_more_unchecked_ilog();
+    biguint_more_checked_ilog2();
+    biguint_more_unchecked_ilog2();
+    biguint_more_checked_ilog10();
+    biguint_more_unchecked_ilog10();
 }
 
 
 
-fn biguint_checked_ilog()
+fn biguint_more_checked_ilog()
 {
-    println!("biguint_checked_ilog");
+    println!("biguint_more_checked_ilog");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -5472,9 +5518,9 @@ fn biguint_checked_ilog()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_ilog()
+fn biguint_more_unchecked_ilog()
 {
-    println!("biguint_unchecked_ilog");
+    println!("biguint_more_unchecked_ilog");
     use std::str::FromStr;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -5556,9 +5602,9 @@ fn biguint_unchecked_ilog()
     println!("---------------------------");
 }
 
-fn biguint_checked_ilog2()
+fn biguint_more_checked_ilog2()
 {
-    println!("biguint_checked_ilog2");
+    println!("biguint_more_checked_ilog2");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u16);
@@ -5630,9 +5676,9 @@ fn biguint_checked_ilog2()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_ilog2()
+fn biguint_more_unchecked_ilog2()
 {
-    println!("biguint_unchecked_ilog2");
+    println!("biguint_more_unchecked_ilog2");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u32);
@@ -5679,9 +5725,9 @@ fn biguint_unchecked_ilog2()
     println!("---------------------------");
 }
 
-fn biguint_checked_ilog10()
+fn biguint_more_checked_ilog10()
 {
-    println!("biguint_checked_ilog10");
+    println!("biguint_more_checked_ilog10");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u32);
@@ -5753,9 +5799,9 @@ fn biguint_checked_ilog10()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_ilog10()
+fn biguint_more_unchecked_ilog10()
 {
-    println!("biguint_unchecked_ilog10");
+    println!("biguint_more_unchecked_ilog10");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u64);
@@ -5803,17 +5849,17 @@ fn biguint_unchecked_ilog10()
 }
 
 
-fn biguint_shift()
+fn biguint_more_shift()
 {
-    biguint_checked_shift_left();
-    biguint_unchecked_shift_left();
-    biguint_checked_shift_right();
-    biguint_unchecked_shift_right();
+    biguint_more_checked_shift_left();
+    biguint_more_unchecked_shift_left();
+    biguint_more_checked_shift_right();
+    biguint_more_unchecked_shift_right();
 }
 
-fn biguint_checked_shift_left()
+fn biguint_more_checked_shift_left()
 {
-    println!("biguint_checked_shift_left()");
+    println!("biguint_more_checked_shift_left()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u32);
@@ -5911,9 +5957,9 @@ fn biguint_checked_shift_left()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_shift_left()
+fn biguint_more_unchecked_shift_left()
 {
-    println!("biguint_unchecked_shift_left()");
+    println!("biguint_more_unchecked_shift_left()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u64);
@@ -5958,13 +6004,13 @@ fn biguint_unchecked_shift_left()
     assert_eq!(res.is_right_carry(), false);
 
     #[cfg(test)] // It will panic!
-    biguint_should_panic_unchecked_shift_left();
+    biguint_more_should_panic_unchecked_shift_left();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_unchecked_shift_left()
+fn biguint_more_should_panic_unchecked_shift_left()
 {
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
@@ -5981,9 +6027,9 @@ fn biguint_should_panic_unchecked_shift_left()
     let _res = _a_biguint.unchecked_shift_left(_n);
 }
 
-fn biguint_checked_shift_right()
+fn biguint_more_checked_shift_right()
 {
-    println!("biguint_checked_shift_right()");
+    println!("biguint_more_checked_shift_right()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u16);
@@ -6081,9 +6127,9 @@ fn biguint_checked_shift_right()
     println!("---------------------------");
 }
 
-fn biguint_unchecked_shift_right()
+fn biguint_more_unchecked_shift_right()
 {
-    println!("biguint_unchecked_shift_right()");
+    println!("biguint_more_unchecked_shift_right()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;
     define_utypes_with!(u32);
@@ -6128,13 +6174,13 @@ fn biguint_unchecked_shift_right()
     assert_eq!(res.is_right_carry(), true);
 
     #[cfg(test)]
-    biguint_should_panic_unchecked_shift_right();
+    biguint_more_should_panic_unchecked_shift_right();
     println!("---------------------------");
 }
 
 #[test]
 #[should_panic]
-fn biguint_should_panic_unchecked_shift_right()
+fn biguint_more_should_panic_unchecked_shift_right()
 {
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_More;

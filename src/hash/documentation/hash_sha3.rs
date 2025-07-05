@@ -1679,10 +1679,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     // pub fn get_hash_value_in_vec(&mut self) -> Vec<u8>
-    /// Returns a hash value in the form of Vec<u8> object.
+    /// Returns a hash value in the form of `Vec<u8>` object.
     /// 
     /// # Output
-    /// A hash value in the form of Vec<u8> object.
+    /// A hash value in the form of `Vec<u8>` object.
     /// 
     /// # Features
     /// The length of output hash value is automatically determined to be:
@@ -1831,11 +1831,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     // pub fn get_hash_code_in_vec<const N: usize>(&mut self) -> Vec<u8>
-    /// Returns a hash value in the form of Vec<u8> object with the length
+    /// Returns a hash value in the form of `Vec<u8>` object with the length
     /// indicated by generic parameter.
     /// 
     /// # Output
-    /// A hash value in the form of Vec<u8> object.
+    /// A hash value in the form of `Vec<u8>` object.
     /// 
     /// # Features
     /// The length of output hash value should be manually determined

@@ -6,12 +6,15 @@
 // This file may not be copied, modified, or distributed
 // except according to those terms.
 
+
 // #![allow(missing_docs)]
 // #![allow(rustdoc::missing_doc_code_examples)]
 // #[allow(non_camel_case_types)]
 // #[allow(dead_code)]``
 pub fn main()
 {
+    biguint_modular_quick_start();
+
     biguint_modular_add_uint();
     biguint_modular_add_assign_uint();
     biguint_modular_sub_uint();
@@ -43,6 +46,42 @@ pub fn main()
     biguint_modular_next_multiple_of_assign();
     biguint_modular_pow();
     biguint_modular_pow_assign();
+}
+
+fn biguint_modular_quick_start()
+{
+    println!("biguint_modular_add_uint");
+
+    use std::str::FromStr;
+    use cryptocol::define_utypes_with;
+    use cryptocol::number::BigUInt_Modular;
+    
+    define_utypes_with!(u128);
+    
+    let a_biguint = U1024::from([1; 8]);
+    let b_biguint = U1024::from_str_radix("00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001__00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001__00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001__00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001__00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001__00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001__00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001__00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001", 2).unwrap();
+    let modulo_biguint = UU128::from_str("1234567891234567879123456789111111111222222222333333333444444444555555555666666666777777777888888888999999999000000000").unwrap();
+
+    let mut res_biguint = a_biguint.modular_add(&b_biguint, &modulo_biguint);
+    println!("{} + {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulo_biguint);
+    assert_eq!(res_biguint.to_string(), "715095817710923963845493130173735203953802580597972250927984767909588940861217692608653370556592101327600086389804546");
+    
+    res_biguint = a_biguint.modular_sub(&b_biguint, &modulo_biguint);
+    println!("{} - {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulo_biguint);
+    assert_eq!(res_biguint.to_string(), "0");
+    
+    res_biguint = a_biguint.modular_mul(&b_biguint, &modulo_biguint);
+    println!("{} * {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulo_biguint);
+    assert_eq!(res_biguint.to_string(), "607396048570755101032038914863987293211201188879216700220932513864139285125189692949640169667338866132733039020566529");
+
+    res_biguint = a_biguint.modular_div(&b_biguint, &modulo_biguint);
+    println!("{} / {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulo_biguint);
+    assert_eq!(res_biguint.to_string(), "1");
+    
+    res_biguint = a_biguint.modular_rem(&b_biguint, &modulo_biguint);
+    println!("{} % {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulo_biguint);
+    assert_eq!(res_biguint.to_string(), "0");
+    println!("---------------------------");
 }
 
 fn biguint_modular_add_uint()
@@ -2089,7 +2128,6 @@ fn biguint_modular_next_multiple_of_uint()
 {
     println!("biguint_modular_next_multiple_of_uint");
     use std::str::FromStr;
-    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_Modular;
     define_utypes_with!(u8);
@@ -4604,7 +4642,6 @@ fn biguint_modular_next_multiple_of()
 {
     println!("biguint_modular_next_multiple_of");
     use std::str::FromStr;
-    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_Modular;
     define_utypes_with!(u128);
@@ -4673,7 +4710,6 @@ fn biguint_modular_next_multiple_of_assign()
 {
     println!("biguint_modular_next_multiple_of_assign");
     use std::str::FromStr;
-    use cryptocol::number::BigUInt_More;
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_Modular;
     define_utypes_with!(u8);

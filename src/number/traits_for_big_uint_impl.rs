@@ -1126,6 +1126,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(res.is_undefined(), false);
     /// assert_eq!(res.is_left_carry(), false);
     /// assert_eq!(res.is_right_carry(), false);
+    /// ```
     /// 
     /// # For more examples,
     /// click [here](../documentation/big_uint_traits_impl/struct.BigUInt.html#method.sub)

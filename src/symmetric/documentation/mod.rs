@@ -62,5 +62,5 @@ pub mod des_ctr;
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to ndes_basic.rs.
-pub mod big_scryptor64_basic;
+pub mod big_cryptor64_basic;
 

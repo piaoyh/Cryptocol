@@ -40,7 +40,34 @@ use crate::number::SmallUInt;
 /// 
 /// ## Example 2
 /// ```
-/// // to do
+/// use cryptocol::define_utypes_with;
+/// use cryptocol::number::BigUInt_Panic_Free;
+/// define_utypes_with!(u32);
+///
+/// let a_biguint = U256::from_string("76801874298166903427690031858186486050853753882811946569946433649006").unwrap();
+/// let m = a_biguint.wrapping_add_uint(2_u8); // == 76801874298166903427690031858186486050853753882811946569946433649008
+/// let one = U256::one();
+/// let res = a_biguint.panic_free_modular_add(&one, &m);
+/// println!("{} + {} = {}", a_biguint, one, res);
+/// assert_eq!(res.to_string(), "76801874298166903427690031858186486050853753882811946569946433649007");
+///
+/// let a_biguint = U256::from_uint(10_u8);
+/// let exp = U256::from_uint(30_u8);
+/// let res = a_biguint.panic_free_pow(&exp);
+/// println!("{} ** {} = {}", a_biguint, exp, res);
+/// assert_eq!(res.to_string(), "1000000000000000000000000000000");
+///
+/// let a_biguint = U256::max();
+/// let num = U256::from(586478_u32);
+/// let multiple = a_biguint.panic_free_next_multiple_of(&num);
+/// println!("The next multiple of {} is {}", a_biguint, multiple);
+/// assert_eq!(multiple.to_string(), "448670");
+///
+/// let a_biguint = U256::from_string("12345678911111222223333344444555556666677777888889999900000").unwrap();
+/// let b_biguint = U256::from_string("99999888887777766666555554444433333222221111100000123456789").unwrap();
+/// let c_biguint = a_biguint.panic_free_gcd(&b_biguint);
+/// println!("The greatest common divisor of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
+/// assert_eq!(c_biguint.to_string(), "27");
 /// ```
 #[allow(non_camel_case_types)]
 pub trait BigUInt_Panic_Free<T, const N: usize> : Clone + Sized //+ Display + + ToString

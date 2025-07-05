@@ -40,7 +40,41 @@ use crate::number::SmallUInt;
 /// 
 /// ## Example 2
 /// ```
-/// // to do
+/// use std::str::FromStr;
+/// use cryptocol::define_utypes_with;
+/// use cryptocol::number::BigUInt_More;
+/// define_utypes_with!(u16);
+///
+/// let a_biguint = U512::max();
+/// let one_biguint = U512::one();
+/// let res = a_biguint.checked_add(&one_biguint);
+/// match res
+/// {
+///     Some(r) => {
+///             println!("{} + {} = {}, overflow = {}", a_biguint, one_biguint, r, r.is_overflow());
+///         },
+///     None => {
+///             println!("Error: Overflow");
+///             assert_eq!(res, None);
+///         },
+/// }
+///
+/// let a_biguint = U512::zero();
+/// let mut res = a_biguint.saturating_sub(&one_biguint);
+/// println!("{} - {} = {}", a_biguint, one_biguint, res);
+/// assert_eq!(res.to_string(), "0");
+///
+/// let a_biguint = U512::from_str("123456789012345678901234567890123456789").unwrap();
+/// let num = U512::from(586478_u32);
+/// res = a_biguint.next_multiple_of(&num);
+/// println!("The next multiple of {} is {}", a_biguint, res);
+/// assert_eq!(res.to_string(), "123456789012345678901234567890123697594");
+///
+/// let a_biguint = U512::from_string("88888666664444422222111112222233333444445555566666777778888899999").unwrap();
+/// let b_biguint = U512::from_string("999998888877777666665555544444333332222211111").unwrap();
+/// res = a_biguint.midpoint(&b_biguint);
+/// println!("The middle point of {} and {} is {}.", a_biguint, b_biguint, res);
+/// assert_eq!(res.to_string(), "44444333332222211111555555555555555555555555555555555555555555555");
 /// ```
 #[allow(non_camel_case_types)]
 pub trait BigUInt_More<T, const N: usize> : Clone + Sized //+ Display + + ToString

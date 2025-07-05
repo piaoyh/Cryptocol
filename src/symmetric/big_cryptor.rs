@@ -725,18 +725,21 @@ impl BigCryptor128
 /// The instantiated object should be mutable.
 /// 
 /// # Example 3
-/// ```
+/// ```text
+/// // to do
 /// ```
 /// 
 /// You can instantiate the DES object without key and set a `u64` key later as
 /// shown in Example 4 or a `[u8; 8]` key later as shown in Example 5.
 /// 
 /// # Example 4
-/// ```
+/// ```text
+/// // to do
 /// ```
 /// 
 /// # Example 5
-/// ```
+/// ```text
+/// // to do
 /// ```
 /// 
 /// Now, you can freely use any methods
@@ -757,11 +760,13 @@ impl BigCryptor128
 /// have to consider the length of data so that you will meak less mistakes.
 /// 
 /// # Example 6
-/// ```
+/// ```text
+/// // to do
 /// ```
 /// 
 /// # Example 7
-/// ```
+/// ```text
+/// // to do
 /// ```
 #[allow(non_camel_case_types)]
 pub struct BigCryptor64
@@ -1274,8 +1279,8 @@ impl BigCryptor64
     ///   It is equivalent to ECB (Electronic Code Book) mode.
     /// 
     /// # Example 1
-    /// ```
-    /// 
+    /// ```text
+    /// // to do
     /// ```
     pub fn encrypt_with_padding_pkcs7(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
@@ -2089,8 +2094,8 @@ impl BigCryptor64
     /// `message` has to have at least the same size as that of `cipher`. 
     /// 
     /// # Example 1
-    /// ```
-    /// 
+    /// ```text
+    /// // to do
     /// ```
     pub fn decrypt_with_padding_pkcs7_into_array<T, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone

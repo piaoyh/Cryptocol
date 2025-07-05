@@ -2265,7 +2265,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - If `length_in_bytes` is `0`, it means the message is null string.
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
-    /// - If `message` is a empty Vec<U> object Vec::<U>::new(), only padding
+    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
     ///   bytes will be encrypted, and stored in the memory area that starts
     ///   from `cipher`.
     /// - The padding bits are composed of the bytes that indicate the length of
@@ -2509,7 +2509,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   it means this method failed in encryption.
     /// 
     /// # Features
-    /// - If `message` is a empty Vec<U> object Vec::<U>::new(), only padding
+    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
     ///   bytes will be encrypted, and stored in the `Vec<V>` object `cipher`.
     /// - The padding bits are composed of the bytes that indicate the length of
     ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
@@ -2756,7 +2756,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   it means this method failed in encryption.
     /// 
     /// # Features
-    /// - If `message` is an empty Vec<U> object Vec::<U>::new(), only padding
+    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
     ///   bytes will be encrypted, and stored in the array `[V; N]` object
     ///   `cipher`.
     /// - If `V::size_in_bytes() * N` is less than 
@@ -3828,7 +3828,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };\
+    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);

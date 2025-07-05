@@ -1,4 +1,4 @@
-// Copyright 2024 PARK Youngho.
+// Copyright 2025 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -9,9 +9,9 @@
 use std::{ io, env, fs };
 use std::io::BufRead;
 use std::convert::From;
-use cryptocol::hash::SHA2_512_t_224;
+use cryptocol::hash::SHA3_256;
 
-type HASH = SHA2_512_t_224;
+type HASH = SHA3_256;
 
 fn main()
 {
@@ -95,8 +95,8 @@ fn check_files(file_list: &str)
 
 fn help()
 {
-    println!("This is an SHA2_512_t_224 hash value extractor from a text or a file, using cryptocol.");
-    println!("Usage: sha2_512_224_app <option> <source>");
+    println!("This is an SHA3_256 hash value extractor from a text or a file, using cryptocol.");
+    println!("Usage: sha3_app <option> <source>");
     println!("options       description");
     println!("--text, -t    : <source> is a text to get a hash code.");
     println!("                The text should be enclosed by ' or \".");
@@ -105,7 +105,7 @@ fn help()
     println!("                of file and its hash code.");
     println!("--help, -h    : print this help message on screen\n");
     println!("Examples:");
-    println!("\tsha2_512_224_app -t 'How are you doing?'");
-    println!("\tsha2_512_224_app -f linuxmint-21.3-cinnamon-64bit.iso");
-    println!("\tsha2_512_224_app -c CHECKSUM");
+    println!("\tsha3_app -t 'How are you doing?'");
+    println!("\tsha3_app -f linuxmint-21.3-cinnamon-64bit.iso");
+    println!("\tsha3_app -c CHECKSUM");
 }

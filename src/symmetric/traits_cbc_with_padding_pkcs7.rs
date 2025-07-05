@@ -709,7 +709,7 @@ pub trait CBC_PKCS7<T> : Sized
     ///   Instead, use other safer methods such as
     ///   encrypt_vec_into_*().
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - If `message` is an empty Vec<U> object Vec::<U>::new(), only padding
+    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
     ///   bytes will be encrypted, and stored in the memory area that starts
     ///   from `cipher`.
     /// - The padding bits are composed of the bytes that indicate the length of
@@ -775,7 +775,7 @@ pub trait CBC_PKCS7<T> : Sized
     ///   it means this method failed in encryption.
     /// 
     /// # Features
-    /// - If `message` is an empty Vec<U> object Vec::<U>::new(), only padding
+    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
     ///   bytes will be encrypted, and stored in the `Vec<V>` object `cipher`.
     /// - The padding bits are composed of the bytes that indicate the length of
     ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
@@ -843,7 +843,7 @@ pub trait CBC_PKCS7<T> : Sized
     ///   it means this method failed in encryption.
     /// 
     /// # Features
-    /// - If `message` is an empty Vec<U> object Vec::<U>::new(), only padding
+    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
     ///   bytes will be encrypted, and stored in the array `[V; N]` object
     ///   `cipher`.
     /// - If `V::size_in_bytes() * N` is less than 

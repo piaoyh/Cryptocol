@@ -40,7 +40,26 @@ use crate::number::SmallUInt;
 /// 
 /// ## Example 2
 /// ```
-/// // to do
+/// use cryptocol::define_utypes_with;
+/// use cryptocol::number::BigUInt_Prime;
+/// define_utypes_with!(u32);
+///
+/// let a_biguint = U256::from_string("12345678911111222223333344444555556666677777888889999900000").unwrap();
+/// let b_biguint = U256::from_string("99999888887777766666555554444433333222221111100000123456789").unwrap();
+/// let c_biguint = a_biguint.gcd(&b_biguint);
+/// println!("The greatest common divisor of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
+/// assert_eq!(c_biguint.to_string(), "27");
+///
+/// let a_biguint = U256::from_string("11111222223333344444555556666677777").unwrap();
+/// let b_biguint = U256::from_string("77777666665555544444333332222211111").unwrap();
+/// let c_biguint = a_biguint.lcm(&b_biguint);
+/// println!("The least common multiple of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
+/// assert_eq!(c_biguint.to_string(), "77779222242222466669444474444755552444414444166664222202222077777");
+///
+/// let a_biguint = U512::from_string("262586890850443215026048316017358917147061433899850397175592679960211511929529269359755816708006242574764016656012965410420527921966695199932942678613269").unwrap();
+/// let b = a_biguint.is_prime_using_miller_rabin(5_usize);
+/// println!("{} is {}a prime number", a_biguint, if b {""} else {"not "});
+/// assert_eq!(b, true);
 /// ```
 #[allow(non_camel_case_types)]
 pub trait BigUInt_Prime<T, const N: usize> : Clone + Sized //+ Display + + ToString

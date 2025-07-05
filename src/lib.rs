@@ -98,7 +98,7 @@
 //!       [`SHA2_512_t_Generic`](hash/sha2_512_t/struct.SHA2_512_t_Generic.html#struct.SHA2_512_t_Generic)
 //! - [X] SHA-3 and Keccak hash algorithms based on 8/16/32/64 bits
 //!       --- Includes SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE 128, SHAKE 256, cSHAKE-128, cSHAKE-256, Keccak family and their expanded versions.
-//!       [`Keccak_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/keccak/struct.Keccak_Generic.html#struct.Keccak_Generic)
+//!       [`Keccak_Generic`](hash/keccak/struct.Keccak_Generic.html#struct.Keccak_Generic)
 // ! - [ ] RIPEMD hash algorithms based on 256 bits
 // !       --- Includes RIPEMD and its expanded versions.
 // !       ===> Moved to Roadmap for ver. 2.0

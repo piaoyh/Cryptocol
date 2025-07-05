@@ -429,7 +429,7 @@ impl <S: SmallCryptor64> BigCryptor64<S>
     /// ```
     /// 
     /// # Compile-fail Example
-    /// ```compile-fail
+    /// ```compile_fail
     /// use cryptocol::symmetric::DES;
     /// let des = DES::new_with_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     /// // It cannot be compiled!
@@ -3364,8 +3364,8 @@ impl <S: SmallCryptor64> BigCryptor64<S>
     /// `message` has to have at least the same size as that of `cipher`. 
     /// 
     /// # Example 1
-    /// ```
-    /// 
+    /// ```text
+    /// // to do
     /// ```
     pub fn decrypt_with_padding_pkcs7_into_array<T, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [T; N]) -> u64
     where T: SmallUInt + Copy + Clone

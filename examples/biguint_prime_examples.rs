@@ -12,22 +12,49 @@
 // #[allow(dead_code)]``
 pub fn main()
 {
-    biguint_gcd_uint();
-    biguint_gcd_assign_uint();
-    biguint_lcm_uint();
-    biguint_lcm_assign_uint();
-    biguint_gcd();
-    biguint_gcd_assign();
-    biguint_lcm();
-    biguint_lcm_assign();
-    biguint_is_prime_using_miller_rabin();
+    biguint_prime_quick_start();
+    biguint_prime_gcd_uint();
+    biguint_prime_gcd_assign_uint();
+    biguint_prime_lcm_uint();
+    biguint_prime_lcm_assign_uint();
+    biguint_prime_gcd();
+    biguint_prime_gcd_assign();
+    biguint_prime_lcm();
+    biguint_prime_lcm_assign();
+    biguint_prime_is_prime_using_miller_rabin();
 }
 
 
-
-fn biguint_gcd_uint()
+fn biguint_prime_quick_start()
 {
-    println!("biguint_gcd_uint()");
+    println!("biguint_prime_quick_start()");
+    use cryptocol::define_utypes_with;
+    use cryptocol::number::BigUInt_Prime;
+    define_utypes_with!(u32);
+
+    let a_biguint = U256::from_string("12345678911111222223333344444555556666677777888889999900000").unwrap();
+    let b_biguint = U256::from_string("99999888887777766666555554444433333222221111100000123456789").unwrap();
+    let c_biguint = a_biguint.gcd(&b_biguint);
+    println!("The greatest common divisor of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
+    assert_eq!(c_biguint.to_string(), "27");
+
+    let a_biguint = U256::from_string("11111222223333344444555556666677777").unwrap();
+    let b_biguint = U256::from_string("77777666665555544444333332222211111").unwrap();
+    let c_biguint = a_biguint.lcm(&b_biguint);
+    println!("The least common multiple of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
+    assert_eq!(c_biguint.to_string(), "77779222242222466669444474444755552444414444166664222202222077777");
+
+    let a_biguint = U512::from_string("262586890850443215026048316017358917147061433899850397175592679960211511929529269359755816708006242574764016656012965410420527921966695199932942678613269").unwrap();
+    let b = a_biguint.is_prime_using_miller_rabin(5_usize);
+    println!("{} is {}a prime number", a_biguint, if b {""} else {"not "});
+    assert_eq!(b, true);
+    println!("---------------------------");
+}
+
+
+fn biguint_prime_gcd_uint()
+{
+    println!("biguint_prime_gcd_uint()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_Prime;
     define_utypes_with!(u32);
@@ -150,9 +177,9 @@ fn biguint_gcd_uint()
     println!("---------------------------");
 }
 
-fn biguint_gcd_assign_uint()
+fn biguint_prime_gcd_assign_uint()
 {
-    println!("biguint_gcd_assign_uint()");
+    println!("biguint_prime_gcd_assign_uint()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_Prime;
     define_utypes_with!(u64);
@@ -333,9 +360,9 @@ fn biguint_gcd_assign_uint()
     println!("---------------------------");
 }
 
-fn biguint_lcm_uint()
+fn biguint_prime_lcm_uint()
 {
-    println!("biguint_lcm_uint()");
+    println!("biguint_prime_lcm_uint()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_Prime;
     define_utypes_with!(u16);
@@ -459,9 +486,9 @@ fn biguint_lcm_uint()
     println!("---------------------------");
 }
 
-fn biguint_lcm_assign_uint()
+fn biguint_prime_lcm_assign_uint()
 {
-    println!("biguint_lcm_assign_uint()");
+    println!("biguint_prime_lcm_assign_uint()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_Prime;
     define_utypes_with!(u32);
@@ -643,9 +670,9 @@ fn biguint_lcm_assign_uint()
 
 
 
-fn biguint_gcd()
+fn biguint_prime_gcd()
 {
-    println!("biguint_gcd()");
+    println!("biguint_prime_gcd()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_Prime;
     define_utypes_with!(u32);
@@ -768,9 +795,9 @@ fn biguint_gcd()
     println!("---------------------------");
 }
 
-fn biguint_gcd_assign()
+fn biguint_prime_gcd_assign()
 {
-    println!("biguint_gcd_assign()");
+    println!("biguint_prime_gcd_assign()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_Prime;
     define_utypes_with!(u64);
@@ -950,9 +977,9 @@ fn biguint_gcd_assign()
     println!("---------------------------");
 }
 
-fn biguint_lcm()
+fn biguint_prime_lcm()
 {
-    println!("biguint_lcm()");
+    println!("biguint_prime_lcm()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_Prime;
     define_utypes_with!(u16);
@@ -1076,9 +1103,9 @@ fn biguint_lcm()
     println!("---------------------------");
 }
 
-fn biguint_lcm_assign()
+fn biguint_prime_lcm_assign()
 {
-    println!("biguint_lcm_assign()");
+    println!("biguint_prime_lcm_assign()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_Prime;
     define_utypes_with!(u32);
@@ -1259,9 +1286,9 @@ fn biguint_lcm_assign()
     println!("---------------------------");
 }
 
-fn biguint_is_prime_using_miller_rabin()
+fn biguint_prime_is_prime_using_miller_rabin()
 {
-    println!("biguint_is_prime_using_miller_rabin()");
+    println!("biguint_prime_is_prime_using_miller_rabin()");
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_Prime;
     define_utypes_with!(u8);

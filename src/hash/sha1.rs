@@ -666,6 +666,8 @@ pub type SHA0 = SHA1_Generic<5, 0x67452301, 0xefcdab89,
 /// use std::convert::From;
 /// use cryptocol::hash::SHA1;
 /// 
+/// type HASH = SHA1;
+/// 
 /// fn main()
 /// {
 ///     let args: Vec<String> = env::args().collect();
@@ -687,7 +689,7 @@ pub type SHA0 = SHA1_Generic<5, 0x67452301, 0xefcdab89,
 /// 
 /// fn get_hash_value_from_text(txt: &str)
 /// {
-///     let mut hash = SHA1::new();
+///     let mut hash = HASH::new();
 ///     hash.digest_str(txt);
 ///     println!("Hash value:\t{}", hash.get_hash_value_in_string());
 /// }
@@ -696,7 +698,7 @@ pub type SHA0 = SHA1_Generic<5, 0x67452301, 0xefcdab89,
 /// {
 ///     if let Ok(contents) = fs::read(file)
 ///     {
-///         let mut hash = SHA1::new();
+///         let mut hash = HASH::new();
 ///         hash.digest_vec(&contents);
 ///         println!("Hash value:\t{}", hash.get_hash_value_in_string());
 ///     }
@@ -729,7 +731,7 @@ pub type SHA0 = SHA1_Generic<5, 0x67452301, 0xefcdab89,
 ///                     let h = String::from(elem[1]).to_uppercase();
 ///                     if let Ok(contents) = fs::read(item)
 ///                     {
-///                         let mut hash = SHA1::new();
+///                         let mut hash = HASH::new();
 ///                         hash.digest_vec(&contents);
 ///                         if hash.to_string() == h
 ///                             { println!("{} ---> OK", item); }

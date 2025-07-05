@@ -1,4 +1,4 @@
-// Copyright 2023, 2024 PARK Youngho.
+// Copyright 2023, 2024, 2025 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -437,6 +437,8 @@ pub type SHA2_224 = SHA2_256_Generic<7, 0xc1059ed8, 0x367cd507, 0x3070dd17,
 /// use std::convert::From;
 /// use cryptocol::hash::SHA2_256;
 /// 
+/// type HASH = SHA2_256;
+/// 
 /// fn main()
 /// {
 ///     let args: Vec<String> = env::args().collect();
@@ -458,7 +460,7 @@ pub type SHA2_224 = SHA2_256_Generic<7, 0xc1059ed8, 0x367cd507, 0x3070dd17,
 /// 
 /// fn get_hash_value_from_text(txt: &str)
 /// {
-///     let mut hash = SHA2_256::new();
+///     let mut hash = HASH::new();
 ///     hash.digest_str(txt);
 ///     println!("Hash value:\t{}", hash.get_hash_value_in_string());
 /// }
@@ -467,7 +469,7 @@ pub type SHA2_224 = SHA2_256_Generic<7, 0xc1059ed8, 0x367cd507, 0x3070dd17,
 /// {
 ///     if let Ok(contents) = fs::read(file)
 ///     {
-///         let mut hash = SHA2_256::new();
+///         let mut hash = HASH::new();
 ///         hash.digest_vec(&contents);
 ///         println!("Hash value:\t{}", hash.get_hash_value_in_string());
 ///     }
@@ -500,7 +502,7 @@ pub type SHA2_224 = SHA2_256_Generic<7, 0xc1059ed8, 0x367cd507, 0x3070dd17,
 ///                     let h = String::from(elem[1]).to_uppercase();
 ///                     if let Ok(contents) = fs::read(item)
 ///                     {
-///                         let mut hash = SHA2_256::new();
+///                         let mut hash = HASH::new();
 ///                         hash.digest_vec(&contents);
 ///                         if hash.to_string() == h
 ///                             { println!("{} ---> OK", item); }
