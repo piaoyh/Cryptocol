@@ -96,7 +96,7 @@
 //! - [X] SHA-2 hash algorithms based on 512/t bits
 //!       --- Includes 512/256, SHA-512/224, and their expanded versions.
 //!       [`SHA2_512_t_Generic`](hash/sha2_512_t/struct.SHA2_512_t_Generic.html#struct.SHA2_512_t_Generic)
-//! - [ ] SHA-3 and Keccak hash algorithms based on 8/16/32/64 bits
+//! - [X] SHA-3 and Keccak hash algorithms based on 8/16/32/64 bits
 //!       --- Includes SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE 128, SHAKE 256, cSHAKE-128, cSHAKE-256, Keccak family and their expanded versions.
 //!       [`Keccak_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/keccak/struct.Keccak_Generic.html#struct.Keccak_Generic)
 // ! - [ ] RIPEMD hash algorithms based on 256 bits
@@ -129,9 +129,18 @@
 //! - [ ] AES symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for AES_Generic
 //!       --- Includes AES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits
 //!       according to PKCS#7 and ISO 7816-4.
-//!       `AES_Generic`, `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
-// ! (symmetric/aes/struct.AES_Generic.html#struct.AES_Generic)
-//! - [ ] Bluefish symmetric-key encryption/decryption algorithm
+//!       `AES_Generic`,
+//!       `ECB_PKCS7`,
+//!       `ECB_ISO`,
+//!       `CBC_PKCS7`,
+//!       `CBC_ISO`,
+//!       `PCBC_PKCS7`,
+//!       `PCBC_ISO`,
+//!       `CFB`,
+//!       `OFB`, and
+//!       `CTR`.
+//!       (symmetric/aes/struct.AES_Generic.html#struct.AES_Generic)
+// ! - [ ] Bluefish symmetric-key encryption/decryption algorithm
 // !     --- Includes Bluefish and its expanded versions. `Bluefish_Generic`
 // !     ===> Moved to Roadmap for ver. 2.0
 // ! - [ ] Twofish symmetric-key encryption/decryption algorithm
@@ -171,7 +180,7 @@
 // !     --- Includes IDEA and its expanded versions. `IDEA_Generic`
 // !     ===> Moved to Roadmap for ver. 2.0
 //!  - [ ] BigCryptor64 and BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor64 and BigCryptor128
-//!     --- Includes 2DES, 3DES, 4DES, etc., 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `NAES`, `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
+//!      --- Includes 2DES, 3DES, 4DES, etc., 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `NAES`, `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
 //! 
 //! ## Pseudo-Random Number Generator Algorithms
 //! - [ ] Pseudo-random number generator --- struct
@@ -193,7 +202,11 @@
 //!       [`Random_BIG_KECCAK_1024`](random/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024),
 //! - [ ] Pseudo-random number generator engines using symmetric-key encryption algorithms ---
 //!       [`Any_DES`](random/random/struct.Any_DES.html#struct.Any_DES),    
-//!       `Any_TDES`, `Any_AES`, `Any_TAES`, `Random_AES`, and `Random_TAES`.
+//!       `Any_TDES`,
+//!       `Any_AES`,
+//!       `Any_TAES`,
+//!       `Random_AES`, and
+//!       `Random_TAES`.
 //! - [ ] Pseudo-random number generator engines using simple randomization algorithm
 //!       --- [`Any_Num_C`](random/random/struct.Any_Num.html#struct.Any_Num_C)
 //! 

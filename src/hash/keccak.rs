@@ -539,6 +539,16 @@ pub type BIG_SHA3_1536 = Keccak_Generic<16, {KECCAK_CONST::SHA3}, 26, u128>;
 /// - The parameter C = 2 X output length (= 224) = 448 bits
 /// - The parameter R = B (= 1600) - C (= 448) = 1152 bits (= 144 bytes)
 /// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+/// 
+/// # Simple Example
+/// ```
+/// use cryptocol::hash::KECCAK_224;
+/// let mut keccak = KECCAK_224::new();
+/// keccak.absorb_str("");
+/// let txt = keccak.get_hash_value_in_string();
+/// println!("keccak = {}", txt);
+/// assert_eq!(txt, "F71837502BA8E10837BDD8D365ADB85591895602FC552B48B7390ABD");
+/// ```
 #[allow(non_camel_case_types)]
 pub type KECCAK_224 = Keccak_Generic<144, {KECCAK_CONST::KECCAK}>;
 
@@ -552,6 +562,17 @@ pub type KECCAK_224 = Keccak_Generic<144, {KECCAK_CONST::KECCAK}>;
 /// - The parameter C = 2 X output length (= 256) = 512 bits
 /// - The parameter R = B (= 1600) - C (= 512) = 1088 bits (= 136 bytes)
 /// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+/// 
+/// # Simple Example
+/// ```
+/// use cryptocol::hash::KECCAK_256;
+/// 
+/// let mut keccak = KECCAK_256::new();
+/// keccak.absorb_str("");
+/// let txt = keccak.get_hash_value_in_string();
+/// println!("keccak = {}", txt);
+/// assert_eq!(txt, "C5D2460186F7233C927E7DB2DCC703C0E500B653CA82273B7BFAD8045D85A470");
+/// ```
 #[allow(non_camel_case_types)]
 pub type KECCAK_256 = Keccak_Generic<136, {KECCAK_CONST::KECCAK}>;
 
@@ -565,6 +586,16 @@ pub type KECCAK_256 = Keccak_Generic<136, {KECCAK_CONST::KECCAK}>;
 /// - The parameter C = 2 X output length (= 384) = 768 bits
 /// - The parameter R = B (= 1600) - C (= 768) = 832 bits (= 104 bytes)
 /// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+/// 
+/// # Simple Example
+/// ```
+/// use cryptocol::hash::KECCAK_384;
+/// let mut keccak = KECCAK_384::new();
+/// keccak.absorb_str("");
+/// let txt = keccak.get_hash_value_in_string();
+/// println!("keccak = {}", txt);
+/// assert_eq!(txt, "2C23146A63A29ACF99E73B88F8C24EAA7DC60AA771780CCC006AFBFA8FE2479B2DD2B21362337441AC12B515911957FF");
+/// ```
 #[allow(non_camel_case_types)]
 pub type KECCAK_384 = Keccak_Generic<104, {KECCAK_CONST::KECCAK}>;
 
@@ -578,6 +609,16 @@ pub type KECCAK_384 = Keccak_Generic<104, {KECCAK_CONST::KECCAK}>;
 /// - The parameter C = 2 X output length (= 512) = 1024 bits
 /// - The parameter R = B (= 1600) - C (= 1024) = 576 bits (= 72 bytes)
 /// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+/// 
+/// # Simple Example
+/// ```
+/// use cryptocol::hash::KECCAK_512;
+/// let mut keccak = KECCAK_512::new();
+/// keccak.absorb_str("");
+/// let txt = keccak.get_hash_value_in_string();
+/// println!("keccak = {}", txt);
+/// assert_eq!(txt, "0EAB42DE4C3CEB9235FC91ACFFE746B29C29A8C366B7C60E4E67C466F36A4304C00FA9CAF9D87976BA469BCBE06713B435F091EF2769FB160CDAB33D3670680E");
+/// ```
 #[allow(non_camel_case_types)]
 pub type KECCAK_512 = Keccak_Generic<72, {KECCAK_CONST::KECCAK}>;
 
@@ -605,6 +646,30 @@ pub type KECCAK_768 = Keccak_Generic<8, {KECCAK_CONST::KECCAK}>;
 /// - The parameter C = 2 X security level (= 128) = 256 bits
 /// - The parameter R = B (= 1600) - C (= 256) = 1344 bits (= 168 bytes)
 /// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+/// 
+/// # Simple Example
+/// ```
+/// use cryptocol::hash::cSHAKE_128;
+/// 
+/// let mut shake = cSHAKE_128::new();
+/// shake.absorb_vec_customized(&"".to_string().into_bytes(), &"Email Signature".to_string().into_bytes(), &vec![0_u8, 1, 2, 3]);
+/// let txt = shake.get_hash_value_in_string();
+/// println!("cSHAKE = {}", txt);
+/// assert_eq!(txt, "C1C36925B6409A04F1B504FCBCA9D82B4017277CB5ED2B2065FC1D3814D5AAF5");
+/// 
+/// let mut data = Vec::<u8>::new();
+/// for i in 0..200
+///     { data.push(i as u8); }
+/// shake.absorb_vec_customized(&"".to_string().into_bytes(), &"Email Signature".to_string().into_bytes(), &data);
+/// let txt = shake.get_hash_value_in_string();
+/// println!("cSHAKE = {}", txt);
+/// assert_eq!(txt, "C5221D50E4F822D96A2E8881A961420F294B7B24FE3D2094BAED2C6524CC166B");
+///
+/// shake.absorb_str_customized("PARK", "Youngho", "In the beginning God created the heavens and the earth.");
+/// let txt = shake.get_hash_value_in_string();
+/// println!("cSHAKE = {}", txt);
+/// assert_eq!(txt, "25685E3E59672612F86AB24E418EB610B6F5F7D299E1B315FD9B59BD698A4AC9");
+/// ```
 #[allow(non_camel_case_types)]
 pub type cSHAKE_128 = Keccak_Generic<168, {KECCAK_CONST::CSHAKE}>;
 
@@ -633,6 +698,16 @@ pub type cSHAKE_224 = Keccak_Generic<144, {KECCAK_CONST::CSHAKE}>;
 /// - The parameter C = 2 X security level (= 256) = 512 bits
 /// - The parameter R = B (= 1600) - C (= 512) = 1088 bits (= 136 bytes)
 /// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+/// 
+/// # Simple Example
+/// ```
+/// use cryptocol::hash::cSHAKE_256;
+/// let mut shake = cSHAKE_256::new();
+/// shake.absorb_str_customized("PARK", "Youngho", "In the beginning God created the heavens and the earth.");
+/// let txt = shake.get_hash_value_in_string();
+/// println!("cSHAKE = {}", txt);
+/// assert_eq!(txt, "490561E775E7CCF90084522B6D8F9DDFAF087C198ABC788737DAC198795242A29B520951D09E8096C441EF88EB53B48AC43B2E7FF9416CF9F32A897BA2EE99FC");
+/// ```
 #[allow(non_camel_case_types)]
 pub type cSHAKE_256 = Keccak_Generic<136, {KECCAK_CONST::CSHAKE}>;
 
@@ -689,6 +764,16 @@ pub type cSHAKE_768 = Keccak_Generic<8, {KECCAK_CONST::CSHAKE}>;
 /// - The parameter C = 2 X security level (= 128) = 256 bits
 /// - The parameter R = B (= 1600) - C (= 256) = 1344 bits (= 168 bytes)
 /// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+/// 
+/// # Simple Example
+/// ```
+/// use cryptocol::hash::SHAKE_128;
+/// let mut shake = SHAKE_128::new();
+/// shake.absorb_str("");
+/// let txt = shake.get_hash_value_in_string();
+/// println!("shake = {}", txt);
+/// assert_eq!(txt, "7F9C2BA4E88F827D616045507605853ED73B8093F6EFBC88EB1A6EACFA66EF26");
+/// ```
 #[allow(non_camel_case_types)]
 pub type SHAKE_128 = Keccak_Generic<168, {KECCAK_CONST::SHAKE}>;
 
@@ -717,6 +802,16 @@ pub type SHAKE_224 = Keccak_Generic<144, {KECCAK_CONST::SHAKE}>;
 /// - The parameter C = 2 X security level (= 256) = 512 bits
 /// - The parameter R = B (= 1600) - C (= 512) = 1088 bits (= 136 bytes)
 /// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+/// 
+/// # Simple Example
+/// ```
+/// use cryptocol::hash::SHAKE_256;
+/// let mut shake = SHAKE_256::new();
+/// shake.absorb_str("");
+/// let txt = shake.get_hash_value_in_string();
+/// println!("shake = {}", txt);
+/// assert_eq!(txt, "46B9DD2B0BA88D13233B3FEB743EEB243FCD52EA62B81B82B50C27646ED5762FD75DC4DDD8C0F200CB05019D67B592F6FC821C49479AB48640292EACB3B7C4BE");
+/// ```
 #[allow(non_camel_case_types)]
 pub type SHAKE_256 = Keccak_Generic<136, {KECCAK_CONST::SHAKE}>;
 
@@ -773,6 +868,26 @@ pub type SHAKE_768 = Keccak_Generic<8, {KECCAK_CONST::SHAKE}>;
 /// - The parameter C = 2 X output length (= 224) = 448 bits
 /// - The parameter R = B (= 1600) - C (= 448) = 1152 bits (= 144 bytes)
 /// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+/// 
+/// # Simple Example
+/// ```
+/// use cryptocol::hash::SHA3_224;
+/// let mut sha3 = SHA3_224::new();
+/// let data = [0xA3_u8; 8 * 25];
+/// sha3.absorb_array(&data);
+/// let txt = sha3.get_hash_value_in_string();
+/// println!("sha3 = {}", txt);
+/// assert_eq!(txt, "9376816ABA503F72F96CE7EB65AC095DEEE3BE4BF9BBC2A1CB7E11E0");
+/// let mut sha3 = SHA3_224::new();
+/// sha3.absorb_array(&data);
+/// let v = sha3.get_hash_value_in_vec();
+/// print!("sha3 = ");
+/// for vv in v
+/// {
+///     print!("{:02X}", vv);
+/// }
+/// println!("\n");
+/// ```
 #[allow(non_camel_case_types)]
 pub type SHA3_224 = Keccak_Generic<144>;
 
@@ -787,6 +902,16 @@ pub type SHA3_224 = Keccak_Generic<144>;
 /// - The parameter C = 2 X output length (= 256) = 512 bits
 /// - The parameter R = B (= 1600) - C (= 512) = 1088 bits (= 136 bytes)
 /// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+/// 
+/// # Simple Example
+/// ```
+/// use cryptocol::hash::SHA3_256;
+/// let mut sha3 = SHA3_256::new();
+/// sha3.absorb_str("");
+/// let txt = sha3.get_hash_value_in_string();
+/// println!("sha3 = {}", txt);
+/// assert_eq!(txt, "A7FFC6F8BF1ED76651C14756A061D662F580FF4DE43B49FA82D80A4B80F8434A");
+/// ```
 #[allow(non_camel_case_types)]
 pub type SHA3_256 = Keccak_Generic<136>;
 
@@ -801,6 +926,16 @@ pub type SHA3_256 = Keccak_Generic<136>;
 /// - The parameter C = 2 X output length (= 384) = 768 bits
 /// - The parameter R = B (= 1600) - C (= 768) = 832 bits (= 104 bytes)
 /// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+/// 
+/// # Simple Example
+/// ```
+/// use cryptocol::hash::SHA3_384;
+/// let mut sha3 = SHA3_384::new();
+/// sha3.absorb_str("");
+/// let txt = sha3.get_hash_value_in_string();
+/// println!("sha3 = {}", txt);
+/// assert_eq!(txt, "0C63A75B845E4F7D01107D852E4C2485C51A50AAAA94FC61995E71BBEE983A2AC3713831264ADB47FB6BD1E058D5F004");
+/// ```
 #[allow(non_camel_case_types)]
 pub type SHA3_384 = Keccak_Generic<104>;
 
@@ -815,6 +950,16 @@ pub type SHA3_384 = Keccak_Generic<104>;
 /// - The parameter C = 2 X output length (= 512) = 1024 bits
 /// - The parameter R = B (= 1600) - C (= 1024) = 576 bits (= 72 bytes)
 /// - The number of Rounds is 12 + 2 X L (= 6) = 24 rounds
+/// 
+/// # Simple Example
+/// ```
+/// use cryptocol::hash::SHA3_512;
+/// let mut sha3 = SHA3_512::new();
+/// sha3.absorb_str("");
+/// let txt = sha3.get_hash_value_in_string();
+/// println!("sha3 = {}", txt);
+/// assert_eq!(txt, "A69F73CCA23A9AC5C8B567DC185A756E97C982164FE25859E0D1DCC1475C80A615B2123AF1F5F94C11E3E9402C3AC558F500199D95B6D3E301758586281DCD26");
+/// ```
 #[allow(non_camel_case_types)]
 pub type SHA3_512 = Keccak_Generic;
 
@@ -1129,6 +1274,8 @@ pub type TINY_SHAKE_64 = Keccak_Generic<9, {KECCAK_CONST::SHAKE}, 18, u8>;
 /// - The parameter C = 2 X output length (= 64) = 128 bits
 /// - The parameter R = B (= 200) - C (= 128) = 72 bits (= 9 bytes)
 /// - The number of Rounds is 12 + 2 X L (= 3) = 18 rounds
+/// 
+/// 
 #[allow(non_camel_case_types)]
 pub type TINY_SHA3_64 = Keccak_Generic<9, {KECCAK_CONST::SHA3}, 18, u8>;
 
@@ -1172,8 +1319,8 @@ pub type TINY_SHA3_64 = Keccak_Generic<9, {KECCAK_CONST::SHA3}, 18, u8>;
 /// - Generating the cryptographically secure pseudo-random numbers
 /// - Implementing proof of work for block chain.
 /// - Study of hash algorithms
-/// - Cryptanalysis Research to find the weakness of SHA-3 and Keccak
-///   construction which SHA3 family uses
+/// - Cryptanalysis Research to find the weakness of the sponge construction
+///   of SHA-3 and Keccak which SHA3 family uses
 /// 
 /// # Generic Parameters
 /// You can create your own expanded version of Keccak by changing the generic
@@ -1519,6 +1666,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     // pub fn digest(&mut self, message: *const u8, length_in_bytes: u64)
     /// Computes hash value.
     /// 
+    /// # Arguments
+    /// - `message` is pointer to `const u8`.
+    /// - `length_in_bytes` is the size of message in the unit of bytes, and
+    ///   its data type is `u64`.
+    /// 
     /// # Features
     /// - This function has the generalized interface (pointer, `*const u8`)
     ///   so as to enable other functions to wrap this function with any
@@ -1528,10 +1680,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - This method is the wrapper of the method `absorb()` for consistancy
     ///   with other hash functions.
     /// 
-    /// # Arguments
-    /// - `message` is pointer to const u8.
-    /// - `length_in_bytes` is the size of message in the unit of bytes, and
-    ///   its data type is `u64`.
+    /// # Warning
+    /// You can use this method even for the type `cSHAKE_*` but it is not
+    /// in accordance with the standard. It is desirable that You use
+    /// the method `digest_customized()` instead. If you use this method for
+    /// the type `cSHAKE_*`, others may think that you do not fully understand
+    /// `SHAKE-*` and `cSHAKE-*`. However, if you intentionally write your code
+    /// in non-standard way, you can use this method even for the type
+    /// `cSHAKE_*`, of course.
     /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of a string slice,
@@ -1579,6 +1735,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Arguments
     /// - `message` is of type `&str`.
     /// 
+    /// # Warning
+    /// You can use this method even for the type `cSHAKE_*` but it is not
+    /// in accordance with the standard. It is desirable that You use
+    /// the method `digest_str_customized()` instead. If you use this method for
+    /// the type `cSHAKE_*`, others may think that you do not fully understand
+    /// `SHAKE-*` and `cSHAKE-*`. However, if you intentionally write your code
+    /// in non-standard way, you can use this method even for the type
+    /// `cSHAKE_*`, of course.
+    /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of the content of String
     ///   object, you are highly recommended to use the method
@@ -1624,6 +1789,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Arguments
     /// - `message` is of the type `&String`.
     /// 
+    /// # Warning
+    /// You can use this method even for the type `cSHAKE_*` but it is not
+    /// in accordance with the standard. It is desirable that You use
+    /// the method `digest_string_customized()` instead. If you use this method
+    /// for the type `cSHAKE_*`, others may think that you do not fully
+    /// understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally write
+    /// your code in non-standard way, you can use this method even for the type
+    /// `cSHAKE_*`, of course.
+    /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of a string slice,
     ///   you are highly recommended to use the method
@@ -1668,6 +1842,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// # Arguments
     /// - `message` is of the type `&[U; N]`.
+    /// 
+    /// # Warning
+    /// You can use this method even for the type `cSHAKE_*` but it is not
+    /// in accordance with the standard. It is desirable that You use
+    /// the method `digest_array_customized()` instead. If you use this method
+    /// for the type `cSHAKE_*`, others may think that you do not fully
+    /// understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally write
+    /// your code in non-standard way, you can use this method even for the type
+    /// `cSHAKE_*`, of course.
     /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of a string slice,
@@ -1715,6 +1898,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Arguments
     /// - `message` is of the type `&Vec<U>`.
     /// 
+    /// # Warning
+    /// You can use this method even for the type `cSHAKE_*` but it is not
+    /// in accordance with the standard. It is desirable that You use
+    /// the method `digest_vec_customized()` instead. If you use this method
+    /// for the type `cSHAKE_*`, others may think that you do not fully
+    /// understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally write
+    /// your code in non-standard way, you can use this method even for the type
+    /// `cSHAKE_*`, of course.
+    /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of a string slice,
     ///   you are highly recommended to use the method
@@ -1752,15 +1944,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     // pub fn digest_customized(&mut self, function_name: *const u8, function_name_length_in_bytes: u64, user_defined: *const u8, user_defined_length_in_bytes: u64, message: *const u8, length_in_bytes: u64)
-    /// Computes hash value.
-    /// 
-    /// # Features
-    /// - This function has the generalized interface (pointer, `*const u8`)
-    ///   so as to enable other functions to wrap this function with any
-    ///   convenient interface for uses. So, this function is usually not called
-    ///   directly in Rust. This function is provided to be called from other
-    ///   programming languages such as C/C++.
-    /// - This method is the wrapper of the method `absorb_customized()`.
+    /// Digests the message with filename string and user-defined string.
     /// 
     /// # Arguments
     /// - `function_name` is pointer to const u8, which contains function name,
@@ -1786,6 +1970,23 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///   hash.
     /// - `length_in_bytes` is the size of message in the unit of bytes, and
     ///   its data type is `u64`.
+    /// 
+    /// # Features
+    /// - This function has the generalized interface (pointer, `*const u8`)
+    ///   so as to enable other functions to wrap this function with any
+    ///   convenient interface for uses. So, this function is usually not called
+    ///   directly in Rust. This function is provided to be called from other
+    ///   programming languages such as C/C++.
+    /// - This method is the wrapper of the method `absorb_customized()`.
+    /// 
+    /// # Warning
+    /// You can use this method even for the types other than `cSHAKE_*` but
+    /// it is not in accordance with the standard. It is desirable that You
+    /// use the method `digest()` instead. If you use this method for the
+    /// types other than `cSHAKE_*`, others may think that you do not fully
+    /// understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the types other than `cSHAKE_*`, of course.
     /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of a string slice,
@@ -1825,11 +2026,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     // pub fn digest_str_customized(&mut self, function_name: &str, user_defined: &str, message: &str)
-    /// Computes hash value.
+    /// Digests the message with filename string and user-defined string.
     /// 
-    /// # Features
-    /// This method is the wrapper of the method `absorb_str_customized()`
-    /// .
     /// # Arguments
     /// - `function_name` is of type `&str`, which contains function name,
     ///   but it is reserved for NIST use. You are supposed to give null string
@@ -1840,6 +2038,18 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - `user_defined` is of type `&str`, which contains a string for
     ///   your special use.
     /// - `message` is of type `&str`.
+    /// 
+    /// # Features
+    /// This method is the wrapper of the method `absorb_str_customized()`.
+    /// 
+    /// # Warning
+    /// You can use this method even for the types other than `cSHAKE_*` but it
+    /// is not in accordance with the standard. It is desirable that You use
+    /// the method `digest_str()` instead. If you use this method for the
+    /// types other than `cSHAKE_*`, others may think that you do not
+    /// fully understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the types other than `cSHAKE_*`, of course.
     /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of the content of String
@@ -1878,11 +2088,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     // pub fn digest_string_customized(&mut self, function_name: &String, user_defined: &String, message: &String)
-    /// Computes hash value.
+    /// Digests the message with filename string and user-defined string.
     /// 
-    /// # Features
-    /// This method is the wrapper of the method `absorb_string_customized()`
-    /// .
     /// # Arguments
     /// - `function_name` is of type `&String`, which contains function name,
     ///   but it is reserved for NIST use. You are supposed to give null string
@@ -1893,6 +2100,18 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - `user_defined` is of type `&String`, which contains a string for
     ///   your special use.
     /// - `message` is of type `&String`.
+    /// 
+    /// # Features
+    /// This method is the wrapper of the method `absorb_string_customized()`.
+    /// 
+    /// # Warning
+    /// You can use this method even for the types other than `cSHAKE_*` but it
+    /// is not in accordance with the standard. It is desirable that You use
+    /// the method `digest_string()` instead. If you use this method for the
+    /// types other than `cSHAKE_*`, others may think that you do not
+    /// fully understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the types other than `cSHAKE_*`, of course.
     /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of a string slice,
@@ -1930,7 +2149,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     // pub fn digest_array_customized<U, V, W, const L: usize, const M: usize, const N: usize>(&mut self, function_name: &[U; L], user_defined: &[V; M], message: &[W; N])
-    /// Computes hash value.
+    /// Digests the message with filename string and user-defined string.
     /// 
     /// # Features
     /// This method is the wrapper of the method `absorb_array_customized()`
@@ -1944,6 +2163,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - `user_defined` is of type `&[V; M]`, which contains a string for
     ///   your special use.
     /// - `message` is of the type `&[W; N]`.
+    /// 
+    /// # Warning
+    /// You can use this method even for the types other than `cSHAKE_*` but it
+    /// is not in accordance with the standard. It is desirable that You use
+    /// the method `digest_array()` instead. If you use this method for the
+    /// types other than `cSHAKE_*`, others may think that you do not
+    /// fully understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the types other than `cSHAKE_*`, of course.
     /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of a string slice,
@@ -1984,7 +2212,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     // pub fn digest_vec_customized<U, V, W>(&mut self, function_name: &Vec<U>, user_defined: &Vec<V>, message: &Vec<W>)
-    /// Computes hash value.
+    /// Digests the message with filename string and user-defined string.
     /// 
     /// # Features
     /// This method is the wrapper of the method `absorb_vec_customized()`
@@ -1998,6 +2226,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - `user_defined` is of type `&[V; M]`, which contains a string for
     ///   your special use.
     /// - `message` is of the type `&[W; N]`.
+    /// 
+    /// # Warning
+    /// You can use this method even for the types other than `cSHAKE_*` but it
+    /// is not in accordance with the standard. It is desirable that You use
+    /// the method `digest_vec()` instead. If you use this method for the
+    /// types other than `cSHAKE_*`, others may think that you do not
+    /// fully understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the types other than `cSHAKE_*`, of course.
     /// 
     /// # Counterpart Methods
     /// - If you want to compute of the hash value of a string slice,
@@ -2440,7 +2677,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Arguments
     /// - `hash` is the array object that contains hash value.
     /// 
-    /// # Example 1
+    /// # Example
     /// ```
     /// use cryptocol::hash::SHA3_256;
     /// let hash_value = [01u8, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF, 0x00, 0x11, 0x22, 0x33,0x44, 0x55, 0x66, 0x77];
@@ -2464,7 +2701,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     // pub fn squeeze(&mut self) -> [u8; RATE]
-    /// Returns the resulting hash value.
+    /// Returns the resulting hash value after squeezing.
     /// 
     /// # Output
     /// A hash value in the form of array object of `u8` with `RATE` elements.
@@ -2473,6 +2710,33 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// The length of output hash value is automatically determined
     /// by the generic parameter `RATE`.
     /// 
+    /// # Example 1 for SHA3_256
+    /// ```
+    /// use cryptocol::hash::SHA3_256;
+    /// let mut hash = SHA3_256::new();
+    /// let txt = "This is an example of the method squeeze().";
+    /// hash.absorb_str(txt);
+    /// let mut hash_value = hash.squeeze();
+    /// let mut hs = SHA3_256::read_hash_value_in_hexadecimal(&hash_value);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "D035239B93FBE534A4B1C0923EB844D689E55ACFB1E13144E6FE7D69B75290F68502392D6138336847C2D52AB1AC84BC0F66B7501ED3705FE4811B106604A2A3704C563BB2BAC52B7FAE628AE96D7E38312B5779FE5E154FAD2116C8E58F97F42C202BBA92310B5DA0758BC2F4549B1EA1C43393FC0BD4BCF392BFB0B4B59883AC6B1D702B9563BA");
+    /// 
+    /// hash_value = hash.squeeze();
+    /// hs = SHA3_256::read_hash_value_in_hexadecimal(&hash_value);
+    /// println!("First random number =\t{}", hs);
+    /// assert_eq!(hs, "BFC8C6A5B32F55DB7FE8A060D63F1872BC8F98D2279567E92F0DC58FCB30808CB673FAB3C69AFA064D6081FB8349563AF2B1580CE458147D34C52A1CE54CA6F7C49EECB06DACCEA31926186455348AB9980F556C4764563D4AABE3C5EAF575767C7CA18DB2FD5651D567EE6D127196F424D1AC61A7B7DB60EE5E211EF290B7AF8A015E6D07C51139");
+    /// hash_value = hash.squeeze();
+    /// hs = SHA3_256::read_hash_value_in_hexadecimal(&hash_value);
+    /// println!("Second random number =\t{}", hs);
+    /// assert_eq!(hs, "631720A8E88A894A34177078646CA9D081C65732E0D6587EBCC5E1B902E4D5B57ADCA15B8A55173A322DD552D28D2EB244AB60C63D6BE0C72206F0CB44F74F16FAA1CE1647426892424E82F7468C00B007C79859A858AC12C92FC8068ACF14EFD0825B3E1F3200EB922B652F2B1B34D2247051F77C5B2B050A1DB5BFA92F7D2C5951D9328DBFD3D3");
+    /// hash_value = hash.squeeze();
+    /// hs = SHA3_256::read_hash_value_in_hexadecimal(&hash_value);
+    /// println!("Third random number =\t{}", hs);
+    /// assert_eq!(hs, "DC064A78C927A328F555A29B2654151A336D28B13F35A427DC0BB58BDA500089ED5EC7045CA3CF71B8121F3B77AC5861613E2F4EF49A23A9D737C78B7256B03AB7F9C5FF7A40814294F465EC5A0F646152FC84CF62B150B4B7CC5246E28DF429EDB483B7B34070092C27537B6AB365A6D6F77DDC2A910BD2513229C9043661F62874912EF88F7984");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.squeeze)
     pub fn squeeze(&mut self) -> [u8; RATE]
     {
         let mut block = [0_u8; RATE];
@@ -2488,33 +2752,63 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         block
     }
 
-    pub fn absorb_str(&mut self, message: &str)
-    {
-        self.absorb(message.as_ptr(), message.len() as u64);
-    }
-
-    #[inline]
-    pub fn absorb_string(&mut self, message: &String)
-    {
-        self.absorb(message.as_ptr(), message.len() as u64);
-    }
-
-    #[inline]
-    pub fn absorb_array<U, const N: usize>(&mut self, message: &[U; N])
-    where U: SmallUInt + Copy + Clone
-    {
-        self.absorb(message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64);
-    }
-
-    #[inline]
-    pub fn absorb_vec<U>(&mut self, message: &Vec<U>)
-    where U: SmallUInt + Copy + Clone
-    {
-        self.absorb(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64);
-    }
-
-    // pub fn absorb(&mut self, message: *const u8, length_in_bytes: usize)
-    /// Digests the message.
+    // pub fn absorb(&mut self, message: *const u8, length_in_bytes: u64)
+    /// Absorbs the message.
+    /// 
+    /// # Arguments
+    /// - `message` is pointer to `const u8`.
+    /// - `length_in_bytes` is the size of message in the unit of bytes, and
+    ///   its data type is `u64`.
+    /// 
+    /// # Features
+    /// - Absorbing is the same as digesting.
+    /// - This function has the generalized interface (pointer, `*const u8`)
+    ///   so as to enable other functions to wrap this function with any
+    ///   convenient interface for uses. So, this function is usually not called
+    ///   directly in Rust. This function is provided to be called from other
+    ///   programming languages such as C/C++.
+    /// 
+    /// # Warning
+    /// You can use this method even for the type `cSHAKE_*` but it
+    /// is not in accordance with the standard. It is desirable that You use
+    /// the method `absorb_customized()` instead. If you use this method
+    /// for the type `cSHAKE_*`, others may think that you do not
+    /// fully understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the type `cSHAKE_*`, of course.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to compute of the hash value of a string slice,
+    ///   you are highly recommended to use the method
+    ///   [absorb_str()](struct@Keccak_Generic#method.absorb_str)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of String
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_string()](struct@Keccak_Generic#method.absorb_string)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Array
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_array()](struct@Keccak_Generic#method.absorb_array)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Vec
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_vec()](struct@Keccak_Generic#method.absorb_array)
+    ///   rather than this method.
+    ///
+    /// # Example 1 for SHA3_384
+    /// ```
+    /// use cryptocol::hash::SHA3_384;
+    /// let mut hash = SHA3_384::new();
+    /// let txt = "This is an example of the method absorb().";
+    /// hash.absorb(txt.as_ptr(), txt.len() as u64);
+    /// let hash_value = hash.squeeze();
+    /// let hs = SHA3_384::read_hash_value_in_hexadecimal(&hash_value);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "50739E69E4848F1AAB0192BD08899F5FDCF194EA91CFB51FCFA53BBF01749E81515503A363D961300434B7DA1BC3E2BA2A56E39A33D7D797AE3694D42027F52F594FEB9EA93684CAE961EC23B7BD8E586D7A79A9A80BE24175F5C169CBC4B0FC0C9E73C8D08EF06D");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.absorb)
     pub fn absorb(&mut self, message: *const u8, length_in_bytes: u64)
     {
         if PADDING == KECCAK_CONST::CSHAKE
@@ -2539,50 +2833,307 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         self.absorb_block(padded.as_ptr());
     }
 
-    // pub fn absorb_str_customized(&mut self, function_name: &str, user_defined: &str, message: &str)
-    /// Digests the message with filename string and user-defined string.
-    #[inline]
-    pub fn absorb_str_customized(&mut self, function_name: &str, user_defined: &str, message: &str)
+    // pub fn absorb_str(&mut self, message: &str)
+    /// Absorbs a string slice.
+    /// 
+    /// # Arguments
+    /// - `message` is a string slice to be absorbed, and
+    ///   its data type is `&str`.
+    /// 
+    /// # Features
+    /// Absorbing is the same as digesting.
+    /// 
+    /// # Warning
+    /// You can use this method even for the type `cSHAKE_*` but it
+    /// is not in accordance with the standard. It is desirable that You use
+    /// the method `absorb_str_customized()` instead. If you use this method
+    /// for the type `cSHAKE_*`, others may think that you do not
+    /// fully understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the type `cSHAKE_*`, of course.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to compute of the hash value of a string slice,
+    ///   you are highly recommended to use the method
+    ///   [absorb_string()](struct@Keccak_Generic#method.absorb_string)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Array
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_array()](struct@Keccak_Generic#method.absorb_array)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Vec
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_vec()](struct@Keccak_Generic#method.absorb_array)
+    ///   rather than this method.
+    /// - If you want to use this method from other programming languages such
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [absorb()](struct@Keccak_Generic#method.absorb) rather than this method.
+    /// 
+    /// # Example 1 for SHA3_512
+    /// ```
+    /// use cryptocol::hash::SHA3_512;
+    /// let mut hash = SHA3_512::new();
+    /// let txt = "This is an example of the method absorb_str().";
+    /// hash.absorb_str(txt);
+    /// let hash_value = hash.squeeze();
+    /// let hs = SHA3_512::read_hash_value_in_hexadecimal(&hash_value);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "625AFE67C854BAB869A7C18798402BDB136E2A320DF953F0AF0F6AD7CA10C3A4020BB0951AD8CAFD36249266B23D6AC41F2D8A65DCEA8FF0B643A17E16F01CFCE51A73747941EECD");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.absorb_str)
+    pub fn absorb_str(&mut self, message: &str)
     {
-        self.absorb_customized(function_name.as_ptr(), function_name.len() as u64,
-                                user_defined.as_ptr(), user_defined.len() as u64,
-                                message.as_ptr(), message.len() as u64);
+        self.absorb(message.as_ptr(), message.len() as u64);
     }
 
-    // pub fn absorb_string_customized(&mut self, function_name: &String, user_defined: &String, message: &String)
-    /// Digests the message with filename string and user-defined string.
+    // pub fn absorb_string(&mut self, message: &String)
+    /// Absorbs a String object.
+    /// 
+    /// # Arguments
+    /// - `message` is a a string to be absorbed, and
+    ///    its data type is `String` object.
+    /// 
+    /// # Features
+    /// Absorbing is the same as digesting.
+    /// 
+    /// # Warning
+    /// You can use this method even for the type `cSHAKE_*` but it
+    /// is not in accordance with the standard. It is desirable that You use
+    /// the method `absorb_string_customized()` instead. If you use this method
+    /// for the type `cSHAKE_*`, others may think that you do not
+    /// fully understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the type `cSHAKE_*`, of course.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to compute of the hash value of the content of string
+    ///   slice, you are highly recommended to use the method
+    ///   [absorb_str()](struct@Keccak_Generic#method.absorb_str)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Array
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_array()](struct@Keccak_Generic#method.absorb_array)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Vec
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_vec()](struct@Keccak_Generic#method.absorb_array)
+    ///   rather than this method.
+    /// - If you want to use this method from other programming languages such
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [absorb()](struct@Keccak_Generic#method.absorb) rather than this method.
+    /// 
+    /// # Example 1 for SHA3_224
+    /// ```
+    /// use cryptocol::hash::SHA3_224;
+    /// let mut hash = SHA3_224::new();
+    /// let txt = "This is an example of the method absorb_string().".to_string();
+    /// hash.absorb_string(&txt);
+    /// let hash_value = hash.squeeze();
+    /// let hs = SHA3_224::read_hash_value_in_hexadecimal(&hash_value);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "D3B139242B2B6EF8B399CF0E6A4F6D993AC83EDE2CEA3894D4EDE8AAB69ADA5DB232289E62D752349FC3F621B2DA118400142D5DDBA6897633F712A1B320FC4F1F7F3D5BE186FE75F8E3602D344FDA1A5AAB343E8FC68B918CC3C2DC01DA3DDF7AE0CBF0C855D6463EBDCAD81F9CABED5580EF6C652E786DED50EBC72DD827E4129A368A823E8B6F7FBCFA6F9FBB72F9");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.absorb_string)
     #[inline]
-    pub fn absorb_string_customized(&mut self, function_name: &String, user_defined: &String, message: &String)
+    pub fn absorb_string(&mut self, message: &String)
     {
-        self.absorb_customized(function_name.as_ptr(), function_name.len() as u64,
-                                user_defined.as_ptr(), user_defined.len() as u64,
-                                message.as_ptr(), message.len() as u64);
+        self.absorb(message.as_ptr(), message.len() as u64);
     }
 
-    // pub fn absorb_array_customized<U, const K: usize, const L: usize, const M: usize>(&mut self, function_name: &[U; K], user_defined: &[U; L], message: &[U; M])
-    /// Digests the message with filename string and user-defined string.
+    // pub fn absorb_array<U, const N: usize>(&mut self, message: &[U; N])
+    /// Absorbs an array object.
+    /// 
+    /// # Arguments
+    /// - `message` is an array of data type `U` with `N` elements
+    ///   to be absorbed.
+    /// 
+    /// # Features
+    /// Absorbing is the same as digesting.
+    /// 
+    /// # Warning
+    /// You can use this method even for the type `cSHAKE_*` but it
+    /// is not in accordance with the standard. It is desirable that You use
+    /// the method `absorb_array_customized()` instead. If you use this method
+    /// for the type `cSHAKE_*`, others may think that you do not
+    /// fully understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the type `cSHAKE_*`, of course.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to compute of the hash value of a string slice,
+    ///   you are highly recommended to use the method
+    ///   [absorb_str()](struct@Keccak_Generic#method.absorb_str)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of String
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_string()](struct@Keccak_Generic#method.absorb_string)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Vec
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_vec()](struct@Keccak_Generic#method.absorb_array)
+    ///   rather than this method.
+    /// - If you want to use this method from other programming languages such
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [absorb()](struct@Keccak_Generic#method.absorb) rather than this method.
+    /// 
+    /// # Example 1 for SHA3_256
+    /// ```
+    /// use cryptocol::hash::SHA3_256;
+    /// let mut hash = SHA3_256::new();
+    /// let data = [ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.absorb_array(&data);
+    /// let hash_value = hash.squeeze();
+    /// let hs = SHA3_256::read_hash_value_in_hexadecimal(&hash_value);
+    /// println!("Hash =\t{}", hs);
+    /// assert_eq!(hs, "2FA65DD00903E850AD14E00D13ACBE9C2CA2E7B140419B8C7EA2742900586B149F41975DC994F8BD506DA5460FE855267CBD0C02D4DB595C78697D2D80FCE659B1F7ED187BEC70EDC00666A545DDBC8836B11D9410F544FD3A0A0288DAEBB92F86C654AC20336A9A7343180DBB8FC342E024DA4627C80697D78BD365AEEBC58353F684ACEAE89ED4");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.absorb_array)
     #[inline]
-    pub fn absorb_array_customized<U, V, W, const L: usize, const M: usize, const N: usize>(&mut self, function_name: &[U; L], user_defined: &[V; M], message: &[W; N])
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone, W: SmallUInt + Copy + Clone
+    pub fn absorb_array<U, const N: usize>(&mut self, message: &[U; N])
+    where U: SmallUInt + Copy + Clone
     {
-        self.absorb_customized(function_name.as_ptr() as *const u8, L as u64 * U::size_in_bytes() as u64,
-                                user_defined.as_ptr() as *const u8, M as u64 * V::size_in_bytes() as u64,
-                                message.as_ptr() as *const u8, N as u64 * W::size_in_bytes() as u64);
+        self.absorb(message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64);
     }
 
-    // pub fn absorb_vec_customized<U>(&mut self, function_name: &Vec<U>, user_defined: &Vec<U>, message: &Vec<U>)
-    /// Digests the message with filename string and user-defined string.
+    // pub fn absorb_vec<U>(&mut self, message: &Vec<U>)
+    /// Absorbs a `Vec` object.
+    /// 
+    /// # Arguments
+    /// - `message` is a `Vec` object to be absorbed.
+    /// 
+    /// # Features
+    /// Absorbing is the same as digesting.
+    /// 
+    /// # Warning
+    /// You can use this method even for the type `cSHAKE_*` but it
+    /// is not in accordance with the standard. It is desirable that You use
+    /// the method `absorb_vec_customized()` instead. If you use this method
+    /// for the type `cSHAKE_*`, others may think that you do not
+    /// fully understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the type `cSHAKE_*`, of course.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to compute of the hash value of a string slice,
+    ///   you are highly recommended to use the method
+    ///   [absorb_str()](struct@Keccak_Generic#method.absorb_str)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of String
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_string()](struct@Keccak_Generic#method.absorb_string)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Array
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_array()](struct@Keccak_Generic#method.absorb_array)
+    ///   rather than this method.
+    /// - If you want to use this method from other programming languages such
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [absorb()](struct@Keccak_Generic#method.absorb) rather than this method.
+    /// 
+    /// # Example 1 for SHA3_512
+    /// ```
+    /// use cryptocol::hash::SHA3_512;
+    /// let mut hash = SHA3_512::new();
+    /// let data = vec![ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.absorb_vec(&data);
+    /// let hash_value = hash.squeeze();
+    /// let hs = SHA3_512::read_hash_value_in_hexadecimal(&hash_value);
+    /// println!("Hash =\t{}", hs);
+    /// assert_eq!(hs, "8714760A0421335BF23FE3C6F436686983A04B055729161041E717E1E964AD2B4E0DB3EEBBE35BC1BAE2999EF1E0DF48F4A60FBAFA1F5B96E3A20A24D44A02989646C598D1857681");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.absorb_vec)
     #[inline]
-    pub fn absorb_vec_customized<U, V, W>(&mut self, function_name: &Vec<U>, user_defined: &Vec<V>, message: &Vec<W>)
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone, W: SmallUInt + Copy + Clone
+    pub fn absorb_vec<U>(&mut self, message: &Vec<U>)
+    where U: SmallUInt + Copy + Clone
     {
-        self.absorb_customized(function_name.as_ptr() as *const u8, function_name.len() as u64 * U::size_in_bytes() as u64,
-                                user_defined.as_ptr() as *const u8, user_defined.len() as u64 * V::size_in_bytes() as u64,
-                                message.as_ptr() as *const u8, message.len() as u64 * W::size_in_bytes() as u64);
+        self.absorb(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64);
     }
 
     // pub fn absorb_customized(&mut self, filename: *const u8, filename_length_in_bytes: u64, user: *const u8, user_length_in_bytes: u64, message: *const u8, length_in_bytes: u64)
-    /// Digests the message with filename string and user-defined string.
+    /// Absorbs the message with filename string and user-defined string.
+    /// 
+    /// # Arguments
+    /// - `function_name` is pointer to const u8, which contains function name,
+    ///   but it is reserved for NIST use. You are supposed to give null string
+    ///   for `function name`. You may want to use `user_defined` instead.
+    ///   However, for all the types other than cSHAKE, you can freely use
+    ///   this method of the expanded versions of struct `Keccak_Generic` for
+    ///   your own purpose.
+    /// - `function_name_length_in_bytes` is the size of `function_name` in the
+    ///   unit of bytes, and its data type is `u64`, but it is reserved
+    ///   for NIST use. You are supposed to give `0` for
+    ///   `function_name_length_in_bytes`. You may want to use
+    ///   `user_defined_length_in_bytes` instead. However, for all the types other
+    ///   than cSHAKE, you can you `function_name_length_in_bytes` because NIST
+    ///   reserved `function_name` and `function_name_length_in_bytes` only for
+    ///   cSHAKE. You can freely use this method for expanded versions of struct
+    ///   `Keccak_Generic`.
+    /// - `user_defined` is pointer to const u8, which contains a string for
+    ///   your special use.
+    /// - `user_defined_length_in_bytes` is the size of `user_defined` in the
+    ///   unit of bytes, and its data type is `u64`.
+    /// - `message` is pointer to const u8, which contains the actual date to
+    ///   hash.
+    /// - `length_in_bytes` is the size of message in the unit of bytes, and
+    ///   its data type is `u64`.
+    /// 
+    /// # Features
+    /// This function has the generalized interface (pointer, `*const u8`)
+    /// so as to enable other functions to wrap this function with any
+    /// convenient interface for uses. So, this function is usually not called
+    /// directly in Rust. This function is provided to be called from other
+    /// programming languages such as C/C++.
+    /// 
+    /// # Warning
+    /// You can use this method even for the types other than `cSHAKE_*` but
+    /// it is not in accordance with the standard. It is desirable that You
+    /// use the method `absorb()` instead. If you use this method for the
+    /// types other than `cSHAKE_*`, others may think that you do not fully
+    /// understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the types other than `cSHAKE_*`, of course.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to compute of the hash value of a string slice,
+    ///   you are highly recommended to use the method
+    ///   [absorb_str_customized()](struct@Keccak_Generic#method.absorb_str_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of String
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_string_customized()](struct@Keccak_Generic#method.absorb_string_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Array
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_array_customized()](struct@Keccak_Generic#method.absorb_array_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Vec
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_vec_customized()](struct@Keccak_Generic#method.absorb_vec_customized)
+    ///   rather than this method.
+    /// 
+    /// # Example 1 for cSHAKE_128
+    /// ```
+    /// use cryptocol::hash::cSHAKE_128;
+    /// let mut hash = cSHAKE_128::new();
+    /// let txt = "This is an example of the method absorb_customized().";
+    /// let user_defined = "On my own purpose";
+    /// hash.absorb_customized("".as_ptr(), 0, user_defined.as_ptr(), user_defined.len() as u64, txt.as_ptr(), txt.len() as u64);
+    /// let hash_value = hash.squeeze();
+    /// let hs = cSHAKE_128::read_hash_value_in_hexadecimal(&hash_value);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "C72A5C005749C1EEFC7776965FE81E519E769A026D5FA9321928D7881B77A46A1C44A949E1636846D29771076EE02E40C1A684F0575D3F618DA25C6025153AE2F4E416844E1676F885116B879B9E53356A5C18D7E5216D32BEAF07EBD652477A2AA03A6A31408C5153730084218FFFF9B5CD5F1AC1F1949A4732231CA7364F223516B3871384048695ECC60079CB18B25963643CA8468EA3BC1DD020E66B75C6E13AF900C61DD9E4");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.absorb_customized)
     pub fn absorb_customized(&mut self, function_name: *const u8, function_name_length_in_bytes: u64,
                                 user_defined: *const u8, user_defined_length_in_bytes: u64,
                                 message: *const u8, length_in_bytes: u64)
@@ -2643,6 +3194,262 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         self.absorb_block(padded.as_ptr());
     }
 
+    // pub fn absorb_str_customized(&mut self, function_name: &str, user_defined: &str, message: &str)
+    /// Absorbs the message with filename string slice and user-defined string slice.
+    /// 
+    /// # Arguments
+    /// - `function_name` is of type `&str`, which contains function name,
+    ///   but it is reserved for NIST use. You are supposed to give null string
+    ///   for `function name`. You may want to use `user_defined` instead.
+    ///   However, for all the types other than cSHAKE, you can freely use
+    ///   this method of the expanded versions of struct `Keccak_Generic` for
+    ///   your own purpose.
+    /// - `user_defined` is of type `&str`, which contains a string for
+    ///   your special use.
+    /// - `message` is of type `&str`.
+    /// 
+    /// # Warning
+    /// You can use this method even for the types other than `cSHAKE_*` but
+    /// it is not in accordance with the standard. It is desirable that You
+    /// use the method `absorb_strr()` instead. If you use this method for the
+    /// types other than `cSHAKE_*`, others may think that you do not fully
+    /// understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the types other than `cSHAKE_*`, of course.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to compute of the hash value of the content of String
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_string_customized()](struct@Keccak_Generic#method.absorb_string_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Array
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_array_customized()](struct@Keccak_Generic#method.absorb_array_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Vec
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_vec_customized()](struct@Keccak_Generic#method.absorb_vec_customized)
+    ///   rather than this method.
+    /// - If you want to use this method from other programming languages such
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [absorb_customized()](struct@Keccak_Generic#method.absorb_customized)
+    ///   rather than this method.
+    /// 
+    /// # Example 1 for cSHAKE_128
+    /// ```
+    /// use cryptocol::hash::cSHAKE_128;
+    /// let mut hash = cSHAKE_128::new();
+    /// let txt = "This is an example of the method absorb_str_customized().";
+    /// let user_defined = "On my own purpose";
+    /// hash.absorb_str_customized("", user_defined, txt);
+    /// let hash_value = hash.squeeze();
+    /// let hs = cSHAKE_128::read_hash_value_in_hexadecimal(&hash_value);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "8C4C069400F3D84F48DCF19F3C38136BA5C7ACADE522359FB44085A39C3909A41E2D953B9454BC3BF5794DEE14B65F0B801FC72EE593850F63552441E08E328D7EDFDD0F7C84A48C699A1C01C331002D938422DAFDEC9BA210E0F0CA8828C0EF89038FE0995BEBFC21D96AB4EE1599E847427B465F3911BA6631A4FF85585663F255ECA5459E090B4FE3E9B199086BF33E4F1221A8128BBE9487DE178EE497B088B69F80F0C024AE");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.absorb_str_customized)
+    #[inline]
+    pub fn absorb_str_customized(&mut self, function_name: &str, user_defined: &str, message: &str)
+    {
+        self.absorb_customized(function_name.as_ptr(), function_name.len() as u64,
+                                user_defined.as_ptr(), user_defined.len() as u64,
+                                message.as_ptr(), message.len() as u64);
+    }
+
+    // pub fn absorb_string_customized(&mut self, function_name: &String, user_defined: &String, message: &String)
+    /// Absorbs the message with filename string and user-defined string.
+    /// 
+    /// # Arguments
+    /// - `function_name` is of type `&String`, which contains function name,
+    ///   but it is reserved for NIST use. You are supposed to give null string
+    ///   for `function name`. You may want to use `user_defined` instead.
+    ///   However, for all the types other than cSHAKE, you can freely use
+    ///   this method of the expanded versions of struct `Keccak_Generic` for
+    ///   your own purpose.
+    /// - `user_defined` is of type `&String`, which contains a string for
+    ///   your special use.
+    /// - `message` is of type `&String`.
+    /// 
+    /// # Warning
+    /// You can use this method even for the types other than `cSHAKE_*` but
+    /// it is not in accordance with the standard. It is desirable that You
+    /// use the method `absorb_strr()` instead. If you use this method for the
+    /// types other than `cSHAKE_*`, others may think that you do not fully
+    /// understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the types other than `cSHAKE_*`, of course.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to compute of the hash value of a string slice,
+    ///   you are highly recommended to use the method
+    ///   [absorb_str_customized()](struct@Keccak_Generic#method.absorb_str_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Array
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_array_customized()](struct@Keccak_Generic#method.absorb_array_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Vec
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_vec_customized()](struct@Keccak_Generic#method.absorb_vec_customized)
+    ///   rather than this method.
+    /// - If you want to use this method from other programming languages such
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [absorb_customized()](struct@Keccak_Generic#method.absorb_customized)
+    ///   rather than this method.
+    /// 
+    /// # Example 1 for cSHAKE_256
+    /// ```
+    /// use cryptocol::hash::cSHAKE_256;
+    /// let mut hash = cSHAKE_256::new();
+    /// let txt = "This is an example of the method absorb_string_customized().".to_string();
+    /// let user_defined = "On my own purpose".to_string();
+    /// hash.absorb_string_customized(&"".to_string(), &user_defined, &txt);
+    /// let hash_value = hash.squeeze();
+    /// let hs = cSHAKE_256::read_hash_value_in_hexadecimal(&hash_value);
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "E9D77C6EEF37DEB01E8B8A8F250A4F5791A3B2BBF17D9C5A729DF38ADBF80742F14C44E7CE17CAFEF6A847C5403D0D420BD47E38E24E6B8D3946B825D96165BD5D81373195218031E915DCC744F7CA244F600D1D7E2B6195890BD2F0B5CE05BB2D877958675D0E0395150CF7E94A0036200A620049595530D123C077CAC1749E4ACE0098F92DA6BB");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.absorb_string_customized)
+    #[inline]
+    pub fn absorb_string_customized(&mut self, function_name: &String, user_defined: &String, message: &String)
+    {
+        self.absorb_customized(function_name.as_ptr(), function_name.len() as u64,
+                                user_defined.as_ptr(), user_defined.len() as u64,
+                                message.as_ptr(), message.len() as u64);
+    }
+
+    // pub fn absorb_array_customized<U, const K: usize, const L: usize, const M: usize>(&mut self, function_name: &[U; K], user_defined: &[U; L], message: &[U; M])
+    /// Absorbs the message with filename array and user-defined array.
+    /// 
+    /// # Arguments
+    /// - `function_name` is of type `&[U; L]`, which contains function name,
+    ///   but it is reserved for NIST use. You are supposed to give null string
+    ///   for `function name`. You may want to use `user_defined` instead.
+    ///   However, for all the types other than cSHAKE, you can freely use
+    ///   this method for expanded versions of struct `Keccak_Generic`.
+    /// - `user_defined` is of type `&[V; M]`, which contains a string for
+    ///   your special use.
+    /// - `message` is of the type `&[W; N]`.
+    /// 
+    /// # Warning
+    /// You can use this method even for the types other than `cSHAKE_*` but
+    /// it is not in accordance with the standard. It is desirable that You
+    /// use the method `absorb_strr()` instead. If you use this method for the
+    /// types other than `cSHAKE_*`, others may think that you do not fully
+    /// understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the types other than `cSHAKE_*`, of course.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to compute of the hash value of a string slice,
+    ///   you are highly recommended to use the method
+    ///   [absorb_str_customized()](struct@Keccak_Generic#method.absorb_str_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of String
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_string_customized()](struct@Keccak_Generic#method.absorb_string_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Vec
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_vec_customized()](struct@Keccak_Generic#method.absorb_vec_customized)
+    ///   rather than this method.
+    /// - If you want to use this method from other programming languages such
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [absorb_customized()](struct@Keccak_Generic#method.absorb_customized)
+    ///   rather than this method.
+    /// 
+    /// # Example 1 for cSHAKE_256
+    /// ```
+    /// use cryptocol::hash::cSHAKE_256;
+    /// let mut hash = cSHAKE_256::new();
+    /// let user_defined = [1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = [ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.absorb_array_customized(&[0_u8; 0], &user_defined, &data);
+    /// let hash_value = hash.squeeze();
+    /// let hs = cSHAKE_256::read_hash_value_in_hexadecimal(&hash_value);
+    /// println!("Hash =\t{}", hs);
+    /// assert_eq!(hs, "FE5EBE3F5007EDCE865F7DC425531F0C493E18168835722CCC0F11CE66F1423061C202BE0B1D0528DE0D763A3097A090B62115392769305D1FF32588A78CCEE990286ABF615452E4DBFF3915D64673E725C5BADF965FC06A80F90C865C65EAEA7A107228B80AC49C9C89F98F1AF4C3563BE243207D6970219264ACB9420E97BF802E862D32D18F31");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.absorb_array_customized)
+    #[inline]
+    pub fn absorb_array_customized<U, V, W, const L: usize, const M: usize, const N: usize>(&mut self, function_name: &[U; L], user_defined: &[V; M], message: &[W; N])
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone, W: SmallUInt + Copy + Clone
+    {
+        self.absorb_customized(function_name.as_ptr() as *const u8, L as u64 * U::size_in_bytes() as u64,
+                                user_defined.as_ptr() as *const u8, M as u64 * V::size_in_bytes() as u64,
+                                message.as_ptr() as *const u8, N as u64 * W::size_in_bytes() as u64);
+    }
+
+    // pub fn absorb_vec_customized<U>(&mut self, function_name: &Vec<U>, user_defined: &Vec<U>, message: &Vec<U>)
+    /// Absorbs the message with filename Vec object and user-defined Vec object.
+    /// 
+    /// # Arguments
+    /// - `function_name` is of type `&[U; L]`, which contains function name,
+    ///   but it is reserved for NIST use. You are supposed to give null string
+    ///   for `function name`. You may want to use `user_defined` instead.
+    ///   However, for all the types other than cSHAKE, you can freely use
+    ///   this method for expanded versions of struct `Keccak_Generic`.
+    /// - `user_defined` is of type `&[V; M]`, which contains a string for
+    ///   your special use.
+    /// - `message` is of the type `&[W; N]`.
+    /// 
+    /// # Warning
+    /// You can use this method even for the types other than `cSHAKE_*` but
+    /// it is not in accordance with the standard. It is desirable that You
+    /// use the method `absorb_strr()` instead. If you use this method for the
+    /// types other than `cSHAKE_*`, others may think that you do not fully
+    /// understand `SHAKE-*` and `cSHAKE-*`. However, if you intentionally
+    /// write your code in non-standard way, you can use this method even for
+    /// the types other than `cSHAKE_*`, of course.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to compute of the hash value of a string slice,
+    ///   you are highly recommended to use the method
+    ///   [absorb_str_customized()](struct@Keccak_Generic#method.absorb_str_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of String
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_string_customized()](struct@Keccak_Generic#method.absorb_string_customized)
+    ///   rather than this method.
+    /// - If you want to compute of the hash value of the content of Array
+    ///   object, you are highly recommended to use the method
+    ///   [absorb_array_customized()](struct@Keccak_Generic#method.absorb_array_customized)
+    ///   rather than this method.
+    /// - If you want to use this method from other programming languages such
+    ///   as C/C++, you are highly recommended to use the method
+    ///   [absorb_customized()](struct@Keccak_Generic#method.absorb_customized)
+    ///   rather than this method.
+    /// 
+    /// # Example 1 for cSHAKE_128
+    /// ```
+    /// use cryptocol::hash::cSHAKE_128;
+    /// let mut hash = cSHAKE_128::new();
+    /// let user_defined = vec![1_u8, 2, 3, 4, 5, 6, 7, 8, 9];
+    /// let data = vec![ 0x67452301_u32.to_le(), 0xefcdab89_u32.to_le(), 0x98badcfe_u32.to_le(), 0x10325476_u32.to_le() ];
+    /// hash.absorb_vec_customized(&vec![0_u8; 0], &user_defined, &data);
+    /// let hash_value = hash.squeeze();
+    /// let hs = cSHAKE_128::read_hash_value_in_hexadecimal(&hash_value);
+    /// println!("Hash =\t{}", hs);
+    /// assert_eq!(hs, "1307CF49A76814AC1D48ADE39AEBC3FADC746604B8C0376B0F76AA01BF4395C097C316B00278F63B080CA5662B4588D38D25A8599414064D91661F2F5B850266C4436230F8557E5CA45A5E295205B99B00EA3756700E85A5C4C3EAFD7948E7C9AFF5015930DFCEF8DCC22E36A1CA896AB4AA501E849047DACF8702644AE746011D63ADB8A3CC1F1446B8028182485C081B87523FBE0BA5E70F3AD020829E9293767E34CE275D30CC");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.absorb_vec_customized)
+    #[inline]
+    pub fn absorb_vec_customized<U, V, W>(&mut self, function_name: &Vec<U>, user_defined: &Vec<V>, message: &Vec<W>)
+    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone, W: SmallUInt + Copy + Clone
+    {
+        self.absorb_customized(function_name.as_ptr() as *const u8, function_name.len() as u64 * U::size_in_bytes() as u64,
+                                user_defined.as_ptr() as *const u8, user_defined.len() as u64 * V::size_in_bytes() as u64,
+                                message.as_ptr() as *const u8, message.len() as u64 * W::size_in_bytes() as u64);
+    }
+
     // pub fn tangle(&mut self, tangling: u64)
     /// Tangles the hash value
     /// 
@@ -2652,60 +3459,27 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Features
     /// It is for using this struct as random number generator.
     /// 
-    /// # Example 1 for SHA2_512
+    /// # Example 1 for SHA3_256
     /// ```
-    /// use cryptocol::hash::SHA2_512;
-    /// let mut hash = SHA2_512::new();
+    /// use cryptocol::hash::SHA3_256;
+    /// let mut hash = SHA3_256::new();
     /// let txt = "TANGLING";
     /// hash.digest_str(txt);
-    /// println!("Msg =\t\"{}\"\nHash =\t{:016X?}", txt, hash.get_hash_value_in_array());
-    /// assert_eq!(format!("{:016X?}", hash.get_hash_value_in_array()), "[070B6A9457F65DD9, A7D2C2326CE14E8A, E870D6939FE02E39, 5CFEEDCA96BF3BA3, 013FFB332B3F51F3, B1D4E16355DBE0A9, E998240787066535, 1D5F597F04F84820]");
+    /// let hs = hash.get_hash_value_in_string();
+    /// println!("Msg =\t\"{}\"\nHash =\t{}", txt, hs);
+    /// assert_eq!(hs, "FA126A570281297F1B8F4075BECD6CD4263AB45A746D37CE2323560E876021A3");
     /// hash.tangle(1);
-    /// println!("Hash =\t{:016X?}", hash.get_hash_value_in_array());
-    /// assert_eq!(format!("{:016X?}", hash.get_hash_value_in_array()), "[4780AEEAD19D5962, C55EAFBA7590FB70, CA6587899B2B276F, 55361EC5C9568667, FFD38C58FF62C288, 5E96A9FFC6B17704, 6D3885C75FE9B667, BFDA80D1514F38E5]");
+    /// let hs = hash.get_hash_value_in_string();
+    /// println!("Hash =\t{}", hs);
+    /// assert_eq!(hs, "762C52E75427AD19FD29FF6606CFC1E09DD9038C2B23489591A6288AA69F0182");
     /// hash.tangle(1);
-    /// println!("Hash =\t{:016X?}", hash.get_hash_value_in_array());
-    /// assert_eq!(format!("{:016X?}", hash.get_hash_value_in_array()), "[D7FFE2BEEB81D532, EA420969761C4DAA, 8EE930740ABBBE3E, 0DC90C0705AE5F38, E91531243615F994, 174C4F96168FBFC4, 06373FFDD9C66A16, 910560A5898E3728]");
+    /// let hs = hash.get_hash_value_in_string();
+    /// println!("Hash =\t{}", hs);
+    /// assert_eq!(hs, "1959308B6378EB3613A1F9A6FFBB77534549A5FDD0BE06A9D3A7988D92F8B0CB");
     /// ```
     /// 
-    /// # Example 2 for SHA2_512_Expanded
-    /// ```
-    /// use cryptocol::hash::SHA2_512_Expanded;
-    /// type MySHA2 = SHA2_512_Expanded<0x1111_1111_1111_1111, 0x3333_3333_3333_3333, 0x5555_5555_5555_5555, 0x7777_7777_7777_7777, 0x9999_9999_9999_9999, 0xbbbb_bbbb_bbbb_bbbb, 0xdddd_dddd_dddd_dddd, 0xffff_ffff_ffff_ffff, 160>;
-    /// let txt = "TANGLING";
-    /// ```
-    /// 
-    /// # Example 3 for SHA2_384
-    /// ```
-    /// use cryptocol::hash::SHA2_384;
-    /// let mut hash = SHA2_384::new();
-    /// let txt = "TANGLING";
-    /// ```
-    /// 
-    /// # Example 4 for SHA2_384_Expanded
-    /// ```
-    /// use cryptocol::hash::SHA2_384_Expanded;
-    /// type MySHA2 = SHA2_384_Expanded<160>;
-    /// let mut my_hash = MySHA2::new();
-    /// let txt = "TANGLING";
-    /// ```
-    /// 
-    /// # Example 5 for SHA2_512_256
-    /// ```
-    /// use cryptocol::hash::SHA2_512_256;
-    /// let mut hash = SHA2_512_256::new();
-    /// let txt = "TANGLING";
-    /// hash.digest_str(txt);
-    /// ```
-    /// 
-    /// # Example 6 for SHA2_512_256_Expanded
-    /// ```
-    /// use cryptocol::hash::SHA2_512_256_Expanded;
-    /// type MySHA2 = SHA2_512_256_Expanded<160>;
-    /// let mut my_hash = MySHA2::new();
-    /// let txt = "TANGLING";
-    /// ```
-    #[inline]
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.tangle)
     pub fn tangle(&mut self, tangling: u64)
     {
         let mut rate = [0_u8; RATE];
@@ -2885,9 +3659,23 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         self.state[0][0] ^= Self::RC[round];
     }
 
-
     // pub fn get_desirable_l() -> usize
-    /// Returns the desiable `L` according to the size of `T`.
+    /// Returns the desirable `L` according to the size of `T`.
+    /// 
+    /// # Output
+    /// This method returns the desirable `L` in the type `usize`
+    /// calculated based on the size of `T`.
+    /// 
+    /// # Example 1 for SHA3_224
+    /// ```
+    /// use cryptocol::hash::SHA3_224;
+    /// let L = SHA3_224::get_desirable_l();
+    /// println!("The desirable L of SHA3-244 is {}", L);
+    /// assert_eq!(L, 6);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.get_desirable_l)
     #[inline]
     pub fn get_desirable_l() -> usize
     {
@@ -2895,7 +3683,22 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     // pub fn get_desirable_rounds() -> usize
-    /// Returns the desiable number of rounds according to the size of `T`.
+    /// Returns the desirable number of rounds according to the size of `T`.
+    /// 
+    /// # Output
+    /// This method returns the desirable number of rounds in the type `usize`
+    /// calculated based on the size of `T`.
+    /// 
+    /// # Example 1 for SHA3_512
+    /// ```
+    /// use cryptocol::hash::SHA3_512;
+    /// let ROUND = SHA3_512::get_desirable_rounds();
+    /// println!("The desirable ROUND of SHA3-512 is {}", ROUND);
+    /// assert_eq!(ROUND, 24);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.get_desirable_rounds)
     #[inline]
     pub fn get_desirable_rounds() -> usize
     {
@@ -2904,7 +3707,24 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     // pub fn get_desirable_b() -> usize
     /// Returns the desiable `B` according to the size of `T`. 
+    /// 
+    /// # Output
+    /// This method returns the desiable `B` in the type `usize`
+    /// calculated based on the size of `T`.
+    /// 
+    /// # Features
     /// The desiable `B` is expressed not in bits but in bytes here.
+    /// 
+    /// # Example 1 for SHA3_384
+    /// ```
+    /// use cryptocol::hash::SHA3_384;
+    /// let B = SHA3_384::get_desirable_b();
+    /// println!("The desirable B of SHA3-384 is {}", B);
+    /// assert_eq!(B, 200);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.get_desirable_b)
     #[inline]
     pub fn get_desirable_b() -> usize
     {
@@ -2914,6 +3734,77 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     // pub fn get_desirable_output_length() -> usize
     /// Returns the desiable `OUTPUT_LENGTH` of specific algorithm.
     /// The desiable `OUTPUT_LENGTH` is expressed not in bits but in bytes here.
+    /// 
+    /// # Output
+    /// This method returns the desiable `OUTPUT_LENGTH` of specific algorithm
+    /// in the type `usize`.
+    /// 
+    /// # Example 1 for SHA3_256
+    /// ```
+    /// use cryptocol::hash::SHA3_256;
+    /// let LENGTH = SHA3_256::get_desirable_output_length();
+    /// println!("The desirable output length of SHA3-256 is {}", LENGTH);
+    /// assert_eq!(LENGTH, 32);
+    /// ```
+    /// 
+    /// # Example 2 for SHAKE_256
+    /// ```
+    /// use cryptocol::hash::SHAKE_256;
+    /// let LENGTH = SHAKE_256::get_desirable_output_length();
+    /// println!("The desirable output length of SHAKE-256 is {}", LENGTH);
+    /// assert_eq!(LENGTH, 64);
+    /// ```
+    /// 
+    /// # Example 3 for cSHAKE_256
+    /// ```
+    /// use cryptocol::hash::cSHAKE_256;
+    /// let LENGTH = cSHAKE_256::get_desirable_output_length();
+    /// println!("The desirable output length of cSHAKE-256 is {}", LENGTH);
+    /// assert_eq!(LENGTH, 64);
+    /// ```
+    /// 
+    /// # Example 4 for KECCAK_256
+    /// ```
+    /// use cryptocol::hash::KECCAK_256;
+    /// let LENGTH = KECCAK_256::get_desirable_output_length();
+    /// println!("The desirable output length of KECCAK-256 is {}", LENGTH);
+    /// assert_eq!(LENGTH, 32);
+    /// ```
+    /// 
+    /// # Example 5 for BIG_SHA3_1536
+    /// ```
+    /// use cryptocol::hash::BIG_SHA3_1536;
+    /// let LENGTH = BIG_SHA3_1536::get_desirable_output_length();
+    /// println!("The desirable output length of BIG_SHA3_1536 is {}", LENGTH);
+    /// assert_eq!(LENGTH, 192);
+    /// ```
+    /// 
+    /// # Example 6 for SMALL_SHA3_256
+    /// ```
+    /// use cryptocol::hash::SMALL_SHA3_256;
+    /// let LENGTH = SMALL_SHA3_256::get_desirable_output_length();
+    /// println!("The desirable output length of SMALL_SHA3_256 is {}", LENGTH);
+    /// assert_eq!(LENGTH, 32);
+    /// ```
+    /// 
+    /// # Example 7 for SMALLER_SHAKE_128
+    /// ```
+    /// use cryptocol::hash::SMALLER_SHAKE_128;
+    /// let LENGTH = SMALLER_SHAKE_128::get_desirable_output_length();
+    /// println!("The desirable output length of SMALLER_SHAKE_128 is {}", LENGTH);
+    /// assert_eq!(LENGTH, 32);
+    /// ```
+    /// 
+    /// # Example 8 for TINY_SHA3_64
+    /// ```
+    /// use cryptocol::hash::TINY_SHA3_64;
+    /// let LENGTH = TINY_SHA3_64::get_desirable_output_length();
+    /// println!("The desirable output length of TINY_SHA3_64 is {}", LENGTH);
+    /// assert_eq!(LENGTH, 8);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.get_desirable_output_length)
     #[inline]
     pub fn get_desirable_output_length() -> usize
     {

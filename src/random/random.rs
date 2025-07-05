@@ -97,17 +97,23 @@ pub type Any_Num = Any_Num_C;
 /// 
 /// # Predetermined Provided Specific `struct`s
 /// - Any_Num_C: uses a pseudo-random number generator algorithm of the function
-/// rand() of C standard library.
-/// - Any_MD4: uses a hash algorithm MD4.
-/// - Any_MD5: uses a hash algorithm MD5.
-/// - Any_SHA0: uses a hash algorithm SHA0.
-/// - Any_SHA1: uses a hash algorithm SHA1.
-/// - Any_SHA2_256: uses a hash algorithm SHA2_256.
-/// - Any_SHA2_512: uses a hash algorithm SHA2_512.
-/// - Random_SHA2_512: uses a hash algorithm SHA2_512.
-/// - Any: a synonym of Any_SHA2_256 at the moment.
-/// - Random: a synonym of Random_SHA2_512 at the moment.
-/// - Any_Num_C: a synonym of Any_Num_C at the moment.
+/// rand() of C standard library, and may not be cryptographically secure.
+/// - Any_MD4: uses a hash algorithm MD4, and may not be cryptographically secure.
+/// - Any_MD5: uses a hash algorithm MD5, and may not be cryptographically secure.
+/// - Any_SHA0: uses a hash algorithm SHA0, and may not be cryptographically secure.
+/// - Any_SHA1: uses a hash algorithm SHA1, and may not be cryptographically secure.
+/// - Any_SHA2_256: uses a hash algorithm SHA2_256, and may not be cryptographically secure.
+/// - Any_SHA2_512: uses a hash algorithm SHA2_512, and may not be cryptographically secure.
+/// - Random_SHA2_512: uses a hash algorithm SHA2_512, and is cryptographically secure.
+/// - Any_SHA3_256: uses a hash algorithm SHA3_256, and may not be cryptographically secure.
+/// - Any_SHA3_512: uses a hash algorithm SHA3_512, and may not be cryptographically secure.
+/// - Random_SHA3_512: uses a hash algorithm SHA3_512, and is cryptographically secure.
+/// - Any_SHAKE_128: uses a hash algorithm SHAKE_128, and may not be cryptographically secure.
+/// - Random_BIG_KECCAK_1024: uses a hash algorithm BIG_KECCAK_1024, and is cryptographically secure.
+/// - Any_DES: uses an encryption/decryption algorithm DES, and may not be cryptographically secure.
+/// 
+/// - Any: a synonym of Any_SHAKE_128 at the moment, and may not be cryptographically secure.
+/// - Random: a synonym of Random_BIG_KECCAK_1024 at the moment, and is cryptographically secure.
 /// 
 /// # QUICK START
 /// You can use either struct `Any` or `Random` depending on your purpose.
@@ -3120,7 +3126,9 @@ impl<const COUNT: u128> Random_Generic<COUNT>
 
 
 /// The type `Any_MD4` which is a pseudo-random number generator using a hash
-/// algorithm MD4. It is a specific version of the generic struct
+/// algorithm MD4.
+/// It is a specific version of the generic struct
+/// [`Random_Generic`](struct@Random_Generic).
 #[allow(non_camel_case_types)]
 pub struct Any_MD4 {}
 impl Any_MD4
@@ -3137,7 +3145,9 @@ impl Any_MD4
 }
 
 /// The type `Any_MD5` which is a pseudo-random number generator using a hash
-/// algorithm MD5. It is a specific version of the generic struct
+/// algorithm MD5.
+/// It is a specific version of the generic struct
+/// [`Random_Generic`](struct@Random_Generic).
 #[allow(non_camel_case_types)]
 pub struct Any_MD5 {}
 impl Any_MD5
@@ -3154,7 +3164,9 @@ impl Any_MD5
 }
 
 /// The type `Any_SHA0` which is a pseudo-random number generator using a hash
-/// algorithm SHA0. It is a specific version of the generic struct
+/// algorithm SHA0.
+/// It is a specific version of the generic struct
+/// [`Random_Generic`](struct@Random_Generic).
 #[allow(non_camel_case_types)] 
 pub struct Any_SHA0 {}
 impl Any_SHA0
@@ -3171,7 +3183,8 @@ impl Any_SHA0
 }
 
 /// The type `Any_SHA1` which is a pseudo-random number generator using a hash
-/// algorithm SHA1. It is a specific version of the generic struct
+/// algorithm SHA1.
+/// It is a specific version of the generic struct
 /// [`Random_Generic`](struct@Random_Generic).
 #[allow(non_camel_case_types)] 
 pub struct Any_SHA1 {}
@@ -3189,7 +3202,9 @@ impl Any_SHA1
 }
 
 /// The type `Any_SHA2_256` which is a pseudo-random number generator using
-/// a hash algorithm SHA-2-256. It is a specific version of the generic struct
+/// a hash algorithm SHA-2-256.
+/// It is a specific version of the generic struct
+/// [`Random_Generic`](struct@Random_Generic).
 #[allow(non_camel_case_types)] 
 pub struct Any_SHA2_256 {}
 impl Any_SHA2_256
@@ -3206,7 +3221,9 @@ impl Any_SHA2_256
 }
 
 /// The type `Any_SHA2_512` which is a pseudo-random number generator using
-/// a hash algorithm SHA-2-512. It is a specific version of the generic struct
+/// a hash algorithm SHA-2-512.
+/// It is a specific version of the generic struct
+/// [`Random_Generic`](struct@Random_Generic).
 #[allow(non_camel_case_types)] 
 pub struct Any_SHA2_512 {}
 impl Any_SHA2_512
@@ -3223,7 +3240,9 @@ impl Any_SHA2_512
 }
 
 /// The type `Random_SHA2_512` which is a pseudo-random number generator using
-/// a hash algorithm SHA-2-512. It is a specific version of the generic struct
+/// a hash algorithm SHA-2-512.
+/// It is a specific version of the generic struct
+/// [`Random_Generic`](struct@Random_Generic).
 #[allow(non_camel_case_types)] 
 pub struct Random_SHA2_512 {}
 impl Random_SHA2_512
@@ -3240,7 +3259,9 @@ impl Random_SHA2_512
 }
 
 /// The type `Any_SHA3_256` which is a pseudo-random number generator using
-/// a hash algorithm SHA-3-256. It is a specific version of the generic struct
+/// a hash algorithm SHA-3-256.
+/// It is a specific version of the generic struct
+/// [`Random_Generic`](struct@Random_Generic).
 #[allow(non_camel_case_types)] 
 pub struct Any_SHA3_256 {}
 impl Any_SHA3_256
@@ -3257,7 +3278,9 @@ impl Any_SHA3_256
 }
 
 /// The type `Any_SHA3_512` which is a pseudo-random number generator using
-/// a hash algorithm SHA-3-512. It is a specific version of the generic struct
+/// a hash algorithm SHA-3-512.
+/// It is a specific version of the generic struct
+/// [`Random_Generic`](struct@Random_Generic).
 #[allow(non_camel_case_types)] 
 pub struct Any_SHA3_512 {}
 impl Any_SHA3_512
@@ -3274,7 +3297,9 @@ impl Any_SHA3_512
 }
 
 /// The type `Random_SHA3_512` which is a pseudo-random number generator using
-/// a hash algorithm SHA-3-512. It is a specific version of the generic struct
+/// a hash algorithm SHA-3-512.
+/// It is a specific version of the generic struct
+/// [`Random_Generic`](struct@Random_Generic).
 #[allow(non_camel_case_types)] 
 pub struct Random_SHA3_512 {}
 impl Random_SHA3_512
@@ -3308,7 +3333,9 @@ impl Any_SHAKE_128
 }
 
 /// The type `BIG_KECCAK_1024` which is a pseudo-random number generator using
-/// a hash algorithm BIG_KECCAK_1024. It is a specific version of the generic struct
+/// a hash algorithm BIG_KECCAK_1024.
+/// It is a specific version of the generic struct
+/// [`Random_Generic`](struct@Random_Generic).
 #[allow(non_camel_case_types)] 
 pub struct Random_BIG_KECCAK_1024 {}
 impl Random_BIG_KECCAK_1024
@@ -3453,8 +3480,10 @@ impl Any_Num_C
     }
 }
 
-/// The type `Any_SHA2_512` which is a pseudo-random number generator using
-/// a hash algorithm SHA-2-512. It is a specific version of the generic struct
+/// The type `Any_DES` which is a pseudo-random number generator using
+/// a DES encryption/decryption algorithm DES.
+/// It is a specific version of the generic struct
+/// [`Random_Generic`](struct@Random_Generic).
 #[allow(non_camel_case_types)] 
 pub struct Any_DES {}
 impl Any_DES
