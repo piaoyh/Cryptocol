@@ -1587,7 +1587,7 @@ impl <const ROUND: usize, const SHIFT: u128,
         convert!(PC244), convert!(PC243), convert!(PC242), convert!(PC241)
     ];
 
-    const SUCCESS: u64 = 0xFFFFFFFF_FFFFFFFF;
+    const SUCCESS: u64 = !0;
     const FAILURE: u64 = 0;
     const MASK: u64 = 0x0101010101010101;
 
@@ -1864,7 +1864,6 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.decryptor_with_key)
-    #[inline]
     pub fn decryptor_with_key(key: [u8; 8]) -> Self
     {
         let mut des = Self
@@ -1918,7 +1917,6 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.decryptor_with_key_u64)
-    #[inline]
     pub fn decryptor_with_key_u64(key: u64) -> Self
     {
         let mut des = Self
@@ -2118,6 +2116,7 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.turn_inverse)
+    #[inline]
     pub fn turn_inverse(&mut self)
     {
         (self.enc, self.dec) = (self.dec, self.enc);

@@ -14,13 +14,11 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use std::ptr::copy_nonoverlapping;
 use std::vec::Vec;
-
 use crate::number::{ LongUnion, LongerUnion, SmallUInt };
-use crate::symmetric::{ DES, SmallCryptor64, SmallCryptor128 };
+use crate::symmetric::{ DES, SmallCryptor };
 
-
+/*
 macro_rules! pre_encrypt_into_vec {
     ($to:expr, $length_in_bytes:expr, $type:ty) => {
         let mut len = if <$type>::size_in_bytes() == 16 {16_usize} else {8};
@@ -66,13 +64,14 @@ macro_rules! pre_decrypt_into_array {
             { $to[i] = <$type>::zero(); }
     };
 }
+*/
 
 
 #[allow(non_camel_case_types)]
 pub struct BigCryptor128
 {
     block: LongerUnion,
-    smallcryptor: Vec<Box<dyn SmallCryptor128>>,
+    smallcryptor: Vec<Box<dyn SmallCryptor<u128, 16>>>,
 }
 
 impl BigCryptor128
@@ -103,7 +102,7 @@ impl BigCryptor128
         Self { block: LongerUnion::zero(), smallcryptor: Vec::new() }
     }
 
-    // pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor128>; N]) -> Self
+    // pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor<u128, 16>>; N]) -> Self
     /// Constructs a new object BigCryptor.
     /// 
     /// # Arguments
@@ -118,14 +117,14 @@ impl BigCryptor128
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new_with_key)
-    pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor128>; N]) -> Self
+    pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor<u128, 16>>; N]) -> Self
     {
         let mut bigcryptor = Self::new();
         bigcryptor.push_small_cryptor_array(smallcryptor);
         bigcryptor
     }
 
-    // pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor128>>) -> Self
+    // pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor<u128, 16>>>) -> Self
     /// Constructs a new object DES_Generic.
     /// 
     /// # Arguments
@@ -152,19 +151,19 @@ impl BigCryptor128
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new_with_key_u64)
-    pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor128>>) -> Self
+    pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor<u128, 16>>>) -> Self
     {
         let mut bigcryptor = Self::new();
         bigcryptor.push_small_cryptor_vec(smallcryptor);
         bigcryptor
     }
 
-    pub fn push_small_cryptor<S: SmallCryptor128 + 'static>(&mut self, smallcryptor: S)
+    pub fn push_small_cryptor<S: SmallCryptor<u128, 16> + 'static>(&mut self, smallcryptor: S)
     {
         self.smallcryptor.push(Box::<S>::new(smallcryptor));
     }
 
-    // pub fn push_small_cryptor_array<const N: usize>(&mut self, smallcryptor: [Box<dyn SmallCryptor128>; N])
+    // pub fn push_small_cryptor_array<const N: usize>(&mut self, smallcryptor: [Box<dyn SmallCryptor<u128, 16>>; N])
     /// Sets the smallcryptor.
     /// 
     /// # Arguments
@@ -189,13 +188,13 @@ impl BigCryptor128
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.set_key)
-    pub fn push_small_cryptor_array<const N: usize>(&mut self, smallcryptor: [Box<dyn SmallCryptor128>; N])
+    pub fn push_small_cryptor_array<const N: usize>(&mut self, smallcryptor: [Box<dyn SmallCryptor<u128, 16>>; N])
     {
         for val in smallcryptor
             { self.smallcryptor.push(val); }
     }
 
-    // pub fn push_small_cryptor_vec(&mut self, smallcryptor: Vec<Box<dyn SmallCryptor128>>)
+    // pub fn push_small_cryptor_vec(&mut self, smallcryptor: Vec<Box<dyn SmallCryptor<u128, 16>>>)
     /// Sets the smallcryptor.
     /// 
     /// # Arguments
@@ -220,7 +219,7 @@ impl BigCryptor128
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.set_key)
-    pub fn push_small_cryptor_vec(&mut self, smallcryptor: Vec<Box<dyn SmallCryptor128>>)
+    pub fn push_small_cryptor_vec(&mut self, smallcryptor: Vec<Box<dyn SmallCryptor<u128, 16>>>)
     {
         self.smallcryptor = smallcryptor;
     }
@@ -702,7 +701,7 @@ impl BigCryptor128
 /// 
 /// # Example 1
 /// ```
-/// use cryptocol::symmetric::{ BigCryptor64, SmallCryptor64 };
+/// use cryptocol::symmetric::{ BigCryptor64, SmallCryptor<u64, 8> };
 /// ```
 /// 
 /// You can instantiate the DES object with `u64` key as Example 2.
@@ -772,7 +771,7 @@ impl BigCryptor128
 pub struct BigCryptor64
 {
     block: LongUnion,
-    smallcryptor: Vec<Box<dyn SmallCryptor64>>,
+    smallcryptor: Vec<Box<dyn SmallCryptor<u64, 8>>>,
 }
 
 impl BigCryptor64
@@ -803,7 +802,7 @@ impl BigCryptor64
         Self { block: LongUnion::zero(), smallcryptor: Vec::new() }
     }
 
-    // pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor64>; N]) -> Self
+    // pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor<u64, 8>>; N]) -> Self
     /// Constructs a new object BigCryptor.
     /// 
     /// # Arguments
@@ -818,14 +817,14 @@ impl BigCryptor64
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new_with_key)
-    pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor64>; N]) -> Self
+    pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor<u64, 8>>; N]) -> Self
     {
         let mut bigcryptor = Self::new();
         bigcryptor.push_small_cryptor_array(smallcryptor);
         bigcryptor
     }
 
-    // pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor64>>) -> Self
+    // pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor<u64, 8>>>) -> Self
     /// Constructs a new object DES_Generic.
     /// 
     /// # Arguments
@@ -852,14 +851,14 @@ impl BigCryptor64
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new_with_key_u64)
-    pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor64>>) -> Self
+    pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor<u64, 8>>>) -> Self
     {
         let mut bigcryptor = Self::new();
         bigcryptor.push_small_cryptor_vec(smallcryptor);
         bigcryptor
     }
 
-    pub fn push_small_cryptor<S: SmallCryptor64 + 'static>(&mut self, smallcryptor: S)
+    pub fn push_small_cryptor<S: SmallCryptor<u64, 8> + 'static>(&mut self, smallcryptor: S)
     {
         self.smallcryptor.push(Box::<S>::new(smallcryptor));
     }
@@ -889,7 +888,7 @@ impl BigCryptor64
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.set_key)
-    pub fn push_small_cryptor_array<const N: usize>(&mut self, smallcryptor: [Box<dyn SmallCryptor64>; N])
+    pub fn push_small_cryptor_array<const N: usize>(&mut self, smallcryptor: [Box<dyn SmallCryptor<u64, 8>>; N])
     {
         for val in smallcryptor
             { self.smallcryptor.push(val); }
@@ -920,7 +919,7 @@ impl BigCryptor64
     /// 
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.set_key)
-    pub fn push_small_cryptor_vec(&mut self, smallcryptor: Vec<Box<dyn SmallCryptor64>>)
+    pub fn push_small_cryptor_vec(&mut self, smallcryptor: Vec<Box<dyn SmallCryptor<u64, 8>>>)
     {
         self.smallcryptor = smallcryptor;
     }
@@ -1247,7 +1246,7 @@ impl BigCryptor64
     #[inline] fn get_block(&self) -> u64            { self.block.get() }
     #[inline] fn set_block(&mut self, block: u64)   { self.block.set(block); }
     
-
+/*
     // pub fn encrypt_with_padding_pkcs7(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     /// Encrypts the data with the padding defined in PKCS #7.
     /// 
@@ -4636,6 +4635,7 @@ impl BigCryptor64
     {
         self.decrypt_ctr_into_string(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * T::size_in_bytes()) as u64, message)
     }
+*/
 }
 
 
@@ -4706,3 +4706,522 @@ impl DDES
 }
 
 
+
+/*
+use std::fmt::{ Display, Debug };
+use std::cmp::{ PartialEq, PartialOrd, Ordering };
+use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
+                BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
+                Shl, ShlAssign, Shr, ShrAssign, RangeBounds };
+
+pub struct BigCryptor<T, Union, const N: usize>
+where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+        + Rem<Output=T> + RemAssign
+        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+        + PartialEq + PartialOrd,
+    Union: SmallUInt + Copy + Clone + Display + Debug + ToString
+        + Add<Output=Union> + AddAssign + Sub<Output=Union> + SubAssign
+        + Mul<Output=Union> + MulAssign + Div<Output=Union> + DivAssign
+        + Rem<Output=Union> + RemAssign
+        + Shl<Output=Union> + ShlAssign + Shr<Output=Union> + ShrAssign
+        + BitAnd<Output=Union> + BitAndAssign + BitOr<Output=Union> + BitOrAssign
+        + BitXor<Output=Union> + BitXorAssign + Not<Output=Union>
+        + PartialEq + PartialOrd
+{
+    block: Union,
+    smallcryptor: Vec<Box<dyn SmallCryptor<T, N>>>,
+}
+
+impl<T, Union, const N: usize> BigCryptor<T, Union, N>
+where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+        + Rem<Output=T> + RemAssign
+        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+        + PartialEq + PartialOrd,
+    Union: SmallUInt + Copy + Clone + Display + Debug + ToString
+        + Add<Output=Union> + AddAssign + Sub<Output=Union> + SubAssign
+        + Mul<Output=Union> + MulAssign + Div<Output=Union> + DivAssign
+        + Rem<Output=Union> + RemAssign
+        + Shl<Output=Union> + ShlAssign + Shr<Output=Union> + ShrAssign
+        + BitAnd<Output=Union> + BitAndAssign + BitOr<Output=Union> + BitOrAssign
+        + BitXor<Output=Union> + BitXorAssign + Not<Output=Union>
+        + PartialEq + PartialOrd
+{
+    const SUCCESS: T = T::MAX;
+    const FAILURE: T = T::ZERO;
+
+    // pub fn new() -> Self
+    /// Constructs a new object BigCryptor.
+    /// 
+    /// # Features
+    /// - In order to encrypt data, object should be instantiated mutable.
+    /// - This method sets the key to be [0, 0, 0, 0, 0, 0, 0, 0].
+    /// - Do not use this default key [0, 0, 0, 0, 0, 0, 0, 0]
+    ///   because it is known as one of the weak keys.
+    /// 
+    /// # Example 1
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new)           
+    #[inline]
+    pub fn new() -> Self
+    {
+        Self { block: Union::zero(), smallcryptor: Vec::new() }
+    }
+
+    // pub fn new_with_small_cryptor_array<const M: usize>(smallcryptor: [Box<dyn SmallCryptor<T, N>>; M]) -> Self
+    /// Constructs a new object BigCryptor.
+    /// 
+    /// # Arguments
+    /// 
+    /// # Features
+    /// This method sets the small cryptor to be the given argument `smallcryptor`.
+    /// 
+    /// # Example 1 for normal case
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new_with_key)
+    pub fn new_with_small_cryptor_array<const M: usize>(smallcryptor: [Box<dyn SmallCryptor<T, N>>; M]) -> Self
+    {
+        let mut bigcryptor = Self::new();
+        bigcryptor.push_small_cryptor_array(smallcryptor);
+        bigcryptor
+    }
+
+    // pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor<T, N>>>) -> Self
+    /// Constructs a new object DES_Generic.
+    /// 
+    /// # Arguments
+    /// - The argument `key` is of `u64`.
+    /// - It should be in the same endianness of machine. For example,
+    ///   if a key is [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF],
+    ///   the key in `u64` is 0x_1234567890ABCDEF_u64 for big-endian machine,
+    ///   and the key in `u64` is 0x_EFCDAB9078563412_u64 for little-endian
+    ///   machine.
+    /// - Remember that inverted parity bits do not affect the 56-bit real key.
+    ///   So, 0x_0000_0000_0000_0000_u4, 0x_0101_0101_0101_0101_u64,
+    ///   0x_0000_0000_0000_0001_u64, 0x_0000_0000_0000_0100_u64,
+    ///   0x_0100_0010_0000_0001_u64, etc. are all the same keys. 
+    ///   Each key has 255 different equivalent keys in DES. 
+    /// 
+    /// # Features
+    /// This method sets the key to be the given argument `key`.
+    /// 
+    /// # Example 1 for normal case
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new_with_key_u64)
+    pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor<T, N>>>) -> Self
+    {
+        let mut bigcryptor = Self::new();
+        bigcryptor.push_small_cryptor_vec(smallcryptor);
+        bigcryptor
+    }
+
+    pub fn push_small_cryptor<S: SmallCryptor<T, N> + 'static>(&mut self, smallcryptor: S)
+    {
+        self.smallcryptor.push(Box::<S>::new(smallcryptor));
+    }
+
+    // pub fn push_small_cryptor_array<const M: usize>(&mut self, smallcryptor: [Box<dyn SmallCryptor<T, N>>; M])
+    /// Sets the smallcryptor.
+    /// 
+    /// # Arguments
+    /// - The argument `key` is the array of u8 that has 8 elements.
+    /// - Remember that inverted parity bits do not affect the 56-bit real key.
+    ///   So, [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+    ///   [0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01],
+    ///   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01],
+    ///   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00],
+    ///   [0x01, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x01], etc.
+    ///   are all the same keys. Each key has 255 different equivalent keys
+    ///   in DES. 
+    /// 
+    /// # Features
+    /// This method sets the key to be the given argument `key`.
+    /// 
+    /// # Example 1 for normal case
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.set_key)
+    pub fn push_small_cryptor_array<const M: usize>(&mut self, smallcryptor: [Box<dyn SmallCryptor<T, N>>; M])
+    {
+        for val in smallcryptor
+            { self.smallcryptor.push(val); }
+    }
+
+    // pub fn push_small_cryptor_vec(&mut self, smallcryptor: Vec<Box<dyn SmallCryptor<T, N>>>)
+    /// Sets the smallcryptor.
+    /// 
+    /// # Arguments
+    /// - The argument `key` is the array of u8 that has 8 elements.
+    /// - Remember that inverted parity bits do not affect the 56-bit real key.
+    ///   So, [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+    ///   [0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01],
+    ///   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01],
+    ///   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00],
+    ///   [0x01, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x01], etc.
+    ///   are all the same keys. Each key has 255 different equivalent keys
+    ///   in DES. 
+    /// 
+    /// # Features
+    /// This method sets the key to be the given argument `key`.
+    /// 
+    /// # Example 1 for normal case
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.set_key)
+    pub fn push_small_cryptor_vec(&mut self, smallcryptor: Vec<Box<dyn SmallCryptor<T, N>>>)
+    {
+        self.smallcryptor = smallcryptor;
+    }
+
+    // pub fn encrypt_unit(&mut self, message: T) -> T
+    /// Encrypts a 64-bit data.
+    /// 
+    /// # Arguments
+    /// `message` is of `u64`-type and the plaintext to be encrypted.
+    /// 
+    /// # Output
+    /// This method returns the encrypted data of `u64`-type from `message`.
+    /// 
+    /// # Example 1 for Normal case 
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.encrypt_u64)
+    pub fn encrypt_unit(&mut self, message: T) -> T
+    {
+        self.set_block(message);
+        self.encrypt_block();
+        self.block.get()
+    }
+
+    // pub fn decrypt_unit(&mut self, cipher: T) -> T
+    /// Decrypts a 128-bit data.
+    /// 
+    /// # Arguments
+    /// `cioher` is of `u64`-type and the ciphertext to be decrypted.
+    /// 
+    /// # Output
+    /// This method returns the decrypted data of `u64`-type from `cipher`.
+    /// 
+    /// # Example 1 for Normal case
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// 
+    /// let message = 0x_1234567890ABCDEF_u64;
+    /// println!("M_u64 =\t{:#016X}", message);
+    /// 
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// let cipher = a_des.encrypt_u64(message);
+    /// println!("C_u64 (16 rounds) =\t{:#016X}", cipher);
+    /// assert_eq!(cipher, 0x_1BC4896735BBE206_u64);
+    /// 
+    /// let recovered = a_des.decrypt_u64(cipher);
+    /// println!("B_u64 (16 rounds) =\t{:#016X}", recovered);
+    /// assert_eq!(recovered, 0x_1234567890ABCDEF_u64);
+    /// assert_eq!(recovered, message);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.decrypt_u64)
+    pub fn decrypt_unit(&mut self, cipher: T) -> T
+    {
+        self.set_block(cipher);
+        self.decrypt_block();
+        self.block.get()
+    }
+
+    // pub fn encrypt_array_unit<const M: usize>(&mut self, message: &[T; M], cipher: &mut [T; M])
+    /// Encrypts an array of 128-bit data.
+    /// 
+    /// # Arguments
+    /// - `message` is of an array of `u64`-type and the plaintext to be
+    ///   encrypted.
+    /// - `cipher` is of an array of `u64`-type and the ciphertext to be
+    ///   stored.
+    /// 
+    /// # Example 1 for Normal case 
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// 
+    /// let message = [0x_1234567890ABCDEF_u64, 0xEFCDAB9078563412, 0xFEDCBA0987654321 ];
+    /// print!("M =\t");
+    /// for m in message
+    ///     { print!("{:#016X} ", m); }
+    /// println!();
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let mut cipher = [0; 3];
+    /// a_des.encrypt_array_u64(&message, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher
+    ///     { print!("{:#016X} ", c); }
+    /// println!();
+    /// assert_eq!(cipher[0], 0x_1BC4896735BBE206_u64);
+    /// assert_eq!(cipher[1], 0x_1D8A61E5E62226A4_u64);
+    /// assert_eq!(cipher[2], 0x_2990D69525C17067_u64);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.encrypt_array_u64)
+    pub fn encrypt_array_unit<const M: usize>(&mut self, message: &[T; M], cipher: &mut [T; M])
+    {
+        for i in 0..N
+            { cipher[i] = self.encrypt_unit(message[i]); }
+    }
+
+    // pub fn decrypt_array_unit<const M: usize>(&mut self, cipher: &[T; M], message: &mut [T; M])
+    /// Decrypts an array of 64-bit data.
+    /// 
+    /// # Arguments
+    /// - `cipher` is of an array of `u64`-type and the ciphertext to be
+    ///   decrypted.
+    /// - `message` is of an array of `u64`-type and the plaintext to be
+    ///   stored.
+    /// 
+    /// # Example 1 for Normal case 
+    /// ```
+    /// use cryptocol::symmetric::AES;
+    /// 
+    /// let key = 0x_1234567890ABCDEFFEDCBA0987654321_u128;
+    /// println!("K =\t{:#016X}", key);
+    /// 
+    /// let message = [0x_1234567890ABCDEF_u64, 0xEFCDAB9078563412, 0xFEDCBA0987654321 ];
+    /// print!("M =\t");
+    /// for m in message
+    ///     { print!("{:#016X} ", m); }
+    /// println!();
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let mut cipher = [0; 3];
+    /// a_des.encrypt_array_u64(&message, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher
+    ///     { print!("{:#016X} ", c); }
+    /// println!();
+    /// assert_eq!(cipher[0], 0x_1BC4896735BBE206_u64);
+    /// assert_eq!(cipher[1], 0x_1D8A61E5E62226A4_u64);
+    /// assert_eq!(cipher[2], 0x_2990D69525C17067_u64);
+    /// 
+    /// let mut recovered = [0; 3];
+    /// a_des.decrypt_array_u64(&cipher, &mut recovered);
+    /// print!("B (16 rounds) =\t");
+    /// for r in recovered
+    ///     { print!("{:#016X} ", r); }
+    /// println!();
+    /// assert_eq!(recovered[0], 0x_1234567890ABCDEF_u64);
+    /// assert_eq!(recovered[1], 0x_EFCDAB9078563412_u64);
+    /// assert_eq!(recovered[2], 0x_FEDCBA0987654321_u64);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.decrypt_array_u64)
+    pub fn decrypt_array_unit<const M: usize>(&mut self, cipher: &[T; M], message: &mut [T; M])
+    {
+        for i in 0..N
+            { message[i] = self.decrypt_unit(cipher[i]); }
+    }
+
+    // pub fn is_succeful(&self) -> bool
+    /// Checks whether the previous encryption or decryption was successful.
+    /// 
+    /// # Output
+    /// If the previous encryption or decryption was successful, this method
+    /// returns true. Otherwise, it returns false.
+    /// 
+    /// # Features
+    /// - Usually, you don't have to use this method because the encryption
+    ///   methods returns the length of ciphertext and the decryption methods
+    ///   returns the length of plaintext but they returns `0` when they failed.
+    /// - If the ciphertext is 8 bytes for decryption with the padding either
+    ///   pkcs7 or iso, the return value `0` of the decryption methods is not
+    ///   discriminatory. You don't know whether the previous decryption was
+    ///   failed or the original plaintext was just null string or "". In this
+    ///   case you can check its success with this method.
+    /// 
+    /// # Example 1 for Normal case for the message of 0 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::AES;
+    /// 
+    /// let key = 0x_1234567890ABCDEFFEDCBA0987654321_u128;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_aes = AES::new_with_key_u128(key);
+    /// 
+    /// let message = "";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 8];
+    /// let len = a_aes.encrypt_with_padding_pkcs7_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// println!("The length of ciphertext = {}", len);
+    /// assert_eq!(len, 8);
+    /// let success = a_aes.is_successful();
+    /// assert_eq!(success, true);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.is_successful)
+    #[inline] pub fn is_successful(&self) -> bool { self.block.get() == Self::SUCCESS }
+
+    // pub fn is_failed(&self) -> bool
+    /// Checks whether the previous encryption or decryption was failed.
+    /// 
+    /// # Output
+    /// If the previous encryption or decryption was failed, this method
+    /// returns true. Otherwise, it returns false.
+    /// 
+    /// # Features
+    /// - Usually, you don't have to use this method because the encryption
+    ///   methods returns the length of ciphertext and the decryption methods
+    ///   returns the length of plaintext but they returns `0` when they failed.
+    /// - If the ciphertext is 8 bytes for decryption with the padding either
+    ///   pkcs7 or iso, the return value `0` of the decryption methods is not
+    ///   discriminatory. You don't know whether the previous decryption was
+    ///   failed or the original plaintext was just null string or "". In this
+    ///   case you can check its success with this method.
+    /// 
+    /// # Example 1 for Normal case for the message of 0 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::AES;
+    /// 
+    /// let key = 0x_1234567890ABCDEFFEDCBA0987654321_u128;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_aes = AES::new_with_key_u128(key);
+    /// 
+    /// let message = "";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 8];
+    /// let len = a_aes.encrypt_with_padding_pkcs7_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// println!("The length of ciphertext = {}", len);
+    /// assert_eq!(len, 8);
+    /// let failure = a_aes.is_failed();
+    /// assert_eq!(failure, false);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.is_failed)
+    #[inline] pub fn is_failed(&self) -> bool   { self.block.get() == Self::FAILURE }
+
+    // pub fn set_successful(&mut self)
+    /// Sets the flag to mean that the previous encryption or decryption
+    /// was successful.
+    /// 
+    /// # Features
+    /// You won't use this method unless you write codes for implementation
+    /// of a trait for BigCryptor.
+    /// 
+    /// # Example
+    /// ```
+    /// use cryptocol::symmetric::AES;
+    /// let mut a_aes = AES::new_with_key_u64(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// assert_eq!(a_des.is_successful(), false);
+    /// 
+    /// a_aes.set_successful();
+    /// assert_eq!(a_aes.is_successful(), true);
+    /// ```
+    #[inline]
+    pub fn set_successful(&mut self)
+    {
+        self.block.set(Self::SUCCESS);
+    }
+
+    // pub fn set_failed(&mut self)
+    /// Sets the flag to mean that the previous encryption or decryption
+    /// was failed.
+    /// 
+    /// # Features
+    /// You won't use this method unless you write codes for implementation
+    /// of a trait for BigCryptor.
+    /// 
+    /// # Example
+    /// ```
+    /// use cryptocol::symmetric::AES;
+    /// let mut a_aes = AES::new_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// a_aes.encrypt_u128(0x1234567890ABCDEF_u64);
+    /// assert_eq!(a_aes.is_failed(), false);
+    /// 
+    /// a_aes.set_failed();
+    /// assert_eq!(a_aes.is_failed(), true);
+    /// ```
+    #[inline]
+    pub fn set_failed(&mut self)
+    {
+        self.block.set(Self::FAILURE);
+    }
+
+    fn encrypt_block(&mut self)
+    {
+        let mut block = self.smallcryptor[0].encrypt_unit(self.block.get());
+        for i in 1..self.smallcryptor.len()
+            { block = self.smallcryptor[i].encrypt_unit(block); }
+        self.block.set(block);
+    }
+
+    fn decrypt_block(&mut self)
+    {
+        let len = self.smallcryptor.len();
+        let mut block = self.smallcryptor[len-1].decrypt_unit(self.block.get());
+        for i in 2..len+1
+            { block = self.smallcryptor[len-i].decrypt_unit(block); }
+        self.block.set(block);
+    }
+
+    #[inline] fn get_block(&self) -> u128            { self.block.get() }
+    #[inline] fn set_block(&mut self, block: u128)   { self.block.set(block); }
+}
+*/

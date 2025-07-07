@@ -15,12 +15,12 @@
 
 use std::ops::{ Add, Sub, Neg };
 
-use crate::symmetric::{ SmallCryptor64, SmallCryptor128, BigCryptor64, BigCryptor128,
+use crate::symmetric::{ /*SmallCryptor<u64, 8>, SmallCryptor<u128, 16>*/ SmallCryptor, BigCryptor64, BigCryptor128,
                         DES_Generic };
 
 
 impl <S> Add<S> for BigCryptor128
-where S: SmallCryptor128 + 'static
+where S: SmallCryptor<u128, 16> + 'static
 {
     type Output = Self;
 
@@ -33,7 +33,7 @@ where S: SmallCryptor128 + 'static
 }
 
 impl <S> Sub<S> for BigCryptor128
-where S: SmallCryptor128 + 'static
+where S: SmallCryptor<u128, 16> + 'static
 {
     type Output = Self;
 
@@ -47,7 +47,7 @@ where S: SmallCryptor128 + 'static
 }
 
 impl <S> Add<S> for BigCryptor64
-where S: SmallCryptor64 + 'static
+where S: SmallCryptor<u64, 8> + 'static
 {
     type Output = Self;
 
@@ -60,7 +60,7 @@ where S: SmallCryptor64 + 'static
 }
 
 impl <S> Sub<S> for BigCryptor64
-where S: SmallCryptor64 + 'static
+where S: SmallCryptor<u64, 8> + 'static
 {
     type Output = Self;
 
@@ -361,7 +361,7 @@ impl <S, const ROUND: usize, const SHIFT: u128,
                 S740, S741, S742, S743, S744, S745, S746, S747,
                 S748, S749, S750, S751, S752, S753, S754, S755,
                 S756, S757, S758, S759, S760, S761, S762, S763>
-where S: SmallCryptor64 + 'static
+where S: SmallCryptor<u64, 8> + 'static
 {
     type Output = BigCryptor64;
 
@@ -668,7 +668,7 @@ impl <S, const ROUND: usize, const SHIFT: u128,
                 S740, S741, S742, S743, S744, S745, S746, S747,
                 S748, S749, S750, S751, S752, S753, S754, S755,
                 S756, S757, S758, S759, S760, S761, S762, S763>
-where S: SmallCryptor64 + 'static
+where S: SmallCryptor<u64, 8> + 'static
 {
     type Output = BigCryptor64;
 

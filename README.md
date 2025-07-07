@@ -113,9 +113,9 @@ The checked items have already been implemented including documentation __at lea
       [`CFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CFB.html#trait.CFB),
       [`OFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.OFB.html#trait.OFB), and
       [`CTR`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CTR.html#trait.CTR).
-- [ ] AES symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for AES_Generic
-      --- Includes AES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
-      `AES_Generic`,
+- [ ] AES and Rijdael symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for Rijdael_Generic
+      --- Includes AES, Rijndael and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
+      `Rijndael_Generic`,
       `ECB_PKCS7`,
       `ECB_ISO`,
       `CBC_PKCS7`,
@@ -182,19 +182,16 @@ The checked items have already been implemented including documentation __at lea
       [`Any_SHA2_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_256.html#struct.Any_SHA2_256),
       [`Any_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_512.html#struct.Any_SHA2_512),
       [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512),
-      [`Any_SHA3_256`](random/random/struct.Any_SHA3_256.html#struct.Any_SHA3_256),
-      [`Any_SHA3_512`](random/random/struct.Any_SHA3_512.html#struct.Any_SHA3_512),
-      [`Any_SHAKE_128`](random/random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
-      [`Random_SHA2_512`](random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512).
+      [`Any_SHA3_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA3_256.html#struct.Any_SHA3_256),
+      [`Any_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA3_512.html#struct.Any_SHA3_512),
+      [`Any_SHAKE_128`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
+      [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512).
       [`Random_SHA3_512`](random/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512), and
-      [`Random_BIG_KECCAK_1024`](random/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024),
+      [`Random_BIG_KECCAK_1024`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024),
 - [ ] Pseudo-random number generator engines using symmetric-key encryption algorithms ---
-      [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES), 
-      `Any_TDES`,
-      `Any_AES`,
-      `Any_TAES`,
-      `Random_AES`, and
-      `Random_TAES`.
+      [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES),
+      `Any_AES`, and
+      `Random_AES`.
 - [ ] Pseudo-random number generator engines using simple randomization algorithm ---
       [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Num_C.html#struct.Any_Num_C)
 

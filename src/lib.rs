@@ -126,10 +126,10 @@
 //!       [`CFB`](symmetric/trait.CFB.html#trait.CFB),
 //!       [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
 //!       [`CTR`](symmetric/trait.CTR.html#trait.CTR).
-//! - [ ] AES symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for AES_Generic
+//! - [ ] AES and Rijdael symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for AES_Generic
 //!       --- Includes AES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits
 //!       according to PKCS#7 and ISO 7816-4.
-//!       `AES_Generic`,
+//!       `Rijdael_Generic`,
 //!       `ECB_PKCS7`,
 //!       `ECB_ISO`,
 //!       `CBC_PKCS7`,
@@ -201,12 +201,9 @@
 //!       [`Random_SHA3_512`](random/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512), and
 //!       [`Random_BIG_KECCAK_1024`](random/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024),
 //! - [ ] Pseudo-random number generator engines using symmetric-key encryption algorithms ---
-//!       [`Any_DES`](random/random/struct.Any_DES.html#struct.Any_DES),    
-//!       `Any_TDES`,
-//!       `Any_AES`,
-//!       `Any_TAES`,
-//!       `Random_AES`, and
-//!       `Random_TAES`.
+//!       [`Any_DES`](random/random/struct.Any_DES.html#struct.Any_DES),
+//!       `Any_AES`, and
+//!       `Random_AES`.
 //! - [ ] Pseudo-random number generator engines using simple randomization algorithm
 //!       --- [`Any_Num_C`](random/random/struct.Any_Num.html#struct.Any_Num_C)
 //! 

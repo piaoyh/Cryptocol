@@ -13,7 +13,10 @@
 
 
 use std::fmt::{ Debug, Display };
-use std::ops::*;
+// use std::ops::*;
+use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
+                BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
+                Shl, ShlAssign, Shr, ShrAssign };
 use std::cmp::{ PartialEq, PartialOrd};
 use std::ptr::copy_nonoverlapping;
 use std::time::{ SystemTime, UNIX_EPOCH };
@@ -26,7 +29,7 @@ use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime }
 use crate::hash::{ MD4, MD5, SHA0, SHA1, SHA2_256, SHA2_512,
                     SHA3_256, SHA3_512, SHAKE_128, BIG_KECCAK_1024 };
 use crate::random::{ Random_Engine, AnyNumber_Engine_C };
-use crate::symmetric::DES;
+use crate::symmetric::{ DES, TDES };
 
 
 
