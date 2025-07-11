@@ -29,7 +29,7 @@ use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime }
 use crate::hash::{ MD4, MD5, SHA0, SHA1, SHA2_256, SHA2_512,
                     SHA3_256, SHA3_512, SHAKE_128, BIG_KECCAK_1024 };
 use crate::random::{ Random_Engine, AnyNumber_Engine_C };
-use crate::symmetric::{ DES, TDES };
+use crate::symmetric::{ DES };
 
 
 

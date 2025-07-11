@@ -27,70 +27,12 @@ macro_rules! make_FP {
     () => {
         {
             let mut out = [0_u8; 64];
-            out[Self::IP[00] as usize] = 00;
-            out[Self::IP[01] as usize] = 01;
-            out[Self::IP[02] as usize] = 02;
-            out[Self::IP[03] as usize] = 03;
-            out[Self::IP[04] as usize] = 04;
-            out[Self::IP[05] as usize] = 05;
-            out[Self::IP[06] as usize] = 06;
-            out[Self::IP[07] as usize] = 07;
-            out[Self::IP[08] as usize] = 08;
-            out[Self::IP[09] as usize] = 09;
-            out[Self::IP[10] as usize] = 10;
-            out[Self::IP[11] as usize] = 11;
-            out[Self::IP[12] as usize] = 12;
-            out[Self::IP[13] as usize] = 13;
-            out[Self::IP[14] as usize] = 14;
-            out[Self::IP[15] as usize] = 15;
-            out[Self::IP[16] as usize] = 16;
-            out[Self::IP[17] as usize] = 17;
-            out[Self::IP[18] as usize] = 18;
-            out[Self::IP[19] as usize] = 19;
-            out[Self::IP[20] as usize] = 20;
-            out[Self::IP[21] as usize] = 21;
-            out[Self::IP[22] as usize] = 22;
-            out[Self::IP[23] as usize] = 23;
-            out[Self::IP[24] as usize] = 24;
-            out[Self::IP[25] as usize] = 25;
-            out[Self::IP[26] as usize] = 26;
-            out[Self::IP[27] as usize] = 27;
-            out[Self::IP[28] as usize] = 28;
-            out[Self::IP[29] as usize] = 29;
-            out[Self::IP[30] as usize] = 30;
-            out[Self::IP[31] as usize] = 31;
-            out[Self::IP[32] as usize] = 32;
-            out[Self::IP[33] as usize] = 33;
-            out[Self::IP[34] as usize] = 34;
-            out[Self::IP[35] as usize] = 35;
-            out[Self::IP[36] as usize] = 36;
-            out[Self::IP[37] as usize] = 37;
-            out[Self::IP[38] as usize] = 38;
-            out[Self::IP[39] as usize] = 39;
-            out[Self::IP[40] as usize] = 40;
-            out[Self::IP[41] as usize] = 41;
-            out[Self::IP[42] as usize] = 42;
-            out[Self::IP[43] as usize] = 43;
-            out[Self::IP[44] as usize] = 44;
-            out[Self::IP[45] as usize] = 45;
-            out[Self::IP[46] as usize] = 46;
-            out[Self::IP[47] as usize] = 47;
-            out[Self::IP[48] as usize] = 48;
-            out[Self::IP[49] as usize] = 49;
-            out[Self::IP[50] as usize] = 50;
-            out[Self::IP[51] as usize] = 51;
-            out[Self::IP[52] as usize] = 52;
-            out[Self::IP[53] as usize] = 53;
-            out[Self::IP[54] as usize] = 54;
-            out[Self::IP[55] as usize] = 55;
-            out[Self::IP[56] as usize] = 56;
-            out[Self::IP[57] as usize] = 57;
-            out[Self::IP[58] as usize] = 58;
-            out[Self::IP[59] as usize] = 59;
-            out[Self::IP[60] as usize] = 60;
-            out[Self::IP[61] as usize] = 61;
-            out[Self::IP[62] as usize] = 62;
-            out[Self::IP[63] as usize] = 63;
+            let mut i = 0_u8;
+            while i < 64
+            {
+                out[Self::IP[i as usize] as usize] = i;
+                i += 1;
+            }
             out
         }
     }
