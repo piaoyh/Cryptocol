@@ -17,6 +17,8 @@ pub fn main()
 {
     aes_sbox();
     aes_invsbox();
+    aes_mc();
+    aes_invmc();
 }
 
 fn aes_sbox()
@@ -32,5 +34,21 @@ fn aes_invsbox()
     println!("aes_invsbox");
     use cryptocol::symmetric::AES_128;
     AES_128::show_InvSBox();
+    println!("-------------------------------");
+}
+
+fn aes_mc()
+{
+    println!("aes_mc");
+    use cryptocol::symmetric::AES_128;
+    AES_128::show_MC();
+    println!("-------------------------------");
+}
+
+fn aes_invmc()
+{
+    println!("aes_invmc");
+    use cryptocol::symmetric::AES_128;
+    AES_128::show_InvMC();
     println!("-------------------------------");
 }
