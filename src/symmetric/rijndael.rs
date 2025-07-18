@@ -691,8 +691,8 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     fn decrypt_block(&mut self)
     {
-        self.add_round_key(ROUND-1);
-        let mut round = ROUND-2;
+        self.add_round_key(ROUND);
+        let mut round = ROUND-1;
         while round > 0
         {
             Self::method_inv_shift_rows(self);
