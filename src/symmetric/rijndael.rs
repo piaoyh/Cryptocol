@@ -13,7 +13,7 @@
 #![allow(unused_variables)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
-use std::ptr::copy_nonoverlapping;
+use std::ptr::{ copy_nonoverlapping, copy };
 use crate::number::{ SmallUInt, IntUnion, LongerUnion, SharedArrays };
 
 
@@ -258,32 +258,19 @@ macro_rules! make_RC_ARRAY {
     () => {
         {
             let mut out = [0u32; ROUND];
-            if RC_AUTO
+            let round = [ RC0.to_le(), RC1.to_le(), RC2.to_le(), RC3.to_le(), RC4.to_le(),
+                          RC5.to_le(), RC6.to_le(), RC7.to_le(), RC8.to_le(), RC9.to_le() ];
+            let nr = if ROUND <= 10 { ROUND } else { 10 };
+            let mut i = 0;
+            while i < nr
             {
-                let mut i = 1;
-                out[0] = 1_u32.to_le();
-                while i < ROUND
-                {
-                    out[i] = (GF_mul!(out[i-1].to_le() as u8, 2) as u32).to_le();
-                    i += 1;
-                }
+                out[i] = round[i];
+                i += 1;
             }
-            else
+            while i < ROUND
             {
-                let round = [RC0.to_le(), RC1.to_le(), RC2.to_le(), RC3.to_le(), RC4.to_le(),
-                             RC5.to_le(), RC6.to_le(), RC7.to_le(), RC8.to_le(), RC9.to_le()];
-                let nr = if ROUND <= 10 { ROUND } else { 10 };
-                let mut i = 0;
-                while i < nr
-                {
-                    out[i] = round[i];
-                    i += 1;
-                }
-                while i < ROUND
-                {
-                    out[i] = (GF_mul!(out[i-1].to_le() as u8, 2) as u32).to_le();
-                    i += 1;
-                }
+                out[i] = (GF_mul!(out[i-1].to_le() as u8, 2) as u32).to_le();
+                i += 1;
             }
             out
         }
@@ -319,14 +306,10 @@ pub type AES_128 = Rijndael_Generic;
 ///   for the ShiftRows step.
 /// - MC00 ~ MC33: You can determine the Mix-Column matrix used for the
 ///   MixColumn step.
-/// - RC_AUTO: If `RC_AUTO` is set to be `true`, Round Constants will be
-///   automatically determined and `RC0` ~ `RC9` will be ignored. If it is set
-///   to be `false`, `RC0` ~ `RC9` will be used for Round Constants.
-/// - RC0 ~ RC9: Round Constants. They are maaningful only when `RC_AUTO` is
-///   `false`. If `Round` is greater than 10, the round constants after RC9 will
-///   be determined by multiplying previous round constant with two on Galois
-///   Field. So, So-called RC10 is double of `RC9` on Galois Field and RC11 is
-///   double of `RC10` on Galois Field, and so on.
+/// - RC0 ~ RC9: Round Constants. If `Round` is greater than 10, the round
+///   constants after RC9 will be determined by multiplying previous round
+///   constant with two on Galois Field. So, So-called RC10 is double of `RC9`
+///   on Galois Field and RC11 is double of `RC10` on Galois Field, and so on.
 #[allow(non_camel_case_types)]
 #[derive(Debug, Clone)]
 pub struct Rijndael_Generic<const ROUND: usize = 10, const NB: usize = 4, const NK: usize = 4,
@@ -338,7 +321,7 @@ pub struct Rijndael_Generic<const ROUND: usize = 10, const NB: usize = 4, const 
             const MC10: u8 = 1, const MC11: u8 = 2, const MC12: u8 = 3, const MC13: u8 = 1,
             const MC20: u8 = 1, const MC21: u8 = 1, const MC22: u8 = 2, const MC23: u8 = 3,
             const MC30: u8 = 3, const MC31: u8 = 1, const MC32: u8 = 1, const MC33: u8 = 2,
-            const RC_AUTO: bool = true, const RC0: u32 = 0b_0000_0001, const RC1: u32 = 0b_0000_0010,
+            const RC0: u32 = 0b_0000_0001, const RC1: u32 = 0b_0000_0010,
             const RC2: u32 = 0b_0000_0100, const RC3: u32 = 0b_0000_1000, const RC4: u32 = 0b_0001_0000,
             const RC5: u32 = 0b_0010_0000, const RC6: u32 = 0b_0100_0000, const RC7: u32 = 0b_1000_0000,
             const RC8: u32 = 0b_0001_1011, const RC9: u32 = 0b_001_10110, const ROT: u32 = 1>
@@ -356,11 +339,11 @@ impl <const ROUND: usize, const NB: usize, const NK: usize, const IRREDUCIBLE: u
         const MC10: u8, const MC11: u8, const MC12: u8, const MC13: u8,
         const MC20: u8, const MC21: u8, const MC22: u8, const MC23: u8,
         const MC30: u8, const MC31: u8, const MC32: u8, const MC33: u8,
-        const RC_AUTO: bool, const RC0: u32, const RC1: u32, const RC2: u32, const RC3: u32, const RC4: u32,
+        const RC0: u32, const RC1: u32, const RC2: u32, const RC3: u32, const RC4: u32,
         const RC5: u32, const RC6: u32, const RC7: u32, const RC8: u32, const RC9: u32, const ROT: u32>
 Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, SR2, SR3,
         MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13, MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
-        RC_AUTO, RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
+        RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
     const SUCCESS: u8 = !0;
     const FAILURE: u8 = 0;
@@ -401,8 +384,16 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
                                                         else
                                                             { Self::make_round_keys_nk_up_to_6_and_nk_diff_from_nb }
                                                     };
-                                                    
-    #[inline]
+
+    #[allow(non_upper_case_globals)]
+    const method_mix_columns: fn (&mut Self) =  if (MC00 == 2) && (MC01 == 3) && (MC02 == 1) && (MC03 == 1)
+                                                && (MC10 == 1) && (MC11 == 2) && (MC12 == 3) && (MC13 == 1)
+                                                && (MC20 == 1) && (MC21 == 1) && (MC22 == 2) && (MC23 == 3)
+                                                && (MC30 == 3) && (MC31 == 1) && (MC32 == 1) && (MC33 == 2)
+                                                    { Self::optimal_mix_columns }
+                                                else
+                                                    { Self::mix_columns };
+
     pub fn new() -> Self
     {
         let mut rijndael = Self
@@ -471,35 +462,37 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         rijndael
     }
 
-    pub fn get_key(&mut self) -> Vec<u8>
+    pub fn get_key(&mut self) -> [u32; NK]
     {
-        let mut key = vec![0u8; NK * 4];
-        for i in 0..NK*4
-            { key[i] = self.key[i / NK].get_ubyte_(i % NK); }
+        let mut key = [0_u32; NK];
+        unsafe { copy_nonoverlapping(self.key.as_ptr() as *const u32,
+                                 &mut key as *mut u32, NK); }
         key
     }
 
     pub fn get_key_u128(&self) -> u128
     {
-        let ints = [self.key[0].get(), self.key[1].get(), self.key[2].get(), self.key[3].get()];
-        let key = LongerUnion::new_with_uints(ints);
-        key.get()
+        let mut key = 0_u128;
+        unsafe { copy_nonoverlapping(self.key.as_ptr() as *const u8,
+                                     &mut key as *mut u128 as *mut u8, 16); }
+        key
     }
 
     pub fn set_key<const K: usize>(&mut self, key: [u8; K])
     {
         let len = if K < NK * 4 { K } else { NK * 4 };
-        unsafe { copy_nonoverlapping(key.as_ptr(), self.key.as_mut_ptr() as *mut u8, len); }
-        unsafe { copy_nonoverlapping(self.key.as_ptr() as *const u8, self.round_key.as_mut_ptr() as *mut u8, NK * 4); }
+        unsafe {
+            copy_nonoverlapping(key.as_ptr(), self.key.as_mut_ptr() as *mut u8, len);
+        }
         Self::method_make_round_keys(self);
     }
 
     pub fn set_key_u128(&mut self, key: u128)
     {
-        let longer = LongerUnion::new_with(key);
-        for i in 0..4
-            { self.key[i].set_uint(longer.get_uint_(i)); }
-        unsafe { copy_nonoverlapping(self.key.as_ptr() as *const u8, self.round_key.as_mut_ptr() as *mut u8, NK * 4); }
+        unsafe {
+            copy_nonoverlapping(&key as *const u128 as *const u8,
+                                self.key.as_mut_ptr() as *mut u8, 16);
+        }
         Self::method_make_round_keys(self);
     }
 
@@ -523,16 +516,16 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     pub fn encrypt_u128(&mut self, message: u128) -> u128
     {
-        self.set_block(message);
+        self.set_block_u128(message);
         self.encrypt_block();
-        self.get_block()
+        self.get_block_u128()
     }
 
     pub fn decrypt_u128(&mut self, cipher: u128) -> u128
     {
-        self.set_block(cipher);
+        self.set_block_u128(cipher);
         self.decrypt_block();
-        self.get_block()
+        self.get_block_u128()
     }
 
     #[inline]
@@ -551,9 +544,9 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     {
         for i in 0..N
         {
-            self.set_block(message[i]);
+            self.set_block_u128(message[i]);
             self.encrypt_block();
-            cipher[i] = self.get_block();
+            cipher[i] = self.get_block_u128();
         }
     }
 
@@ -561,9 +554,9 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     {
         for i in 0..N
         {
-            self.set_block(cipher[i]);
+            self.set_block_u128(cipher[i]);
             self.decrypt_block();
-            message[i] = self.get_block();
+            message[i] = self.get_block_u128();
         }
     }
 
@@ -593,17 +586,18 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     fn encrypt_block(&mut self)
     {
-        self.add_round_key(0);
-        for round in 1..ROUND-1
+                                                //println!("state: {} - {:02x?}", -1, self.block);
+        self.add_round_key(0);          //println!("state: {} - {:02x?}", 0, self.block); println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", 0, self.round_key[0][0].get().to_be(), self.round_key[0][1].get().to_be(), self.round_key[0][2].get().to_be(), self.round_key[0][3].get().to_be());
+        for round in 1..ROUND
         {
-            self.sub_bytes();
-            Self::method_shift_rows(self);
-            self.mix_columns();
-            self.add_round_key(round);
+            self.sub_bytes();                   //println!("state: {} - {:02x?}", round, self.block);
+            Self::method_shift_rows(self);      //println!("state: {} - {:02x?}", round, self.block);
+            Self::method_mix_columns(self);     //println!("state: {} - {:02x?}", round, self.block);
+            self.add_round_key(round);          //println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", round, self.round_key[round][0].get().to_be(), self.round_key[round][1].get().to_be(), self.round_key[round][2].get().to_be(), self.round_key[round][3].get().to_be());
         }
-        self.sub_bytes();
-        Self::method_shift_rows(self);
-        self.add_round_key(ROUND-1);
+        self.sub_bytes();                       //println!("state: {} - {:02x?}", ROUND, self.block);
+        Self::method_shift_rows(self);          //println!("state: {} - {:02x?}", ROUND, self.block);
+        self.add_round_key(ROUND);              //println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", ROUND, self.round_key[ROUND][0].get().to_be(), self.round_key[ROUND][1].get().to_be(), self.round_key[ROUND][2].get().to_be(), self.round_key[ROUND][3].get().to_be());
     }
 
     fn sub_bytes(&mut self)
@@ -611,47 +605,74 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         for i in 0..4
         {
             for j in 0..NB
-                { self.block[i][j] = Self::SBOX[self.block[i][j] as usize]; }    
+            {
+                self.block[i][j] = Self::SBOX[self.block[i][j] as usize];
+            }
         }
     }
 
     fn optimal_shift_rows(&mut self)
     {
-        let mut b = [0_u8; NB];
+        let mut tmp = [0_u8; 3];
+        let tmp_ptr = tmp.as_mut_ptr();
         for i in 1..4
         {
-            for j in 0..i
-                { b[NB-i+j] = self.block[i][j]; }
-            for j in 0..NB-i
-                { self.block[i][j] = self.block[i][j+i]; }
-            for j in NB-i..NB
-                { self.block[i][j] = b[j]; }
+            unsafe {
+                let ptr_block_0 = self.block[i].as_mut_ptr();
+                let ptr_block_i = self.block[i].as_ptr().add(i);
+                let ptr_block_nb_i = self.block[i].as_mut_ptr().add(NB - i);
+                copy_nonoverlapping(ptr_block_0, tmp_ptr, i);
+                copy(ptr_block_i, ptr_block_0, NB - i);
+                copy_nonoverlapping(tmp_ptr, ptr_block_nb_i, i);
+            }
         }
     }
 
     fn shift_rows(&mut self)
     {
-        let mut b = [0_u8; NB];
+        let mut tmp = [0_u8; NB];
+        let tmp_ptr = tmp.as_mut_ptr();
         for i in 0..4
         {
-            for j in 0..Self::SR[i]
-                { b[NB-i+j] = self.block[i][j]; }
-            for j in 0..NB-Self::SR[i]
-                { self.block[i][j] = self.block[i][j+Self::SR[i]]; }
-            for j in NB-Self::SR[i]..NB
-                { self.block[i][j] = b[j]; }
+            unsafe {
+                let ptr_block_0 = self.block[i].as_mut_ptr();
+                let ptr_block_i = self.block[i].as_ptr().add(Self::SR[i]);
+                let ptr_block_nb_i = self.block[i].as_mut_ptr().add(NB - Self::SR[i]);
+                copy_nonoverlapping(ptr_block_0, tmp_ptr, Self::SR[i]);
+                copy(ptr_block_i, ptr_block_0, NB - Self::SR[i]);
+                copy_nonoverlapping(tmp_ptr, ptr_block_nb_i, Self::SR[i]);
+            }
         }
+    }
+
+    fn optimal_mix_columns(&mut self)
+    {
+        let mut new_block = [[0_u8; NB]; 4];
+        for col in 0..NB
+        {
+            new_block[0][col] = GF_mul!(2, self.block[0][col]) ^ GF_mul!(3, self.block[1][col])
+                                ^ self.block[2][col] ^ self.block[3][col];
+            new_block[1][col] = self.block[0][col] ^ GF_mul!(2, self.block[1][col])
+                                ^ GF_mul!(3, self.block[2][col]) ^ self.block[3][col];
+            new_block[2][col] = self.block[0][col] ^ self.block[1][col]
+                                ^ GF_mul!(2, self.block[2][col]) ^ GF_mul!(3, self.block[3][col]);
+            new_block[3][col] = GF_mul!(3, self.block[0][col]) ^ self.block[1][col]
+                                ^ self.block[2][col] ^ GF_mul!(2, self.block[3][col]);
+        }
+        self.block = new_block;
     }
 
     fn mix_columns(&mut self)
     {
         let mut new_block = [[0_u8; NB]; 4];
-        for col in 0..NB
+        for row in 0..4
         {
-            for row in 0..4
+            for col in 0..NB
             {
                 for i in 0..4
-                    { new_block[row][col] ^= GF_mul!(Self::MC[row][i], self.block[i][col]); }
+                {
+                    new_block[row][col] ^= GF_mul!(Self::MC[row][i], self.block[i][col]);
+                }
             }
         }
         self.block = new_block;
@@ -659,13 +680,13 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     fn add_round_key(&mut self, round: usize)
     {
-        // let mut idx = 0;
         for i in 0..4
         {
             for j in 0..NB
             {
-                self.block[i][j] ^= self.round_key[round][i].get_ubyte_(j); }
-        }
+                self.block[i][j] ^= self.round_key[round][j].get_ubyte_(i);
+            }
+        }   
     }
 
     fn decrypt_block(&mut self)
@@ -690,47 +711,57 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         for i in 0..4
         {
             for j in 0..NB
-                { self.block[i][j] = Self::INV_SBOX[self.block[i][j] as usize]; }    
+            {
+                self.block[i][j] = Self::INV_SBOX[self.block[i][j] as usize];
+            }    
         }
     }
 
     fn optimal_inv_shift_rows(&mut self)
     {
-        let mut b = [0_u8; NB];
+        let mut tmp = [0_u8; 3];
+        let tmp_ptr = tmp.as_mut_ptr();
         for i in 1..4
         {
-            for j in 0..i
-                { b[j] = self.block[i][NB-i+j]; }
-            for j in 0..NB-i
-                { self.block[i][NB-j] = self.block[i][NB-j-i]; }
-            for j in 0..i
-                { self.block[i][j] = b[j]; }
+            unsafe {
+                let ptr_block_0 = self.block[i].as_mut_ptr();
+                let ptr_block_i = self.block[i].as_mut_ptr().add(i);
+                let ptr_block_nb_i = self.block[i].as_ptr().add(NB - i);
+                copy_nonoverlapping(ptr_block_nb_i, tmp_ptr, i);
+                copy(ptr_block_0, ptr_block_i, NB - i);
+                copy_nonoverlapping(tmp_ptr, ptr_block_0, i);
+            }
         }
     }
 
     fn inv_shift_rows(&mut self)
     {
-        let mut b = [0_u8; NB];
+        let mut tmp = [0_u8; NB];
+        let tmp_ptr = tmp.as_mut_ptr();
         for i in 0..4
         {
-            for j in 0..Self::SR[i]
-                { b[j] = self.block[i][NB-Self::SR[i]+j]; }
-            for j in 0..NB-Self::SR[i]
-                { self.block[i][NB-j] = self.block[i][NB-j-Self::SR[i]]; }
-            for j in 0..Self::SR[i]
-                { self.block[i][j] = b[j]; }
+            unsafe {
+                let ptr_block_0 = self.block[i].as_mut_ptr();
+                let ptr_block_i = self.block[i].as_mut_ptr().add(Self::SR[i]);
+                let ptr_block_nb_i = self.block[i].as_ptr().add(NB - Self::SR[i]);
+                copy_nonoverlapping(ptr_block_nb_i, tmp_ptr, i);
+                copy(ptr_block_0, ptr_block_i, NB - Self::SR[i]);
+                copy_nonoverlapping(tmp_ptr, ptr_block_0, i);
+            }
         }
     }
 
     fn inv_mix_columns(&mut self)
     {
         let mut new_block = [[0_u8; NB]; 4];
-        for col in 0..NB
+        for row in 0..4
         {
-            for row in 0..4
+            for col in 0..NB
             {
                 for i in 0..4
-                    { new_block[row][col] ^= GF_mul!(Self::INV_MC[row][i], self.block[i][col]); }
+                {
+                    new_block[row][col] ^= GF_mul!(Self::INV_MC[row][i], self.block[i][col]);
+                }
             }
         }
         self.block = new_block;
@@ -738,23 +769,26 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     fn make_round_keys_nk_up_to_6_and_nk_equal_to_nb(&mut self)
     {
-        for round in 1..ROUND
+        self.set_zeroth_round_key();                                                //println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", 0, self.round_key[0][0].get().to_be(), self.round_key[0][1].get().to_be(), self.round_key[0][2].get().to_be(), self.round_key[0][3].get().to_be());
+        for round in 1..=ROUND
         {
-            let mut tmp = self.round_key[round-1][NB-1];
-            #[cfg(target_endian = "little")] { tmp = tmp.rotate_right(8 * ROT); }
+            let mut tmp = self.round_key[round-1][NB-1];                    //println!("tmp: {} - {:08x}", round, tmp.to_be());
+            #[cfg(target_endian = "little")] { tmp = tmp.rotate_right(8 * ROT); }     //println!("rot: {} - {:08x}", round, tmp.to_be());
             #[cfg(target_endian = "big")] { tmp = tmp.rotate_left(8 * ROT); }
             for j in 0..4
-                { tmp.set_ubyte_(j, Self::SBOX[tmp.get_ubyte_(j) as usize]); }
-            tmp.set(tmp.get() ^ Self::RC[round-1]);
+                { tmp.set_ubyte_(j, Self::SBOX[tmp.get_ubyte_(j) as usize]); }  //println!("sub: {} - {:08x}", round, tmp.to_be());
+            tmp.set(tmp.get() ^ Self::RC[round-1]);                               //println!("xor: {} - {:08x}", round, tmp.to_be());
             self.round_key[round][0] = tmp ^ self.round_key[round-1][0];
             for i in 1..NK
                 { self.round_key[round][i] = self.round_key[round][i-1] ^ self.round_key[round-1][i]; }
+            // println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", round, self.round_key[round][0].get().to_be(), self.round_key[round][1].get().to_be(), self.round_key[round][2].get().to_be(), self.round_key[round][3].get().to_be());
         }
     }
 
     fn make_round_keys_nk_greater_than_6_and_nk_equal_to_nb(&mut self)
     {
-        for round in 1..ROUND
+        self.set_zeroth_round_key();
+        for round in 1..=ROUND
         {
             let mut tmp = self.round_key[round-1][NB-1];
             #[cfg(target_endian = "little")] { tmp = tmp.rotate_right(8 * ROT); }
@@ -776,10 +810,17 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     fn make_round_keys_nk_up_to_6_and_nk_diff_from_nb(&mut self)
     {
+
+        self.set_zeroth_round_key();
+        let mut idx = NK;
+        let w = vec![IntUnion::new(); NB * ROUND + 1];
+        
+
+        self.set_zeroth_round_key();
         let mut round = NK / NB;
         let mut cc = NK % NB;
         let mut idx = NK;
-        while round < ROUND
+        while round <= ROUND
         {
             let mut tmp = if cc == 0 { self.round_key[round-1][NB-1] } else { self.round_key[round][cc-1] };
             if idx % NK == 0
@@ -816,10 +857,11 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     fn make_round_keys_nk_greater_than_6_and_nk_diff_from_nb(&mut self)
     {
+        self.set_zeroth_round_key();
         let mut round = NK / NB;
         let mut cc = NK % NB;
         let mut idx = NK;
-        while round < ROUND
+        while round <= ROUND
         {
             let mut tmp = self.round_key[round][cc-1];
             if idx % NK == 0
@@ -859,23 +901,48 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         }
     }
 
-    fn get_block(&self) -> u128
+    #[inline]
+    fn set_zeroth_round_key(&mut self)
     {
-        let ubytes = [
-                    self.block[0][0], self.block[0][1], self.block[0][2], self.block[0][3],
-                    self.block[1][0], self.block[1][1], self.block[1][2], self.block[1][3],
-                    self.block[2][0], self.block[2][1], self.block[2][2], self.block[2][3],
-                    self.block[3][0], self.block[3][1], self.block[3][2], self.block[3][3]
-        ];
-        let block = LongerUnion::new_with_ubytes(ubytes);
+        unsafe {
+            copy_nonoverlapping(self.key.as_ptr() as *const u8,
+                                self.round_key.as_mut_ptr() as *mut u8, NK * 4);
+        }
+    }
+
+    fn get_block_u128(&self) -> u128
+    {
+        let mut block = LongerUnion::new();
+        let mut idx = 0;
+        for j in 0..NB
+        {
+            for i in 0..4
+            {
+                block.set_ubyte_(idx, self.block[i][j]);
+                idx += 1;
+            }
+        }
         block.get()
     }
 
-    fn set_block(&mut self, block: u128)
+    fn set_block_u128(&mut self, block: u128)
     {
-        let longer = LongerUnion::new_with(block);
-        for i in 0..16
-            { self.block[i/4][i%4] = longer.get_ubyte_(i); }
+        let block_union = LongerUnion::new_with(block);
+        let mut idx = 0;
+        for j in 0..NB
+        {
+            for i in 0..4
+            {
+                self.block[i][j] = block_union.get_ubyte_(idx);
+                idx += 1;
+            }
+        }
+    }
+
+    #[inline]
+    pub fn get_desirable_ROUND() -> usize
+    {
+        6 + if NB > NK { NB } else { NK }
     }
 
     fn GF_mul(mut a: u8, mut b: u8, m: u8) -> u8
