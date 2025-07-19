@@ -586,18 +586,18 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     fn encrypt_block(&mut self)
     {
-                                                //println!("state: {} - {:02x?}", -1, self.block);
-        self.add_round_key(0);          //println!("state: {} - {:02x?}", 0, self.block); println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", 0, self.round_key[0][0].get().to_be(), self.round_key[0][1].get().to_be(), self.round_key[0][2].get().to_be(), self.round_key[0][3].get().to_be());
+                                               //println!("state: {} - {:02x?}", -1, self.block);
+        self.add_round_key(0);          //println!("after addRoundKey - state: {} - {:02x?}", 0, self.block); println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", 0, self.round_key[0][0].get().to_be(), self.round_key[0][1].get().to_be(), self.round_key[0][2].get().to_be(), self.round_key[0][3].get().to_be());
         for round in 1..ROUND
         {
-            self.sub_bytes();                   //println!("state: {} - {:02x?}", round, self.block);
-            Self::method_shift_rows(self);      //println!("state: {} - {:02x?}", round, self.block);
-            Self::method_mix_columns(self);     //println!("state: {} - {:02x?}", round, self.block);
-            self.add_round_key(round);          //println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", round, self.round_key[round][0].get().to_be(), self.round_key[round][1].get().to_be(), self.round_key[round][2].get().to_be(), self.round_key[round][3].get().to_be());
+            self.sub_bytes();                   //println!("after subBytes - state: {} - {:02x?}", round, self.block);
+            Self::method_shift_rows(self);      //println!("after shiftRows - state: {} - {:02x?}", round, self.block);
+            Self::method_mix_columns(self);     //println!("after mixColumns - state: {} - {:02x?}", round, self.block);
+            self.add_round_key(round);          //println!("after addRoundKey - state: {} - {:02x?}", 0, self.block); println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", round, self.round_key[round][0].get().to_be(), self.round_key[round][1].get().to_be(), self.round_key[round][2].get().to_be(), self.round_key[round][3].get().to_be());
         }
-        self.sub_bytes();                       //println!("state: {} - {:02x?}", ROUND, self.block);
-        Self::method_shift_rows(self);          //println!("state: {} - {:02x?}", ROUND, self.block);
-        self.add_round_key(ROUND);              //println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", ROUND, self.round_key[ROUND][0].get().to_be(), self.round_key[ROUND][1].get().to_be(), self.round_key[ROUND][2].get().to_be(), self.round_key[ROUND][3].get().to_be());
+        self.sub_bytes();                       //println!("after subBytes - state: {} - {:02x?}", ROUND, self.block);
+        Self::method_shift_rows(self);          //println!("after shiftRows - state: {} - {:02x?}", ROUND, self.block);
+        self.add_round_key(ROUND);              //println!("after addRoundKey - state: {} - {:02x?}", 0, self.block); println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", ROUND, self.round_key[ROUND][0].get().to_be(), self.round_key[ROUND][1].get().to_be(), self.round_key[ROUND][2].get().to_be(), self.round_key[ROUND][3].get().to_be());
     }
 
     fn sub_bytes(&mut self)
@@ -779,7 +779,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
                 { tmp.set_ubyte_(j, Self::SBOX[tmp.get_ubyte_(j) as usize]); }  //println!("sub: {} - {:08x}", round, tmp.to_be());
             tmp.set(tmp.get() ^ Self::RC[round-1]);                               //println!("xor: {} - {:08x}", round, tmp.to_be());
             self.round_key[round][0] = tmp ^ self.round_key[round-1][0];
-            for i in 1..NK
+            for i in 1..NB
                 { self.round_key[round][i] = self.round_key[round][i-1] ^ self.round_key[round-1][i]; }
             // println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", round, self.round_key[round][0].get().to_be(), self.round_key[round][1].get().to_be(), self.round_key[round][2].get().to_be(), self.round_key[round][3].get().to_be());
         }
@@ -803,34 +803,30 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
             for j in 0..4
                 { tmp.set_ubyte_(j, Self::SBOX[tmp.get_ubyte_(j) as usize]); }
             self.round_key[round][4] = tmp ^ self.round_key[round-1][4];
-            for i in 5..NK
+            for i in 5..NB
                 { self.round_key[round][i] = self.round_key[round][i-1] ^ self.round_key[round-1][i]; }
         }
     }
 
     fn make_round_keys_nk_up_to_6_and_nk_diff_from_nb(&mut self)
     {
-
-        self.set_zeroth_round_key();
-        let mut idx = NK;
-        let w = vec![IntUnion::new(); NB * ROUND + 1];
-        
-
         self.set_zeroth_round_key();
         let mut round = NK / NB;
         let mut cc = NK % NB;
         let mut idx = NK;
+        let mut rc_round = 0;
         while round <= ROUND
         {
             let mut tmp = if cc == 0 { self.round_key[round-1][NB-1] } else { self.round_key[round][cc-1] };
             if idx % NK == 0
             {
-                    println!("tmp: {} - {:08x}", round, tmp.to_be());
-                #[cfg(target_endian = "little")] { tmp = tmp.rotate_right(8 * ROT); }    println!("rot: {} - {:08x}", round, tmp.to_be());
+                    //println!("{} tmp: {} - {:08x}", idx, round, tmp.to_be());
+                #[cfg(target_endian = "little")] { tmp = tmp.rotate_right(8 * ROT); }       //println!("{} rot: {} - {:08x}", idx, round, tmp.to_be());
                 #[cfg(target_endian = "big")] { tmp = tmp.rotate_left(8 * ROT); }
                 for j in 0..4
-                    { tmp.set_ubyte_(j, Self::SBOX[tmp.get_ubyte_(j) as usize]); }    println!("sub: {} - {:08x}", round, tmp.to_be());
-                tmp.set(tmp.get() ^ Self::RC[round-1]);    println!("xor: {} - {:08x}", round, tmp.to_be());
+                    { tmp.set_ubyte_(j, Self::SBOX[tmp.get_ubyte_(j) as usize]); }    //println!("{} sub: {} - {:08x}", idx, round, tmp.to_be());
+                tmp.set(tmp.get() ^ Self::RC[rc_round]);                                 //println!("{} xor: {} - {:08x}, RC - {:02x}", idx, round, tmp.to_be(), Self::RC[rc_round] as u8);
+                rc_round += 1;
             }
             if cc < NK
             {
@@ -841,7 +837,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
             else
             {
                 self.round_key[round][cc] = tmp ^ self.round_key[round][cc-NK];
-            }
+            }                                                                       //println!("{} w: {} - {:08x}", idx, round, self.round_key[round][cc].to_be()); println!("{} roundKey: {} - {:08x}{:08x}{:08x}{:08x}", idx, round, self.round_key[round][0].get().to_be(), self.round_key[round][1].get().to_be(), self.round_key[round][2].get().to_be(), self.round_key[round][3].get().to_be());
             if cc == NB - 1
             {
                 cc = 0;
@@ -861,23 +857,27 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         let mut round = NK / NB;
         let mut cc = NK % NB;
         let mut idx = NK;
+        let mut rc_round = 0;
         while round <= ROUND
         {
-            let mut tmp = self.round_key[round][cc-1];
+            let mut tmp = if cc == 0 { self.round_key[round-1][NB-1] } else { self.round_key[round][cc-1] };
             if idx % NK == 0
             {
                 #[cfg(target_endian = "little")] { tmp = tmp.rotate_right(8 * ROT); }
                 #[cfg(target_endian = "big")] { tmp = tmp.rotate_left(8 * ROT); }
                 for j in 0..4
                     { tmp.set_ubyte_(j, Self::SBOX[tmp.get_ubyte_(j) as usize]); }
-                tmp.set(tmp.get() ^ Self::RC[round-1]);
+                tmp.set(tmp.get() ^ Self::RC[rc_round]);
+                rc_round += 1;
             }
             else if idx % NK == 4
             {
+                let rrr = (idx - NK) / NB;
+                let ccc = (idx - NK) % NB;
                 for j in 0..4
                     { tmp.set_ubyte_(j, Self::SBOX[tmp.get_ubyte_(j) as usize]); }
+                self.round_key[round][cc] = tmp ^ self.round_key[rrr][ccc];
             }
-            self.round_key[round][4] = tmp ^ self.round_key[round-1][4];
             if cc < NK
             {
                 let rrr = (idx - NK) / NB;
