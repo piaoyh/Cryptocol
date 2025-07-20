@@ -1,5 +1,14 @@
 # Breaking Changes
 
+## Breaking changes from ver. 0.12.0 to ver. 0.12.1
+
+| Ver. 0.12.0                                     | Ver. 0.12.1                                            |
+|-------------------------------------------------|--------------------------------------------------------|
+| pub fn _encrypt(&mut self, message: u64) -> u64 | pub(super) fn _encrypt(&mut self, message: u64) -> u64 |
+| pub fn _decrypt(&mut self, cipher: u64) -> u64  | pub(super) fn _decrypt(&mut self, cipher: u64) -> u64  |
+
+- The attribute of the above functions of DES_Generic has been changed from `pub` into `pub(super)`. 
+
 ## Breaking changes from ver. 0.11.5 to ver. 0.11.6
 
 | Methods                                                                                  |

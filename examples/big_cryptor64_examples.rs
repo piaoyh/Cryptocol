@@ -25,7 +25,7 @@ fn ndes_quick_start_main()
 fn ndes_quick_start_instantiation_with_keys()
 {
     println!("des_quick_start_instantiation_with_keys()");
-    // use cryptocol::symmetric::{ BigCryptor64, SmallCryptor64 };
+    // use cryptocol::symmetric::{ BigCryptor64, SmallCryptor };
     println!("-------------------------------");
 }
 
@@ -39,9 +39,9 @@ fn ndes_basic_operation_main()
 fn ndes_new_with_keys()
 {
     println!("ndes_new_with_keys()");
-    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor64 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor };
 
-    let keys: [Box<dyn SmallCryptor64>; 3]
+    let keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
             = [ Box::new(DES::encryptor_with_key_u64(0x1234567890ABCDEF_u64)),
                 Box::new(DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)),
                 Box::new(DES::encryptor_with_key_u64(0x1234567890ABCDEF_u64)) ];
@@ -64,7 +64,7 @@ fn ndes_new_with_keys_u64()
 {
     println!("ndes_new_with_keys_u64()");
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
 
     let mut tdes = BigCryptor64::new_with_small_cryptor_array(
         [Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
@@ -75,7 +75,7 @@ fn ndes_new_with_keys_u64()
     let message = "I am OK.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 16];
-    tdes.encrypt_with_padding_pkcs7(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    tdes.encrypt_str_into_array(&message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -87,7 +87,7 @@ fn ndes_new_with_keys_u64()
     println!();
 
     let mut recovered = vec![0; 16];
-    let len = tdes.decrypt_with_padding_pkcs7(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let len = tdes.decrypt_array_into_vec(&cipher, &mut recovered);
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -95,7 +95,7 @@ fn ndes_new_with_keys_u64()
     let mut txt = String::new();
     for c in recovered.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "49 20 61 6D 20 4F 4B 2E 00 00 00 00 00 00 00 00 ");
+    assert_eq!(txt, "49 20 61 6D 20 4F 4B 2E ");
 
     let mut converted = String::new();
     unsafe { converted.as_mut_vec() }.append(&mut recovered);
@@ -104,7 +104,5 @@ fn ndes_new_with_keys_u64()
     println!("Bb =\t{}", converted);
     assert_eq!(converted, "I am OK.");
     assert_eq!(converted, message);
-    println!();
-
     println!("-------------------------------");
 }

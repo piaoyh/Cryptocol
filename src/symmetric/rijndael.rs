@@ -278,6 +278,45 @@ macro_rules! make_RC_ARRAY {
 }
 
 
+/// Rijndael_32_32 is not really practical but only educational to understand
+/// AES or Rijndael cryptographic algorithm. Its key is 32-bit and its
+/// encryption block is 32-bit.
+#[allow(non_camel_case_types)]
+pub type Rijndael_32_32 = Rijndael_Generic<7, 1, 1>;
+
+/// Rijndael_64_64 is not really practical too, but it can be used with DES
+/// cryptographic algorithm along. Its key is 64-bit and its encryption block
+/// is 64-bit. So, it can work with DES.
+#[allow(non_camel_case_types)]
+pub type Rijndael_64_64 = Rijndael_Generic<8, 2, 2>;
+
+#[allow(non_camel_case_types)]
+pub type Rijndael_256_256 = Rijndael_Generic<14, 8, 8>;
+
+#[allow(non_camel_case_types)]
+pub type Rijndael_256_192 = Rijndael_Generic<14, 8, 6>;
+
+#[allow(non_camel_case_types)]
+pub type Rijndael_256_128 = Rijndael_Generic<14, 8, 4>;
+
+#[allow(non_camel_case_types)]
+pub type Rijndael_192_256 = Rijndael_Generic<14, 6, 8>;
+
+#[allow(non_camel_case_types)]
+pub type Rijndael_192_192 = Rijndael_Generic<12, 6, 6>;
+
+#[allow(non_camel_case_types)]
+pub type Rijndael_192_128 = Rijndael_Generic<12, 6, 4>;
+
+#[allow(non_camel_case_types)]
+pub type Rijndael_128_256 = Rijndael_Generic<14, 4, 8>;
+
+#[allow(non_camel_case_types)]
+pub type Rijndael_128_192 = Rijndael_Generic<12, 4, 6>;
+
+#[allow(non_camel_case_types)]
+pub type Rijndael_128_128 = Rijndael_Generic;
+
 #[allow(non_camel_case_types)]
 pub type AES_256 = Rijndael_Generic<14, 4, 8>;
 
@@ -286,30 +325,277 @@ pub type AES_192 = Rijndael_Generic<12, 4, 6>;
 
 #[allow(non_camel_case_types)]
 pub type AES_128 = Rijndael_Generic;
+
+
+/// A Rijndael or AES symmetric-key algorithm for the encryption of digital data
+/// 
+/// # Note
+/// ** This descryption about Rijndael is according to little endianness. **
+/// MSB (Most Significant Bit) is the 64th bit and LSB (Least Significant Bit)
+/// is the first bit in this descryption unless otherwise mentioned.
+/// 
+/// # Introduction
+/// The name, AES, is the acronym of Advanced Encryption Standard. The name,
+/// Rijndael, is created out of the names of the Belgian cryptographers, Joan
+/// Daemen and Vincent Rijmen. Rijndael means Rhine valley in Dutch though it is
+/// not known that the name Rijndael was made with that intention.
+/// It is the symmetric key
+/// encryption/decryption algorithm. It was originally developed based on
+/// Lucifer encryption/decryption algorithm made by IBM. DES was approved as a 
+/// federal standard in November 1976.
+/// 
+/// # Use of AES or Rijndael and its variants
+/// This algorithm is implemented generic way. Most of the constants are
+/// implemented as generic constants. So, without changing any line of code, you
+/// can change the algorithm by changing the generic parameter. You can design
+/// and implement your own algorithm based on Rijndael which uses SPN
+/// (Substitution–Permutation Network). You can also use the the source code of
+/// Rijndael_Generic in order to find the weakness of SPN.
+/// 
 /// # Generic Parameters
-/// - ROUND: You can determine how many times the Substitution-Permutation
-///   Network will be repeated. Its minimum value is 0. Original Rijndael has
-///   the number of rounds as follows:
-///   |              | 128-bit key | 192-bit key | 256-bit key |
+///   You can change the generic parameters if you want to make your own
+///   encryption/decryption algorithm based on Rijndael. However, your own
+///   algorithm may or may not be securer than AES. It is a high chance that
+///   your own algorithm is less secure than AES unless you have performed the
+///   security test for your own algorithm and proved that your algorithm is
+///   at least as secure as AES.
+/// - ROUND: Indicates the number of rounds. You can change how many times the
+///   Substitution-Permutation Network will be repeated. Its minimum value is 0.
+///   Original Rijndael has the number of rounds as follows:
+///   |  data \ key  | 128-bit key | 192-bit key | 256-bit key |
 ///   |--------------|-------------|-------------|-------------|
 ///   | 128-bit data | 10 rounds   | 12 rounds   | 14 rounds   |
 ///   | 192-bit data | 12 rounds   | 12 rounds   | 14 rounds   |
 ///   | 256-bit data | 14 rounds   | 14 rounds   | 14 rounds   |
 /// 
-/// - NB: You can determine the size of block.
-/// - NK: You can determine the size of key.
-/// - IRREDUCIBLE: You can determine the irreducible polynomial.
-/// - AFFINE_MUL: You can determine the affine matrix.
-/// - AFFINE_ADD: You can determine the non-linear part of the affine
-///   transformation.
-/// - SR0 ~ SR3: You can determine the amount of shifting rows for each rows
-///   for the ShiftRows step.
-/// - MC00 ~ MC33: You can determine the Mix-Column matrix used for the
-///   MixColumn step.
-/// - RC0 ~ RC9: Round Constants. If `Round` is greater than 10, the round
-///   constants after RC9 will be determined by multiplying previous round
-///   constant with two on Galois Field. So, So-called RC10 is double of `RC9`
-///   on Galois Field and RC11 is double of `RC10` on Galois Field, and so on.
+///   The default of `ROUND` is 10. The default value `10` is for AES-128
+///   which is most frequently used.
+/// - NB: Indicates the size of block. The block size is (`NB` * 4) bytes.
+///   You can change the size of block by changing the value `NB`.
+///   The default value of `NB` is `4`. The default value `4` is for AES
+///   which is most frequently used.
+/// - NK: Indicates the size of key. The key size is (`NK` * 4) bytes.
+///   You can change the size of Key by changing the value `NK`.
+///   The default value of `NK` is `4`. The default value `4` is for AES-128
+///   which is most frequently used.
+/// - IRREDUCIBLE: Indicates the irreducible polynomial. You can change the
+///   irreducible polynomial by changing `IRREDUCIBLE`. The default value of
+///   `IRREDUCIBLE` is `0b_0001_1011` which means x^8 + x^4 + x^3 + x + 1. In
+///   `IRREDUCIBLE`, the term `x^8` is always omitted. The default value
+///   `0b_0001_1011` is for Rijndael or AES.
+/// - AFFINE_MUL: Indicates the two-dimensional matrix that is used to make
+///   S-Box. `AFFINE_MUL` is the linear part of the affine transformation.
+///   You can change the S-Box by changing `AFFINE_MUL` with `AFFINE_ADD`
+///   along. The default value of `AFFINE_MUL` is
+///   `0b_11111000_01111100_00111110_00011111_10001111_11000111_11100011_11110001`
+///   which means the matrix as follows.
+///   | Matrix          |
+///   |-----------------|
+///   | 1 1 1 1 1 0 0 0 |
+///   | 0 1 1 1 1 1 0 0 |
+///   | 0 0 1 1 1 1 1 0 |
+///   | 0 0 0 1 1 1 1 1 |
+///   | 1 0 0 0 1 1 1 1 |
+///   | 1 1 0 0 0 1 1 1 |
+///   | 1 1 1 0 0 0 1 1 |
+///   | 1 1 1 1 0 0 0 1 |
+/// 
+///   The default value of `AFFINE_MUL` is for Rijndael or AES.
+/// - AFFINE_ADD: Indicates the one-dimensional matrix that is used to make
+///   S-Box. `AFFINE_ADD` is the non-linear part of the affine transformation.
+///   You can change the S-Box by changing `AFFINE_ADD` with `AFFINE_MUL` along.
+///   The default value of `AFFINE_ADD` is `0b_01100011` which means the matrix
+///   as follows.
+///   | Matrix |
+///   |--------|
+///   | 0      |
+///   | 1      |
+///   | 1      |
+///   | 0      |
+///   | 0      |
+///   | 0      |
+///   | 1      |
+///   | 1      |
+/// 
+///   The default value of `AFFINE_ADD` is for Rijndael or AES.
+/// - SR0 ~ SR3: Indicates how many bytes to shift (rotate) in each row in
+///   ShiftRows step. You can change the amounts of shifting (rotating) in each
+///   row by changing `SR0`, `SR1`, `SR2`, and `SR3`. The default values of
+///   `SR0`, `SR1`, `SR2`, and `SR3` are `0`, `1`, `2`, and `3`, respectively.
+///   The default values `0`, `1`, `2`, and `3` are for Rijndael or AES.
+/// - MC00 ~ MC33: Indicates the two-dimensional matrix that is used as
+///   MixColumns matrix in MixColumn step. `MC00`, `MC01`, `MC02`, `MC03`,
+///   `MC10`, `MC11`, `MC12`, `MC13`, `MC20`, `MC21`, `MC22`, `MC23`, `MC30`,
+///   `MC31`, `MC32`, and `MC33` are the elements of the two-dimensional
+///   MixColumns matrix. You can change the MixColumns matrix to change the
+///   MixColumn step by changing `MC00` ~ `MC33`. The default values of `MC00`,
+///   `MC01`, `MC02`, `MC03`, `MC10`, `MC11`, `MC12`, `MC13`, `MC20`, `MC21`,
+///   `MC22`, `MC23`, `MC30`, `MC31`, `MC32`, and `MC33` are `2`, `3`, `1`,
+///   `1`, `1`, `2`, `3`, `1`, `1`, `1`, `2`, `3`, `3`, `1`, `1`, and `2`,
+///   respectively, which means the matrix as follows.
+///   | Matrix  |
+///   |---------|
+///   | 2 3 1 1 |
+///   | 1 2 3 1 |
+///   | 1 1 2 3 |
+///   | 3 1 1 2 |
+/// 
+///   The default values of `MC00` ~ `MC33` are for Rijndael or AES.
+/// - RC0 ~ RC9: Indicates Round Constants that are used to make round keys.
+///   The round keys are used in the AddRoundKey step. You can change the
+///   round keys by changing `RC0` ~ `RC9`. The default values of `RC0`, `RC1`,
+///   `RC2`, `RC3`, `RC4`, `RC5`, `RC6`, `RC7`, `RC8`, and `RC9` are
+///   `0b_0000_0001`, `0b_0000_0010`, `0b_0000_0100`, `0b_0000_1000`,
+///   `0b_0001_0000`, `0b_0010_0000`,`0b_0100_0000`, `0b_1000_0000`,
+///   `0b_0001_1011`, and `0b_001_10110`, respectively. The default values are
+///   for Rijndael or AES. If `Round` is greater than 10, the round constants
+///   after RC9 will be determined by multiplying previous round constant by `2`
+///   on Galois Field. So, So-called RC10 is double of `RC9` on Galois Field and
+///   RC11 is double of `RC10` on Galois Field, and so on.
+/// - ROT: Indicates how may bytes to shift (rotate) in making round keys. You
+///   can change round keys by changing `ROT`. The default value of `ROT` is
+///   `1`. The default value `1` is for for Rijndael or AES.
+/// 
+/// # Reference
+/// [Read more](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard)
+/// about AES in brief.
+/// Watch [this video](https://www.youtube.com/watch?v=x1v2tX4_dkQ) and then
+/// [this video](https://www.youtube.com/watch?v=NHuibtoL_qk) in series
+/// for more (or deeper or full) understanding of AES.
+/// 
+/// # Quick Start
+/// You have to import (use) one of the modules `AES_128`, `AES_192`, and
+/// `AES_256` in order to use official AES as shown in Example 1.
+/// 
+/// # Example 1
+/// ```
+/// use cryptocol::symmetric::AES_128;
+/// use cryptocol::symmetric::AES_192;
+/// use cryptocol::symmetric::AES_256;
+/// ```
+/// 
+/// You can instantiate the AES object with `u128` key as Example 2.
+/// In this case, you have to take endianness into account.
+/// In little-endianness, 0x_1234567890ABCDEF1234567890ABCDEF_u128 is [0xEFu8,
+/// 0xCDu8, 0xABu8, 0x90u8, 0x78u8, 0x56u8, 0x34u8, 0x12u8, 0xEFu8, 0xCDu8,
+/// 0xABu8, 0x90u8, 0x78u8, 0x56u8, 0x34u8, 0x12u8] while the same 
+/// 0x_1234567890ABCDEF1234567890ABCDEF_u128 is [0x12u8, 0x34u8, 0x56u8, 0x78u8,
+/// 0x90u8, 0xABu8, 0xCDu8, 0xEF_u64, 0x12u8, 0x34u8, 0x56u8, 0x78u8, 0x90u8,
+/// 0xABu8, 0xCDu8, 0xEF_u64] in big-endianness.
+/// The instantiated object should be mutable.
+/// 
+/// # Example 2
+/// ```
+/// use cryptocol::symmetric::AES_128;
+/// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
+/// let mut _a_aes = AES_128::new_with_key_u128(key);
+/// ```
+/// 
+/// Also, you can instantiate the AES object with `[u8; 16]` key as shown in
+/// Example 3. In this case, you don't have to take endianness into account.
+/// The instantiated object should be mutable.
+/// 
+/// # Example 3
+/// ```
+/// use cryptocol::symmetric::AES_128;
+/// let key = [0xEFu8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12];
+/// let mut _a_aes = AES_128::new_with_key(key);
+/// ```
+/// 
+/// You can instantiate the AES object without key and set a `u128` key later as
+/// shown in Example 4 or a `[u8; 16]` key later as shown in Example 5.
+/// 
+/// # Example 4
+/// ```
+/// use cryptocol::symmetric::AES_128;
+/// let mut a_des = AES_128::new();
+/// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
+/// a_des.set_key_u128(key);
+/// ```
+/// 
+/// # Example 5
+/// ```
+/// use cryptocol::symmetric::AES_128;
+/// let mut a_des = AES_128::new();
+/// let key = [0xEFu8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12];
+/// a_des.set_key(key);
+/// ```
+/// 
+/// Now, you can freely use any operation mode. This crate provide
+/// ECB (Electronic CodeBook), CBC(Cipher Block Chaining), PCBC (Propagation
+/// Cipher Block Chaining), CFB (Cipher FeedBack) OFB (Output FeedBack), and
+/// CTR (CounTeR). You can choose the way of padding bits according to either
+/// [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/) or
+/// [ISO 7816-4](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+/// So, you can import (use) one of the following traits: ECB_PKCS7, ECB_ISO,
+/// CBC_PKCS7, CBC_ISO, PCBC_PKCS7, PCBC_ISO, CFB, OFB, and CTR. The following
+/// example 6 shows the case that you choose CBC operation mode and padding bits
+/// according to PKCS #7. 
+/// 
+/// # Example 6
+/// ```
+/// use std::io::Write;
+/// use std::fmt::Write as _;
+/// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
+/// 
+/// let mut a_aes = DES::new_with_key([0xEFu8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
+/// let message = "In the beginning God created the heavens and the earth.";
+/// println!("M =\t{}", message);
+/// let iv = 0x_FEDCBA0987654321FEDCBA0987654321_u128;
+/// println!("IV =\t{}", iv);
+/// let mut cipher = Vec::<u8>::new();
+/// a_aes.encrypt_str_into_vec(iv, message, &mut cipher);
+/// print!("C =\t");
+/// for c in cipher.clone()
+///     { print!("{:02X} ", c); }
+/// println!();
+/// let mut txt = String::new();
+/// for c in cipher.clone()
+///     { write!(txt, "{:02X} ", c); }
+/// assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
+/// 
+/// let mut recovered = String::new();
+/// a_aes.decrypt_vec_into_string(iv, &cipher, &mut recovered);
+/// println!("B (16 rounds) =\t{}", recovered);
+/// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+/// assert_eq!(recovered, message);
+/// println!();
+/// ```
+/// 
+/// You can modify the Rijndael encryption/decryption algorithm as you want. All
+/// the constants are implemented as generic parameters. For instance, you can
+/// change S-box, the number of rounds of Substitution - Permutation network,
+/// the irreducible polynormial, key length, etc. The following Example 7 shows
+/// the variation of Rijndael which has 512-bit data block and 512-bit key.
+/// 
+/// # Example 7
+/// ```
+/// use std::io::Write;
+/// use std::fmt::Write as _;
+/// use cryptocol::symmetric::{ Rijndael_Generic, CBC_PKCS7 };
+/// 
+/// let mut a_rijndael = Rijndael_Generic::<22, 16, 16>::new_with_key_u128([0xEFu8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
+/// let message = "In the beginning God created the heavens and the earth.";
+/// println!("M =\t{}", message);
+/// let iv = [0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32];
+/// println!("IV =\t{}", iv);
+/// let mut cipher = Vec::<u8>::new();
+/// a_des.encrypt_str_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+/// print!("C =\t");
+/// for c in cipher.clone()
+///     { print!("{:02X} ", c); }
+/// println!();
+/// let mut txt = String::new();
+/// for c in cipher.clone()
+///     { write!(txt, "{:02X} ", c); }
+/// assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
+/// 
+/// let mut recovered = String::new();
+/// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
+/// println!("B =\t{}", recovered);
+/// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+/// assert_eq!(recovered, message);
+/// ```
 #[allow(non_camel_case_types)]
 #[derive(Debug, Clone)]
 pub struct Rijndael_Generic<const ROUND: usize = 10, const NB: usize = 4, const NK: usize = 4,
@@ -321,10 +607,10 @@ pub struct Rijndael_Generic<const ROUND: usize = 10, const NB: usize = 4, const 
             const MC10: u8 = 1, const MC11: u8 = 2, const MC12: u8 = 3, const MC13: u8 = 1,
             const MC20: u8 = 1, const MC21: u8 = 1, const MC22: u8 = 2, const MC23: u8 = 3,
             const MC30: u8 = 3, const MC31: u8 = 1, const MC32: u8 = 1, const MC33: u8 = 2,
-            const RC0: u32 = 0b_0000_0001, const RC1: u32 = 0b_0000_0010,
-            const RC2: u32 = 0b_0000_0100, const RC3: u32 = 0b_0000_1000, const RC4: u32 = 0b_0001_0000,
-            const RC5: u32 = 0b_0010_0000, const RC6: u32 = 0b_0100_0000, const RC7: u32 = 0b_1000_0000,
-            const RC8: u32 = 0b_0001_1011, const RC9: u32 = 0b_001_10110, const ROT: u32 = 1>
+            const RC0: u32 = 0b_0000_0001, const RC1: u32 = 0b_0000_0010, const RC2: u32 = 0b_0000_0100,
+            const RC3: u32 = 0b_0000_1000, const RC4: u32 = 0b_0001_0000, const RC5: u32 = 0b_0010_0000,
+            const RC6: u32 = 0b_0100_0000, const RC7: u32 = 0b_1000_0000, const RC8: u32 = 0b_0001_1011,
+            const RC9: u32 = 0b_001_10110, const ROT: u32 = 1>
 {
     key:        [IntUnion; NK],
     block:      [[u8; NB]; 4],
@@ -514,11 +800,25 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         self.dec = Self::encrypt_u128;
     }
 
+    pub fn encrypt_unit(&mut self, message: &[IntUnion; NB]) -> [IntUnion; NB]
+    {
+        self.set_block(message);
+        self.encrypt_block();
+        self.get_block()
+    }
+
     pub fn encrypt_u128(&mut self, message: u128) -> u128
     {
         self.set_block_u128(message);
         self.encrypt_block();
         self.get_block_u128()
+    }
+
+    pub fn decrypt_unit(&mut self, cipher: &[IntUnion; NB]) -> [IntUnion; NB]
+    {
+        self.set_block(cipher);
+        self.decrypt_block();
+        self.get_block()
     }
 
     pub fn decrypt_u128(&mut self, cipher: u128) -> u128
@@ -529,13 +829,13 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     }
 
     #[inline]
-    pub fn _encrypt(&mut self, message: u128) -> u128
+    pub(super) fn _encrypt(&mut self, message: u128) -> u128
     {
         (self.enc)(self, message)
     }
 
     #[inline]
-    pub fn _decrypt(&mut self, cipher: u128) -> u128
+    pub(super) fn _decrypt(&mut self, cipher: u128) -> u128
     {
         (self.dec)(self, cipher)
     }
@@ -586,18 +886,17 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     fn encrypt_block(&mut self)
     {
-                                               //println!("state: {} - {:02x?}", -1, self.block);
-        self.add_round_key(0);          //println!("after addRoundKey - state: {} - {:02x?}", 0, self.block); println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", 0, self.round_key[0][0].get().to_be(), self.round_key[0][1].get().to_be(), self.round_key[0][2].get().to_be(), self.round_key[0][3].get().to_be());
+        self.add_round_key(0);
         for round in 1..ROUND
         {
-            self.sub_bytes();                   //println!("after subBytes - state: {} - {:02x?}", round, self.block);
-            Self::method_shift_rows(self);      //println!("after shiftRows - state: {} - {:02x?}", round, self.block);
-            Self::method_mix_columns(self);     //println!("after mixColumns - state: {} - {:02x?}", round, self.block);
-            self.add_round_key(round);          //println!("after addRoundKey - state: {} - {:02x?}", 0, self.block); println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", round, self.round_key[round][0].get().to_be(), self.round_key[round][1].get().to_be(), self.round_key[round][2].get().to_be(), self.round_key[round][3].get().to_be());
+            self.sub_bytes();
+            Self::method_shift_rows(self);
+            Self::method_mix_columns(self);
+            self.add_round_key(round);
         }
-        self.sub_bytes();                       //println!("after subBytes - state: {} - {:02x?}", ROUND, self.block);
-        Self::method_shift_rows(self);          //println!("after shiftRows - state: {} - {:02x?}", ROUND, self.block);
-        self.add_round_key(ROUND);              //println!("after addRoundKey - state: {} - {:02x?}", 0, self.block); println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", ROUND, self.round_key[ROUND][0].get().to_be(), self.round_key[ROUND][1].get().to_be(), self.round_key[ROUND][2].get().to_be(), self.round_key[ROUND][3].get().to_be());
+        self.sub_bytes();
+        Self::method_shift_rows(self);
+        self.add_round_key(ROUND);
     }
 
     fn sub_bytes(&mut self)
@@ -769,19 +1068,18 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     fn make_round_keys_nk_up_to_6_and_nk_equal_to_nb(&mut self)
     {
-        self.set_zeroth_round_key();                                                //println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", 0, self.round_key[0][0].get().to_be(), self.round_key[0][1].get().to_be(), self.round_key[0][2].get().to_be(), self.round_key[0][3].get().to_be());
+        self.set_zeroth_round_key();
         for round in 1..=ROUND
         {
-            let mut tmp = self.round_key[round-1][NB-1];                    //println!("tmp: {} - {:08x}", round, tmp.to_be());
-            #[cfg(target_endian = "little")] { tmp = tmp.rotate_right(8 * ROT); }     //println!("rot: {} - {:08x}", round, tmp.to_be());
+            let mut tmp = self.round_key[round-1][NB-1];
+            #[cfg(target_endian = "little")] { tmp = tmp.rotate_right(8 * ROT); }
             #[cfg(target_endian = "big")] { tmp = tmp.rotate_left(8 * ROT); }
             for j in 0..4
-                { tmp.set_ubyte_(j, Self::SBOX[tmp.get_ubyte_(j) as usize]); }  //println!("sub: {} - {:08x}", round, tmp.to_be());
-            tmp.set(tmp.get() ^ Self::RC[round-1]);                               //println!("xor: {} - {:08x}", round, tmp.to_be());
+                { tmp.set_ubyte_(j, Self::SBOX[tmp.get_ubyte_(j) as usize]); }
+            tmp.set(tmp.get() ^ Self::RC[round-1]);
             self.round_key[round][0] = tmp ^ self.round_key[round-1][0];
             for i in 1..NB
                 { self.round_key[round][i] = self.round_key[round][i-1] ^ self.round_key[round-1][i]; }
-            // println!("roundKey: {} - {:08x}{:08x}{:08x}{:08x}", round, self.round_key[round][0].get().to_be(), self.round_key[round][1].get().to_be(), self.round_key[round][2].get().to_be(), self.round_key[round][3].get().to_be());
         }
     }
 
@@ -820,12 +1118,11 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
             let mut tmp = if cc == 0 { self.round_key[round-1][NB-1] } else { self.round_key[round][cc-1] };
             if idx % NK == 0
             {
-                    //println!("{} tmp: {} - {:08x}", idx, round, tmp.to_be());
-                #[cfg(target_endian = "little")] { tmp = tmp.rotate_right(8 * ROT); }       //println!("{} rot: {} - {:08x}", idx, round, tmp.to_be());
+                #[cfg(target_endian = "little")] { tmp = tmp.rotate_right(8 * ROT); }
                 #[cfg(target_endian = "big")] { tmp = tmp.rotate_left(8 * ROT); }
                 for j in 0..4
-                    { tmp.set_ubyte_(j, Self::SBOX[tmp.get_ubyte_(j) as usize]); }    //println!("{} sub: {} - {:08x}", idx, round, tmp.to_be());
-                tmp.set(tmp.get() ^ Self::RC[rc_round]);                                 //println!("{} xor: {} - {:08x}, RC - {:02x}", idx, round, tmp.to_be(), Self::RC[rc_round] as u8);
+                    { tmp.set_ubyte_(j, Self::SBOX[tmp.get_ubyte_(j) as usize]); }
+                tmp.set(tmp.get() ^ Self::RC[rc_round]);
                 rc_round += 1;
             }
             if cc < NK
@@ -837,7 +1134,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
             else
             {
                 self.round_key[round][cc] = tmp ^ self.round_key[round][cc-NK];
-            }                                                                       //println!("{} w: {} - {:08x}", idx, round, self.round_key[round][cc].to_be()); println!("{} roundKey: {} - {:08x}{:08x}{:08x}{:08x}", idx, round, self.round_key[round][0].get().to_be(), self.round_key[round][1].get().to_be(), self.round_key[round][2].get().to_be(), self.round_key[round][3].get().to_be());
+            }
             if cc == NB - 1
             {
                 cc = 0;
@@ -910,6 +1207,19 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         }
     }
 
+    fn get_block(&self) -> [IntUnion; NB]
+    {
+        let mut block = [IntUnion::new(); NB];
+        for j in 0..NB
+        {
+            for i in 0..4
+            {
+                block[j].set_ubyte_(i, self.block[i][j]);
+            }
+        }
+        block
+    }
+
     fn get_block_u128(&self) -> u128
     {
         let mut block = LongerUnion::new();
@@ -923,6 +1233,19 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
             }
         }
         block.get()
+    }
+
+    fn set_block(&mut self, block: &[IntUnion; NB])
+    {
+        let mut idx = 0;
+        for j in 0..NB
+        {
+            for i in 0..4
+            {
+                self.block[i][j] = block[j].get_[i];
+                idx += 1;
+            }
+        }
     }
 
     fn set_block_u128(&mut self, block: u128)
@@ -945,66 +1268,66 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         6 + if NB > NK { NB } else { NK }
     }
 
-    fn GF_mul(mut a: u8, mut b: u8, m: u8) -> u8
-    {
-        let mut ret = 0_u8;
-        while b != 0
-        {
-            if b & 1 == 1
-                { ret ^= a; }
-            if a & 0b1000_0000 != 0
-                { a = (a << 1) ^ m; }
-            else
-                { a <<= 1; }
-            b >>= 1;
-        }
-        ret
-    }
+    // fn GF_mul(mut a: u8, mut b: u8, m: u8) -> u8
+    // {
+    //     let mut ret = 0_u8;
+    //     while b != 0
+    //     {
+    //         if b & 1 == 1
+    //             { ret ^= a; }
+    //         if a & 0b1000_0000 != 0
+    //             { a = (a << 1) ^ m; }
+    //         else
+    //             { a <<= 1; }
+    //         b >>= 1;
+    //     }
+    //     ret
+    // }
 
 
     /////// Testing Codes during Development //////
-    #[allow(non_snake_case)]
-    pub fn show_SBox()
-    {
-        for i in 0..256
-            { println!("{:02X} => {:02X}", i, Self::SBOX[i]); }
-    }
+    // #[allow(non_snake_case)]
+    // pub fn show_SBox()
+    // {
+    //     for i in 0..256
+    //         { println!("{:02X} => {:02X}", i, Self::SBOX[i]); }
+    // }
 
-    #[allow(non_snake_case)]
-    pub fn show_InvSBox()
-    {
-        for i in 0..256
-            { println!("{:02X} => {:02X}", i, Self::INV_SBOX[i]); }
-    }
+    // #[allow(non_snake_case)]
+    // pub fn show_InvSBox()
+    // {
+    //     for i in 0..256
+    //         { println!("{:02X} => {:02X}", i, Self::INV_SBOX[i]); }
+    // }
 
-    #[allow(non_snake_case)]
-    pub fn show_MC()
-    {
-        println!("MC is as follows:");
-        for i in 0..4
-        {
-            for j in 0..4
-                { print!("{:02x} ", Self::MC[i][j]); }
-            println!();
-        }
-    }
+    // #[allow(non_snake_case)]
+    // pub fn show_MC()
+    // {
+    //     println!("MC is as follows:");
+    //     for i in 0..4
+    //     {
+    //         for j in 0..4
+    //             { print!("{:02x} ", Self::MC[i][j]); }
+    //         println!();
+    //     }
+    // }
 
-    #[allow(non_snake_case)]
-    pub fn show_InvMC()
-    {
-        println!("Inverse MC is as follows:");
-        for i in 0..4
-        {
-            for j in 0..4
-                { print!("{:02x} ", Self::INV_MC[i][j]); }
-            println!();
-        }
-    }
+    // #[allow(non_snake_case)]
+    // pub fn show_InvMC()
+    // {
+    //     println!("Inverse MC is as follows:");
+    //     for i in 0..4
+    //     {
+    //         for j in 0..4
+    //             { print!("{:02x} ", Self::INV_MC[i][j]); }
+    //         println!();
+    //     }
+    // }
 
-    #[allow(non_snake_case)]
-    pub fn show_RC()
-    {
-        for i in 0..ROUND
-            { println!("{:02} => {:02X}", i, Self::RC[i]); }
-    }
+    // #[allow(non_snake_case)]
+    // pub fn show_RC()
+    // {
+    //     for i in 0..ROUND
+    //         { println!("{:02} => {:02X}", i, Self::RC[i]); }
+    // }
 }

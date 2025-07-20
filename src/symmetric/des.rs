@@ -658,9 +658,9 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// 
 /// # Use of DES and its variants
 /// This algorithm is implemented generic way. Most of the constants are
-/// implemented as generic constants. So, without changing any code, you can
-/// change the algorithm by changing the generic parameter. You can design and
-/// implement your own algorithm based on DES which uses Feistel structure. 
+/// implemented as generic constants. So, without changing any line of code, you
+/// can change the algorithm by changing the generic parameter. You can design
+/// and implement your own algorithm based on DES which uses Feistel structure.
 /// 
 /// # Generic Parameters
 /// - ROUND: You can determine how many times the Fiestel network will be
@@ -747,8 +747,8 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// # Caution
 /// DES is not considered to be secure anymore. So, it is wise not to use DES
 /// for serious purpose. Instead, use TDES or AES or any other equivalents.
-/// In this crate, NDES which is generalized version of TDES will be provided
-/// soon, and AES will be also provided later.
+/// In this crate, NDES which is generalized version of TDES is provided, and
+/// AES is also provided.
 /// 
 /// # Reference
 /// [Read more](https://en.wikipedia.org/wiki/Data_Encryption_Standard)
@@ -758,7 +758,7 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// for more (or deeper or full) understanding of DES.
 /// 
 /// # Quick Start
-/// You have to import (use) the module `des` in order to use official DES
+/// You have to import (use) the module `DES` in order to use official DES
 /// as shown in Example 1.
 /// 
 /// # Example 1
@@ -856,13 +856,13 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// the constants are implemented as generic parameters. For instance, you can
 /// change S-box, the number of rounds of Feistel network, the number of
 /// shift-left in round key generators, etc. The following Example 7 shows the
-/// variation of DES which has 256 rounds instead of 16 rounds.
+/// variation of DES which has 128 rounds instead of 16 rounds.
 /// 
 /// # Example 7
 /// ```
 /// use std::io::Write;
 /// use std::fmt::Write as _;
-/// use cryptocol::symmetric::DES_Expanded;
+/// use cryptocol::symmetric::{ DES_Expanded, CBC_PKCS7 };
 /// 
 /// let mut a_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64([0xEFu8, 0xCDu8, 0xABu8, 0x90u8, 0x78u8, 0x56u8, 0x34u8, 0x12u8]);
 /// let message = "In the beginning God created the heavens and the earth.";
@@ -870,7 +870,7 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// let iv = 0x_FEDCBA0987654321_u64;
 /// println!("IV =\t{}", iv);
 /// let mut cipher = Vec::<u8>::new();
-/// a_des.encrypt_with_padding_pkcs7_cbc_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+/// a_des.encrypt_str_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
 /// print!("C =\t");
 /// for c in cipher.clone()
 ///     { print!("{:02X} ", c); }
@@ -881,7 +881,7 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
 /// 
 /// let mut recovered = String::new();
-/// a_des.decrypt_vec_with_padding_pkcs7_cbc_into_string(iv, &cipher, &mut recovered);
+/// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
 /// println!("B =\t{}", recovered);
 /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
 /// assert_eq!(recovered, message);
@@ -2233,7 +2233,7 @@ impl <const ROUND: usize, const SHIFT: u128,
         self.get_block()
     }
 
-    // pub fn _encrypt(&mut self, message: u64) -> u64
+    // pub(super) fn _encrypt(&mut self, message: u64) -> u64
     /// Encrypts a 64-bit data when NDES encrypting if the object was
     /// constructed as encryptor for NDES such as Triple DES, and decrypts a
     /// 64-bit data when NDES encrypting if the object was constructed as
@@ -2264,12 +2264,12 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method._encrypt)
     #[inline]
-    pub fn _encrypt(&mut self, message: u64) -> u64
+    pub(super) fn _encrypt(&mut self, message: u64) -> u64
     {
         (self.enc)(self, message)
     }
 
-    // pub fn _decrypt(&mut self, cipher: u64) -> u64
+    // pub(super) fn _decrypt(&mut self, cipher: u64) -> u64
     /// Decrypts a 64-bit data when NDES decrypting if the object was
     /// constructed as encryptor for NDES such as Triple DES, and encrypts a
     /// 64-bit data when NDES decrypting if the object was constructed as
@@ -2305,7 +2305,7 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method._decrypt)
     #[inline]
-    pub fn _decrypt(&mut self, cipher: u64) -> u64
+    pub(super) fn _decrypt(&mut self, cipher: u64) -> u64
     {
         (self.dec)(self, cipher)
     }

@@ -1159,9 +1159,9 @@ fn des_new_with_key_u64()
 fn des_encryptor_with_key()
 {
     println!("des_encryptor_with_key");
-    use cryptocol::symmetric::{ DES, BigCryptor64, SmallCryptor64 };
+    use cryptocol::symmetric::{ DES, BigCryptor64, SmallCryptor };
     
-    let keys: [Box<dyn SmallCryptor64>; 3]
+    let keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
             = [ Box::new(DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])),
                 Box::new(DES::decryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])),
                 Box::new(DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])) ];
@@ -1242,9 +1242,9 @@ fn des_encryptor_with_key_u64()
 fn des_decryptor_with_key()
 {
     println!("des_decryptor_with_key_u64");
-    use cryptocol::symmetric::{ DES, BigCryptor64, SmallCryptor64 };
+    use cryptocol::symmetric::{ DES, BigCryptor64, SmallCryptor };
     
-    let keys: [Box<dyn SmallCryptor64>; 3]
+    let keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
             = [ Box::new(DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])),
                 Box::new(DES::decryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])),
                 Box::new(DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])) ];
@@ -1958,9 +1958,9 @@ fn des_set_key_u64()
 fn des_turn_inverse()
 {
     println!("des_turn_inverse");
-    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor64 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor };
 
-    let mut keys: [Box<dyn SmallCryptor64>; 3]
+    let mut keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
                 = [ Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)),
                     Box::new(DES::new_with_key_u64(0x_FEDCBA0987654321_u64)),
                     Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)) ];
@@ -2005,9 +2005,9 @@ fn des_turn_inverse()
 fn des_turn_encryptor()
 {
     println!("des_turn_encryptor");
-    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor64 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor };
 
-    let mut keys: [Box<dyn SmallCryptor64>; 3]
+    let mut keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
             = [ Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)),
                 Box::new(DES::new_with_key_u64(0x_FEDCBA0987654321_u64)),
                 Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)) ];
@@ -2052,9 +2052,9 @@ fn des_turn_encryptor()
 fn des_turn_decryptor()
 {
     println!("des_turn_decryptor");
-    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor64 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor };
 
-    let mut keys: [Box<dyn SmallCryptor64>; 3]
+    let mut keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
                 = [ Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)),
                     Box::new(DES::new_with_key_u64(0x_FEDCBA0987654321_u64)),
                     Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)) ];
@@ -2100,8 +2100,8 @@ fn des_encrypt_decrypt_u64_array_u64_main()
 {
     des_encrypt_u64();
     des_decrypt_u64();
-    des__encrypt();
-    des__decrypt();
+    // des__encrypt();
+    // des__decrypt();
     des_encrypt_array_u64();
     des_decrypt_array_u64();
     des_is_successful();
@@ -2234,129 +2234,129 @@ fn des_decrypt_u64()
     println!("-------------------------------");
 }
 
-fn des__encrypt()
-{
-    println!("des__encrypt");
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+// fn des__encrypt()
+// {
+//     println!("des__encrypt");
+//     use cryptocol::symmetric::{ DES, DES_Expanded };
 
-    // Normal case
-    let key = 0x_1234567890ABCDEF_u64;
-    println!("K =\t{:#016X}", key);
+//     // Normal case
+//     let key = 0x_1234567890ABCDEF_u64;
+//     println!("K =\t{:#016X}", key);
     
-    let message = 0x_1234567890ABCDEF_u64;
-    println!("M_u64 =\t{:#016X}", message);
+//     let message = 0x_1234567890ABCDEF_u64;
+//     println!("M_u64 =\t{:#016X}", message);
 
-    let mut a_des = DES::new_with_key_u64(key);
-    let cipher = a_des._encrypt(message);
-    println!("C_u64 (16 rounds) =\t{:#016X}", cipher);
-    assert_eq!(cipher, 0x_1BC4896735BBE206_u64);
-    println!();
+//     let mut a_des = DES::new_with_key_u64(key);
+//     let cipher = a_des._encrypt(message);
+//     println!("C_u64 (16 rounds) =\t{:#016X}", cipher);
+//     assert_eq!(cipher, 0x_1BC4896735BBE206_u64);
+//     println!();
 
-    // Expanded case for 128 rounds
-    let key = 0x_1234567890ABCDEF_u64;
-    println!("K =\t{:#016X}", key);
+//     // Expanded case for 128 rounds
+//     let key = 0x_1234567890ABCDEF_u64;
+//     println!("K =\t{:#016X}", key);
     
-    let message = 0x_1234567890ABCDEF_u64;
-    println!("M_u64 =\t{:#016X}", message);
+//     let message = 0x_1234567890ABCDEF_u64;
+//     println!("M_u64 =\t{:#016X}", message);
 
-    let mut b_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64(key);
-    let cipher = b_des._encrypt(message);
-    println!("C_u64 (128 rounds) =\t{:#016X}", cipher);
-    assert_eq!(cipher, 0x_21F25F81CE4D4AA3_u64);
-    println!();
+//     let mut b_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64(key);
+//     let cipher = b_des._encrypt(message);
+//     println!("C_u64 (128 rounds) =\t{:#016X}", cipher);
+//     assert_eq!(cipher, 0x_21F25F81CE4D4AA3_u64);
+//     println!();
 
-    // Expanded case for 0 rounds which means that key is meaningless
-    let key1 = 0x_1234567890ABCDEF_u64;
-    let key2 = 0_u64;
-    let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
-    let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
-    println!("K1 =\t{:#016x}", key1);
+//     // Expanded case for 0 rounds which means that key is meaningless
+//     let key1 = 0x_1234567890ABCDEF_u64;
+//     let key2 = 0_u64;
+//     let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
+//     let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
+//     println!("K1 =\t{:#016x}", key1);
     
-    let message = 0x_1234567890ABCDEF_u64;
-    println!("M_u64 =\t{:#016X}", message);
+//     let message = 0x_1234567890ABCDEF_u64;
+//     println!("M_u64 =\t{:#016X}", message);
 
-    let cipher1 = c_des._encrypt(message);
-    let cipher2 = d_des._encrypt(message);
-    println!("C_u64 (0 rounds) =\t{:#016X}", cipher1);
-    assert_eq!(cipher1, 0x_2138A9B46057CEDF_u64);
+//     let cipher1 = c_des._encrypt(message);
+//     let cipher2 = d_des._encrypt(message);
+//     println!("C_u64 (0 rounds) =\t{:#016X}", cipher1);
+//     assert_eq!(cipher1, 0x_2138A9B46057CEDF_u64);
 
-    println!("D_u64 (0 rounds) =\t{:#016X}", cipher);
-    assert_eq!(cipher2, 0x_2138A9B46057CEDF_u64);
-    assert_eq!(cipher1, cipher2);
-    println!("-------------------------------");
-}
+//     println!("D_u64 (0 rounds) =\t{:#016X}", cipher);
+//     assert_eq!(cipher2, 0x_2138A9B46057CEDF_u64);
+//     assert_eq!(cipher1, cipher2);
+//     println!("-------------------------------");
+// }
 
-fn des__decrypt()
-{
-    println!("des__decrypt");
-    use cryptocol::symmetric::{ DES, DES_Expanded };
+// fn des__decrypt()
+// {
+//     println!("des__decrypt");
+//     use cryptocol::symmetric::{ DES, DES_Expanded };
 
-    // Normal case
-    let key = 0x_1234567890ABCDEF_u64;
-    println!("K =\t{:#016X}", key);
+//     // Normal case
+//     let key = 0x_1234567890ABCDEF_u64;
+//     println!("K =\t{:#016X}", key);
     
-    let message = 0x_1234567890ABCDEF_u64;
-    println!("M_u64 =\t{:#016X}", message);
+//     let message = 0x_1234567890ABCDEF_u64;
+//     println!("M_u64 =\t{:#016X}", message);
 
-    let mut a_des = DES::new_with_key_u64(key);
-    let cipher = a_des._encrypt(message);
-    println!("C_u64 (16 rounds) =\t{:#016X}", cipher);
-    assert_eq!(cipher, 0x_1BC4896735BBE206_u64);
+//     let mut a_des = DES::new_with_key_u64(key);
+//     let cipher = a_des._encrypt(message);
+//     println!("C_u64 (16 rounds) =\t{:#016X}", cipher);
+//     assert_eq!(cipher, 0x_1BC4896735BBE206_u64);
 
-    let recovered = a_des._decrypt(cipher);
-    println!("B_u64 (16 rounds) =\t{:#016X}", recovered);
-    assert_eq!(recovered, 0x_1234567890ABCDEF_u64);
-    assert_eq!(recovered, message);
-    println!();
+//     let recovered = a_des._decrypt(cipher);
+//     println!("B_u64 (16 rounds) =\t{:#016X}", recovered);
+//     assert_eq!(recovered, 0x_1234567890ABCDEF_u64);
+//     assert_eq!(recovered, message);
+//     println!();
 
-    // Expanded case for 128 rounds
-    let key = 0x_1234567890ABCDEF_u64;
-    println!("K =\t{:#016X}", key);
+//     // Expanded case for 128 rounds
+//     let key = 0x_1234567890ABCDEF_u64;
+//     println!("K =\t{:#016X}", key);
     
-    let message = 0x_1234567890ABCDEF_u64;
-    println!("M_u64 =\t{:#016X}", message);
+//     let message = 0x_1234567890ABCDEF_u64;
+//     println!("M_u64 =\t{:#016X}", message);
 
-    let mut b_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64(key);
-    let cipher = b_des._encrypt(message);
-    println!("C_u64 (128 rounds) =\t{:#016X}", cipher);
-    assert_eq!(cipher, 0x_21F25F81CE4D4AA3_u64);
+//     let mut b_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64(key);
+//     let cipher = b_des._encrypt(message);
+//     println!("C_u64 (128 rounds) =\t{:#016X}", cipher);
+//     assert_eq!(cipher, 0x_21F25F81CE4D4AA3_u64);
 
-    let recovered = b_des._decrypt(cipher);
-    println!("B_u64 (16 rounds) =\t{:#016X}", recovered);
-    assert_eq!(recovered, 0x_1234567890ABCDEF_u64);
-    assert_eq!(recovered, message);
-    println!();
+//     let recovered = b_des._decrypt(cipher);
+//     println!("B_u64 (16 rounds) =\t{:#016X}", recovered);
+//     assert_eq!(recovered, 0x_1234567890ABCDEF_u64);
+//     assert_eq!(recovered, message);
+//     println!();
 
-    // Expanded case for 0 rounds which means that key is meaningless
-    let key1 = 0x_1234567890ABCDEF_u64;
-    let key2 = 0_u64;
-    let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
-    let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
-    println!("K =\t{:#016X}", key);
+//     // Expanded case for 0 rounds which means that key is meaningless
+//     let key1 = 0x_1234567890ABCDEF_u64;
+//     let key2 = 0_u64;
+//     let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
+//     let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
+//     println!("K =\t{:#016X}", key);
     
-    let message = 0x_1234567890ABCDEF_u64;
-    println!("M_u64 =\t{:#016X}", message);
+//     let message = 0x_1234567890ABCDEF_u64;
+//     println!("M_u64 =\t{:#016X}", message);
 
-    let cipher1 = c_des._encrypt(message);
-    let cipher2 = d_des._encrypt(message);
-    println!("C_u64 (0 rounds) =\t{:#016X}", cipher1);
-    assert_eq!(cipher1, 0x_2138A9B46057CEDF_u64);
+//     let cipher1 = c_des._encrypt(message);
+//     let cipher2 = d_des._encrypt(message);
+//     println!("C_u64 (0 rounds) =\t{:#016X}", cipher1);
+//     assert_eq!(cipher1, 0x_2138A9B46057CEDF_u64);
 
-    println!("D_u64 (0 rounds) =\t{:#016X}", cipher);
-    assert_eq!(cipher2, 0x_2138A9B46057CEDF_u64);
-    assert_eq!(cipher1, cipher2);
+//     println!("D_u64 (0 rounds) =\t{:#016X}", cipher);
+//     assert_eq!(cipher2, 0x_2138A9B46057CEDF_u64);
+//     assert_eq!(cipher1, cipher2);
 
-    let recovered1 = c_des._decrypt(cipher1);
-    let recovered2 = d_des._decrypt(cipher2);
-    println!("B1_u64 (0 rounds) =\t{:#016X}", recovered1);
-    println!("B2_u64 (0 rounds) =\t{:#016X}", recovered2);
-    assert_eq!(recovered1, 0x_1234567890ABCDEF_u64);
-    assert_eq!(recovered1, message);
-    assert_eq!(recovered2, 0x_1234567890ABCDEF_u64);
-    assert_eq!(recovered2, message);
-    assert_eq!(recovered1, recovered2);
-    println!("-------------------------------");
-}
+//     let recovered1 = c_des._decrypt(cipher1);
+//     let recovered2 = d_des._decrypt(cipher2);
+//     println!("B1_u64 (0 rounds) =\t{:#016X}", recovered1);
+//     println!("B2_u64 (0 rounds) =\t{:#016X}", recovered2);
+//     assert_eq!(recovered1, 0x_1234567890ABCDEF_u64);
+//     assert_eq!(recovered1, message);
+//     assert_eq!(recovered2, 0x_1234567890ABCDEF_u64);
+//     assert_eq!(recovered2, message);
+//     assert_eq!(recovered1, recovered2);
+//     println!("-------------------------------");
+// }
 
 fn des_encrypt_array_u64()
 {
