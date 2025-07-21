@@ -53,15 +53,17 @@ mod traits_ofb;
 mod traits_ctr;
 mod trait_small_cryptor;
 
-mod traits_ecb_with_padding_pkcs7_impl;
-mod traits_ecb_with_padding_iso_impl;
-mod traits_cbc_with_padding_pkcs7_impl;
-mod traits_cbc_with_padding_iso_impl;
-mod traits_pcbc_with_padding_pkcs7_impl;
-mod traits_pcbc_with_padding_iso_impl;
-mod traits_cfb_impl;
-mod traits_ofb_impl;
-mod traits_ctr_impl;
+mod traits_ecb_with_padding_pkcs7_impl_for_des;
+mod traits_ecb_with_padding_pkcs7_impl_for_rijndael;
+mod traits_ecb_with_padding_pkcs7_impl_for_bigcryptor64;
+mod traits_ecb_with_padding_iso_impl_for_des;
+mod traits_cbc_with_padding_pkcs7_impl_for_des;
+mod traits_cbc_with_padding_iso_impl_for_des;
+mod traits_pcbc_with_padding_pkcs7_impl_for_des;
+mod traits_pcbc_with_padding_iso_impl_for_des;
+mod traits_cfb_impl_for_des;
+mod traits_ofb_impl_for_des;
+mod traits_ctr_impl_for_des;
 mod trait_small_cryptor_impl;
 mod traits_for_big_cryptor_impl;
 

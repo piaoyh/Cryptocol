@@ -16,20 +16,7 @@
 ///// For test during implementation //////
 pub fn main()
 {
-    for i in 10..8
-    {
-        println!("{}", i);
-    }
     // aes_devel();
-    use cryptocol::symmetric::Rijndael_Generic;
-    use cryptocol::number::LongerUnion;
-    let mut aes = Rijndael_Generic::<0>::new();
-    let msg = LongerUnion::new_with_ubytes([0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
-    print!("Message =\t");
-    for i in 0..16
-        { print!("{:02x}", msg.get_ubyte_(i)); }
-    println!();
-    let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
 }
 
 // fn aes_devel()

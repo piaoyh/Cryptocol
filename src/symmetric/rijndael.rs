@@ -694,7 +694,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         rijndael
     }
 
-    pub fn new_with_key<const K: usize>(key: [u8; K]) -> Self
+    pub fn new_with_key<const K: usize>(key: &[u8; K]) -> Self
     {
         let mut rijndael = Self
         {
@@ -723,7 +723,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     }
 
     #[inline]
-    pub fn encryptor_with_key<const K: usize>(key: [u8; K]) -> Self
+    pub fn encryptor_with_key<const K: usize>(key: &[u8; K]) -> Self
     {
         Self::new_with_key(key)
     }
@@ -734,7 +734,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         Self::new_with_key_u128(key)
     }
 
-    pub fn decryptor_with_key<const K: usize>(key: [u8; K]) -> Self
+    pub fn decryptor_with_key<const K: usize>(key: &[u8; K]) -> Self
     {
         let mut rijndael = Self::new_with_key(key);
         rijndael.turn_inverse();
@@ -764,7 +764,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         key
     }
 
-    pub fn set_key<const K: usize>(&mut self, key: [u8; K])
+    pub fn set_key<const K: usize>(&mut self, key: &[u8; K])
     {
         let len = if K < NK * 4 { K } else { NK * 4 };
         unsafe {
@@ -1242,7 +1242,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         {
             for i in 0..4
             {
-                self.block[i][j] = block[j].get_[i];
+                self.block[i][j] = block[j].get_ubyte_(i);
                 idx += 1;
             }
         }
