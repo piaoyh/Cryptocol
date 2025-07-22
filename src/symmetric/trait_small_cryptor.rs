@@ -13,11 +13,8 @@
 #![allow(unused_variables)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
-use crate::number::SmallUInt;
-
 
 pub trait SmallCryptor<T, const N: usize>
-where T: SmallUInt + Copy + Clone
 {
     fn set_key(&mut self, key: [u8; N]);
     fn set_key_unit(&mut self, key: T);

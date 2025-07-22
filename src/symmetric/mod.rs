@@ -64,7 +64,8 @@ mod traits_pcbc_with_padding_iso_impl_for_des;
 mod traits_cfb_impl_for_des;
 mod traits_ofb_impl_for_des;
 mod traits_ctr_impl_for_des;
-mod trait_small_cryptor_impl;
+mod trait_small_cryptor_impl_for_des;
+mod trait_small_cryptor_impl_for_rijndael;
 mod traits_for_big_cryptor_impl;
 
 pub use des::*;
