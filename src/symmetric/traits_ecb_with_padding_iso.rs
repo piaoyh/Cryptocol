@@ -20,6 +20,8 @@ use crate::number::SmallUInt;
 use crate::symmetric::{ des_pre_encrypt_into_vec, des_pre_decrypt_into_vec };
 
 
+/// ECB (Electronic CodeBook) is one of the operation modes for 
+/// encryption/decryption.
 #[allow(non_camel_case_types)]
 pub trait ECB_ISO<T> : Sized
 {
@@ -94,6 +96,15 @@ pub trait ECB_ISO<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt)
+    /// 
+    /// # For Rijndael or AES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/aes_ecb_pkcs7/struct.Rijndal_Generic.html#method.encrypt)
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 
     // fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64

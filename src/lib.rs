@@ -133,7 +133,7 @@
 //!       [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
 //!       [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
 //!       [`CBC_PKCS7`](symmetric/trait.CBC_PKCS7.html#trait.ECB_PKCS7),
-//!       `CBC_ISO`,
+//!       [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
 //!       `PCBC_PKCS7`,
 //!       `PCBC_ISO`,
 //!       `CFB`,

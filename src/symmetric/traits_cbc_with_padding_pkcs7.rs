@@ -20,6 +20,12 @@ use crate::number::SmallUInt;
 use crate::symmetric::{ des_pre_encrypt_into_vec, des_pre_decrypt_into_vec };
 
 
+/// CBC (Cipher-Block Chaining) is one of the operation modes for 
+/// encryption/decryption.
+/// 
+/// # Caution
+/// For Rijndael or AES, if NB > 64, you are not supposed to use the padding
+/// defined in PKCS #7 because its behavior is not defined.
 #[allow(non_camel_case_types)]
 pub trait CBC_PKCS7<T> : Sized
 {
@@ -97,6 +103,15 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt)
+    /// 
+    /// # For Rijndael or AES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/aes_ecb_pkcs7/struct.Rijndal_Generic.html#method.encrypt)
     fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 
     // fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64

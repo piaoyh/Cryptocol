@@ -107,7 +107,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.Rijndal_Generic.html#method.encrypt)
+    /// click [here](./documentation/aes_ecb_pkcs7/struct.Rijndal_Generic.html#method.encrypt)
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 
     // fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64

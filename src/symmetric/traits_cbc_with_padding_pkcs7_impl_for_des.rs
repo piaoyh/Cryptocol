@@ -321,6 +321,7 @@ CBC_PKCS7<u64> for DES_Generic<ROUND, SHIFT,
             unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
             progress += 8;
         }
+        
         block = 0_u64;
         let mut block_union = LongUnion::new_with(0x_08_08_08_08__08_08_08_08);
         if progress != length_in_bytes

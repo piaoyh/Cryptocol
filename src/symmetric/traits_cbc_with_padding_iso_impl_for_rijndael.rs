@@ -17,7 +17,7 @@
 use std::ptr::copy_nonoverlapping;
 
 use crate::number::{ SmallUInt, IntUnion };
-use crate::symmetric::{ ECB_ISO, Rijndael_Generic };
+use crate::symmetric::{ CBC_ISO, Rijndael_Generic };
 use crate::symmetric::{ des_pre_encrypt_into_array, des_pre_decrypt_into_array };
 
 
@@ -31,22 +31,26 @@ impl <const ROUND: usize, const NB: usize, const NK: usize, const IRREDUCIBLE: u
         const RC0: u32, const RC1: u32, const RC2: u32, const RC3: u32,
         const RC4: u32, const RC5: u32, const RC6: u32, const RC7: u32,
         const RC8: u32, const RC9: u32, const ROT: u32>
-ECB_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
+CBC_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
                                                 AFFINE_MUL, AFFINE_ADD, SR0, SR1, SR2, SR3,
                                                 MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13,
                                                 MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
                                                 RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
-    fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
+    fn encrypt(&mut self, iv: [u32; NB], message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
         let mut progress = 0_usize;
-        let mut encoded: [IntUnion; NB];
+        let mut encoded = [IntUnion::new(); NB];
+        for i in 0..NB
+            { encoded[i].set(iv[i]); }
         let mut block = [IntUnion::new(); NB];
         let size = NB * 4;
         for _ in 0..length_in_bytes / size as u64
         {
             unsafe { copy_nonoverlapping(message.add(progress as usize), block.as_mut_ptr() as *mut u8, size); }
-            encoded = self.encrypt_unit(&block);
+            for i in 0..NB
+                { encoded[i] ^= block[i]; }
+            encoded = self.encrypt_unit(&encoded);
             unsafe { copy_nonoverlapping(encoded.as_ptr() as *const u8, cipher.add(progress as usize), size); }
             progress += size;
         }
@@ -60,13 +64,15 @@ ECB_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
             unsafe { copy_nonoverlapping(addr, block.as_mut_ptr() as *mut u8, tail); }
             block[tail >> 2].set_ubyte_(tail & 0b11, 0b_1000_0000); // tail >> 2 == tail / 4,  tail & 0b11 == tail % 4
         }
-        encoded = self.encrypt_unit(&block);
+        for i in 0..NB
+            { encoded[i] ^= block[i]; }
+        encoded = self.encrypt_unit(&encoded);
         unsafe { copy_nonoverlapping(encoded.as_ptr() as *const u8, cipher.add(progress as usize), size); }
         self.set_successful();
         progress as u64 + size as u64
     }
 
-    fn encrypt_into_array<U, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+    fn encrypt_into_array<U, const N: usize>(&mut self, iv: [u32; NB], message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
     {
         if (length_in_bytes as u128 + 1).next_multiple_of(8) > U::size_in_bytes() as u128 * N as u128
@@ -75,10 +81,10 @@ ECB_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
             return 0;
         }
         des_pre_encrypt_into_array!(cipher, length_in_bytes, U);
-        self.encrypt(message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
+        self.encrypt(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
     }
 
-    fn decrypt(&mut self, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
+    fn decrypt(&mut self, iv: [u32; NB], cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
     {
         let size = NB * 4;
         if length_in_bytes % size as u64 != 0
@@ -89,12 +95,18 @@ ECB_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
         let mut progress = 0_usize;
         let mut decoded: [IntUnion; NB];
         let mut block = [IntUnion::new(); NB];
+        let mut iivv = [IntUnion::new(); NB];
+        for i in 0..NB
+            { iivv[i].set(iv[i]); }
         if length_in_bytes > size as u64
         {
             for _ in 0..(length_in_bytes / size as u64 - 1)
             {
                 unsafe { copy_nonoverlapping(cipher.add(progress as usize), block.as_mut_ptr() as *mut u8, size); }
                 decoded = self.decrypt_unit(&block);
+                for i in 0..NB
+                    { decoded[i] ^= iivv[i]; }
+                iivv = block.clone();
                 unsafe { copy_nonoverlapping(decoded.as_ptr() as *const u8, message.add(progress as usize), size); }
                 progress += size;
             }
@@ -102,6 +114,8 @@ ECB_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
 
         unsafe { copy_nonoverlapping(cipher.add(progress as usize), block.as_mut_ptr() as *mut u8, size); }
         decoded = self.decrypt_unit(&block);
+        for i in 0..NB
+            { decoded[i] ^= iivv[i]; }
         let message_bytes: usize;
         for i in 1..(size + 1)
         {
@@ -124,7 +138,7 @@ ECB_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
         return 0;
     }
 
-    fn decrypt_into_array<U, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    fn decrypt_into_array<U, const N: usize>(&mut self, iv: [u32; NB], cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
     {
         if length_in_bytes as u128 > U::size_in_bytes() as u128 * N as u128 + 1
@@ -133,6 +147,6 @@ ECB_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
             return 0;
         }
         des_pre_decrypt_into_array!(message, length_in_bytes, U);
-        self.decrypt(cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
+        self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
     }
 }
