@@ -117,8 +117,8 @@ The checked items have already been implemented including documentation __at lea
       --- Includes AES, Rijndael and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
       [`Rijndael_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/rijndael/struct.Rijndael_Generic.html#struct.Rijndael_Generic),
       [`ECB_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
-      `ECB_ISO`,
-      `CBC_PKCS7`,
+      [`ECB_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+      [`CBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.CBC_PKCS7),
       `CBC_ISO`,
       `PCBC_PKCS7`,
       `PCBC_ISO`,

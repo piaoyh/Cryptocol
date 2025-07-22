@@ -375,6 +375,11 @@ ECB_PKCS7<u64> for DES_Generic<ROUND, SHIFT,
         decoded = self.decrypt_u64(block);
         let decoded_union = LongUnion::new_with(decoded);
         let padding_bytes = decoded_union.get_ubyte_(7);
+        if padding_bytes as usize > 8
+        {
+            self.set_failed();
+            return 0;
+        }
         let message_bytes = 8 - padding_bytes as usize;
         for i in message_bytes..8
         {
