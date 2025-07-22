@@ -14,7 +14,7 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 use std::ptr::{ copy_nonoverlapping, copy };
-use crate::number::{ SmallUInt, IntUnion, LongerUnion, SharedArrays };
+use crate::number::{ IntUnion, LongerUnion };
 
 
 // macro_rules! GF_rot_left {
@@ -615,8 +615,8 @@ pub struct Rijndael_Generic<const ROUND: usize = 10, const NB: usize = 4, const 
     key:        [IntUnion; NK],
     block:      [[u8; NB]; 4],
     round_key:  Vec<[IntUnion; NB]>,
-    enc:        fn (s: &mut Self, message: u128) -> u128,
-    dec:        fn (s: &mut Self, cipher: u128) -> u128,
+    enc:        fn (s: &mut Self, message: &[IntUnion; NB]) -> [IntUnion; NB],
+    dec:        fn (s: &mut Self, cipher: &[IntUnion; NB]) -> [IntUnion; NB],
 }
 
 impl <const ROUND: usize, const NB: usize, const NK: usize, const IRREDUCIBLE: u8, const AFFINE_MUL: u64,
@@ -687,8 +687,8 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
             key:        [IntUnion::new(); NK],
             block:      [[0_u8; NB]; 4],
             round_key:  vec![[IntUnion::new(); NB]; ROUND + 1],
-            enc:        Self::encrypt_u128,
-            dec:        Self::decrypt_u128,
+            enc:        Self::encrypt_unit,
+            dec:        Self::decrypt_unit,
         };
         Self::method_make_round_keys(&mut rijndael);
         rijndael
@@ -701,8 +701,8 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
             key:        [IntUnion::new(); NK],
             block:      [[0_u8; NB]; 4],
             round_key:  vec![[IntUnion::new(); NB]; ROUND + 1],
-            enc:        Self::encrypt_u128,
-            dec:        Self::decrypt_u128,
+            enc:        Self::encrypt_unit,
+            dec:        Self::decrypt_unit,
         };
         rijndael.set_key(key);
         rijndael
@@ -715,8 +715,8 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
             key:        [IntUnion::new(); NK],
             block:      [[0_u8; NB]; 4],
             round_key:  vec![[IntUnion::new(); NB]; ROUND + 1],
-            enc:        Self::encrypt_u128,
-            dec:        Self::decrypt_u128,
+            enc:        Self::encrypt_unit,
+            dec:        Self::decrypt_unit,
         };
         rijndael.set_key_u128(key);
         rijndael
@@ -790,14 +790,14 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     pub fn turn_encryptor(&mut self)
     {
-        self.enc = Self::encrypt_u128;
-        self.dec = Self::decrypt_u128;
+        self.enc = Self::encrypt_unit;
+        self.dec = Self::decrypt_unit;
     }
 
     pub fn turn_decryptor(&mut self)
     {
-        self.enc = Self::decrypt_u128;
-        self.dec = Self::encrypt_u128;
+        self.enc = Self::decrypt_unit;
+        self.dec = Self::encrypt_unit;
     }
 
     pub fn encrypt_unit(&mut self, message: &[IntUnion; NB]) -> [IntUnion; NB]
@@ -829,13 +829,13 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     }
 
     #[inline]
-    pub(super) fn _encrypt(&mut self, message: u128) -> u128
+    pub(super) fn _encrypt(&mut self, message: &[IntUnion; NB]) -> [IntUnion; NB]
     {
         (self.enc)(self, message)
     }
 
     #[inline]
-    pub(super) fn _decrypt(&mut self, cipher: u128) -> u128
+    pub(super) fn _decrypt(&mut self, cipher: &[IntUnion; NB]) -> [IntUnion; NB]
     {
         (self.dec)(self, cipher)
     }
@@ -1263,7 +1263,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     }
 
     #[inline]
-    pub fn get_desirable_ROUND() -> usize
+    pub fn get_desirable_round() -> usize
     {
         6 + if NB > NK { NB } else { NK }
     }

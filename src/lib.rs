@@ -129,8 +129,8 @@
 //! - [ ] AES and Rijdael symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for AES_Generic
 //!       --- Includes AES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits
 //!       according to PKCS#7 and ISO 7816-4.
-//!       `Rijdael_Generic`,
-//!       `ECB_PKCS7`,
+//!       [`Rijdael_Generic`](symmetric/des/struct.Rijndael_Generic.html#struct.Rijndael_Generic),
+//!       [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
 //!       `ECB_ISO`,
 //!       `CBC_PKCS7`,
 //!       `CBC_ISO`,

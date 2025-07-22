@@ -19,7 +19,12 @@ use std::vec::Vec;
 use crate::number::SmallUInt;
 use crate::symmetric::{ des_pre_encrypt_into_vec, des_pre_decrypt_into_vec };
 
-
+/// ECB (Electronic CodeBook) is one of the operation modes for 
+/// encryption/decryption.
+/// 
+/// # Caution
+/// For Rijndael or AES, if NB > 64, you are not supposed to use the padding
+/// defined in PKCS #7 because its behavior is not defined.
 #[allow(non_camel_case_types)]
 pub trait ECB_PKCS7<T> : Sized
 {
@@ -37,8 +42,9 @@ pub trait ECB_PKCS7<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
@@ -48,6 +54,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -91,6 +99,15 @@ pub trait ECB_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt)
+    /// 
+    /// # For Rijndael or AES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ecb_pkcs7/struct.Rijndal_Generic.html#method.encrypt)
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 
     // fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
@@ -112,6 +129,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -183,6 +202,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -249,8 +270,9 @@ pub trait ECB_PKCS7<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
@@ -260,6 +282,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -323,6 +347,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -387,6 +413,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -455,8 +483,9 @@ pub trait ECB_PKCS7<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
@@ -466,6 +495,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -530,6 +561,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -594,6 +627,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -662,8 +697,9 @@ pub trait ECB_PKCS7<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
@@ -673,6 +709,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -740,6 +778,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -805,6 +845,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -878,8 +920,9 @@ pub trait ECB_PKCS7<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
@@ -889,6 +932,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -958,6 +1003,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -1025,6 +1072,8 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 

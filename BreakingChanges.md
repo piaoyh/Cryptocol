@@ -1,5 +1,24 @@
 # Breaking Changes
 
+## Breaking changes from ver. 0.12.1 to ver. 0.12.2
+
+| Ver. 0.12.1                                                               | Ver. 0.12.2                                                                |
+|---------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| pub fn new_with_key<const K: usize>(key: [u8; K]) -> Self                 | pub fn new_with_key<const K: usize>(key: &[u8; K]) -> Self                 |
+| pub fn encryptor_with_key<const K: usize>(key: [u8; K]) -> Self           | pub fn encryptor_with_key<const K: usize>(key: &[u8; K]) -> Self           |
+| pub fn decryptor_with_key<const K: usize>(key: [u8; K]) -> Self           | pub fn decryptor_with_key<const K: usize>(key: &[u8; K]) -> Self           |
+| pub fn set_key<const K: usize>(&mut self, key: [u8; K])                   | pub fn set_key<const K: usize>(&mut self, key: &[u8; K])                   |
+| pub fn encrypt_unit(&mut self, message: [IntUnion; NB]) -> [IntUnion; NB] | pub fn encrypt_unit(&mut self, message: &[IntUnion; NB]) -> [IntUnion; NB] |
+| pub fn decrypt_unit(&mut self, cipher: [IntUnion; NB]) -> [IntUnion; NB]  | pub fn decrypt_unit(&mut self, cipher: &[IntUnion; NB]) -> [IntUnion; NB]  |
+
+- The arguements `key`, `message`, and `cipher` of the above functions of Rijndael_Generic has been changed from `move` into `borrow`.
+
+| Ver. 0.12.1                           | Ver. 0.12.2                           |
+|---------------------------------------|---------------------------------------|
+| pub fn get_desirable_ROUND() -> usize | pub fn get_desirable_round() -> usize |
+
+- The function name of the above functions of Rijndael_Generic has been changed from `get_desirable_ROUND` into `get_desirable_round`.
+
 ## Breaking changes from ver. 0.12.0 to ver. 0.12.1
 
 | Ver. 0.12.0                                     | Ver. 0.12.1                                            |

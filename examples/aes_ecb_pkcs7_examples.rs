@@ -13,12 +13,6 @@
 #![allow(non_snake_case)]
 
 
-// use std::io::Write;
-
-// #![allow(missing_docs)]
-// #![allow(rustdoc::missing_doc_code_examples)]
-// #[allow(non_camel_case_types)]
-// #[allow(dead_code)]
 pub fn main()
 {
     aes_encrypt_with_padding_pkcs7_ecb();
@@ -37,7 +31,7 @@ pub fn main()
     // aes_encrypt_array_with_padding_pkcs7_ecb_into_vec();
     // aes_encrypt_array_with_padding_pkcs7_ecb_into_array();
 
-    // aes_decrypt_with_padding_pkcs7_ecb();
+    aes_decrypt_with_padding_pkcs7_ecb();
     // aes_decrypt_with_padding_pkcs7_ecb_into_vec();
     // aes_decrypt_with_padding_pkcs7_ecb_into_array();
     // aes_decrypt_with_padding_pkcs7_ecb_into_string();
@@ -56,7 +50,7 @@ fn aes_encrypt_with_padding_pkcs7_ecb()
     println!("aes_encrypt_with_padding_pkcs7_ecb");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, ECB_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, ECB_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -121,24 +115,27 @@ fn aes_encrypt_with_padding_pkcs7_ecb()
     assert_eq!(txt, "09 74 04 A7 68 1F 4D 00 ED CA 85 39 90 0E A1 AC E1 AC 90 60 D8 C9 BC AB ED 8D 66 89 3F 85 2B 86 3E CE 84 00 57 F2 B9 14 43 FB DD D9 19 70 46 25 B1 F8 7D 38 27 58 A0 C9 5D AE C0 12 7D 6A 7C D0 ");
     println!();
 
-    // // Normal case for the message of 0 bytes
-    // let key = 0x_1234567890ABCDEF_u64;
-    // println!("K =\t{:#016X}", key);
-    // let mut a_aes = DES::new_with_key_u64(key);
+    // Normal case for Rijndael-256-256
+    let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
+    print!("K =\t");
+    for i in 0..32
+        { print!("{:02X}", key[i]); }
+    println!();
+    let mut a_aes = Rijndael_256_256::new_with_key(&key);
 
-    // let message = "";
-    // println!("M =\t{}", message);
-    // let mut cipher = [0_u8; 8];
-    // a_aes.encrypt(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
-    // print!("C =\t");
-    // for c in cipher.clone()
-    //     { print!("{:02X} ", c); }
-    // println!();
-    // let mut txt = String::new();
-    // for c in cipher.clone()
-    //     { write!(txt, "{:02X} ", c); }
-    // assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
-    // println!();
+    let message = "In the beginning God created the heavens and the earth.";
+    println!("M =\t{}", message);
+    let mut cipher = [0_u8; 64];
+    a_aes.encrypt(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    print!("C =\t");
+    for c in cipher.clone()
+        { print!("{:02X} ", c); }
+    println!();
+    let mut txt = String::new();
+    for c in cipher.clone()
+        { write!(txt, "{:02X} ", c); }
+    assert_eq!(txt, "9A 05 BF D4 01 B1 D9 A1 31 C5 13 A9 D1 50 83 C6 E4 F7 B9 40 E2 29 59 E2 42 96 3A DC 22 65 88 F7 33 86 40 28 99 94 21 6D 08 7F 9B B5 40 C4 D3 63 88 A2 67 DB 24 E1 6F 26 49 13 DE 4C A4 B9 4F 3B ");
+    println!();
 
     // // Normal case for the message shorter than 8 bytes
     // let key = 0x_1234567890ABCDEF_u64;
@@ -2718,35 +2715,36 @@ fn aes_encrypt_array_with_padding_pkcs7_ecb_into_array()
     assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 41 7F 89 79 08 CD A1 4C ");
     println!("-------------------------------");
 }
+*/
 
 fn aes_decrypt_with_padding_pkcs7_ecb()
 {
     println!("aes_decrypt_with_padding_pkcs7_ecb");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ DES, DES_Expanded, ECB_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, ECB_PKCS7 };
 
-    // Normal case
-    let key = 0x_1234567890ABCDEF_u64;
+    // Normal case for AES-128
+    let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     println!("K =\t{:#016X}", key);
-    let mut a_aes = DES::new_with_key_u64(key);
+    let mut a_aes = AES_128::new_with_key_u128(key);
 
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
-    let mut cipher = Vec::<u8>::new();
-    a_aes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
-    print!("C (16 rounds) =\t");
+    let mut cipher = [0_u8; 64];
+    a_aes.encrypt(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
     println!();
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    assert_eq!(txt, "E8 96 2E 8D BA 45 C6 D9 45 06 DC 98 D9 2F 1F 86 B8 05 A9 B8 D2 B2 1E 82 DA 51 DA B1 F9 81 B7 B3 95 C5 46 72 A8 D9 D8 B0 9E 62 AB 4F F8 36 31 54 5B D2 91 45 68 4B B4 C0 70 D1 8E C0 F3 FF 85 D1 ");
 
     let mut recovered = vec![0; 55];
     a_aes.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
-    print!("Ba (16 rounds) =\t");
+    print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
     println!();
@@ -2758,32 +2756,35 @@ fn aes_decrypt_with_padding_pkcs7_ecb()
     let mut converted = String::new();
     unsafe { converted.as_mut_vec() }.append(&mut recovered);
     
-    println!("Bb (16 rounds) =\t{}", converted);
+    println!("Bb =\t{}", converted);
     assert_eq!(converted, "In the beginning God created the heavens and the earth.");
     assert_eq!(converted, message);
     println!();
 
-    // Expanded case for 128 rounds
-    let key = 0x_1234567890ABCDEF_u64;
-    println!("K =\t{:#016X}", key);
-    let mut a_aes = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64(key);
+    // Normal case for AES-192
+    let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
+    print!("K =\t");
+    for i in 0..24
+        { print!("{:02X}", key[i]); }
+    println!();
+    let mut a_aes = AES_192::new_with_key(&key);
 
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
-    let mut cipher = Vec::<u8>::new();
-    a_aes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
-    print!("C (128 rounds) =\t");
+    let mut cipher = [0_u8; 64];
+    a_aes.encrypt(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
     println!();
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "DD C6 D8 D1 B0 66 D9 AC F7 F3 B4 FD D6 6C ED 78 20 FB A6 8D 35 38 EA 65 B0 65 23 05 FF D4 53 B1 D1 E0 C5 52 36 1E AC E2 19 EF 94 B8 98 04 A9 69 CC 6A BC 81 7D 6B 29 C0 ");
+    assert_eq!(txt, "F2 8F C2 CA 9D 3A AC 96 69 7B 52 0D 5F CB 10 4B 31 26 61 63 CE A4 EB 2B EE 9F C3 4C A1 40 F4 FF 0F 70 8E 7C 6F 42 BC 93 4F CF DA 45 BB F6 6F 6B A9 4F E6 98 36 61 FF 71 9C FF AB 3A 34 D7 BE 3C ");
 
     let mut recovered = vec![0; 55];
     a_aes.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
-    print!("Ba (128 rounds) =\t");
+    print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
     println!();
@@ -2795,85 +2796,63 @@ fn aes_decrypt_with_padding_pkcs7_ecb()
     let mut converted = String::new();
     unsafe { converted.as_mut_vec() }.append(&mut recovered);
     
-    println!("Bb (128 rounds) =\t{}", converted);
+    println!("Bb =\t{}", converted);
     assert_eq!(converted, "In the beginning God created the heavens and the earth.");
     assert_eq!(converted, message);
     println!();
 
-    // Expanded case for 0 rounds which means that key is meaningless
-    let key1 = 0x_1234567890ABCDEF_u64;
-    let key2 = 0_u64;
-    println!("K =\t{:#016X}", key);
-    let mut c_aes = DES_Expanded::<0, 0>::new_with_key_u64(key1);
-    let mut d_aes = DES_Expanded::<0, 0>::new_with_key_u64(key2);
+    // Normal case for AES-256
+    let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
+    print!("K =\t");
+    for i in 0..32
+        { print!("{:02X}", key[i]); }
+    println!();
+    let mut a_aes = AES_256::new_with_key(&key);
 
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
-    let mut cipher1 = Vec::<u8>::new();
-    let mut cipher2 = Vec::<u8>::new();
-    c_aes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher1);
-    d_aes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher2);
-    print!("C (0 rounds) =\t");
-    for c in cipher1.clone()
+    let mut cipher = [0_u8; 64];
+    a_aes.encrypt(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    print!("C =\t");
+    for c in cipher.clone()
         { print!("{:02X} ", c); }
     println!();
     let mut txt = String::new();
-    for c in cipher1.clone()
+    for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 02 ");
-    print!("D (0 rounds) =\t");
-    for c in cipher2.clone()
-        { print!("{:02X} ", c); }
-    println!();
-    let mut txt = String::new();
-    for c in cipher2.clone()
-        { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "86 9D 10 B8 94 9A 10 91 9A 9B 96 9D 9D 96 9D 9B 10 8B 9F 98 10 93 B1 9A 92 B8 9A 98 10 B8 94 9A 10 94 9A 92 B9 9A 9D B3 10 92 9D 98 10 B8 94 9A 10 9A 92 B1 B8 94 1D 02 ");
+    assert_eq!(txt, "09 74 04 A7 68 1F 4D 00 ED CA 85 39 90 0E A1 AC E1 AC 90 60 D8 C9 BC AB ED 8D 66 89 3F 85 2B 86 3E CE 84 00 57 F2 B9 14 43 FB DD D9 19 70 46 25 B1 F8 7D 38 27 58 A0 C9 5D AE C0 12 7D 6A 7C D0 ");
 
-    let mut recovered1 = vec![0; 55];
-    let mut recovered2 = vec![0; 55];
-    c_aes.decrypt(cipher1.as_ptr(), cipher1.len() as u64, recovered1.as_mut_ptr());
-    d_aes.decrypt(cipher2.as_ptr(), cipher2.len() as u64, recovered2.as_mut_ptr());
-    print!("B1a (0 rounds) =\t");
-    for b in recovered1.clone()
+    let mut recovered = vec![0; 55];
+    a_aes.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    print!("Ba =\t");
+    for b in recovered.clone()
         { print!("{:02X} ", b); }
     println!();
     let mut txt = String::new();
-    for c in recovered1.clone()
-        { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
-    print!("B2a (0 rounds) =\t");
-    for b in recovered2.clone()
-        { print!("{:02X} ", b); }
-    println!();
-    let mut txt = String::new();
-    for c in recovered2.clone()
+    for c in recovered.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
 
-    let mut converted1 = String::new();
-    let mut converted2 = String::new();
-    unsafe { converted1.as_mut_vec() }.append(&mut recovered1);
-    unsafe { converted2.as_mut_vec() }.append(&mut recovered2);
+    let mut converted = String::new();
+    unsafe { converted.as_mut_vec() }.append(&mut recovered);
     
-    println!("B1b (0 rounds) =\t{}", converted1);
-    assert_eq!(converted1, "In the beginning God created the heavens and the earth.");
-    assert_eq!(converted1, message);
-    println!("B2b (0 rounds) =\t{}", converted2);
-    assert_eq!(converted2, "In the beginning God created the heavens and the earth.");
-    assert_eq!(converted2, message);
-    assert_eq!(converted1, converted1);
+    println!("Bb =\t{}", converted);
+    assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    assert_eq!(converted, message);
     println!();
 
-    // Normal case for the message of 0 bytes
-    let key = 0x_1234567890ABCDEF_u64;
-    println!("K =\t{:#016X}", key);
-    let mut a_aes = DES::new_with_key_u64(key);
+    // Normal case for Rijndael-256-256
+    let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
+    print!("K =\t");
+    for i in 0..32
+        { print!("{:02X}", key[i]); }
+    println!();
+    let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
 
-    let message = "";
+    let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
-    let mut cipher = Vec::<u8>::new();
-    a_aes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    let mut cipher = [0_u8; 64];
+    a_rijndael.encrypt(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2881,10 +2860,10 @@ fn aes_decrypt_with_padding_pkcs7_ecb()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
+    assert_eq!(txt, "9A 05 BF D4 01 B1 D9 A1 31 C5 13 A9 D1 50 83 C6 E4 F7 B9 40 E2 29 59 E2 42 96 3A DC 22 65 88 F7 33 86 40 28 99 94 21 6D 08 7F 9B B5 40 C4 D3 63 88 A2 67 DB 24 E1 6F 26 49 13 DE 4C A4 B9 4F 3B ");
 
-    let mut recovered = vec![0; 8];
-    let len = a_aes.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    let mut recovered = vec![0; 55];
+    a_rijndael.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
         { print!("{:02X} ", b); }
@@ -2892,171 +2871,171 @@ fn aes_decrypt_with_padding_pkcs7_ecb()
     let mut txt = String::new();
     for c in recovered.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "00 00 00 00 00 00 00 00 ");
+    assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
 
     let mut converted = String::new();
     unsafe { converted.as_mut_vec() }.append(&mut recovered);
-    converted.truncate(len as usize);
     
     println!("Bb =\t{}", converted);
-    assert_eq!(converted, "");
+    assert_eq!(converted, "In the beginning God created the heavens and the earth.");
     assert_eq!(converted, message);
     println!();
 
-    // Normal case for the message shorter than 8 bytes
-    let key = 0x_1234567890ABCDEF_u64;
-    println!("K =\t{:#016X}", key);
-    let mut a_aes = DES::new_with_key_u64(key);
+    // // Normal case for the message shorter than 8 bytes
+    // let key = 0x_1234567890ABCDEF_u64;
+    // println!("K =\t{:#016X}", key);
+    // let mut a_aes = DES::new_with_key_u64(key);
 
-    let message = "7 bytes";
-    println!("M =\t{}", message);
-    let mut cipher = Vec::<u8>::new();
-    a_aes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
-    print!("C =\t");
-    for c in cipher.clone()
-        { print!("{:02X} ", c); }
-    println!();
-    let mut txt = String::new();
-    for c in cipher.clone()
-        { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "F6 F0 41 DD 55 55 3B 35 ");
+    // let message = "7 bytes";
+    // println!("M =\t{}", message);
+    // let mut cipher = Vec::<u8>::new();
+    // a_aes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    // print!("C =\t");
+    // for c in cipher.clone()
+    //     { print!("{:02X} ", c); }
+    // println!();
+    // let mut txt = String::new();
+    // for c in cipher.clone()
+    //     { write!(txt, "{:02X} ", c); }
+    // assert_eq!(txt, "F6 F0 41 DD 55 55 3B 35 ");
     
-    let mut recovered = vec![0; 8];
-    let len = a_aes.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
-    print!("Ba =\t");
-    for b in recovered.clone()
-        { print!("{:02X} ", b); }
-    println!();
-    let mut txt = String::new();
-    for c in recovered.clone()
-        { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "37 20 62 79 74 65 73 00 ");
+    // let mut recovered = vec![0; 8];
+    // let len = a_aes.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    // print!("Ba =\t");
+    // for b in recovered.clone()
+    //     { print!("{:02X} ", b); }
+    // println!();
+    // let mut txt = String::new();
+    // for c in recovered.clone()
+    //     { write!(txt, "{:02X} ", c); }
+    // assert_eq!(txt, "37 20 62 79 74 65 73 00 ");
 
-    let mut converted = String::new();
-    unsafe { converted.as_mut_vec() }.append(&mut recovered);
-    converted.truncate(len as usize);
+    // let mut converted = String::new();
+    // unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    // converted.truncate(len as usize);
 
-    println!("Bb =\t{}", converted);
-    assert_eq!(converted, "7 bytes");
-    assert_eq!(converted, message);
-    println!();
+    // println!("Bb =\t{}", converted);
+    // assert_eq!(converted, "7 bytes");
+    // assert_eq!(converted, message);
+    // println!();
 
-    // Normal case for the message of 8 bytes
-    let key = 0x_1234567890ABCDEF_u64;
-    println!("K =\t{:#016X}", key);
-    let mut a_aes = DES::new_with_key_u64(key);
+    // // Normal case for the message of 8 bytes
+    // let key = 0x_1234567890ABCDEF_u64;
+    // println!("K =\t{:#016X}", key);
+    // let mut a_aes = DES::new_with_key_u64(key);
 
-    let message = "I am OK.";
-    println!("M =\t{}", message);
-    let mut cipher = Vec::<u8>::new();
-    a_aes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
-    print!("C =\t");
-    for c in cipher.clone()
-        { print!("{:02X} ", c); }
-    println!();
-    let mut txt = String::new();
-    for c in cipher.clone()
-        { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "27 F5 93 EE 76 DC 64 87 41 7F 89 79 08 CD A1 4C ");
+    // let message = "I am OK.";
+    // println!("M =\t{}", message);
+    // let mut cipher = Vec::<u8>::new();
+    // a_aes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    // print!("C =\t");
+    // for c in cipher.clone()
+    //     { print!("{:02X} ", c); }
+    // println!();
+    // let mut txt = String::new();
+    // for c in cipher.clone()
+    //     { write!(txt, "{:02X} ", c); }
+    // assert_eq!(txt, "27 F5 93 EE 76 DC 64 87 41 7F 89 79 08 CD A1 4C ");
     
-    let mut recovered = vec![0; 16];
-    let len = a_aes.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
-    print!("Ba =\t");
-    for b in recovered.clone()
-        { print!("{:02X} ", b); }
-    println!();
-    let mut txt = String::new();
-    for c in recovered.clone()
-        { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "49 20 61 6D 20 4F 4B 2E 00 00 00 00 00 00 00 00 ");
+    // let mut recovered = vec![0; 16];
+    // let len = a_aes.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    // print!("Ba =\t");
+    // for b in recovered.clone()
+    //     { print!("{:02X} ", b); }
+    // println!();
+    // let mut txt = String::new();
+    // for c in recovered.clone()
+    //     { write!(txt, "{:02X} ", c); }
+    // assert_eq!(txt, "49 20 61 6D 20 4F 4B 2E 00 00 00 00 00 00 00 00 ");
 
-    let mut converted = String::new();
-    unsafe { converted.as_mut_vec() }.append(&mut recovered);
-    converted.truncate(len as usize);
+    // let mut converted = String::new();
+    // unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    // converted.truncate(len as usize);
     
-    println!("Bb =\t{}", converted);
-    assert_eq!(converted, "I am OK.");
-    assert_eq!(converted, message);
-    println!();
+    // println!("Bb =\t{}", converted);
+    // assert_eq!(converted, "I am OK.");
+    // assert_eq!(converted, message);
+    // println!();
 
-    // Normal case for the message longer than 8 bytes and shorter than 16 bytes
-    let key = 0x_1234567890ABCDEF_u64;
-    println!("K =\t{:#016X}", key);
-    let mut a_aes = DES::new_with_key_u64(key);
+    // // Normal case for the message longer than 8 bytes and shorter than 16 bytes
+    // let key = 0x_1234567890ABCDEF_u64;
+    // println!("K =\t{:#016X}", key);
+    // let mut a_aes = DES::new_with_key_u64(key);
 
-    let message = "PARK Youngho";
-    println!("M =\t{}", message);
-    let mut cipher = Vec::<u8>::new();
-    a_aes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
-    print!("C =\t");
-    for c in cipher.clone()
-        { print!("{:02X} ", c); }
-    println!();
-    let mut txt = String::new();
-    for c in cipher.clone()
-        { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "8E 52 20 47 78 78 51 B7 00 69 10 77 91 B7 52 36 ");
+    // let message = "PARK Youngho";
+    // println!("M =\t{}", message);
+    // let mut cipher = Vec::<u8>::new();
+    // a_aes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    // print!("C =\t");
+    // for c in cipher.clone()
+    //     { print!("{:02X} ", c); }
+    // println!();
+    // let mut txt = String::new();
+    // for c in cipher.clone()
+    //     { write!(txt, "{:02X} ", c); }
+    // assert_eq!(txt, "8E 52 20 47 78 78 51 B7 00 69 10 77 91 B7 52 36 ");
 
-    let mut recovered = vec![0; 16];
-    let len = a_aes.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
-    print!("Ba =\t");
-    for b in recovered.clone()
-        { print!("{:02X} ", b); }
-    println!();
-    let mut txt = String::new();
-    for c in recovered.clone()
-        { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "50 41 52 4B 20 59 6F 75 6E 67 68 6F 00 00 00 00 ");
+    // let mut recovered = vec![0; 16];
+    // let len = a_aes.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    // print!("Ba =\t");
+    // for b in recovered.clone()
+    //     { print!("{:02X} ", b); }
+    // println!();
+    // let mut txt = String::new();
+    // for c in recovered.clone()
+    //     { write!(txt, "{:02X} ", c); }
+    // assert_eq!(txt, "50 41 52 4B 20 59 6F 75 6E 67 68 6F 00 00 00 00 ");
 
-    let mut converted = String::new();
-    unsafe { converted.as_mut_vec() }.append(&mut recovered);
-    converted.truncate(len as usize);
+    // let mut converted = String::new();
+    // unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    // converted.truncate(len as usize);
     
-    println!("Bb =\t{}", converted);
-    assert_eq!(converted, "PARK Youngho");
-    assert_eq!(converted, message);
-    println!();
+    // println!("Bb =\t{}", converted);
+    // assert_eq!(converted, "PARK Youngho");
+    // assert_eq!(converted, message);
+    // println!();
 
 
-    // Normal case for the message of 16 bytes
-    let key = 0x_1234567890ABCDEF_u64;
-    println!("K =\t{:#016X}", key);
-    let mut a_aes = DES::new_with_key_u64(key);
+    // // Normal case for the message of 16 bytes
+    // let key = 0x_1234567890ABCDEF_u64;
+    // println!("K =\t{:#016X}", key);
+    // let mut a_aes = DES::new_with_key_u64(key);
 
-    let message = "고맙습니다.";
-    println!("M =\t{}", message);
-    let mut cipher = Vec::<u8>::new();
-    a_aes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
-    print!("C =\t");
-    for c in cipher.clone()
-        { print!("{:02X} ", c); }
-    println!();
-    let mut txt = String::new();
-    for c in cipher.clone()
-        { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 41 7F 89 79 08 CD A1 4C ");
+    // let message = "고맙습니다.";
+    // println!("M =\t{}", message);
+    // let mut cipher = Vec::<u8>::new();
+    // a_aes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    // print!("C =\t");
+    // for c in cipher.clone()
+    //     { print!("{:02X} ", c); }
+    // println!();
+    // let mut txt = String::new();
+    // for c in cipher.clone()
+    //     { write!(txt, "{:02X} ", c); }
+    // assert_eq!(txt, "20 83 6B 12 1D 3A 5D BA 4D D6 5F 5A 8E 2E AC E7 41 7F 89 79 08 CD A1 4C ");
 
-    let mut recovered = vec![0; 24];
-    let len = a_aes.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
-    print!("Ba =\t");
-    for b in recovered.clone()
-        { print!("{:02X} ", b); }
-    println!();
-    let mut txt = String::new();
-    for c in recovered.clone()
-        { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "EA B3 A0 EB A7 99 EC 8A B5 EB 8B 88 EB 8B A4 2E 00 00 00 00 00 00 00 00 ");
+    // let mut recovered = vec![0; 24];
+    // let len = a_aes.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    // print!("Ba =\t");
+    // for b in recovered.clone()
+    //     { print!("{:02X} ", b); }
+    // println!();
+    // let mut txt = String::new();
+    // for c in recovered.clone()
+    //     { write!(txt, "{:02X} ", c); }
+    // assert_eq!(txt, "EA B3 A0 EB A7 99 EC 8A B5 EB 8B 88 EB 8B A4 2E 00 00 00 00 00 00 00 00 ");
 
-    let mut converted = String::new();
-    unsafe { converted.as_mut_vec() }.append(&mut recovered);
-    converted.truncate(len as usize);
+    // let mut converted = String::new();
+    // unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    // converted.truncate(len as usize);
     
-    println!("Bb =\t{}", converted);
-    assert_eq!(converted, "고맙습니다.");
-    assert_eq!(converted, message);
+    // println!("Bb =\t{}", converted);
+    // assert_eq!(converted, "고맙습니다.");
+    // assert_eq!(converted, message);
     println!("-------------------------------");
 }
 
+/*
 fn aes_decrypt_with_padding_pkcs7_ecb_into_vec()
 {
     println!("aes_decrypt_with_padding_pkcs7_ecb_into_vec");

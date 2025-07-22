@@ -38,10 +38,6 @@ ECB_PKCS7<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
                                                 MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
                                                 RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
-    // fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
-    /// # Caution
-    /// If NB > 64, you are not supposed to use the padding defined in PKCS #7
-    /// because its behavior is not defined.
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
         let mut progress = 0_usize;
@@ -63,8 +59,8 @@ ECB_PKCS7<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
             let padding = (size - tail) as u8;
             let addr = unsafe { message.add(progress as usize) as *const u8 };
             unsafe { copy_nonoverlapping(addr, block.as_mut_ptr() as *mut u8, tail); }
-            let nb = tail / NB;
-            let ii = tail % NB;
+            let nb = tail >> 2;     // tail >> 2 == tail / 4
+            let ii = tail & 0b11;   // tail & 0b11 == tail % 4
             for i in ii..4
                 { block[nb].set_ubyte_(i, padding); }
             for row in (nb + 1)..NB
@@ -114,8 +110,8 @@ ECB_PKCS7<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
         }
 
         unsafe { copy_nonoverlapping(cipher.add(progress as usize), block.as_mut_ptr() as *mut u8, size); }
-        decoded = self.encrypt_unit(&block);
-        let padding_bytes = decoded[NB-1].get_ubyte_(4);
+        decoded = self.decrypt_unit(&block);
+        let padding_bytes = decoded[NB-1].get_ubyte_(3);
         let message_bytes = size - padding_bytes as usize;
         for i in message_bytes..size
         {

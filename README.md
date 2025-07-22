@@ -115,8 +115,8 @@ The checked items have already been implemented including documentation __at lea
       [`CTR`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CTR.html#trait.CTR).
 - [ ] AES and Rijdael symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for Rijdael_Generic
       --- Includes AES, Rijndael and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
-      `Rijndael_Generic`,
-      `ECB_PKCS7`,
+      [`Rijndael_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/rijndael/struct.Rijndael_Generic.html#struct.Rijndael_Generic),
+      [`ECB_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
       `ECB_ISO`,
       `CBC_PKCS7`,
       `CBC_ISO`,

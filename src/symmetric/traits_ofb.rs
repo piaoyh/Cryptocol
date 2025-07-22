@@ -35,8 +35,9 @@ pub trait OFB<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
@@ -45,6 +46,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -105,6 +108,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -171,6 +176,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -231,8 +238,9 @@ pub trait OFB<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
@@ -241,6 +249,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -300,6 +310,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -360,6 +372,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -424,8 +438,9 @@ pub trait OFB<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
@@ -434,6 +449,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -494,6 +511,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -554,6 +573,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -618,8 +639,9 @@ pub trait OFB<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
@@ -628,6 +650,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -690,6 +714,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -751,6 +777,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -819,8 +847,9 @@ pub trait OFB<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
+    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
+    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
@@ -829,6 +858,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -893,6 +924,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -956,6 +989,8 @@ pub trait OFB<T> : Sized
     ///   and will be only any multiple of `8`.
     /// - When `T` is `u128`, the output should be at least `16`,
     ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
