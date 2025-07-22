@@ -57,6 +57,7 @@ mod traits_ecb_with_padding_pkcs7_impl_for_des;
 mod traits_ecb_with_padding_pkcs7_impl_for_rijndael;
 mod traits_ecb_with_padding_pkcs7_impl_for_bigcryptor64;
 mod traits_ecb_with_padding_iso_impl_for_des;
+mod traits_ecb_with_padding_iso_impl_for_rijndael;
 mod traits_cbc_with_padding_pkcs7_impl_for_des;
 mod traits_cbc_with_padding_iso_impl_for_des;
 mod traits_pcbc_with_padding_pkcs7_impl_for_des;
