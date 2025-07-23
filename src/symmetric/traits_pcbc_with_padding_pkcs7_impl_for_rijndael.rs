@@ -16,8 +16,8 @@
 
 use std::ptr::copy_nonoverlapping;
 
-use crate::number::{ SmallUInt, IntUnion };
-use crate::symmetric::{ CBC_PKCS7, Rijndael_Generic };
+use crate::number::{ SmallUInt, IntUnion, LongUnion };
+use crate::symmetric::{ PCBC_PKCS7, Rijndael_Generic };
 use crate::symmetric::{ des_pre_encrypt_into_array, des_pre_decrypt_into_array };
 
 
@@ -32,7 +32,7 @@ impl <const ROUND: usize, const NB: usize, const NK: usize, const IRREDUCIBLE: u
         const RC0: u32, const RC1: u32, const RC2: u32, const RC3: u32,
         const RC4: u32, const RC5: u32, const RC6: u32, const RC7: u32,
         const RC8: u32, const RC9: u32, const ROT: u32>
-CBC_PKCS7<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
+PCBC_PKCS7<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
                                             AFFINE_MUL, AFFINE_ADD, SR0, SR1, SR2, SR3,
                                             MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13,
                                             MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
@@ -44,15 +44,18 @@ CBC_PKCS7<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
         let mut progress = 0_usize;
         let mut block = [IntUnion::new(); NB];
         let mut encoded = [IntUnion::new(); NB];
+        let mut iivv = [IntUnion::new(); NB];
         for i in 0..NB
-            { encoded[i].set(iv[i]); }
+            { iivv[i].set(iv[i]); }
         for _ in 0..length_in_bytes / size as u64
         {
             unsafe { copy_nonoverlapping(message.add(progress as usize), block.as_mut_ptr() as *mut u8, size); }
             for i in 0..NB
-                { encoded[i] ^= block[i]; }
-            encoded = self.encrypt_unit(&encoded);
+                { iivv[i] ^= block[i]; }
+            encoded = self.encrypt_unit(&iivv);
             unsafe { copy_nonoverlapping(encoded.as_ptr() as *const u8, cipher.add(progress as usize), size); }
+            for i in 0..NB
+                { iivv[i] = block[i] ^ encoded[i]; }
             progress += size;
         }
 
@@ -74,8 +77,8 @@ CBC_PKCS7<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
             }
         }
         for i in 0..NB
-            { encoded[i] ^= block[i]; }
-        encoded = self.encrypt_unit(&encoded);
+            { block[i] ^= iivv[i]; }
+        encoded = self.encrypt_unit(&block);
         unsafe { copy_nonoverlapping(encoded.as_ptr() as *const u8, cipher.add(progress as usize), size); }
         self.set_successful();
         progress as u64 + size as u64
@@ -115,8 +118,10 @@ CBC_PKCS7<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
                 unsafe { copy_nonoverlapping(cipher.add(progress as usize), block.as_mut_ptr() as *mut u8, size); }
                 decoded = self.decrypt_unit(&block);
                 for i in 0..NB
-                    { decoded[i] ^= iivv[i]; }
-                iivv = block.clone();
+                {
+                    decoded[i] ^= iivv[i];
+                    iivv[i] = decoded[i] ^ block[i];
+                }
                 unsafe { copy_nonoverlapping(decoded.as_ptr() as *const u8, message.add(progress as usize), size); }
                 progress += size;
             }
@@ -126,6 +131,7 @@ CBC_PKCS7<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
         decoded = self.decrypt_unit(&block);
         for i in 0..NB
             { decoded[i] ^= iivv[i]; }
+
         let padding_bytes = decoded[NB-1].get_ubyte_(3);
         if padding_bytes as usize > size
         {
