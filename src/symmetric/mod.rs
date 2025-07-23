@@ -67,6 +67,7 @@ mod traits_pcbc_with_padding_pkcs7_impl_for_rijndael;
 mod traits_pcbc_with_padding_iso_impl_for_des;
 mod traits_pcbc_with_padding_iso_impl_for_rijndael;
 mod traits_cfb_impl_for_des;
+mod traits_cfb_impl_for_rijndael;
 mod traits_ofb_impl_for_des;
 mod traits_ctr_impl_for_des;
 mod trait_small_cryptor_impl_for_des;

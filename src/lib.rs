@@ -134,9 +134,9 @@
 //!       [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
 //!       [`CBC_PKCS7`](symmetric/trait.CBC_PKCS7.html#trait.ECB_PKCS7),
 //!       [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
-//!       `PCBC_PKCS7`,
-//!       `PCBC_ISO`,
-//!       `CFB`,
+//!       [`PCBC_PKCS7`](symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+//!       [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO),
+//!       [`CFB`](symmetric/trait.CFB.html#trait.CFB),
 //!       `OFB`, and
 //!       `CTR`.
 //!       (symmetric/aes/struct.AES_Generic.html#struct.AES_Generic)

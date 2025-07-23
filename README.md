@@ -122,7 +122,7 @@ The checked items have already been implemented including documentation __at lea
       [`CBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
       [`PCBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
       [`PCBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO),
-      `CFB`,
+      [`CFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CFB.html#trait.CFB),
       `OFB`, and
       `CTR`.
 <!--
