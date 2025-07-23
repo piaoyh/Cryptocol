@@ -137,8 +137,8 @@
 //!       [`PCBC_PKCS7`](symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
 //!       [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO),
 //!       [`CFB`](symmetric/trait.CFB.html#trait.CFB),
-//!       `OFB`, and
-//!       `CTR`.
+//!       [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+//!       [`CTR`](symmetric/trait.CTR.html#trait.CTR).
 //!       (symmetric/aes/struct.AES_Generic.html#struct.AES_Generic)
 // ! - [ ] Bluefish symmetric-key encryption/decryption algorithm
 // !     --- Includes Bluefish and its expanded versions. `Bluefish_Generic`
