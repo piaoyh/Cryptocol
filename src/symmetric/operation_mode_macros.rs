@@ -209,3 +209,75 @@ macro_rules! decrypt_into_array_without_padding {
     // self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
 }
 pub(super) use decrypt_into_array_without_padding;
+
+
+macro_rules! crypt_into_something_with_padding {
+    ($type:ty) => {
+        fn encrypt_into_array<U, const N: usize>(&mut self, iv: $type, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+        where U: SmallUInt + Copy + Clone
+        {
+            encrypt_into_array!(self, iv, message, length_in_bytes, cipher, U)
+        }
+
+        fn encrypt_into_vec<U>(&mut self, iv: $type, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+        where U: SmallUInt + Copy + Clone
+        {
+            encrypt_into_vec!(self, iv, message, length_in_bytes, cipher, U)
+        }
+
+        fn decrypt_into_array<U, const N: usize>(&mut self, iv: $type, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
+        where U: SmallUInt + Copy + Clone
+        {
+            decrypt_into_array!(self, iv, cipher, length_in_bytes, message, U)
+        }
+    };
+}
+pub(super) use crypt_into_something_with_padding;
+
+
+macro_rules! crypt_into_something_with_padding_without_iv {
+    () => {
+        fn encrypt_into_array<U, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+        where U: SmallUInt + Copy + Clone
+        {
+            encrypt_into_array!(self, message, length_in_bytes, cipher, U)
+        }
+
+        fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+        where U: SmallUInt + Copy + Clone
+        {
+            encrypt_into_vec!(self, message, length_in_bytes, cipher, U)
+        }
+
+        fn decrypt_into_array<U, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
+        where U: SmallUInt + Copy + Clone
+        {
+            decrypt_into_array!(self, cipher, length_in_bytes, message, U)
+        }
+    };
+}
+pub(super) use crypt_into_something_with_padding_without_iv;
+
+
+macro_rules! crypt_into_something_without_padding {
+    ($type:ty) => {
+        fn encrypt_into_array<U, const N: usize>(&mut self, iv: $type, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+        where U: SmallUInt + Copy + Clone
+        {
+            encrypt_into_array_without_padding!(self, iv, message, length_in_bytes, cipher, U)
+        }
+
+        fn encrypt_into_vec<U>(&mut self, iv: $type, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+        where U: SmallUInt + Copy + Clone
+        {
+            encrypt_into_vec!(self, iv, message, length_in_bytes, cipher, U)
+        }
+
+        fn decrypt_into_array<U, const N: usize>(&mut self, iv: $type, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
+        where U: SmallUInt + Copy + Clone
+        {
+            decrypt_into_array_without_padding!(self, iv, cipher, length_in_bytes, message, U)
+        }
+    };
+}
+pub(super) use crypt_into_something_without_padding;

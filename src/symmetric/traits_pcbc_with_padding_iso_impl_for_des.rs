@@ -18,7 +18,8 @@ use std::ptr::copy_nonoverlapping;
 
 use crate::number::{ SmallUInt, LongUnion };
 use crate::symmetric::{ DES_Generic, PCBC_ISO };
-use crate::symmetric::{ encrypt_into_array, encrypt_into_vec,
+use crate::symmetric::{ crypt_into_something_with_padding,
+                        encrypt_into_array, encrypt_into_vec,
                         decrypt_into_array,
                         pre_encrypt_into_array, pre_encrypt_into_vec,
                         pre_decrypt_into_array };
@@ -341,18 +342,6 @@ PCBC_ISO<u64> for DES_Generic<ROUND, SHIFT,
         progress + 8
     }
 
-    fn encrypt_into_array<U, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone
-    {
-        encrypt_into_array!(self, iv, message, length_in_bytes, cipher, U)
-    }
-
-    fn encrypt_into_vec<U>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
-    {
-        encrypt_into_vec!(self, iv, message, length_in_bytes, cipher, U)
-    }
-
     fn decrypt(&mut self, mut iv: u64, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
     {
         let mut progress = 0_u64;
@@ -393,9 +382,5 @@ PCBC_ISO<u64> for DES_Generic<ROUND, SHIFT,
         return 0;
     }
 
-    fn decrypt_into_array<U, const N: usize>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone
-    {
-        decrypt_into_array!(self, iv, cipher, length_in_bytes, message, U)
-    }
+    crypt_into_something_with_padding!{u64}
 }

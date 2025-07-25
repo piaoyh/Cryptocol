@@ -18,7 +18,8 @@ use std::ptr::copy_nonoverlapping;
 
 use crate::number::{ SmallUInt, IntUnion };
 use crate::symmetric::{ Rijndael_Generic, CTR };
-use crate::symmetric::{ encrypt_into_array, encrypt_into_vec,
+use crate::symmetric::{ crypt_into_something_without_padding,
+                        encrypt_into_array_without_padding, encrypt_into_vec,
                         decrypt_into_array_without_padding,
                         pre_encrypt_into_array, pre_encrypt_into_vec,
                         pre_decrypt_into_array_without_padding };
@@ -86,21 +87,5 @@ CTR<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
         }
     }
 
-    fn encrypt_into_array<U, const N: usize>(&mut self, nonce: [u32; NB], message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone
-    {
-        encrypt_into_array!(self, nonce, message, length_in_bytes, cipher, U)
-    }
-
-    fn encrypt_into_vec<U>(&mut self, nonce: [u32; NB], message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
-    {
-        encrypt_into_vec!(self, nonce, message, length_in_bytes, cipher, U)
-    }
-
-    fn decrypt_into_array<U, const N: usize>(&mut self, nonce: [u32; NB], cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone
-    {
-        decrypt_into_array_without_padding!(self, nonce, cipher, length_in_bytes, message, U)
-    }
+    crypt_into_something_without_padding! {[u32; NB]}
 }
