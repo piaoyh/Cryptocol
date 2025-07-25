@@ -33,7 +33,7 @@ The checked items have already been implemented including documentation __at lea
       of it for the Unions ---
       [`SmallUInt`](https://docs.rs/cryptocol/latest/cryptocol/number/small_uint/trait.SmallUInt.html#trait.SmallUInt)
 <!--
-- [ ] Trait SmallUInt and its implementation for primitive data types --- SmallUInt
+- [ ] Trait SmallSInt and its implementation for primitive data types --- SmallSInt
       ===> Moved to Roadmap for ver. 2.0
 -->
 
@@ -166,8 +166,10 @@ The checked items have already been implemented including documentation __at lea
       --- Includes IDEA and its expanded versions. `IDEA_Generic`
       ===> Moved to Roadmap for ver. 2.0
 -->
-- [ ] BigCryptor64 and BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor64 and BigCryptor128
-      --- Includes 2DES, 3DES, 4DES, etc., 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `NAES`, `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
+- [ ] BigCryptor64 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor64
+      --- Includes 2DES, 3DES, 4DES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
+- [ ] BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor128
+      --- Includes 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
 
 ### Pseudo-Random Number Generator Algorithms
 
@@ -186,7 +188,7 @@ The checked items have already been implemented including documentation __at lea
       [`Any_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA3_512.html#struct.Any_SHA3_512),
       [`Any_SHAKE_128`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
       [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512).
-      [`Random_SHA3_512`](random/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512), and
+      [`Random_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512), and
       [`Random_BIG_KECCAK_1024`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024),
 - [ ] Pseudo-random number generator engines using symmetric-key encryption algorithms ---
       [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES),
@@ -214,7 +216,7 @@ When the implementation of all the above functionalitis are completed,
 the version number 1.0.0.0 will be given. After that whenever another
 functionality is added to this crate, the version number will get higher
 beyond 1.0.0.0. Before the version number 1.0.0.0, the maximum version
-number will be 0.20.x.x since there are all twenty-five functionalities
+number will be 0.21.x.x since there are all twenty-five functionalities
 listed above. So, for example, even if the version number is 0.5.0.0,
 it does not mean that 50% of all functionalities are implemented.
 

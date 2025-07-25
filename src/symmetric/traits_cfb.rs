@@ -15,9 +15,10 @@
 
 
 use std::vec::Vec;
-
 use crate::number::SmallUInt;
-use crate::symmetric::{ des_pre_encrypt_into_vec, des_pre_decrypt_into_vec_no_padding };
+use crate::symmetric::pre_decrypt_into_vec_no_padding;
+
+
 
 pub trait CFB<T> : Sized
 {
@@ -90,73 +91,6 @@ pub trait CFB<T> : Sized
     /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt)
     fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 
-    // fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data in CFB (Cipher FeedBack) mode,
-    /// and stores the encrypted data in `Vec<U>`.
-    /// 
-    /// # Arguments
-    /// - `message` is a pointer to u8 which is `*const u8`,
-    ///   and is the plaintext to be encrypted.
-    /// - `length_in_bytes` is of `u64`-type,
-    ///   and is the length of the plaintext `message` in bytes.
-    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be stored.
-    /// 
-    /// # Output
-    /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
-    /// 
-    /// # Features
-    /// - This method is useful to use in hybrid programming with C/C++.
-    /// - If `length_in_bytes` is `0`, it means the message is null string.
-    ///   and stored in the `Vec<U>` object `cipher`.
-    /// - You don't have to worry about whether or not the size of the memory
-    ///   area where the ciphertext will be stored is enough.
-    /// 
-    /// # For DES and its variants
-    /// ## Example 1 for Normal case
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CFB };
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    ///
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C (16 rounds) =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
-    /// ```
-    /// 
-    /// ## For more examples,
-    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_into_vec)
-    fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
-    {
-        des_pre_encrypt_into_vec!(cipher, length_in_bytes, U);
-        let len = self.encrypt(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8);
-        cipher.truncate(len as usize);
-        len
-    }
-
     // fn encrypt_into_array<U, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     /// Encrypts the data in CFB (Cipher FeedBack) mode,
     /// and stores the encrypted data in array `[U; N]`.
@@ -225,6 +159,67 @@ pub trait CFB<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_into_array)
     fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+    where U: SmallUInt + Copy + Clone;
+
+    // fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+    /// Encrypts the data in CFB (Cipher FeedBack) mode,
+    /// and stores the encrypted data in `Vec<U>`.
+    /// 
+    /// # Arguments
+    /// - `message` is a pointer to u8 which is `*const u8`,
+    ///   and is the plaintext to be encrypted.
+    /// - `length_in_bytes` is of `u64`-type,
+    ///   and is the length of the plaintext `message` in bytes.
+    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - If `length_in_bytes` is `0`, it means the message is null string.
+    ///   and stored in the `Vec<U>` object `cipher`.
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the ciphertext will be stored is enough.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CFB };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 79 3A A1 78 EC CD 02 72 6A C4 41 7C 25 A4 2C 07 FC 77 25 49 12 55 0F 8A ED 44 C3 E4 DC 91 69 0F 40 72 7F F2 D9 B7 54 9F 36 91 C5 85 4F 9B 30 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cfb/struct.DES_Generic.html#method.encrypt_into_vec)
+    fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone;
 
     // fn encrypt_str(&mut self, message: &str, cipher: *mut u8) -> u64
@@ -636,7 +631,8 @@ pub trait CFB<T> : Sized
     /// - `cipher` is a pointer to u8 which is `*mut u8`,
     ///   and is the ciphertext to be stored.
     /// - The size of the memory area which starts at `cipher` and the
-    ///   ciphertext will be stored at is assumed to be enough.
+    ///   ciphertext will be stored at is assumed to be enough to store it.
+    ///   You are supposed to make sure that the memory area is prepared enough.
     /// - The size of the area for ciphertext should be prepared to be:
     ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
     ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
@@ -844,7 +840,8 @@ pub trait CFB<T> : Sized
     /// - `cipher` is a pointer to u8 which is `*mut u8`,
     ///   and is the ciphertext to be stored.
     /// - The size of the memory area which starts at `cipher` and the
-    ///   ciphertext will be stored at is assumed to be enough.
+    ///   ciphertext will be stored at is assumed to be enough to store it.
+    ///   You are supposed to make sure that the memory area is prepared enough.
     /// - The size of the area for ciphertext should be prepared to be:
     ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
     ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
@@ -1203,7 +1200,7 @@ pub trait CFB<T> : Sized
     fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        des_pre_decrypt_into_vec_no_padding!(message, length_in_bytes, U);
+        pre_decrypt_into_vec_no_padding!(message, length_in_bytes, U);
         let len = self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
         message.truncate(len as usize);
         len

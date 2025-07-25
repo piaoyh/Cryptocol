@@ -158,73 +158,72 @@ macro_rules! combine_pieces {
     };
 }
 
-macro_rules! des_pre_encrypt_into_vec {
-    ($to:expr, $length_in_bytes:expr, $type:ty) => {
-        let mut len = if <$type>::size_in_bytes() == 16 {16_usize} else {8};
-        len = ($length_in_bytes + 1).next_multiple_of(len as u64) as usize / <$type>::size_in_bytes() as usize;
-        $to.truncate(len - 1);
-        $to.resize(len, <$type>::zero());
-    };
-    // des_pre_encrypt_into_vec!(cipher, length_in_bytes, T);
-    //
-    // let mut len = if T::size_in_bytes() == 16 {16_usize} else {8};
-    // len = (length_in_bytes + 1).next_multiple_of(len as u64) as usize / T::size_in_bytes();
-    // cipher.truncate(len - 1);
-    // cipher.resize(len, T::zero());
-}
-pub(super) use des_pre_encrypt_into_vec;
+// macro_rules! des_pre_encrypt_into_vec {
+//     ($to:expr, $length_in_bytes:expr, $type:ty) => {
+//         let len = ($length_in_bytes + 1).next_multiple_of(8_u64) as usize / <$type>::size_in_bytes() as usize;
+//         $to.truncate(len);
+//         $to.resize(len + 1, <$type>::zero());
+//     };
+//     // des_pre_encrypt_into_vec!(cipher, length_in_bytes, T);
+//     //
+//     // let mut len = if T::size_in_bytes() == 16 {16_usize} else {8};
+//     // len = (length_in_bytes + 1).next_multiple_of(len as u64) as usize / T::size_in_bytes();
+//     // cipher.truncate(len - 1);
+//     // cipher.resize(len, T::zero());
+// }
+// pub(super) use des_pre_encrypt_into_vec;
 
-macro_rules! des_pre_decrypt_into_vec {
-    ($to:expr, $length_in_bytes:expr, $type:ty) => {
-        let len = $length_in_bytes as usize / <$type>::size_in_bytes() as usize;
-        $to.truncate(len - 1);
-        $to.resize(len, <$type>::zero());
-    };
-}
-pub(super) use des_pre_decrypt_into_vec;
+// macro_rules! des_pre_decrypt_into_vec {
+//     ($to:expr, $length_in_bytes:expr, $type:ty) => {
+//         let len = $length_in_bytes as usize / <$type>::size_in_bytes() as usize;
+//         $to.truncate(len - 1);
+//         $to.resize(len, <$type>::zero());
+//     };
+// }
+// pub(super) use des_pre_decrypt_into_vec;
 
-macro_rules! des_pre_decrypt_into_vec_no_padding {
-    ($to:expr, $length_in_bytes:expr, $type:ty) => {
-        let len = $length_in_bytes as usize / <$type>::size_in_bytes() as usize;
-        $to.truncate(len);
-        $to.resize(len, <$type>::zero());
-    };
-}
-pub(super) use des_pre_decrypt_into_vec_no_padding;
+// macro_rules! des_pre_decrypt_into_vec_no_padding {
+//     ($to:expr, $length_in_bytes:expr, $type:ty) => {
+//         let len = $length_in_bytes as usize / <$type>::size_in_bytes() as usize;
+//         $to.truncate(len);
+//         $to.resize(len, <$type>::zero());
+//     };
+// }
+// pub(super) use des_pre_decrypt_into_vec_no_padding;
 
-macro_rules! des_pre_encrypt_into_array {
-    ($to:expr, $length_in_bytes:expr, $type:ty) => {
-        let mut len = if <$type>::size_in_bytes() == 16 {16_usize} else {8};
-        len = ($length_in_bytes + 1).next_multiple_of(len as u64) as usize / <$type>::size_in_bytes() as usize;
-        for i in len - 1..$to.len()
-            { $to[i] = <$type>::zero(); }
-    };
-    // des_pre_encrypt_into_array!(cipher, length_in_bytes, T);
-    //
-    // let mut len = if T::size_in_bytes() == 16 {16_usize} else {8};
-    // len = (length_in_bytes + 1).next_multiple_of(len as u64) as usize / T::size_in_bytes();
-    // for i in len..M
-    //     { cipher[i] = T::zero(); }
-}
-pub(super) use des_pre_encrypt_into_array;
+// macro_rules! des_pre_encrypt_into_array {
+//     ($to:expr, $length_in_bytes:expr, $type:ty) => {
+//         let mut len = if <$type>::size_in_bytes() == 16 {16_usize} else {8};
+//         len = ($length_in_bytes + 1).next_multiple_of(len as u64) as usize / <$type>::size_in_bytes() as usize;
+//         for i in len - 1..$to.len()
+//             { $to[i] = <$type>::zero(); }
+//     };
+//     // des_pre_encrypt_into_array!(cipher, length_in_bytes, T);
+//     //
+//     // let mut len = if T::size_in_bytes() == 16 {16_usize} else {8};
+//     // len = (length_in_bytes + 1).next_multiple_of(len as u64) as usize / T::size_in_bytes();
+//     // for i in len..M
+//     //     { cipher[i] = T::zero(); }
+// }
+// pub(super) use des_pre_encrypt_into_array;
 
-macro_rules! des_pre_decrypt_into_array {
-    ($to:expr, $length_in_bytes:expr, $type:ty) => {
-        let len = $length_in_bytes as usize / <$type>::size_in_bytes() as usize;
-        for i in len - 1..$to.len()
-            { $to[i] = <$type>::zero(); }
-    };
-}
-pub(super) use des_pre_decrypt_into_array;
+// macro_rules! des_pre_decrypt_into_array {
+//     ($to:expr, $length_in_bytes:expr, $type:ty) => {
+//         let len = $length_in_bytes as usize / <$type>::size_in_bytes() as usize;
+//         for i in len - 1..$to.len()
+//             { $to[i] = <$type>::zero(); }
+//     };
+// }
+// pub(super) use des_pre_decrypt_into_array;
 
-macro_rules! des_pre_decrypt_into_array_no_padding {
-    ($to:expr, $length_in_bytes:expr, $type:ty) => {
-        let len = $length_in_bytes as usize / <$type>::size_in_bytes() as usize;
-        for i in len..$to.len()
-            { $to[i] = <$type>::zero(); }
-    };
-}
-pub(super) use des_pre_decrypt_into_array_no_padding;
+// macro_rules! des_pre_decrypt_into_array_no_padding {
+//     ($to:expr, $length_in_bytes:expr, $type:ty) => {
+//         let len = $length_in_bytes as usize / <$type>::size_in_bytes() as usize;
+//         for i in len..$to.len()
+//             { $to[i] = <$type>::zero(); }
+//     };
+// }
+// pub(super) use des_pre_decrypt_into_array_no_padding;
 
 
 
@@ -1375,6 +1374,8 @@ impl <const ROUND: usize, const SHIFT: u128,
                         S748, S749, S750, S751, S752, S753, S754, S755,
                         S756, S757, S758, S759, S760, S761, S762, S763>
 {
+    pub(super) const BLOCK_SIZE: usize = 8;
+    
     const SBOX: [[u8; 64]; 8] = [
               [ S000, S001, S002, S003, S004, S005, S006, S007,
                 S008, S009, S010, S011, S012, S013, S014, S015,

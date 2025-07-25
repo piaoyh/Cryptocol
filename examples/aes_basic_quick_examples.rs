@@ -17,6 +17,7 @@
 pub fn main()
 {
     // aes_devel();
+    aes_quick_start();
 }
 
 // fn aes_devel()
@@ -255,3 +256,124 @@ pub fn main()
 //     assert_eq!(restored.get(), 0x6BC1BEE22E409F96E93D7E117393172A_u128.to_be());
 //     println!("-------------------------------");
 // }
+
+fn aes_quick_start()
+{
+    aes_import_modules();
+    aes_instantiation_with_keys();
+    aes_instantiation_with_no_key();
+    aes_cbc_pkcs7();
+    aes_expanded_rijndael();
+}
+
+fn aes_import_modules()
+{
+    println!("aes_import_modules()");
+    use cryptocol::symmetric::AES_128;
+    use cryptocol::symmetric::AES_192;
+    use cryptocol::symmetric::AES_256;
+
+    use cryptocol::symmetric::Rijndael_256_256;
+    use cryptocol::symmetric::Rijndael_256_192;
+    use cryptocol::symmetric::Rijndael_256_128;
+    use cryptocol::symmetric::Rijndael_192_256;
+    use cryptocol::symmetric::Rijndael_192_192;
+    use cryptocol::symmetric::Rijndael_192_128;
+    use cryptocol::symmetric::Rijndael_128_256;
+    use cryptocol::symmetric::Rijndael_128_192;
+    use cryptocol::symmetric::Rijndael_128_128;
+
+    use cryptocol::symmetric::Rijndael_32_32;
+    use cryptocol::symmetric::Rijndael_64_64;
+    println!("-------------------------------");
+}
+
+fn aes_instantiation_with_keys()
+{
+    println!("aes_instantiation_with_keys()");
+    use cryptocol::symmetric::AES_128;
+    let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
+    let mut _a_aes = AES_128::new_with_key_u128(key);
+
+    let key = [0xEFu8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12];
+    let mut _a_aes = AES_128::new_with_key(&key);
+    println!("-------------------------------");
+}
+
+fn aes_instantiation_with_no_key()
+{
+    println!("aes_instantiation_with_no_key()");
+    use cryptocol::symmetric::AES_128;
+
+    let mut a_aes = AES_128::new();
+    let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
+    a_aes.set_key_u128(key);
+
+    let mut a_aes = AES_128::new();
+    let key = [0xEFu8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12];
+    a_aes.set_key(&key);
+    println!("-------------------------------");
+}
+
+fn aes_cbc_pkcs7()
+{
+    println!("aes_cbc_pkcs7()");
+    use std::io::Write;
+    use std::fmt::Write as _;
+    use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
+
+    let mut a_aes = AES_128::new_with_key(&[0xEFu8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
+    let message = "In the beginning God created the heavens and the earth.";
+    println!("M =\t{}", message);
+    let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
+    println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
+    let mut cipher = Vec::<u8>::new();
+    a_aes.encrypt_str_into_vec(iv, message, &mut cipher);
+    print!("C =\t");
+    for c in cipher.clone()
+        { print!("{:02X} ", c); }
+    println!();
+    let mut txt = String::new();
+    for c in cipher.clone()
+        { write!(txt, "{:02X} ", c); }
+    assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
+
+    let mut recovered = String::new();
+    a_aes.decrypt_vec_into_string(iv, &cipher, &mut recovered);
+    println!("B =\t{}", recovered);
+    assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    assert_eq!(recovered, message);
+    println!("-------------------------------");
+}
+
+fn aes_expanded_rijndael()
+{
+    println!("aes_cbc_pkcs7()");
+    use std::io::Write;
+    use std::fmt::Write as _;
+    use cryptocol::symmetric::{ Rijndael_Generic, CBC_PKCS7 };
+
+    let mut a_rijndael = Rijndael_Generic::<22, 16, 16>::new_with_key(&[0xEFu8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
+    let message = "In the beginning God created the heavens and the earth.";
+    println!("M =\t{}", message);
+    let iv = [0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32];
+    println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
+
+    let mut cipher = Vec::<u8>::new();
+    a_rijndael.encrypt_str_into_vec(iv, message, &mut cipher);
+    print!("C =\t");
+    for c in cipher.clone()
+        { print!("{:02X} ", c); }
+    println!();
+    let mut txt = String::new();
+    for c in cipher.clone()
+        { write!(txt, "{:02X} ", c); }
+    assert_eq!(txt, "B1 C0 1F 84 17 46 35 12 D9 16 52 44 5F 40 A1 7F 3B 55 F7 E6 42 E5 1F 42 57 43 AD E4 00 19 54 1D B6 F3 1B 20 C8 D3 08 92 B7 C4 0C E2 77 73 A5 E4 0D E7 0F F4 B0 38 FE 78 30 56 E4 A7 9E CE 0E 50 ");
+
+    let mut recovered = String::new();
+    a_rijndael.decrypt_vec_into_string(iv, &cipher, &mut recovered);
+    println!("B =\t{}", recovered);
+    assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    assert_eq!(recovered, message);
+    println!("-------------------------------");
+}

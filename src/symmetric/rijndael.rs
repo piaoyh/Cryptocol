@@ -17,6 +17,16 @@ use std::ptr::{ copy_nonoverlapping, copy };
 use crate::number::{ IntUnion, LongerUnion };
 
 
+// macro_rules! rijndael_pre_encrypt_into_vec {
+//     ($to:expr, $length_in_bytes:expr, $type:ty) => {
+//         let len = ($length_in_bytes + 1).next_multiple_of(4 * NB as u64) as usize / <$type>::size_in_bytes() as usize;
+//         $to.truncate(len);
+//         $to.resize(len + 1, <$type>::zero());
+//     };
+// }
+// pub(super) use rijndael_pre_encrypt_into_vec;
+
+
 // macro_rules! GF_rot_left {
 //     ($r:expr, $n:expr) => {
 //         $r.rotate_left_assign($n);
@@ -290,44 +300,69 @@ pub type Rijndael_32_32 = Rijndael_Generic<7, 1, 1>;
 #[allow(non_camel_case_types)]
 pub type Rijndael_64_64 = Rijndael_Generic<8, 2, 2>;
 
+/// Rijndael_256_256 is one of Rijndael series. Its key is 256-bit and its
+/// encryption block is 256-bit.
 #[allow(non_camel_case_types)]
 pub type Rijndael_256_256 = Rijndael_Generic<14, 8, 8>;
 
+/// Rijndael_256_192 is one of Rijndael series. Its key is 192-bit and its
+/// encryption block is 256-bit.
 #[allow(non_camel_case_types)]
 pub type Rijndael_256_192 = Rijndael_Generic<14, 8, 6>;
 
+/// Rijndael_256_128 is one of Rijndael series. Its key is 128-bit and its
+/// encryption block is 256-bit.
 #[allow(non_camel_case_types)]
 pub type Rijndael_256_128 = Rijndael_Generic<14, 8, 4>;
 
+/// Rijndael_192_256 is one of Rijndael series. Its key is 256-bit and its
+/// encryption block is 192-bit.
 #[allow(non_camel_case_types)]
 pub type Rijndael_192_256 = Rijndael_Generic<14, 6, 8>;
 
+/// Rijndael_192_192 is one of Rijndael series. Its key is 192-bit and its
+/// encryption block is 192-bit.
 #[allow(non_camel_case_types)]
 pub type Rijndael_192_192 = Rijndael_Generic<12, 6, 6>;
 
+/// Rijndael_256_128 is one of Rijndael series. Its key is 128-bit and its
+/// encryption block is 192-bit.
 #[allow(non_camel_case_types)]
 pub type Rijndael_192_128 = Rijndael_Generic<12, 6, 4>;
 
+/// Rijndael_128_256 is one of Rijndael series. Its key is 256-bit and its
+/// encryption block is 128-bit. It is the same as the AES_256.
 #[allow(non_camel_case_types)]
 pub type Rijndael_128_256 = Rijndael_Generic<14, 4, 8>;
 
+/// Rijndael_128_192 is one of Rijndael series. Its key is 192-bit and its
+/// encryption block is 128-bit. It is the same as the AES_192.
 #[allow(non_camel_case_types)]
 pub type Rijndael_128_192 = Rijndael_Generic<12, 4, 6>;
 
+/// Rijndael_128_128 is one of Rijndael series. Its key is 128-bit and its
+/// encryption block is 128-bit. It is the same as the AES_128.
 #[allow(non_camel_case_types)]
 pub type Rijndael_128_128 = Rijndael_Generic;
 
+/// AES_256 is one of AES series. Its key is 256-bit and its encryption
+/// block is 128-bit. It is the same as the Rijndael_128_256.
 #[allow(non_camel_case_types)]
 pub type AES_256 = Rijndael_Generic<14, 4, 8>;
 
+/// AES_192 is one of AES series. Its key is 192-bit and its encryption
+/// block is 128-bit. It is the same as the Rijndael_128_192.
 #[allow(non_camel_case_types)]
 pub type AES_192 = Rijndael_Generic<12, 4, 6>;
 
+/// AES_128 is one of AES series. Its key is 128-bit and its encryption
+/// block is 128-bit. It is the same as the Rijndael_128_128.
 #[allow(non_camel_case_types)]
 pub type AES_128 = Rijndael_Generic;
 
 
-/// A Rijndael or AES symmetric-key algorithm for the encryption of digital data
+/// A Rijndael or AES (Advanced Encryption Standard) symmetric-key algorithm
+/// for the encryption of digital data
 /// 
 /// # Note
 /// ** This descryption about Rijndael is according to little endianness. **
@@ -338,11 +373,32 @@ pub type AES_128 = Rijndael_Generic;
 /// The name, AES, is the acronym of Advanced Encryption Standard. The name,
 /// Rijndael, is created out of the names of the Belgian cryptographers, Joan
 /// Daemen and Vincent Rijmen. Rijndael means Rhine valley in Dutch though it is
-/// not known that the name Rijndael was made with that intention.
-/// It is the symmetric key
-/// encryption/decryption algorithm. It was originally developed based on
-/// Lucifer encryption/decryption algorithm made by IBM. DES was approved as a 
-/// federal standard in November 1976.
+/// not known whether the name Rijndael was made with that intention. AES is the
+/// subset of Rijndael. AES has three versions: AES-128, AES-192 and AES-256.
+/// All of them have the 128-bit data block. AES-128 has the 128-bit key length.
+/// AES-192 has the 192-bit key length. AES-256 has the 256-bit key length.
+/// On the other hand, Rijndael has nine versions: Rijndael-128-128,
+/// Rijndael-128-192, Rijndael-128-256, Rijndael-192-128, Rijndael-192-192,
+/// Rijndael-192-256, Rijndael-256-128, Rijndael-256-192, and Rijndael-256-256.
+/// Rijndael-128-*, Rijndael-192-*, and Rijndael-256-* have 128-bit data block,
+/// 192-bit data block, and 256-bit data block, respectively. Rijndael-*-128,
+/// Rijndael-*-192, and Rijndael-*-256 have 128-bit key length, 192-bit key
+/// length, and 256-bit key length, respectively. However, this module,
+/// Rijndael_Generic provides more expanded versions such as 32-bit and 64-bit
+/// data blocks and key lengths and more than 256-bit data blocks and key
+/// lengths.
+/// 
+/// # Short History of birth of AES
+/// On 2nd, January, 1997, NIST announced that they wished to choose the
+/// encryption algorithm standard in replacement of DES, which is called AES.   
+/// The contest held three rounds. At the first round, fifteen were submitted:
+/// CAST-256, CRYPTON, DEAL, DFC, E2, FROG, HPC, LOKI97, MAGENTA, MARS, RC6,
+/// Rijndael, SAFER+, Serpent, and Twofish. At the second round, five remained:
+/// MARS, RC6, Rijndael, Serpent, and Twofish. At the third round, Rijndael was
+/// chosen out of the remained five. However, all the five algorithms are
+/// commonly referred to as "AES finalists", and they are also considered
+/// well-known and respected in the community. So, the other four algorithms
+/// are also being actively used as well as Rijndael, today.
 /// 
 /// # Use of AES or Rijndael and its variants
 /// This algorithm is implemented generic way. Most of the constants are
@@ -464,14 +520,34 @@ pub type AES_128 = Rijndael_Generic;
 /// for more (or deeper or full) understanding of AES.
 /// 
 /// # Quick Start
-/// You have to import (use) one of the modules `AES_128`, `AES_192`, and
-/// `AES_256` in order to use official AES as shown in Example 1.
+/// You have to import (use) one of the modules: `AES_128`, `AES_192`, and
+/// `AES_256` in order to use official AES as shown in Example 1. And, in the
+/// same way you can import (use) the modules: `Rijndael_256_256`,
+/// `Rijndael_256_192`, `Rijndael_256_128`, `Rijndael_192_256`,
+/// `Rijndael_192_192`, `Rijndael_192_128`, `Rijndael_128_256`,
+/// `Rijndael_128_192`, and `Rijndael_128_128`. Also, there are some predefined
+/// modules `Rijndael_32_32` for 32 bit key and 32-bit encryption data, and
+/// `Rijndael_64_64` for 64 bit key and 64-bit encryption data, though they are
+/// not very practical.
 /// 
 /// # Example 1
 /// ```
 /// use cryptocol::symmetric::AES_128;
 /// use cryptocol::symmetric::AES_192;
 /// use cryptocol::symmetric::AES_256;
+/// 
+/// use cryptocol::symmetric::Rijndael_256_256;
+/// use cryptocol::symmetric::Rijndael_256_192;
+/// use cryptocol::symmetric::Rijndael_256_128;
+/// use cryptocol::symmetric::Rijndael_192_256;
+/// use cryptocol::symmetric::Rijndael_192_192;
+/// use cryptocol::symmetric::Rijndael_192_128;
+/// use cryptocol::symmetric::Rijndael_128_256;
+/// use cryptocol::symmetric::Rijndael_128_192;
+/// use cryptocol::symmetric::Rijndael_128_128;
+///
+/// use cryptocol::symmetric::Rijndael_32_32;
+/// use cryptocol::symmetric::Rijndael_64_64;
 /// ```
 /// 
 /// You can instantiate the AES object with `u128` key as Example 2.
@@ -491,6 +567,7 @@ pub type AES_128 = Rijndael_Generic;
 /// let mut _a_aes = AES_128::new_with_key_u128(key);
 /// ```
 /// 
+/// Note that the object should be intantiated as mutable object.
 /// Also, you can instantiate the AES object with `[u8; 16]` key as shown in
 /// Example 3. In this case, you don't have to take endianness into account.
 /// The instantiated object should be mutable.
@@ -499,7 +576,7 @@ pub type AES_128 = Rijndael_Generic;
 /// ```
 /// use cryptocol::symmetric::AES_128;
 /// let key = [0xEFu8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12];
-/// let mut _a_aes = AES_128::new_with_key(key);
+/// let mut _a_aes = AES_128::new_with_key(&key);
 /// ```
 /// 
 /// You can instantiate the AES object without key and set a `u128` key later as
@@ -508,17 +585,17 @@ pub type AES_128 = Rijndael_Generic;
 /// # Example 4
 /// ```
 /// use cryptocol::symmetric::AES_128;
-/// let mut a_des = AES_128::new();
+/// let mut a_aes = AES_128::new();
 /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
-/// a_des.set_key_u128(key);
+/// a_aes.set_key_u128(key);
 /// ```
 /// 
 /// # Example 5
 /// ```
 /// use cryptocol::symmetric::AES_128;
-/// let mut a_des = AES_128::new();
+/// let mut a_aes = AES_128::new();
 /// let key = [0xEFu8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12];
-/// a_des.set_key(key);
+/// a_aes.set_key(&key);
 /// ```
 /// 
 /// Now, you can freely use any operation mode. This crate provide
@@ -537,12 +614,12 @@ pub type AES_128 = Rijndael_Generic;
 /// use std::io::Write;
 /// use std::fmt::Write as _;
 /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
-/// 
-/// let mut a_aes = DES::new_with_key([0xEFu8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
+///
+/// let mut a_aes = AES_128::new_with_key(&[0xEFu8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
 /// let message = "In the beginning God created the heavens and the earth.";
 /// println!("M =\t{}", message);
-/// let iv = 0x_FEDCBA0987654321FEDCBA0987654321_u128;
-/// println!("IV =\t{}", iv);
+/// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
+/// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
 /// let mut cipher = Vec::<u8>::new();
 /// a_aes.encrypt_str_into_vec(iv, message, &mut cipher);
 /// print!("C =\t");
@@ -552,11 +629,11 @@ pub type AES_128 = Rijndael_Generic;
 /// let mut txt = String::new();
 /// for c in cipher.clone()
 ///     { write!(txt, "{:02X} ", c); }
-/// assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
-/// 
+/// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
+///
 /// let mut recovered = String::new();
 /// a_aes.decrypt_vec_into_string(iv, &cipher, &mut recovered);
-/// println!("B (16 rounds) =\t{}", recovered);
+/// println!("B =\t{}", recovered);
 /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
 /// assert_eq!(recovered, message);
 /// println!();
@@ -573,14 +650,15 @@ pub type AES_128 = Rijndael_Generic;
 /// use std::io::Write;
 /// use std::fmt::Write as _;
 /// use cryptocol::symmetric::{ Rijndael_Generic, CBC_PKCS7 };
-/// 
-/// let mut a_rijndael = Rijndael_Generic::<22, 16, 16>::new_with_key_u128([0xEFu8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
+///
+/// let mut a_rijndael = Rijndael_Generic::<22, 16, 16>::new_with_key(&[0xEFu8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
 /// let message = "In the beginning God created the heavens and the earth.";
 /// println!("M =\t{}", message);
 /// let iv = [0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32, 0x_FEDCBA09_u32, 87654321_u32];
-/// println!("IV =\t{}", iv);
+/// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
+///
 /// let mut cipher = Vec::<u8>::new();
-/// a_des.encrypt_str_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+/// a_rijndael.encrypt_str_into_vec(iv, message, &mut cipher);
 /// print!("C =\t");
 /// for c in cipher.clone()
 ///     { print!("{:02X} ", c); }
@@ -588,10 +666,10 @@ pub type AES_128 = Rijndael_Generic;
 /// let mut txt = String::new();
 /// for c in cipher.clone()
 ///     { write!(txt, "{:02X} ", c); }
-/// assert_eq!(txt, "0B EA 6B BC 68 F9 B0 3E 7D AF DE 71 9C 08 AA 16 42 40 1C C8 DC 40 51 C6 8D D4 E7 D2 0B A4 F2 09 02 02 C2 6E 99 BC 9E 2A F4 11 7E 48 A7 ED 76 70 C6 9D C6 BD A6 9B 58 8B ");
-/// 
+/// assert_eq!(txt, "B1 C0 1F 84 17 46 35 12 D9 16 52 44 5F 40 A1 7F 3B 55 F7 E6 42 E5 1F 42 57 43 AD E4 00 19 54 1D B6 F3 1B 20 C8 D3 08 92 B7 C4 0C E2 77 73 A5 E4 0D E7 0F F4 B0 38 FE 78 30 56 E4 A7 9E CE 0E 50 ");
+///
 /// let mut recovered = String::new();
-/// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
+/// a_rijndael.decrypt_vec_into_string(iv, &cipher, &mut recovered);
 /// println!("B =\t{}", recovered);
 /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
 /// assert_eq!(recovered, message);
@@ -631,6 +709,8 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13, MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
         RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
+    pub(super) const BLOCK_SIZE: usize = 4 * NB;
+    
     const SUCCESS: u8 = !0;
     const FAILURE: u8 = 0;
     const SBOX: [u8; 256] = make_SBOX!();
@@ -680,6 +760,17 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
                                                 else
                                                     { Self::mix_columns };
 
+    // pub fn new() -> Self
+    /// Constructs a new object Rijndael_Genetric.
+    /// 
+    /// # Features
+    /// - In order to encrypt data, object should be instantiated mutable.
+    /// - This method sets the key to have all bits zeros.
+    /// - The default key which has all bits zeros is not a weak key unlike DES.
+    /// 
+    /// # Example 1
+    /// ```
+    /// ```
     pub fn new() -> Self
     {
         let mut rijndael = Self

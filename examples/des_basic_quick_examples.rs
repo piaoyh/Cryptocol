@@ -2131,8 +2131,8 @@ fn des_encrypt_decrypt_u64_array_u64_main()
 {
     des_encrypt_u64();
     des_decrypt_u64();
-    des__encrypt();
-    des__decrypt();
+    // des__encrypt();
+    // des__decrypt();
     des_encrypt_array_u64();
     des_decrypt_array_u64();
     des_is_successful();
@@ -2266,6 +2266,7 @@ fn des_decrypt_u64()
     println!("-------------------------------");
 }
 
+/*
 fn des__encrypt()
 {
     println!("des__encrypt");
@@ -2389,7 +2390,7 @@ fn des__decrypt()
     assert_eq!(recovered1, recovered2);
     println!("-------------------------------");
 }
-
+*/
 fn des_encrypt_array_u64()
 {
     println!("des_encrypt_array_u64");

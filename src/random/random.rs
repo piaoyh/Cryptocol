@@ -127,6 +127,7 @@ pub type Any_Num = Any_Num_C;
 /// 
 /// ## Example
 /// ```
+/// use cryptocol::number::BigUInt_Prime;
 /// use cryptocol::random::Random;
 /// use cryptocol::define_utypes_with;
 /// define_utypes_with!(u64);
@@ -3000,6 +3001,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # Example
     /// ```
+    /// use cryptocol::number::BigUInt_Prime;
     /// use cryptocol::define_utypes_with;
     /// use cryptocol::random::Random;
     /// 

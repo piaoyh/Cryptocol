@@ -18,7 +18,10 @@ use std::ptr::copy_nonoverlapping;
 
 use crate::number::{ SmallUInt, LongUnion };
 use crate::symmetric::{ CBC_ISO, DES_Generic };
-use crate::symmetric::{ des_pre_encrypt_into_array, des_pre_decrypt_into_array };
+use crate::symmetric::{ encrypt_into_array, encrypt_into_vec,
+                        decrypt_into_array,
+                        pre_encrypt_into_array, pre_encrypt_into_vec,
+                        pre_decrypt_into_array };
 
 
 impl <const ROUND: usize, const SHIFT: u128,
@@ -340,13 +343,13 @@ CBC_ISO<u64> for DES_Generic<ROUND, SHIFT,
     fn encrypt_into_array<U, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        if (length_in_bytes as u128 + 1).next_multiple_of(8) > U::size_in_bytes() as u128 * N as u128
-        {
-            self.set_failed();
-            return 0;
-        }
-        des_pre_encrypt_into_array!(cipher, length_in_bytes, U);
-        self.encrypt(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
+        encrypt_into_array!(self, iv, message, length_in_bytes, cipher, U)
+    }
+
+    fn encrypt_into_vec<U>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+    where U: SmallUInt + Copy + Clone
+    {
+        encrypt_into_vec!(self, iv, message, length_in_bytes, cipher, U)
     }
 
     fn decrypt(&mut self, mut iv: u64, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
@@ -390,12 +393,6 @@ CBC_ISO<u64> for DES_Generic<ROUND, SHIFT,
     fn decrypt_into_array<U, const N: usize>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        if length_in_bytes as u128 > U::size_in_bytes() as u128 * N as u128 + 1
-        {
-            self.set_failed();
-            return 0;
-        }
-        des_pre_decrypt_into_array!(message, length_in_bytes, U);
-        self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
+        decrypt_into_array!(self, iv, cipher, length_in_bytes, message, U)
     }
 }

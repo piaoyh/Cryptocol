@@ -776,6 +776,7 @@ pub struct BigCryptor64
 
 impl BigCryptor64
 {
+    pub(super) const BLOCK_SIZE: u64 = 8;
     const SUCCESS: u64 = !0;
     const FAILURE: u64 = 0;
 

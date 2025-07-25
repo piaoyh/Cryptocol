@@ -16,9 +16,12 @@
 
 use std::ptr::copy_nonoverlapping;
 
-use crate::number::{ SmallUInt, IntUnion, LongUnion };
+use crate::number::{ SmallUInt, IntUnion };
 use crate::symmetric::{ Rijndael_Generic, PCBC_ISO };
-use crate::symmetric::{ des_pre_encrypt_into_array, des_pre_decrypt_into_array };
+use crate::symmetric::{ encrypt_into_array, encrypt_into_vec,
+                        decrypt_into_array,
+                        pre_encrypt_into_array, pre_encrypt_into_vec,
+                        pre_decrypt_into_array };
 
 
 
@@ -43,8 +46,8 @@ PCBC_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
         let size = NB * 4;
         let mut progress = 0_usize;
         let mut block = [IntUnion::new(); NB];
-        let mut encoded = [IntUnion::new(); NB];
         let mut iivv = [IntUnion::new(); NB];
+        let mut encoded: [IntUnion; NB];
         for i in 0..NB
             { iivv[i].set(iv[i]); }
         for _ in 0..length_in_bytes / size as u64
@@ -79,13 +82,13 @@ PCBC_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
     fn encrypt_into_array<U, const N: usize>(&mut self, iv: [u32; NB], message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        if length_in_bytes as u128 > U::size_in_bytes() as u128 * N as u128
-        {
-            self.set_failed();
-            return 0;
-        }
-        des_pre_encrypt_into_array!(cipher, length_in_bytes, U);
-        self.encrypt(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
+        encrypt_into_array!(self, iv, message, length_in_bytes, cipher, U)
+    }
+
+    fn encrypt_into_vec<U>(&mut self, iv: [u32; NB], message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+    where U: SmallUInt + Copy + Clone
+    {
+        encrypt_into_vec!(self, iv, message, length_in_bytes, cipher, U)
     }
 
     fn decrypt(&mut self, iv: [u32; NB], cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
@@ -149,12 +152,6 @@ PCBC_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
     fn decrypt_into_array<U, const N: usize>(&mut self, iv: [u32; NB], cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        if length_in_bytes as u128 > U::size_in_bytes() as u128 * N as u128
-        {
-            self.set_failed();
-            return 0;
-        }
-        des_pre_decrypt_into_array!(message, length_in_bytes, U);
-        self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
+        decrypt_into_array!(self, iv, cipher, length_in_bytes, message, U)
     }
 }

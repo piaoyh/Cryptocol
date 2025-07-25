@@ -15,9 +15,9 @@
 
 
 use std::vec::Vec;
-
 use crate::number::SmallUInt;
-use crate::symmetric::{ des_pre_encrypt_into_vec, des_pre_decrypt_into_vec };
+use crate::symmetric::pre_decrypt_into_vec;
+
 
 
 #[allow(non_camel_case_types)]
@@ -99,81 +99,6 @@ pub trait PCBC_ISO<T> : Sized
     /// click [here](./documentation/des_pcbc_iso/struct.DES_Generic.html#method.encrypt)
     fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 
-    // fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data with the padding defined according to ISO 7816-4
-    /// in PCBC (Propagation Cipher-Block Chaining) mode, and stores the encrypted data
-    /// in `Vec<U>`.
-    /// 
-    /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
-    /// - `message` is a pointer to u8 which is `*const u8`,
-    ///   and is the plaintext to be encrypted.
-    /// - `length_in_bytes` is of `u64`-type,
-    ///   and is the length of the plaintext `message` in bytes.
-    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be stored.
-    /// 
-    /// # Output
-    /// - This method returns the size of ciphertext including padding bits
-    ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
-    /// 
-    /// # Features
-    /// - This method is useful to use in hybrid programming with C/C++.
-    /// - If `length_in_bytes` is `0`, it means the message is null string.
-    ///   So, only padding bytes will be encrypted,
-    ///   and stored in the `Vec<U>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
-    /// - You don't have to worry about whether or not the size of the memory
-    ///   area where the ciphertext will be stored is enough.
-    /// 
-    /// # For DES and its variants
-    /// ## Example 1 for Normal case
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, PCBC_ISO };
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    ///
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C (16 rounds) =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 4F 79 21 5B FA D8 86 8E ");
-    /// ```
-    /// 
-    /// ## For more examples,
-    /// click [here](./documentation/des_pcbc_iso/struct.DES_Generic.html#method.encrypt_into_vec)
-    fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
-    {
-        des_pre_encrypt_into_vec!(cipher, length_in_bytes, U);
-        let len = self.encrypt(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8);
-        cipher.truncate(len as usize);
-        len
-    }
-
     // fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     /// Encrypts the data with the padding defined according to ISO 7816-4
     /// in PCBC (Propagation Cipher-Block Chaining) mode, and stores the encrypted data
@@ -252,6 +177,75 @@ pub trait PCBC_ISO<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_pcbc_iso/struct.DES_Generic.html#method.encrypt_into_array)
     fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+    where U: SmallUInt + Copy + Clone;
+
+    // fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+    /// Encrypts the data with the padding defined according to ISO 7816-4
+    /// in PCBC (Propagation Cipher-Block Chaining) mode, and stores the encrypted data
+    /// in `Vec<U>`.
+    /// 
+    /// # Arguments
+    /// - `iv` is an initial value for CBC mode.
+    /// - `message` is a pointer to u8 which is `*const u8`,
+    ///   and is the plaintext to be encrypted.
+    /// - `length_in_bytes` is of `u64`-type,
+    ///   and is the length of the plaintext `message` in bytes.
+    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext including padding bits
+    ///   in bytes.
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - If `length_in_bytes` is `0`, it means the message is null string.
+    ///   So, only padding bytes will be encrypted,
+    ///   and stored in the `Vec<U>` object `cipher`.
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the ciphertext will be stored is enough.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, PCBC_ISO };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 4F 79 21 5B FA D8 86 8E ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_pcbc_iso/struct.DES_Generic.html#method.encrypt_into_vec)
+    fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone;
 
     // fn encrypt_str(&mut self, iv: T, message: &str, cipher: *mut u8) -> u64
@@ -1256,97 +1250,6 @@ pub trait PCBC_ISO<T> : Sized
     /// click [here](./documentation/des_pcbc_iso/struct.DES_Generic.html#method.decrypt)
     fn decrypt(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64;
 
-    // fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
-    /// Decrypts the data with the padding defined according to ISO 7816-4
-    /// in PCBC (Propagation Cipher-Block Chaining) mode, and stores the decrypted data
-    /// in `Vec<U>`.
-    /// 
-    /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
-    /// - `cipher` is a pointer to u8 which is `*const u8`,
-    ///   and is the ciphertext to be decrypted.
-    /// - `length_in_bytes` is of `u64`-type,
-    ///   and is the length of the ciphertext `cipher` in bytes.
-    /// - `message` is a `Vec<U>` object, and is the plaintext to be stored.
-    /// 
-    /// # Output
-    /// - This method returns the size of plaintext in bytes.
-    /// - If this method returns `zero`, and `length_in_bytes` is greater than
-    ///   `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means that this method failed in decryption.
-    /// - If this method returns `zero`, and `length_in_bytes` is `8` for `T` =
-    ///   `u64` or `16` for `T` = `u128`, it means either that this method
-    ///   failed in decryption or that the original plaintext is empty data.
-    ///   Then, you will have to check whether or not it failed by the method
-    ///   `is_successful()` or `is_failed()`.
-    /// 
-    /// # Features
-    /// - This method is useful to use in hybrid programming with C/C++.
-    /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
-    /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
-    /// - You don't have to worry about whether or not the size of the memory
-    ///   area where the plaintext will be stored is enough.
-    /// 
-    /// # For DES and its variants
-    /// ## Example 1 for Normal case
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, PCBC_ISO };
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    ///
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C (16 rounds) =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 4F 79 21 5B FA D8 86 8E ");
-    ///
-    /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
-    /// print!("Ba (16 rounds) =\t");
-    /// for b in recovered.clone()
-    ///     { print!("{:02X} ", b); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in recovered.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
-    ///
-    /// let mut converted = String::new();
-    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
-    /// 
-    /// println!("Bb (16 rounds) =\t{}", converted);
-    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
-    /// assert_eq!(converted, message);
-    /// ```
-    /// 
-    /// ## For more examples,
-    /// click [here](./documentation/des_pcbc_iso/struct.DES_Generic.html#method.decrypt_into_vec)
-    fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
-    {
-        des_pre_decrypt_into_vec!(message, length_in_bytes, U);
-        let len = self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
-        message.truncate(len as usize);
-        len
-    }
-
     // fn decrypt_into_array<U, const N: usize>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     /// Decrypts the data with the padding defined according to ISO 7816-4
     /// in PCBC (Propagation Cipher-Block Chaining) mode, and stores the encrypted data
@@ -1437,6 +1340,97 @@ pub trait PCBC_ISO<T> : Sized
     /// click [here](./documentation/des_pcbc_iso/struct.DES_Generic.html#method.decrypt_into_array)
     fn decrypt_into_array<U, const N: usize>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone;
+
+    // fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    /// Decrypts the data with the padding defined according to ISO 7816-4
+    /// in PCBC (Propagation Cipher-Block Chaining) mode, and stores the decrypted data
+    /// in `Vec<U>`.
+    /// 
+    /// # Arguments
+    /// - `iv` is an initial value for CBC mode.
+    /// - `cipher` is a pointer to u8 which is `*const u8`,
+    ///   and is the ciphertext to be decrypted.
+    /// - `length_in_bytes` is of `u64`-type,
+    ///   and is the length of the ciphertext `cipher` in bytes.
+    /// - `message` is a `Vec<U>` object, and is the plaintext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of plaintext in bytes.
+    /// - If this method returns `zero`, and `length_in_bytes` is greater than
+    ///   `8` for `T` = `u64` or `16` for `T` = `u128`,
+    ///   it means that this method failed in decryption.
+    /// - If this method returns `zero`, and `length_in_bytes` is `8` for `T` =
+    ///   `u64` or `16` for `T` = `u128`, it means either that this method
+    ///   failed in decryption or that the original plaintext is empty data.
+    ///   Then, you will have to check whether or not it failed by the method
+    ///   `is_successful()` or `is_failed()`.
+    /// 
+    /// # Features
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
+    /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the plaintext will be stored is enough.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, PCBC_ISO };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D DB B4 41 7D 93 0B BD CD 0E B8 80 D4 EC 13 FC 57 D6 7E FF 69 1C 76 8A CD A1 A6 77 7C 6E 86 28 21 DD DB 59 0C 72 39 9B 95 4F 79 21 5B FA D8 86 8E ");
+    ///
+    /// let mut recovered = Vec::<u8>::new();
+    /// a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// print!("Ba (16 rounds) =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    ///
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb (16 rounds) =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_pcbc_iso/struct.DES_Generic.html#method.decrypt_into_vec)
+    fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    where U: SmallUInt + Copy + Clone
+    {
+        pre_decrypt_into_vec!(message, length_in_bytes, U);
+        let len = self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
+        message.truncate(len as usize);
+        len
+    }
 
     // fn decrypt_into_string(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
     /// Decrypts the data with the padding defined according to ISO 7816-4

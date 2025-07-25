@@ -15,9 +15,9 @@
 
 
 use std::vec::Vec;
-
 use crate::number::SmallUInt;
-use crate::symmetric::{ des_pre_encrypt_into_vec, des_pre_decrypt_into_vec_no_padding };
+use crate::symmetric::pre_decrypt_into_vec_no_padding;
+
 
 
 pub trait CTR<T> : Sized
@@ -91,73 +91,6 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt)
     fn encrypt(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 
-    // fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data in CTR (CounTeR) mode,
-    /// and stores the encrypted data in `Vec<U>`.
-    /// 
-    /// # Arguments
-    /// - `message` is a pointer to u8 which is `*const u8`,
-    ///   and is the plaintext to be encrypted.
-    /// - `length_in_bytes` is of `u64`-type,
-    ///   and is the length of the plaintext `message` in bytes.
-    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be stored.
-    /// 
-    /// # Output
-    /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
-    /// 
-    /// # Features
-    /// - This method is useful to use in hybrid programming with C/C++.
-    /// - If `length_in_bytes` is `0`, it means the message is null string.
-    ///   and stored in the `Vec<U>` object `cipher`.
-    /// - You don't have to worry about whether or not the size of the memory
-    ///   area where the ciphertext will be stored is enough.
-    /// 
-    /// # For DES and its variants
-    /// ## Example 1 for Normal case
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    ///
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C (16 rounds) =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
-    /// ```
-    /// 
-    /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_into_vec)
-    fn encrypt_into_vec<U>(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
-    {
-        des_pre_encrypt_into_vec!(cipher, length_in_bytes, U);
-        let len = self.encrypt(nonce, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8);
-        cipher.truncate(len as usize);
-        len
-    }
-
     // fn encrypt_into_array<U, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     /// Encrypts the data in CTR (CounTeR) mode,
     /// and stores the encrypted data in array `[U; N]`.
@@ -226,6 +159,67 @@ pub trait CTR<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_into_array)
     fn encrypt_into_array<U, const N: usize>(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+    where U: SmallUInt + Copy + Clone;
+
+    // fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+    /// Encrypts the data in CTR (CounTeR) mode,
+    /// and stores the encrypted data in `Vec<U>`.
+    /// 
+    /// # Arguments
+    /// - `message` is a pointer to u8 which is `*const u8`,
+    ///   and is the plaintext to be encrypted.
+    /// - `length_in_bytes` is of `u64`-type,
+    ///   and is the length of the plaintext `message` in bytes.
+    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext
+    /// - When `T` is `u64`, the output should be at least `8`,
+    ///   and will be only any multiple of `8`.
+    /// - When `T` is `u128`, the output should be at least `16`,
+    ///   and will be only any multiple of `16`.
+    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
+    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - If this method returns `zero`,
+    ///   it means this method failed in encryption.
+    /// 
+    /// # Features
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - If `length_in_bytes` is `0`, it means the message is null string.
+    ///   and stored in the `Vec<U>` object `cipher`.
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the ciphertext will be stored is enough.
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CTR };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    ///
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_into_vec)
+    fn encrypt_into_vec<U>(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone;
 
     // fn encrypt_str(&mut self, message: &str, cipher: *mut u8) -> u64
@@ -1206,7 +1200,7 @@ pub trait CTR<T> : Sized
     fn decrypt_into_vec<U>(&mut self, nonce: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        des_pre_decrypt_into_vec_no_padding!(message, length_in_bytes, U);
+        pre_decrypt_into_vec_no_padding!(message, length_in_bytes, U);
         let len = self.decrypt(nonce, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
         message.truncate(len as usize);
         len

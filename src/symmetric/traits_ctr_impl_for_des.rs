@@ -17,8 +17,11 @@
 use std::ptr::copy_nonoverlapping;
 
 use crate::number::SmallUInt;
-use crate::symmetric::{ DES_Generic, CTR, des_pre_encrypt_into_array,
-                        des_pre_decrypt_into_array_no_padding };
+use crate::symmetric::{ DES_Generic, CTR };
+use crate::symmetric::{ pre_encrypt_into_array, pre_encrypt_into_vec,
+                        pre_decrypt_into_array_without_padding,
+                        encrypt_into_vec, encrypt_into_array_without_padding,
+                        decrypt_into_array_without_padding };
 
 
 impl <const ROUND: usize, const SHIFT: u128,
@@ -341,27 +344,21 @@ CTR<u64> for DES_Generic<ROUND, SHIFT,
         progress + tail as u64
     }
 
-    fn encrypt_into_array<U, const N: usize>(&mut self, nonce: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+    fn encrypt_into_array<U, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        if length_in_bytes as u128 > U::size_in_bytes() as u128 * N as u128
-        {
-            self.set_failed();
-            return 0;
-        }
-        des_pre_encrypt_into_array!(cipher, length_in_bytes, U);
-        self.encrypt(nonce, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8)
+        encrypt_into_array_without_padding!(self, iv, message, length_in_bytes, cipher, U)
     }
 
-    fn decrypt_into_array<U, const N: usize>(&mut self, nonce: u64, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    fn encrypt_into_vec<U>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        if length_in_bytes as u128 > U::size_in_bytes() as u128 * N as u128
-        {
-            self.set_failed();
-            return 0;
-        }
-        des_pre_decrypt_into_array_no_padding!(message, length_in_bytes, U);
-        self.decrypt(nonce, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
+        encrypt_into_vec!(self, iv, message, length_in_bytes, cipher, U)
+    }
+
+    fn decrypt_into_array<U, const N: usize>(&mut self, iv: u64, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    where U: SmallUInt + Copy + Clone
+    {
+        decrypt_into_array_without_padding!(self, iv, cipher, length_in_bytes, message, U)
     }
 }

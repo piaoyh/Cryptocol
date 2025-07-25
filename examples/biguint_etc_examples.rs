@@ -184,6 +184,7 @@ fn biguint_any_odd_with_msb_set()
 fn biguint_any_prime_using_miller_rabin()
 {
     println!("biguint_any_prime_using_miller_rabin");
+    use cryptocol::number::BigUInt_Prime;
     use cryptocol::random::Any;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
@@ -284,6 +285,7 @@ fn biguint_random_odd_with_msb_set()
 fn biguint_random_prime_using_miller_rabin()
 {
     println!("biguint_random_prime_using_miller_rabin");
+    use cryptocol::number::BigUInt_Prime;
     use cryptocol::random::Random;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
@@ -297,6 +299,7 @@ fn biguint_random_prime_using_miller_rabin()
 fn biguint_is_prime_using_miller_rabin()
 {
     println!("biguint_is_prime_using_miller_rabin");
+    use cryptocol::number::BigUInt_Prime;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
