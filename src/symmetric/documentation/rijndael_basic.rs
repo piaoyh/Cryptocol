@@ -41,7 +41,7 @@ impl <const ROUND: usize, const NB: usize, const NK: usize>
 Rijndael_Generic<ROUND, NB, NK>
 {
     // pub fn new() -> Self
-    /// Constructs a new object Rijndael_Genetric..
+    /// Constructs a new object Rijndael_Generic..
     ///
     /// # Features
     /// - In order to encrypt data, object should be instantiated mutable.
@@ -78,7 +78,7 @@ Rijndael_Generic<ROUND, NB, NK>
     }
 
     // pub fn new_with_key<const K: usize>(key: &[u8; K]) -> Self
-    /// Constructs a new object Rijndael_Genetric.
+    /// Constructs a new object Rijndael_Generic.
     ///
     /// # Arguments
     /// - The argument `key` is the array of u8 that has `K` elements.
@@ -180,7 +180,7 @@ Rijndael_Generic<ROUND, NB, NK>
     }
 
     // pub fn new_with_key_u128(key: u128) -> Self
-    /// Constructs a new object Rijndael_Genetric.
+    /// Constructs a new object Rijndael_Generic.
     ///
     /// # Arguments
     /// - The argument `key` is of `u128`.
@@ -257,7 +257,7 @@ Rijndael_Generic<ROUND, NB, NK>
     }
 
     // pub fn encryptor_with_key<const K: usize>(key: &[u8; K]) -> Self
-    /// Constructs a new object Rijndael_Genetric as a positive encryptor (or
+    /// Constructs a new object Rijndael_Generic as a positive encryptor (or
     /// an encryptor) for the component of BigCryptor128 and NAES.
     ///
     /// # Arguments
@@ -285,7 +285,7 @@ Rijndael_Generic<ROUND, NB, NK>
     }
 
     // pub fn encryptor_with_key_u128(key: u128) -> Self
-    /// Constructs a new object Rijndael_Genetric as a positive encryptor (or
+    /// Constructs a new object Rijndael_Generic as a positive encryptor (or
     /// an encryptor) for the component of BigCryptor128 and NAES.
     ///
     /// # Arguments
@@ -319,7 +319,7 @@ Rijndael_Generic<ROUND, NB, NK>
     }
 
     // pub fn decryptor_with_key<const K: usize>(key: &[u8; K]) -> Self
-    /// Constructs a new object Rijndael_Genetric as a negative encryptor (or
+    /// Constructs a new object Rijndael_Generic as a negative encryptor (or
     /// a decryptor) for the component of BigCryptor128 and NAES.
     ///
     /// # Arguments
@@ -346,7 +346,7 @@ Rijndael_Generic<ROUND, NB, NK>
     }
 
     // pub fn decryptor_with_key_u128(key: u128) -> Self
-    /// Constructs a new object Rijndael_Genetric as a negative encryptor (or
+    /// Constructs a new object Rijndael_Generic as a negative encryptor (or
     /// a decryptor) for the component of BigCryptor128 and NAES.
     ///
     /// # Arguments
@@ -531,7 +531,7 @@ Rijndael_Generic<ROUND, NB, NK>
     }
 
     //  pub fn set_key_u128(&mut self, key: u128)
-    /// Constructs a new object Rijndael_Genetric.
+    /// Constructs a new object Rijndael_Generic.
     ///
     /// # Arguments
     /// - The argument `key` is of `u128`.
@@ -631,10 +631,10 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - Even if you are writing codes in the context of using BigCryptor128
     ///   or NAES, you will hardly use this method because it is high chance
     ///   that you will have constructed components with the methods,
-    ///   [encryptor_with_key](struct@Rijndael_Genetric#method.encryptor_with_key),
-    ///   [encryptor_with_key_u64](struct@Rijndael_Genetric#method.encryptor_with_key_u64),
-    ///   [decryptor_with_key](struct@Rijndael_Genetric#method.decryptor_with_key), and
-    ///   [decryptor_with_key_u64](struct@Rijndael_Genetric#method.decryptor_with_key_u64).
+    ///   [encryptor_with_key](struct@Rijndael_Generic#method.encryptor_with_key),
+    ///   [encryptor_with_key_u64](struct@Rijndael_Generic#method.encryptor_with_key_u64),
+    ///   [decryptor_with_key](struct@Rijndael_Generic#method.decryptor_with_key), and
+    ///   [decryptor_with_key_u64](struct@Rijndael_Generic#method.decryptor_with_key_u64).
     /// - If it is constructed as encryptor for BigCryptor128 or NAES,
     ///   it will not be changed at all.
     /// - If it is constructed as decryptor for BigCryptor128 or NAES,
@@ -658,10 +658,10 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - Even if you are writing codes in the context of using BigCryptor128
     ///   or NAES, you will hardly use this method because it is high chance
     ///   that you will have constructed components with the methods,
-    ///   [encryptor_with_key](struct@Rijndael_Genetric#method.encryptor_with_key),
-    ///   [encryptor_with_key_u128](struct@Rijndael_Genetric#method.encryptor_with_key_u128),
-    ///   [decryptor_with_key](struct@Rijndael_Genetric#method.decryptor_with_key), and
-    ///   [decryptor_with_key_u128](struct@Rijndael_Genetric#method.decryptor_with_key_u128).
+    ///   [encryptor_with_key](struct@Rijndael_Generic#method.encryptor_with_key),
+    ///   [encryptor_with_key_u128](struct@Rijndael_Generic#method.encryptor_with_key_u128),
+    ///   [decryptor_with_key](struct@Rijndael_Generic#method.decryptor_with_key), and
+    ///   [decryptor_with_key_u128](struct@Rijndael_Generic#method.decryptor_with_key_u128).
     /// - If it is constructed as encryptor for BigCryptor128 or NAES,
     ///   it will be changed into decryptor.
     /// - If it is constructed as decryptor for BigCryptor128 or NAES,

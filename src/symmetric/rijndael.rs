@@ -761,7 +761,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
                                                     { Self::mix_columns };
 
     // pub fn new() -> Self
-    /// Constructs a new object Rijndael_Genetric.
+    /// Constructs a new object Rijndael_Generic.
     ///
     /// # Features
     /// - In order to encrypt data, object should be instantiated mutable.
@@ -802,7 +802,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     }
 
     // pub fn new_with_key<const K: usize>(key: &[u8; K]) -> Self
-    /// Constructs a new object Rijndael_Genetric.
+    /// Constructs a new object Rijndael_Generic.
     ///
     /// # Arguments
     /// - The argument `key` is the array of u8 that has `K` elements.
@@ -849,7 +849,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     }
 
     // pub fn new_with_key_u128(key: u128) -> Self
-    /// Constructs a new object Rijndael_Genetric.
+    /// Constructs a new object Rijndael_Generic.
     ///
     /// # Arguments
     /// - The argument `key` is of `u128`.
@@ -902,7 +902,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     }
 
     // pub fn encryptor_with_key<const K: usize>(key: &[u8; K]) -> Self
-    /// Constructs a new object Rijndael_Genetric as a positive encryptor (or
+    /// Constructs a new object Rijndael_Generic as a positive encryptor (or
     /// an encryptor) for the component of BigCryptor128 and NAES.
     ///
     /// # Arguments
@@ -925,7 +925,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.encryptor_with_key)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.encryptor_with_key)
     #[inline]
     pub fn encryptor_with_key<const K: usize>(key: &[u8; K]) -> Self
     {
@@ -933,7 +933,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     }
 
     // pub fn encryptor_with_key_u128(key: u128) -> Self
-    /// Constructs a new object Rijndael_Genetric as a positive encryptor (or
+    /// Constructs a new object Rijndael_Generic as a positive encryptor (or
     /// an encryptor) for the component of BigCryptor128 and NAES.
     ///
     /// # Arguments
@@ -962,7 +962,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.encryptor_with_key_u128)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.encryptor_with_key_u128)
     #[inline]
     pub fn encryptor_with_key_u128(key: u128) -> Self
     {
@@ -970,7 +970,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     }
 
     // pub fn decryptor_with_key<const K: usize>(key: &[u8; K]) -> Self
-    /// Constructs a new object Rijndael_Genetric as a negative encryptor (or
+    /// Constructs a new object Rijndael_Generic as a negative encryptor (or
     /// a decryptor) for the component of BigCryptor128 and NAES.
     ///
     /// # Arguments
@@ -993,7 +993,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.decryptor_with_key)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.decryptor_with_key)
     pub fn decryptor_with_key<const K: usize>(key: &[u8; K]) -> Self
     {
         let mut rijndael = Self::new_with_key(key);
@@ -1002,7 +1002,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     }
 
     // pub fn decryptor_with_key_u128(key: u128) -> Self
-    /// Constructs a new object Rijndael_Genetric as a negative encryptor (or
+    /// Constructs a new object Rijndael_Generic as a negative encryptor (or
     /// a decryptor) for the component of BigCryptor128 and NAES.
     ///
     /// # Arguments
@@ -1031,7 +1031,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.decryptor_with_key_u128)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.decryptor_with_key_u128)
     pub fn decryptor_with_key_u128(key: u128) -> Self
     {
         let mut rijndael = Self::new_with_key_u128(key);
@@ -1059,7 +1059,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.get_key)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.get_key)
     pub fn get_key(&mut self) -> [u32; NK]
     {
         let mut key = [0_u32; NK];
@@ -1091,7 +1091,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.get_key_u128)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.get_key_u128)
     pub fn get_key_u128(&self) -> u128
     {
         let len = if 16 < NK * 4 { 16 } else { NK * 4 };
@@ -1129,7 +1129,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.set_key)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.set_key)
     pub fn set_key<const K: usize>(&mut self, key: &[u8; K])
     {
         let len = if K < NK * 4 { K } else { NK * 4 };
@@ -1140,7 +1140,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     }
 
     //  pub fn set_key_u128(&mut self, key: u128)
-    /// Constructs a new object Rijndael_Genetric.
+    /// Constructs a new object Rijndael_Generic.
     ///
     /// # Arguments
     /// - The argument `key` is of `u128`.
@@ -1173,7 +1173,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.set_key_u128)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.set_key_u128)
     pub fn set_key_u128(&mut self, key: u128)
     {
         let len = if 16 < NK * 4 { 16 } else { NK * 4 };
@@ -1193,10 +1193,10 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// - Even if you are writing codes in the context of using BigCryptor128
     ///   or NAES, you will hardly use this method because it is high chance
     ///   that you will have constructed components with the methods,
-    ///   encryptor_with_key(struct@Rijndael_Genetric#method.encryptor_with_key),
-    ///   encryptor_with_key_u64(struct@Rijndael_Genetric#method.encryptor_with_key_u128),
-    ///   decryptor_with_key(struct@Rijndael_Genetric#method.decryptor_with_key), and
-    ///   decryptor_with_key_u64(struct@Rijndael_Genetric#method.decryptor_with_key_u128).
+    ///   encryptor_with_key(struct@Rijndael_Generic#method.encryptor_with_key),
+    ///   encryptor_with_key_u64(struct@Rijndael_Generic#method.encryptor_with_key_u128),
+    ///   decryptor_with_key(struct@Rijndael_Generic#method.decryptor_with_key), and
+    ///   decryptor_with_key_u64(struct@Rijndael_Generic#method.decryptor_with_key_u128).
     /// - If it is constructed as encryptor for BigCryptor128 or NAES,
     ///   it will be changed into decryptor.
     /// - If it is constructed as decryptor for BigCryptor128 or NAES,
@@ -1208,7 +1208,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.turn_inverse)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.turn_inverse)
     #[inline]
     pub fn turn_inverse(&mut self)
     {
@@ -1224,10 +1224,10 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// - Even if you are writing codes in the context of using BigCryptor128
     ///   or NAES, you will hardly use this method because it is high chance
     ///   that you will have constructed components with the methods,
-    ///   [encryptor_with_key](struct@Rijndael_Genetric#method.encryptor_with_key),
-    ///   [encryptor_with_key_u128](struct@Rijndael_Genetric#method.encryptor_with_key_u128),
-    ///   [decryptor_with_key](struct@Rijndael_Genetric#method.decryptor_with_key), and
-    ///   [decryptor_with_key_u128](struct@Rijndael_Genetric#method.decryptor_with_key_u128).
+    ///   [encryptor_with_key](struct@Rijndael_Generic#method.encryptor_with_key),
+    ///   [encryptor_with_key_u128](struct@Rijndael_Generic#method.encryptor_with_key_u128),
+    ///   [decryptor_with_key](struct@Rijndael_Generic#method.decryptor_with_key), and
+    ///   [decryptor_with_key_u128](struct@Rijndael_Generic#method.decryptor_with_key_u128).
     /// - If it is constructed as encryptor for BigCryptor128 or NAES,
     ///   it will not be changed at all.
     /// - If it is constructed as decryptor for BigCryptor128 or NAES,
@@ -1239,7 +1239,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.turn_encryptor)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.turn_encryptor)
     pub fn turn_encryptor(&mut self)
     {
         self.enc = Self::encrypt_unit;
@@ -1255,10 +1255,10 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// - Even if you are writing codes in the context of using BigCryptor128
     ///   or NAES, you will hardly use this method because it is high chance
     ///   that you will have constructed components with the methods,
-    ///   [encryptor_with_key](struct@Rijndael_Genetric#method.encryptor_with_key),
-    ///   [encryptor_with_key_u128](struct@Rijndael_Genetric#method.encryptor_with_key_u128),
-    ///   [decryptor_with_key](struct@Rijndael_Genetric#method.decryptor_with_key), and
-    ///   [decryptor_with_key_u128](struct@Rijndael_Genetric#method.decryptor_with_key_u128).
+    ///   [encryptor_with_key](struct@Rijndael_Generic#method.encryptor_with_key),
+    ///   [encryptor_with_key_u128](struct@Rijndael_Generic#method.encryptor_with_key_u128),
+    ///   [decryptor_with_key](struct@Rijndael_Generic#method.decryptor_with_key), and
+    ///   [decryptor_with_key_u128](struct@Rijndael_Generic#method.decryptor_with_key_u128).
     /// - If it is constructed as encryptor for BigCryptor128 or NAES,
     ///   it will be changed into decryptor.
     /// - If it is constructed as decryptor for BigCryptor128 or NAES,
@@ -1270,7 +1270,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.turn_decryptor)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.turn_decryptor)
     pub fn turn_decryptor(&mut self)
     {
         self.enc = Self::decrypt_unit;
@@ -1306,7 +1306,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.encrypt_unit)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.encrypt_unit)
     pub fn encrypt_unit(&mut self, message: &[IntUnion; NB]) -> [IntUnion; NB]
     {
         self.set_block(message);
@@ -1338,7 +1338,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.encrypt_u128)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.encrypt_u128)
     pub fn encrypt_u128(&mut self, message: u128) -> u128
     {
         self.set_block_u128(message);
@@ -1375,7 +1375,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.decrypt_unit)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.decrypt_unit)
     pub fn decrypt_unit(&mut self, cipher: &[IntUnion; NB]) -> [IntUnion; NB]
     {
         self.set_block(cipher);
@@ -1407,7 +1407,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.decrypt_u128)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.decrypt_u128)
     pub fn decrypt_u128(&mut self, cipher: u128) -> u128
     {
         self.set_block_u128(cipher);
@@ -1522,7 +1522,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.encrypt_array_unit)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.encrypt_array_unit)
     pub fn encrypt_array_unit<const N: usize>(&mut self, message: &[[IntUnion; NB]; N], cipher: &mut [[IntUnion; NB]; N])
     {
         for i in 0..N
@@ -1613,7 +1613,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.encrypt_array_u128)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.encrypt_array_u128)
     pub fn encrypt_array_u128<const N: usize>(&mut self, message: &[u128; N], cipher: &mut [u128; N])
     {
         for i in 0..N
@@ -1719,7 +1719,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.decrypt_array_unit)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.decrypt_array_unit)
     pub fn decrypt_array_unit<const N: usize>(&mut self, cipher: &[[IntUnion; NB]; N], message: &mut [[IntUnion; NB]; N])
     {
         for i in 0..N
@@ -1809,7 +1809,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.decrypt_array_u128)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.decrypt_array_u128)
     pub fn decrypt_array_u128<const N: usize>(&mut self, cipher: &[u128; N], message: &mut [u128; N])
     {
         for i in 0..N
@@ -1865,7 +1865,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.is_successful)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.is_successful)
     #[inline]
     pub fn is_successful(&self) -> bool
     {
@@ -1917,7 +1917,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.is_failed)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.is_failed)
     #[inline]
     pub fn is_failed(&self) -> bool
     {
@@ -1963,7 +1963,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// ```
     ///
     /// # For more examples,
-    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.get_desirable_round)
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.get_desirable_round)
     #[inline]
     pub fn get_desirable_round() -> usize
     {
