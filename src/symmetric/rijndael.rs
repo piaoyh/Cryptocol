@@ -710,7 +710,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
     pub(super) const BLOCK_SIZE: usize = 4 * NB;
-    
+
     const SUCCESS: u8 = !0;
     const FAILURE: u8 = 0;
     const SBOX: [u8; 256] = make_SBOX!();
@@ -762,15 +762,31 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     // pub fn new() -> Self
     /// Constructs a new object Rijndael_Genetric.
-    /// 
+    ///
     /// # Features
     /// - In order to encrypt data, object should be instantiated mutable.
     /// - This method sets the key to have all bits zeros.
     /// - The default key which has all bits zeros is not a weak key unlike DES.
-    /// 
+    ///
     /// # Example 1
     /// ```
+    /// use cryptocol::symmetric::AES_128;
+    /// let mut _a_aes = AES_128::new();
+    /// let plaintext = 0x1234567890ABCDEF1234567890ABCDEF_u128;
+    /// let ciphertext = _a_aes.encrypt_u128(plaintext);
+    ///
+    /// println!("Plaintext:\t\t{:#032X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#032X}", ciphertext);
+    /// assert_eq!(ciphertext, 0xE2C8CD3BFD4D72366A4806B100659867);
+    ///
+    /// let recovered_cipher_text = _a_aes.decrypt_u128(ciphertext);
+    /// println!("Recovered-ciphertext:\t{:#032X}", recovered_cipher_text);
+    /// assert_eq!(recovered_cipher_text, 0x1234567890ABCDEF1234567890ABCDEF_u128);
+    /// assert_eq!(recovered_cipher_text, plaintext);
     /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.new)
     pub fn new() -> Self
     {
         let mut rijndael = Self
@@ -785,6 +801,39 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         rijndael
     }
 
+    // pub fn new_with_key<const K: usize>(key: &[u8; K]) -> Self
+    /// Constructs a new object Rijndael_Genetric.
+    ///
+    /// # Arguments
+    /// - The argument `key` is the array of u8 that has `K` elements.
+    ///
+    /// # Features
+    /// - This method sets the key to be the given argument `key`.
+    /// - If `K` is less than `4 * NK`, the rest bits of
+    ///   the key to be set after `K` bits will be set to be `zero`.
+    /// - If `K` is greater than `4 * NK`, the rest bits after `4 * NK` bits
+    ///   of the key given as the argument will be ignored.
+    ///
+    /// # Example 1 for normal case
+    /// ```
+    /// use cryptocol::symmetric::AES_128;
+    ///
+    /// let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let plaintext = 0x1234567890ABCDEF1234567890ABCDEF_u128;
+    /// let ciphertext = aes.encrypt_u128(plaintext);
+    ///
+    /// println!("Plaintext:\t\t{:#034X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#034X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x01CCF8264AECB5D644E2BAE927584D87_u128);
+    ///
+    /// let cipher_cipher_text = aes.encrypt_u128(ciphertext);
+    /// println!("Recovered-ciphertext:\t{:#034X}", recovered_cipher_text);
+    /// assert_eq!(recovered_cipher_text, 0x1234567890ABCDEF1234567890ABCDEF_u128);
+    /// assert_eq!(recovered_cipher_text, plaintext);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.new_with_key)
     pub fn new_with_key<const K: usize>(key: &[u8; K]) -> Self
     {
         let mut rijndael = Self
@@ -799,6 +848,45 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         rijndael
     }
 
+    // pub fn new_with_key_u128(key: u128) -> Self
+    /// Constructs a new object Rijndael_Genetric.
+    ///
+    /// # Arguments
+    /// - The argument `key` is of `u128`.
+    /// - It should be in the same endianness of machine. For example,
+    ///   if the intended key is [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD,
+    ///   0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF], the key in
+    ///   `u128` for this argument is 0x_1234567890ABCDEF1234567890ABCDEF_u128
+    ///   for big-endian machine, and the key in `u128` for this argument is
+    ///   0x_EFCDAB9078563412EFCDAB9078563412_u128 for little-endian machine.
+    ///
+    /// # Features
+    /// - This method sets the key to be the given argument `key`.
+    /// - If `NK` is less than `4`, the rest bits at the address higher than
+    ///   `4 * NK` of the key given as the argument will be ignored.
+    /// - If `NK` is greater than `4`, the rest bits of the key to be set after
+    ///   128 bits will be set to be `zero`.
+    ///
+    /// # Example 1 for normal case
+    /// ```
+    /// use cryptocol::symmetric::AES_128;
+    ///
+    /// let mut aes = AES_128::new_with_key_u128(0xEFCDAB9078563412EFCDAB9078563412);
+    /// let plaintext = 0x1234567890ABCDEF1234567890ABCDEF_u128;
+    /// let ciphertext = aes.encrypt_u128(plaintext);
+    ///
+    /// println!("Plaintext:\t\t{:#034X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#034X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x01CCF8264AECB5D644E2BAE927584D87_u128);
+    ///
+    /// let recovered_cipher_text = aes.decrypt_u128(ciphertext);
+    /// println!("Recovered-ciphertext:\t{:#034X}\n", recovered_cipher_text);
+    /// assert_eq!(recovered_cipher_text, 0x1234567890ABCDEF1234567890ABCDEF_u128);
+    /// assert_eq!(recovered_cipher_text, plaintext);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.new_with_key_u128)
     pub fn new_with_key_u128(key: u128) -> Self
     {
         let mut rijndael = Self
@@ -813,18 +901,99 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         rijndael
     }
 
+    // pub fn encryptor_with_key<const K: usize>(key: &[u8; K]) -> Self
+    /// Constructs a new object Rijndael_Genetric as a positive encryptor (or
+    /// an encryptor) for the component of BigCryptor128 and NAES.
+    ///
+    /// # Arguments
+    /// - The argument `key` is the array of u8 that has `K` elements.
+    ///
+    /// # Features
+    /// - You won't use this method unless you use BigCryptor128 and NAES
+    ///   for such as Triple AES.
+    /// - This method constructs the encryptor component of BigCryptor128
+    ///   and NAES.
+    /// - This method sets the key to be the given argument `key`.
+    /// - If `K` is less than `4 * NK`, the rest bits of
+    ///   the key to be set after `K` bits will be set to be `zero`.
+    /// - If `K` is greater than `4 * NK`, the rest bits after `4 * NB` bits
+    ///   of the key given as the argument will be ignored.
+    ///
+    /// # Example 1
+    /// ```
+    /// // To do
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.encryptor_with_key)
     #[inline]
     pub fn encryptor_with_key<const K: usize>(key: &[u8; K]) -> Self
     {
         Self::new_with_key(key)
     }
 
+    // pub fn encryptor_with_key_u128(key: u128) -> Self
+    /// Constructs a new object Rijndael_Genetric as a positive encryptor (or
+    /// an encryptor) for the component of BigCryptor128 and NAES.
+    ///
+    /// # Arguments
+    /// - The argument `key` is of `u128`.
+    /// - It should be in the same endianness of machine. For example,
+    ///   if the intended key is [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD,
+    ///   0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF], the key in
+    ///   `u128` for this argument is 0x_1234567890ABCDEF1234567890ABCDEF_u128
+    ///   for big-endian machine, and the key in `u128` for this argument is
+    ///   0x_EFCDAB9078563412EFCDAB9078563412_u128 for little-endian machine.
+    ///
+    /// # Features
+    /// - You won't use this method unless you use BigCryptor128 and NAES
+    ///   for such as Triple AES.
+    /// - This method constructs the encryptor component of BigCryptor128
+    ///   and NAES.
+    /// - This method sets the key to be the given argument `key`.
+    /// - If `NK` is less than `4`, the rest bits at the address higher than
+    ///   `4 * NK` of the key given as the argument will be ignored.
+    /// - If `NK` is greater than `4`, the rest bits of the key to be set after
+    ///   128 bits will be set to be `zero`.
+    ///
+    /// # Example 1
+    /// ```
+    /// // To do
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.encryptor_with_key_u128)
     #[inline]
     pub fn encryptor_with_key_u128(key: u128) -> Self
     {
         Self::new_with_key_u128(key)
     }
 
+    // pub fn decryptor_with_key<const K: usize>(key: &[u8; K]) -> Self
+    /// Constructs a new object Rijndael_Genetric as a negative encryptor (or
+    /// a decryptor) for the component of BigCryptor128 and NAES.
+    ///
+    /// # Arguments
+    /// - The argument `key` is the array of u8 that has `K` elements.
+    ///
+    /// # Features
+    /// - You won't use this method unless you use BigCryptor128 and NAES
+    ///   for such as Triple AES.
+    /// - This method constructs the encryptor component of BigCryptor128
+    ///   and NAES.
+    /// - This method sets the key to be the given argument `key`.
+    /// - If `K` is less than `4 * NK`, the rest bits of
+    ///   the key to be set after `K` bits will be set to be `zero`.
+    /// - If `K` is greater than `4 * NK`, the rest bits after `4 * NB` bits
+    ///   of the key given as the argument will be ignored.
+    ///
+    /// # Example 1
+    /// ```
+    /// // To do
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.decryptor_with_key)
     pub fn decryptor_with_key<const K: usize>(key: &[u8; K]) -> Self
     {
         let mut rijndael = Self::new_with_key(key);
@@ -832,6 +1001,37 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         rijndael
     }
 
+    // pub fn decryptor_with_key_u128(key: u128) -> Self
+    /// Constructs a new object Rijndael_Genetric as a negative encryptor (or
+    /// a decryptor) for the component of BigCryptor128 and NAES.
+    ///
+    /// # Arguments
+    /// - The argument `key` is of `u128`.
+    /// - It should be in the same endianness of machine. For example,
+    ///   if the intended key is [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD,
+    ///   0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF], the key in
+    ///   `u128` for this argument is 0x_1234567890ABCDEF1234567890ABCDEF_u128
+    ///   for big-endian machine, and the key in `u128` for this argument is
+    ///   0x_EFCDAB9078563412EFCDAB9078563412_u128 for little-endian machine.
+    ///
+    /// # Features
+    /// - You won't use this method unless you use BigCryptor128 and NAES
+    ///   for such as Triple AES.
+    /// - This method constructs the encryptor component of BigCryptor128
+    ///   and NAES.
+    /// - This method sets the key to be the given argument `key`.
+    /// - If `NK` is less than `4`, the rest bits at the address higher than
+    ///   `4 * NK` of the key given as the argument will be ignored.
+    /// - If `NK` is greater than `4`, the rest bits of the key to be set after
+    ///   128 bits will be set to be `zero`.
+    ///
+    /// # Example 1
+    /// ```
+    /// // To do
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.decryptor_with_key_u128)
     pub fn decryptor_with_key_u128(key: u128) -> Self
     {
         let mut rijndael = Self::new_with_key_u128(key);
@@ -839,6 +1039,27 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         rijndael
     }
 
+    // pub fn get_key(&mut self) -> [u32; NK]
+    /// Gets the key.
+    ///
+    /// # Output
+    /// This method returns the key in the form of array of `u32`.
+    ///
+    /// # Example 1 for AES_128
+    /// ```
+    /// use cryptocol::symmetric::AES_128;
+    ///
+    /// let mut _aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let key = _aes.get_key();
+    /// print!("K = ");
+    /// for k in key
+    ///     { print!("{:#010X} ", k); }
+    /// println!();
+    /// assert_eq!(key, [0x78563412, 0xEFCDAB90, 0x78563412, 0xEFCDAB90]);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.get_key)
     pub fn get_key(&mut self) -> [u32; NK]
     {
         let mut key = [0_u32; NK];
@@ -847,14 +1068,68 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         key
     }
 
+    // pub fn get_key_u128(&self) -> u128
+    /// Gets the key.
+    ///
+    /// # Output
+    /// This method returns the key in the form of `u128`.
+    ///
+    /// # Features
+    /// - If `NK` is less than `4`, the rest bits at the address higher than
+    ///   `4 * NK` of the returned key will be set to be `zero`.
+    /// - If `NK` is greater than `4`, the rest bits of the key to be returned
+    ///   after 128 bits will be ignored.
+    ///
+    /// # Example 1 for 128-bit key
+    /// ```
+    /// use cryptocol::symmetric::AES_128;
+    ///
+    /// let mut _aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let key = _aes.get_key_u128();
+    /// println!("Key = {:#034X}", key);
+    /// assert_eq!(key, 0xEFCDAB9078563412EFCDAB9078563412_u128);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.get_key_u128)
     pub fn get_key_u128(&self) -> u128
     {
+        let len = if 16 < NK * 4 { 16 } else { NK * 4 };
         let mut key = 0_u128;
         unsafe { copy_nonoverlapping(self.key.as_ptr() as *const u8,
-                                     &mut key as *mut u128 as *mut u8, 16); }
+                                     &mut key as *mut u128 as *mut u8, len); }
         key
     }
 
+    // pub fn set_key<const K: usize>(&mut self, key: &[u8; K])
+    /// Sets the key.
+    ///
+    /// # Arguments
+    /// - The argument `key` is the array of `u8` that has `K` elements.
+    ///
+    /// # Features
+    /// - This method sets the key to be the given argument `key`.
+    /// - If `K` is less than `4 * NK`, the rest bits of
+    ///   the key to be set after `K` bits will be set to be `zero`.
+    /// - If `K` is greater than `4 * NK`, the rest bits after `4 * NK` bits
+    ///   of the key given as the argument will be ignored.
+    ///
+    /// # Example 1 for normal case
+    /// ```
+    /// use cryptocol::symmetric::AES_128;
+    ///
+    /// let mut aes = AES_128::new();
+    /// aes.set_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let key = aes.get_key();
+    /// print!("K = ");
+    /// for k in key
+    ///     { print!("{:#010X} ", k); }
+    /// println!();
+    /// assert_eq!(key, [0x78563412, 0xEFCDAB90, 0x78563412, 0xEFCDAB90]);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.set_key)
     pub fn set_key<const K: usize>(&mut self, key: &[u8; K])
     {
         let len = if K < NK * 4 { K } else { NK * 4 };
@@ -864,33 +1139,174 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         Self::method_make_round_keys(self);
     }
 
+    //  pub fn set_key_u128(&mut self, key: u128)
+    /// Constructs a new object Rijndael_Genetric.
+    ///
+    /// # Arguments
+    /// - The argument `key` is of `u128`.
+    /// - It should be in the same endianness of machine. For example,
+    ///   if the intended key is [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD,
+    ///   0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF], the key in
+    ///   `u128` for this argument is 0x_1234567890ABCDEF1234567890ABCDEF_u128
+    ///   for big-endian machine, and the key in `u128` for this argument is
+    ///   0x_EFCDAB9078563412EFCDAB9078563412_u128 for little-endian machine.
+    ///
+    /// # Features
+    /// - This method sets the key to be the given argument `key`.
+    /// - If `NK` is less than `4`, the rest bits at the address higher than
+    ///   `4 * NK` of the key given as the argument will be ignored.
+    /// - If `NK` is greater than `4`, the rest bits of the key to be set after
+    ///   128 bits will be set to be `zero`.
+    ///
+    /// # Example 1 for normal case
+    /// ```
+    /// use cryptocol::symmetric::AES_128;
+    ///
+    /// let mut aes = AES_128::new();
+    /// aes.set_key_u128(0xEFCDAB9078563412EFCDAB9078563412);
+    /// let key = aes.get_key();
+    /// print!("K = ");
+    /// for k in key
+    ///     { print!("{:#010X} ", k); }
+    /// println!();
+    /// assert_eq!(key, [0x78563412, 0xEFCDAB90, 0x78563412, 0xEFCDAB90]);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.set_key_u128)
     pub fn set_key_u128(&mut self, key: u128)
     {
+        let len = if 16 < NK * 4 { 16 } else { NK * 4 };
         unsafe {
             copy_nonoverlapping(&key as *const u128 as *const u8,
-                                self.key.as_mut_ptr() as *mut u8, 16);
+                                self.key.as_mut_ptr() as *mut u8, len);
         }
         Self::method_make_round_keys(self);
     }
 
+    // pub fn turn_inverse(&mut self)
+    /// Flips its role in BigCryptor128 or NAES.
+    ///
+    /// # Features
+    /// - You won't use this method unless you use BigCryptor128 or NAES
+    ///   for such as Triple DES.
+    /// - Even if you are writing codes in the context of using BigCryptor128
+    ///   or NAES, you will hardly use this method because it is high chance
+    ///   that you will have constructed components with the methods,
+    ///   encryptor_with_key(struct@Rijndael_Genetric#method.encryptor_with_key),
+    ///   encryptor_with_key_u64(struct@Rijndael_Genetric#method.encryptor_with_key_u128),
+    ///   decryptor_with_key(struct@Rijndael_Genetric#method.decryptor_with_key), and
+    ///   decryptor_with_key_u64(struct@Rijndael_Genetric#method.decryptor_with_key_u128).
+    /// - If it is constructed as encryptor for BigCryptor128 or NAES,
+    ///   it will be changed into decryptor.
+    /// - If it is constructed as decryptor for BigCryptor128 or NAES,
+    ///   it will be changed into encryptor.
+    ///
+    /// # Example 1
+    /// ```
+    ///
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.turn_inverse)
     #[inline]
     pub fn turn_inverse(&mut self)
     {
         (self.enc, self.dec) = (self.dec, self.enc);
     }
 
+    // pub fn turn_encryptor(&mut self)
+    /// Changes its role in BigCryptor128 or NAES to encryptor.
+    ///
+    /// # Features
+    /// - You won't use this method unless you use BigCryptor128 or NAES
+    ///   for such as Triple AES.
+    /// - Even if you are writing codes in the context of using BigCryptor128
+    ///   or NAES, you will hardly use this method because it is high chance
+    ///   that you will have constructed components with the methods,
+    ///   [encryptor_with_key](struct@Rijndael_Genetric#method.encryptor_with_key),
+    ///   [encryptor_with_key_u128](struct@Rijndael_Genetric#method.encryptor_with_key_u128),
+    ///   [decryptor_with_key](struct@Rijndael_Genetric#method.decryptor_with_key), and
+    ///   [decryptor_with_key_u128](struct@Rijndael_Genetric#method.decryptor_with_key_u128).
+    /// - If it is constructed as encryptor for BigCryptor128 or NAES,
+    ///   it will not be changed at all.
+    /// - If it is constructed as decryptor for BigCryptor128 or NAES,
+    ///   it will be changed into encryptor.
+    ///
+    /// # Example 1
+    /// ```
+    ///
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.turn_encryptor)
     pub fn turn_encryptor(&mut self)
     {
         self.enc = Self::encrypt_unit;
         self.dec = Self::decrypt_unit;
     }
 
+    // pub fn turn_decryptor(&mut self)
+    /// Changes its role in BigCryptor128 or NAES to decryptor.
+    ///
+    /// # Features
+    /// - You won't use this method unless you use BBigCryptor128 or NAES
+    ///   for such as Triple DES.
+    /// - Even if you are writing codes in the context of using BigCryptor128
+    ///   or NAES, you will hardly use this method because it is high chance
+    ///   that you will have constructed components with the methods,
+    ///   [encryptor_with_key](struct@Rijndael_Genetric#method.encryptor_with_key),
+    ///   [encryptor_with_key_u128](struct@Rijndael_Genetric#method.encryptor_with_key_u128),
+    ///   [decryptor_with_key](struct@Rijndael_Genetric#method.decryptor_with_key), and
+    ///   [decryptor_with_key_u128](struct@Rijndael_Genetric#method.decryptor_with_key_u128).
+    /// - If it is constructed as encryptor for BigCryptor128 or NAES,
+    ///   it will be changed into decryptor.
+    /// - If it is constructed as decryptor for BigCryptor128 or NAES,
+    ///   it will not be changed at all.
+    ///
+    /// # Example 1
+    /// ```
+    ///
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.turn_decryptor)
     pub fn turn_decryptor(&mut self)
     {
         self.enc = Self::decrypt_unit;
         self.dec = Self::encrypt_unit;
     }
 
+    //  pub fn encrypt_unit(&mut self, message: &[IntUnion; NB]) -> [IntUnion; NB]
+    /// Encrypts data in the form of an array of IntUnion with `NB` elements.
+    ///
+    /// # Arguments
+    /// `message` is of the type `&[IntUnion; NB]`
+    /// and the plaintext to be encrypted.
+    ///
+    /// # Output
+    /// This method returns the encrypted data in the array of `IntUnion`
+    /// with `NB` elements.
+    ///
+    /// # Example 1 for AES_128
+    /// ```
+    /// use cryptocol::number::IntUnion;
+    /// use cryptocol::symmetric::AES_128;
+    ///
+    /// let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let plaintext = [IntUnion::new_with(0x90ABCDEF), IntUnion::new_with(0x12345678), IntUnion::new_with(0x90ABCDEF), IntUnion::new_with(0x12345678)];
+    /// let ciphertext = aes.encrypt_unit(&plaintext);
+    ///
+    /// println!("Plaintext:\t{:08X}{:08X}{:08X}{:08X}", plaintext[0].get(), plaintext[1].get(), plaintext[2].get(), plaintext[3].get());
+    /// println!("Ciphertext:\t{:08X}{:08X}{:08X}{:08X}", ciphertext[0].get(), ciphertext[1].get(), ciphertext[2].get(), ciphertext[3].get());
+    /// assert_eq!(ciphertext[0].get(), 0x27584D87);
+    /// assert_eq!(ciphertext[1].get(), 0x44E2BAE9);
+    /// assert_eq!(ciphertext[2].get(), 0x4AECB5D6);
+    /// assert_eq!(ciphertext[3].get(), 0x01CCF826);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.encrypt_unit)
     pub fn encrypt_unit(&mut self, message: &[IntUnion; NB]) -> [IntUnion; NB]
     {
         self.set_block(message);
@@ -898,6 +1314,31 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         self.get_block()
     }
 
+    // pub fn encrypt_u128(&mut self, message: u128) -> u128
+    /// Encrypts a 128-bit data.
+    ///
+    /// # Arguments
+    /// `message` is of `u128`-type and the plaintext to be encrypted.
+    ///
+    /// # Output
+    /// This method returns the encrypted data of `u128`-type from `message`.
+    ///
+    /// # Example 1 for AES_128
+    /// ```
+    /// use cryptocol::number::IntUnion;
+    /// use cryptocol::symmetric::AES_128;
+    ///
+    /// let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let plaintext = 0x1234567890ABCDEF1234567890ABCDEF;
+    /// let ciphertext = aes.encrypt_u128(plaintext);
+    /// 
+    /// println!("Plaintext:\t{:#034X}", plaintext);
+    /// println!("Ciphertext:\t{:#034X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x01CCF8264AECB5D644E2BAE927584D87_u128);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.encrypt_u128)
     pub fn encrypt_u128(&mut self, message: u128) -> u128
     {
         self.set_block_u128(message);
@@ -905,6 +1346,36 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         self.get_block_u128()
     }
 
+    // pub fn decrypt_unit(&mut self, cipher: &[IntUnion; NB]) -> [IntUnion; NB]
+    /// Decrypts data in the form of an array of IntUnion with `NB` elements.
+    ///
+    /// # Arguments
+    /// `cipher` is of the type `&[IntUnion; NB]`
+    /// and the ciphertext to be decrypted.
+    ///
+    /// # Output
+    /// This method returns the decrypted data in the array of `IntUnion`
+    /// with `NB` elements.
+    ///
+    /// # Example 1 for AES_128
+    /// ```
+    /// use cryptocol::number::IntUnion;
+    /// use cryptocol::symmetric::AES_128;
+    ///
+    /// let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let ciphertext = [IntUnion::new_with(0x27584D87), IntUnion::new_with(0x44E2BAE9), IntUnion::new_with(0x4AECB5D6), IntUnion::new_with(0x01CCF826)];
+    /// let plaintext = aes.decrypt_unit(&ciphertext);
+    ///
+    /// println!("Ciphertext:\t{:08X}{:08X}{:08X}{:08X}", ciphertext[0].get(), ciphertext[1].get(), ciphertext[2].get(), ciphertext[3].get());
+    /// println!("Plaintext:\t{:08X}{:08X}{:08X}{:08X}", plaintext[0].get(), plaintext[1].get(), plaintext[2].get(), plaintext[3].get());
+    /// assert_eq!(plaintext[0].get(), 0x90ABCDEF);
+    /// assert_eq!(plaintext[1].get(), 0x12345678);
+    /// assert_eq!(plaintext[2].get(), 0x90ABCDEF);
+    /// assert_eq!(plaintext[3].get(), 0x12345678);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.decrypt_unit)
     pub fn decrypt_unit(&mut self, cipher: &[IntUnion; NB]) -> [IntUnion; NB]
     {
         self.set_block(cipher);
@@ -912,6 +1383,31 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         self.get_block()
     }
 
+    // pub fn decrypt_u128(&mut self, cipher: u128) -> u128
+    /// Decrypts a 128-bit data.
+    ///
+    /// # Arguments
+    /// `cioher` is of `u128`-type and the ciphertext to be decrypted.
+    ///
+    /// # Output
+    /// This method returns the decrypted data of `u128`-type from `cipher`.
+    ///
+    /// # Example 1 for AES_128
+    /// ```
+    /// use cryptocol::number::IntUnion;
+    /// use cryptocol::symmetric::AES_128;
+    ///
+    /// let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let ciphertext = 0x01CCF8264AECB5D644E2BAE927584D87_u128;
+    /// let plaintext = aes.decrypt_u128(ciphertext);
+    ///
+    /// println!("Ciphertext:\t{:#034X}", ciphertext);
+    /// println!("Plaintext:\t{:#034X}", plaintext);
+    /// assert_eq!(plaintext, 0x1234567890ABCDEF1234567890ABCDEF);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.decrypt_u128)
     pub fn decrypt_u128(&mut self, cipher: u128) -> u128
     {
         self.set_block_u128(cipher);
@@ -931,6 +1427,193 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         (self.dec)(self, cipher)
     }
 
+    // pub fn encrypt_array_unit<const N: usize>(&mut self, message: &[[IntUnion; NB]; N], cipher: &mut [[IntUnion; NB]; N])
+    /// Encrypts an array of unit data, `[[IntUnion; NB]; N]`.
+    ///
+    /// # Arguments
+    /// - `message` is of an array of `[IntUnion; NB]`-type and the plaintext
+    ///   to be encrypted.
+    /// - `cipher` is of an array of `[IntUnion; NB]`-type and the ciphertext
+    ///   to be stored.
+    ///
+    /// # Features
+    /// This method encrypts multiple of 64-bit data without padding anything
+    /// in ECB (Electronic CodeBook) mode.
+    ///
+    /// # Counterpart methods
+    /// - If you need to encrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
+    ///   in ECB operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::ECB_PKCS7`.
+    ///   see [here](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)
+    /// - If you need to encrypt data with padding bits according ISO
+    ///   in ECB operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::ECB_ISO`.
+    ///   see [here](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)
+    /// - If you need to encrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
+    ///   in CBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::CBC_PKCS7`.
+    ///   see [here](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)
+    /// - If you need to encrypt data with padding bits according ISO
+    ///   in CBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::CBC_ISO`.
+    ///   see [here](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)
+    /// - If you need to encrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
+    ///   in PCBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::PCBC_PKCS7`.
+    ///   see [here](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html)
+    /// - If you need to encrypt data with padding bits according ISO
+    ///   in PCBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::PCBC_ISO`.
+    ///   see [here](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html)
+    /// - If you need to encrypt data in CFB operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::CFB`.
+    ///   see [here](./traits_cfb/trait.CFB.html)
+    /// - If you need to encrypt data in OFB operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::OFB`.
+    ///   see [here](./traits_ofb/trait.OFB.html)
+    /// - If you need to encrypt data in CTR operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::CTR`.
+    ///   see [here](./traits_ctr/trait.CTR.html)
+    ///
+    /// In summary,
+    ///
+    /// |      | padding PKCS7                                                        | padding ISO                                                    | no padding                         |
+    /// |------|----------------------------------------------------------------------|----------------------------------------------------------------|------------------------------------|
+    /// | ECB  | [ECB_PKCS7](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)    | [ECB_ISO](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)    |                                    |
+    /// | CBC  | [CBC_PKCS7](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)    | [CBC_ISO](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)    |                                    |
+    /// | PCBC | [PCBC_PKCS7](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html) | [PCBC_ISO](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html) |                                    |
+    /// | CFB  |                                                                      |                                                                | [CFB](./traits_cfb/trait.CFB.html) |
+    /// | OFB  |                                                                      |                                                                | [OFB](./traits_ofb/trait.OFB.html) |
+    /// | CTR  |                                                                      |                                                                | [CTR](./traits_ctr/trait.CTR.html) |
+    ///
+    /// # Example 1 for AES_128
+    /// ```
+    /// use cryptocol::number::IntUnion;
+    /// use cryptocol::symmetric::AES_128;
+    ///
+    /// let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let plaintext = [[IntUnion::new_with(0x90ABCDEF), IntUnion::new_with(0x12345678), IntUnion::new_with(0x90ABCDEF), IntUnion::new_with(0x12345678)]; 3];
+    /// let mut ciphertext = [[IntUnion::new(); 4]; 3];
+    /// aes.encrypt_array_unit(&plaintext, &mut ciphertext);
+    /// 
+    /// println!("Plaintext:\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}",
+    ///         plaintext[0][0].get(), plaintext[0][1].get(), plaintext[0][2].get(), plaintext[0][3].get(),
+    ///         plaintext[1][0].get(), plaintext[1][1].get(), plaintext[1][2].get(), plaintext[1][3].get(),
+    ///         plaintext[2][0].get(), plaintext[2][1].get(), plaintext[2][2].get(), plaintext[2][3].get());
+    /// println!("Ciphertext:\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}",
+    ///         ciphertext[0][0].get(), ciphertext[0][1].get(), ciphertext[0][2].get(), ciphertext[0][3].get(),
+    ///         ciphertext[1][0].get(), ciphertext[1][1].get(), ciphertext[1][2].get(), ciphertext[1][3].get(),
+    ///         ciphertext[2][0].get(), ciphertext[2][1].get(), ciphertext[2][2].get(), ciphertext[2][3].get());
+    /// assert_eq!(ciphertext[0][0].get(), 0x27584D87);
+    /// assert_eq!(ciphertext[0][1].get(), 0x44E2BAE9);
+    /// assert_eq!(ciphertext[0][2].get(), 0x4AECB5D6);
+    /// assert_eq!(ciphertext[0][3].get(), 0x01CCF826);
+    /// assert_eq!(ciphertext[1][0].get(), 0x27584D87);
+    /// assert_eq!(ciphertext[1][1].get(), 0x44E2BAE9);
+    /// assert_eq!(ciphertext[1][2].get(), 0x4AECB5D6);
+    /// assert_eq!(ciphertext[1][3].get(), 0x01CCF826);
+    /// assert_eq!(ciphertext[2][0].get(), 0x27584D87);
+    /// assert_eq!(ciphertext[2][1].get(), 0x44E2BAE9);
+    /// assert_eq!(ciphertext[2][2].get(), 0x4AECB5D6);
+    /// assert_eq!(ciphertext[2][3].get(), 0x01CCF826);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.encrypt_array_unit)
+    pub fn encrypt_array_unit<const N: usize>(&mut self, message: &[[IntUnion; NB]; N], cipher: &mut [[IntUnion; NB]; N])
+    {
+        for i in 0..N
+        {
+            self.set_block(&message[i]);
+            self.encrypt_block();
+            cipher[i] = self.get_block();
+        }
+    }
+
+    // pub fn encrypt_array_u128<const N: usize>(&mut self, message: &[u128; N], cipher: &mut [u128; N])
+    /// Encrypts an array of 128-bit data.
+    ///
+    /// # Arguments
+    /// - `message` is of an array of `u128`-type and the plaintext
+    ///   to be encrypted.
+    /// - `cipher` is of an array of `u128`-type and the ciphertext
+    ///   to be stored.
+    ///
+    /// # Features
+    /// This method encrypts multiple of 128-bit data without padding anything
+    /// in ECB (Electronic CodeBook) mode.
+    ///
+    /// # Counterpart methods
+    /// - If you need to encrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
+    ///   in ECB operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::ECB_PKCS7`.
+    ///   see [here](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)
+    /// - If you need to encrypt data with padding bits according ISO
+    ///   in ECB operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::ECB_ISO`.
+    ///   see [here](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)
+    /// - If you need to encrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
+    ///   in CBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::CBC_PKCS7`.
+    ///   see [here](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)
+    /// - If you need to encrypt data with padding bits according ISO
+    ///   in CBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::CBC_ISO`.
+    ///   see [here](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)
+    /// - If you need to encrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
+    ///   in PCBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::PCBC_PKCS7`.
+    ///   see [here](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html)
+    /// - If you need to encrypt data with padding bits according ISO
+    ///   in PCBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::PCBC_ISO`.
+    ///   see [here](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html)
+    /// - If you need to encrypt data in CFB operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::CFB`.
+    ///   see [here](./traits_cfb/trait.CFB.html)
+    /// - If you need to encrypt data in OFB operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::OFB`.
+    ///   see [here](./traits_ofb/trait.OFB.html)
+    /// - If you need to encrypt data in CTR operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::CTR`.
+    ///   see [here](./traits_ctr/trait.CTR.html)
+    ///
+    /// In summary,
+    ///
+    /// |      | padding PKCS7                                                        | padding ISO                                                    | no padding                         |
+    /// |------|----------------------------------------------------------------------|----------------------------------------------------------------|------------------------------------|
+    /// | ECB  | [ECB_PKCS7](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)    | [ECB_ISO](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)    |                                    |
+    /// | CBC  | [CBC_PKCS7](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)    | [CBC_ISO](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)    |                                    |
+    /// | PCBC | [PCBC_PKCS7](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html) | [PCBC_ISO](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html) |                                    |
+    /// | CFB  |                                                                      |                                                                | [CFB](./traits_cfb/trait.CFB.html) |
+    /// | OFB  |                                                                      |                                                                | [OFB](./traits_ofb/trait.OFB.html) |
+    /// | CTR  |                                                                      |                                                                | [CTR](./traits_ctr/trait.CTR.html) |
+    ///
+    /// # Example 1 for AES_128
+    /// ```
+    /// use cryptocol::number::IntUnion;
+    /// use cryptocol::symmetric::AES_128;
+    /// 
+    /// let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let plaintext = [0x1234567890ABCDEF1234567890ABCDEF_u128, 0x1234567890ABCDEF1234567890ABCDEF, 0x1234567890ABCDEF1234567890ABCDEF];
+    /// let mut ciphertext = [0_u128; 3];
+    /// aes.encrypt_array_u128(&plaintext, &mut ciphertext);
+    /// 
+    /// println!("Plaintext:\t{:#034X} {:#034X} {:#034X}", plaintext[0], plaintext[1], plaintext[2]);
+    /// println!("Ciphertext:\t{:#034X} {:#034X} {:#034X}", ciphertext[0], ciphertext[1], ciphertext[2]);
+    /// assert_eq!(ciphertext[0], 0x01CCF8264AECB5D644E2BAE927584D87_u128);
+    /// assert_eq!(ciphertext[1], 0x01CCF8264AECB5D644E2BAE927584D87_u128);
+    /// assert_eq!(ciphertext[2], 0x01CCF8264AECB5D644E2BAE927584D87_u128);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.encrypt_array_u128)
     pub fn encrypt_array_u128<const N: usize>(&mut self, message: &[u128; N], cipher: &mut [u128; N])
     {
         for i in 0..N
@@ -941,6 +1624,192 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         }
     }
 
+    // pub fn decrypt_array_unit<const N: usize>(&mut self, cipher: &[[IntUnion; NB]; N], message: &mut [[IntUnion; NB]; N])
+    /// Decrypts an array of unit data, `[[IntUnion; NB]; N]`.
+    ///
+    /// # Arguments
+    /// - `cipher` is of an array of `[IntUnion; NB]`-type and the ciphertext
+    ///   to be encrypted.
+    /// - `message` is of an array of `[IntUnion; NB]`-type and the plaintext
+    ///   to be stored.
+    ///
+    /// # Features
+    /// This method decrypts multiple of 64-bit data without padding anything
+    /// in ECB (Electronic CodeBook) mode.
+    ///
+    /// # Counterpart methods
+    /// - If you need to decrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
+    ///   in ECB operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::ECB_PKCS7`.
+    ///   see [here](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)
+    /// - If you need to decrypt data with padding bits according ISO
+    ///   in ECB operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::ECB_ISO`.
+    ///   see [here](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)
+    /// - If you need to decrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
+    ///   in CBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::CBC_PKCS7`.
+    ///   see [here](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)
+    /// - If you need to decrypt data with padding bits according ISO
+    ///   in CBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::CBC_ISO`.
+    ///   see [here](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)
+    /// - If you need to decrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
+    ///   in PCBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::PCBC_PKCS7`.
+    ///   see [here](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html)
+    /// - If you need to decrypt data with padding bits according ISO
+    ///   in PCBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::PCBC_ISO`.
+    ///   see [here](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html)
+    /// - If you need to decrypt data in CFB operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::CFB`.
+    ///   see [here](./traits_cfb/trait.CFB.html)
+    /// - If you need to decrypt data in OFB operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::OFB`.
+    ///   see [here](./traits_ofb/trait.OFB.html)
+    /// - If you need to decrypt data in CTR operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::CTR`.
+    ///   see [here](./traits_ctr/trait.CTR.html)
+    ///
+    /// In summary,
+    ///
+    /// |      | padding PKCS7                                                        | padding ISO                                                    | no padding                         |
+    /// |------|----------------------------------------------------------------------|----------------------------------------------------------------|------------------------------------|
+    /// | ECB  | [ECB_PKCS7](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)    | [ECB_ISO](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)    |                                    |
+    /// | CBC  | [CBC_PKCS7](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)    | [CBC_ISO](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)    |                                    |
+    /// | PCBC | [PCBC_PKCS7](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html) | [PCBC_ISO](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html) |                                    |
+    /// | CFB  |                                                                      |                                                                | [CFB](./traits_cfb/trait.CFB.html) |
+    /// | OFB  |                                                                      |                                                                | [OFB](./traits_ofb/trait.OFB.html) |
+    /// | CTR  |                                                                      |                                                                | [CTR](./traits_ctr/trait.CTR.html) |
+    ///
+    /// # Example 1 for AES_128
+    /// ```
+    /// use cryptocol::number::IntUnion;
+    /// use cryptocol::symmetric::AES_128;
+    /// 
+    /// let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let ciphertext = [[IntUnion::new_with(0x27584D87), IntUnion::new_with(0x44E2BAE9), IntUnion::new_with(0x4AECB5D6), IntUnion::new_with(0x01CCF826)]; 3];
+    /// let mut plaintext = [[IntUnion::new(); 4]; 3];
+    /// aes.decrypt_array_unit(&ciphertext, &mut plaintext);
+    /// 
+    /// println!("Ciphertext:\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}",
+    ///         ciphertext[0][0].get(), ciphertext[0][1].get(), ciphertext[0][2].get(), ciphertext[0][3].get(),
+    ///         ciphertext[1][0].get(), ciphertext[1][1].get(), ciphertext[1][2].get(), ciphertext[1][3].get(),
+    ///         ciphertext[2][0].get(), ciphertext[2][1].get(), ciphertext[2][2].get(), ciphertext[2][3].get());
+    /// println!("Plaintext:\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}",
+    ///         plaintext[0][0].get(), plaintext[0][1].get(), plaintext[0][2].get(), plaintext[0][3].get(),
+    ///         plaintext[1][0].get(), plaintext[1][1].get(), plaintext[1][2].get(), plaintext[1][3].get(),
+    ///         plaintext[2][0].get(), plaintext[2][1].get(), plaintext[2][2].get(), plaintext[2][3].get());
+    /// assert_eq!(plaintext[0][0].get(), 0x90ABCDEF);
+    /// assert_eq!(plaintext[0][1].get(), 0x12345678);
+    /// assert_eq!(plaintext[0][2].get(), 0x90ABCDEF);
+    /// assert_eq!(plaintext[0][3].get(), 0x12345678);
+    /// assert_eq!(plaintext[1][0].get(), 0x90ABCDEF);
+    /// assert_eq!(plaintext[1][1].get(), 0x12345678);
+    /// assert_eq!(plaintext[1][2].get(), 0x90ABCDEF);
+    /// assert_eq!(plaintext[1][3].get(), 0x12345678);
+    /// assert_eq!(plaintext[2][0].get(), 0x90ABCDEF);
+    /// assert_eq!(plaintext[2][1].get(), 0x12345678);
+    /// assert_eq!(plaintext[2][2].get(), 0x90ABCDEF);
+    /// assert_eq!(plaintext[2][3].get(), 0x12345678);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.decrypt_array_unit)
+    pub fn decrypt_array_unit<const N: usize>(&mut self, cipher: &[[IntUnion; NB]; N], message: &mut [[IntUnion; NB]; N])
+    {
+        for i in 0..N
+        {
+            self.set_block(&cipher[i]);
+            self.decrypt_block();
+            message[i] = self.get_block();
+        }
+    }
+
+    // pub fn decrypt_array_u128<const N: usize>(&mut self, cipher: &[u128; N], message: &mut [u128; N])
+    /// Decrypts an array of 128-bit data.
+    ///
+    /// # Arguments
+    /// - `cipher` is of an array of `u128`-type and the ciphertext to be
+    ///   decrypted.
+    /// - `message` is of an array of `u128`-type and the plaintext to be stored.
+    ///
+    /// # Features
+    /// This method decrypts multiple of 64-bit data without padding anything
+    /// in ECB (Electronic CodeBook) mode.
+    ///
+    /// # Counterpart methods
+    /// - If you need to decrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
+    ///   in ECB operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::ECB_PKCS7`.
+    ///   see [here](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)
+    /// - If you need to decrypt data with padding bits according ISO
+    ///   in ECB operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::ECB_ISO`.
+    ///   see [here](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)
+    /// - If you need to decrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
+    ///   in CBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::CBC_PKCS7`.
+    ///   see [here](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)
+    /// - If you need to decrypt data with padding bits according ISO
+    ///   in CBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::CBC_ISO`.
+    ///   see [here](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)
+    /// - If you need to decrypt data with padding bits according
+    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
+    ///   in PCBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::PCBC_PKCS7`.
+    ///   see [here](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html)
+    /// - If you need to decrypt data with padding bits according ISO
+    ///   in PCBC operation mode, you may need to import (use)
+    ///   `cryptocol::symmetric::PCBC_ISO`.
+    ///   see [here](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html)
+    /// - If you need to decrypt data in CFB operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::CFB`.
+    ///   see [here](./traits_cfb/trait.CFB.html)
+    /// - If you need to decrypt data in OFB operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::OFB`.
+    ///   see [here](./traits_ofb/trait.OFB.html)
+    /// - If you need to decrypt data in CTR operation mode,
+    ///   you may need to import (use) `cryptocol::symmetric::CTR`.
+    ///   see [here](./traits_ctr/trait.CTR.html)
+    ///
+    /// In summary,
+    ///
+    /// |      | padding PKCS7                                                        | padding ISO                                                    | no padding                         |
+    /// |------|----------------------------------------------------------------------|----------------------------------------------------------------|------------------------------------|
+    /// | ECB  | [ECB_PKCS7](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)    | [ECB_ISO](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)    |                                    |
+    /// | CBC  | [CBC_PKCS7](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)    | [CBC_ISO](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)    |                                    |
+    /// | PCBC | [PCBC_PKCS7](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html) | [PCBC_ISO](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html) |                                    |
+    /// | CFB  |                                                                      |                                                                | [CFB](./traits_cfb/trait.CFB.html) |
+    /// | OFB  |                                                                      |                                                                | [OFB](./traits_ofb/trait.OFB.html) |
+    /// | CTR  |                                                                      |                                                                | [CTR](./traits_ctr/trait.CTR.html) |
+    ///
+    /// # Example 1 for AES_128
+    /// ```
+    /// use cryptocol::number::IntUnion;
+    /// use cryptocol::symmetric::AES_128;
+    /// 
+    /// let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let ciphertext = [0x01CCF8264AECB5D644E2BAE927584D87_u128, 0x01CCF8264AECB5D644E2BAE927584D87_u128, 0x01CCF8264AECB5D644E2BAE927584D87_u128];
+    /// let mut plaintext = [0_u128; 3];
+    /// aes.decrypt_array_u128(&ciphertext, &mut plaintext);
+    /// 
+    /// println!("Ciphertext:\t{:#034X} {:#034X} {:#034X}", ciphertext[0], ciphertext[1], ciphertext[2]);
+    /// println!("Plaintext:\t{:#034X} {:#034X} {:#034X}", plaintext[0], plaintext[1], plaintext[2]);
+    /// assert_eq!(plaintext[0], 0x1234567890ABCDEF1234567890ABCDEF_u128);
+    /// assert_eq!(plaintext[1], 0x1234567890ABCDEF1234567890ABCDEF_u128);
+    /// assert_eq!(plaintext[2], 0x1234567890ABCDEF1234567890ABCDEF_u128);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.decrypt_array_u128)
     pub fn decrypt_array_u128<const N: usize>(&mut self, cipher: &[u128; N], message: &mut [u128; N])
     {
         for i in 0..N
@@ -951,28 +1820,154 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         }
     }
 
+    // pub fn is_succeful(&self) -> bool
+    /// Checks whether the previous encryption or decryption was successful.
+    ///
+    /// # Output
+    /// If the previous encryption or decryption was successful, this method
+    /// returns true. Otherwise, it returns false.
+    ///
+    /// # Features
+    /// - Usually, you don't have to use this method because the encryption
+    ///   methods returns the length of ciphertext and the decryption methods
+    ///   returns the length of plaintext but they returns `0` when they failed.
+    /// - If the ciphertext is 8 bytes for decryption with the padding either
+    ///   pkcs7 or iso, the return value `0` of the decryption methods is not
+    ///   discriminatory. You don't know whether the previous decryption was
+    ///   failed or the original plaintext was just null string or "". In this
+    ///   case you can check its success with this method.
+    ///
+    /// # Example 1 for the message of 0 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ AES_128, ECB_PKCS7 };
+    /// 
+    /// let key = 0xEFCDAB9078563412EFCDAB9078563412_u128;
+    /// println!("K =\t{:#034X}", key);
+    /// let mut a_aes = AES_128::new_with_key_u128(key);
+    /// let message = "";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 16];
+    /// let len = a_aes.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// println!("The length of ciphertext = {}", len);
+    /// assert_eq!(len, 16);
+    /// let success = a_aes.is_successful();
+    /// assert_eq!(success, true);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "26 F2 F8 B7 B7 FD 46 9A 97 97 F3 24 E7 51 99 47 ");
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.is_successful)
     #[inline]
     pub fn is_successful(&self) -> bool
     {
         self.block[0][0] == Self::SUCCESS
     }
 
+    // pub fn is_failed(&self) -> bool
+    /// Checks whether the previous encryption or decryption was failed.
+    ///
+    /// # Output
+    /// If the previous encryption or decryption was failed, this method
+    /// returns true. Otherwise, it returns false.
+    ///
+    /// # Features
+    /// - Usually, you don't have to use this method because the encryption
+    ///   methods returns the length of ciphertext and the decryption methods
+    ///   returns the length of plaintext but they returns `0` when they failed.
+    /// - If the ciphertext is 8 bytes for decryption with the padding either
+    ///   pkcs7 or iso, the return value `0` of the decryption methods is not
+    ///   discriminatory. You don't know whether the previous decryption was
+    ///   failed or the original plaintext was just null string or "". In this
+    ///   case you can check its success with this method.
+    ///
+    /// # Example 1 for the message of 0 bytes
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ AES_128, ECB_PKCS7 };
+    /// 
+    /// let key = 0xEFCDAB9078563412EFCDAB9078563412_u128;
+    /// println!("K =\t{:#034X}", key);
+    /// let mut a_aes = AES_128::new_with_key_u128(key);
+    /// let message = "";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 16];
+    /// let len = a_aes.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// println!("The length of ciphertext = {}", len);
+    /// assert_eq!(len, 16);
+    /// let failure = a_aes.is_failed();
+    /// assert_eq!(failure, false);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "26 F2 F8 B7 B7 FD 46 9A 97 97 F3 24 E7 51 99 47 ");
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.is_failed)
     #[inline]
     pub fn is_failed(&self) -> bool
     {
         self.block[0][0] == Self::FAILURE
     }
 
+    // pub(super) fn set_successful(&mut self)
+    /// Sets the flag to mean that the previous encryption or decryption
+    /// was successful.
+    ///
+    /// # Features
+    /// You won't use this method unless you write codes for implementation
+    /// of a trait for BigCryptor128.
     #[inline]
-    pub fn set_successful(&mut self)
+    pub(super) fn set_successful(&mut self)
     {
         self.block[0][0] = Self::SUCCESS;
     }
 
+    // pub(super) fn set_failed(&mut self)
+    /// Sets the flag to mean that the previous encryption or decryption
+    /// was failed.
+    ///
+    /// # Features
+    /// You won't use this method unless you write codes for implementation
+    /// of a trait for BigCryptor64 or NDES.
     #[inline]
-    pub fn set_failed(&mut self)
+    pub(super) fn set_failed(&mut self)
     {
         self.block[0][0] = Self::FAILURE;
+    }
+
+    // pub fn get_desirable_round() -> usize
+    /// Returns the desirable number of rounds
+    /// according to the Rijndael documents
+    /// 
+    /// # Example 1 for AES_128
+    /// ```
+    /// use cryptocol::symmetric::AES_128;
+    /// let rounds = AES_128::get_desirable_round();
+    /// println!("The desirable number of rounds of AES_128 is {}", rounds);
+    /// assert_eq!(rounds, 10);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Genetric.html#method.get_desirable_round)
+    #[inline]
+    pub fn get_desirable_round() -> usize
+    {
+        6 + if NB > NK { NB } else { NK }
     }
 
     fn encrypt_block(&mut self)
@@ -1076,7 +2071,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
             {
                 self.block[i][j] ^= self.round_key[round][j].get_ubyte_(i);
             }
-        }   
+        }
     }
 
     fn decrypt_block(&mut self)
@@ -1103,7 +2098,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
             for j in 0..NB
             {
                 self.block[i][j] = Self::INV_SBOX[self.block[i][j] as usize];
-            }    
+            }
         }
     }
 
@@ -1204,7 +2199,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         let mut cc = NK % NB;
         let mut idx = NK;
         let mut rc_round = 0;
-        while round <= ROUND
+        while (round <= ROUND) && (rc_round < ROUND)
         {
             let mut tmp = if cc == 0 { self.round_key[round-1][NB-1] } else { self.round_key[round][cc-1] };
             if idx % NK == 0
@@ -1246,7 +2241,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         let mut cc = NK % NB;
         let mut idx = NK;
         let mut rc_round = 0;
-        while round <= ROUND
+        while (round <= ROUND) && (rc_round < ROUND)
         {
             let mut tmp = if cc == 0 { self.round_key[round-1][NB-1] } else { self.round_key[round][cc-1] };
             if idx % NK == 0
@@ -1313,9 +2308,10 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     fn get_block_u128(&self) -> u128
     {
+        let nb = if 4 < NB {4} else {NB};
         let mut block = LongerUnion::new();
         let mut idx = 0;
-        for j in 0..NB
+        for j in 0..nb
         {
             for i in 0..4
             {
@@ -1341,9 +2337,10 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     fn set_block_u128(&mut self, block: u128)
     {
+        let nb = if 4 < NB {4} else {NB};
         let block_union = LongerUnion::new_with(block);
         let mut idx = 0;
-        for j in 0..NB
+        for j in 0..nb
         {
             for i in 0..4
             {
@@ -1351,12 +2348,6 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
                 idx += 1;
             }
         }
-    }
-
-    #[inline]
-    pub fn get_desirable_round() -> usize
-    {
-        6 + if NB > NK { NB } else { NK }
     }
 
     // fn GF_mul(mut a: u8, mut b: u8, m: u8) -> u8

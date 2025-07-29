@@ -1375,7 +1375,7 @@ impl <const ROUND: usize, const SHIFT: u128,
                         S756, S757, S758, S759, S760, S761, S762, S763>
 {
     pub(super) const BLOCK_SIZE: usize = 8;
-    
+
     const SBOX: [[u8; 64]; 8] = [
               [ S000, S001, S002, S003, S004, S005, S006, S007,
                 S008, S009, S010, S011, S012, S013, S014, S015,
@@ -1536,33 +1536,33 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn new() -> Self
     /// Constructs a new object DES_Generic.
-    /// 
+    ///
     /// # Features
     /// - In order to encrypt data, object should be instantiated mutable.
     /// - This method sets the key to be [0, 0, 0, 0, 0, 0, 0, 0].
     /// - Do not use this default key [0, 0, 0, 0, 0, 0, 0, 0]
     ///   because it is known as one of the weak keys.
-    /// 
+    ///
     /// # Example 1
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
+    ///
     /// let mut des = DES::new();   // The default key is 0x0000000000000000 which is a weak key.
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des.encrypt_u64(plaintext);
     ///
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x1E32B46B44C69201_u64);
     ///
     /// let cipher_cipher_text = des.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);  // So, you can't use the default key!!!
     /// ```
-    /// 
+    ///
     /// # For more examples,
-    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new)           
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new)
     #[inline]
     pub fn new() -> Self
     {
@@ -1571,7 +1571,7 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn new_with_key(key: [u8; 8]) -> Self
     /// Constructs a new object DES_Generic.
-    /// 
+    ///
     /// # Arguments
     /// - The argument `key` is the array of u8 that has 8 elements.
     /// - Remember that inverted parity bits do not affect the 56-bit real key.
@@ -1581,28 +1581,28 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00],
     ///   [0x01, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x01], etc.
     ///   are all the same keys. Each key has 255 different equivalent keys
-    ///   in DES. 
-    /// 
+    ///   in DES.
+    ///
     /// # Features
     /// This method sets the key to be the given argument `key`.
-    /// 
+    ///
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::symmetric::DES;
     /// let mut des = DES::new_with_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    ///
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x3B6041D76AF28F23_u64);
-    /// 
+    ///
     /// let cipher_cipher_text = des.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#018X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x7C5AAE491DC1310D_u64);
     /// assert_ne!(cipher_cipher_text, plaintext);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new_with_key)
     pub fn new_with_key(key: [u8; 8]) -> Self
@@ -1621,41 +1621,41 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn new_with_key_u64(key: u64) -> Self
     /// Constructs a new object DES_Generic.
-    /// 
+    ///
     /// # Arguments
     /// - The argument `key` is of `u64`.
     /// - It should be in the same endianness of machine. For example,
-    ///   if a key is [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF],
-    ///   the key in `u64` is 0x_1234567890ABCDEF_u64 for big-endian machine,
-    ///   and the key in `u64` is 0x_EFCDAB9078563412_u64 for little-endian
-    ///   machine.
+    ///   if the intended key is [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD,
+    ///   0xEF], the key in `u64` for this argument is 0x_1234567890ABCDEF_u64
+    ///   for big-endian machine, and the key in `u64` for this argument is
+    ///   0x_EFCDAB9078563412_u64 for little-endian machine.
     /// - Remember that inverted parity bits do not affect the 56-bit real key.
     ///   So, 0x_0000_0000_0000_0000_u4, 0x_0101_0101_0101_0101_u64,
     ///   0x_0000_0000_0000_0001_u64, 0x_0000_0000_0000_0100_u64,
-    ///   0x_0100_0010_0000_0001_u64, etc. are all the same keys. 
-    ///   Each key has 255 different equivalent keys in DES. 
-    /// 
+    ///   0x_0100_0010_0000_0001_u64, etc. are all the same keys.
+    ///   Each key has 255 different equivalent keys in DES.
+    ///
     /// # Features
     /// This method sets the key to be the given argument `key`.
-    /// 
+    ///
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
+    ///
     /// let mut des = DES::new_with_key_u64(0xEFCDAB9078563412);
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    ///
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x3B6041D76AF28F23_u64);
-    /// 
+    ///
     /// let cipher_cipher_text = des.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#018X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x7C5AAE491DC1310D_u64);
     /// assert_ne!(cipher_cipher_text, plaintext);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.new_with_key_u64)
     pub fn new_with_key_u64(key: u64) -> Self
@@ -1673,8 +1673,9 @@ impl <const ROUND: usize, const SHIFT: u128,
     }
 
     // pub fn encryptor_with_key(key: [u8; 8]) -> Self
-    /// Constructs a new object DES_Generic for the component of NDES.
-    /// 
+    /// Constructs a new object DES_Generic as a positive encryptor (or
+    /// an encryptor) for the component of BigCryptor64 incluing NDES.
+    ///
     /// # Arguments
     /// - The argument `key` is the array of u8 that has 8 elements.
     /// - Remember that inverted parity bits do not affect the 56-bit real key.
@@ -1685,33 +1686,33 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///   [0x01, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x01], etc.
     ///   are all the same keys. Each key has 255 different equivalent keys
     ///   in DES.
-    /// 
+    ///
     /// # Features
     /// - You won't use this method unless you use NDES for such as Triple DES.
     /// - This method sets the key to be the given argument `key`.
     /// - This method constructs the encryptor component of NDES.
-    /// 
+    ///
     /// # Example 1
     /// ```
     /// use cryptocol::symmetric::{ DES, NDES };
-    /// 
+    ///
     /// let keys = [DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]),
     ///             DES::decryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]),
     ///             DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])];
     /// let mut tdes = NDES::new_with_small_des_array(keys);
     /// let plaintext = 0x_1234567890ABCDEF_u64;
     /// let ciphertext = tdes.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    ///
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x272A2AC7B4E66748_u64);
-    /// 
+    ///
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.encryptor_with_key)
     #[inline]
@@ -1721,8 +1722,9 @@ impl <const ROUND: usize, const SHIFT: u128,
     }
 
     // pub fn encryptor_with_key_u64(key: u64) -> Self
-    /// Constructs a new object DES_Generic for the component of NDES.
-    /// 
+    /// Constructs a new object DES_Generic as a positive encryptor (or
+    /// an encryptor) for the component of BigCryptor64 incluing NDES.
+    ///
     /// # Arguments
     /// - The argument `key` is an unsigned integer that is of `u64`-type.
     /// - Remember that inverted parity bits do not affect the 56-bit real key.
@@ -1730,33 +1732,33 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///   0x0000000000000001_u64, 0x0000000000000100_u64, 0x0100001000000001,
     ///   etc. are all the same keys. Each key has 255 different equivalent keys
     ///   in DES.
-    /// 
+    ///
     /// # Features
     /// - You won't use this method unless you use NDES for such as Triple DES.
     /// - This method sets the key to be the given argument `key`.
     /// - This method constructs the encryptor component of NDES.
-    /// 
+    ///
     /// # Example 1
     /// ```
     /// use cryptocol::symmetric::{ NDES, DES };
-    /// 
+    ///
     /// let keys = [DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64),
     ///             DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64),
     ///             DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)];
     /// let mut tdes = NDES::new_with_small_des_array(keys);
     /// let plaintext = 0x_1234567890ABCDEF_u64;
     /// let ciphertext = tdes.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    ///
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
-    /// 
+    ///
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.encryptor_with_key_u64)
     #[inline]
@@ -1766,8 +1768,9 @@ impl <const ROUND: usize, const SHIFT: u128,
     }
 
     // pub fn decryptor_with_key(key: [u8; 8]) -> Self
-    /// Constructs a new object DES_Generic for the component of NDES.
-    /// 
+    /// Constructs a new object DES_Generic as a negative encryptor (or
+    /// a decryptor) for the component of BigCryptor64 incluing NDES.
+    ///
     /// # Arguments
     /// - The argument `key` is the array of u8 that has 8 elements.
     /// - Remember that inverted parity bits do not affect the 56-bit real key.
@@ -1778,33 +1781,33 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///   [0x01, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x01], etc.
     ///   are all the same keys. Each key has 255 different equivalent keys
     ///   in DES.
-    /// 
+    ///
     /// # Features
     /// - You won't use this method unless you use NDES for such as Triple DES.
     /// - This method sets the key to be the given argument `key`.
     /// - This method constructs the decryptor component of NDES.
-    /// 
+    ///
     /// # Example 1
     /// ```
     /// use cryptocol::symmetric::{ DES, NDES };
-    /// 
+    ///
     /// let keys = [DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]),
     ///             DES::decryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]),
     ///             DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])];
     /// let mut tdes = NDES::new_with_small_des_array(keys);
     /// let plaintext = 0x_1234567890ABCDEF_u64;
     /// let ciphertext = tdes.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    ///
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x272A2AC7B4E66748_u64);
-    /// 
+    ///
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.decryptor_with_key)
     pub fn decryptor_with_key(key: [u8; 8]) -> Self
@@ -1822,8 +1825,9 @@ impl <const ROUND: usize, const SHIFT: u128,
     }
 
     // pub fn decryptor_with_key_u64(key: u64) -> Self
-    /// Constructs a new object DES_Generic for the component of NDES.
-    /// 
+    /// Constructs a new object DES_Generic as a negative encryptor (or
+    /// a decryptor) for the component of BigCryptor64 incluing NDES.
+    ///
     /// # Arguments
     /// - The argument `key` is an unsigned integer that is of `u64`-type.
     /// - Remember that inverted parity bits do not affect the 56-bit real key.
@@ -1831,33 +1835,33 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///   0x0000000000000001_u64, 0x0000000000000100_u64, 0x0100001000000001,
     ///   etc. are all the same keys. Each key has 255 different equivalent keys
     ///   in DES.
-    /// 
+    ///
     /// # Features
     /// - You won't use this method unless you use NDES for such as Triple DES.
     /// - This method sets the key to be the given argument `key`.
     /// - This method constructs the decryptor component of NDES.
-    /// 
+    ///
     /// # Example 1
     /// ```
     /// use cryptocol::symmetric::{ NDES, DES };
-    /// 
+    ///
     /// let keys = [DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64),
     ///             DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64),
     ///             DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)];
     /// let mut tdes = NDES::new_with_small_des_array(keys);
     /// let plaintext = 0x_1234567890ABCDEF_u64;
     /// let ciphertext = tdes.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    ///
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x272A2AC7B4E66748_u64);
-    /// 
+    ///
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.decryptor_with_key_u64)
     pub fn decryptor_with_key_u64(key: u64) -> Self
@@ -1876,14 +1880,14 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn get_key(&mut self) -> [u8; 8]
     /// Gets the key.
-    /// 
+    ///
     /// # Output
     /// This method returns the key in the form of array of `u8`.
-    /// 
+    ///
     /// # Example
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
+    ///
     /// let mut des = DES::new();
     /// des.set_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     /// let key = des.get_key();
@@ -1902,14 +1906,14 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn get_key_u64(&self) -> u64
     /// Gets the key.
-    /// 
+    ///
     /// # Output
     /// This method returns the key in the form of `u64`.
-    /// 
+    ///
     /// # Example
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
+    ///
     /// let mut des = DES::new();
     /// des.set_key_u64(0xEFCDAB9078563412);
     /// let key = des.get_key_u64();
@@ -1924,7 +1928,7 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn set_key(&mut self, key: [u8; 8])
     /// Sets the key.
-    /// 
+    ///
     /// # Arguments
     /// - The argument `key` is the array of `u8` that has 8 elements.
     /// - Remember that inverted parity bits do not affect the 56-bit real key.
@@ -1934,30 +1938,30 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00],
     ///   [0x01, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x01], etc.
     ///   are all the same keys. Each key has 255 different equivalent keys
-    ///   in DES. 
-    /// 
+    ///   in DES.
+    ///
     /// # Features
     /// This method sets the key to be the given argument `key`.
-    /// 
+    ///
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
+    ///
     /// let mut des = DES::new();
     /// des.set_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    ///
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x3B6041D76AF28F23_u64);
-    /// 
+    ///
     /// let cipher_cipher_text = des.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#018X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x7C5AAE491DC1310D_u64);
     /// assert_ne!(cipher_cipher_text, plaintext);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.set_key)
     pub fn set_key(&mut self, key: [u8; 8])
@@ -1973,7 +1977,7 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn set_key_u64(&mut self, key: u64)
     /// Sets the key.
-    /// 
+    ///
     /// # Arguments
     /// - The argument `key` is of `u64`.
     /// - It should be in the same endianness of machine. For example,
@@ -1984,31 +1988,31 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// - Remember that inverted parity bits do not affect the 56-bit real key.
     ///   So, 0x_0000_0000_0000_0000_u4, 0x_0101_0101_0101_0101_u64,
     ///   0x_0000_0000_0000_0001_u64, 0x_0000_0000_0000_0100_u64,
-    ///   0x_0100_0010_0000_0001_u64, etc. are all the same keys. 
-    ///   Each key has 255 different equivalent keys in DES. 
-    /// 
+    ///   0x_0100_0010_0000_0001_u64, etc. are all the same keys.
+    ///   Each key has 255 different equivalent keys in DES.
+    ///
     /// # Features
     /// This method sets the key to be the given argument `key`.
-    /// 
+    ///
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
+    ///
     /// let mut des = DES::new();
     /// des.set_key_u64(0xEFCDAB9078563412);
     /// let plaintext = 0x1234567890ABCDEF_u64;
     /// let ciphertext = des.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    ///
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x3B6041D76AF28F23_u64);
-    /// 
+    ///
     /// let cipher_cipher_text = des.encrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}\n", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#018X}\n", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x7C5AAE491DC1310D_u64);
     /// assert_ne!(cipher_cipher_text, plaintext);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.set_key_u64)
     pub fn set_key_u64(&mut self, key: u64)
@@ -2018,45 +2022,46 @@ impl <const ROUND: usize, const SHIFT: u128,
     }
 
     // pub fn turn_inverse(&mut self)
-    /// Flips its role in NDES.
-    /// 
+    /// Flips its role in BigCryptor64.
+    ///
     /// # Features
-    /// - You won't use this method unless you use NDES for such as Triple DES.
-    /// - Even if you are writing codes in the context of using NDES,
-    ///   you will hardly use this method because it is high chance that you
-    ///   will have constructed components with the methods,
-    ///   encryptor_with_key(struct@DES_Generic#method.encryptor_with_key),
-    ///   encryptor_with_key_u64(struct@DES_Generic#method.encryptor_with_key_u64),
-    ///   decryptor_with_key(struct@DES_Generic#method.decryptor_with_key), and
-    ///   decryptor_with_key_u64(struct@DES_Generic#method.decryptor_with_key_u64).
-    /// - If it is constructed as encryptor for NDES,
+    /// - You won't use this method unless you use BigCryptor64 or NDES
+    ///   for such as Triple DES.
+    /// - Even if you are writing codes in the context of using BigCryptor64
+    ///   or NDES, you will hardly use this method because it is high chance
+    ///   that you will have constructed components with the methods,
+    ///   [encryptor_with_key](struct@DES_Generic#method.encryptor_with_key),
+    ///   [encryptor_with_key_u64](struct@DES_Generic#method.encryptor_with_key_u64),
+    ///   [decryptor_with_key](struct@DES_Generic#method.decryptor_with_key), and
+    ///   [decryptor_with_key_u64](struct@DES_Generic#method.decryptor_with_key_u64).
+    /// - If it is constructed as encryptor for BigCryptor64 or NDES,
     ///   it will be changed into decryptor.
-    /// - If it is constructed as decryptor for NDES,
+    /// - If it is constructed as decryptor for BigCryptor64 or NDES,
     ///   it will be changed into encryptor.
-    /// 
+    ///
     /// # Example 1
     /// ```
     /// use cryptocol::symmetric::{ NDES, DES };
-    /// 
+    ///
     /// let mut keys = [DES::new_with_key_u64(0x_1234567890ABCDEF_u64),
     ///             DES::new_with_key_u64(0x_FEDCBA0987654321_u64),
     ///             DES::new_with_key_u64(0x_1234567890ABCDEF_u64)];
     /// keys[1].turn_inverse();
-    /// 
+    ///
     /// let mut tdes = NDES::new_with_small_des_array(keys);
     /// let plaintext = 0x_1234567890ABCDEF_u64;
     /// let ciphertext = tdes.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    ///
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
-    /// 
+    ///
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.turn_inverse)
     #[inline]
@@ -2066,45 +2071,46 @@ impl <const ROUND: usize, const SHIFT: u128,
     }
 
     // pub fn turn_encryptor(&mut self)
-    /// Changes its role in NDES to encryptor.
-    /// 
+    /// Changes its role in BigCryptor64 or NDES to encryptor.
+    ///
     /// # Features
-    /// - You won't use this method unless you use NDES for such as Triple DES.
-    /// - Even if you are writing codes in the context of using NDES,
-    ///   you will hardly use this method because it is high chance that you
-    ///   will have constructed components with the methods,
-    ///   encryptor_with_key(struct@DES_Generic#method.encryptor_with_key),
-    ///   encryptor_with_key_u64(struct@DES_Generic#method.encryptor_with_key_u64),
-    ///   decryptor_with_key(struct@DES_Generic#method.decryptor_with_key), and
-    ///   decryptor_with_key_u64(struct@DES_Generic#method.decryptor_with_key_u64).
-    /// - If it is constructed as encryptor for NDES,
+    /// - You won't use this method unless you use BigCryptor64 or NDES
+    ///   for such as Triple DES.
+    /// - Even if you are writing codes in the context of using BigCryptor64
+    ///   or NDES, you will hardly use this method because it is high chance
+    ///   that you will have constructed components with the methods,
+    ///   [encryptor_with_key](struct@DES_Generic#method.encryptor_with_key),
+    ///   [encryptor_with_key_u64](struct@DES_Generic#method.encryptor_with_key_u64),
+    ///   [decryptor_with_key](struct@DES_Generic#method.decryptor_with_key), and
+    ///   [decryptor_with_key_u64](struct@DES_Generic#method.decryptor_with_key_u64).
+    /// - If it is constructed as encryptor for BigCryptor64 or NDES,
     ///   it will not be changed at all.
-    /// - If it is constructed as decryptor for NDES,
+    /// - If it is constructed as decryptor for BigCryptor64 or NDES,
     ///   it will be changed into encryptor.
-    /// 
+    ///
     /// # Example 1
     /// ```
     /// use cryptocol::symmetric::{ NDES, DES };
-    /// 
+    ///
     /// let mut keys = [DES::new_with_key_u64(0x_1234567890ABCDEF_u64),
     ///             DES::new_with_key_u64(0x_FEDCBA0987654321_u64),
     ///             DES::new_with_key_u64(0x_1234567890ABCDEF_u64)];
     /// keys[0].turn_encryptor();
-    /// 
+    ///
     /// let mut tdes = NDES::new_with_small_des_array(keys);
     /// let plaintext = 0x_1234567890ABCDEF_u64;
     /// let ciphertext = tdes.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    ///
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x_CDAC175F3B7EAA2B_u64);
-    /// 
+    ///
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.turn_encryptor)
     pub fn turn_encryptor(&mut self)
@@ -2114,45 +2120,46 @@ impl <const ROUND: usize, const SHIFT: u128,
     }
 
     // pub fn turn_decryptor(&mut self)
-    /// Changes its role in NDES to decryptor.
-    /// 
+    /// Changes its role in BigCryptor64 or NDES to decryptor.
+    ///
     /// # Features
-    /// - You won't use this method unless you use NDES for such as Triple DES.
-    /// - Even if you are writing codes in the context of using NDES,
-    ///   you will hardly use this method because it is high chance that you
-    ///   will have constructed components with the methods,
-    ///   encryptor_with_key(struct@DES_Generic#method.encryptor_with_key),
-    ///   encryptor_with_key_u64(struct@DES_Generic#method.encryptor_with_key_u64),
-    ///   decryptor_with_key(struct@DES_Generic#method.decryptor_with_key), and
-    ///   decryptor_with_key_u64(struct@DES_Generic#method.decryptor_with_key_u64).
-    /// - If it is constructed as encryptor for NDES,
+    /// - You won't use this method unless you use BigCryptor64 or NDES
+    ///   for such as Triple DES.
+    /// - Even if you are writing codes in the context of using BigCryptor64
+    ///   or NDES, you will hardly use this method because it is high chance
+    ///   that you will have constructed components with the methods,
+    ///   [encryptor_with_key](struct@DES_Generic#method.encryptor_with_key),
+    ///   [encryptor_with_key_u64](struct@DES_Generic#method.encryptor_with_key_u64),
+    ///   [decryptor_with_key](struct@DES_Generic#method.decryptor_with_key), and
+    ///   [decryptor_with_key_u64](struct@DES_Generic#method.decryptor_with_key_u64).
+    /// - If it is constructed as encryptor for BigCryptor64 or NDES,
     ///   it will be changed into decryptor.
-    /// - If it is constructed as decryptor for NDES,
+    /// - If it is constructed as decryptor for BigCryptor64 or NDES,
     ///   it will not be changed at all.
-    /// 
+    ///
     /// # Example 1
     /// ```
     /// use cryptocol::symmetric::{ NDES, DES };
-    /// 
+    ///
     /// let mut keys = [DES::new_with_key_u64(0x_1234567890ABCDEF_u64),
     ///             DES::new_with_key_u64(0x_FEDCBA0987654321_u64),
     ///             DES::new_with_key_u64(0x_1234567890ABCDEF_u64)];
     /// keys[1].turn_decryptor();
-    /// 
+    ///
     /// let mut tdes = NDES::new_with_small_des_array(keys);
     /// let plaintext = 0x_1234567890ABCDEF_u64;
     /// let ciphertext = tdes.encrypt_u64(plaintext);
-    /// 
-    /// println!("Plaintext:\t\t{:#016X}", plaintext);
-    /// println!("Ciphertext:\t\t{:#016X}", ciphertext);
+    ///
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
-    /// 
+    ///
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
-    /// println!("Cipher-ciphertext:\t{:#016X}", cipher_cipher_text);
+    /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     /// assert_eq!(cipher_cipher_text, plaintext);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.turn_decryptor)
     pub fn turn_decryptor(&mut self)
@@ -2163,29 +2170,29 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn encrypt_u64(&mut self, message: u64) -> u64
     /// Encrypts a 64-bit data.
-    /// 
+    ///
     /// # Arguments
     /// `message` is of `u64`-type and the plaintext to be encrypted.
-    /// 
+    ///
     /// # Output
     /// This method returns the encrypted data of `u64`-type from `message`.
-    /// 
-    /// # Example 1 for Normal case 
+    ///
+    /// # Example 1 for Normal case
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
+    ///
     /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// 
+    /// println!("K =\t{:#018X}", key);
+    ///
     /// let message = 0x_1234567890ABCDEF_u64;
-    /// println!("M_u64 =\t{:#016X}", message);
-    /// 
+    /// println!("M_u64 =\t{:#018X}", message);
+    ///
     /// let mut a_des = DES::new_with_key_u64(key);
     /// let cipher = a_des.encrypt_u64(message);
-    /// println!("C_u64 (16 rounds) =\t{:#016X}", cipher);
+    /// println!("C_u64 (16 rounds) =\t{:#018X}", cipher);
     /// assert_eq!(cipher, 0x_1BC4896735BBE206_u64);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.encrypt_u64)
     pub fn encrypt_u64(&mut self, message: u64) -> u64
@@ -2197,34 +2204,34 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn decrypt_u64(&mut self, cipher: u64) -> u64
     /// Decrypts a 64-bit data.
-    /// 
+    ///
     /// # Arguments
     /// `cioher` is of `u64`-type and the ciphertext to be decrypted.
-    /// 
+    ///
     /// # Output
     /// This method returns the decrypted data of `u64`-type from `cipher`.
-    /// 
+    ///
     /// # Example 1 for Normal case
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
+    ///
     /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// 
+    /// println!("K =\t{:#018X}", key);
+    ///
     /// let message = 0x_1234567890ABCDEF_u64;
-    /// println!("M_u64 =\t{:#016X}", message);
-    /// 
+    /// println!("M_u64 =\t{:#018X}", message);
+    ///
     /// let mut a_des = DES::new_with_key_u64(key);
     /// let cipher = a_des.encrypt_u64(message);
-    /// println!("C_u64 (16 rounds) =\t{:#016X}", cipher);
+    /// println!("C_u64 (16 rounds) =\t{:#018X}", cipher);
     /// assert_eq!(cipher, 0x_1BC4896735BBE206_u64);
-    /// 
+    ///
     /// let recovered = a_des.decrypt_u64(cipher);
-    /// println!("B_u64 (16 rounds) =\t{:#016X}", recovered);
+    /// println!("B_u64 (16 rounds) =\t{:#018X}", recovered);
     /// assert_eq!(recovered, 0x_1234567890ABCDEF_u64);
     /// assert_eq!(recovered, message);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.decrypt_u64)
     pub fn decrypt_u64(&mut self, cipher: u64) -> u64
@@ -2239,29 +2246,29 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// constructed as encryptor for NDES such as Triple DES, and decrypts a
     /// 64-bit data when NDES encrypting if the object was constructed as
     /// decryptor for NDES such as Triple DES.
-    /// 
+    ///
     /// # Arguments
     /// `message` is of `u64`-type and the plaintext to be encrypted.
-    /// 
+    ///
     /// # Output
     /// This method returns the encrypted data of `u64`-type from `message`.
-    /// 
-    /// # Example 1 for Normal case 
+    ///
+    /// # Example 1 for Normal case
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
+    ///
     /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// 
+    /// println!("K =\t{:#018X}", key);
+    ///
     /// let message = 0x_1234567890ABCDEF_u64;
-    /// println!("M_u64 =\t{:#016X}", message);
-    /// 
+    /// println!("M_u64 =\t{:#018X}", message);
+    ///
     /// let mut a_des = DES::new_with_key_u64(key);
     /// let cipher = a_des._encrypt(message);
-    /// println!("C_u64 (16 rounds) =\t{:#016X}", cipher);
+    /// println!("C_u64 (16 rounds) =\t{:#018X}", cipher);
     /// assert_eq!(cipher, 0x_1BC4896735BBE206_u64);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method._encrypt)
     #[inline]
@@ -2275,34 +2282,34 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// constructed as encryptor for NDES such as Triple DES, and encrypts a
     /// 64-bit data when NDES decrypting if the object was constructed as
     /// decryptor for NDES such as Triple DES.
-    /// 
+    ///
     /// # Arguments
     /// `cipher` is of `u64`-type and the ciphertext to be decrypted.
-    /// 
+    ///
     /// # Output
     /// This method returns the decrypted data of `u64`-type from `cipher`.
-    /// 
-    /// # Example 1 for Normal case 
+    ///
+    /// # Example 1 for Normal case
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
+    ///
     /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// 
+    /// println!("K =\t{:#018X}", key);
+    ///
     /// let message = 0x_1234567890ABCDEF_u64;
-    /// println!("M_u64 =\t{:#016X}", message);
-    /// 
+    /// println!("M_u64 =\t{:#018X}", message);
+    ///
     /// let mut a_des = DES::new_with_key_u64(key);
     /// let cipher = a_des._encrypt(message);
-    /// println!("C_u64 (16 rounds) =\t{:#016X}", cipher);
+    /// println!("C_u64 (16 rounds) =\t{:#018X}", cipher);
     /// assert_eq!(cipher, 0x_1BC4896735BBE206_u64);
-    /// 
+    ///
     /// let recovered = a_des._decrypt(cipher);
-    /// println!("B_u64 (16 rounds) =\t{:#016X}", recovered);
+    /// println!("B_u64 (16 rounds) =\t{:#018X}", recovered);
     /// assert_eq!(recovered, 0x_1234567890ABCDEF_u64);
     /// assert_eq!(recovered, message);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method._decrypt)
     #[inline]
@@ -2313,16 +2320,16 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn encrypt_array_u64<const N: usize>(&mut self, message: &[u64; N], cipher: &mut [u64; N])
     /// Encrypts an array of 64-bit data.
-    /// 
+    ///
     /// # Arguments
     /// - `message` is of an array of `u64`-type and the plaintext to be
     ///   encrypted.
     /// - `cipher` is of an array of `u64`-type and the ciphertext to be stored.
-    /// 
+    ///
     /// # Features
     /// This method encrypts multiple of 64-bit data without padding anything
     /// in ECB (Electronic CodeBook) mode.
-    /// 
+    ///
     /// # Counterpart methods
     /// - If you need to encrypt data with padding bits according
     ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
@@ -2360,9 +2367,9 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// - If you need to encrypt data in CTR operation mode,
     ///   you may need to import (use) `cryptocol::symmetric::CTR`.
     ///   see [here](./traits_ctr/trait.CTR.html)
-    /// 
+    ///
     /// In summary,
-    /// 
+    ///
     /// |      | padding PKCS7                                                        | padding ISO                                                    | no padding                         |
     /// |------|----------------------------------------------------------------------|----------------------------------------------------------------|------------------------------------|
     /// | ECB  | [ECB_PKCS7](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)    | [ECB_ISO](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)    |                                    |
@@ -2371,32 +2378,32 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// | CFB  |                                                                      |                                                                | [CFB](./traits_cfb/trait.CFB.html) |
     /// | OFB  |                                                                      |                                                                | [OFB](./traits_ofb/trait.OFB.html) |
     /// | CTR  |                                                                      |                                                                | [CTR](./traits_ctr/trait.CTR.html) |
-    /// 
-    /// # Example 1 for Normal case 
+    ///
+    /// # Example 1 for Normal case
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
+    ///
     /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// 
+    /// println!("K =\t{:#018X}", key);
+    ///
     /// let message = [0x_1234567890ABCDEF_u64, 0xEFCDAB9078563412, 0xFEDCBA0987654321 ];
     /// print!("M =\t");
     /// for m in message
-    ///     { print!("{:#016X} ", m); }
+    ///     { print!("{:#018X} ", m); }
     /// println!();
     /// let mut a_des = DES::new_with_key_u64(key);
-    /// 
+    ///
     /// let mut cipher = [0; 3];
     /// a_des.encrypt_array_u64(&message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher
-    ///     { print!("{:#016X} ", c); }
+    ///     { print!("{:#018X} ", c); }
     /// println!();
     /// assert_eq!(cipher[0], 0x_1BC4896735BBE206_u64);
     /// assert_eq!(cipher[1], 0x_1D8A61E5E62226A4_u64);
     /// assert_eq!(cipher[2], 0x_2990D69525C17067_u64);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.encrypt_array_u64)
     pub fn encrypt_array_u64<const N: usize>(&mut self, message: &[u64; N], cipher: &mut [u64; N])
@@ -2411,16 +2418,16 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn decrypt_array_u64<const N: usize>(&mut self, cipher: &[u64; N], message: &mut [u64; N])
     /// Decrypts an array of 64-bit data.
-    /// 
+    ///
     /// # Arguments
     /// - `cipher` is of an array of `u64`-type and the ciphertext to be
     ///   decrypted.
     /// - `message` is of an array of `u64`-type and the plaintext to be stored.
-    /// 
+    ///
     /// # Features
     /// This method decrypts multiple of 64-bit data without padding anything
     /// in ECB (Electronic CodeBook) mode.
-    /// 
+    ///
     /// # Counterpart methods
     /// - If you need to decrypt data with padding bits according
     ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
@@ -2458,9 +2465,9 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// - If you need to decrypt data in CTR operation mode,
     ///   you may need to import (use) `cryptocol::symmetric::CTR`.
     ///   see [here](./traits_ctr/trait.CTR.html)
-    /// 
+    ///
     /// In summary,
-    /// 
+    ///
     /// |      | padding PKCS7                                                        | padding ISO                                                    | no padding                         |
     /// |------|----------------------------------------------------------------------|----------------------------------------------------------------|------------------------------------|
     /// | ECB  | [ECB_PKCS7](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)    | [ECB_ISO](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)    |                                    |
@@ -2469,42 +2476,42 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// | CFB  |                                                                      |                                                                | [CFB](./traits_cfb/trait.CFB.html) |
     /// | OFB  |                                                                      |                                                                | [OFB](./traits_ofb/trait.OFB.html) |
     /// | CTR  |                                                                      |                                                                | [CTR](./traits_ctr/trait.CTR.html) |
-    /// 
-    /// # Example 1 for Normal case 
+    ///
+    /// # Example 1 for Normal case
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
+    ///
     /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// 
+    /// println!("K =\t{:#018X}", key);
+    ///
     /// let message = [0x_1234567890ABCDEF_u64, 0xEFCDAB9078563412, 0xFEDCBA0987654321 ];
     /// print!("M =\t");
     /// for m in message
-    ///     { print!("{:#016X} ", m); }
+    ///     { print!("{:#018X} ", m); }
     /// println!();
     /// let mut a_des = DES::new_with_key_u64(key);
-    /// 
+    ///
     /// let mut cipher = [0; 3];
     /// a_des.encrypt_array_u64(&message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher
-    ///     { print!("{:#016X} ", c); }
+    ///     { print!("{:#018X} ", c); }
     /// println!();
     /// assert_eq!(cipher[0], 0x_1BC4896735BBE206_u64);
     /// assert_eq!(cipher[1], 0x_1D8A61E5E62226A4_u64);
     /// assert_eq!(cipher[2], 0x_2990D69525C17067_u64);
-    /// 
+    ///
     /// let mut recovered = [0; 3];
     /// a_des.decrypt_array_u64(&cipher, &mut recovered);
     /// print!("B (16 rounds) =\t");
     /// for r in recovered
-    ///     { print!("{:#016X} ", r); }
+    ///     { print!("{:#018X} ", r); }
     /// println!();
     /// assert_eq!(recovered[0], 0x_1234567890ABCDEF_u64);
     /// assert_eq!(recovered[1], 0x_EFCDAB9078563412_u64);
     /// assert_eq!(recovered[2], 0x_FEDCBA0987654321_u64);
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.decrypt_array_u64)
     pub fn decrypt_array_u64<const N: usize>(&mut self, cipher: &[u64; N], message: &mut [u64; N])
@@ -2519,11 +2526,11 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn is_succeful(&self) -> bool
     /// Checks whether the previous encryption or decryption was successful.
-    /// 
+    ///
     /// # Output
     /// If the previous encryption or decryption was successful, this method
     /// returns true. Otherwise, it returns false.
-    /// 
+    ///
     /// # Features
     /// - Usually, you don't have to use this method because the encryption
     ///   methods returns the length of ciphertext and the decryption methods
@@ -2533,21 +2540,20 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///   discriminatory. You don't know whether the previous decryption was
     ///   failed or the original plaintext was just null string or "". In this
     ///   case you can check its success with this method.
-    /// 
+    ///
     /// # Example 1 for Normal case for the message of 0 bytes
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::DES;
+    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K =\t{:#018X}", key);
     /// let mut a_des = DES::new_with_key_u64(key);
-    /// 
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 8];
-    /// let len = a_des.encrypt_with_padding_pkcs7_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// let len = a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
     /// println!("The length of ciphertext = {}", len);
     /// assert_eq!(len, 8);
     /// let success = a_des.is_successful();
@@ -2561,7 +2567,7 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.is_successful)
     #[inline]
@@ -2572,11 +2578,11 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn is_failed(&self) -> bool
     /// Checks whether the previous encryption or decryption was failed.
-    /// 
+    ///
     /// # Output
     /// If the previous encryption or decryption was failed, this method
     /// returns true. Otherwise, it returns false.
-    /// 
+    ///
     /// # Features
     /// - Usually, you don't have to use this method because the encryption
     ///   methods returns the length of ciphertext and the decryption methods
@@ -2586,17 +2592,17 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///   discriminatory. You don't know whether the previous decryption was
     ///   failed or the original plaintext was just null string or "". In this
     ///   case you can check its success with this method.
-    /// 
+    ///
     /// # Example 1 for Normal case for the message of 0 bytes
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::DES;
-    /// 
+    ///
     /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K =\t{:#018X}", key);
     /// let mut a_des = DES::new_with_key_u64(key);
-    /// 
+    ///
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 8];
@@ -2614,7 +2620,7 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
     /// ```
-    /// 
+    ///
     /// # For more examples,
     /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.is_failed)
     #[inline]
@@ -2623,72 +2629,84 @@ impl <const ROUND: usize, const SHIFT: u128,
         self.block.get() == Self::FAILURE
     }
 
-    // pub fn set_successful(&mut self)
+    // pub(super) fn set_successful(&mut self)
     /// Sets the flag to mean that the previous encryption or decryption
     /// was successful.
-    /// 
+    ///
     /// # Features
     /// You won't use this method unless you write codes for implementation
-    /// of a trait for NDES.
-    /// 
+    /// of a trait for BigCryptor64 or NDES.
+    ///
     /// # Example
     /// ```
     /// use cryptocol::symmetric::DES;
     /// let mut a_des = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
     /// assert_eq!(a_des.is_successful(), false);
-    /// 
+    ///
     /// a_des.set_successful();
     /// assert_eq!(a_des.is_successful(), true);
     /// ```
     #[inline]
-    pub fn set_successful(&mut self)
+    pub(super) fn set_successful(&mut self)
     {
         self.block.set(Self::SUCCESS);
     }
 
-    // pub fn set_failed(&mut self)
+    // pub(super) fn set_failed(&mut self)
     /// Sets the flag to mean that the previous encryption or decryption
     /// was failed.
-    /// 
+    ///
     /// # Features
     /// You won't use this method unless you write codes for implementation
-    /// of a trait for NDES.
-    /// 
+    /// of a trait for BigCryptor64 or NDES.
+    ///
     /// # Example
     /// ```
     /// use cryptocol::symmetric::DES;
     /// let mut a_des = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
     /// a_des.encrypt_u64(0x1234567890ABCDEF_u64);
     /// assert_eq!(a_des.is_failed(), false);
-    /// 
+    ///
     /// a_des.set_failed();
     /// assert_eq!(a_des.is_failed(), true);
     /// ```
     #[inline]
-    pub fn set_failed(&mut self)
+    pub(super) fn set_failed(&mut self)
     {
         self.block.set(Self::FAILURE);
     }
 
     // pub fn has_weak_key(&self) -> bool
     /// Checks wether or not it has a weak key.
-    /// 
+    ///
     /// # Output
     /// This method returns `true` if it has a weak key.
     /// Otherwise, it returns `false`.
-    /// 
-    /// # Example
+    ///
+    /// # Example 1 for not weak key
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
-    /// let mut a_des = DES::new_with_key_u64(0x_1234567890ABCDEF_u64);
+    ///
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// let mut a_des = DES::new_with_key_u64(key);
     /// let weak_key = a_des.has_weak_key();
+    /// println!("{:016X} is {}a weak key.", key.to_be(), if weak_key {""} else {"not "});
     /// assert_eq!(weak_key, false);
-    /// 
-    /// a_des.set_key_u64(0x_0000000000000000_u64);
+    /// ```
+    ///
+    /// # Example 2 for weak key
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    ///
+    /// let key = 0x_0000000000000000_u64;
+    /// a_des.set_key_u64(key);
     /// let weak_key = a_des.has_weak_key();
+    /// println!("{:016X} is {}a weak key.", key.to_be(), if weak_key {""} else {"not "});
     /// assert_eq!(weak_key, true);
     /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.has_weak_key)
     #[inline]
     pub fn has_weak_key(&mut self) -> bool
     {
@@ -2698,7 +2716,7 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn is_equivalent_key_u64(&mut self, key: u64) -> bool
     /// Checks wether or not it `key` is equivalent to its key.
-    /// 
+    ///
     /// # Output
     /// This method returns `true` if it is equivalent to its key.
     /// Otherwise, it returns `false`.
@@ -2710,7 +2728,7 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     // pub fn is_equivalent_key(&mut self, key: &[u8; 8]) -> bool
     /// Checks wether or not it `key` is equivalent to its key.
-    /// 
+    ///
     /// # Output
     /// This method returns `true` if it is equivalent to its key.
     /// Otherwise, it returns `false`.

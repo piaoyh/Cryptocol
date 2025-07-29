@@ -2,13 +2,20 @@
 
 ## Breaking changes from ver. 0.12.1 to ver. 0.12.2
 
+| Ver. 0.12.1                      | Ver. 0.12.2                         |
+|----------------------------------|-------------------------------------|
+| pub fn set_successful(&mut self) | pub(super) fn set_failed(&mut self) |
+| pub fn set_failed(&mut self)     | pub(super) fn set_failed(&mut self) |
+
+- The attribute of the above functions of DES_Generic and Rijndael_Generic has been changed from `pub` into `pub(super)` for the security reason. 
+
 | Ver. 0.12.1                                                               | Ver. 0.12.2                                                                |
 |---------------------------------------------------------------------------|----------------------------------------------------------------------------|
 | pub fn new_with_key<const K: usize>(key: [u8; K]) -> Self                 | pub fn new_with_key<const K: usize>(key: &[u8; K]) -> Self                 |
 | pub fn encryptor_with_key<const K: usize>(key: [u8; K]) -> Self           | pub fn encryptor_with_key<const K: usize>(key: &[u8; K]) -> Self           |
 | pub fn decryptor_with_key<const K: usize>(key: [u8; K]) -> Self           | pub fn decryptor_with_key<const K: usize>(key: &[u8; K]) -> Self           |
 | pub fn set_key<const K: usize>(&mut self, key: [u8; K])                   | pub fn set_key<const K: usize>(&mut self, key: &[u8; K])                   |
-| pub fn encrypt_unit(&mut self, message: [IntUnion; NB]) -> [IntUnion; NB] | pub fn encrypt_unit(&mut self, message: &[IntUnion; NB]) -> [IntUnion; NB] |
+| pub fn encrypt_unit(&mut self, message: [IntUnion; NB]) -> [IntUnion; NB] | pub fn encrypt_unit(&mut self, message: &[u32; NB]) -> [u32; NB]           |
 | pub fn decrypt_unit(&mut self, cipher: [IntUnion; NB]) -> [IntUnion; NB]  | pub fn decrypt_unit(&mut self, cipher: &[IntUnion; NB]) -> [IntUnion; NB]  |
 
 - The arguements `key`, `message`, and `cipher` of the above functions of Rijndael_Generic has been changed from `move` into `borrow`.
@@ -26,7 +33,7 @@
 | pub fn _encrypt(&mut self, message: u64) -> u64 | pub(super) fn _encrypt(&mut self, message: u64) -> u64 |
 | pub fn _decrypt(&mut self, cipher: u64) -> u64  | pub(super) fn _decrypt(&mut self, cipher: u64) -> u64  |
 
-- The attribute of the above functions of DES_Generic has been changed from `pub` into `pub(super)`. 
+- The attribute of the above functions of DES_Generic has been changed from `pub` into `pub(super)` for the security reason. 
 
 ## Breaking changes from ver. 0.11.5 to ver. 0.11.6
 
