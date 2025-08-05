@@ -300,6 +300,12 @@ pub type Rijndael_32_32 = Rijndael_Generic<7, 1, 1>;
 #[allow(non_camel_case_types)]
 pub type Rijndael_64_64 = Rijndael_Generic<8, 2, 2>;
 
+/// Rijndael_512_512 can be used as one of post-Quantum algorithms for a
+/// while because even Grover algorithm takes long enough to break
+/// Rijndael_512_512. Its key is 512-bit and its encryption block is 512-bit.
+#[allow(non_camel_case_types)]
+pub type Rijndael_512_512 = Rijndael_Generic<22, 16, 16>;
+
 /// Rijndael_256_256 is one of Rijndael series. Its key is 256-bit and its
 /// encryption block is 256-bit.
 #[allow(non_camel_case_types)]
@@ -546,8 +552,9 @@ pub type AES_128 = Rijndael_Generic;
 /// use cryptocol::symmetric::Rijndael_128_192;
 /// use cryptocol::symmetric::Rijndael_128_128;
 ///
-/// use cryptocol::symmetric::Rijndael_32_32;
+/// use cryptocol::symmetric::Rijndael_512_512;
 /// use cryptocol::symmetric::Rijndael_64_64;
+/// use cryptocol::symmetric::Rijndael_32_32;
 /// ```
 /// 
 /// You can instantiate the AES object with `u128` key as Example 2.
@@ -673,6 +680,66 @@ pub type AES_128 = Rijndael_Generic;
 /// println!("B =\t{}", recovered);
 /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
 /// assert_eq!(recovered, message);
+/// ```
+/// 
+/// You can use Rijndael_512_512 as one of post-Quantum algorithms for a
+/// while because even Grover algorithm takes long enough to break
+/// Rijndael_512_512. Its key is 512-bit and its encryption block is 512-bit.
+/// 
+/// # Example 8 for Post-Quantum
+/// ```
+/// use std::io::Write;
+/// use std::fmt::Write as _;
+/// use cryptocol::number::SharedArrays;
+/// use cryptocol::hash::SHA3_512;
+/// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+/// 
+/// let mut sha3 = SHA3_512::new();
+/// sha3.absorb_str("Post-Quantum");
+/// let key: [u8; 64] = sha3.get_hash_value_in_array();
+/// print!("K =\t");
+/// for i in 0..64
+///     { print!("{:02X}", key[i]); }
+/// println!();
+/// let mut a_rijndael = Rijndael_512_512::new_with_key(&key);
+/// sha3.absorb_str("Initialize");
+/// let mut iv = SharedArrays::<u32, 16, u8, 64>::new();
+/// iv.src = sha3.get_hash_value_in_array();
+/// let iv = unsafe { iv.des };
+/// print!("IV =\t");
+/// for i in 0..16
+///     { print!("{:08X}", iv[i].to_be()); }
+/// println!();
+/// let message = "In the beginning God created the heavens and the earth.";
+/// println!("M =\t{}", message);
+/// let mut cipher = [0_u8; 64];
+/// a_rijndael.encrypt(iv.clone(), message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+/// print!("C =\t");
+/// for c in cipher.clone()
+///     { print!("{:02X} ", c); }
+/// println!();
+/// let mut txt = String::new();
+/// for c in cipher.clone()
+///     { write!(txt, "{:02X} ", c); }
+/// assert_eq!(txt, "C2 C4 1C 91 EE 50 F0 04 B6 73 00 B2 81 05 01 25 C1 87 24 27 7E CE 01 65 C5 CB 87 38 99 9F 5B 0C D1 DF 8D 52 C4 C4 C8 D8 F5 D5 AD F3 FD DA 35 C2 33 F6 5D 83 02 85 F1 20 8C 56 0B 72 9C 91 84 42 ");
+/// 
+/// let mut recovered = vec![0; 55];
+/// a_rijndael.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+/// print!("Ba =\t");
+/// for b in recovered.clone()
+///     { print!("{:02X} ", b); }
+/// println!();
+/// let mut txt = String::new();
+/// for c in recovered.clone()
+///     { write!(txt, "{:02X} ", c); }
+/// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+/// 
+/// let mut converted = String::new();
+/// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+/// 
+/// println!("Bb =\t{}", converted);
+/// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+/// assert_eq!(converted, message);
 /// ```
 #[allow(non_camel_case_types)]
 #[derive(Debug, Clone)]

@@ -53,7 +53,7 @@ pub fn main()
 
 fn des_encrypt_with_padding_iso_cbc()
 {
-    println!("des_encrypt_with_padding_iso_cbc");
+    println!("des_encrypt_with_padding_iso_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -242,7 +242,7 @@ fn des_encrypt_with_padding_iso_cbc()
 
 fn des_encrypt_with_padding_iso_cbc_into_vec()
 {
-    println!("des_encrypt_with_padding_iso_cbc_into_vec");
+    println!("des_encrypt_with_padding_iso_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -430,7 +430,7 @@ fn des_encrypt_with_padding_iso_cbc_into_vec()
 
 fn des_encrypt_with_padding_iso_cbc_into_array()
 {
-    println!("des_encrypt_with_padding_iso_cbc_into_array");
+    println!("des_encrypt_with_padding_iso_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -619,7 +619,7 @@ fn des_encrypt_with_padding_iso_cbc_into_array()
 
 fn des_encrypt_str_with_padding_iso_cbc()
 {
-    println!("des_encrypt_str_with_padding_iso_cbc");
+    println!("des_encrypt_str_with_padding_iso_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -808,7 +808,7 @@ fn des_encrypt_str_with_padding_iso_cbc()
 
 fn des_encrypt_str_with_padding_iso_cbc_into_vec()
 {
-    println!("des_encrypt_str_with_padding_iso_cbc_into_vec");
+    println!("des_encrypt_str_with_padding_iso_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -997,7 +997,7 @@ fn des_encrypt_str_with_padding_iso_cbc_into_vec()
 
 fn des_encrypt_str_with_padding_iso_cbc_into_array()
 {
-    println!("des_encrypt_str_with_padding_iso_cbc_into_array");
+    println!("des_encrypt_str_with_padding_iso_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -1186,7 +1186,7 @@ fn des_encrypt_str_with_padding_iso_cbc_into_array()
 
 fn des_encrypt_string_with_padding_iso_cbc()
 {
-    println!("des_encrypt_string_with_padding_iso_cbc");
+    println!("des_encrypt_string_with_padding_iso_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -1375,7 +1375,7 @@ fn des_encrypt_string_with_padding_iso_cbc()
 
 fn des_encrypt_string_with_padding_iso_cbc_into_vec()
 {
-    println!("des_encrypt_string_with_padding_iso_cbc_into_vec");
+    println!("des_encrypt_string_with_padding_iso_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -1564,7 +1564,7 @@ fn des_encrypt_string_with_padding_iso_cbc_into_vec()
 
 fn des_encrypt_string_with_padding_iso_cbc_into_array()
 {
-    println!("des_encrypt_string_with_padding_iso_cbc_into_array");
+    println!("des_encrypt_string_with_padding_iso_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -1752,7 +1752,7 @@ fn des_encrypt_string_with_padding_iso_cbc_into_array()
 
 fn des_encrypt_vec_with_padding_iso_cbc()
 {
-    println!("des_encrypt_vec_with_padding_iso_cbc");
+    println!("des_encrypt_vec_with_padding_iso_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -1950,7 +1950,7 @@ fn des_encrypt_vec_with_padding_iso_cbc()
 
 fn des_encrypt_vec_with_padding_iso_cbc_into_vec()
 {
-    println!("des_encrypt_vec_with_padding_iso_cbc_into_vec");
+    println!("des_encrypt_vec_with_padding_iso_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -2149,7 +2149,7 @@ fn des_encrypt_vec_with_padding_iso_cbc_into_vec()
 
 fn des_encrypt_vec_with_padding_iso_cbc_into_array()
 {
-    println!("des_encrypt_vec_with_padding_iso_cbc_into_array");
+    println!("des_encrypt_vec_with_padding_iso_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -2347,7 +2347,7 @@ fn des_encrypt_vec_with_padding_iso_cbc_into_array()
 
 fn des_encrypt_array_with_padding_iso_cbc()
 {
-    println!("des_encrypt_array_with_padding_iso_cbc");
+    println!("des_encrypt_array_with_padding_iso_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -2553,7 +2553,7 @@ fn des_encrypt_array_with_padding_iso_cbc()
 
 fn des_encrypt_array_with_padding_iso_cbc_into_vec()
 {
-    println!("des_encrypt_array_with_padding_iso_cbc_into_vec");
+    println!("des_encrypt_array_with_padding_iso_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -2760,7 +2760,7 @@ fn des_encrypt_array_with_padding_iso_cbc_into_vec()
 
 fn des_encrypt_array_with_padding_iso_cbc_into_array()
 {
-    println!("des_encrypt_array_with_padding_iso_cbc_into_array");
+    println!("des_encrypt_array_with_padding_iso_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -2965,7 +2965,7 @@ fn des_encrypt_array_with_padding_iso_cbc_into_array()
 
 fn des_decrypt_with_padding_iso_cbc()
 {
-    println!("des_decrypt_with_padding_iso_cbc");
+    println!("des_decrypt_with_padding_iso_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -3319,7 +3319,7 @@ fn des_decrypt_with_padding_iso_cbc()
 
 fn des_decrypt_with_padding_iso_cbc_into_vec()
 {
-    println!("des_decrypt_with_padding_iso_cbc_into_vec");
+    println!("des_decrypt_with_padding_iso_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -3667,7 +3667,7 @@ fn des_decrypt_with_padding_iso_cbc_into_vec()
 
 fn des_decrypt_with_padding_iso_cbc_into_array()
 {
-    println!("des_decrypt_with_padding_iso_cbc_into_array");
+    println!("des_decrypt_with_padding_iso_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -4021,7 +4021,7 @@ fn des_decrypt_with_padding_iso_cbc_into_array()
 
 fn des_decrypt_with_padding_iso_cbc_into_string()
 {
-    println!("des_decrypt_with_padding_iso_cbc_into_string");
+    println!("des_decrypt_with_padding_iso_cbc_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -4263,7 +4263,7 @@ fn des_decrypt_with_padding_iso_cbc_into_string()
 
 fn des_decrypt_vec_with_padding_iso_cbc()
 {
-    println!("des_decrypt_vec_with_padding_iso_cbc");
+    println!("des_decrypt_vec_with_padding_iso_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -4616,7 +4616,7 @@ fn des_decrypt_vec_with_padding_iso_cbc()
 
 fn des_decrypt_vec_with_padding_iso_cbc_into_vec()
 {
-    println!("des_decrypt_vec_with_padding_iso_cbc_into_vec");
+    println!("des_decrypt_vec_with_padding_iso_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -4964,7 +4964,7 @@ fn des_decrypt_vec_with_padding_iso_cbc_into_vec()
 
 fn des_decrypt_vec_with_padding_iso_cbc_into_array()
 {
-    println!("des_decrypt_vec_with_padding_iso_cbc_into_array");
+    println!("des_decrypt_vec_with_padding_iso_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -5318,7 +5318,7 @@ fn des_decrypt_vec_with_padding_iso_cbc_into_array()
 
 fn des_decrypt_vec_with_padding_iso_cbc_into_string()
 {
-    println!("des_decrypt_vec_with_padding_iso_cbc_into_string");
+    println!("des_decrypt_vec_with_padding_iso_cbc_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -5560,7 +5560,7 @@ fn des_decrypt_vec_with_padding_iso_cbc_into_string()
 
 fn des_decrypt_array_with_padding_iso_cbc()
 {
-    println!("des_decrypt_array_with_padding_iso_cbc");
+    println!("des_decrypt_array_with_padding_iso_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -5922,7 +5922,7 @@ fn des_decrypt_array_with_padding_iso_cbc()
 
 fn des_decrypt_array_with_padding_iso_cbc_into_vec()
 {
-    println!("des_decrypt_array_with_padding_iso_cbc_into_vec");
+    println!("des_decrypt_array_with_padding_iso_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -6270,7 +6270,7 @@ fn des_decrypt_array_with_padding_iso_cbc_into_vec()
 
 fn des_decrypt_array_with_padding_iso_cbc_into_array()
 {
-    println!("des_decrypt_array_with_padding_iso_cbc_into_array");
+    println!("des_decrypt_array_with_padding_iso_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };
@@ -6624,7 +6624,7 @@ fn des_decrypt_array_with_padding_iso_cbc_into_array()
 
 fn des_decrypt_array_with_padding_iso_cbc_into_string()
 {
-    println!("des_decrypt_array_with_padding_iso_cbc_into_string");
+    println!("des_decrypt_array_with_padding_iso_cbc_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CBC_ISO };

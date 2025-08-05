@@ -53,7 +53,7 @@ pub fn main()
 
 fn des_encrypt_ctr()
 {
-    println!("des_encrypt_ctr");
+    println!("des_encrypt_ctr()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -242,7 +242,7 @@ fn des_encrypt_ctr()
 
 fn des_encrypt_ctr_into_vec()
 {
-    println!("des_encrypt_ctr_into_vec");
+    println!("des_encrypt_ctr_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -430,7 +430,7 @@ fn des_encrypt_ctr_into_vec()
 
 fn des_encrypt_ctr_into_array()
 {
-    println!("des_encrypt_ctr_into_array");
+    println!("des_encrypt_ctr_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -618,7 +618,7 @@ fn des_encrypt_ctr_into_array()
 
 fn des_encrypt_str_ctr()
 {
-    println!("des_encrypt_str_ctr");
+    println!("des_encrypt_str_ctr()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -806,7 +806,7 @@ fn des_encrypt_str_ctr()
 
 fn des_encrypt_str_ctr_into_vec()
 {
-    println!("des_encrypt_str_ctr_into_vec");
+    println!("des_encrypt_str_ctr_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -994,7 +994,7 @@ fn des_encrypt_str_ctr_into_vec()
 
 fn des_encrypt_str_ctr_into_array()
 {
-    println!("des_encrypt_str_ctr_into_array");
+    println!("des_encrypt_str_ctr_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -1182,7 +1182,7 @@ fn des_encrypt_str_ctr_into_array()
 
 fn des_encrypt_string_ctr()
 {
-    println!("des_encrypt_string_ctr");
+    println!("des_encrypt_string_ctr()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -1370,7 +1370,7 @@ fn des_encrypt_string_ctr()
 
 fn des_encrypt_string_ctr_into_vec()
 {
-    println!("des_encrypt_string_ctr_into_vec");
+    println!("des_encrypt_string_ctr_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -1558,7 +1558,7 @@ fn des_encrypt_string_ctr_into_vec()
 
 fn des_encrypt_string_ctr_into_array()
 {
-    println!("des_encrypt_string_ctr_into_array");
+    println!("des_encrypt_string_ctr_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -1746,7 +1746,7 @@ fn des_encrypt_string_ctr_into_array()
 
 fn des_encrypt_vec_ctr()
 {
-    println!("des_encrypt_vec_ctr");
+    println!("des_encrypt_vec_ctr()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -1943,7 +1943,7 @@ fn des_encrypt_vec_ctr()
 
 fn des_encrypt_vec_ctr_into_vec()
 {
-    println!("des_encrypt_vec_ctr_into_vec");
+    println!("des_encrypt_vec_ctr_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -2141,7 +2141,7 @@ fn des_encrypt_vec_ctr_into_vec()
 
 fn des_encrypt_vec_ctr_into_array()
 {
-    println!("des_encrypt_vec_ctr_into_array");
+    println!("des_encrypt_vec_ctr_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -2338,7 +2338,7 @@ fn des_encrypt_vec_ctr_into_array()
 
 fn des_encrypt_array_ctr()
 {
-    println!("des_encrypt_array_ctr");
+    println!("des_encrypt_array_ctr()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -2543,7 +2543,7 @@ fn des_encrypt_array_ctr()
 
 fn des_encrypt_array_ctr_into_vec()
 {
-    println!("des_encrypt_array_ctr_into_vec");
+    println!("des_encrypt_array_ctr_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -2749,7 +2749,7 @@ fn des_encrypt_array_ctr_into_vec()
 
 fn des_encrypt_array_ctr_into_array()
 {
-    println!("des_encrypt_array_ctr_into_array");
+    println!("des_encrypt_array_ctr_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -2953,7 +2953,7 @@ fn des_encrypt_array_ctr_into_array()
 
 fn des_decrypt_ctr()
 {
-    println!("des_decrypt_ctr");
+    println!("des_decrypt_ctr()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -3306,7 +3306,7 @@ fn des_decrypt_ctr()
 
 fn des_decrypt_ctr_into_vec()
 {
-    println!("des_decrypt_ctr_into_vec");
+    println!("des_decrypt_ctr_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -3654,7 +3654,7 @@ fn des_decrypt_ctr_into_vec()
 
 fn des_decrypt_ctr_into_array()
 {
-    println!("des_decrypt_ctr_into_array");
+    println!("des_decrypt_ctr_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -4008,7 +4008,7 @@ fn des_decrypt_ctr_into_array()
 
 fn des_decrypt_ctr_into_string()
 {
-    println!("des_decrypt_ctr_into_string");
+    println!("des_decrypt_ctr_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -4250,7 +4250,7 @@ fn des_decrypt_ctr_into_string()
 
 fn des_decrypt_vec_ctr()
 {
-    println!("des_decrypt_vec_ctr");
+    println!("des_decrypt_vec_ctr()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -4603,7 +4603,7 @@ fn des_decrypt_vec_ctr()
 
 fn des_decrypt_vec_ctr_into_vec()
 {
-    println!("des_decrypt_vec_ctr_into_vec");
+    println!("des_decrypt_vec_ctr_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -4951,7 +4951,7 @@ fn des_decrypt_vec_ctr_into_vec()
 
 fn des_decrypt_vec_ctr_into_array()
 {
-    println!("des_decrypt_vec_ctr_into_array");
+    println!("des_decrypt_vec_ctr_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -5305,7 +5305,7 @@ fn des_decrypt_vec_ctr_into_array()
 
 fn des_decrypt_vec_ctr_into_string()
 {
-    println!("des_decrypt_vec_ctr_into_string");
+    println!("des_decrypt_vec_ctr_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -5547,7 +5547,7 @@ fn des_decrypt_vec_ctr_into_string()
 
 fn des_decrypt_array_ctr()
 {
-    println!("des_decrypt_array_ctr");
+    println!("des_decrypt_array_ctr()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -5909,7 +5909,7 @@ fn des_decrypt_array_ctr()
 
 fn des_decrypt_array_ctr_into_vec()
 {
-    println!("des_decrypt_array_ctr_into_vec");
+    println!("des_decrypt_array_ctr_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -6257,7 +6257,7 @@ fn des_decrypt_array_ctr_into_vec()
 
 fn des_decrypt_array_ctr_into_array()
 {
-    println!("des_decrypt_array_ctr_into_array");
+    println!("des_decrypt_array_ctr_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };
@@ -6611,7 +6611,7 @@ fn des_decrypt_array_ctr_into_array()
 
 fn des_decrypt_array_ctr_into_string()
 {
-    println!("des_decrypt_array_ctr_into_string");
+    println!("des_decrypt_array_ctr_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, CTR };

@@ -34,6 +34,12 @@ pub mod des_cbc_pkcs7;
 /// examples were moved to des_cbc_iso.rs.
 pub mod des_cbc_iso;
 
+/// rijndael.rs was too big because of documentation and plenty of examples
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to rijndael_cbc_iso.rs.
+pub mod rijndael_cbc_iso;
+
 /// des.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and

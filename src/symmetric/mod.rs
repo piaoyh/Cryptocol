@@ -73,8 +73,9 @@ mod traits_ofb_impl_for_des;
 mod traits_ofb_impl_for_rijndael;
 mod traits_ctr_impl_for_des;
 mod traits_ctr_impl_for_rijndael;
-mod trait_small_cryptor_impl_for_des;
-mod trait_small_cryptor_impl_for_rijndael;
+mod trait_small_cryptor64_impl_for_des;
+mod trait_small_cryptor64_impl_for_rijndael;
+mod trait_small_cryptor128_impl_for_rijndael;
 mod traits_for_big_cryptor_impl;
 
 pub use des::*;

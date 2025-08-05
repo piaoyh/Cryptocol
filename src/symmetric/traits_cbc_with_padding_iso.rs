@@ -68,6 +68,36 @@ pub trait CBC_ISO<T> : Sized
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
+    /// # For Rijndael or AES, and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// 
+    /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_aes = AES_128::new_with_key_u128(key);
+    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
+    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
+    /// 
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 64];
+    /// a_aes.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X}", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.encrypt)
+    /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```

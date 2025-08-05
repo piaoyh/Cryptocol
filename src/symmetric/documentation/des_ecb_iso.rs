@@ -63,8 +63,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -306,8 +304,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -550,8 +546,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -806,8 +800,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -1044,8 +1036,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -1283,8 +1273,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -1537,8 +1525,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -1777,8 +1763,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -2016,8 +2000,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -2271,8 +2253,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -2521,8 +2501,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -2770,8 +2748,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -3037,8 +3013,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -3296,8 +3270,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -3554,8 +3526,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   in bytes.
     /// - When `T` is `u64`, the output should be at least `8`,
     ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 

@@ -53,7 +53,7 @@ pub fn main()
 
 fn des_encrypt_ofb()
 {
-    println!("des_encrypt_ofb");
+    println!("des_encrypt_ofb()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -242,7 +242,7 @@ fn des_encrypt_ofb()
 
 fn des_encrypt_ofb_into_vec()
 {
-    println!("des_encrypt_ofb_into_vec");
+    println!("des_encrypt_ofb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -430,7 +430,7 @@ fn des_encrypt_ofb_into_vec()
 
 fn des_encrypt_ofb_into_array()
 {
-    println!("des_encrypt_ofb_into_array");
+    println!("des_encrypt_ofb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -618,7 +618,7 @@ fn des_encrypt_ofb_into_array()
 
 fn des_encrypt_str_ofb()
 {
-    println!("des_encrypt_str_ofb");
+    println!("des_encrypt_str_ofb()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -806,7 +806,7 @@ fn des_encrypt_str_ofb()
 
 fn des_encrypt_str_ofb_into_vec()
 {
-    println!("des_encrypt_str_ofb_into_vec");
+    println!("des_encrypt_str_ofb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -994,7 +994,7 @@ fn des_encrypt_str_ofb_into_vec()
 
 fn des_encrypt_str_ofb_into_array()
 {
-    println!("des_encrypt_str_ofb_into_array");
+    println!("des_encrypt_str_ofb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -1182,7 +1182,7 @@ fn des_encrypt_str_ofb_into_array()
 
 fn des_encrypt_string_ofb()
 {
-    println!("des_encrypt_string_ofb");
+    println!("des_encrypt_string_ofb()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -1370,7 +1370,7 @@ fn des_encrypt_string_ofb()
 
 fn des_encrypt_string_ofb_into_vec()
 {
-    println!("des_encrypt_string_ofb_into_vec");
+    println!("des_encrypt_string_ofb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -1558,7 +1558,7 @@ fn des_encrypt_string_ofb_into_vec()
 
 fn des_encrypt_string_ofb_into_array()
 {
-    println!("des_encrypt_string_ofb_into_array");
+    println!("des_encrypt_string_ofb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -1746,7 +1746,7 @@ fn des_encrypt_string_ofb_into_array()
 
 fn des_encrypt_vec_ofb()
 {
-    println!("des_encrypt_vec_ofb");
+    println!("des_encrypt_vec_ofb()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -1943,7 +1943,7 @@ fn des_encrypt_vec_ofb()
 
 fn des_encrypt_vec_ofb_into_vec()
 {
-    println!("des_encrypt_vec_ofb_into_vec");
+    println!("des_encrypt_vec_ofb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -2141,7 +2141,7 @@ fn des_encrypt_vec_ofb_into_vec()
 
 fn des_encrypt_vec_ofb_into_array()
 {
-    println!("des_encrypt_vec_ofb_into_array");
+    println!("des_encrypt_vec_ofb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -2338,7 +2338,7 @@ fn des_encrypt_vec_ofb_into_array()
 
 fn des_encrypt_array_ofb()
 {
-    println!("des_encrypt_array_ofb");
+    println!("des_encrypt_array_ofb()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -2543,7 +2543,7 @@ fn des_encrypt_array_ofb()
 
 fn des_encrypt_array_ofb_into_vec()
 {
-    println!("des_encrypt_array_ofb_into_vec");
+    println!("des_encrypt_array_ofb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -2749,7 +2749,7 @@ fn des_encrypt_array_ofb_into_vec()
 
 fn des_encrypt_array_ofb_into_array()
 {
-    println!("des_encrypt_array_ofb_into_array");
+    println!("des_encrypt_array_ofb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -2953,7 +2953,7 @@ fn des_encrypt_array_ofb_into_array()
 
 fn des_decrypt_ofb()
 {
-    println!("des_decrypt_ofb");
+    println!("des_decrypt_ofb()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -3306,7 +3306,7 @@ fn des_decrypt_ofb()
 
 fn des_decrypt_ofb_into_vec()
 {
-    println!("des_decrypt_ofb_into_vec");
+    println!("des_decrypt_ofb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -3654,7 +3654,7 @@ fn des_decrypt_ofb_into_vec()
 
 fn des_decrypt_ofb_into_array()
 {
-    println!("des_decrypt_ofb_into_array");
+    println!("des_decrypt_ofb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -4008,7 +4008,7 @@ fn des_decrypt_ofb_into_array()
 
 fn des_decrypt_ofb_into_string()
 {
-    println!("des_decrypt_ofb_into_string");
+    println!("des_decrypt_ofb_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -4250,7 +4250,7 @@ fn des_decrypt_ofb_into_string()
 
 fn des_decrypt_vec_ofb()
 {
-    println!("des_decrypt_vec_ofb");
+    println!("des_decrypt_vec_ofb()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -4603,7 +4603,7 @@ fn des_decrypt_vec_ofb()
 
 fn des_decrypt_vec_ofb_into_vec()
 {
-    println!("des_decrypt_vec_ofb_into_vec");
+    println!("des_decrypt_vec_ofb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -4951,7 +4951,7 @@ fn des_decrypt_vec_ofb_into_vec()
 
 fn des_decrypt_vec_ofb_into_array()
 {
-    println!("des_decrypt_vec_ofb_into_array");
+    println!("des_decrypt_vec_ofb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -5305,7 +5305,7 @@ fn des_decrypt_vec_ofb_into_array()
 
 fn des_decrypt_vec_ofb_into_string()
 {
-    println!("des_decrypt_vec_ofb_into_string");
+    println!("des_decrypt_vec_ofb_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -5547,7 +5547,7 @@ fn des_decrypt_vec_ofb_into_string()
 
 fn des_decrypt_array_ofb()
 {
-    println!("des_decrypt_array_ofb");
+    println!("des_decrypt_array_ofb()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -5909,7 +5909,7 @@ fn des_decrypt_array_ofb()
 
 fn des_decrypt_array_ofb_into_vec()
 {
-    println!("des_decrypt_array_ofb_into_vec");
+    println!("des_decrypt_array_ofb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -6257,7 +6257,7 @@ fn des_decrypt_array_ofb_into_vec()
 
 fn des_decrypt_array_ofb_into_array()
 {
-    println!("des_decrypt_array_ofb_into_array");
+    println!("des_decrypt_array_ofb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
@@ -6611,7 +6611,7 @@ fn des_decrypt_array_ofb_into_array()
 
 fn des_decrypt_array_ofb_into_string()
 {
-    println!("des_decrypt_array_ofb_into_string");
+    println!("des_decrypt_array_ofb_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
     use cryptocol::symmetric::{ DES, DES_Expanded, OFB };
