@@ -2130,7 +2130,6 @@ fn aes_decrypt_with_padding_iso_cbc()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
-    println!();
 
     let mut recovered = vec![0; 55];
     a_aes.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -2173,7 +2172,6 @@ fn aes_decrypt_with_padding_iso_cbc()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
-    println!();
 
     let mut recovered = vec![0; 55];
     a_aes.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -2216,7 +2214,6 @@ fn aes_decrypt_with_padding_iso_cbc()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
-    println!();
 
     let mut recovered = vec![0; 55];
     a_aes.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -2259,7 +2256,6 @@ fn aes_decrypt_with_padding_iso_cbc()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
-    println!();
 
     let mut recovered = vec![0; 55];
     a_rijndael.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -2587,7 +2583,6 @@ fn aes_decrypt_with_padding_iso_cbc_into_array()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
-    println!();
 
     let mut recovered = [0; 64];
     let len = a_aes.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -2631,7 +2626,6 @@ fn aes_decrypt_with_padding_iso_cbc_into_array()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
-    println!();
 
     let mut recovered = [0; 64];
     a_aes.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -2676,7 +2670,6 @@ fn aes_decrypt_with_padding_iso_cbc_into_array()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
-    println!();
 
     let mut recovered = [0; 64];
     a_aes.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -2720,7 +2713,6 @@ fn aes_decrypt_with_padding_iso_cbc_into_array()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
-    println!();
 
     let mut recovered = [0; 64];
     a_rijndael.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -2821,7 +2813,6 @@ fn aes_decrypt_with_padding_iso_cbc_into_string()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
-    println!();
 
     let mut converted= String::new();
     a_aes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut converted);
@@ -2852,7 +2843,6 @@ fn aes_decrypt_with_padding_iso_cbc_into_string()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
-    println!();
 
     let mut converted= String::new();
     a_aes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut converted);
@@ -2883,7 +2873,6 @@ fn aes_decrypt_with_padding_iso_cbc_into_string()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
-    println!();
 
     let mut converted= String::new();
     a_aes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut converted);
@@ -3827,7 +3816,6 @@ fn aes_decrypt_array_with_padding_iso_cbc()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
-    println!();
 
     let mut recovered = vec![0; 55];
     a_aes.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
@@ -3870,7 +3858,6 @@ fn aes_decrypt_array_with_padding_iso_cbc()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
-    println!();
 
     let mut recovered = vec![0; 55];
     a_aes.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
@@ -3913,8 +3900,7 @@ fn aes_decrypt_array_with_padding_iso_cbc()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
-    println!();
-    
+
     let mut recovered = vec![0; 55];
     a_aes.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
@@ -3956,8 +3942,7 @@ fn aes_decrypt_array_with_padding_iso_cbc()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
-    println!();
-    
+
     let mut recovered = vec![0; 55];
     a_rijndael.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
     print!("Ba =\t");
@@ -4055,7 +4040,6 @@ fn aes_decrypt_array_with_padding_iso_cbc_into_vec()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
-    println!();
 
     let mut recovered = vec![0; 55];
     a_aes.decrypt_array_into_vec(iv, &cipher, &mut recovered);
@@ -4098,7 +4082,6 @@ fn aes_decrypt_array_with_padding_iso_cbc_into_vec()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
-    println!();
 
     let mut recovered = vec![0; 55];
     a_aes.decrypt_array_into_vec(iv, &cipher, &mut recovered);
@@ -4141,8 +4124,7 @@ fn aes_decrypt_array_with_padding_iso_cbc_into_vec()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
-    println!();
-    
+
     let mut recovered = vec![0; 55];
     a_aes.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
@@ -4184,8 +4166,7 @@ fn aes_decrypt_array_with_padding_iso_cbc_into_vec()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
-    println!();
-    
+
     let mut recovered = vec![0; 55];
     a_rijndael.decrypt_array_into_vec(iv, &cipher, &mut recovered);
     print!("Ba =\t");
@@ -4283,7 +4264,6 @@ fn aes_decrypt_array_with_padding_iso_cbc_into_array()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
-    println!();
 
     let mut recovered = [0; 64];
     let len = a_aes.decrypt_array_into_array(iv, &cipher, &mut recovered);
@@ -4326,7 +4306,6 @@ fn aes_decrypt_array_with_padding_iso_cbc_into_array()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
-    println!();
 
     let mut recovered = [0; 64];
     let len = a_aes.decrypt_array_into_array(iv, &cipher, &mut recovered);
@@ -4369,7 +4348,6 @@ fn aes_decrypt_array_with_padding_iso_cbc_into_array()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
-    println!();
 
     let mut recovered = [0; 64];
     let len = a_aes.decrypt_array_into_array(iv, &cipher, &mut recovered);
@@ -4412,7 +4390,6 @@ fn aes_decrypt_array_with_padding_iso_cbc_into_array()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
-    println!();
 
     let mut recovered = [0; 64];
     let len = a_rijndael.decrypt_array_into_array(iv, &cipher, &mut recovered);
@@ -4511,7 +4488,6 @@ fn aes_decrypt_array_with_padding_iso_cbc_into_string()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
-    println!();
 
     let mut converted= String::new();
     a_aes.decrypt_array_into_string(iv, &cipher, &mut converted);
@@ -4542,7 +4518,6 @@ fn aes_decrypt_array_with_padding_iso_cbc_into_string()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
-    println!();
 
     let mut converted= String::new();
     a_aes.decrypt_array_into_string(iv, &cipher, &mut converted);
@@ -4573,7 +4548,6 @@ fn aes_decrypt_array_with_padding_iso_cbc_into_string()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
-    println!();
 
     let mut converted= String::new();
     a_aes.decrypt_array_into_string(iv, &cipher, &mut converted);
@@ -4604,7 +4578,6 @@ fn aes_decrypt_array_with_padding_iso_cbc_into_string()
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
     assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
-    println!();
 
     let mut converted= String::new();
     a_rijndael.decrypt_array_into_string(iv, &cipher, &mut converted);

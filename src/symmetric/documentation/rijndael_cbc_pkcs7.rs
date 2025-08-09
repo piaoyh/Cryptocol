@@ -45,7 +45,7 @@ impl <const ROUND: usize, const NB: usize, const NK: usize>
 Rijndael_Generic<ROUND, NB, NK>
 {
     // pub fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
-    /// Encrypts the data with the padding defined according to ISO 7816-4
+    /// Encrypts the data with the padding defined according to PKCS #7
     /// in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
@@ -77,17 +77,16 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - The size of the area for ciphertext should be prepared to be
     ///   (`length_in_bytes` + `1`).next_multiple_of(`4` * `NB`) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -106,14 +105,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -135,14 +134,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -164,14 +163,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -193,14 +192,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 5 for Rijndael-512-512 for post-quantum
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
     /// 
@@ -231,7 +230,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt(&mut self, iv: [u32; NB], message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
@@ -239,7 +238,7 @@ Rijndael_Generic<ROUND, NB, NK>
     }
 
     // pub fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data with the padding defined according to ISO 7816-4
+    /// Encrypts the data with the padding defined according to PKCS #7
     /// in CBC (Cipher-Block Chaining) mode, and stores the encrypted data
     /// in `Vec<U>`.
     /// 
@@ -267,11 +266,10 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - If `length_in_bytes` is `0`, it means the message is a null string.
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the `Vec<U>` object which is referred to as `cipher`.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
@@ -279,7 +277,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -298,14 +296,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -327,14 +325,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -356,14 +354,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -385,7 +383,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 5 for Rijndael-512-512 for post-quantum
@@ -394,7 +392,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -423,7 +421,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt_into_vec<U>(&mut self, iv: [u32; NB], message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     {
@@ -431,7 +429,7 @@ Rijndael_Generic<ROUND, NB, NK>
     }
 
     // pub fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
-    /// Encrypts the data with the padding defined according to ISO 7816-4
+    /// Encrypts the data with the padding defined according to PKCS #7
     /// in CBC (Cipher-Block Chaining) mode, and stores the encrypted data
     /// in array `[U; N]`.
     /// 
@@ -473,17 +471,16 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - The size of the area for ciphertext should be prepared to be
     ///   (`length_in_bytes` + `1`).next_multiple_of(`4` * `NB`) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -502,14 +499,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -531,14 +528,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -560,14 +557,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -589,7 +586,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 5 for Rijndael-512-512 for post-quantum
@@ -598,7 +595,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -627,7 +624,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt_into_array<U, const N: usize>(&mut self, iv: [u32; NB], message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
@@ -637,7 +634,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn encrypt_str(&mut self, iv: T, message: &str, cipher: *mut u8) -> u64
     /// Encrypts the data in a `str` object with the padding defined
-    /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
@@ -664,17 +661,16 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - The size of the area for ciphertext should be prepared to be
     ///   (`message.len()` + `1`).next_multiple_of(`4` * `NB`) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -693,14 +689,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -722,14 +718,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -751,14 +747,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -780,7 +776,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 5 for Rijndael-512-512 for post-quantum
@@ -789,7 +785,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -818,7 +814,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt_str(&mut self, iv: [u32; NB], message: &str, cipher: *mut u8) -> u64
     {
@@ -827,7 +823,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn encrypt_str_into_vec<U>(&mut self, iv: T, message: &str, cipher: &mut Vec<U>) -> u64
     /// Encrypts the data in `str` with the padding defined according to
-    /// ISO 7816-4 in CBC (Cipher-Block Chaining) mode, and stores the
+    /// PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the
     /// encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
@@ -847,11 +843,10 @@ Rijndael_Generic<ROUND, NB, NK>
     /// # Features
     /// - If `message` is a null string "", only padding bytes will be encrypted,
     ///   and stored in the `Vec<U>` object which is referred to as `cipher`.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
@@ -859,7 +854,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -878,14 +873,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -907,14 +902,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -936,14 +931,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -965,7 +960,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 5 for Rijndael-512-512 for post-quantum
@@ -974,7 +969,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -1003,7 +998,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt_str_into_vec<U>(&mut self, iv: [u32; NB], message: &str, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
@@ -1013,7 +1008,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn encrypt_str_into_array<U, const N: usize>(&mut self, iv: T, message: &str, cipher: &mut [U; N]) -> u64
     /// Encrypts the data in a `str` object with the padding defined
-    /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode,
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode,
     /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
@@ -1048,17 +1043,16 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - The size of the area for ciphertext should be prepared to be
     ///   (`message.len()` + `1`).next_multiple_of(`4` * `NB`) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1077,14 +1071,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1106,14 +1100,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1135,14 +1129,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ ARijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ ARijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1164,14 +1158,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 5 for Rijndael-512-512 for post-quantum
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
@@ -1202,7 +1196,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt_str_into_array<U, const N: usize>(&mut self, iv: [u32; NB], message: &str, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
@@ -1212,7 +1206,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn encrypt_string(&mut self, iv: T, message: &String, cipher: *mut u8) -> u64
     /// Encrypts the data stored in a `String` object with the padding
-    /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
@@ -1240,17 +1234,16 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - The size of the area for ciphertext should be prepared to be
     ///   (`message.len()` + `1`).next_multiple_of(`4` * `NB`) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1269,14 +1262,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1298,14 +1291,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1327,14 +1320,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1356,7 +1349,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 5 for Rijndael-512-512 for post-quantum
@@ -1365,7 +1358,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -1395,7 +1388,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt_string(&mut self, iv: [u32; NB], message: &String, cipher: *mut u8) -> u64
     {
@@ -1404,7 +1397,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn encrypt_string_into_vec<U>(&mut self, iv: T, message: &String, cipher: &mut Vec<U>) -> u64
     /// Encrypts the data stored in a `String` object with the padding
-    /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode,
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode,
     /// and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
@@ -1425,11 +1418,10 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - If `message` is a `String` object that has a null string "", only
     ///   padding bytes will be encrypted, and stored in the `Vec<U>` object
     ///   which is referred to as `cipher`.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
@@ -1437,7 +1429,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1456,14 +1448,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1485,14 +1477,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1514,14 +1506,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for ijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1543,7 +1535,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 5 for Rijndael-512-512 for post-quantum
@@ -1552,7 +1544,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -1582,7 +1574,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt_string_into_vec<U>(&mut self, iv: [u32; NB], message: &String, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
@@ -1592,7 +1584,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn encrypt_string_into_array<U, const N: usize>(&mut self, iv: T, message: &String, cipher: &mut [U; N]) -> u64
     /// Encrypts the data stored in a `String` object with the padding
-    /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode,
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode,
     /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
@@ -1628,17 +1620,16 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - The size of the area for ciphertext should be prepared to be
     ///   (`message.len()` + `1`).next_multiple_of(`4` * `NB`) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1657,14 +1648,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1686,14 +1677,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1715,14 +1706,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1744,7 +1735,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 5 for Rijndael-512-512 for post-quantum
@@ -1753,7 +1744,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -1783,7 +1774,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt_string_into_array<U, const N: usize>(&mut self, iv: [u32; NB], message: &String, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
@@ -1793,7 +1784,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn encrypt_vec<U>(&mut self, iv: T, message: &Vec<U>, cipher: *mut u8) -> u64
     /// Encrypts the data stored in a `Vec<U>` object with the padding defined
-    /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
@@ -1822,17 +1813,16 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only
     ///   padding bytes will be encrypted, and stored in the memory area that
     ///   starts from `cipher`.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1852,14 +1842,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1882,14 +1872,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1912,14 +1902,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1942,7 +1932,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 5 for Rijndael-512-512 for post-quantum
@@ -1951,7 +1941,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -1982,7 +1972,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt_vec<U>(&mut self, iv: [u32; NB], message: &Vec<U>, cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -1992,7 +1982,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn encrypt_vec_into_vec<U, V>(&mut self, iv: T, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
     /// Encrypts the data stored in a `Vec<U>` object with the padding defined
-    /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode, and
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode, and
     /// stores the encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
@@ -2013,11 +2003,10 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only
     ///   padding bytes will be encrypted, and stored in the `Vec<U>` object
     ///   which is referred to as `cipher`.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
@@ -2025,7 +2014,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2045,14 +2034,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2075,14 +2064,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2105,14 +2094,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2135,7 +2124,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 5 for Rijndael-512-512 for post-quantum
@@ -2144,7 +2133,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -2175,7 +2164,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt_vec_into_vec<U, V>(&mut self, iv: [u32; NB], message: &Vec<U>, cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -2185,7 +2174,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, message: &Vec<U>, cipher: &mut [V; N]) -> u64
     /// Encrypts the data stored in a `Vec<U>` object with the padding defined
-    /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode, and
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode, and
     /// stores the encrypted data in array `[V; N]`.
     /// 
     /// # Arguments
@@ -2225,17 +2214,16 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   (`size_of::<U>()` * `message.len()` + `1`).next_multiple_of(`4` * `MB`)
     ///   at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2255,14 +2243,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2285,14 +2273,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// // Normal case for AES-
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
@@ -2316,14 +2304,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2346,7 +2334,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 1 for Rijndael-512-512 for post-quantum
@@ -2355,7 +2343,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -2386,7 +2374,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: [u32; NB], message: &Vec<U>, cipher: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -2396,7 +2384,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn encrypt_array<U, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: *mut u8) -> u64
     /// Encrypts the data stored in an array `[U; N]` object with the padding
-    /// defined according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
+    /// defined according to PKCS #7 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
@@ -2424,17 +2412,16 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// - If `message` is an empty array `[U; 0]` object, only padding bytes
     ///   will be encrypted, and stored in the memory area that starts from `cipher`.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2455,14 +2442,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2486,14 +2473,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2517,14 +2504,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2548,7 +2535,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 5 for Rijndael-512-512 for post-quantum
@@ -2557,7 +2544,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -2589,7 +2576,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt_array<U, const N: usize>(&mut self, iv: [u32; NB], message: &[U; N], cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -2599,7 +2586,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut Vec<V>) -> u64
     /// Encrypts the data stored in an array `[U; N]` object with the padding
-    /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode, and stores the
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the
     /// encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
@@ -2619,11 +2606,10 @@ Rijndael_Generic<ROUND, NB, NK>
     /// # Features
     /// - If `message` is an empty array `[U; 0]` object, only padding bytes
     ///   will be encrypted, and stored in the `Vec<U>` object `cipher`.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
@@ -2631,7 +2617,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2652,14 +2638,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2683,14 +2669,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2714,14 +2700,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2745,7 +2731,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 5 for Rijndael-512-512 for post-quantum
@@ -2754,7 +2740,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -2786,7 +2772,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: [u32; NB], message: &[U; N], cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -2796,7 +2782,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut [V; M]) -> u64
     /// Encrypts the data stored in an array `[U; N]` object with the padding
-    /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode, and stores the
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the
     /// encrypted data in array `[V; M]`.
     /// 
     /// # Arguments
@@ -2834,17 +2820,16 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   (`size_of::<U>()` * `message.len()` + `1`).next_multiple_of(`4` * `MB`)
     ///   at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2865,14 +2850,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// ```
     /// 
     /// # Example 2 for AES-192
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2896,14 +2881,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 3 for AES-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2927,14 +2912,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2958,7 +2943,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// ```
     /// 
     /// # Example 5 for Rijndael-512-512 for post-quantum
@@ -2967,7 +2952,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -2999,7 +2984,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// ```
     pub fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: [u32; NB], message: &[U; N], cipher: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -3008,7 +2993,7 @@ Rijndael_Generic<ROUND, NB, NK>
     }
 
     // pub fn decrypt(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64;
-    /// Decrypts the data with the padding defined according to ISO 7816-4
+    /// Decrypts the data with the padding defined according to PKCS #7
     /// in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
@@ -3045,17 +3030,16 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - If the size of the area for plaintext is prepared more than
     ///   `length_in_bytes` - `1`, the rest of the area will be filled with
     ///   `0`s.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -3074,7 +3058,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_aes.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -3099,7 +3083,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3121,7 +3105,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_aes.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -3146,7 +3130,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3168,7 +3152,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_aes.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -3193,7 +3177,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3215,7 +3199,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_rijndael.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -3242,7 +3226,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -3272,7 +3256,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_rijndael.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -3298,7 +3282,7 @@ Rijndael_Generic<ROUND, NB, NK>
     }
 
     // pub fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
-    /// Decrypts the data with the padding defined according to ISO 7816-4
+    /// Decrypts the data with the padding defined according to PKCS #7
     /// in CBC (Cipher-Block Chaining) mode, and stores the decrypted data
     /// in `Vec<U>`.
     /// 
@@ -3328,11 +3312,10 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   Instead, use other safer methods such as decrypt_*_into_*().
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - `length_in_bytes` cannot be other than any multiple of `4` * `NB`.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the plaintext will be stored is enough.
     /// 
@@ -3340,7 +3323,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -3359,7 +3342,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_aes.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -3384,7 +3367,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3406,7 +3389,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_aes.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -3431,7 +3414,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3453,7 +3436,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_aes.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -3479,7 +3462,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3501,7 +3484,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_rijndael.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -3528,7 +3511,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -3558,7 +3541,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_rijndael.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -3585,7 +3568,7 @@ Rijndael_Generic<ROUND, NB, NK>
     }
 
     // pub fn decrypt_into_array<U, const N: usize>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
-    /// Decrypts the data with the padding defined according to ISO 7816-4
+    /// Decrypts the data with the padding defined according to PKCS #7
     /// in CBC (Cipher-Block Chaining) mode, and stores the decrypted data
     /// in array `[U; N]`.
     /// 
@@ -3625,17 +3608,16 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - It is responsible for you to prepare the `message` area big enough!
     /// - The size of the area for plaintext does not have to be prepared more
     ///   than `length_in_bytes` - `1`.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -3654,7 +3636,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// 
     /// let mut recovered = [0; 64];
     /// let len = a_aes.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -3680,7 +3662,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3702,7 +3684,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = [0; 64];
     /// a_aes.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -3729,7 +3711,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3751,7 +3733,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = [0; 64];
     /// a_aes.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -3777,7 +3759,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3799,7 +3781,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// 
     /// let mut recovered = [0; 64];
     /// a_rijndael.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -3826,7 +3808,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -3856,7 +3838,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// 
     /// let mut recovered = [0; 64];
     /// a_rijndael.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -3884,7 +3866,7 @@ Rijndael_Generic<ROUND, NB, NK>
     }
 
     // pub fn decrypt_into_string(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
-    /// Decrypts the data with the padding defined according to ISO 7816-4
+    /// Decrypts the data with the padding defined according to PKCS #7
     /// in CBC (Cipher-Block Chaining) mode, and stores the decrypted data
     /// in a `String`.
     /// 
@@ -3914,11 +3896,10 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   Instead, use other safer methods such as decrypt_*_into_*().
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - `length_in_bytes` cannot be other than any multiple of `4` * `NB`.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// - This method assumes that the original plaintext is a string
@@ -3928,7 +3909,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -3947,9 +3928,9 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// 
-    /// let mut converted= String::new();
+    /// let mut converted = String::new();
     /// a_aes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut converted);
     /// println!("B =\t{}", converted);
     /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
@@ -3960,7 +3941,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3982,9 +3963,9 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
-    /// let mut converted= String::new();
+    /// let mut converted = String::new();
     /// a_aes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut converted);
     /// println!("B =\t{}", converted);
     /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
@@ -3995,7 +3976,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4017,9 +3998,9 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
-    /// let mut converted= String::new();
+    /// let mut converted = String::new();
     /// a_aes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut converted);
     /// println!("B =\t{}", converted);
     /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
@@ -4030,7 +4011,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4052,7 +4033,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// 
     /// let mut converted= String::new();
     /// a_rijndael.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut converted);
@@ -4067,7 +4048,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -4097,7 +4078,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// 
     /// let mut converted= String::new();
     /// a_rijndael.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut converted);
@@ -4112,7 +4093,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn decrypt_vec<U>(&mut self, iv: T, cipher: &Vec<U>, message: *mut u8) -> u64
     /// Decrypts the data stored in a `Vec<U>` object with the padding defined
-    /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
@@ -4147,17 +4128,16 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - If the size of the area for plaintext is prepared more than
     ///   `size_of::<U>()` * `cipher.len()` - `1`, the rest of the area will be
     ///   filled with `0`s.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -4176,7 +4156,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_aes.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
@@ -4201,7 +4181,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4223,7 +4203,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_aes.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
@@ -4248,7 +4228,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4270,7 +4250,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_aes.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
@@ -4295,7 +4275,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4317,7 +4297,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_rijndael.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
@@ -4344,7 +4324,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -4374,7 +4354,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_rijndael.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
@@ -4402,7 +4382,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn decrypt_vec_into_vec<U, V>(&mut self, iv: T, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
     /// Decrypts the data stored in a `Vec<U>` object with the padding defined
-    /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode, and
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode, and
     /// stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
@@ -4425,11 +4405,10 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   failed in decryption.
     /// 
     /// # Features
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
@@ -4437,7 +4416,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -4456,7 +4435,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_aes.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
@@ -4481,7 +4460,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4503,7 +4482,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_aes.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
@@ -4528,7 +4507,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4550,7 +4529,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_aes.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
@@ -4575,7 +4554,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4597,7 +4576,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_rijndael.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
@@ -4624,7 +4603,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -4654,7 +4633,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_rijndael.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
@@ -4682,7 +4661,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, cipher: &Vec<U>, message: &mut [V; N]) -> u64
     /// Decrypts the data stored in a `Vec<U>` object with the padding defined
-    /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode, and
+    /// according to PKCS #7 in CBC (Cipher-Block Chaining) mode, and
     /// stores the decrypted data in array `[V; N]`.
     /// 
     /// # Arguments
@@ -4716,17 +4695,16 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - It is responsible for you to prepare the `message` area big enough!
     /// - The size of the area for plaintext does not have to be prepared more
     ///   than `size_of::<U>()` * `cipher.len()` - `1`.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -4745,7 +4723,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// 
     /// let mut recovered = [0; 64];
     /// let len = a_aes.decrypt_vec_into_array(iv, &cipher, &mut recovered);
@@ -4770,7 +4748,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4792,7 +4770,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = [0; 64];
     /// a_aes.decrypt_vec_into_array(iv, &cipher, &mut recovered);
@@ -4817,7 +4795,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4839,7 +4817,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = [0; 64];
     /// a_aes.decrypt_vec_into_array(iv, &cipher, &mut recovered);
@@ -4864,7 +4842,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4886,7 +4864,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// 
     /// let mut recovered = [0; 64];
     /// a_rijndael.decrypt_vec_into_array(iv, &cipher, &mut recovered);
@@ -4913,7 +4891,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -4943,7 +4921,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// 
     /// let mut recovered = [0; 64];
     /// a_rijndael.decrypt_vec_into_array(iv, &cipher, &mut recovered);
@@ -4971,7 +4949,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn decrypt_vec_into_string(&mut self, iv: T, cipher: &str, message: &mut String) -> u64
     /// Decrypts the data in `str` with the padding defined according to
-    /// ISO 7816-4 in CBC (Cipher-Block Chaining) mode, and stores the
+    /// PKCS #7 in CBC (Cipher-Block Chaining) mode, and stores the
     /// decrypted data in `String`.
     /// 
     /// # Arguments
@@ -4994,11 +4972,10 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   failed in decryption.
     /// 
     /// # Features
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// - This method assumes that the original plaintext is a string
@@ -5008,7 +4985,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -5027,7 +5004,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// 
     /// let mut converted= String::new();
     /// a_aes.decrypt_vec_into_string(iv, &cipher, &mut converted);
@@ -5040,7 +5017,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5062,7 +5039,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut converted= String::new();
     /// a_aes.decrypt_vec_into_string(iv, &cipher, &mut converted);
@@ -5075,7 +5052,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5097,7 +5074,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut converted= String::new();
     /// a_aes.decrypt_vec_into_string(iv, &cipher, &mut converted);
@@ -5110,7 +5087,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5132,7 +5109,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// 
     /// let mut converted= String::new();
     /// a_rijndael.decrypt_vec_into_string(iv, &cipher, &mut converted);
@@ -5147,7 +5124,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -5177,7 +5154,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// 
     /// let mut converted= String::new();
     /// a_rijndael.decrypt_vec_into_string(iv, &cipher, &mut converted);
@@ -5193,7 +5170,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn decrypt_array<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: *mut u8) -> u64
     /// Decrypts the data stored in an array `[U; N]` object with the padding
-    /// defined according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
+    /// defined according to PKCS #7 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
     /// - `iv` is an initial value for CBC mode.
@@ -5228,17 +5205,16 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - If the size of the area for plaintext is prepared more than
     ///   `size_of::<U>()` * `N` - `1`, the rest of the area will be
     ///   filled with `0`s.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -5257,7 +5233,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_aes.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
@@ -5282,7 +5258,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5304,7 +5280,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_aes.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
@@ -5329,7 +5305,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5351,7 +5327,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_aes.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
@@ -5376,7 +5352,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5398,7 +5374,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_rijndael.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
@@ -5425,7 +5401,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -5454,7 +5430,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_rijndael.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
@@ -5482,7 +5458,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut Vec<V>) -> u64
     /// Decrypts the data stored in an array `[U; N]` object with the padding
-    /// defined according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode,
+    /// defined according to PKCS #7 in CBC (Cipher-Block Chaining) mode,
     /// and stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
@@ -5505,11 +5481,10 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   failed in decryption.
     /// 
     /// # Features
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
@@ -5517,7 +5492,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -5536,7 +5511,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_aes.decrypt_array_into_vec(iv, &cipher, &mut recovered);
@@ -5561,7 +5536,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5583,7 +5558,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_aes.decrypt_array_into_vec(iv, &cipher, &mut recovered);
@@ -5608,7 +5583,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5630,7 +5605,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_aes.decrypt_array_into_vec(iv, &cipher, &mut recovered);
@@ -5655,7 +5630,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5677,7 +5652,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_rijndael.decrypt_array_into_vec(iv, &cipher, &mut recovered);
@@ -5704,7 +5679,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -5733,7 +5708,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_rijndael.decrypt_array_into_vec(iv, &cipher, &mut recovered);
@@ -5761,7 +5736,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut [V; M]) -> u64
     /// Decrypts the data stored in an array `[U; N]` object with the padding
-    /// defined according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode,
+    /// defined according to PKCS #7 in CBC (Cipher-Block Chaining) mode,
     /// and stores the decrypted data in array `[V; M]`.
     /// 
     /// # Arguments
@@ -5795,17 +5770,16 @@ Rijndael_Generic<ROUND, NB, NK>
     /// - It is responsible for you to prepare the `message` area big enough!
     /// - The size of the area for plaintext does not have to be prepared more
     ///   than `size_of::<U>()` * `N` - `1`.
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// 
     /// # Example 1 for AES-128
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -5824,7 +5798,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// 
     /// let mut recovered = [0; 64];
     /// let len = a_aes.decrypt_array_into_array(iv, &cipher, &mut recovered);
@@ -5849,7 +5823,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5871,7 +5845,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = [0; 64];
     /// let len = a_aes.decrypt_array_into_array(iv, &cipher, &mut recovered);
@@ -5896,7 +5870,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5918,7 +5892,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
     /// let mut recovered = [0; 64];
     /// let len = a_aes.decrypt_array_into_array(iv, &cipher, &mut recovered);
@@ -5943,7 +5917,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5965,7 +5939,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// 
     /// let mut recovered = [0; 64];
     /// let len = a_rijndael.decrypt_array_into_array(iv, &cipher, &mut recovered);
@@ -5992,7 +5966,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -6021,7 +5995,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// 
     /// let mut recovered = [0; 64];
     /// let len = a_rijndael.decrypt_array_into_array(iv, &cipher, &mut recovered);
@@ -6049,7 +6023,7 @@ Rijndael_Generic<ROUND, NB, NK>
 
     // pub fn decrypt_array_into_string<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut String) -> u64
     /// Decrypts the data stored in an array `[U; N]` object with the padding
-    /// defined according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode,
+    /// defined according to PKCS #7 in CBC (Cipher-Block Chaining) mode,
     /// and stores the decrypted data in `String`.
     /// 
     /// # Arguments
@@ -6072,11 +6046,10 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   failed in decryption.
     /// 
     /// # Features
-    /// - The padding bits are composed of the byte `0b_1000_0000` that
-    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
-    ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to ISO 7816-4,
-    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// - This method assumes that the original plaintext is a string
@@ -6086,7 +6059,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -6105,9 +6078,9 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 EC D3 12 F1 1A 78 77 A6 A5 CB 73 AB 65 22 5B 7D ");
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
     /// 
-    /// let mut converted= String::new();
+    /// let mut converted = String::new();
     /// a_aes.decrypt_array_into_string(iv, &cipher, &mut converted);
     /// println!("B =\t{}", converted);
     /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
@@ -6118,7 +6091,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -6140,9 +6113,9 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
-    /// let mut converted= String::new();
+    /// let mut converted = String::new();
     /// a_aes.decrypt_array_into_string(iv, &cipher, &mut converted);
     /// println!("B =\t{}", converted);
     /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
@@ -6153,7 +6126,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -6175,9 +6148,9 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 82 00 CA D0 33 66 79 E7 66 57 CB 46 39 93 B6 A4 ");
+    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
     /// 
-    /// let mut converted= String::new();
+    /// let mut converted = String::new();
     /// a_aes.decrypt_array_into_string(iv, &cipher, &mut converted);
     /// println!("B =\t{}", converted);
     /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
@@ -6188,7 +6161,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -6210,9 +6183,9 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 06 0D FD 0A 88 F1 5B 2B 85 93 CB 95 9B 89 8B ED D6 81 9E E4 CA 74 EF B4 BE BE 7D AF 87 81 47 AC ");
+    /// assert_eq!(txt, "A3 73 85 5F B4 73 BC 49 2C 9D D7 22 EE 13 27 99 38 E4 9E 02 CA ED AB 81 81 31 B9 5C F2 3D C2 01 DE 8A 21 C4 ED 7B FD 0E 1B 1E 7E 41 55 F1 A6 68 8C D4 4A 94 4A DC 01 06 13 12 89 7E A1 84 F6 19 ");
     /// 
-    /// let mut converted= String::new();
+    /// let mut converted = String::new();
     /// a_rijndael.decrypt_array_into_string(iv, &cipher, &mut converted);
     /// println!("B =\t{}", converted);
     /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
@@ -6225,7 +6198,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_PKCS7 };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -6254,7 +6227,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
+    /// assert_eq!(txt, "6A 2E 19 EE 77 BA 5A CF 01 E9 87 4D EC C2 1F B4 9B 32 A8 1D BB 77 75 F8 CD A0 10 4B F5 2E 81 9D 15 C8 D2 2D 9C 15 D0 20 7B C4 A2 90 0C D7 A3 BB 18 E3 2D E4 69 B1 0B F6 28 5C BC C3 52 D1 EA CC ");
     /// 
     /// let mut converted= String::new();
     /// a_rijndael.decrypt_array_into_string(iv, &cipher, &mut converted);
