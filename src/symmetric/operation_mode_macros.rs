@@ -129,7 +129,7 @@ pub(super) use encrypt_into_vec;
 
 macro_rules! decrypt_into_array {
     ($me:expr, $iv:expr, $cipher:expr, $length_in_bytes:expr, $message:expr, $U:ty) => {{
-        if $length_in_bytes as u128 > <$U>::size_in_bytes() as u128 * N as u128
+        if $length_in_bytes as u128 - 1 > <$U>::size_in_bytes() as u128 * N as u128
         {
             $me.set_failed();
             return 0;
@@ -137,7 +137,7 @@ macro_rules! decrypt_into_array {
         pre_decrypt_into_array!($message, $length_in_bytes, $U);
         $me.decrypt($iv, $cipher, $length_in_bytes, $message.as_mut_ptr() as *mut u8)
     }};
-    // if length_in_bytes as u128 > U::size_in_bytes() as u128 * N as u128
+    // if length_in_bytes as u128 - 1 > U::size_in_bytes() as u128 * N as u128
     // {
     //     self.set_failed();
     //     return 0;
@@ -146,7 +146,7 @@ macro_rules! decrypt_into_array {
     // self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8)
 
     ($me:expr, $cipher:expr, $length_in_bytes:expr, $message:expr, $U:ty) => {{
-        if $length_in_bytes as u128 > <$U>::size_in_bytes() as u128 * N as u128
+        if $length_in_bytes as u128 - 1 > <$U>::size_in_bytes() as u128 * N as u128
         {
             $me.set_failed();
             return 0;

@@ -987,7 +987,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   of the key given as the argument will be ignored.
     ///
     /// # Example 1
-    /// ```
+    /// ```text
     /// // To do
     /// ```
     ///
@@ -1024,7 +1024,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   128 bits will be set to be `zero`.
     ///
     /// # Example 1
-    /// ```
+    /// ```text
     /// // To do
     /// ```
     ///
@@ -1055,7 +1055,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   of the key given as the argument will be ignored.
     ///
     /// # Example 1
-    /// ```
+    /// ```text
     /// // To do
     /// ```
     ///
@@ -1093,7 +1093,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   128 bits will be set to be `zero`.
     ///
     /// # Example 1
-    /// ```
+    /// ```text
     /// // To do
     /// ```
     ///
@@ -1270,8 +1270,8 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   it will be changed into encryptor.
     ///
     /// # Example 1
-    /// ```
-    ///
+    /// ```text
+    /// // To do
     /// ```
     ///
     /// # For more examples,
@@ -1301,8 +1301,8 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   it will be changed into encryptor.
     ///
     /// # Example 1
-    /// ```
-    ///
+    /// ```text
+    /// // To do
     /// ```
     ///
     /// # For more examples,
@@ -1332,8 +1332,8 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   it will not be changed at all.
     ///
     /// # Example 1
-    /// ```
-    ///
+    /// ```text
+    /// // To do
     /// ```
     ///
     /// # For more examples,

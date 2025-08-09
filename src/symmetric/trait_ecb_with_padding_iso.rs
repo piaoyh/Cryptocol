@@ -22,15 +22,11 @@ use crate::symmetric::pre_decrypt_into_vec;
 
 /// ECB (Electronic CodeBook) is one of the operation modes for 
 /// encryption/decryption.
-/// 
-/// # Caution
-/// For Rijndael or AES, if NB > 64, you are not supposed to use the padding
-/// defined in PKCS #7 because its behavior is not defined.
 #[allow(non_camel_case_types)]
-pub trait ECB_PKCS7<T> : Sized
+pub trait ECB_ISO<T> : Sized
 {
     // fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
-    /// Encrypts the data with the padding defined according to PKCS #7
+    /// Encrypts the data with the padding defined according to ISO 7816-4
     /// in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
@@ -51,12 +47,8 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -68,17 +60,18 @@ pub trait ECB_PKCS7<T> : Sized
     /// - If `length_in_bytes` is `0`, it means the message is null string.
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -95,16 +88,16 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt)
     /// 
     /// # For Rijndael or AES and its variants
     /// ## Example 1 for Normal case
-    /// ```
-    /// 
+    /// ```text
+    /// // To do
     /// ```
     /// 
     /// ## For more examples,
@@ -112,7 +105,7 @@ pub trait ECB_PKCS7<T> : Sized
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 
     // fn encrypt_into_array<U, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
-    /// Encrypts the data with the padding defined according to PKCS #7
+    /// Encrypts the data with the padding defined according to ISO 7816-4
     /// in ECB (Electronic CodeBook) mode, and stores the encrypted data
     /// in array `[U; N]`.
     /// 
@@ -127,12 +120,8 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -142,28 +131,29 @@ pub trait ECB_PKCS7<T> : Sized
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the array `[U; N]` object `cipher`.
     /// - If `U::size_in_bytes() * N` is less than `length_in_bytes`'s next
-    ///   multiple of 8, this method does not perform encryption and returns
-    ///   `zero`.
+    ///   multiple of `size_of::<T>()`, this method does not perform
+    ///   encryption and returns `zero`.
     /// - If `U::size_in_bytes() * N` is equal to `length_in_bytes`'s next
-    ///   multiple of 8, this method performs encryption, fills the array
-    ///   `cipher` with the encrypted ciphertext, and returns the size of the
-    ///   ciphertext including padding bits in bytes.
+    ///   multiple of `size_of::<T>()`, this method performs encryption,
+    ///   fills the array `cipher` with the encrypted ciphertext, and returns
+    ///   the size of the ciphertext including padding bits in bytes.
     /// - If `U::size_in_bytes() * N` is greater than `length_in_bytes`'s next
-    ///   multiple of 8, this method performs encryption, fills the array
-    ///   `cipher` with the encrypted ciphertext, and then fills the rest of the
-    ///   elements of the array `cipher` with zeros, and returns the size of the
-    ///   ciphertext including padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    ///   multiple of `size_of::<T>()`, this method performs encryption, fills
+    ///   the array `cipher` with the encrypted ciphertext, and then fills the
+    ///   rest of the elements of the array `cipher` with zeros, and returns
+    ///   the size of the ciphertext including padding bits in bytes.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -180,16 +170,16 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt_into_array)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt_into_array)
     fn encrypt_into_array<U, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone;
 
     // fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data with the padding defined according to PKCS #7
+    /// Encrypts the data with the padding defined according to ISO 7816-4
     /// in ECB (Electronic CodeBook) mode, and stores the encrypted data
     /// in `Vec<U>`.
     /// 
@@ -203,12 +193,8 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -217,10 +203,11 @@ pub trait ECB_PKCS7<T> : Sized
     /// - If `length_in_bytes` is `0`, it means the message is null string.
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the `Vec<U>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
@@ -229,7 +216,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -246,17 +233,17 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt_into_vec)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt_into_vec)
     fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone;
 
     // fn encrypt_str(&mut self, message: &str, cipher: *mut u8) -> u64
     /// Encrypts the data in `str` with the padding defined
-    /// according to PKCS #7 in ECB (Electronic CodeBook) mode.
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
     /// - `message` is a `str` object, and is the plaintext to be encrypted.
@@ -273,12 +260,8 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -288,17 +271,18 @@ pub trait ECB_PKCS7<T> : Sized
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - If `message` is a null string "", only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -315,11 +299,11 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt_str)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt_str)
     #[inline]
     fn encrypt_str(&mut self, message: &str, cipher: *mut u8) -> u64
     {
@@ -327,7 +311,7 @@ pub trait ECB_PKCS7<T> : Sized
     }
 
     // fn encrypt_str_into_vec<U>(&mut self, message: &str, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data in `str` with the padding defined according to PKCS #7
+    /// Encrypts the data in `str` with the padding defined according to ISO 7816-4
     /// in ECB (Electronic CodeBook) mode, and stores the encrypted data
     /// in `Vec<U>`.
     /// 
@@ -338,22 +322,19 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
     /// # Features
     /// - If `message` is a null string "", only padding bytes will be encrypted,
     ///   and stored in the `Vec<U>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
@@ -362,7 +343,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -379,11 +360,11 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt_str_into_vec)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt_str_into_vec)
     #[inline]
     fn encrypt_str_into_vec<U>(&mut self, message: &str, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
@@ -392,7 +373,7 @@ pub trait ECB_PKCS7<T> : Sized
     }
 
     // fn encrypt_str_into_array<U, const N: usize>(&mut self, message: &str, cipher: &mut [U; N]) -> u64
-    /// Encrypts the data in `str` with the padding defined according to PKCS #7
+    /// Encrypts the data in `str` with the padding defined according to ISO 7816-4
     /// in ECB (Electronic CodeBook) mode, and stores the encrypted data
     /// in array `[U; N]`.
     /// 
@@ -404,12 +385,8 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -428,17 +405,18 @@ pub trait ECB_PKCS7<T> : Sized
     ///   `cipher` with the encrypted ciphertext, and then fills the rest of
     ///   the elements of the array `cipher` with zeros, and returns the size
     ///   of the ciphertext including padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -455,11 +433,11 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt_str_into_array)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt_str_into_array)
     #[inline]
     fn encrypt_str_into_array<U, const N: usize>(&mut self, message: &str, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
@@ -469,7 +447,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn encrypt_string(&mut self, message: &String, cipher: *mut u8) -> u64
     /// Encrypts the data stored in a String object with the padding according
-    /// to PKCS #7 in ECB (Electronic CodeBook) mode.
+    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
     /// - `message` is a String object, and is the plaintext to be encrypted.
@@ -486,12 +464,8 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -502,17 +476,18 @@ pub trait ECB_PKCS7<T> : Sized
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - If `message` is a null string String::new(), only padding bytes will
     ///   be encrypted, and stored in the memory area that starts from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -529,11 +504,11 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt_string)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt_string)
     #[inline]
     fn encrypt_string(&mut self, message: &String, cipher: *mut u8) -> u64
     {
@@ -542,7 +517,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn encrypt_string_into_vec<U>(&mut self, message: &String, cipher: &mut Vec<U>) -> u64
     /// Encrypts the data stored in a String object with the padding according
-    /// to PKCS #7 in ECB (Electronic CodeBook) mode, and stores the encrypted
+    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the encrypted
     /// data in `Vec<U>`.
     /// 
     /// # Arguments
@@ -552,22 +527,19 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
     /// # Features
     /// - If `message` is a null string String::new(), only padding bytes will
     ///   be encrypted, and stored in the `Vec<U>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
@@ -576,7 +548,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -593,11 +565,11 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt_string_into_vec)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt_string_into_vec)
     #[inline]
     fn encrypt_string_into_vec<U>(&mut self, message: &String, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
@@ -607,7 +579,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn encrypt_string_into_array<U, const N: usize>(&mut self, message: &String, cipher: &mut [U; N]) -> u64
     /// Encrypts the data stored in a String object with the padding according
-    /// to PKCS #7 in ECB (Electronic CodeBook) mode, and stores the encrypted
+    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the encrypted
     /// data in array `[U; N]`.
     /// 
     /// # Arguments
@@ -618,12 +590,8 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -642,17 +610,18 @@ pub trait ECB_PKCS7<T> : Sized
     ///   `cipher` with the encrypted ciphertext, and then fills the rest of
     ///   the elements of the array `cipher` with zeros, and returns the size
     ///   of the ciphertext including padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -669,11 +638,12 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
+    /// println!();
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt_string_into_array)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt_string_into_array)
     #[inline]
     fn encrypt_string_into_array<U, const N: usize>(&mut self, message: &String, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
@@ -683,7 +653,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn encrypt_vec<U>(&mut self, message: &Vec<U>, cipher: *mut u8) -> u64
     /// Encrypts the data stored in a `Vec<U>` object with the padding defined
-    /// according to PKCS #7 in ECB (Electronic CodeBook) mode.
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
     /// - `message` is a `Vec<U>` object, and is the plaintext to be encrypted.
@@ -700,12 +670,8 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -717,17 +683,18 @@ pub trait ECB_PKCS7<T> : Sized
     /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
     ///   bytes will be encrypted, and stored in the memory area that starts
     ///   from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -745,11 +712,11 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt_vec)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt_vec)
     #[inline]
     fn encrypt_vec<U>(&mut self, message: &Vec<U>, cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -759,7 +726,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn encrypt_vec_into_vec<U, V>(&mut self, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
     /// Encrypts the data stored in a `Vec<U>` object with the padding according
-    /// to PKCS #7 in ECB (Electronic CodeBook) mode, and stores the encrypted
+    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the encrypted
     /// data in `Vec<V>`.
     /// 
     /// # Arguments
@@ -769,22 +736,19 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
     /// # Features
     /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
     ///   bytes will be encrypted, and stored in the `Vec<V>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
@@ -793,7 +757,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, DES_Expanded, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -811,11 +775,11 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt_vec_into_vec)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt_vec_into_vec)
     #[inline]
     fn encrypt_vec_into_vec<U, V>(&mut self, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -825,7 +789,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, message: &Vec<U>, cipher: &mut [V; N]) -> u64
     /// Encrypts the data stored in a `Vec<U>` object with the padding according
-    /// to PKCS #7 in ECB (Electronic CodeBook) mode, and stores the encrypted
+    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the encrypted
     /// data in array `[V; N]`.
     /// 
     /// # Arguments
@@ -836,12 +800,8 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -863,17 +823,18 @@ pub trait ECB_PKCS7<T> : Sized
     ///   ciphertext, and then fills the rest of the elements of the array
     ///   `cipher` with zeros, and returns the size of the ciphertext including
     ///   padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to PKCS#7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -891,11 +852,11 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt_vec_into_array)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt_vec_into_array)
     #[inline]
     fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, message: &Vec<U>, cipher: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -905,7 +866,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn encrypt_array<U, const N: usize>(&mut self, message: &[U; N], cipher: *mut u8) -> u64
     /// Encrypts the data stored in an array `[U; N]` object with the padding
-    /// defined according to PKCS #7 in ECB (Electronic CodeBook) mode.
+    /// defined according to ISO 7816-4 in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
     /// - `message` is the data stored in an array `[U; N]` object,
@@ -923,12 +884,8 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -940,17 +897,18 @@ pub trait ECB_PKCS7<T> : Sized
     /// - If `message.len()` is `0`, it means the message is empty data.
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -969,11 +927,11 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt_array)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt_array)
     #[inline]
     fn encrypt_array<U, const N: usize>(&mut self, message: &[U; N], cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -983,7 +941,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, message: &[U; N], cipher: &mut Vec<V>) -> u64
     /// Encrypts the data stored in an array `[U; N]` object with the padding
-    /// according to PKCS #7 in ECB (Electronic CodeBook) mode, and stores the
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the
     /// encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
@@ -994,22 +952,19 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
     /// # Features
     /// - If `message` is an empty array `[U; N]` object [U; 0], only padding
     ///   bytes will be encrypted, and stored in the `Vec<U>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
@@ -1018,7 +973,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1037,11 +992,11 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt_array_into_vec)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt_array_into_vec)
     #[inline]
     fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, message: &[U; N], cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -1051,7 +1006,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, message: &[U; N], cipher: &mut [V; M]) -> u64
     /// Encrypts the data stored in an array `[U; N]` object with the padding
-    /// according to PKCS #7 in ECB (Electronic CodeBook) mode, and stores the
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the
     /// encrypted data in array `[V; M]`.
     /// 
     /// # Arguments
@@ -1063,12 +1018,8 @@ pub trait ECB_PKCS7<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -1090,17 +1041,18 @@ pub trait ECB_PKCS7<T> : Sized
     ///   and then fills the rest of the elements of the array `cipher`
     ///   with zeros, and returns the size of the ciphertext including
     ///   padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to PKCS#7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1112,18 +1064,17 @@ pub trait ECB_PKCS7<T> : Sized
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
     /// let mut cipher = [0_u8; 56];
     /// a_des.encrypt_array_into_array(&message, &mut cipher);
-    /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
     /// println!();
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.encrypt_array_into_array)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.encrypt_array_into_array)
     #[inline]
     fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, message: &[U; N], cipher: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -1132,7 +1083,7 @@ pub trait ECB_PKCS7<T> : Sized
     }
 
     // fn decrypt(&mut self, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64;
-    /// Decrypts the data with the padding defined according to PKCS #7
+    /// Decrypts the data with the padding defined according to ISO 7816-4
     /// in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
@@ -1166,17 +1117,18 @@ pub trait ECB_PKCS7<T> : Sized
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
     /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1193,7 +1145,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_des.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -1215,11 +1167,11 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.decrypt)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.decrypt)
     fn decrypt(&mut self, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64;
 
     // fn decrypt_into_array<U, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
-    /// Decrypts the data with the padding defined according to PKCS #7
+    /// Decrypts the data with the padding defined according to ISO 7816-4
     /// in ECB (Electronic CodeBook) mode, and stores the encrypted data
     /// in array `[U; N]`.
     /// 
@@ -1253,17 +1205,18 @@ pub trait ECB_PKCS7<T> : Sized
     ///   array `message` with the derypted plaintext, and then fills the rest
     ///   of the elements of the array `message` with zeros if any, and returns
     ///   the size of the plaintext.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1280,7 +1233,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// 
     /// let mut recovered = [0u8; 56];
     /// let len = a_des.decrypt_into_array(cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -1302,12 +1255,12 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.decrypt_into_array)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.decrypt_into_array)
     fn decrypt_into_array<U, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone;
 
     // fn decrypt_into_vec<U>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
-    /// Decrypts the data with the padding defined according to PKCS #7
+    /// Decrypts the data with the padding defined according to ISO 7816-4
     /// in ECB (Electronic CodeBook) mode, and stores the decrypted data
     /// in `Vec<U>`.
     /// 
@@ -1333,10 +1286,11 @@ pub trait ECB_PKCS7<T> : Sized
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
     /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the plaintext will be stored is enough.
     /// 
@@ -1345,7 +1299,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1362,7 +1316,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_des.decrypt_into_vec(cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -1384,7 +1338,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.decrypt_into_vec)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.decrypt_into_vec)
     fn decrypt_into_vec<U>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
@@ -1395,7 +1349,7 @@ pub trait ECB_PKCS7<T> : Sized
     }
 
     // fn decrypt_into_string(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
-    /// Decrypts the data with the padding defined according to PKCS #7
+    /// Decrypts the data with the padding defined according to ISO 7816-4
     /// in ECB (Electronic CodeBook) mode, and stores the decrypted data
     /// in String object.
     /// 
@@ -1421,10 +1375,11 @@ pub trait ECB_PKCS7<T> : Sized
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
     /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the plaintext will be stored is enough.
     /// - This method assumes that the original plaintext is a string
@@ -1435,7 +1390,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1452,7 +1407,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// 
     /// let mut recovered = String::new();
     /// a_des.decrypt_into_string(cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -1462,7 +1417,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.decrypt_into_string)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.decrypt_into_string)
     #[inline]
     fn decrypt_into_string(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
     {
@@ -1471,7 +1426,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn decrypt_vec<U>(&mut self, cipher: &Vec<U>, message: *mut u8) -> u64
     /// Decrypts the data stored in a `Vec<U>` object with the padding defined
-    /// according to PKCS #7 in ECB (Electronic CodeBook) mode.
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
     /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be decrypted.
@@ -1504,17 +1459,18 @@ pub trait ECB_PKCS7<T> : Sized
     /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1531,7 +1487,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_des.decrypt_vec(&cipher, recovered.as_mut_ptr());
@@ -1553,7 +1509,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.decrypt_vec)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.decrypt_vec)
     #[inline]
     fn decrypt_vec<U>(&mut self, cipher: &Vec<U>, message: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -1563,7 +1519,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn decrypt_vec_into_vec<U, V>(&mut self, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
     /// Decrypts the data stored in a `Vec<U>` object with the padding according
-    /// to PKCS #7 in ECB (Electronic CodeBook) mode, and stores the decrypted
+    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the decrypted
     /// data in `Vec<V>`.
     /// 
     /// # Arguments
@@ -1587,10 +1543,11 @@ pub trait ECB_PKCS7<T> : Sized
     ///   can be only any multiple of `8`.
     /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the plaintext will be stored is enough.
     /// 
@@ -1599,7 +1556,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1616,7 +1573,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_des.decrypt_vec_into_vec(&cipher, &mut recovered);
@@ -1638,7 +1595,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.decrypt_vec_into_vec)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.decrypt_vec_into_vec)
     #[inline]
     fn decrypt_vec_into_vec<U, V>(&mut self, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -1648,7 +1605,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, cipher: &Vec<U>, message: &mut [V; N]) -> u64
     /// Decrypts the data stored in a `Vec<U>` object with the padding according
-    /// to PKCS #7 in ECB (Electronic CodeBook) mode, and stores the decrypted
+    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the decrypted
     /// data in array `[V; N]`.
     /// 
     /// # Arguments
@@ -1681,17 +1638,18 @@ pub trait ECB_PKCS7<T> : Sized
     /// - If `V::size_in_bytes() * N` is less than 
     ///   `U::size_in_bytes() * cipher.len() - 1`,
     ///   this method does not perform decryption and returns `zero`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1708,7 +1666,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// 
     /// let mut recovered = [0u8; 56];
     /// let len = a_des.decrypt_vec_into_array(&cipher, &mut recovered);
@@ -1730,7 +1688,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.decrypt_vec_into_array)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.decrypt_vec_into_array)
     #[inline]
     fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, cipher: &Vec<U>, message: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -1740,7 +1698,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn decrypt_vec_into_string<U>(&mut self, cipher: &Vec<U>, message: &mut String) -> u64
     /// Decrypts the data stored in a `Vec<U>` object with the padding according
-    /// to PKCS #7 in ECB (Electronic CodeBook) mode, and stores the decrypted
+    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the decrypted
     /// data in String object.
     /// 
     /// # Arguments
@@ -1764,10 +1722,11 @@ pub trait ECB_PKCS7<T> : Sized
     ///   can be only any multiple of `8`.
     /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the plaintext will be stored is enough.
     /// - This method assumes that the original plaintext is a string
@@ -1778,7 +1737,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1795,7 +1754,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// 
     /// let mut recovered = String::new();
     /// a_des.decrypt_vec_into_string(&cipher, &mut recovered);
@@ -1805,7 +1764,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.decrypt_vec_into_string)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.decrypt_vec_into_string)
     #[inline]
     fn decrypt_vec_into_string<U>(&mut self, cipher: &Vec<U>, message: &mut String) -> u64
     where U: SmallUInt + Copy + Clone
@@ -1815,7 +1774,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn decrypt_array<U, const N: usize>(&mut self, cipher: &[U; N], message: *mut u8) -> u64
     /// Decrypts the data stored in an array `[U; N]` object with the padding
-    /// defined according to PKCS #7 in ECB (Electronic CodeBook) mode.
+    /// defined according to ISO 7816-4 in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
     /// - `cipher` is the data stored in an array `[U; N]` object,
@@ -1849,17 +1808,18 @@ pub trait ECB_PKCS7<T> : Sized
     /// - When `T` is `u128`, `N * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1876,7 +1836,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// let len = a_des.decrypt_array(&cipher, recovered.as_mut_ptr());
@@ -1899,7 +1859,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.decrypt_array)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.decrypt_array)
     #[inline]
     fn decrypt_array<U, const N: usize>(&mut self, cipher: &[U; N], message: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -1909,7 +1869,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, cipher: &[U; N], message: &mut Vec<V>) -> u64
     /// Decrypts the data stored in an array `[U; N]` object with the padding
-    /// according to PKCS #7 in ECB (Electronic CodeBook) mode, and stores the
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the
     /// decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
@@ -1934,10 +1894,11 @@ pub trait ECB_PKCS7<T> : Sized
     ///   can be only any multiple of `8`.
     /// - When `T` is `u128`, `N * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
@@ -1946,7 +1907,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1963,7 +1924,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_des.decrypt_array_into_vec(&cipher, &mut recovered);
@@ -1985,7 +1946,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.decrypt_array_into_vec)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.decrypt_array_into_vec)
     #[inline]
     fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, cipher: &[U; N], message: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -1995,7 +1956,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, cipher: &[U; N], message: &mut [V; M]) -> u64
     /// Decrypts the data stored in an array `[U; N]` object with the padding
-    /// according to PKCS #7 in ECB (Electronic CodeBook) mode, and stores the
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the
     /// decrypted data in array `[V; M]`.
     /// 
     /// # Arguments
@@ -2028,10 +1989,11 @@ pub trait ECB_PKCS7<T> : Sized
     ///   fills the array `message` with the derypted plaintext, and then
     ///   fills the rest of the elements of the array `message` with zeros
     ///   if any, and returns the size of the plaintext.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
@@ -2040,7 +2002,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -2057,7 +2019,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// 
     /// let mut recovered = [0u8; 56];
     /// let len = a_des.decrypt_array_into_array(&cipher, &mut recovered);
@@ -2079,7 +2041,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.decrypt_array_into_array)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.decrypt_array_into_array)
     #[inline]
     fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, cipher: &[U; N], message: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -2089,7 +2051,7 @@ pub trait ECB_PKCS7<T> : Sized
 
     // fn decrypt_array_into_string<U, const N: usize>(&mut self, cipher: &[U; N], message: &mut String) -> u64
     /// Decrypts the data stored in an array `[U; N]` object with the padding according
-    /// to PKCS #7 in ECB (Electronic CodeBook) mode, and stores the decrypted
+    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the decrypted
     /// data in a String object.
     /// 
     /// # Arguments
@@ -2114,10 +2076,11 @@ pub trait ECB_PKCS7<T> : Sized
     ///   can be only any multiple of `8`.
     /// - When `T` is `u128`, `N * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
+    /// - For more information about the padding bits according to ISO 7816-4,
+    ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// - This method assumes that the original plaintext is a string
@@ -2128,7 +2091,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
+    /// use cryptocol::symmetric::{ DES, ECB_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -2145,7 +2108,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 D3 4E 76 9C C5 BB 9E CB ");
+    /// assert_eq!(txt, "6F 10 01 6D 99 BF 41 F8 BC 00 A8 1D 81 B7 4B 20 6F B5 30 0A 14 03 A9 8E 69 E7 A6 33 42 AF 97 59 ED 9D E0 95 35 DC DF 0D 99 58 FA 92 13 50 4D 50 F4 BE 6B A5 C5 7D F6 5D ");
     /// 
     /// let mut recovered = String::new();
     /// a_des.decrypt_array_into_string(&cipher, &mut recovered);
@@ -2155,7 +2118,7 @@ pub trait ECB_PKCS7<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ecb_pkcs7/struct.DES_Generic.html#method.decrypt_array_into_string)
+    /// click [here](./documentation/des_ecb_iso/struct.DES_Generic.html#method.decrypt_array_into_string)
     #[inline]
     fn decrypt_array_into_string<U, const N: usize>(&mut self, cipher: &[U; N], message: &mut String) -> u64
     where U: SmallUInt + Copy + Clone

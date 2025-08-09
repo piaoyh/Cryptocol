@@ -20,10 +20,10 @@ use crate::symmetric::pre_decrypt_into_vec_no_padding;
 
 
 
-pub trait CTR<T> : Sized
+pub trait OFB<T> : Sized
 {
     // fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
-    /// Encrypts the data in CTR (CounTeR) mode.
+    /// Encrypts the data in CFB (Cipher FeedBack) mode.
     /// 
     /// # Arguments
     /// - `message` is a pointer to u8 which is `*const u8`,
@@ -35,19 +35,13 @@ pub trait CTR<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(size_of::<`T`>) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -65,7 +59,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -84,15 +78,15 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt)
-    fn encrypt(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt)
+    fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 
     // fn encrypt_into_array<U, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
-    /// Encrypts the data in CTR (CounTeR) mode,
+    /// Encrypts the data in OFB (Output FeedBack) mode,
     /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
@@ -105,12 +99,8 @@ pub trait CTR<T> : Sized
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -134,7 +124,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -153,16 +143,16 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_into_array)
-    fn encrypt_into_array<U, const N: usize>(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_into_array)
+    fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone;
 
     // fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data in CTR (CounTeR) mode,
+    /// Encrypts the data in OFB (Output FeedBack) mode,
     /// and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
@@ -174,12 +164,8 @@ pub trait CTR<T> : Sized
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -195,7 +181,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -214,16 +200,16 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_into_vec)
-    fn encrypt_into_vec<U>(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_into_vec)
+    fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone;
 
     // fn encrypt_str(&mut self, message: &str, cipher: *mut u8) -> u64
-    /// Encrypts the data in `str` in CTR (CounTeR) mode.
+    /// Encrypts the data in `str` in OFB (Output FeedBack) mode.
     /// 
     /// # Arguments
     /// - `message` is a `str` object, and is the plaintext to be encrypted.
@@ -232,19 +218,13 @@ pub trait CTR<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(size_of::<`T`>) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -260,7 +240,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -279,19 +259,19 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_str)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_str)
     #[inline]
-    fn encrypt_str(&mut self, nonce: T, message: &str, cipher: *mut u8) -> u64
+    fn encrypt_str(&mut self, iv: T, message: &str, cipher: *mut u8) -> u64
     {
-        self.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher)
+        self.encrypt(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
     // fn encrypt_str_into_vec<U>(&mut self, message: &str, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data in `str` in CTR (CounTeR) mode,
+    /// Encrypts the data in `str` in OFB (Output FeedBack) mode,
     /// and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
@@ -300,12 +280,8 @@ pub trait CTR<T> : Sized
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -320,7 +296,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -339,20 +315,20 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_str_into_vec)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_str_into_vec)
     #[inline]
-    fn encrypt_str_into_vec<U>(&mut self, nonce: T, message: &str, cipher: &mut Vec<U>) -> u64
+    fn encrypt_str_into_vec<U>(&mut self, iv: T, message: &str, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, cipher)
+        self.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
     // fn encrypt_str_into_array<U, const N: usize>(&mut self, message: &str, cipher: &mut [U; N]) -> u64
-    /// Encrypts the data in `str` in CTR (CounTeR) mode,
+    /// Encrypts the data in `str` in OFB (Output FeedBack) mode,
     /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
@@ -362,12 +338,8 @@ pub trait CTR<T> : Sized
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -390,7 +362,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -409,20 +381,21 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_str_into_array)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_str_into_array)
     #[inline]
-    fn encrypt_str_into_array<U, const N: usize>(&mut self, nonce: T, message: &str, cipher: &mut [U; N]) -> u64
+    fn encrypt_str_into_array<U, const N: usize>(&mut self, iv: T, message: &str, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, cipher)
+        self.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
     // fn encrypt_string(&mut self, message: &String, cipher: *mut u8) -> u64
-    /// Encrypts the data stored in a String object in CTR (CounTeR) mode.
+    /// Encrypts the data stored in a String object
+    /// in OFB (Output FeedBack) mode.
     /// 
     /// # Arguments
     /// - `message` is a String object, and is the plaintext to be encrypted.
@@ -431,19 +404,13 @@ pub trait CTR<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(size_of::<`T`>) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -460,7 +427,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -479,20 +446,20 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_string)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_string)
     #[inline]
-    fn encrypt_string(&mut self, nonce: T, message: &String, cipher: *mut u8) -> u64
+    fn encrypt_string(&mut self, iv: T, message: &String, cipher: *mut u8) -> u64
     {
-        self.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher)
+        self.encrypt(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
     // fn encrypt_string_into_vec<U>(&mut self, message: &String, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data stored in a String object in CTR (CounTeR) mode,
-    /// and stores the encrypted data in `Vec<U>`.
+    /// Encrypts the data stored in a String object in OFB (Output FeedBack)
+    /// mode, and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
     /// - `message` is a String object, and is the plaintext to be encrypted.
@@ -500,12 +467,8 @@ pub trait CTR<T> : Sized
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -520,7 +483,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -539,21 +502,21 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_string_into_vec)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_string_into_vec)
     #[inline]
-    fn encrypt_string_into_vec<U>(&mut self, nonce: T, message: &String, cipher: &mut Vec<U>) -> u64
+    fn encrypt_string_into_vec<U>(&mut self, iv: T, message: &String, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, cipher)
+        self.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
     // fn encrypt_string_into_array<U, const N: usize>(&mut self, message: &String, cipher: &mut [U; N]) -> u64
-    /// Encrypts the data stored in a String object in CTR (CounTeR) mode,
-    /// and stores the encrypted data in array `[U; N]`.
+    /// Encrypts the data stored in a String object in OFB (Output FeedBack)
+    /// mode, and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
     /// - `message` is a String object, and is the plaintext to be encrypted.
@@ -562,12 +525,8 @@ pub trait CTR<T> : Sized
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -590,7 +549,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -609,20 +568,21 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_string_into_array)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_string_into_array)
     #[inline]
-    fn encrypt_string_into_array<U, const N: usize>(&mut self, nonce: T, message: &String, cipher: &mut [U; N]) -> u64
+    fn encrypt_string_into_array<U, const N: usize>(&mut self, iv: T, message: &String, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, cipher)
+        self.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, cipher)
     }
 
     // fn encrypt_vec<U>(&mut self, message: &Vec<U>, cipher: *mut u8) -> u64
-    /// Encrypts the data stored in a `Vec<U>` object in CTR (CounTeR) mode.
+    /// Encrypts the data stored in a `Vec<U>` object 
+    /// in OFB (Output FeedBack) mode.
     /// 
     /// # Arguments
     /// - `message` is a `Vec<U>` object, and is the plaintext to be encrypted.
@@ -631,19 +591,13 @@ pub trait CTR<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(size_of::<`T`>) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -660,7 +614,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -680,21 +634,21 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_vec)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
     #[inline]
-    fn encrypt_vec<U>(&mut self, nonce: T, message: &Vec<U>, cipher: *mut u8) -> u64
+    fn encrypt_vec<U>(&mut self, iv: T, message: &Vec<U>, cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt(nonce, message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
+        self.encrypt(iv, message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_vec_into_vec<U, V>(&mut self, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
-    /// Encrypts the data stored in a `Vec<U>` object in CTR (CounTeR) mode,
-    /// and stores the encrypted data in `Vec<V>`.
+    /// Encrypts the data stored in a `Vec<U>` object in OFB (Output FeedBack)
+    /// mode, and stores the encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
     /// - `message` is a `Vec<U>` object, and is the plaintext to be encrypted.
@@ -702,12 +656,8 @@ pub trait CTR<T> : Sized
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -722,7 +672,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -742,21 +692,21 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_vec_into_vec)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec_into_vec)
     #[inline]
-    fn encrypt_vec_into_vec<U, V>(&mut self, nonce: T, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
+    fn encrypt_vec_into_vec<U, V>(&mut self, iv: T, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_vec(nonce, message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_vec(iv, message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, message: &Vec<U>, cipher: &mut [V; N]) -> u64
-    /// Encrypts the data stored in a `Vec<U>` object in CTR (CounTeR) mode,
-    /// and stores the encrypted data in array `[V; N]`.
+    /// Encrypts the data stored in a `Vec<U>` object in OFB (Output FeedBack)
+    /// mode, and stores the encrypted data in array `[V; N]`.
     /// 
     /// # Arguments
     /// - `message` is a `Vec<U>` object, and is the plaintext to be encrypted.
@@ -765,12 +715,8 @@ pub trait CTR<T> : Sized
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -795,7 +741,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -815,21 +761,21 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_vec_into_array)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec_into_array)
     #[inline]
-    fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, nonce: T, message: &Vec<U>, cipher: &mut [V; N]) -> u64
+    fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, message: &Vec<U>, cipher: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_array(nonce, message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_array(iv, message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_array<U, const N: usize>(&mut self, message: &[U; N], cipher: *mut u8) -> u64
     /// Encrypts the data stored in an array `[U; N]` object
-    /// in CTR (CounTeR) mode.
+    /// in OFB (Output FeedBack) mode.
     /// 
     /// # Arguments
     /// - `message` is the data stored in an array `[U; N]` object,
@@ -839,19 +785,13 @@ pub trait CTR<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(size_of::<`T`>) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -868,7 +808,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -889,21 +829,21 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_array)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_array)
     #[inline]
-    fn encrypt_array<U, const N: usize>(&mut self, nonce: T, message: &[U; N], cipher: *mut u8) -> u64
+    fn encrypt_array<U, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.encrypt(nonce, message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
+        self.encrypt(iv, message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, message: &[U; N], cipher: &mut Vec<V>) -> u64
-    /// Encrypts the data stored in an array `[U; N]` object in CTR (CounTeR)
-    /// mode, and stores the encrypted data in `Vec<V>`.
+    /// Encrypts the data stored in an array `[U; N]` object in OFB (Output
+    /// FeedBack) mode, and stores the encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
     /// - `message` is an array `[U; N]` object, and is the plaintext to be
@@ -912,12 +852,8 @@ pub trait CTR<T> : Sized
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -932,7 +868,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -953,21 +889,21 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_array_into_vec)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_array_into_vec)
     #[inline]
-    fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, nonce: T, message: &[U; N], cipher: &mut Vec<V>) -> u64
+    fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_vec(nonce, message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_vec(iv, message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, message: &[U; N], cipher: &mut [V; M]) -> u64
-    /// Encrypts the data stored in an array `[U; N]` object in CTR (CounTeR)
-    /// mode, and stores the encrypted data in array `[V; M]`.
+    /// Encrypts the data stored in an array `[U; N]` object in OFB (Output
+    /// FeedBack) mode, and stores the encrypted data in array `[V; M]`.
     /// 
     /// # Arguments
     /// - `message` is an array `[U; N]` object,
@@ -977,12 +913,8 @@ pub trait CTR<T> : Sized
     /// 
     /// # Output
     /// - This method returns the size of ciphertext
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -1007,7 +939,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1027,20 +959,20 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.encrypt_array_into_array)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_array_into_array)
     #[inline]
-    fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, nonce: T, message: &[U; N], cipher: &mut [V; M]) -> u64
+    fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.encrypt_into_array(nonce, message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
+        self.encrypt_into_array(iv, message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
 
     // fn decrypt(&mut self, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64;
-    /// Decrypts the data in CTR (CounTeR) mode.
+    /// Decrypts the data in OFB (Output FeedBack) mode.
     /// 
     /// # Arguments
     /// - `cipher` is a pointer to u8 which is `*const u8`,
@@ -1076,7 +1008,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1095,7 +1027,7 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     ///
     /// let mut recovered = vec![0; 55];
     /// a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -1117,15 +1049,15 @@ pub trait CTR<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.decrypt)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt)
     #[inline]
-    fn decrypt(&mut self, nonce: T, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
+    fn decrypt(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
     {
-        self.encrypt(nonce, cipher, length_in_bytes, message)
+        self.encrypt(iv, cipher, length_in_bytes, message)
     }
 
     // fn decrypt_into_vec<U>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
-    /// Decrypts the data in CTR (CounTeR) mode,
+    /// Decrypts the data in OFB (Output FeedBack) mode,
     /// and stores the decrypted data in `Vec<U>`.
     /// 
     /// # Arguments
@@ -1155,7 +1087,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1174,7 +1106,7 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     ///
     /// let mut recovered = Vec::<u8>::new();
     /// a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -1196,18 +1128,18 @@ pub trait CTR<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.decrypt_into_vec)
-    fn decrypt_into_vec<U>(&mut self, nonce: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_into_vec)
+    fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
         pre_decrypt_into_vec_no_padding!(message, length_in_bytes, U);
-        let len = self.decrypt(nonce, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
+        let len = self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
         message.truncate(len as usize);
         len
     }
 
     // fn decrypt_into_array<U, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
-    /// Decrypts the data in CTR (CounTeR) mode,
+    /// Decrypts the data in OFB (Output FeedBack) mode,
     /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
@@ -1243,7 +1175,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1262,7 +1194,7 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     ///
     /// let mut recovered = [0u8; 56];
     /// let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -1284,12 +1216,12 @@ pub trait CTR<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.decrypt_into_array)
-    fn decrypt_into_array<U, const N: usize>(&mut self, nonce: T, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_into_array)
+    fn decrypt_into_array<U, const N: usize>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone;
 
     // fn decrypt_into_string(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
-    /// Decrypts the data in CTR (CounTeR) mode,
+    /// Decrypts the data in OFB (Output FeedBack) mode,
     /// and stores the decrypted data in String object.
     /// 
     /// # Arguments
@@ -1321,7 +1253,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1340,7 +1272,7 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     ///
     /// let mut recovered = String::new();
     /// a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -1350,15 +1282,16 @@ pub trait CTR<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.decrypt_into_string)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_into_string)
     #[inline]
-    fn decrypt_into_string(&mut self, nonce: T, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
+    fn decrypt_into_string(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
     {
-        self.decrypt_into_vec(nonce, cipher, length_in_bytes, unsafe { message.as_mut_vec() })
+        self.decrypt_into_vec(iv, cipher, length_in_bytes, unsafe { message.as_mut_vec() })
     }
 
     // fn decrypt_vec<U>(&mut self, cipher: &Vec<U>, message: *mut u8) -> u64
-    /// Decrypts the data stored in a `Vec<U>` object in CTR (CounTeR) mode.
+    /// Decrypts the data stored in a `Vec<U>` object 
+    /// in OFB (Output FeedBack) mode.
     /// 
     /// # Arguments
     /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be decrypted.
@@ -1391,7 +1324,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1410,7 +1343,7 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     ///
     /// let mut recovered = vec![0; 55];
     /// a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
@@ -1432,17 +1365,17 @@ pub trait CTR<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.decrypt_vec)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_vec)
     #[inline]
-    fn decrypt_vec<U>(&mut self, nonce: T, cipher: &Vec<U>, message: *mut u8) -> u64
+    fn decrypt_vec<U>(&mut self, iv: T, cipher: &Vec<U>, message: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
+        self.decrypt(iv, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_vec_into_vec<U, V>(&mut self, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
-    /// Decrypts the data stored in a `Vec<U>` object in CTR (CounTeR) mode,
-    /// and stores the decrypted data in `Vec<V>`.
+    /// Decrypts the data stored in a `Vec<U>` object in OFB (Output FeedBack)
+    /// mode, and stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
     /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be decrypted.
@@ -1467,7 +1400,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1486,7 +1419,7 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     ///
     /// let mut recovered = Vec::<u8>::new();
     /// a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
@@ -1508,17 +1441,17 @@ pub trait CTR<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.decrypt_vec_into_vec)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_vec_into_vec)
     #[inline]
-    fn decrypt_vec_into_vec<U, V>(&mut self, nonce: T, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
+    fn decrypt_vec_into_vec<U, V>(&mut self, iv: T, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_vec(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, cipher: &Vec<U>, message: &mut [V; N]) -> u64
-    /// Decrypts the data stored in a `Vec<U>` object in CTR (CounTeR) mode,
-    /// and stores the decrypted data in array `[V; N]`.
+    /// Decrypts the data stored in a `Vec<U>` object in OFB (Output FeedBack)
+    /// mode, and stores the decrypted data in array `[V; N]`.
     /// 
     /// # Arguments
     /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be decrypted.
@@ -1550,7 +1483,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1569,7 +1502,7 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     ///
     /// let mut recovered = [0u8; 56];
     /// let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
@@ -1591,17 +1524,17 @@ pub trait CTR<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.decrypt_vec_into_array)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_vec_into_array)
     #[inline]
-    fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, nonce: T, cipher: &Vec<U>, message: &mut [V; N]) -> u64
+    fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, cipher: &Vec<U>, message: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_array(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_array(iv, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_vec_into_string<U>(&mut self, cipher: &Vec<U>, message: &mut String) -> u64
-    /// Decrypts the data stored in a `Vec<U>` object in CTR (CounTeR) mode,
-    /// and stores the decrypted data in String object.
+    /// Decrypts the data stored in a `Vec<U>` object in OFB (Output FeedBack)
+    /// mode, and stores the decrypted data in String object.
     /// 
     /// # Arguments
     /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be decrypted.
@@ -1628,7 +1561,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1647,7 +1580,7 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     ///
     /// let mut recovered = String::new();
     /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
@@ -1655,261 +1588,19 @@ pub trait CTR<T> : Sized
     /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     /// assert_eq!(recovered, message);
     /// ```
-    ///
-    /// # Example 2 for Expanded case for 128 rounds
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES_Expanded, CTR };
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES_Expanded::<128, 0x_8103_8103_8103_8103_8103_8103_8103_8103_u128>::new_with_key_u64(key);
-    ///
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C (128 rounds) =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
-    ///
-    /// let mut recovered = String::new();
-    /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
-    /// println!("B (128 rounds) =\t{}", recovered);
-    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
-    /// assert_eq!(recovered, message);
-    /// ```
-    ///
-    /// # Example 3 for Expanded case for 0 rounds which means that key is meaningless
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES_Expanded, CTR };
-    /// 
-    /// let key1 = 0x_1234567890ABCDEF_u64;
-    /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
-    /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
-    ///
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
-    /// let mut cipher1 = Vec::<u8>::new();
-    /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
-    /// print!("C (0 rounds) =\t");
-    /// for c in cipher1.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher1.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
-    /// print!("D (0 rounds) =\t");
-    /// for c in cipher2.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher2.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "58 ED BA 3F 6E 10 CC 9F 76 E4 F3 25 68 1C 82 9A 38 C4 F5 2F 26 16 9E 98 7B F7 FF 2F 26 01 84 98 39 EB FF 2A 70 10 82 8E 3B E2 F4 2F 26 01 84 98 34 E6 FB 39 72 1D C2 ");
-    ///
-    /// let mut recovered1 = String::new();
-    /// let mut recovered2 = String::new();
-    /// c_des.decrypt_vec_into_string(iv, &cipher1, &mut recovered1);
-    /// d_des.decrypt_vec_into_string(iv, &cipher2, &mut recovered2);
-    /// println!("B1 (0 rounds) =\t{}", recovered1);
-    /// println!("B2 (0 rounds) =\t{}", recovered2);
-    /// assert_eq!(recovered1, "In the beginning God created the heavens and the earth.");
-    /// assert_eq!(recovered2, "In the beginning God created the heavens and the earth.");
-    /// assert_eq!(recovered1, message);
-    /// assert_eq!(recovered2, message);
-    /// assert_eq!(recovered1, recovered2);
-    /// ```
-    ///
-    /// # Example 4 for Normal case for the message of 0 bytes
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    ///
-    /// let message = "";
-    /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "");
-    ///
-    /// let mut recovered = String::new();
-    /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
-    /// println!("B =\t{}", recovered);
-    /// assert_eq!(recovered, "");
-    /// assert_eq!(recovered, message);
-    /// ```
-    ///
-    /// # Example 5 for Normal case for the message shorter than 8 bytes
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    ///
-    /// let message = "7 bytes";
-    /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
-    ///
-    /// let mut recovered = String::new();
-    /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
-    /// println!("B =\t{}", recovered);
-    /// assert_eq!(recovered, "7 bytes");
-    /// assert_eq!(recovered, message);
-    /// ```
-    ///
-    /// # Example 6 for Normal case for the message of 8 bytes
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    ///
-    /// let message = "I am OK.";
-    /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
-    ///
-    /// let mut recovered = String::new();
-    /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
-    /// println!("B =\t{}", recovered);
-    /// assert_eq!(recovered, "I am OK.");
-    /// assert_eq!(recovered, message);
-    /// ```
-    ///
-    /// # Example 7 for Normal case for the message longer than 8 bytes and shorter than 16 bytes
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    ///
-    /// let message = "PARK Youngho";
-    /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
-    ///
-    /// let mut recovered = String::new();
-    /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
-    /// println!("B =\t{}", recovered);
-    /// assert_eq!(recovered, "PARK Youngho");
-    /// assert_eq!(recovered, message);
-    /// ```
-    ///
-    /// # Example 8 for Normal case for the message of 16 bytes
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    ///
-    /// let message = "고맙습니다.";
-    /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
-    ///
-    /// let mut recovered = String::new();
-    /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
-    /// println!("B =\t{}", recovered);
-    /// assert_eq!(recovered, "고맙습니다.");
-    /// assert_eq!(recovered, message);
-    /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.decrypt_vec_into_string)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_vec_into_string)
     #[inline]
-    fn decrypt_vec_into_string<U>(&mut self, nonce: T, cipher: &Vec<U>, message: &mut String) -> u64
+    fn decrypt_vec_into_string<U>(&mut self, iv: T, cipher: &Vec<U>, message: &mut String) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_string(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_array<U, const N: usize>(&mut self, cipher: &[U; N], message: *mut u8) -> u64
     /// Decrypts the data stored in an array `[U; N]` object
-    /// in CTR (CounTeR) mode.
+    /// in OFB (Output FeedBack) mode.
     /// 
     /// # Arguments
     /// - `cipher` is the data stored in an array `[U; N]` object,
@@ -1943,7 +1634,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -1962,7 +1653,7 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     ///
     /// let mut recovered = vec![0; 55];
     /// let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
@@ -1985,17 +1676,17 @@ pub trait CTR<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.decrypt_array)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_array)
     #[inline]
-    fn decrypt_array<U, const N: usize>(&mut self, nonce: T, cipher: &[U; N], message: *mut u8) -> u64
+    fn decrypt_array<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
+        self.decrypt(iv, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, cipher: &[U; N], message: &mut Vec<V>) -> u64
-    /// Decrypts the data stored in an array `[U; N]` object in CTR (CounTeR)
-    /// mode, and stores the decrypted data in `Vec<V>`.
+    /// Decrypts the data stored in an array `[U; N]` object in OFB (Output
+    /// FeedBack) mode, and stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
     /// - `cipher` is an array `[U; N]` object, and is the ciphertext to be
@@ -2021,7 +1712,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -2040,7 +1731,7 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     ///
     /// let mut recovered = Vec::<u8>::new();
     /// a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
@@ -2062,17 +1753,17 @@ pub trait CTR<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.decrypt_array_into_vec)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_array_into_vec)
     #[inline]
-    fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, nonce: T, cipher: &[U; N], message: &mut Vec<V>) -> u64
+    fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_vec(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_vec(iv, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, cipher: &[U; N], message: &mut [V; M]) -> u64
-    /// Decrypts the data stored in an array `[U; N]` object in CTR (CounTeR)
-    /// mode, and stores the decrypted data in array `[V; M]`.
+    /// Decrypts the data stored in an array `[U; N]` object in OFB (Output
+    /// FeedBack) mode, and stores the decrypted data in array `[V; M]`.
     /// 
     /// # Arguments
     /// - `cipher` is an array `[U; N]` object,
@@ -2106,7 +1797,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -2125,7 +1816,7 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     ///
     /// let mut recovered = [0u8; 56];
     /// let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
@@ -2147,17 +1838,17 @@ pub trait CTR<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.decrypt_array_into_array)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_array_into_array)
     #[inline]
-    fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, nonce: T, cipher: &[U; N], message: &mut [V; M]) -> u64
+    fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_array(nonce, cipher.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_array(iv, cipher.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, message)
     }
 
     // fn decrypt_array_into_string<U, const N: usize>(&mut self, cipher: &[U; N], message: &mut String) -> u64
-    /// Decrypts the data stored in an array `[U; N]` object in CTR (CounTeR)
-    /// mode, and stores the decrypted data in a String object.
+    /// Decrypts the data stored in an array `[U; N]` object in OFB (Output
+    /// FeedBack) mode, and stores the decrypted data in a String object.
     /// 
     /// # Arguments
     /// - `cipher` is an array `[U; N]` object,
@@ -2185,7 +1876,7 @@ pub trait CTR<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CTR };
+    /// use cryptocol::symmetric::{ DES, OFB };
     /// 
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#016X}", key);
@@ -2204,7 +1895,7 @@ pub trait CTR<T> : Sized
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
+    /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     ///
     /// let mut recovered = String::new();
     /// a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
@@ -2214,11 +1905,11 @@ pub trait CTR<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/des_ctr/struct.DES_Generic.html#method.decrypt_array_into_string)
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_array_into_string)
     #[inline]
-    fn decrypt_array_into_string<U, const N: usize>(&mut self, nonce: T, cipher: &[U; N], message: &mut String) -> u64
+    fn decrypt_array_into_string<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut String) -> u64
     where U: SmallUInt + Copy + Clone
     {
-        self.decrypt_into_string(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
+        self.decrypt_into_string(iv, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
 }

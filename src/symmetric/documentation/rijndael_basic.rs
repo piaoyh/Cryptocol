@@ -275,7 +275,7 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   of the key given as the argument will be ignored.
     ///
     /// # Example 1
-    /// ```
+    /// ```text
     /// // To do
     /// ```
     #[inline]
@@ -309,7 +309,7 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   128 bits will be set to be `zero`.
     ///
     /// # Example 1
-    /// ```
+    /// ```text
     /// // To do
     /// ```
     #[inline]
@@ -337,7 +337,7 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   of the key given as the argument will be ignored.
     ///
     /// # Example 1
-    /// ```
+    /// ```text
     /// // To do
     /// ```
     pub fn decryptor_with_key<const K: usize>(key: &[u8; K]) -> Self
@@ -370,7 +370,7 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   128 bits will be set to be `zero`.
     ///
     /// # Example 1
-    /// ```
+    /// ```text
     /// // To do
     /// ```
     pub fn decryptor_with_key_u128(key: u128) -> Self
@@ -613,8 +613,8 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   it will be changed into encryptor.
     ///
     /// # Example 1
-    /// ```
-    ///
+    /// ```text
+    /// // To do
     /// ```
     #[inline]
     pub fn turn_inverse(&mut self)
@@ -641,8 +641,8 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   it will be changed into encryptor.
     ///
     /// # Example 1
-    /// ```
-    ///
+    /// ```text
+    /// // To do
     /// ```
     pub fn turn_encryptor(&mut self)
     {
@@ -668,8 +668,8 @@ Rijndael_Generic<ROUND, NB, NK>
     ///   it will not be changed at all.
     ///
     /// # Example 1
-    /// ```
-    ///
+    /// ```text
+    /// // To do
     /// ```
     pub fn turn_decryptor(&mut self)
     {

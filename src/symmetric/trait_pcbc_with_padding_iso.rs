@@ -38,20 +38,14 @@ pub trait PCBC_ISO<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(size_of::<`T`>) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -63,8 +57,9 @@ pub trait PCBC_ISO<T> : Sized
     /// - If `length_in_bytes` is `0`, it means the message is null string.
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -116,12 +111,8 @@ pub trait PCBC_ISO<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -131,19 +122,20 @@ pub trait PCBC_ISO<T> : Sized
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the array `[U; N]` object `cipher`.
     /// - If `U::size_in_bytes() * N` is less than `length_in_bytes`'s next
-    ///   multiple of 8, this method does not perform encryption and returns
-    ///   `zero`.
+    ///   multiple of `size_of::<T>()`, this method does not perform
+    ///   encryption and returns `zero`.
     /// - If `U::size_in_bytes() * N` is equal to `length_in_bytes`'s next
-    ///   multiple of 8, this method performs encryption, fills the array
-    ///   `cipher` with the encrypted ciphertext, and returns the size of the
-    ///   ciphertext including padding bits in bytes.
+    ///   multiple of `size_of::<T>()`, this method performs encryption,
+    ///   fills the array `cipher` with the encrypted ciphertext, and returns
+    ///   the size of the ciphertext including padding bits in bytes.
     /// - If `U::size_in_bytes() * N` is greater than `length_in_bytes`'s next
-    ///   multiple of 8, this method performs encryption, fills the array
-    ///   `cipher` with the encrypted ciphertext, and then fills the rest of the
-    ///   elements of the array `cipher` with zeros, and returns the size of the
-    ///   ciphertext including padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    ///   multiple of `size_of::<T>()`, this method performs encryption, fills
+    ///   the array `cipher` with the encrypted ciphertext, and then fills the
+    ///   rest of the elements of the array `cipher` with zeros, and returns
+    ///   the size of the ciphertext including padding bits in bytes.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -195,12 +187,8 @@ pub trait PCBC_ISO<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -209,8 +197,9 @@ pub trait PCBC_ISO<T> : Sized
     /// - If `length_in_bytes` is `0`, it means the message is null string.
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the `Vec<U>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -260,20 +249,14 @@ pub trait PCBC_ISO<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(size_of::<`T`>) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -283,8 +266,9 @@ pub trait PCBC_ISO<T> : Sized
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - If `message` is a null string "", only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -336,20 +320,17 @@ pub trait PCBC_ISO<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
     /// # Features
     /// - If `message` is a null string "", only padding bytes will be encrypted,
     ///   and stored in the `Vec<U>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -405,12 +386,8 @@ pub trait PCBC_ISO<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -429,8 +406,9 @@ pub trait PCBC_ISO<T> : Sized
     ///   `cipher` with the encrypted ciphertext, and then fills the rest of
     ///   the elements of the array `cipher` with zeros, and returns the size
     ///   of the ciphertext including padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -482,20 +460,14 @@ pub trait PCBC_ISO<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(size_of::<`T`>) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -506,8 +478,9 @@ pub trait PCBC_ISO<T> : Sized
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - If `message` is a null string String::new(), only padding bytes will
     ///   be encrypted, and stored in the memory area that starts from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -559,20 +532,17 @@ pub trait PCBC_ISO<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
     /// # Features
     /// - If `message` is a null string String::new(), only padding bytes will
     ///   be encrypted, and stored in the `Vec<U>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -628,12 +598,8 @@ pub trait PCBC_ISO<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -652,8 +618,9 @@ pub trait PCBC_ISO<T> : Sized
     ///   `cipher` with the encrypted ciphertext, and then fills the rest of
     ///   the elements of the array `cipher` with zeros, and returns the size
     ///   of the ciphertext including padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -705,20 +672,14 @@ pub trait PCBC_ISO<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(size_of::<`T`>) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -730,8 +691,9 @@ pub trait PCBC_ISO<T> : Sized
     /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
     ///   bytes will be encrypted, and stored in the memory area that starts
     ///   from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -785,20 +747,17 @@ pub trait PCBC_ISO<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
     /// # Features
     /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
     ///   bytes will be encrypted, and stored in the `Vec<V>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -855,12 +814,8 @@ pub trait PCBC_ISO<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -882,8 +837,9 @@ pub trait PCBC_ISO<T> : Sized
     ///   ciphertext, and then fills the rest of the elements of the array
     ///   `cipher` with zeros, and returns the size of the ciphertext including
     ///   padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to PKCS#7,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -937,20 +893,14 @@ pub trait PCBC_ISO<T> : Sized
     /// - The size of the memory area which starts at `cipher` and the
     ///   ciphertext will be stored at is assumed to be enough.
     /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`,
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(32 * `NB`) at least when `T` is `[u32; NB]`.
+    ///   (`length_in_bytes` + 1).next_multiple_of(size_of::<`T`>) at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -962,8 +912,9 @@ pub trait PCBC_ISO<T> : Sized
     /// - If `message.len()` is `0`, it means the message is empty data.
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -1019,20 +970,17 @@ pub trait PCBC_ISO<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
     /// # Features
     /// - If `message` is an empty array `[U; N]` object [U; 0], only padding
     ///   bytes will be encrypted, and stored in the `Vec<U>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -1091,12 +1039,8 @@ pub trait PCBC_ISO<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - When `T` is `u128`, the output should be at least `16`,
-    ///   and will be only any multiple of `16`.
-    /// - When `T` is `[u32; NB]` for Rijndael or AES, the output should be at
-    ///   least `32 * NB`, and will be only any multiple of `32 * NB`.
+    /// - The output should be at least `size_of::<T>()`,
+    ///   and will be only any multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -1118,8 +1062,9 @@ pub trait PCBC_ISO<T> : Sized
     ///   and then fills the rest of the elements of the array `cipher`
     ///   with zeros, and returns the size of the ciphertext including
     ///   padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to PKCS#7,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -1196,8 +1141,9 @@ pub trait PCBC_ISO<T> : Sized
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
     /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -1286,8 +1232,9 @@ pub trait PCBC_ISO<T> : Sized
     ///   array `message` with the derypted plaintext, and then fills the rest
     ///   of the elements of the array `message` with zeros if any, and returns
     ///   the size of the plaintext.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -1369,8 +1316,9 @@ pub trait PCBC_ISO<T> : Sized
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
     /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -1460,8 +1408,9 @@ pub trait PCBC_ISO<T> : Sized
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
     /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -1546,8 +1495,9 @@ pub trait PCBC_ISO<T> : Sized
     /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -1632,8 +1582,9 @@ pub trait PCBC_ISO<T> : Sized
     ///   can be only any multiple of `8`.
     /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -1729,8 +1680,9 @@ pub trait PCBC_ISO<T> : Sized
     /// - If `V::size_in_bytes() * N` is less than 
     ///   `U::size_in_bytes() * cipher.len() - 1`,
     ///   this method does not perform decryption and returns `zero`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -1815,8 +1767,9 @@ pub trait PCBC_ISO<T> : Sized
     ///   can be only any multiple of `8`.
     /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -1903,8 +1856,9 @@ pub trait PCBC_ISO<T> : Sized
     /// - When `T` is `u128`, `N * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -1991,8 +1945,9 @@ pub trait PCBC_ISO<T> : Sized
     ///   can be only any multiple of `8`.
     /// - When `T` is `u128`, `N * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -2088,8 +2043,9 @@ pub trait PCBC_ISO<T> : Sized
     ///   fills the array `message` with the derypted plaintext, and then
     ///   fills the rest of the elements of the array `message` with zeros
     ///   if any, and returns the size of the plaintext.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -2177,8 +2133,9 @@ pub trait PCBC_ISO<T> : Sized
     ///   can be only any multiple of `8`.
     /// - When `T` is `u128`, `N * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory

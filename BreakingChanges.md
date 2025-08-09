@@ -11,10 +11,10 @@
 
 | Ver. 0.12.1                                                               | Ver. 0.12.2                                                                |
 |---------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| pub fn new_with_key<const K: usize>(key: [u8; K]) -> Self                 | pub fn new_with_key<const K: usize>(key: &[u8; K]) -> Self                 |
-| pub fn encryptor_with_key<const K: usize>(key: [u8; K]) -> Self           | pub fn encryptor_with_key<const K: usize>(key: &[u8; K]) -> Self           |
-| pub fn decryptor_with_key<const K: usize>(key: [u8; K]) -> Self           | pub fn decryptor_with_key<const K: usize>(key: &[u8; K]) -> Self           |
-| pub fn set_key<const K: usize>(&mut self, key: [u8; K])                   | pub fn set_key<const K: usize>(&mut self, key: &[u8; K])                   |
+| pub fn new_with_key<const K: usize\>(key: [u8; K]) -> Self                 | pub fn new_with_key<const K: usize\>(key: &[u8; K]) -> Self                 |
+| pub fn encryptor_with_key<const K: usize\>(key: [u8; K]) -> Self           | pub fn encryptor_with_key<const K: usize\>(key: &[u8; K]) -> Self           |
+| pub fn decryptor_with_key<const K: usize\>(key: [u8; K]) -> Self           | pub fn decryptor_with_key<const K: usize\>(key: &[u8; K]) -> Self           |
+| pub fn set_key<const K: usize\>(&mut self, key: [u8; K])                   | pub fn set_key<const K: usize\>(&mut self, key: &[u8; K])                   |
 | pub fn encrypt_unit(&mut self, message: [IntUnion; NB]) -> [IntUnion; NB] | pub fn encrypt_unit(&mut self, message: &[u32; NB]) -> [u32; NB]           |
 | pub fn decrypt_unit(&mut self, cipher: [IntUnion; NB]) -> [IntUnion; NB]  | pub fn decrypt_unit(&mut self, cipher: &[IntUnion; NB]) -> [IntUnion; NB]  |
 
@@ -170,9 +170,9 @@
 | pub fn length_in_bytes(&self) -> usize                     | pub fn length_in_bytes(&self) -> u32                     |
 | pub fn length_in_bits(&self) -> usize                      | pub fn length_in_bits(&self) -> u32                      |
 | pub fn set_submax(&mut self, size_in_bits: usize)          | pub fn set_submax(&mut self, size_in_bits: u32)          |
-| pub fn is_bit_set(self, bit_pos: usize) -> Option<bool>    | pub fn is_bit_set(self, bit_pos: u32) -> Option<bool>    |
+| pub fn is_bit_set(self, bit_pos: usize) -> Option<bool\>    | pub fn is_bit_set(self, bit_pos: u32) -> Option<bool\>    |
 | pub fn is_bit_set_(self, bit_pos: usize) -> bool           | pub fn is_bit_set_(self, bit_pos: u32) -> bool           |
-| pub fn generate_check_bits(bit_pos: usize) -> Option<Self> | pub fn generate_check_bits(bit_pos: u32) -> Option<Self> |
+| pub fn generate_check_bits(bit_pos: usize) -> Option<Self\> | pub fn generate_check_bits(bit_pos: u32) -> Option<Self\> |
 | pub fn generate_check_bits_(bit_pos: usize) -> Self        | pub fn generate_check_bits_(bit_pos: u32) -> Self        |
 | pub fn get_lower_portion(portion: usize) -> Self           | pub fn get_lower_portion(portion: u32) -> Self           |
 | 
@@ -188,9 +188,9 @@
 | fn length_in_bytes(&self) -> usize                     | fn length_in_bytes(&self) -> u32                     |
 | fn length_in_bits(&self) -> usize                      | fn length_in_bits(&self) -> u32                      |
 | fn set_submax(&mut self, size_in_bits: usize)          | fn set_submax(&mut self, size_in_bits: u32)          |
-| fn is_bit_set(self, bit_pos: usize) -> Option<bool>    | fn is_bit_set(self, bit_pos: u32) -> Option<bool>    |
+| fn is_bit_set(self, bit_pos: usize) -> Option<bool\>    | fn is_bit_set(self, bit_pos: u32) -> Option<bool\>    |
 | fn is_bit_set_(self, bit_pos: usize) -> bool           | fn is_bit_set_(self, bit_pos: u32) -> bool           |
-| fn generate_check_bits(bit_pos: usize) -> Option<Self> | fn generate_check_bits(bit_pos: u32) -> Option<Self> |
+| fn generate_check_bits(bit_pos: usize) -> Option<Self\> | fn generate_check_bits(bit_pos: u32) -> Option<Self\> |
 | fn generate_check_bits_(bit_pos: usize) -> Self        | fn generate_check_bits_(bit_pos: u32) -> Self        |
 
 - The return types and the arguments of the above methods has been changed from `usize` to `u32` for consistancy with the primitive datatyes such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`.
@@ -243,29 +243,29 @@
 | fn midpoint_assign_uint<U\>(&mut self, rhs: U)                                           |
 | fn midpoint(&self, rhs: &Self) -> Self                                                   |
 | fn midpoint_assign(&mut self, rhs: &Self)                                                |
-| fn checked_pow_uint<U\>(&self, exp: U) -> Option<Self>                                   |
+| fn checked_pow_uint<U\>(&self, exp: U) -> Option<Self\>                                   |
 | fn unchecked_pow_uint<U\>(&self, exp: U) -> Self                                         |
 | fn saturating_pow_uint<U\>(&self, exp: U) -> Self                                        |
 | fn saturating_pow_assign_uint<U\>(&mut self, exp: U)                                     |
-| fn checked_pow(&self, exp: &Self) -> Option<Self>                                        |
+| fn checked_pow(&self, exp: &Self) -> Option<Self\>                                        |
 | fn unchecked_pow(&self, exp: &Self) -> Self                                              |
 | fn saturating_pow(&self, exp: &Self) -> Self                                             |
 | fn saturating_pow_assign(&mut self, exp: &Self)                                          |
-| fn checked_iroot_uint<U\>(&self, exp: U) -> Option<Self>                                 |
+| fn checked_iroot_uint<U\>(&self, exp: U) -> Option<Self\>                                 |
 | fn unchecked_iroot_uint<U\>(&self, exp: U) -> Self                                       |
-| fn checked_ilog_uint<U\>(&self, base: U) -> Option<Self>                                 |
+| fn checked_ilog_uint<U\>(&self, base: U) -> Option<Self\>                                 |
 | fn unchecked_ilog_uint<U\>(&self, base: U) -> Self                                       |
-| fn checked_iroot(&self, exp: &Self) -> Option<Self>                                      |
+| fn checked_iroot(&self, exp: &Self) -> Option<Self\>                                      |
 | fn unchecked_iroot(&self, exp: &Self) -> Self                                            |
 | fn checked_ilog(&self, base: &Self) -> Self                                              |
 | fn unchecked_ilog(&self, base: &Self) -> Self                                            |
-| fn checked_ilog2(&self) -> Option<Self>                                                  |
+| fn checked_ilog2(&self) -> Option<Self\>                                                  |
 | fn unchecked_ilog2(&self) -> Self                                                        |
-| fn checked_ilog10(&self) -> Option<Self>                                                 |
+| fn checked_ilog10(&self) -> Option<Self\>                                                 |
 | fn unchecked_ilog10(&self) -> Self                                                       |
-| fn checked_shift_left<U\>(&self, n: U) -> Option<Self>                                   |
+| fn checked_shift_left<U\>(&self, n: U) -> Option<Self\>                                   |
 | fn unchecked_shift_left<U\>(&self, n: U) -> Self                                         |
-| fn checked_shift_right<U\>(&self, n: U) -> Option<Self>                                  |
+| fn checked_shift_right<U\>(&self, n: U) -> Option<Self\>                                  |
 | fn unchecked_shift_right<U\>(&self, n: U) -> Self                                        |
 
 - The methods above have been moved from struct BigUInt to trait BigUInt_More because docs.rs failed in generating struct.bigUInt.html.
@@ -274,55 +274,55 @@
 
 | Methods                                                |
 |--------------------------------------------------------|
-| fn checked_add_uint<U\>(&self, rhs: U) -> Option<Self> |
+| fn checked_add_uint<U\>(&self, rhs: U) -> Option<Self\> |
 | fn unchecked_add_uint<U\>(&self, rhs: U) -> Self       |
 | fn saturating_add_uint<U\>(&self, rhs: U) -> Self      |
 | fn saturating_add_assign_uint<U\>(&mut self, rhs: U)   |
 | fn safe_add_uint<U\>(&self, rhs: U) -> Self            |
 | fn safe_add_assign_uint<U\>(&mut self, rhs: U)         |
-| fn checked_sub_uint<U\>(&self, rhs: U) -> Option<Self> |
+| fn checked_sub_uint<U\>(&self, rhs: U) -> Option<Self\> |
 | fn unchecked_sub_uint<U\>(&self, rhs: U) -> Self       |
 | fn saturating_sub_uint<U\>(&self, rhs: U) -> Self      |
 | fn saturating_sub_assign_uint<U\>(&mut self, rhs: U)   |
 | fn safe_sub_uint<U\>(&self, rhs: U) -> Self            |
 | fn safe_sub_assign_uint<U\>(&mut self, rhs: U)         |
-| fn checked_mul_uint<U\>(&self, rhs: U) -> Option<Self> |
+| fn checked_mul_uint<U\>(&self, rhs: U) -> Option<Self\> |
 | fn unchecked_mul_uint<U\>(&self, rhs: U) -> Self       |
 | fn saturating_mul_uint<U\>(&self, rhs: U) -> Self      |
 | fn saturating_mul_assign_uint<U\>(&mut self, rhs: U)   |
 | fn safe_mul_uint<U\>(&self, rhs: U) -> Self            |
 | fn safe_mul_assign_uint<U\>(&mut self, rhs: U)         |
-| fn checked_div_uint<U\>(&self, rhs: U) -> Option<Self> |
+| fn checked_div_uint<U\>(&self, rhs: U) -> Option<Self\> |
 | fn unchecked_div_uint<U\>(&self, rhs: U) -> Self       |
 | fn saturating_div_uint<U\>(&self, rhs: U) -> Self      |
 | fn saturating_div_assign_uint<U\>(&mut self, rhs: U)   |
-| fn checked_rem_uint<U\>(&self, rhs: U) -> Option<Self> |
+| fn checked_rem_uint<U\>(&self, rhs: U) -> Option<Self\> |
 | fn unchecked_rem_uint<U\>(&self, rhs: U) -> Self       |
 | fn saturating_rem_uint<U\>(&self, rhs: U) -> Self      |
 | fn saturating_rem_assign_uint<U\>(&mut self, rhs: U)   |
-| fn checked_add<U\>(&self, rhs: U) -> Option<Self>      |
+| fn checked_add<U\>(&self, rhs: U) -> Option<Self\>      |
 | fn unchecked_add<U\>(&self, rhs: U) -> Self            |
 | fn saturating_add<U\>(&self, rhs: U) -> Self           |
 | fn saturating_add_assign<U\>(&mut self, rhs: U)        |
 | fn safe_add<U\>(&self, rhs: U) -> Self                 |
 | fn safe_add_assign<U\>(&mut self, rhs: U)              |
-| fn checked_sub<U\>(&self, rhs: U) -> Option<Self>      |
+| fn checked_sub<U\>(&self, rhs: U) -> Option<Self\>      |
 | fn unchecked_sub<U\>(&self, rhs: U) -> Self            |
 | fn saturating_sub<U\>(&self, rhs: U) -> Self           |
 | fn saturating_sub_assign<U\>(&mut self, rhs: U)        |
 | fn safe_sub<U\>(&self, rhs: U) -> Self                 |
 | fn safe_sub_assign<U\>(&mut self, rhs: U)              |
-| fn checked_mul<U\>(&self, rhs: U) -> Option<Self>      |
+| fn checked_mul<U\>(&self, rhs: U) -> Option<Self\>      |
 | fn unchecked_mul<U\>(&self, rhs: U) -> Self            |
 | fn saturating_mul<U\>(&self, rhs: U) -> Self           |
 | fn saturating_mul_assign<U\>(&mut self, rhs: U)        |
 | fn safe_mul<U\>(&self, rhs: U) -> Self                 |
 | fn safe_mul_assign<U\>(&mut self, rhs: U)              |
-| fn checked_div<U\>(&self, rhs: U) -> Option<Self>      |
+| fn checked_div<U\>(&self, rhs: U) -> Option<Self\>      |
 | fn unchecked_div<U\>(&self, rhs: U) -> Self            |
 | fn saturating_div<U\>(&self, rhs: U) -> Self           |
 | fn saturating_div_assign<U\>(&mut self, rhs: U)        |
-| fn checked_rem<U\>(&self, rhs: U) -> Option<Self>      |
+| fn checked_rem<U\>(&self, rhs: U) -> Option<Self\>      |
 | fn unchecked_rem<U\>(&self, rhs: U) -> Self            |
 | fn saturating_rem<U\>(&self, rhs: U) -> Self           |
 | fn saturating_rem_assign<U\>(&mut self, rhs: U)        |
@@ -404,11 +404,11 @@
 |-------------------------------------------------------------|
 | pub fn shift_left<U\>(&self, n: U) -> Self                  |
 | pub fn shift_left_assign<U\>(&mut self, n: U)               |
-| pub fn checked_shift_left<U\>(&self, n: U) -> Option<Self>  |
+| pub fn checked_shift_left<U\>(&self, n: U) -> Option<Self\>  |
 | pub fn unchecked_shift_left<U\>(&self, n: U) -> Self        |
 | pub fn shift_right<U\>(&self, n: U) -> Self                 |
 | pub fn shift_right_assign<U\>(&mut self, n: U)              |
-| pub fn checked_shift_right<U\>(&self, n: U) -> Option<Self> |
+| pub fn checked_shift_right<U\>(&self, n: U) -> Option<Self\> |
 | pub fn unchecked_shift_right<U\>(&self, n: U) -> Self       |       
 
 - These methods have been changed to set tbe flag `LEFT_CARRY` instead of the flag `OVERFLOW` when a bit `1` is pushed out to the left, and to set tbe flag `RIGHT_CARRY` instead of the flag `UNDERFLOW` when a bit `1` is pushed out to the right.
@@ -447,13 +447,13 @@
 | pub fn ilog2_assign_uint(&mut self)               | removed    |
 | pub fn panic_free_ilog2_uint(&self) -> Self       | removed    |
 | pub fn panic_free_ilog2_assign_uint(&mut self)    | removed    |
-| pub fn checked_ilog2_uint(&self) -> Option<Self>  | removed    |
+| pub fn checked_ilog2_uint(&self) -> Option<Self\>  | removed    |
 | pub fn unchecked_ilog2_uint(&self) -> Self        | removed    |
 | pub fn ilog10_uint(&self) -> Self                 | removed    |
 | pub fn ilog10_assign_uint(&mut self)              | removed    |
 | pub fn panic_free_ilog10_uint(&self) -> Self      | removed    |
 | pub fn panic_free_ilog10_assign_uint(&mut self)   | removed    |
-| pub fn checked_ilog10_uint(&self) -> Option<Self> | removed    |
+| pub fn checked_ilog10_uint(&self) -> Option<Self\> | removed    |
 | pub fn unchecked_ilog10_uint(&self) -> Self       | removed    |
 
 - The methods above have been removed because they are meaningless.
@@ -913,13 +913,13 @@ Breaking changes have been made to change the source code according to Rust conv
 | fn random_odd_with_MSB_set_uint(&mut self) -> T                 | fn random_odd_with_msb_set_uint(&mut self) -> T                 |
 | fn random_prime_using_Miller_Rabin_uint(&mut self, ... ) -> T   | fn random_prime_using_miller_rabin_uint(&mut self, ... ) -> T   |
 | fn random_prime_with_MSB_set_using_Miller_Rabin_uint(...) -> T  | fn random_prime_with_msb_set_using_miller_rabin_uint(...) -> T  |
-| fn random_BigUInt(&mut self) -> BigUInt<T, N>                   | fn random_biguint(&mut self) -> BigUInt<T, N>                   |
-| fn random_under_BigUInt( ... ) -> Option<BigUInt<T, N>>         | fn random_under_biguint( ... ) -> Option<BigUInt<T, N>>         |
-| fn random_under_BigUInt_( ... ) -> Option<BigUInt<T, N>>        | fn random_under_biguint_( ... ) -> Option<BigUInt<T, N>>        |
-| fn random_odd_BigUInt(&mut self) -> BigUInt<T, N>               | fn random_odd_biguint(&mut self) -> BigUInt<T, N>               |
-| fn random_odd_under_BigUInt( ... ) -> Option<BigUInt<T, N>>     | fn random_odd_under_biguint( ... ) -> Option<BigUInt<T, N>>     |
-| fn random_odd_under_BigUInt_( ... ) -> Option<BigUInt<T, N>>    | fn random_odd_under_biguint_( ... ) -> Option<BigUInt<T, N>>    |
-| fn random_with_MSB_set_BigUInt(&mut self) -> BigUInt<T, N>      | fn random_with_msb_set_biguint(&mut self) -> BigUInt<T, N>      |
-| fn random_odd_with_MSB_set_BigUInt(&mut self) -> BigUInt<T, N>  | fn random_odd_with_msb_set_biguint(&mut self) -> BigUInt<T, N>  |
-| fn random_prime_using_Miller_Rabin_BigUInt(..) -> BigUInt<T, N> | fn random_prime_using_miller_rabin_biguint(..) -> BigUInt<T, N> |
+| fn random_BigUInt(&mut self) -> BigUInt<T, N\>                   | fn random_biguint(&mut self) -> BigUInt<T, N\>                   |
+| fn random_under_BigUInt( ... ) -> Option<BigUInt<T, N\>\>         | fn random_under_biguint( ... ) -> Option<BigUInt<T, N\>\>         |
+| fn random_under_BigUInt_( ... ) -> Option<BigUInt<T, N\>\>        | fn random_under_biguint_( ... ) -> Option<BigUInt<T, N\>\>        |
+| fn random_odd_BigUInt(&mut self) -> BigUInt<T, N\>               | fn random_odd_biguint(&mut self) -> BigUInt<T, N\>               |
+| fn random_odd_under_BigUInt( ... ) -> Option<BigUInt<T, N\>\>     | fn random_odd_under_biguint( ... ) -> Option<BigUInt<T, N\>\>     |
+| fn random_odd_under_BigUInt_( ... ) -> Option<BigUInt<T, N\>\>    | fn random_odd_under_biguint_( ... ) -> Option<BigUInt<T, N\>\>    |
+| fn random_with_MSB_set_BigUInt(&mut self) -> BigUInt<T, N\>      | fn random_with_msb_set_biguint(&mut self) -> BigUInt<T, N\>      |
+| fn random_odd_with_MSB_set_BigUInt(&mut self) -> BigUInt<T, N\>  | fn random_odd_with_msb_set_biguint(&mut self) -> BigUInt<T, N\>  |
+| fn random_prime_using_Miller_Rabin_BigUInt(..) -> BigUInt<T, N\> | fn random_prime_using_miller_rabin_biguint(..) -> BigUInt<T, N\> |
 | fn random_prime_with_MSB_set_using_Miller_Rabin_BigUInt(.)-> .. | fn random_prime_with_msb_set_using_miller_rabin_biguint(.)-> .. |

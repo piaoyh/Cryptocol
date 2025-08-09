@@ -74,8 +74,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - If `length_in_bytes` is `0`, it means the message is null string.
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -312,8 +313,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - If `length_in_bytes` is `0`, it means the message is null string.
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the `Vec<U>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -566,8 +568,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   `cipher` with the encrypted ciphertext, and then fills the rest of the
     ///   elements of the array `cipher` with zeros, and returns the size of the
     ///   ciphertext including padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -809,8 +812,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - If `message` is a null string "", only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -1042,8 +1046,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// # Features
     /// - If `message` is a null string "", only padding bytes will be encrypted,
     ///   and stored in the `Vec<U>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -1291,8 +1296,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   `cipher` with the encrypted ciphertext, and then fills the rest of
     ///   the elements of the array `cipher` with zeros, and returns the size
     ///   of the ciphertext including padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -1535,8 +1541,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - If `message` is a null string String::new(), only padding bytes will
     ///   be encrypted, and stored in the memory area that starts from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -1769,8 +1776,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// # Features
     /// - If `message` is a null string String::new(), only padding bytes will
     ///   be encrypted, and stored in the `Vec<U>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -2018,8 +2026,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   `cipher` with the encrypted ciphertext, and then fills the rest of
     ///   the elements of the array `cipher` with zeros, and returns the size
     ///   of the ciphertext including padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -2264,8 +2273,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
     ///   bytes will be encrypted, and stored in the memory area that starts
     ///   from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -2507,8 +2517,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// # Features
     /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
     ///   bytes will be encrypted, and stored in the `Vec<V>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -2769,8 +2780,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   ciphertext, and then fills the rest of the elements of the array
     ///   `cipher` with zeros, and returns the size of the ciphertext including
     ///   padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to PKCS#7,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -3024,8 +3036,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - If `message.len()` is `0`, it means the message is empty data.
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -3276,8 +3289,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// # Features
     /// - If `message` is an empty array `[U; N]` object [U; 0], only padding
     ///   bytes will be encrypted, and stored in the `Vec<U>` object `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -3547,8 +3561,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   and then fills the rest of the elements of the array `cipher`
     ///   with zeros, and returns the size of the ciphertext including
     ///   padding bits in bytes.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to PKCS#7,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -3812,8 +3827,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
     /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -4218,8 +4234,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
     /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -4629,8 +4646,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   array `message` with the derypted plaintext, and then fills the rest
     ///   of the elements of the array `message` with zeros if any, and returns
     ///   the size of the plaintext.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -5036,8 +5054,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
     /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -5342,8 +5361,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -5747,8 +5767,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   can be only any multiple of `8`.
     /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -6158,8 +6179,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - If `V::size_in_bytes() * N` is less than 
     ///   `U::size_in_bytes() * cipher.len() - 1`,
     ///   this method does not perform decryption and returns `zero`.
-     /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+     /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -6564,8 +6586,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   can be only any multiple of `8`.
     /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -6872,8 +6895,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - When `T` is `u128`, `N * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
@@ -7287,8 +7311,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   can be only any multiple of `8`.
     /// - When `T` is `u128`, `N * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -7698,8 +7723,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   fills the array `message` with the derypted plaintext, and then
     ///   fills the rest of the elements of the array `message` with zeros
     ///   if any, and returns the size of the plaintext.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
@@ -8107,8 +8133,9 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     ///   can be only any multiple of `8`.
     /// - When `T` is `u128`, `N * U::size_in_bytes()`
     ///   can be only any multiple of `16`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to ISO 7816-4 defined in RFC 5652.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
+    ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
+    ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
