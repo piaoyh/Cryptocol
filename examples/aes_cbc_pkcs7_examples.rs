@@ -180,7 +180,6 @@ fn aes_encrypt_with_padding_pkcs7_cbc()
     println!("-------------------------------");
 }
 
-
 fn aes_encrypt_with_padding_pkcs7_cbc_into_vec()
 {
     println!("aes_encrypt_with_padding_pkcs7_cbc_into_vec()");
