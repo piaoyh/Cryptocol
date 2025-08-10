@@ -317,9 +317,10 @@ ECB_PKCS7<u64> for DES_Generic<ROUND, SHIFT,
     {
         let mut progress = 0_u64;
         let mut encoded: u64;
+        let mut block = 0_u64;
         for _ in 0..length_in_bytes >> 3    // length_in_bytes >> 3 == length_in_bytes / 8
         {
-            let block = unsafe { *(message.add(progress as usize) as *const u64 ) };
+            unsafe { copy_nonoverlapping(message.add(progress as usize), (&mut block) as *mut u64 as *mut u8, 8); }
             encoded = self.encrypt_u64(block);
             unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
             progress += 8;

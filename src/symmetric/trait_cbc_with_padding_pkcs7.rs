@@ -128,6 +128,104 @@ pub trait CBC_PKCS7<T> : Sized
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt)
     fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 
+    // fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+    /// Encrypts the data with the padding defined according to PKCS #7
+    /// in CBC (Cipher-Block Chaining) mode, and stores the encrypted data
+    /// in `Vec<U>`.
+    /// 
+    /// # Arguments
+    /// - `iv` is an initial value for CBC mode.
+    /// - `message` is an immutable pointer to `u8` which is `*const u8`,
+    ///   and is the place where the plaintext to be encrypted is stored.
+    /// - `length_in_bytes` is of `u64`-type,
+    ///   and is the length of the plaintext `message` in bytes.
+    /// - `cipher` is a mutable reference to `Vec<U>` object, and
+    ///   is the place where the encrypted data will be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of ciphertext including padding bits
+    ///   in bytes.
+    /// - The output will be at least `size_of::<T>()`,
+    ///   and cannot be other than a multiple of `size_of::<T>()`.
+    /// - If this method failed in encryption,
+    ///   this method returns `zero`.
+    /// 
+    /// # Features
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as encrypt_*_into_*().
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - If `length_in_bytes` is `0`, it means the message is a null string.
+    ///   So, only padding bytes will be encrypted,
+    ///   and stored in the `Vec<U>` object which is referred to as `cipher`.
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the ciphertext will be stored is enough.
+    /// 
+    /// # For Rijndael or AES, and its variants
+    /// ## Example 1 for AES-128
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
+    /// 
+    /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_aes = AES_128::new_with_key_u128(key);
+    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
+    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
+    /// 
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_aes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/rijndael_cbc_pkcs7/struct.Rijndal_Generic.html#method.encrypt_into_vec)
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CBC_PKCS7 };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =\t{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_into_vec)
+    fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+    where U: SmallUInt + Copy + Clone;
+
     // fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     /// Encrypts the data with the padding defined according to PKCS #7
     /// in CBC (Cipher-Block Chaining) mode, and stores the encrypted data
@@ -236,104 +334,6 @@ pub trait CBC_PKCS7<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_into_array)
     fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone;
-
-    // fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data with the padding defined according to PKCS #7
-    /// in CBC (Cipher-Block Chaining) mode, and stores the encrypted data
-    /// in `Vec<U>`.
-    /// 
-    /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
-    /// - `message` is an immutable pointer to `u8` which is `*const u8`,
-    ///   and is the place where the plaintext to be encrypted is stored.
-    /// - `length_in_bytes` is of `u64`-type,
-    ///   and is the length of the plaintext `message` in bytes.
-    /// - `cipher` is a mutable reference to `Vec<U>` object, and
-    ///   is the place where the encrypted data will be stored.
-    /// 
-    /// # Output
-    /// - This method returns the size of ciphertext including padding bits
-    ///   in bytes.
-    /// - The output will be at least `size_of::<T>()`,
-    ///   and cannot be other than a multiple of `size_of::<T>()`.
-    /// - If this method failed in encryption,
-    ///   this method returns `zero`.
-    /// 
-    /// # Features
-    /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as encrypt_*_into_*().
-    /// - This method is useful to use in hybrid programming with C/C++.
-    /// - If `length_in_bytes` is `0`, it means the message is a null string.
-    ///   So, only padding bytes will be encrypted,
-    ///   and stored in the `Vec<U>` object which is referred to as `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
-    /// - You don't have to worry about whether or not the size of the memory
-    ///   area where the ciphertext will be stored is enough.
-    /// 
-    /// # For Rijndael or AES, and its variants
-    /// ## Example 1 for AES-
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
-    /// 
-    /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
-    /// 
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_aes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
-    /// ```
-    /// 
-    /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_pkcs7/struct.Rijndal_Generic.html#method.encrypt_into_vec)
-    /// 
-    /// # For DES and its variants
-    /// ## Example 1 for Normal case
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CBC_PKCS7 };
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    /// 
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =\t{}", iv);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C (16 rounds) =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
-    /// ```
-    /// 
-    /// ## For more examples,
-    /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_into_vec)
-    fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone;
 
     // fn encrypt_str(&mut self, iv: T, message: &str, cipher: *mut u8) -> u64
@@ -1719,6 +1719,148 @@ pub trait CBC_PKCS7<T> : Sized
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt)
     fn decrypt(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64;
 
+    // fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    /// Decrypts the data with the padding defined according to PKCS #7
+    /// in CBC (Cipher-Block Chaining) mode, and stores the decrypted data
+    /// in `Vec<U>`.
+    /// 
+    /// # Arguments
+    /// - `iv` is an initial value for CBC mode.
+    /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
+    ///   and is the place where the ciphertext to be decrypted is stored.
+    /// - `length_in_bytes` is of `u64`-type,
+    ///   and is the length of the ciphertext `cipher` in bytes.
+    /// - `message` is a mutable reference to `Vec<U>` object, and
+    ///   is the place where the decrypted data will be stored.
+    /// 
+    /// # Output
+    /// - This method returns the size of plaintext in bytes.
+    /// - If this method failed in decryption, it always returns `zero`.
+    /// - Even if this method succeeded in decryption, it returns `zero` when
+    ///   the original plaintext is zero-length empty data. Then, you will have
+    ///   to check whether or not it failed by using the method
+    ///   `is_successful()` or `is_failed()`.
+    /// - If `length_in_bytes` is greater than `size_of::<T>()` (which means
+    ///   that the original plaintext is surely not empty data) and it returns
+    ///   `zero`, you can interpret it that this method surely failed in
+    ///   decryption.
+    /// 
+    /// # Features
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as decrypt_*_into_*().
+    /// - This method is useful to use in hybrid programming with C/C++.
+    /// - `length_in_bytes` cannot be other than any multiple of `size_of::<T>()`.
+    /// - The padding bits are composed of the bytes that indicate the length of
+    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
+    /// - For more information about the padding bits according to PKCS #7,
+    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - You don't have to worry about whether or not the size of the memory
+    ///   area where the plaintext will be stored is enough.
+    /// 
+    /// # For Rijndael or AES, and its variants
+    /// ## Example 1 for AES-128
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
+    /// 
+    /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_aes = AES_128::new_with_key_u128(key);
+    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
+    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
+    /// 
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 64];
+    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
+    /// 
+    /// let mut recovered = Vec::<u8>::new();
+    /// a_aes.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// print!("Ba =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    /// 
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/rijndael_cbc_pkcs7/struct.Rijndal_Generic.html#method.decrypt_into_vec)
+    /// 
+    /// # For DES and its variants
+    /// ## Example 1 for Normal case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DES, CBC_PKCS7 };
+    /// 
+    /// let key = 0x_1234567890ABCDEF_u64;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_des = DES::new_with_key_u64(key);
+    /// 
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =\t{}", iv);
+    /// let mut cipher = Vec::<u8>::new();
+    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C (16 rounds) =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
+    /// 
+    /// let mut recovered = Vec::<u8>::new();
+    /// a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// print!("Ba (16 rounds) =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    /// 
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb (16 rounds) =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt_into_vec)
+    fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
+    where U: SmallUInt + Copy + Clone
+    {
+        pre_decrypt_into_vec!(message, length_in_bytes, U);
+        let len = self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
+        message.truncate(len as usize);
+        len
+    }
+
     // fn decrypt_into_array<U, const N: usize>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     /// Decrypts the data with the padding defined according to PKCS #7
     /// in CBC (Cipher-Block Chaining) mode, and stores the decrypted data
@@ -1863,148 +2005,6 @@ pub trait CBC_PKCS7<T> : Sized
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt_into_array)
     fn decrypt_into_array<U, const N: usize>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone;
-
-    // fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
-    /// Decrypts the data with the padding defined according to PKCS #7
-    /// in CBC (Cipher-Block Chaining) mode, and stores the decrypted data
-    /// in `Vec<U>`.
-    /// 
-    /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
-    /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
-    ///   and is the place where the ciphertext to be decrypted is stored.
-    /// - `length_in_bytes` is of `u64`-type,
-    ///   and is the length of the ciphertext `cipher` in bytes.
-    /// - `message` is a mutable reference to `Vec<U>` object, and
-    ///   is the place where the decrypted data will be stored.
-    /// 
-    /// # Output
-    /// - This method returns the size of plaintext in bytes.
-    /// - If this method failed in decryption, it always returns `zero`.
-    /// - Even if this method succeeded in decryption, it returns `zero` when
-    ///   the original plaintext is zero-length empty data. Then, you will have
-    ///   to check whether or not it failed by using the method
-    ///   `is_successful()` or `is_failed()`.
-    /// - If `length_in_bytes` is greater than `size_of::<T>()` (which means
-    ///   that the original plaintext is surely not empty data) and it returns
-    ///   `zero`, you can interpret it that this method surely failed in
-    ///   decryption.
-    /// 
-    /// # Features
-    /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as decrypt_*_into_*().
-    /// - This method is useful to use in hybrid programming with C/C++.
-    /// - `length_in_bytes` cannot be other than any multiple of `size_of::<T>()`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
-    /// - You don't have to worry about whether or not the size of the memory
-    ///   area where the plaintext will be stored is enough.
-    /// 
-    /// # For Rijndael or AES, and its variants
-    /// ## Example 1 for AES-128
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
-    /// 
-    /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
-    /// 
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
-    /// 
-    /// let mut recovered = Vec::<u8>::new();
-    /// a_aes.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
-    /// print!("Ba =\t");
-    /// for b in recovered.clone()
-    ///     { print!("{:02X} ", b); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in recovered.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
-    /// 
-    /// let mut converted = String::new();
-    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
-    /// 
-    /// println!("Bb =\t{}", converted);
-    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
-    /// assert_eq!(converted, message);
-    /// ```
-    /// 
-    /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_pkcs7/struct.Rijndal_Generic.html#method.decrypt_into_vec)
-    /// 
-    /// # For DES and its variants
-    /// ## Example 1 for Normal case
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ DES, CBC_PKCS7 };
-    /// 
-    /// let key = 0x_1234567890ABCDEF_u64;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_des = DES::new_with_key_u64(key);
-    /// 
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =\t{}", iv);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
-    /// print!("C (16 rounds) =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "4B B5 ED DC A0 58 7E 6D 6C 3B A2 00 38 C3 D4 29 42 B1 CF 0D E9 FA EA 11 11 6B C8 30 73 39 DD B7 3F 96 9B A3 76 05 34 7E 64 2F D4 CC B2 68 33 64 C5 9E EF 01 A9 4A FD 5B ");
-    /// 
-    /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
-    /// print!("Ba (16 rounds) =\t");
-    /// for b in recovered.clone()
-    ///     { print!("{:02X} ", b); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in recovered.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
-    /// 
-    /// let mut converted = String::new();
-    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
-    /// 
-    /// println!("Bb (16 rounds) =\t{}", converted);
-    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
-    /// assert_eq!(converted, message);
-    /// ```
-    /// 
-    /// ## For more examples,
-    /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt_into_vec)
-    fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
-    {
-        pre_decrypt_into_vec!(message, length_in_bytes, U);
-        let len = self.decrypt(iv, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
-        message.truncate(len as usize);
-        len
-    }
 
     // fn decrypt_into_string(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
     /// Decrypts the data with the padding defined according to PKCS #7

@@ -138,7 +138,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -398,9 +399,10 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
-    /// println!("K =\t{:#016X}", key);
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -671,7 +673,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -930,7 +933,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -1183,7 +1187,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -1450,7 +1455,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -1710,7 +1716,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -1964,7 +1971,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -2232,7 +2240,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -4193,7 +4202,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -4620,7 +4630,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -5047,7 +5058,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -5454,7 +5466,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -5798,7 +5811,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -6220,7 +6234,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -6646,7 +6661,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -7047,7 +7063,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -7394,7 +7411,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -7823,7 +7841,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -8249,7 +8268,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 
@@ -8650,7 +8670,8 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// 
     /// let key1 = 0x_1234567890ABCDEF_u64;
     /// let key2 = 0_u64;
-    /// println!("K =\t{:#016X}", key);
+    /// println!("K1 =\t{:#016X}", key1);
+    /// println!("K2 =\t{:#016X}", key2);
     /// let mut c_des = DES_Expanded::<0, 0>::new_with_key_u64(key1);
     /// let mut d_des = DES_Expanded::<0, 0>::new_with_key_u64(key2);
     /// 

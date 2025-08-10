@@ -76,7 +76,7 @@ fn aes_encrypt_with_padding_pkcs7_pcbc()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 EC 7B 5E 0B F6 7C AB 84 BB DD 0F 27 F4 63 B5 E3 C2 1D 11 06 C2 BF B0 32 24 81 DB FD A4 CE 56 F6 89 BB 67 77 F3 56 67 3A 6B DE 56 C0 63 78 7C 95 ");
+    assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 EC 7B 5E 0B F6 7C AB 84 BB DD 0F 27 F4 63 B5 E3 C2 1D 11 06 C2 BF B0 32 24 81 DB FD A4 CE 56 F6 0B 49 DD 7A 22 C9 C8 91 34 F6 0A 3A E7 C1 59 7A ");
     println!();
 
     // Normal case for AES-192
@@ -100,7 +100,7 @@ fn aes_encrypt_with_padding_pkcs7_pcbc()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C DF 4B 11 43 90 8D 06 A0 07 52 17 31 8F CB 2F 7D EC A2 3F 20 15 3C 88 DD E7 0D 54 74 BC A2 AE 02 6C 73 8C E2 06 50 77 E9 A6 15 16 2C 34 27 C9 23 ");
+    assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C DF 4B 11 43 90 8D 06 A0 07 52 17 31 8F CB 2F 7D EC A2 3F 20 15 3C 88 DD E7 0D 54 74 BC A2 AE 02 EA B0 18 02 59 6A 3E 62 5B 55 B0 B3 AE 40 B1 3A ");
     println!();
 
     // Normal case for AES-256
@@ -124,7 +124,7 @@ fn aes_encrypt_with_padding_pkcs7_pcbc()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 DE 41 61 A8 40 B9 71 D8 33 CF 8D CD D8 3D ED D6 1B E4 9A 53 FD 6F 61 7E E2 7D C5 9B C0 14 4B FB AA 53 07 BD C3 D9 8D 9A 9D FE F5 1B EB 28 6E C9 ");
+    assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 DE 41 61 A8 40 B9 71 D8 33 CF 8D CD D8 3D ED D6 1B E4 9A 53 FD 6F 61 7E E2 7D C5 9B C0 14 4B FB 7C 25 FA 8C 89 5F 87 71 22 EF 09 78 9D 35 C5 61 ");
     println!();
 
     // Normal case for Rijndael-256-256
@@ -186,12 +186,12 @@ fn aes_encrypt_with_padding_pkcs7_pcbc()
     println!("-------------------------------");
 }
 
-fn aes_encrypt_with_padding_pkcs7_cbc_into_vec()
+fn aes_encrypt_with_padding_pkcs7_pcbc_into_vec()
 {
-    println!("aes_encrypt_with_padding_pkcs7_cbc_into_vec()");
+    println!("aes_encrypt_with_padding_pkcs7_pcbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -320,12 +320,12 @@ fn aes_encrypt_with_padding_pkcs7_cbc_into_vec()
     println!("-------------------------------");
 }
 
-fn aes_encrypt_with_padding_pkcs7_cbc_into_array()
+fn aes_encrypt_with_padding_pkcs7_pcbc_into_array()
 {
-    println!("aes_encrypt_with_padding_pkcs7_cbc_into_array()");
+    println!("aes_encrypt_with_padding_pkcs7_pcbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -454,12 +454,12 @@ fn aes_encrypt_with_padding_pkcs7_cbc_into_array()
     println!("-------------------------------");
 }
 
-fn aes_encrypt_str_with_padding_pkcs7_cbc()
+fn aes_encrypt_str_with_padding_pkcs7_pcbc()
 {
-    println!("aes_encrypt_str_with_padding_pkcs7_cbc()");
+    println!("aes_encrypt_str_with_padding_pkcs7_pcbc()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -588,12 +588,12 @@ fn aes_encrypt_str_with_padding_pkcs7_cbc()
     println!("-------------------------------");
 }
 
-fn aes_encrypt_str_with_padding_pkcs7_cbc_into_vec()
+fn aes_encrypt_str_with_padding_pkcs7_pcbc_into_vec()
 {
-    println!("aes_encrypt_str_with_padding_pkcs7_cbc_into_vec()");
+    println!("aes_encrypt_str_with_padding_pkcs7_pcbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -722,12 +722,12 @@ fn aes_encrypt_str_with_padding_pkcs7_cbc_into_vec()
     println!("-------------------------------");
 }
 
-fn aes_encrypt_str_with_padding_pkcs7_cbc_into_array()
+fn aes_encrypt_str_with_padding_pkcs7_pcbc_into_array()
 {
-    println!("aes_encrypt_str_with_padding_pkcs7_cbc_into_array()");
+    println!("aes_encrypt_str_with_padding_pkcs7_pcbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -856,12 +856,12 @@ fn aes_encrypt_str_with_padding_pkcs7_cbc_into_array()
     println!("-------------------------------");
 }
 
-fn aes_encrypt_string_with_padding_pkcs7_cbc()
+fn aes_encrypt_string_with_padding_pkcs7_pcbc()
 {
-    println!("aes_encrypt_string_with_padding_pkcs7_cbc()");
+    println!("aes_encrypt_string_with_padding_pkcs7_pcbc()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -991,12 +991,12 @@ fn aes_encrypt_string_with_padding_pkcs7_cbc()
     println!("-------------------------------");
 }
 
-fn aes_encrypt_string_with_padding_pkcs7_cbc_into_vec()
+fn aes_encrypt_string_with_padding_pkcs7_pcbc_into_vec()
 {
-    println!("aes_encrypt_string_with_padding_pkcs7_cbc_into_vec()");
+    println!("aes_encrypt_string_with_padding_pkcs7_pcbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -1125,12 +1125,12 @@ fn aes_encrypt_string_with_padding_pkcs7_cbc_into_vec()
     println!("-------------------------------");
 }
 
-fn aes_encrypt_string_with_padding_pkcs7_cbc_into_array()
+fn aes_encrypt_string_with_padding_pkcs7_pcbc_into_array()
 {
-    println!("aes_encrypt_string_with_padding_pkcs7_cbc_into_array()");
+    println!("aes_encrypt_string_with_padding_pkcs7_pcbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -1259,12 +1259,12 @@ fn aes_encrypt_string_with_padding_pkcs7_cbc_into_array()
     println!("-------------------------------");
 }
 
-fn aes_encrypt_vec_with_padding_pkcs7_cbc()
+fn aes_encrypt_vec_with_padding_pkcs7_pcbc()
 {
-    println!("aes_encrypt_vec_with_padding_pkcs7_cbc()");
+    println!("aes_encrypt_vec_with_padding_pkcs7_pcbc()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -1398,12 +1398,12 @@ fn aes_encrypt_vec_with_padding_pkcs7_cbc()
     println!("-------------------------------");
 }
 
-fn aes_encrypt_vec_with_padding_pkcs7_cbc_into_vec()
+fn aes_encrypt_vec_with_padding_pkcs7_pcbc_into_vec()
 {
-    println!("aes_encrypt_vec_with_padding_pkcs7_cbc_into_vec()");
+    println!("aes_encrypt_vec_with_padding_pkcs7_pcbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -1537,12 +1537,12 @@ fn aes_encrypt_vec_with_padding_pkcs7_cbc_into_vec()
     println!("-------------------------------");
 }
 
-fn aes_encrypt_vec_with_padding_pkcs7_cbc_into_array()
+fn aes_encrypt_vec_with_padding_pkcs7_pcbc_into_array()
 {
-    println!("aes_encrypt_vec_with_padding_pkcs7_cbc_into_array()");
+    println!("aes_encrypt_vec_with_padding_pkcs7_pcbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -1676,12 +1676,12 @@ fn aes_encrypt_vec_with_padding_pkcs7_cbc_into_array()
     println!("-------------------------------");
 }
 
-fn aes_encrypt_array_with_padding_pkcs7_cbc()
+fn aes_encrypt_array_with_padding_pkcs7_pcbc()
 {
-    println!("aes_encrypt_array_with_padding_pkcs7_cbc()");
+    println!("aes_encrypt_array_with_padding_pkcs7_pcbc()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -1820,12 +1820,12 @@ fn aes_encrypt_array_with_padding_pkcs7_cbc()
     println!("-------------------------------");
 }
 
-fn aes_encrypt_array_with_padding_pkcs7_cbc_into_vec()
+fn aes_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
 {
-    println!("aes_encrypt_array_with_padding_pkcs7_cbc_into_vec()");
+    println!("aes_encrypt_array_with_padding_pkcs7_pcbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -1964,12 +1964,12 @@ fn aes_encrypt_array_with_padding_pkcs7_cbc_into_vec()
     println!("-------------------------------");
 }
 
-fn aes_encrypt_array_with_padding_pkcs7_cbc_into_array()
+fn aes_encrypt_array_with_padding_pkcs7_pcbc_into_array()
 {
-    println!("aes_encrypt_array_with_padding_pkcs7_cbc_into_array()");
+    println!("aes_encrypt_array_with_padding_pkcs7_pcbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -2114,7 +2114,7 @@ fn aes_decrypt_with_padding_pkcs7_pcbc()
     println!("aes_decrypt_with_padding_pkcs7_pcbc");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, PCBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -2134,7 +2134,7 @@ fn aes_decrypt_with_padding_pkcs7_pcbc()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 EC 7B 5E 0B F6 7C AB 84 BB DD 0F 27 F4 63 B5 E3 C2 1D 11 06 C2 BF B0 32 24 81 DB FD A4 CE 56 F6 89 BB 67 77 F3 56 67 3A 6B DE 56 C0 63 78 7C 95 ");
+    assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 EC 7B 5E 0B F6 7C AB 84 BB DD 0F 27 F4 63 B5 E3 C2 1D 11 06 C2 BF B0 32 24 81 DB FD A4 CE 56 F6 0B 49 DD 7A 22 C9 C8 91 34 F6 0A 3A E7 C1 59 7A ");
 
     let mut recovered = vec![0; 55];
     a_aes.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -2176,7 +2176,7 @@ fn aes_decrypt_with_padding_pkcs7_pcbc()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C DF 4B 11 43 90 8D 06 A0 07 52 17 31 8F CB 2F 7D EC A2 3F 20 15 3C 88 DD E7 0D 54 74 BC A2 AE 02 6C 73 8C E2 06 50 77 E9 A6 15 16 2C 34 27 C9 23 ");
+    assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C DF 4B 11 43 90 8D 06 A0 07 52 17 31 8F CB 2F 7D EC A2 3F 20 15 3C 88 DD E7 0D 54 74 BC A2 AE 02 EA B0 18 02 59 6A 3E 62 5B 55 B0 B3 AE 40 B1 3A ");
 
     let mut recovered = vec![0; 55];
     a_aes.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -2218,7 +2218,7 @@ fn aes_decrypt_with_padding_pkcs7_pcbc()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 DE 41 61 A8 40 B9 71 D8 33 CF 8D CD D8 3D ED D6 1B E4 9A 53 FD 6F 61 7E E2 7D C5 9B C0 14 4B FB AA 53 07 BD C3 D9 8D 9A 9D FE F5 1B EB 28 6E C9 ");
+    assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 DE 41 61 A8 40 B9 71 D8 33 CF 8D CD D8 3D ED D6 1B E4 9A 53 FD 6F 61 7E E2 7D C5 9B C0 14 4B FB 7C 25 FA 8C 89 5F 87 71 22 EF 09 78 9D 35 C5 61 ");
 
     let mut recovered = vec![0; 55];
     a_aes.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -2333,12 +2333,12 @@ fn aes_decrypt_with_padding_pkcs7_pcbc()
     println!("-------------------------------");
 }
 
-fn aes_decrypt_with_padding_pkcs7_cbc_into_vec()
+fn aes_decrypt_with_padding_pkcs7_pcbc_into_vec()
 {
-    println!("aes_decrypt_with_padding_pkcs7_cbc_into_vec()");
+    println!("aes_decrypt_with_padding_pkcs7_pcbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -2557,12 +2557,12 @@ fn aes_decrypt_with_padding_pkcs7_cbc_into_vec()
     println!("-------------------------------");
 }
 
-fn aes_decrypt_with_padding_pkcs7_cbc_into_array()
+fn aes_decrypt_with_padding_pkcs7_pcbc_into_array()
 {
-    println!("aes_decrypt_with_padding_pkcs7_cbc_into_array()");
+    println!("aes_decrypt_with_padding_pkcs7_pcbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -2787,12 +2787,12 @@ fn aes_decrypt_with_padding_pkcs7_cbc_into_array()
     println!("-------------------------------");
 }
 
-fn aes_decrypt_with_padding_pkcs7_cbc_into_string()
+fn aes_decrypt_with_padding_pkcs7_pcbc_into_string()
 {
-    println!("aes_decrypt_with_padding_pkcs7_cbc_into_string()");
+    println!("aes_decrypt_with_padding_pkcs7_pcbc_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -2951,12 +2951,12 @@ fn aes_decrypt_with_padding_pkcs7_cbc_into_string()
     println!("-------------------------------");
 }
 
-fn aes_decrypt_vec_with_padding_pkcs7_cbc()
+fn aes_decrypt_vec_with_padding_pkcs7_pcbc()
 {
-    println!("aes_decrypt_vec_with_padding_pkcs7_cbc()");
+    println!("aes_decrypt_vec_with_padding_pkcs7_pcbc()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -3175,12 +3175,12 @@ fn aes_decrypt_vec_with_padding_pkcs7_cbc()
     println!("-------------------------------");
 }
 
-fn aes_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
+fn aes_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()
 {
-    println!("aes_decrypt_vec_with_padding_pkcs7_cbc_into_vec()");
+    println!("aes_decrypt_vec_with_padding_pkcs7_pcbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -3400,12 +3400,12 @@ fn aes_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     println!("-------------------------------");
 }
 
-fn aes_decrypt_vec_with_padding_pkcs7_cbc_into_array()
+fn aes_decrypt_vec_with_padding_pkcs7_pcbc_into_array()
 {
-    println!("aes_decrypt_vec_with_padding_pkcs7_cbc_into_array()");
+    println!("aes_decrypt_vec_with_padding_pkcs7_pcbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -3625,12 +3625,12 @@ fn aes_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     println!("-------------------------------");
 }
 
-fn aes_decrypt_vec_with_padding_pkcs7_cbc_into_string()
+fn aes_decrypt_vec_with_padding_pkcs7_pcbc_into_string()
 {
-    println!("aes_decrypt_vec_with_padding_pkcs7_cbc_into_string()");
+    println!("aes_decrypt_vec_with_padding_pkcs7_pcbc_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -3790,12 +3790,12 @@ fn aes_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     println!("-------------------------------");
 }
 
-fn aes_decrypt_array_with_padding_pkcs7_cbc()
+fn aes_decrypt_array_with_padding_pkcs7_pcbc()
 {
-    println!("aes_decrypt_array_with_padding_pkcs7_cbc()");
+    println!("aes_decrypt_array_with_padding_pkcs7_pcbc()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -4014,12 +4014,12 @@ fn aes_decrypt_array_with_padding_pkcs7_cbc()
     println!("-------------------------------");
 }
 
-fn aes_decrypt_array_with_padding_pkcs7_cbc_into_vec()
+fn aes_decrypt_array_with_padding_pkcs7_pcbc_into_vec()
 {
-    println!("aes_decrypt_array_with_padding_pkcs7_cbc_into_vec()");
+    println!("aes_decrypt_array_with_padding_pkcs7_pcbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -4238,12 +4238,12 @@ fn aes_decrypt_array_with_padding_pkcs7_cbc_into_vec()
     println!("-------------------------------");
 }
 
-fn aes_decrypt_array_with_padding_pkcs7_cbc_into_array()
+fn aes_decrypt_array_with_padding_pkcs7_pcbc_into_array()
 {
-    println!("aes_decrypt_array_with_padding_pkcs7_cbc_into_array()");
+    println!("aes_decrypt_array_with_padding_pkcs7_pcbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
@@ -4462,12 +4462,12 @@ fn aes_decrypt_array_with_padding_pkcs7_cbc_into_array()
     println!("-------------------------------");
 }
 
-fn aes_decrypt_array_with_padding_pkcs7_cbc_into_string()
+fn aes_decrypt_array_with_padding_pkcs7_pcbc_into_string()
 {
-    println!("aes_decrypt_array_with_padding_pkcs7_cbc_into_string()");
+    println!("aes_decrypt_array_with_padding_pkcs7_pcbc_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_PKCS7 };
+    use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_PKCS7 };
 
     // Normal case for AES-128
     let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
