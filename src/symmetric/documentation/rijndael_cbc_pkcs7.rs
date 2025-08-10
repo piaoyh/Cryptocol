@@ -141,7 +141,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ AES_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -163,7 +163,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
@@ -354,7 +354,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
@@ -557,7 +557,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
@@ -747,7 +747,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
@@ -931,7 +931,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
@@ -1129,14 +1129,14 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ ARijndael_256_256, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_PKCS7 };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1320,7 +1320,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
@@ -1506,7 +1506,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for ijndael-256-256
@@ -1706,7 +1706,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
@@ -1902,7 +1902,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
@@ -2094,7 +2094,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
@@ -2304,7 +2304,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
@@ -2504,7 +2504,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
@@ -2700,7 +2700,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
@@ -2912,7 +2912,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 67 A0 85 02 82 84 7E 3E 6D 04 DA 31 EB 8D F9 24 ");
+    /// assert_eq!(txt, "6F 4E AB DE A3 9C 7C EA 7D 02 D7 51 22 1E 17 63 5E 41 51 D8 DB 27 21 0E 69 F0 21 49 04 AE B6 F7 D5 BC 1E 2D 1F 77 60 4E 7A 8F 35 C3 6A 57 C1 81 26 97 BB 8A A5 91 49 0B 82 21 76 D8 10 22 07 7C ");
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256

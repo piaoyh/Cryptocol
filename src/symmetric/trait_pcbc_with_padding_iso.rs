@@ -67,7 +67,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -90,7 +90,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.encrypt)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.encrypt)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -140,8 +140,8 @@ pub trait PCBC_ISO<T> : Sized
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - The output should be at least `size_of::<T>()`,
-    ///   and will be only any multiple of `size_of::<T>()`.
+    /// - The output will be at least `size_of::<T>()`,
+    ///   and cannot be other than a multiple of `size_of::<T>()`.
     /// - If this method returns `zero`,
     ///   it means this method failed in encryption.
     /// 
@@ -167,6 +167,38 @@ pub trait PCBC_ISO<T> : Sized
     ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
+    /// 
+    /// # For Rijndael or AES, and its variants
+    /// ## Example 1 for AES-128
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
+    /// 
+    /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
+    /// println!("K =\t{:#016X}", key);
+    /// let mut a_aes = AES_128::new_with_key_u128(key);
+    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
+    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
+    /// 
+    /// let mes = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", mes);
+    /// let mut message = [0_u8; 55];
+    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// let mut cipher = [0_u8; 64];
+    /// a_aes.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 EC 7B 5E 0B F6 7C AB 84 BB DD 0F 27 F4 63 B5 E3 C2 1D 11 06 C2 BF B0 32 24 81 DB FD A4 CE 56 F6 0B 49 DD 7A 22 C9 C8 91 34 F6 0A 3A E7 C1 59 7A ");
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.encrypt)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -242,7 +274,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -265,7 +297,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.encrypt_into_vec)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.encrypt_into_vec)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -339,7 +371,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -362,7 +394,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.encrypt_str)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.encrypt_str)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -434,7 +466,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -457,7 +489,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.encrypt_str_into_vec)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.encrypt_str_into_vec)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -543,7 +575,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -566,7 +598,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.encrypt_str_into_array)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.encrypt_str_into_array)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -645,7 +677,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -738,7 +770,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -761,7 +793,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.encrypt_string_into_vec)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.encrypt_string_into_vec)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -848,7 +880,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -871,7 +903,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.encrypt_string_into_array)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.encrypt_string_into_array)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -951,7 +983,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -975,7 +1007,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.encrypt_vec)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.encrypt_vec)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -1050,7 +1082,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1074,7 +1106,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.encrypt_vec_into_vec)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.encrypt_vec_into_vec)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -1166,7 +1198,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1190,7 +1222,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.encrypt_vec_into_array)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.encrypt_vec_into_array)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -1270,7 +1302,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1295,7 +1327,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.encrypt_array)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.encrypt_array)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -1370,7 +1402,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1395,7 +1427,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.encrypt_array_into_vec)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.encrypt_array_into_vec)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -1486,7 +1518,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1511,7 +1543,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.encrypt_array_into_array)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.encrypt_array_into_array)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -1599,7 +1631,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1640,7 +1672,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.decrypt)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.decrypt)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -1743,7 +1775,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1785,7 +1817,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.decrypt_into_array)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.decrypt_into_array)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -1881,7 +1913,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1922,7 +1954,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.decrypt_into_vec)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.decrypt_into_vec)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -2026,7 +2058,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2056,7 +2088,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.decrypt_into_string)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.decrypt_into_string)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -2147,7 +2179,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2188,7 +2220,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.decrypt_vec)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.decrypt_vec)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -2282,7 +2314,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2323,7 +2355,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.decrypt_vec_into_vec)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.decrypt_vec_into_vec)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -2426,7 +2458,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2467,7 +2499,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.decrypt_vec_into_array)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.decrypt_vec_into_array)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -2563,7 +2595,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2592,7 +2624,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.decrypt_vec_into_string)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.decrypt_vec_into_string)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -2684,7 +2716,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2726,7 +2758,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.decrypt_array)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.decrypt_array)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -2821,7 +2853,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2863,7 +2895,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.decrypt_array_into_vec)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.decrypt_array_into_vec)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -2966,7 +2998,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -3008,7 +3040,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.decrypt_array_into_array)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.decrypt_array_into_array)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case
@@ -3104,7 +3136,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -3134,7 +3166,7 @@ pub trait PCBC_ISO<T> : Sized
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/rijndael_cbc_iso/struct.Rijndael_Generic.html#method.decrypt_array_into_string)
+    /// click [here](./documentation/rijndael_pcbc_iso/struct.Rijndael_Generic.html#method.decrypt_array_into_string)
     /// 
     /// # For DES and its variants
     /// ## Example 1 for Normal case

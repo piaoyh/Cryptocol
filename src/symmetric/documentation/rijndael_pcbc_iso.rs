@@ -87,7 +87,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -113,7 +113,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -142,7 +142,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -171,7 +171,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -200,7 +200,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
     /// 
@@ -279,7 +279,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -305,7 +305,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -334,7 +334,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -363,7 +363,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -394,7 +394,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -483,7 +483,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -509,7 +509,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -538,7 +538,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -567,7 +567,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -598,7 +598,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -674,7 +674,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -700,7 +700,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -729,7 +729,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -758,7 +758,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -789,7 +789,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -859,7 +859,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -885,7 +885,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -914,7 +914,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -943,7 +943,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -974,7 +974,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -1058,7 +1058,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1084,7 +1084,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1113,7 +1113,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1142,7 +1142,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ ARijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1171,7 +1171,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
@@ -1250,7 +1250,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1276,7 +1276,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1305,7 +1305,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1334,7 +1334,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1365,7 +1365,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -1437,7 +1437,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1463,7 +1463,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1492,7 +1492,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1521,7 +1521,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1552,7 +1552,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -1638,7 +1638,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, AES_192, AES_256, Rijndael_256_256, Rijndael_512_512, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1664,7 +1664,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1693,7 +1693,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1722,7 +1722,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1753,7 +1753,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -1832,7 +1832,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -1859,7 +1859,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1889,7 +1889,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1919,7 +1919,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -1951,7 +1951,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -2025,7 +2025,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2052,7 +2052,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2082,7 +2082,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2112,7 +2112,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2144,7 +2144,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -2235,7 +2235,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2262,7 +2262,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2292,7 +2292,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// // Normal case for AES-
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
@@ -2323,7 +2323,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2355,7 +2355,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -2434,7 +2434,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2462,7 +2462,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2493,7 +2493,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2524,7 +2524,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2557,7 +2557,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -2631,7 +2631,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2659,7 +2659,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2690,7 +2690,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2721,7 +2721,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2754,7 +2754,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -2844,7 +2844,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -2872,7 +2872,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2903,7 +2903,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2934,7 +2934,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -2967,7 +2967,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -3055,7 +3055,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -3099,7 +3099,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3146,7 +3146,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3193,7 +3193,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3242,7 +3242,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -3340,7 +3340,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -3384,7 +3384,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3431,7 +3431,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3479,7 +3479,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3528,7 +3528,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -3635,7 +3635,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -3680,7 +3680,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3729,7 +3729,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3777,7 +3777,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3826,7 +3826,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -3928,7 +3928,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -3960,7 +3960,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -3995,7 +3995,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4030,7 +4030,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4067,7 +4067,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -4157,7 +4157,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -4201,7 +4201,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4248,7 +4248,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4295,7 +4295,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4344,7 +4344,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -4437,7 +4437,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -4481,7 +4481,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4528,7 +4528,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4575,7 +4575,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4624,7 +4624,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -4726,7 +4726,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -4770,7 +4770,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4817,7 +4817,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4864,7 +4864,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -4913,7 +4913,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -5008,7 +5008,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -5040,7 +5040,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5075,7 +5075,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5110,7 +5110,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5147,7 +5147,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -5238,7 +5238,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -5282,7 +5282,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5329,7 +5329,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5376,7 +5376,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5425,7 +5425,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -5517,7 +5517,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -5561,7 +5561,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5608,7 +5608,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5655,7 +5655,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5704,7 +5704,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -5805,7 +5805,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -5849,7 +5849,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5896,7 +5896,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5943,7 +5943,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -5992,7 +5992,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
@@ -6086,7 +6086,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_128, PCBC_ISO };
     /// 
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
@@ -6118,7 +6118,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_192, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_192, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -6153,7 +6153,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ AES_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -6188,7 +6188,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ Rijndael_256_256, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_256_256, PCBC_ISO };
     /// 
     /// let key = [0x12_u8, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
     /// print!("K =\t");
@@ -6225,7 +6225,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// use std::fmt::Write as _;
     /// use cryptocol::number::SharedArrays;
     /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::symmetric::{ Rijndael_512_512, CBC_ISO };
+    /// use cryptocol::symmetric::{ Rijndael_512_512, PCBC_ISO };
     /// 
     /// let mut sha3 = SHA3_512::new();
     /// sha3.absorb_str("Post-quantum");
