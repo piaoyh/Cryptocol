@@ -17,10 +17,11 @@
 use std::vec::Vec;
 use crate::number::{ SmallUInt, LongUnion };
 
-/// des.rs was too big because of documentation and plenty of examples
+/// traits_ecb_with_padding_iso.rs was too big because of documentation and
+/// plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
-/// examples were moved to des_basic.rs. And, most of generic parameters
+/// examples were moved to des_ecb_iso.rs. And, most of generic parameters
 /// are omitted. It is not actual code but dummy code for compilation!!!
 #[allow(non_camel_case_types)]
 pub struct DES_Generic<const ROUND: usize = 16>
@@ -33,47 +34,46 @@ pub struct DES_Generic<const ROUND: usize = 16>
     dec: fn (s: &mut Self, cipher: u64) -> u64,
 }
 
-/// des.rs was too big because of documentation and plenty of examples
+/// traits_ecb_with_padding_iso.rs was too big because of documentation and
+/// plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
-/// examples were moved to des_basic.rs. And, most of generic parameters
+/// examples were moved to des_ecb_iso.rs. And, most of generic parameters
 /// are omitted. It is not actual code but dummy code for compilation!!!
 impl <const ROUND: usize> DES_Generic<ROUND>
 {
-    // fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
+    // fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
     /// Encrypts the data with the padding defined according to ISO 7816-4
     /// in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
-    /// - `message` is a pointer to u8 which is `*const u8`,
-    ///   and is the plaintext to be encrypted.
+    /// - `message` is an immutable pointer to `u8` which is `*const u8`,
+    ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
     ///   and is the length of the plaintext `message` in bytes.
-    /// - `cipher` is a pointer to u8 which is `*mut u8`,
-    ///   and is the ciphertext to be stored.
-    /// - The size of the memory area which starts at `cipher` and the
-    ///   ciphertext will be stored at is assumed to be enough.
-    /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
-    ///   So, it is responsible for you to prepare the `cipher` area big enough!
+    /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption,
+    ///   this method returns `zero`.
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as
-    ///   encrypt_*_into_*().
+    ///   Instead, use other safer methods such as `encrypt_*_into_*()`.
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - If `length_in_bytes` is `0`, it means the message is null string.
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
+    /// - The size of the memory area which starts at `cipher` is assumed to be
+    ///   enough to store the ciphertext.
+    /// - The size of the area for ciphertext should be prepared to be
+    ///   (`length_in_bytes` + `1`).next_multiple_of(`8`) at least.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -295,25 +295,28 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `message` is a pointer to u8 which is `*const u8`,
-    ///   and is the plaintext to be encrypted.
+    /// - `message` is an immutable pointer to `u8` which is `*const u8`,
+    ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
     ///   and is the length of the plaintext `message` in bytes.
-    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be stored.
+    /// - `cipher` is a mutable reference to `Vec<U>` object, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption,
+    ///   this method returns `zero`.
     /// 
     /// # Features
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as encrypt_*_into_vec().
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - If `length_in_bytes` is `0`, it means the message is null string.
+    /// - If `length_in_bytes` is `0`, it means the message is a null string.
     ///   So, only padding bytes will be encrypted,
-    ///   and stored in the `Vec<U>` object `cipher`.
+    ///   and stored in the `Vec<U>` object which is referred to as `cipher`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -538,38 +541,42 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `message` is a pointer to u8 which is `*const u8`,
-    ///   and is the plaintext to be encrypted.
+    /// - `message` is an immutable pointer to `u8` which is `*const u8`,
+    ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
     ///   and is the length of the plaintext `message` in bytes.
-    /// - `cipher` is an array `[U; N]` object,
-    ///   and is the ciphertext to be stored.
+    /// - `cipher` is a mutable reference to an array `[U; N]` object, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption, this method returns `zero`.
     /// 
     /// # Features
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as encrypt_*_into_array().
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - If `length_in_bytes` is `0`, it means the message is null data.
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the array `[U; N]` object `cipher`.
-    /// - If `U::size_in_bytes() * N` is less than `length_in_bytes`'s next
-    ///   multiple of 8, this method does not perform encryption and returns
-    ///   `zero`.
-    /// - If `U::size_in_bytes() * N` is equal to `length_in_bytes`'s next
-    ///   multiple of 8, this method performs encryption, fills the array
-    ///   `cipher` with the encrypted ciphertext, and returns the size of the
-    ///   ciphertext including padding bits in bytes.
-    /// - If `U::size_in_bytes() * N` is greater than `length_in_bytes`'s next
-    ///   multiple of 8, this method performs encryption, fills the array
-    ///   `cipher` with the encrypted ciphertext, and then fills the rest of the
-    ///   elements of the array `cipher` with zeros, and returns the size of the
-    ///   ciphertext including padding bits in bytes.
+    /// - If `U::size_in_bytes()` * `N` is less than `length_in_bytes`'s next
+    ///   multiple of `8`, this method does not perform
+    ///   encryption but returns `zero`.
+    /// - If `U::size_in_bytes()` * `N` is equal to `length_in_bytes`'s next
+    ///   multiple of `8`, this method performs encryption,
+    ///   fills the array `cipher` with the encrypted data, and returns
+    ///   the size of the ciphertext including padding bits in bytes.
+    /// - If `U::size_in_bytes()` * `N` is greater than `length_in_bytes`'s next
+    ///   multiple of `8`, this method performs encryption, fills
+    ///   the array `cipher` with the encrypted data, and then fills the
+    ///   rest of the elements of the array `cipher` with zeros, and returns
+    ///   the size of the ciphertext including padding bits in bytes.
+    /// - The size of the area for ciphertext should be prepared to be
+    ///   (`length_in_bytes` + `1`).next_multiple_of(`8`) at least.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -787,27 +794,21 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     }
 
     // fn encrypt_str(&mut self, message: &str, cipher: *mut u8) -> u64
-    /// Encrypts the data in `str` with the padding defined
+    /// Encrypts the data in a `str` object with the padding defined
     /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
-    /// - `message` is a `str` object, and is the plaintext to be encrypted.
-    /// - `cipher` is a pointer to u8 which is `*mut u8`,
-    ///   and is the ciphertext to be stored.
-    /// - The size of the memory area which starts at `cipher` and the
-    ///   ciphertext will be stored at is assumed to be enough.
-    /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
-    ///   So, it is responsible for you to prepare the `cipher` area big enough!
+    /// - `message` is an immutable reference to `str` object which is `&str`,
+    ///   and is the place where the plaintext to be encrypted is stored.
+    /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption, this method returns `zero`.
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
@@ -815,6 +816,11 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - If `message` is a null string "", only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
+    /// - The size of the memory area which starts at `cipher` is assumed to be
+    ///   enough to store the ciphertext.
+    /// - The size of the area for ciphertext should be prepared to be
+    ///   (`message.len()` + `1`).next_multiple_of(`8`) at least.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -1031,25 +1037,26 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     }
 
     // fn encrypt_str_into_vec<U>(&mut self, message: &str, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data in `str` with the padding defined according to ISO 7816-4
-    /// in ECB (Electronic CodeBook) mode, and stores the encrypted data
-    /// in `Vec<U>`.
+    /// Encrypts the data in `str` with the padding defined according to
+    /// ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the
+    /// encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `message` is a `str` object, and is the plaintext to be encrypted.
-    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be stored.
+    /// - `message` is an immutable reference to `str` object which is `&str`,
+    ///   and is the place where the plaintext to be encrypted is stored.
+    /// - `cipher` is a mutable reference to `Vec<U>` object, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption, this method returns `zero`.
     /// 
     /// # Features
     /// - If `message` is a null string "", only padding bytes will be encrypted,
-    ///   and stored in the `Vec<U>` object `cipher`.
+    ///   and stored in the `Vec<U>` object which is referred to as `cipher`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -1269,38 +1276,41 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     }
 
     // fn encrypt_str_into_array<U, const N: usize>(&mut self, message: &str, cipher: &mut [U; N]) -> u64
-    /// Encrypts the data in `str` with the padding defined according to ISO 7816-4
-    /// in ECB (Electronic CodeBook) mode, and stores the encrypted data
-    /// in array `[U; N]`.
+    /// Encrypts the data in a `str` object with the padding defined
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode,
+    /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `message` is a `str` object, and is the plaintext to be encrypted.
-    /// - `cipher` is an array `[U; N]` object,
-    ///   and is the ciphertext to be stored.
+    /// - `message` is an immutable reference to `str` object which is `&str`,
+    ///   and is the place where the plaintext to be encrypted is stored.
+    /// - `cipher` is a mutable reference to an array `[U; N]` object, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption, this method returns `zero`.
     /// 
     /// # Features
-    /// - If `message` is a null string "", only padding bytes will be
-    ///   encrypted, and stored in the array `[U; N]` object `cipher`.
-    /// - If `U::size_in_bytes() * N` is less than `message.len()`'s next
-    ///   multiple of 8,
-    ///   this method does not perform encryption and returns `zero`.
-    /// - If `U::size_in_bytes() * N` is equal to `message.len()`'s next
-    ///   multiple of 8, this method performs encryption, fills the array
-    ///   `cipher` with the encrypted ciphertext, and returns the size of
-    ///   the ciphertext including padding bits in bytes.
-    /// - If `U::size_in_bytes() * N` is greater than `message.len()`'s next
-    ///   multiple of 8, this method performs encryption, fills the array
-    ///   `cipher` with the encrypted ciphertext, and then fills the rest of
-    ///   the elements of the array `cipher` with zeros, and returns the size
-    ///   of the ciphertext including padding bits in bytes.
+    /// - If `message` is a null string "", only padding bytes will be encrypted,
+    ///   and stored in the array `[U; N]` object `cipher`.
+    /// - If `U::size_in_bytes()` * `N` is less than `message.len()`'s next
+    ///   multiple of `8`, this method does not perform
+    ///   encryption but returns `zero`.
+    /// - If `U::size_in_bytes()` * `N` is equal to `message.len()`'s next
+    ///   multiple of `8`, this method performs encryption,
+    ///   fills the array `cipher` with the encrypted data, and returns
+    ///   the size of the ciphertext including padding bits in bytes.
+    /// - If `U::size_in_bytes()` * `N` is greater than `message.len()`'s next
+    ///   multiple of `8`, this method performs encryption, fills
+    ///   the array `cipher` with the encrypted data, and then fills the
+    ///   rest of the elements of the array `cipher` with zeros, and returns
+    ///   the size of the ciphertext including padding bits in bytes.
+    /// - The size of the area for ciphertext should be prepared to be
+    ///   (`message.len()` + `1`).next_multiple_of(`8`) at least.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -1518,35 +1528,34 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     }
 
     // fn encrypt_string(&mut self, message: &String, cipher: *mut u8) -> u64
-    /// Encrypts the data stored in a String object with the padding according
-    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode.
+    /// Encrypts the data stored in a `String` object with the padding
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
-    /// - `message` is a String object, and is the plaintext to be encrypted.
-    /// - `cipher` is a pointer to u8 which is `*mut u8`,
-    ///   and is the ciphertext to be stored.
-    /// - The size of the memory area which starts at `cipher` and the
-    ///   ciphertext will be stored at is assumed to be enough.
-    /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
-    ///   So, it is responsible for you to prepare the `cipher` area big enough!
+    /// - `message` is an immutable reference to `String` object, and
+    ///   is the place where the plaintext to be encrypted is stored.
+    /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption, this method returns `zero`.
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as
-    ///   encrypt_string_into_*().
+    ///   Instead, use other safer methods such as encrypt_string_into_*().
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - If `message` is a null string String::new(), only padding bytes will
-    ///   be encrypted, and stored in the memory area that starts from `cipher`.
+    /// - If `message` is a `String` object that has a null string "", only
+    ///   padding bytes will be encrypted, and stored in the memory area that
+    ///   starts from `cipher`.
+    /// - The size of the memory area which starts at `cipher` is assumed to be
+    ///   enough to store the ciphertext.
+    /// - The size of the area for ciphertext should be prepared to be
+    ///   (`message.len()` + `1`).next_multiple_of(`8`) at least.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -1764,25 +1773,27 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     }
 
     // fn encrypt_string_into_vec<U>(&mut self, message: &String, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data stored in a String object with the padding according
-    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the encrypted
-    /// data in `Vec<U>`.
+    /// Encrypts the data stored in a `String` object with the padding
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode,
+    /// and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `message` is a String object, and is the plaintext to be encrypted.
-    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be stored.
+    /// - `message` is an immutable reference to `String` object, and
+    ///   is the place where the plaintext to be encrypted is stored.
+    /// - `cipher` is a mutable reference to `Vec<U>` object, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption, this method returns `zero`.
     /// 
     /// # Features
-    /// - If `message` is a null string String::new(), only padding bytes will
-    ///   be encrypted, and stored in the `Vec<U>` object `cipher`.
+    /// - If `message` is a `String` object that has a null string "", only
+    ///   padding bytes will be encrypted, and stored in the `Vec<U>` object
+    ///   which is referred to as `cipher`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -2002,38 +2013,42 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     }
 
     // fn encrypt_string_into_array<U, const N: usize>(&mut self, message: &String, cipher: &mut [U; N]) -> u64
-    /// Encrypts the data stored in a String object with the padding according
-    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the encrypted
-    /// data in array `[U; N]`.
+    /// Encrypts the data stored in a `String` object with the padding
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode,
+    /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `message` is a String object, and is the plaintext to be encrypted.
-    /// - `cipher` is an array `[U; N]` object,
-    ///   and is the ciphertext to be stored.
+    /// - `message` is an immutable reference to `String` object, and
+    ///   is the place where the plaintext to be encrypted is stored.
+    /// - `cipher` is a mutable reference to an array `[U; N]` object, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption, this method returns `zero`.
     /// 
     /// # Features
-    /// - If `message` is a null string String::new(), only padding bytes will
-    ///   be encrypted, and stored in the array `[U; N]` object `cipher`.
-    /// - If `U::size_in_bytes() * N` is less than `message.len()`'s next
-    ///   multiple of 8,
-    ///   this method does not perform encryption and returns `zero`.
-    /// - If `U::size_in_bytes() * N` is equal to `message.len()`'s next
-    ///   multiple of 8, this method performs encryption, fills the array
-    ///   `cipher` with the encrypted ciphertext, and returns the size of
-    ///   the ciphertext including padding bits in bytes.
-    /// - If `U::size_in_bytes() * N` is greater than `message.len()`'s next
-    ///   multiple of 8, this method performs encryption, fills the array
-    ///   `cipher` with the encrypted ciphertext, and then fills the rest of
-    ///   the elements of the array `cipher` with zeros, and returns the size
-    ///   of the ciphertext including padding bits in bytes.
+    /// - If `message` is a `String` object that has a null string "", only
+    ///   padding bytes will be encrypted, and stored in the array `[U; N]`
+    ///   object `cipher`.
+    /// - If `size_of::<U>()` * `N` is less than `message.len()`'s next
+    ///   multiple of `8`, this method does not perform
+    ///   encryption but returns `zero`.
+    /// - If `size_of::<U>()` * `N` is equal to `message.len()`'s next
+    ///   multiple of `8`, this method performs encryption,
+    ///   fills the array `cipher` with the encrypted data, and returns
+    ///   the size of the ciphertext including padding bits in bytes.
+    /// - If `size_of::<U>()` * `N` is greater than `message.len()`'s next
+    ///   multiple of `8`, this method performs encryption, fills
+    ///   the array `cipher` with the encrypted data, and then fills the
+    ///   rest of the elements of the array `cipher` with zeros, and returns
+    ///   the size of the ciphertext including padding bits in bytes.
+    /// - The size of the area for ciphertext should be prepared to be
+    ///   (`message.len()` + `1`).next_multiple_of(`8`) at least.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -2256,32 +2271,31 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
-    /// - `message` is a `Vec<U>` object, and is the plaintext to be encrypted.
-    /// - `cipher` is a pointer to u8 which is `*mut u8`,
-    ///   and is the ciphertext to be stored.
-    /// - The size of the memory area which starts at `cipher` and the
-    ///   ciphertext will be stored at is assumed to be enough.
-    /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
-    ///   So, it is responsible for you to prepare the `cipher` area big enough!
+    /// - `message` is an immutable reference to `Vec<U>` object, and
+    ///   is the place where the plaintext to be encrypted is stored.
+    /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption, this method returns `zero`.
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as
-    ///   encrypt_vec_into_*().
+    ///   Instead, use other safer methods such as encrypt_vec_into_*().
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
-    ///   bytes will be encrypted, and stored in the memory area that starts
-    ///   from `cipher`.
+    /// - The size of the memory area which starts at `cipher` is assumed to be
+    ///   enough to store the ciphertext.
+    /// - The size of the area for ciphertext should be prepared to be
+    ///   (`size_of::<U>()` * `message.len()` + `1`).next_multiple_of(`8`)
+    ///   at least.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
+    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only
+    ///   padding bytes will be encrypted, and stored in the memory area that
+    ///   starts from `cipher`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -2507,25 +2521,27 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     }
 
     // fn encrypt_vec_into_vec<U, V>(&mut self, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
-    /// Encrypts the data stored in a `Vec<U>` object with the padding according
-    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the encrypted
-    /// data in `Vec<V>`.
+    /// Encrypts the data stored in a `Vec<U>` object with the padding defined
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode, and
+    /// stores the encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `message` is a `Vec<U>` object, and is the plaintext to be encrypted.
-    /// - `cipher` is a `Vec<V>` object, and is the ciphertext to be stored.
+    /// - `message` is an immutable reference to `Vec<U>` object, and
+    ///   is the place where the plaintext to be encrypted is stored.
+    /// - `cipher` is a mutable reference to `Vec<U>` object, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption, this method returns `zero`.
     /// 
     /// # Features
-    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
-    ///   bytes will be encrypted, and stored in the `Vec<V>` object `cipher`.
+    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only
+    ///   padding bytes will be encrypted, and stored in the `Vec<U>` object
+    ///   which is referred to as `cipher`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -2754,45 +2770,50 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     }
 
     // fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, message: &Vec<U>, cipher: &mut [V; N]) -> u64
-    /// Encrypts the data stored in a `Vec<U>` object with the padding according
-    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the encrypted
-    /// data in array `[V; N]`.
+    /// Encrypts the data stored in a `Vec<U>` object with the padding defined
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode, and
+    /// stores the encrypted data in array `[V; N]`.
     /// 
     /// # Arguments
-    /// - `message` is a `Vec<U>` object, and is the plaintext to be encrypted.
-    /// - `cipher` is an array `[V; N]` object,
-    ///   and is the ciphertext to be stored.
+    /// - `message` is an immutable reference to `Vec<U>` object, and
+    ///   is the place where the plaintext to be encrypted is stored.
+    /// - `cipher` is a mutable reference to an array `[U; N]` object, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption, this method returns `zero`.
     /// 
     /// # Features
-    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only padding
-    ///   bytes will be encrypted, and stored in the array `[V; N]` object
-    ///   `cipher`.
-    /// - If `V::size_in_bytes() * N` is less than 
-    ///   `U::size_in_bytes() * message.len()`'s next multiple of 8,
-    ///   this method does not perform encryption and returns `zero`.
-    /// - If `V::size_in_bytes() * N` is equal to
-    ///   `U::size_in_bytes() * message.len()`'s next multiple of 8, this method
-    ///   performs encryption, fills the array `cipher` with the encrypted
-    ///   ciphertext, and returns the size of the ciphertext including padding
-    ///   bits in bytes.
-    /// - If `V::size_in_bytes() * N` is greater than
-    ///   `U::size_in_bytes() * message.len()`'s next multiple of 8, this method
-    ///   performs encryption, fills the array `cipher` with the encrypted
-    ///   ciphertext, and then fills the rest of the elements of the array
+    /// - If `message` is an empty `Vec<U>` object `Vec::<U>::new()`, only
+    ///   padding bytes will be encrypted, and stored in the array `[U; N]`
+    ///   object `cipher`.
+    /// - If `size_of::<V>()` * `N` is less than 
+    ///   `size_of::<U>() * message.len()`'s next multiple of
+    ///   `8`, this method does not perform
+    ///   encryption but returns `zero`.
+    /// - If `size_of::<V>()` * `N` is equal to
+    ///   `size_of::<U>() * message.len()`'s next multiple of
+    ///   `8`, this method performs encryption,
+    ///   fills the array `cipher` with the encrypted data, and returns
+    ///   the size of the ciphertext including padding bits in bytes.
+    /// - If `size_of::<V>()` * `N` is greater than
+    ///   `size_of::<U>() * message.len()`'s next multiple of `8`,
+    ///   this method performs encryption, fills the array `cipher` with the
+    ///   encrypted data, and then fills the rest of the elements of the array
     ///   `cipher` with zeros, and returns the size of the ciphertext including
     ///   padding bits in bytes.
+    /// - The size of the area for ciphertext should be prepared to be
+    ///   (`size_of::<U>()` * `message.len()` + `1`).next_multiple_of(`8`)
+    ///   at least.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to PKCS#7,
+    /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # Example 1 for Normal case
@@ -3018,33 +3039,30 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// defined according to ISO 7816-4 in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
-    /// - `message` is the data stored in an array `[U; N]` object,
-    ///   and is the plaintext to be encrypted.
-    /// - `cipher` is a pointer to u8 which is `*mut u8`,
-    ///   and is the ciphertext to be stored.
-    /// - The size of the memory area which starts at `cipher` and the
-    ///   ciphertext will be stored at is assumed to be enough.
-    /// - The size of the area for ciphertext should be prepared to be:
-    ///   (`length_in_bytes` + 1).next_multiple_of(8) at least when `T` is `u64`, and
-    ///   (`length_in_bytes` + 1).next_multiple_of(16) at least when `T` is `u128`.
-    ///   So, it is responsible for you to prepare the `cipher` area big enough!
+    /// - `message` is an immutable reference to an array `[U; N]` object, and
+    ///   is the place where the plaintext to be encrypted is stored.
+    /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption, this method returns `zero`.
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as
-    ///   encrypt_array_into_*().
+    ///   Instead, use other safer methods such as encrypt_vec_into_*().
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - If `message.len()` is `0`, it means the message is empty data.
-    ///   So, only padding bytes will be encrypted,
-    ///   and stored in the memory area that starts from `cipher`.
+    /// - The size of the memory area which starts at `cipher` is assumed to be
+    ///   enough to store the ciphertext.
+    /// - The size of the area for ciphertext should be prepared to be
+    ///   (`size_of::<U>()` * `N` + `1`).next_multiple_of(`8`)
+    ///   at least.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
+    /// - If `message` is an empty array `[U; 0]` object, only padding bytes
+    ///   will be encrypted, and stored in the memory area that starts from `cipher`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -3283,21 +3301,21 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `message` is an array `[U; N]` object, and is the plaintext to be
-    ///   encrypted.
-    /// - `cipher` is a `Vec<V>` object, and is the ciphertext to be stored.
+    /// - `message` is an immutable reference to an array `[U; N]` object, and
+    ///   is the place where the plaintext to be encrypted is stored.
+    /// - `cipher` is a mutable reference to `Vec<U>` object, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption, this method returns `zero`.
     /// 
     /// # Features
-    /// - If `message` is an empty array `[U; N]` object [U; 0], only padding
-    ///   bytes will be encrypted, and stored in the `Vec<U>` object `cipher`.
+    /// - If `message` is an empty array `[U; 0]` object, only padding bytes
+    ///   will be encrypted, and stored in the `Vec<U>` object `cipher`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -3539,41 +3557,43 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// encrypted data in array `[V; M]`.
     /// 
     /// # Arguments
-    /// - `message` is an array `[U; N]` object,
-    ///   and is the plaintext to be encrypted.
-    /// - `cipher` is an array `[V; M]` object,
-    ///   and is the ciphertext to be stored.
+    /// - `message` is an immutable reference to an array `[U; N]` object, and
+    ///   is the place where the plaintext to be encrypted is stored.
+    /// - `cipher` is a mutable reference to an array `[U; N]` object, and
+    ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of ciphertext including padding bits
     ///   in bytes.
-    /// - When `T` is `u64`, the output should be at least `8`,
-    ///   and will be only any multiple of `8`.
-    /// - If this method returns `zero`,
-    ///   it means this method failed in encryption.
+    /// - The output will be at least `8`,
+    ///   and cannot be other than a multiple of `8`.
+    /// - If this method failed in encryption, this method returns `zero`.
     /// 
     /// # Features
-    /// - If `message` is an empty array `[U; N]` object [U; 0],
-    ///   only padding bytes will be encrypted,
-    ///   and stored in the array `[V; M]` object `cipher`.
-    /// - If `V::size_in_bytes() * M` is less than 
-    ///   `U::size_in_bytes() * N`'s next multiple of 8,
+    /// - If `message` is an empty array `[U; 0]` object, only padding bytes
+    ///   will be encrypted, and stored in the array `[V; M]` object `cipher`.
+    /// - If `V::size_in_bytes()` * `M` is less than 
+    ///   `U::size_in_bytes()` * `N`'s next multiple of `8`,
     ///   this method does not perform encryption and returns `zero`.
-    /// - If `V::size_in_bytes() * M` is equal to
-    ///   `U::size_in_bytes() * N`'s next multiple of 8, this method
-    ///   performs encryption, fills the array `cipher` with the encrypted
-    ///   ciphertext, and returns the size of the ciphertext including padding
-    ///   bits in bytes.
-    /// - If `V::size_in_bytes() * M` is greater than
-    ///   `U::size_in_bytes() * N`'s next multiple of 8, this method performs
-    ///   encryption, fills the array `cipher` with the encrypted ciphertext,
-    ///   and then fills the rest of the elements of the array `cipher`
-    ///   with zeros, and returns the size of the ciphertext including
+    /// - If `V::size_in_bytes()` * `M` is equal to
+    ///   `U::size_in_bytes()` * `N`'s next multiple of `8`,
+    ///   this method performs encryption, fills the array `cipher` with the
+    ///   encrypted ciphertext, and returns the size of the ciphertext including
     ///   padding bits in bytes.
+    /// - If `V::size_in_bytes()` * `M` is greater than
+    ///   `U::size_in_bytes()` * `N`'s next multiple of `8`,
+    ///   this method performs encryption, fills the array `cipher` with the
+    ///   encrypted ciphertext, and then fills the rest of the elements of the
+    ///   array `cipher` with zeros, and returns the size of the ciphertext
+    ///   including padding bits in bytes.
+    /// - The size of the area for ciphertext should be prepared to be
+    ///   (`size_of::<U>()` * `message.len()` + `1`).next_multiple_of(`8`)
+    ///   at least.
+    ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
-    /// - For more information about the padding bits according to PKCS#7,
+    /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// 
     /// # Example 1 for Normal case
@@ -3806,36 +3826,38 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
-    /// - `cipher` is a pointer to u8 which is `*const u8`,
-    ///   and is the ciphertext to be decrypted.
+    /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
+    ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
     ///   and is the length of the ciphertext `cipher` in bytes.
-    /// - `message` is a pointer to u8 which is `*mut u8`,
-    ///   and is the plaintext to be stored.
-    /// - The size of the memory area which starts at `message` and the
-    ///   plaintext will be stored at is assumed to be enough.
-    /// - The size of the area for plaintext should be prepared to be:
-    ///   `length_in_bytes` - 1.
-    ///   So, it is responsible for you to prepare the `message` area big enough!
+    /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
+    ///   is the place where the decrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of plaintext in bytes.
-    /// - If this method returns `zero`, and `length_in_bytes` is greater than
-    ///   `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means that this method failed in decryption.
-    /// - If this method returns `zero`, and `length_in_bytes` is `8` for `T` =
-    ///   `u64` or `16` for `T` = `u128`, it means either that this method
-    ///   failed in decryption or that the original plaintext is empty data.
-    ///   Then, you will have to check whether or not it failed by the method
+    /// - If this method failed in decryption, it always returns `zero`.
+    /// - Even if this method succeeded in decryption, it returns `zero` when
+    ///   the original plaintext is zero-length empty data. Then, you will have
+    ///   to check whether or not it failed by using the method
     ///   `is_successful()` or `is_failed()`.
+    /// - If `length_in_bytes` is greater than `8` (which means
+    ///   that the original plaintext is surely not empty data) and it returns
+    ///   `zero`, you can interpret it that this method surely failed in
+    ///   decryption.
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as
-    ///   decrypt_*_into_*().
+    ///   Instead, use other safer methods such as `decrypt_*_into_*()`.
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
-    /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
+    /// - `length_in_bytes` cannot be other than any multiple of `8`.
+    /// - The size of the memory area which starts at `message` is assumed to
+    ///   be enough to store the plaintext. So, it is responsible for you to
+    ///   prepare the `message` area big enough!
+    /// - The size of the area for plaintext does not have to be prepared more
+    ///   than `length_in_bytes` - `1`.
+    /// - If the size of the area for plaintext is prepared more than
+    ///   `length_in_bytes` - `1`, the rest of the area will be filled with
+    ///   `0`s.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -4223,27 +4245,30 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `cipher` is a pointer to u8 which is `*const u8`,
-    ///   and is the ciphertext to be decrypted.
+    /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
+    ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
     ///   and is the length of the ciphertext `cipher` in bytes.
-    /// - `message` is a `Vec<U>` object, and is the plaintext to be stored.
+    /// - `message` is a mutable reference to `Vec<U>` object, and
+    ///   is the place where the decrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of plaintext in bytes.
-    /// - If this method returns `zero`, and `length_in_bytes` is greater than
-    ///   `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means that this method failed in decryption.
-    /// - If this method returns `zero`, and `length_in_bytes` is `8` for `T` =
-    ///   `u64` or `16` for `T` = `u128`, it means either that this method
-    ///   failed in decryption or that the original plaintext is empty data.
-    ///   Then, you will have to check whether or not it failed by the method
+    /// - If this method failed in decryption, it always returns `zero`.
+    /// - Even if this method succeeded in decryption, it returns `zero` when
+    ///   the original plaintext is zero-length empty data. Then, you will have
+    ///   to check whether or not it failed by using the method
     ///   `is_successful()` or `is_failed()`.
+    /// - If `length_in_bytes` is greater than `8` (which means
+    ///   that the original plaintext is surely not empty data) and it returns
+    ///   `zero`, you can interpret it that this method surely failed in
+    ///   decryption.
     /// 
     /// # Features
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as decrypt_*_into_vec().
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
-    /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
+    /// - `length_in_bytes` cannot be other than any multiple of `8`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -4624,39 +4649,44 @@ impl <const ROUND: usize> DES_Generic<ROUND>
 
     // fn decrypt_into_array<U, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     /// Decrypts the data with the padding defined according to ISO 7816-4
-    /// in ECB (Electronic CodeBook) mode, and stores the encrypted data
+    /// in ECB (Electronic CodeBook) mode, and stores the decrypted data
     /// in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `cipher` is a pointer to u8 which is `*const u8`,
-    ///   and is the ciphertext to be encrypted.
+    /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
+    ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
-    ///   and is the length of the ciphertext `message` in bytes.
-    /// - `message` is an array `[U; N]` object,
-    ///   and is the plaintext to be stored.
+    ///   and is the length of the ciphertext `cipher` in bytes.
+    /// - `message` is a mutable reference to an array `[U; N]` object, and
+    ///   is the place where the decrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of plaintext in bytes.
-    /// - If this method returns `zero`, and `length_in_bytes` is greater than
-    ///   `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means that this method failed in decryption.
-    /// - If this method returns `zero`, and `length_in_bytes` is `8` for `T` =
-    ///   `u64` or `16` for `T` = `u128`, it means either that this method
-    ///   failed in decryption or that the original plaintext is empty data.
-    ///   Then, you will have to check whether or not it failed by the method
+    /// - If this method failed in decryption, it always returns `zero`.
+    /// - Even if this method succeeded in decryption, it returns `zero` when
+    ///   the original plaintext is zero-length empty data. Then, you will have
+    ///   to check whether or not it failed by using the method
     ///   `is_successful()` or `is_failed()`.
+    /// - If `length_in_bytes` is greater than `8` (which means
+    ///   that the original plaintext is surely not empty data) and it returns
+    ///   `zero`, you can interpret it that this method surely failed in
+    ///   decryption.
     /// 
     /// # Features
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as decrypt_*_into_array().
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
-    /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
-    /// - If `U::size_in_bytes() * N` is less than `length_in_bytes` - 1,
-    ///   this method does not perform decryption and returns `zero`.
-    /// - If `U::size_in_bytes() * N` is greater than or equal to
-    ///   `length_in_bytes` - 1, this method performs decryption, fills the
-    ///   array `message` with the derypted plaintext, and then fills the rest
-    ///   of the elements of the array `message` with zeros if any, and returns
-    ///   the size of the plaintext.
+    /// - `length_in_bytes` cannot be other than any multiple of `8`.
+    /// - If `U::size_in_bytes()` * `N` is less than `length_in_bytes` - `1`,
+    ///   this method does not perform decryption but returns `zero`.
+    /// - If `U::size_in_bytes()` * `N` is equal to or greater than
+    ///   `length_in_bytes` - `1`, this method performs decryption, fills the
+    ///   array `message` with the decrypted data, and then fills the rest of
+    ///   the elements of the array `message` with zeros, and returns the size
+    ///   of the plaintext.
+    /// - It is responsible for you to prepare the `message` area big enough!
+    /// - The size of the area for plaintext does not have to be prepared more
+    ///   than `length_in_bytes` - `1`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -5042,37 +5072,40 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     // fn decrypt_into_string(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
     /// Decrypts the data with the padding defined according to ISO 7816-4
     /// in ECB (Electronic CodeBook) mode, and stores the decrypted data
-    /// in String object.
+    /// in a `String`.
     /// 
     /// # Arguments
-    /// - `cipher` is a pointer to u8 which is `*const u8`,
-    ///   and is the ciphertext to be decrypted.
+    /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
+    ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
     ///   and is the length of the ciphertext `cipher` in bytes.
-    /// - `message` is a String object, and is the plaintext to be stored.
+    /// - `message` is a mutable reference to a `String` object, and
+    ///   is the place where the decrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of plaintext in bytes.
-    /// - If this method returns `zero`, and `length_in_bytes` is greater than
-    ///   `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means that this method failed in decryption.
-    /// - If this method returns `zero`, and `length_in_bytes` is `8` for `T` =
-    ///   `u64` or `16` for `T` = `u128`, it means either that this method
-    ///   failed in decryption or that the original plaintext is empty String.
-    ///   Then, you will have to check whether or not it failed by the method
+    /// - If this method failed in decryption, it always returns `zero`.
+    /// - Even if this method succeeded in decryption, it returns `zero` when
+    ///   the original plaintext is zero-length empty data. Then, you will have
+    ///   to check whether or not it failed by using the method
     ///   `is_successful()` or `is_failed()`.
+    /// - If `length_in_bytes` is greater than `8` (which means
+    ///   that the original plaintext is surely not empty data) and it returns
+    ///   `zero`, you can interpret it that this method surely failed in
+    ///   decryption.
     /// 
     /// # Features
+    /// - You are not encouraged to use this method in pure Rust programming.
+    ///   Instead, use other safer methods such as decrypt_*_into_string().
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - When `T` is `u64`, `length_in_bytes` can be only any multiple of `8`.
-    /// - When `T` is `u128`, `length_in_bytes` can be only any multiple of `16`.
+    /// - `length_in_bytes` cannot be other than any multiple of `8`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
-    ///   area where the plaintext will be stored is enough.
+    ///   area where the ciphertext will be stored is enough.
     /// - This method assumes that the original plaintext is a string
     ///   in the format of UTF-8.
     /// 
@@ -5344,36 +5377,37 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
-    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be decrypted.
-    /// - `message` is a pointer to u8 which is `*mut u8`,
-    ///   and is the plaintext to be stored.
-    /// - The size of the memory area which starts at `message` and the
-    ///   plaintext will be stored at is assumed to be enough.
-    /// - The size of the area for plaintext should be prepared to be:
-    ///   `length_in_bytes` - 1.
-    ///   So, it is responsible for you to prepare the `message` area big enough!
+    /// - `cipher` is an immutable reference to `Vec<U>` object, and
+    ///   is the place where the plaintext to be decrypted is stored.
+    /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
+    ///   is the place where the decrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of plaintext in bytes.
-    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
-    ///   is greater than `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means that this method failed in decryption.
-    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
-    ///   is `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means either that this method failed in decryption
-    ///   or that the original plaintext is empty data.
-    ///   Then, you will have to check whether or not it failed by the method
+    /// - If this method failed in decryption, it always returns `zero`.
+    /// - Even if this method succeeded in decryption, it returns `zero` when
+    ///   the original plaintext is zero-length empty data. Then, you will have
+    ///   to check whether or not it failed by using the method
     ///   `is_successful()` or `is_failed()`.
+    /// - If `size_of::<U>()` * `cipher.len()` is greater than `8`
+    ///   (which means that the original plaintext is surely not empty data)
+    ///   and it returns `zero`, you can interpret it that this method surely
+    ///   failed in decryption.
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as
-    ///   decrypt_vec_into_*().
-    /// - When `T` is `u64`, `cipher.len() * U::size_in_bytes()`
-    ///   can be only any multiple of `8`.
-    /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
-    ///   can be only any multiple of `16`.
+    ///   Instead, use other safer methods such as decrypt_vec_into_*().
     /// - This method is useful to use in hybrid programming with C/C++.
+    /// - `size_of::<U>()` * `cipher.len()` cannot be other than any multiple
+    ///   of `8`.
+    /// - The size of the memory area which starts at `message` is assumed to
+    ///   be enough to store the plaintext. So, it is responsible for you to
+    ///   prepare the `message` area big enough!
+    /// - The size of the area for plaintext does not have to be prepared more
+    ///   than `size_of::<U>()` * `cipher.len()` - `1`.
+    /// - If the size of the area for plaintext is prepared more than
+    ///   `size_of::<U>()` * `cipher.len()` - `1`, the rest of the area will be
+    ///   filled with `0`s.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -5756,38 +5790,36 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     }
 
     // fn decrypt_vec_into_vec<U, V>(&mut self, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
-    /// Decrypts the data stored in a `Vec<U>` object with the padding according
-    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the decrypted
-    /// data in `Vec<V>`.
+    /// Decrypts the data stored in a `Vec<U>` object with the padding defined
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode, and
+    /// stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be decrypted.
-    /// - `message` is a `Vec<V>` object, and is the plaintext to be stored.
+    /// - `cipher` is an immutable reference to `Vec<U>` object, and
+    ///   is the place where the ciphertext to be decrypted is stored.
+    /// - `message` is a mutable reference to `Vec<U>` object, and
+    ///   is the place where the decrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of plaintext in bytes.
-    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
-    ///   is greater than `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means that this method failed in decryption.
-    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
-    ///   is `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means either that this method failed in decryption
-    ///   or that the original plaintext is empty data.
-    ///   Then, you will have to check whether or not it failed by the method
+    /// - If this method failed in decryption, it always returns `zero`.
+    /// - Even if this method succeeded in decryption, it returns `zero` when
+    ///   the original plaintext is zero-length empty data. Then, you will have
+    ///   to check whether or not it failed by using the method
     ///   `is_successful()` or `is_failed()`.
+    /// - If `size_of::<U>()` * `cipher.len()` is greater than `8`
+    ///   (which means that the original plaintext is surely not empty data)
+    ///   and it returns `zero`, you can interpret it that this method surely
+    ///   failed in decryption.
     /// 
     /// # Features
-    /// - When `T` is `u64`, `cipher.len() * U::size_in_bytes()`
-    ///   can be only any multiple of `8`.
-    /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
-    ///   can be only any multiple of `16`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
-    ///   area where the plaintext will be stored is enough.
+    ///   area where the ciphertext will be stored is enough.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -6160,41 +6192,41 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     }
 
     // fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, cipher: &Vec<U>, message: &mut [V; N]) -> u64
-    /// Decrypts the data stored in a `Vec<U>` object with the padding according
-    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the decrypted
-    /// data in array `[V; N]`.
+    /// Decrypts the data stored in a `Vec<U>` object with the padding defined
+    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode, and
+    /// stores the decrypted data in array `[V; N]`.
     /// 
     /// # Arguments
-    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be decrypted.
-    /// - `message` is an array `[V; N]` object,
-    ///   and is the plaintext to be stored.
+    /// - `cipher` is an immutable reference to `Vec<U>` object, and
+    ///   is the place where the ciphertext to be decrypted is stored.
+    /// - `message` is a mutable reference to an array `[U; N]` object, and
+    ///   is the place where the decrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of plaintext in bytes.
-    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
-    ///   is greater than `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means that this method failed in decryption.
-    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
-    ///   is `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means either that this method failed in decryption
-    ///   or that the original plaintext is empty data.
-    ///   Then, you will have to check whether or not it failed by the method
+    /// - If this method failed in decryption, it always returns `zero`.
+    /// - Even if this method succeeded in decryption, it returns `zero` when
+    ///   the original plaintext is zero-length empty data. Then, you will have
+    ///   to check whether or not it failed by using the method
     ///   `is_successful()` or `is_failed()`.
+    /// - If `size_of::<U>()` * `cipher.len()` is greater than `8`
+    ///   (which means that the original plaintext is surely not empty data)
+    ///   and it returns `zero`, you can interpret it that this method surely
+    ///   failed in decryption.
     /// 
     /// # Features
-    /// - When `T` is `u64`, `cipher.len() * U::size_in_bytes()`
-    ///   can be only any multiple of `8`.
-    /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
-    ///   can be only any multiple of `16`.
-    /// - If `V::size_in_bytes() * N` is greater than or equal to
-    ///   `U::size_in_bytes() * cipher.len() - 1`, this method performs
-    ///   decryption, fills the array `message` with the derypted plaintext,
-    ///   and then fills the rest of the elements of the array `message`
-    ///   with zeros if any, and returns the size of the plaintext.
-    /// - If `V::size_in_bytes() * N` is less than 
-    ///   `U::size_in_bytes() * cipher.len() - 1`,
-    ///   this method does not perform decryption and returns `zero`.
-     /// - The padding bits are composed of the byte `0b_1000_0000` that
+    /// - If `size_of::<V>()` * `N` is less than 
+    ///   `size_of::<U>()` * `cipher.len()` - `1`, this method does not perform
+    ///   decryption but returns `zero`.
+    /// - If `size_of::<V>()` * `N` is equal to or greater than
+    ///   `size_of::<U>()` * `cipher.len()` - `1`, this method performs
+    ///   decryption, fills the array `message` with the decrypted data, and then
+    ///   fills the rest of the elements of the array `message` with zeros, and
+    ///   returns the size of the plaintext.
+    /// - It is responsible for you to prepare the `message` area big enough!
+    /// - The size of the area for plaintext does not have to be prepared more
+    ///   than `size_of::<U>()` * `cipher.len()` - `1`.
+    /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
@@ -6576,39 +6608,37 @@ impl <const ROUND: usize> DES_Generic<ROUND>
         unimplemented!(); // Dummy code for documentation
     }
 
-    // fn decrypt_vec_into_string<U>(&mut self, cipher: &Vec<U>, message: &mut String) -> u64
-    /// Decrypts the data stored in a `Vec<U>` object with the padding according
-    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the decrypted
-    /// data in String object.
+    // fn decrypt_vec_into_string(&mut self, cipher: &str, message: &mut String) -> u64
+    /// Decrypts the data in `str` with the padding defined according to
+    /// ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the
+    /// decrypted data in `String`.
     /// 
     /// # Arguments
-    /// - `cipher` is a `Vec<U>` object, and is the ciphertext to be decrypted.
-    /// - `message` is an String object, and is the plaintext to be stored.
+    /// - `cipher` is an immutable reference to `Vec<U>` object, and
+    ///   is the place where the ciphertext to be decrypted is stored.
+    /// - `message` is a mutable reference to a `String` object, and
+    ///   is the place where the decrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of plaintext in bytes.
-    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
-    ///   is greater than `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means that this method failed in decryption.
-    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
-    ///   is `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means either that this method failed in decryption
-    ///   or that the original plaintext is empty String.
-    ///   Then, you will have to check whether or not it failed by the method
+    /// - If this method failed in decryption, it always returns `zero`.
+    /// - Even if this method succeeded in decryption, it returns `zero` when
+    ///   the original plaintext is zero-length empty data. Then, you will have
+    ///   to check whether or not it failed by using the method
     ///   `is_successful()` or `is_failed()`.
+    /// - If `size_of::<U>()` * `cipher.len()` is greater than `8`
+    ///   (which means that the original plaintext is surely not empty data)
+    ///   and it returns `zero`, you can interpret it that this method surely
+    ///   failed in decryption.
     /// 
     /// # Features
-    /// - When `T` is `u64`, `cipher.len() * U::size_in_bytes()`
-    ///   can be only any multiple of `8`.
-    /// - When `T` is `u128`, `cipher.len() * U::size_in_bytes()`
-    ///   can be only any multiple of `16`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
     /// - You don't have to worry about whether or not the size of the memory
-    ///   area where the plaintext will be stored is enough.
+    ///   area where the ciphertext will be stored is enough.
     /// - This method assumes that the original plaintext is a string
     ///   in the format of UTF-8.
     /// 
@@ -6881,37 +6911,37 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// defined according to ISO 7816-4 in ECB (Electronic CodeBook) mode.
     /// 
     /// # Arguments
-    /// - `cipher` is the data stored in an array `[U; N]` object,
-    ///   and is the ciphertext to be decrypted.
-    /// - `message` is a pointer to u8 which is `*mut u8`,
-    ///   and is the plaintext to be stored.
-    /// - The size of the memory area which starts at `message` and the
-    ///   plaintext will be stored at is assumed to be enough.
-    /// - The size of the area for plaintext should be prepared to be:
-    ///   `N * U::size_in_bytes()` - 1.
-    ///   So, it is responsible for you to prepare the `message` area big enough!
+    /// - `cipher` is an immutable reference to an array `[U; N]` object, and
+    ///   is the place where the plaintext to be decrypted is stored.
+    /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
+    ///   is the place where the decrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of plaintext in bytes.
-    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
-    ///   is greater than `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means that this method failed in decryption.
-    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
-    ///   is `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means either that this method failed in decryption
-    ///   or that the original plaintext is empty array [U; 0].
-    ///   Then, you will have to check whether or not it failed by the
-    ///   method `is_successful()` or `is_failed()`.
+    /// - If this method failed in decryption, it always returns `zero`.
+    /// - Even if this method succeeded in decryption, it returns `zero` when
+    ///   the original plaintext is zero-length empty data. Then, you will have
+    ///   to check whether or not it failed by using the method
+    ///   `is_successful()` or `is_failed()`.
+    /// - If `size_of::<U>()` * `N` is greater than `8`
+    ///   (which means that the original plaintext is surely not empty data)
+    ///   and it returns `zero`, you can interpret it that this method surely
+    ///   failed in decryption.
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as
-    ///   decrypt_array_into_*().
-    /// - When `T` is `u64`, `N * U::size_in_bytes()`
-    ///   can be only any multiple of `8`.
-    /// - When `T` is `u128`, `N * U::size_in_bytes()`
-    ///   can be only any multiple of `16`.
+    ///   Instead, use other safer methods such as decrypt_array_into_*().
     /// - This method is useful to use in hybrid programming with C/C++.
+    /// - `size_of::<U>()` * `N` cannot be other than any multiple
+    ///   of `8`.
+    /// - The size of the memory area which starts at `message` is assumed to
+    ///   be enough to store the plaintext. So, it is responsible for you to
+    ///   prepare the `message` area big enough!
+    /// - The size of the area for plaintext does not have to be prepared more
+    ///   than `size_of::<U>()` * `N` - `1`.
+    /// - If the size of the area for plaintext is prepared more than
+    ///   `size_of::<U>()` * `N` - `1`, the rest of the area will be
+    ///   filled with `0`s.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -7304,31 +7334,28 @@ impl <const ROUND: usize> DES_Generic<ROUND>
 
     // fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, cipher: &[U; N], message: &mut Vec<V>) -> u64
     /// Decrypts the data stored in an array `[U; N]` object with the padding
-    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the
-    /// decrypted data in `Vec<V>`.
+    /// defined according to ISO 7816-4 in ECB (Electronic CodeBook) mode,
+    /// and stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `cipher` is an array `[U; N]` object, and is the ciphertext to be
-    ///   decrypted.
-    /// - `message` is a `Vec<V>` object, and is the plaintext to be stored.
+    /// - `cipher` is an immutable reference to an array `[U; N]` object, and
+    ///   is the place where the plaintext to be decrypted is stored.
+    /// - `message` is a mutable reference to `Vec<U>` object, and
+    ///   is the place where the decrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of plaintext in bytes.
-    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
-    ///   is greater than `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means that this method failed in decryption.
-    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
-    ///   is `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means either that this method failed in decryption
-    ///   or that the original plaintext is empty array [U; 0].
-    ///   Then, you will have to check whether or not it failed by the
-    ///   method `is_successful()` or `is_failed()`.
+    /// - If this method failed in decryption, it always returns `zero`.
+    /// - Even if this method succeeded in decryption, it returns `zero` when
+    ///   the original plaintext is zero-length empty data. Then, you will have
+    ///   to check whether or not it failed by using the method
+    ///   `is_successful()` or `is_failed()`.
+    /// - If `size_of::<U>()` * `N` is greater than `8`
+    ///   (which means that the original plaintext is surely not empty data)
+    ///   and it returns `zero`, you can interpret it that this method surely
+    ///   failed in decryption.
     /// 
     /// # Features
-    /// - When `T` is `u64`, `N * U::size_in_bytes()`
-    ///   can be only any multiple of `8`.
-    /// - When `T` is `u128`, `N * U::size_in_bytes()`
-    ///   can be only any multiple of `16`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
@@ -7709,46 +7736,44 @@ impl <const ROUND: usize> DES_Generic<ROUND>
 
     // fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, cipher: &[U; N], message: &mut [V; M]) -> u64
     /// Decrypts the data stored in an array `[U; N]` object with the padding
-    /// according to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the
-    /// decrypted data in array `[V; M]`.
+    /// defined according to ISO 7816-4 in ECB (Electronic CodeBook) mode,
+    /// and stores the decrypted data in array `[V; M]`.
     /// 
     /// # Arguments
-    /// - `cipher` is an array `[U; N]` object,
-    ///   and is the ciphertext to be decrypted.
-    /// - `message` is an array `[V; M]` object,
-    ///   and is the plaintext to be stored.
+    /// - `cipher` is an immutable reference to an array `[U; N]` object, and
+    ///   is the place where the plaintext to be decrypted is stored.
+    /// - `message` is a mutable reference to an array `[U; N]` object, and
+    ///   is the place where the decrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of plaintext in bytes.
-    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
-    ///   is greater than `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means that this method failed in decryption.
-    /// - If this method returns `zero`, and `cipher.len() * U::size_in_bytes()`
-    ///   is `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means either that this method failed in decryption
-    ///   or that the original plaintext is empty array [U; 0].
-    ///   Then, you will have to check whether or not it failed by the
-    ///   method `is_successful()` or `is_failed()`.
+    /// - If this method failed in decryption, it always returns `zero`.
+    /// - Even if this method succeeded in decryption, it returns `zero` when
+    ///   the original plaintext is zero-length empty data. Then, you will have
+    ///   to check whether or not it failed by using the method
+    ///   `is_successful()` or `is_failed()`.
+    /// - If `size_of::<U>()` * `N` is greater than `8`
+    ///   (which means that the original plaintext is surely not empty data)
+    ///   and it returns `zero`, you can interpret it that this method surely
+    ///   failed in decryption.
     /// 
     /// # Features
-    /// - When `T` is `u64`, `N * U::size_in_bytes()`
-    ///   can be only any multiple of `8`.
-    /// - When `T` is `u128`, `N * U::size_in_bytes()`
-    ///   can be only any multiple of `16`.
-    /// - If `V::size_in_bytes() * M` is less than `U::size_in_bytes() * N - 1`,
-    ///   this method does not perform decryption and returns `zero`.
-    /// - If `V::size_in_bytes() * M` is greater than or qual to
-    ///   `U::size_in_bytes() * N - 1`, this method performs decryption,
-    ///   fills the array `message` with the derypted plaintext, and then
-    ///   fills the rest of the elements of the array `message` with zeros
-    ///   if any, and returns the size of the plaintext.
+    /// - If `size_of::<V>()` * `M` is less than 
+    ///   `size_of::<U>()` * `N` - `1`, this method does not perform
+    ///   decryption but returns `zero`.
+    /// - If `size_of::<V>()` * `M` is equal to or greater than
+    ///   `size_of::<U>()` * `N` - `1`, this method performs decryption,
+    ///   fills the array `message` with the decrypted data, and then
+    ///   fills the rest of the elements of the array `message` with zeros, and
+    ///   returns the size of the plaintext.
+    /// - It is responsible for you to prepare the `message` area big enough!
+    /// - The size of the area for plaintext does not have to be prepared more
+    ///   than `size_of::<U>()` * `N` - `1`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.
     /// - For more information about the padding bits according to ISO 7816-4,
     ///   Read [here](https://en.wikipedia.org/wiki/Padding_(cryptography)#ISO/IEC_7816-4).
-    /// - You don't have to worry about whether or not the size of the memory
-    ///   area where the ciphertext will be stored is enough.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -8127,32 +8152,29 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     }
 
     // fn decrypt_array_into_string<U, const N: usize>(&mut self, cipher: &[U; N], message: &mut String) -> u64
-    /// Decrypts the data stored in an array `[U; N]` object with the padding according
-    /// to ISO 7816-4 in ECB (Electronic CodeBook) mode, and stores the decrypted
-    /// data in a String object.
+    /// Decrypts the data stored in an array `[U; N]` object with the padding
+    /// defined according to ISO 7816-4 in ECB (Electronic CodeBook) mode,
+    /// and stores the decrypted data in `String`.
     /// 
     /// # Arguments
-    /// - `cipher` is an array `[U; N]` object,
-    ///   and is the ciphertext to be decrypted.
-    /// - `message` is a String object, and is the plaintext to be encrypted.
+    /// - `cipher` is an immutable reference to an array `[U; N]` object, and
+    ///   is the place where the plaintext to be decrypted is stored.
+    /// - `message` is a mutable reference to a `String` object, and
+    ///   is the place where the decrypted data will be stored.
     /// 
     /// # Output
     /// - This method returns the size of plaintext in bytes.
-    /// - If this method returns `zero`, and `N * U::size_in_bytes()`
-    ///   is greater than `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means that this method failed in decryption.
-    /// - If this method returns `zero`, and `N * U::size_in_bytes()`
-    ///   is `8` for `T` = `u64` or `16` for `T` = `u128`,
-    ///   it means either that this method failed in decryption
-    ///   or that the original plaintext is empty array [U; 0].
-    ///   Then, you will have to check whether or not it failed by the
-    ///   method `is_successful()` or `is_failed()`.
+    /// - If this method failed in decryption, it always returns `zero`.
+    /// - Even if this method succeeded in decryption, it returns `zero` when
+    ///   the original plaintext is zero-length empty data. Then, you will have
+    ///   to check whether or not it failed by using the method
+    ///   `is_successful()` or `is_failed()`.
+    /// - If `size_of::<U>()` * `N` is greater than `8`
+    ///   (which means that the original plaintext is surely not empty data)
+    ///   and it returns `zero`, you can interpret it that this method surely
+    ///   failed in decryption.
     /// 
     /// # Features
-    /// - When `T` is `u64`, `N * U::size_in_bytes()`
-    ///   can be only any multiple of `8`.
-    /// - When `T` is `u128`, `N * U::size_in_bytes()`
-    ///   can be only any multiple of `16`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
     ///   indicates the delimiter one bit `1` followed by seven bits `0`s and
     ///   all padding bits `0`s according to ISO 7816-4.

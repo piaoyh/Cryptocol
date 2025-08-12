@@ -46,7 +46,7 @@ pub trait PCBC_ISO<T> : Sized
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as encrypt_*_into_*().
+    ///   Instead, use other safer methods such as `encrypt_*_into_*()`.
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - If `length_in_bytes` is `0`, it means the message is null string.
     ///   So, only padding bytes will be encrypted,
@@ -256,7 +256,7 @@ pub trait PCBC_ISO<T> : Sized
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as encrypt_*_into_*().
+    ///   Instead, use other safer methods such as encrypt_*_into_vec().
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - If `length_in_bytes` is `0`, it means the message is a null string.
     ///   So, only padding bytes will be encrypted,
@@ -1609,7 +1609,7 @@ pub trait PCBC_ISO<T> : Sized
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as decrypt_*_into_*().
+    ///   Instead, use other safer methods such as `decrypt_*_into_*()`.
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - `length_in_bytes` cannot be other than any multiple of `size_of::<T>()`.
     /// - The size of the memory area which starts at `message` is assumed to
@@ -1751,7 +1751,7 @@ pub trait PCBC_ISO<T> : Sized
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as decrypt_*_into_*().
+    ///   Instead, use other safer methods such as decrypt_*_into_array().
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - `length_in_bytes` cannot be other than any multiple of `size_of::<T>()`.
     /// - If `U::size_in_bytes()` * `N` is less than `length_in_bytes` - `1`,
@@ -1897,7 +1897,7 @@ pub trait PCBC_ISO<T> : Sized
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as decrypt_*_into_*().
+    ///   Instead, use other safer methods such as decrypt_*_into_vec().
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - `length_in_bytes` cannot be other than any multiple of `size_of::<T>()`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that
@@ -2040,7 +2040,7 @@ pub trait PCBC_ISO<T> : Sized
     /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
-    ///   Instead, use other safer methods such as decrypt_*_into_*().
+    ///   Instead, use other safer methods such as decrypt_*_into_string().
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - `length_in_bytes` cannot be other than any multiple of `size_of::<T>()`.
     /// - The padding bits are composed of the byte `0b_1000_0000` that

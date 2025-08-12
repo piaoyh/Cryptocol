@@ -48,7 +48,7 @@ pub trait CTR<T> : Sized
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
     ///   Instead, use other safer methods such as
-    ///   encrypt_*_into_*().
+    ///   `encrypt_*_into_*()`.
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - If `length_in_bytes` is `0`, it means the message is null string.
     ///   So, only null string will be stored in the memory area that starts
@@ -998,7 +998,7 @@ pub trait CTR<T> : Sized
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
     ///   Instead, use other safer methods such as
-    ///   decrypt_*_into_*().
+    ///   `decrypt_*_into_*()`.
     /// - This method is useful to use in hybrid programming with C/C++.
     /// 
     /// # For DES and its variants

@@ -16,11 +16,23 @@ pub mod rijndael_basic;
 /// examples were moved to des_ecb_pkcs7.rs.
 pub mod des_ecb_pkcs7;
 
+/// rijndael.rs was too big because of documentation and plenty of examples
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to rijndael_ecb_pkcs7.rs.
+pub mod rijndael_ecb_pkcs7;
+
 /// des.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_ecb_iso.rs.
 pub mod des_ecb_iso;
+
+/// rijndael.rs was too big because of documentation and plenty of examples
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to rijndael_ecb_iso.rs.
+pub mod rijndael_ecb_iso;
 
 /// des.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
