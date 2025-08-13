@@ -26,7 +26,7 @@ pub trait OFB<T> : Sized
     /// Encrypts the data without any padding in OFB (Output feedback) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -118,7 +118,7 @@ pub trait OFB<T> : Sized
     /// and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -208,7 +208,7 @@ pub trait OFB<T> : Sized
     /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -308,7 +308,7 @@ pub trait OFB<T> : Sized
     /// FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -401,7 +401,7 @@ pub trait OFB<T> : Sized
     /// mode, and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -489,7 +489,7 @@ pub trait OFB<T> : Sized
     /// FeedBack) mode, and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -587,7 +587,7 @@ pub trait OFB<T> : Sized
     /// in OFB (Output feedback) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -681,7 +681,7 @@ pub trait OFB<T> : Sized
     /// OFB (Output feedback) mode, and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -770,7 +770,7 @@ pub trait OFB<T> : Sized
     /// (Cipher FeedBack) mode, and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -868,7 +868,7 @@ pub trait OFB<T> : Sized
     /// in OFB (Output feedback) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -965,7 +965,7 @@ pub trait OFB<T> : Sized
     /// OFB (Output feedback) mode, and stores the encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -1056,7 +1056,7 @@ pub trait OFB<T> : Sized
     /// (Cipher FeedBack) mode, and stores the encrypted data in array `[V; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -1159,7 +1159,7 @@ pub trait OFB<T> : Sized
     /// padding in OFB (Output feedback) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -1257,7 +1257,7 @@ pub trait OFB<T> : Sized
     /// in OFB (Output feedback) mode, and stores the encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -1350,7 +1350,7 @@ pub trait OFB<T> : Sized
     /// in array `[V; M]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[V; M]` object, and
@@ -1451,7 +1451,7 @@ pub trait OFB<T> : Sized
     /// Decrypts the data without any padding in OFB (Output feedback) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -1588,7 +1588,7 @@ pub trait OFB<T> : Sized
     /// and stores the decrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -1723,7 +1723,7 @@ pub trait OFB<T> : Sized
     /// and stores the decrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -1861,7 +1861,7 @@ pub trait OFB<T> : Sized
     /// and stores the decrypted data in a `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -1972,7 +1972,7 @@ pub trait OFB<T> : Sized
     /// in OFB (Output feedback) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -2110,7 +2110,7 @@ pub trait OFB<T> : Sized
     /// OFB (Output feedback) mode, and stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to `Vec<U>` object, and
@@ -2239,7 +2239,7 @@ pub trait OFB<T> : Sized
     /// (Cipher FeedBack) mode, and stores the decrypted data in array `[V; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to an array `[V; N]` object, and
@@ -2377,7 +2377,7 @@ pub trait OFB<T> : Sized
     /// mode, and stores the decrypted data in `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to a `String` object, and
@@ -2484,7 +2484,7 @@ pub trait OFB<T> : Sized
     /// in OFB (Output feedback) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -2623,7 +2623,7 @@ pub trait OFB<T> : Sized
     /// in OFB (Output feedback) mode, and stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to `Vec<U>` object, and
@@ -2753,7 +2753,7 @@ pub trait OFB<T> : Sized
     /// in array `[V; M]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to an array `[U; N]` object, and
@@ -2891,7 +2891,7 @@ pub trait OFB<T> : Sized
     /// in OFB (Output feedback) mode, and stores the decrypted data in `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to a `String` object, and

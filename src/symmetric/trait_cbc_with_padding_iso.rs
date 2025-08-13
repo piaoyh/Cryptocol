@@ -28,7 +28,7 @@ pub trait CBC_ISO<T> : Sized
     /// in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -129,7 +129,7 @@ pub trait CBC_ISO<T> : Sized
     /// in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -228,7 +228,7 @@ pub trait CBC_ISO<T> : Sized
     /// in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -338,7 +338,7 @@ pub trait CBC_ISO<T> : Sized
     /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -439,7 +439,7 @@ pub trait CBC_ISO<T> : Sized
     /// encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -535,7 +535,7 @@ pub trait CBC_ISO<T> : Sized
     /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -643,7 +643,7 @@ pub trait CBC_ISO<T> : Sized
     /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -745,7 +745,7 @@ pub trait CBC_ISO<T> : Sized
     /// and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -842,7 +842,7 @@ pub trait CBC_ISO<T> : Sized
     /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -951,7 +951,7 @@ pub trait CBC_ISO<T> : Sized
     /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -1057,7 +1057,7 @@ pub trait CBC_ISO<T> : Sized
     /// stores the encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -1156,7 +1156,7 @@ pub trait CBC_ISO<T> : Sized
     /// stores the encrypted data in array `[V; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -1271,7 +1271,7 @@ pub trait CBC_ISO<T> : Sized
     /// defined according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -1378,7 +1378,7 @@ pub trait CBC_ISO<T> : Sized
     /// encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -1478,7 +1478,7 @@ pub trait CBC_ISO<T> : Sized
     /// encrypted data in array `[V; M]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -1592,7 +1592,7 @@ pub trait CBC_ISO<T> : Sized
     /// in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -1734,7 +1734,7 @@ pub trait CBC_ISO<T> : Sized
     /// in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -1877,7 +1877,7 @@ pub trait CBC_ISO<T> : Sized
     /// in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -2023,7 +2023,7 @@ pub trait CBC_ISO<T> : Sized
     /// in a `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -2141,7 +2141,7 @@ pub trait CBC_ISO<T> : Sized
     /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -2287,7 +2287,7 @@ pub trait CBC_ISO<T> : Sized
     /// stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to `Vec<U>` object, and
@@ -2422,7 +2422,7 @@ pub trait CBC_ISO<T> : Sized
     /// stores the decrypted data in array `[V; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to an array `[U; N]` object, and
@@ -2566,7 +2566,7 @@ pub trait CBC_ISO<T> : Sized
     /// decrypted data in `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to a `String` object, and
@@ -2678,7 +2678,7 @@ pub trait CBC_ISO<T> : Sized
     /// defined according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -2826,7 +2826,7 @@ pub trait CBC_ISO<T> : Sized
     /// and stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to `Vec<U>` object, and
@@ -2962,7 +2962,7 @@ pub trait CBC_ISO<T> : Sized
     /// and stores the decrypted data in array `[V; M]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to an array `[U; N]` object, and
@@ -3107,7 +3107,7 @@ pub trait CBC_ISO<T> : Sized
     /// and stores the decrypted data in `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to a `String` object, and

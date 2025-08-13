@@ -46,7 +46,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// Encrypts the data without any padding in CFB (Cipher FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -232,7 +232,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -415,7 +415,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -609,7 +609,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -792,7 +792,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// mode, and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -970,7 +970,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// FeedBack) mode, and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -1158,7 +1158,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in CFB (Cipher FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -1343,7 +1343,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// CFB (Cipher FeedBack) mode, and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -1523,7 +1523,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// (Cipher FeedBack) mode, and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -1712,7 +1712,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in CFB (Cipher FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -1903,7 +1903,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// CFB (Cipher FeedBack) mode, and stores the encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -2088,7 +2088,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// (Cipher FeedBack) mode, and stores the encrypted data in array `[V; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -2286,7 +2286,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// padding in CFB (Cipher FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -2481,7 +2481,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in CFB (Cipher FeedBack) mode, and stores the encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -2671,7 +2671,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in array `[V; M]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[V; M]` object, and
@@ -2870,7 +2870,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// Decrypts the data without any padding in CFB (Cipher FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -3152,7 +3152,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// and stores the decrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -3431,7 +3431,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// and stores the decrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -3722,7 +3722,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// and stores the decrypted data in a `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -3941,7 +3941,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in CFB (Cipher FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -4224,7 +4224,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// CFB (Cipher FeedBack) mode, and stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to `Vec<U>` object, and
@@ -4498,7 +4498,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// (Cipher FeedBack) mode, and stores the decrypted data in array `[V; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to an array `[V; N]` object, and
@@ -4781,7 +4781,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// mode, and stores the decrypted data in `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to a `String` object, and
@@ -4997,7 +4997,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in CFB (Cipher FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -5278,7 +5278,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in CFB (Cipher FeedBack) mode, and stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to `Vec<U>` object, and
@@ -5551,7 +5551,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in array `[V; M]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to an array `[U; N]` object, and
@@ -5832,7 +5832,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in CFB (Cipher FeedBack) mode, and stores the decrypted data in `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CFB mode.
+    /// - `iv` is an initialization vector for CFB mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to a `String` object, and

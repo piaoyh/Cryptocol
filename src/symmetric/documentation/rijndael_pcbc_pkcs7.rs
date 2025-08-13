@@ -49,7 +49,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in PCBC (Propagation Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -243,7 +243,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -434,7 +434,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -637,7 +637,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// according to PKCS #7 in PCBC (Propagation Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -827,7 +827,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -1012,7 +1012,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -1209,7 +1209,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// according to PKCS #7 in PCBC (Propagation Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -1401,7 +1401,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -1588,7 +1588,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -1787,7 +1787,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// according to PKCS #7 in PCBC (Propagation Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -1986,7 +1986,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// stores the encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -2178,7 +2178,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// stores the encrypted data in array `[V; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -2387,7 +2387,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// defined according to PKCS #7 in PCBC (Propagation Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -2590,7 +2590,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -2786,7 +2786,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// encrypted data in array `[V; M]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -2997,7 +2997,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in PCBC (Propagation Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -3287,7 +3287,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -3573,7 +3573,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -3871,7 +3871,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// in a `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -4096,7 +4096,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// according to PKCS #7 in PCBC (Propagation Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -4386,7 +4386,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to `Vec<U>` object, and
@@ -4665,7 +4665,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// stores the decrypted data in array `[V; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to an array `[U; N]` object, and
@@ -4953,7 +4953,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// decrypted data in `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to a `String` object, and
@@ -5173,7 +5173,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// defined according to PKCS #7 in PCBC (Propagation Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -5462,7 +5462,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// and stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to `Vec<U>` object, and
@@ -5740,7 +5740,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// and stores the decrypted data in array `[V; M]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to an array `[U; N]` object, and
@@ -6027,7 +6027,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// and stores the decrypted data in `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for PCBC mode.
+    /// - `iv` is an initialization vector for PCBC mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to a `String` object, and

@@ -47,7 +47,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -313,7 +313,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -575,7 +575,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -848,7 +848,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -1108,7 +1108,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -1363,7 +1363,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -1631,7 +1631,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -1892,7 +1892,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -2148,7 +2148,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -2416,7 +2416,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -2687,7 +2687,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// stores the encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -2952,7 +2952,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// stores the encrypted data in array `[V; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -3232,7 +3232,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// defined according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -3510,7 +3510,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -3782,7 +3782,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// encrypted data in array `[V; M]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -4067,7 +4067,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -4501,7 +4501,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -4925,7 +4925,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is a pointer to u8 which is `*const u8`,
     ///   and is the ciphertext to be encrypted.
     /// - `length_in_bytes` is of `u64`-type,
@@ -5358,7 +5358,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// in a `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -5676,7 +5676,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -6110,7 +6110,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to `Vec<U>` object, and
@@ -6528,7 +6528,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// stores the decrypted data in array `[V; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to an array `[U; N]` object, and
@@ -6961,7 +6961,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// decrypted data in `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to a `String` object, and
@@ -7274,7 +7274,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// defined according to ISO 7816-4 in CBC (Cipher-Block Chaining) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -7717,7 +7717,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// and stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to `Vec<U>` object, and
@@ -8135,7 +8135,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// and stores the decrypted data in array `[V; M]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to an array `[U; N]` object, and
@@ -8568,7 +8568,7 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// and stores the decrypted data in `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initial value for CBC mode.
+    /// - `iv` is an initialization vector for CBC mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to a `String` object, and
