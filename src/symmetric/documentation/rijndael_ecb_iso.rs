@@ -18,10 +18,11 @@ use std::vec::Vec;
 use crate::number::{ SmallUInt, IntUnion };
 
 
-/// traits_cbc_with_padding_iso.rs was too big because of documentation and
-/// plenty of examples So, in order to provide documentation for rijndael or aes
-/// without `docs.rs`'s failing generating documentation, dummy codes were made
-/// and documentation and examples were moved to rijndael_cbc.rs. And, most of
+/// trait_ecb_with_padding_iso.rs may be too big
+/// because of documentation and plenty of examples.
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to des_ecb_iso.rs. And, most of
 /// generic parameters are omitted. It is not actual code but dummy code for
 /// compilation!!!
 #[allow(non_camel_case_types)]
@@ -35,10 +36,11 @@ pub struct Rijndael_Generic<const ROUND: usize = 10, const NB: usize = 4, const 
     dec:        fn (s: &mut Self, cipher: &[IntUnion; NB]) -> [IntUnion; NB],
 }
 
-/// traits_ecb_with_padding_iso.rs was too big because of documentation and
-/// plenty of examples So, in order to provide documentation for rijndael or aes
-/// without `docs.rs`'s failing generating documentation, dummy codes were made
-/// and documentation and examples were moved to rijndael_cbc.rs. And, most of
+/// trait_ecb_with_padding_iso.rs may be too big
+/// because of documentation and plenty of examples.
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to des_ecb_iso.rs. And, most of
 /// generic parameters are omitted. It is not actual code but dummy code for
 /// compilation!!!
 impl <const ROUND: usize, const NB: usize, const NK: usize>

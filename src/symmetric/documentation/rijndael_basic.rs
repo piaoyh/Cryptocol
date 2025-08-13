@@ -15,11 +15,11 @@
 
 use crate::number::IntUnion;
 
-/// rijndael.rs was too big because of documentation and plenty of examples
+/// rijndael.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
-/// examples were moved to des_basic.rs. And, most of generic parameters
-/// are omitted. It is not actual code but dummy code for compilation!!!
+/// examples were moved to rijndael_basic.rs.
 #[allow(non_camel_case_types)]
 #[derive(Debug, Clone)]
 pub struct Rijndael_Generic<const ROUND: usize = 10, const NB: usize = 4, const NK: usize = 4>
@@ -32,10 +32,11 @@ pub struct Rijndael_Generic<const ROUND: usize = 10, const NB: usize = 4, const 
     dec:        fn (s: &mut Self, cipher: &[IntUnion; NB]) -> [IntUnion; NB],
 }
 
-/// rijndael.rs was too big because of documentation and plenty of examples
+/// rijndael.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
-/// examples were moved to des_basic.rs. And, most of generic parameters
+/// examples were moved to rijndael_basic.rs. And, most of generic parameters
 /// are omitted. It is not actual code but dummy code for compilation!!!
 impl <const ROUND: usize, const NB: usize, const NK: usize>
 Rijndael_Generic<ROUND, NB, NK>

@@ -18,7 +18,8 @@ use std::vec::Vec;
 use crate::number::{ SmallUInt, IntUnion };
 
 
-/// trait_ctr.rs was too big because of documentation and plenty of examples
+/// trait_ctr.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to rijndael_ctr.rs. And, most of generic parameters
@@ -34,7 +35,8 @@ pub struct Rijndael_Generic<const ROUND: usize = 10, const NB: usize = 4, const 
     dec:        fn (s: &mut Self, cipher: &[IntUnion; NB]) -> [IntUnion; NB],
 }
 
-/// trait_ctr.rs was too big because of documentation and plenty of examples
+/// trait_ctr.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to rijndael_ctr.rs. And, most of generic parameters

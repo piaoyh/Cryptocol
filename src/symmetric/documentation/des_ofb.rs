@@ -17,7 +17,8 @@
 use std::vec::Vec;
 use crate::number::{ SmallUInt, LongUnion };
 
-/// trait_ofb.rs was too big because of documentation and plenty of examples
+/// trait_ofb.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_ofb.rs. And, most of generic parameters

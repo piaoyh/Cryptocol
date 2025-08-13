@@ -17,10 +17,11 @@
 use std::vec::Vec;
 use crate::number::{ SmallUInt, LongUnion };
 
-/// des.rs was too big because of documentation and plenty of examples
+/// trait_ecb_with_padding_pkcs7.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
-/// examples were moved to des_basic.rs. And, most of generic parameters
+/// examples were moved to des_ecb_pkcs7.rs. And, most of generic parameters
 /// are omitted. It is not actual code but dummy code for compilation!!!
 #[allow(non_camel_case_types)]
 pub struct DES_Generic<const ROUND: usize = 16>

@@ -18,10 +18,11 @@ use std::vec::Vec;
 use crate::number::{ SmallUInt, LongUnion };
 use crate::symmetric::SmallCryptor;
 
-/// ndes.rs was too big because of documentation and plenty of examples
+/// big_cryptor.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
-/// examples were moved to ndes_basic.rs. And, most of generic parameters
+/// examples were moved to big_cryptor64_basic.rs. And, most of generic parameters
 /// are omitted. It is not actual code but dummy code for compilation!!!
 #[allow(non_camel_case_types)]
 pub struct BigCryptor64<S: SmallCryptor<u64, 8>>
@@ -30,10 +31,11 @@ pub struct BigCryptor64<S: SmallCryptor<u64, 8>>
     des: Vec<S>,
 }
 
-/// ndes.rs was too big because of documentation and plenty of examples
+/// big_cryptor.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
-/// examples were moved to des_basic.rs. And, most of generic parameters
+/// examples were moved to big_cryptor64_basic.rs. And, most of generic parameters
 /// are omitted. It is not actual code but dummy code for compilation!!!
 impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
 {

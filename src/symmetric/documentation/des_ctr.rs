@@ -17,7 +17,8 @@
 use std::vec::Vec;
 use crate::number::{ SmallUInt, LongUnion };
 
-/// trait_ctr.rs was too big because of documentation and plenty of examples
+/// trait_ctr.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_ctr.rs. And, most of generic parameters
@@ -33,7 +34,8 @@ pub struct DES_Generic<const ROUND: usize = 16>
     dec: fn (s: &mut Self, cipher: u64) -> u64,
 }
 
-/// trait_ctr.rs was too big because of documentation and plenty of examples
+/// trait_ctr.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_ctr.rs. And, most of generic parameters

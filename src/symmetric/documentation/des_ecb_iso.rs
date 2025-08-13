@@ -17,8 +17,8 @@
 use std::vec::Vec;
 use crate::number::{ SmallUInt, LongUnion };
 
-/// traits_ecb_with_padding_iso.rs was too big because of documentation and
-/// plenty of examples.
+/// trait_ecb_with_padding_iso.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_ecb_iso.rs. And, most of generic parameters
@@ -34,8 +34,8 @@ pub struct DES_Generic<const ROUND: usize = 16>
     dec: fn (s: &mut Self, cipher: u64) -> u64,
 }
 
-/// traits_ecb_with_padding_iso.rs was too big because of documentation and
-/// plenty of examples.
+/// trait_ecb_with_padding_iso.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_ecb_iso.rs. And, most of generic parameters

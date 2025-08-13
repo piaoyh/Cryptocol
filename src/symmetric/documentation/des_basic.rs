@@ -16,11 +16,11 @@
 
 use crate::number::LongUnion;
 
-/// des.rs was too big because of documentation and plenty of examples
+/// des.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
-/// examples were moved to des_basic.rs. And, most of generic parameters
-/// are omitted. It is not actual code but dummy code for compilation!!!
+/// examples were moved to des_basic.rs.
 #[allow(non_camel_case_types)]
 pub struct DES_Generic<const ROUND: usize = 16>
 {
@@ -32,7 +32,8 @@ pub struct DES_Generic<const ROUND: usize = 16>
     dec: fn (s: &mut Self, cipher: u64) -> u64,
 }
 
-/// des.rs was too big because of documentation and plenty of examples
+/// des.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_basic.rs. And, most of generic parameters
