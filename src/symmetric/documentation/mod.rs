@@ -117,12 +117,26 @@ pub mod rijndael_cfb;
 /// examples were moved to des_ofb.rs.
 pub mod des_ofb;
 
+/// trait_ofb.rs may be too big
+/// because of documentation and plenty of examples.
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to rijndael_ofb.rs.
+pub mod rijndael_ofb;
+
 /// trait_ctr.rs may be too big
 /// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_ctr.rs.
 pub mod des_ctr;
+
+/// trait_ctr.rs may be too big
+/// because of documentation and plenty of examples.
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to rijndael_ctr.rs.
+pub mod rijndael_ctr;
 
 /// big_cryptor.rs may be too big
 /// because of documentation and plenty of examples.
