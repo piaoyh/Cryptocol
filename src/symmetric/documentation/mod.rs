@@ -1,108 +1,133 @@
-/// des.rs was too big because of documentation and plenty of examples
+/// des.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_basic.rs.
 pub mod des_basic;
 
-/// rijndael.rs was too big because of documentation and plenty of examples
+/// rijndael.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
-/// examples were moved to des_basic.rs.
+/// examples were moved to rijndael_basic.rs.
 pub mod rijndael_basic;
 
-/// des.rs was too big because of documentation and plenty of examples
+/// trait_ecb_with_padding_pkcs7.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_ecb_pkcs7.rs.
 pub mod des_ecb_pkcs7;
 
-/// rijndael.rs was too big because of documentation and plenty of examples
+/// trait_ecb_with_padding_pkcs7.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to rijndael_ecb_pkcs7.rs.
 pub mod rijndael_ecb_pkcs7;
 
-/// des.rs was too big because of documentation and plenty of examples
+/// trait_ecb_with_padding_iso.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_ecb_iso.rs.
 pub mod des_ecb_iso;
 
-/// rijndael.rs was too big because of documentation and plenty of examples
+/// trait_ecb_with_padding_iso.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to rijndael_ecb_iso.rs.
 pub mod rijndael_ecb_iso;
 
-/// des.rs was too big because of documentation and plenty of examples
+/// trait_cbc_with_padding_pkcs7.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_cbc_pkcs7.rs.
 pub mod des_cbc_pkcs7;
 
-/// rijndael.rs was too big because of documentation and plenty of examples
+/// trait_cbc_with_padding_pkcs7.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to rijndael_cbc_pkcs7.rs.
 pub mod rijndael_cbc_pkcs7;
 
-/// des.rs was too big because of documentation and plenty of examples
+/// trait_cbc_with_padding_iso.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_cbc_iso.rs.
 pub mod des_cbc_iso;
 
-/// rijndael.rs was too big because of documentation and plenty of examples
+/// trait_cbc_with_padding_iso.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to rijndael_cbc_iso.rs.
 pub mod rijndael_cbc_iso;
 
-/// des.rs was too big because of documentation and plenty of examples
+/// trait_pcbc_with_padding_pkcs7.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_pcbc_pkcs7.rs.
 pub mod des_pcbc_pkcs7;
 
-/// rijndael.rs was too big because of documentation and plenty of examples
+/// trait_pcbc_with_padding_pkcs7.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to rijndael_pcbc_pkcs7.rs.
 pub mod rijndael_pcbc_pkcs7;
 
-/// des.rs was too big because of documentation and plenty of examples
+/// trait_pcbc_with_padding_iso.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_pcbc_iso.rs.
 pub mod des_pcbc_iso;
 
-/// rijndael.rs was too big because of documentation and plenty of examples
+/// trait_pcbc_with_padding_iso.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to rijndael_pcbc_iso.rs.
 pub mod rijndael_pcbc_iso;
 
-/// des.rs was too big because of documentation and plenty of examples
+/// trait_cfb.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_cfb.rs.
 pub mod des_cfb;
 
-/// des.rs was too big because of documentation and plenty of examples
+/// trait_cfb.rs may be too big
+/// because of documentation and plenty of examples.
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to rijndael_cfb.rs.
+pub mod rijndael_cfb;
+
+/// trait_ofb.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_ofb.rs.
 pub mod des_ofb;
 
-/// des.rs was too big because of documentation and plenty of examples
+/// trait_ctr.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_ctr.rs.
 pub mod des_ctr;
 
-/// ndes.rs was too big because of documentation and plenty of examples
+/// big_cryptor.rs may be too big
+/// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
-/// examples were moved to ndes_basic.rs.
+/// examples were moved to big_cryptor64_basic.rs.
 pub mod big_cryptor64_basic;
 

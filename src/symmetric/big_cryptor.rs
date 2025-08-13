@@ -549,7 +549,7 @@ impl BigCryptor128
 
 
 
-/// An BigCryptor64 symmetric-key algorithm for the encryption of digital data
+/// A BigCryptor64 symmetric-key algorithm for the encryption of digital data
 /// 
 /// # Note
 /// **This descryption about BigCryptor is according to big endianness.**
