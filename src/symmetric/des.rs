@@ -1694,19 +1694,20 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///
     /// # Example 1
     /// ```
-    /// use cryptocol::symmetric::{ DES, NDES };
-    ///
-    /// let keys = [DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]),
-    ///             DES::decryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]),
-    ///             DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])];
-    /// let mut tdes = NDES::new_with_small_des_array(keys);
+    /// use cryptocol::symmetric::{ DES, BigCryptor64, SmallCryptor };
+    /// 
+    /// let keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
+    ///         = [ Box::new(DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])),
+    ///             Box::new(DES::decryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])),
+    ///             Box::new(DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])) ];
+    /// let mut tdes = BigCryptor64::new_with_small_cryptor_array(keys);
     /// let plaintext = 0x_1234567890ABCDEF_u64;
     /// let ciphertext = tdes.encrypt_u64(plaintext);
-    ///
+    /// 
     /// println!("Plaintext:\t\t{:#018X}", plaintext);
     /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x272A2AC7B4E66748_u64);
-    ///
+    /// 
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
     /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
@@ -1740,19 +1741,20 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///
     /// # Example 1
     /// ```
-    /// use cryptocol::symmetric::{ NDES, DES };
-    ///
-    /// let keys = [DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64),
-    ///             DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64),
-    ///             DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)];
-    /// let mut tdes = NDES::new_with_small_des_array(keys);
+    /// use cryptocol::symmetric::{ BigCryptor64, DES };
+    /// 
+    /// let mut tdes = BigCryptor64::new_with_small_cryptor_array(
+    ///             [Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
+    ///             Box::new(DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)),
+    ///             Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64))]
+    /// );
     /// let plaintext = 0x_1234567890ABCDEF_u64;
     /// let ciphertext = tdes.encrypt_u64(plaintext);
-    ///
+    /// 
     /// println!("Plaintext:\t\t{:#018X}", plaintext);
     /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
-    ///
+    /// 
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
     /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
@@ -1789,19 +1791,20 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///
     /// # Example 1
     /// ```
-    /// use cryptocol::symmetric::{ DES, NDES };
-    ///
-    /// let keys = [DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]),
-    ///             DES::decryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]),
-    ///             DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])];
-    /// let mut tdes = NDES::new_with_small_des_array(keys);
+    /// use cryptocol::symmetric::{ DES, BigCryptor64, SmallCryptor };
+    /// 
+    /// let keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
+    ///         = [ Box::new(DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])),
+    ///             Box::new(DES::decryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])),
+    ///             Box::new(DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])) ];
+    /// let mut tdes = BigCryptor64::new_with_small_cryptor_array(keys);
     /// let plaintext = 0x_1234567890ABCDEF_u64;
     /// let ciphertext = tdes.encrypt_u64(plaintext);
-    ///
+    /// 
     /// println!("Plaintext:\t\t{:#018X}", plaintext);
     /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x272A2AC7B4E66748_u64);
-    ///
+    /// 
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
     /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
@@ -1843,19 +1846,19 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///
     /// # Example 1
     /// ```
-    /// use cryptocol::symmetric::{ NDES, DES };
-    ///
-    /// let keys = [DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64),
-    ///             DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64),
-    ///             DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)];
-    /// let mut tdes = NDES::new_with_small_des_array(keys);
+    /// use cryptocol::symmetric::{ BigCryptor64, DES };
+    /// 
+    /// let mut tdes = BigCryptor64::new_with_small_cryptor_array(
+    ///                 [ Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
+    ///                                 Box::new(DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)),
+    ///                                 Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)) ] );
     /// let plaintext = 0x_1234567890ABCDEF_u64;
     /// let ciphertext = tdes.encrypt_u64(plaintext);
-    ///
+    /// 
     /// println!("Plaintext:\t\t{:#018X}", plaintext);
     /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x272A2AC7B4E66748_u64);
-    ///
+    /// 
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
     /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
@@ -2041,21 +2044,22 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///
     /// # Example 1
     /// ```
-    /// use cryptocol::symmetric::{ NDES, DES };
-    ///
-    /// let mut keys = [DES::new_with_key_u64(0x_1234567890ABCDEF_u64),
-    ///             DES::new_with_key_u64(0x_FEDCBA0987654321_u64),
-    ///             DES::new_with_key_u64(0x_1234567890ABCDEF_u64)];
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor };
+    /// 
+    /// let mut keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
+    ///             = [ Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)),
+    ///                 Box::new(DES::new_with_key_u64(0x_FEDCBA0987654321_u64)),
+    ///                 Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)) ];
     /// keys[1].turn_inverse();
-    ///
-    /// let mut tdes = NDES::new_with_small_des_array(keys);
+    /// 
+    /// let mut tdes = BigCryptor64::new_with_small_cryptor_array(keys);
     /// let plaintext = 0x_1234567890ABCDEF_u64;
     /// let ciphertext = tdes.encrypt_u64(plaintext);
-    ///
+    /// 
     /// println!("Plaintext:\t\t{:#018X}", plaintext);
     /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
-    ///
+    /// 
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
     /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
@@ -2090,21 +2094,22 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///
     /// # Example 1
     /// ```
-    /// use cryptocol::symmetric::{ NDES, DES };
-    ///
-    /// let mut keys = [DES::new_with_key_u64(0x_1234567890ABCDEF_u64),
-    ///             DES::new_with_key_u64(0x_FEDCBA0987654321_u64),
-    ///             DES::new_with_key_u64(0x_1234567890ABCDEF_u64)];
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor };
+    /// 
+    /// let mut keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
+    ///         = [ Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)),
+    ///             Box::new(DES::new_with_key_u64(0x_FEDCBA0987654321_u64)),
+    ///             Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)) ];
     /// keys[0].turn_encryptor();
-    ///
-    /// let mut tdes = NDES::new_with_small_des_array(keys);
+    /// 
+    /// let mut tdes = BigCryptor64::new_with_small_cryptor_array(keys);
     /// let plaintext = 0x_1234567890ABCDEF_u64;
     /// let ciphertext = tdes.encrypt_u64(plaintext);
-    ///
+    /// 
     /// println!("Plaintext:\t\t{:#018X}", plaintext);
     /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x_CDAC175F3B7EAA2B_u64);
-    ///
+    /// 
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
     /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
@@ -2139,21 +2144,22 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///
     /// # Example 1
     /// ```
-    /// use cryptocol::symmetric::{ NDES, DES };
-    ///
-    /// let mut keys = [DES::new_with_key_u64(0x_1234567890ABCDEF_u64),
-    ///             DES::new_with_key_u64(0x_FEDCBA0987654321_u64),
-    ///             DES::new_with_key_u64(0x_1234567890ABCDEF_u64)];
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor };
+    /// 
+    /// let mut keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
+    ///             = [ Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)),
+    ///                 Box::new(DES::new_with_key_u64(0x_FEDCBA0987654321_u64)),
+    ///                 Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)) ];
     /// keys[1].turn_decryptor();
-    ///
-    /// let mut tdes = NDES::new_with_small_des_array(keys);
+    /// 
+    /// let mut tdes = BigCryptor64::new_with_small_cryptor_array(keys);
     /// let plaintext = 0x_1234567890ABCDEF_u64;
     /// let ciphertext = tdes.encrypt_u64(plaintext);
-    ///
+    /// 
     /// println!("Plaintext:\t\t{:#018X}", plaintext);
     /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
     /// assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u64);
-    ///
+    /// 
     /// let cipher_cipher_text = tdes.decrypt_u64(ciphertext);
     /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
     /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);

@@ -1222,7 +1222,6 @@ fn des_encryptor_with_key_u64()
     assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
     assert_eq!(cipher_cipher_text, plaintext);
     println!();
-    
 
     // Operators
     let mut tdes = BigCryptor64::new()

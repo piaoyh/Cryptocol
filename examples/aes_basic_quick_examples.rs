@@ -445,17 +445,17 @@ fn aes_basic()
     aes_new();
     aes_new_with_key();
     aes_new_with_key_u128();
-    // aes_encryptor_with_key();
-    // aes_encryptor_with_key_u128();
-    // aes_decryptor_with_key();
-    // aes_decryptor_with_key_u128();
+    aes_encryptor_with_key();
+    aes_encryptor_with_key_u128();
+    aes_decryptor_with_key();
+    aes_decryptor_with_key_u128();
     aes_get_key();
     aes_get_key_u128();
     aes_set_key();
     aes_set_key_u128();
-    // aes_turn_inverse();
-    // aes_turn_encryptor();
-    // aes_turn_decryptor();
+    aes_turn_inverse();
+    aes_turn_encryptor();
+    aes_turn_decryptor();
     aes_encrypt_unit();
     aes_encrypt_u128();
     aes_decrypt_unit();
@@ -640,176 +640,175 @@ fn aes_new_with_key_u128()
     assert_eq!(recovered_cipher_text, plaintext);
     println!("-------------------------------");
 }
-/*
+
 fn aes_encryptor_with_key()
 {
     println!("aes_encryptor_with_key");
     use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
     
-    let keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
-            = [ Box::new(AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])),
-                Box::new(AES_128::decryptor_with_key(&[0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])),
-                Box::new(AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])) ];
-    let mut tdes = BigCryptor64::new_with_small_cryptor_array(keys);
-    let plaintext = 0x_1234567890ABCDEF_u128;
-    let ciphertext = tdes.encrypt_u128(plaintext);
+    let keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+            = [ Box::new(AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])),
+                Box::new(AES_128::decryptor_with_key(&[0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])),
+                Box::new(AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])) ];
+    let mut taes = BigCryptor128::new_with_small_cryptor_array(keys);
+    let plaintext = 0x_1234567890ABCDEFFEDCA0987654321_u128;
+    let ciphertext = taes.encrypt_u128(plaintext);
     
     println!("Plaintext:\t\t{:#034X}", plaintext);
     println!("Ciphertext:\t\t{:#034X}", ciphertext);
-    assert_eq!(ciphertext, 0x272A2AC7B4E66748_u128);
+    assert_eq!(ciphertext, 0x_E301940B5A5DE1600D78C375BF58F232_u128);
     
-    let cipher_cipher_text = tdes.decrypt_u128(ciphertext);
-    println!("Cipher-ciphertext:\t{:#034X}", cipher_cipher_text);
-    assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u128);
-    assert_eq!(cipher_cipher_text, plaintext);
+    let recovered_text = taes.decrypt_u128(ciphertext);
+    println!("Recovered text:\t{:#034X}", recovered_text);
+    assert_eq!(recovered_text, 0x_1234567890ABCDEFFEDCA0987654321_u128);
+    assert_eq!(recovered_text, plaintext);
     println!();
 
     // Operators
-    let mut tdes = BigCryptor64::new()
-                    + AES_128::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])
-                    - AES_128::encryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])
-                    + AES_128::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
-    let plaintext = 0x_1234567890ABCDEF_u128;
-    let ciphertext = tdes.encrypt_u128(plaintext);
+    let mut taes = BigCryptor128::new()
+                    + AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])
+                    - AES_128::encryptor_with_key(&[0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])
+                    + AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]);
+    let plaintext = 0x_1234567890ABCDEFFEDCA0987654321_u128;
+    let ciphertext = taes.encrypt_u128(plaintext);
 
     println!("Plaintext:\t\t{:#034X}", plaintext);
     println!("Ciphertext:\t\t{:#034X}", ciphertext);
-    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u128);
+    assert_eq!(ciphertext, 0x_E301940B5A5DE1600D78C375BF58F232_u128);
 
-    let cipher_cipher_text = tdes.decrypt_u128(ciphertext);
-    println!("Cipher-ciphertext:\t{:#034X}", cipher_cipher_text);
-    assert_eq!(cipher_cipher_text, 0x_1234567890ABCDEF_u128);
-    assert_eq!(cipher_cipher_text, plaintext);
+    let recovered_text = taes.decrypt_u128(ciphertext);
+    println!("Recovered text:\t{:#034X}", recovered_text);
+    assert_eq!(recovered_text, 0x_1234567890ABCDEFFEDCA0987654321_u128);
+    assert_eq!(recovered_text, plaintext);
     println!("-------------------------------");
 }
 
 fn aes_encryptor_with_key_u128()
 {
     println!("aes_encryptor_with_key_u128");
-    use cryptocol::symmetric::{ BigCryptor64, AES_128 };
+    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
 
-    let mut tdes = BigCryptor64::new_with_small_cryptor_array(
-                [Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEF_u128)),
-                Box::new(AES_128::decryptor_with_key_u128(0x_FEDCBA0987654321_u128)),
-                Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEF_u128))]
+    let mut taes = BigCryptor128::new_with_small_cryptor_array(
+                [Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
+                Box::new(AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
+                Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128))]
     );
-    let plaintext = 0x_1234567890ABCDEF_u128;
-    let ciphertext = tdes.encrypt_u128(plaintext);
+    let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
+    let ciphertext = taes.encrypt_u128(plaintext);
 
     println!("Plaintext:\t\t{:#034X}", plaintext);
     println!("Ciphertext:\t\t{:#034X}", ciphertext);
-    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u128);
+    assert_eq!(ciphertext, 0x_DB56B1B7D320D7481BF40A1964E9C7C4_u128);
 
-    let cipher_cipher_text = tdes.decrypt_u128(ciphertext);
-    println!("Cipher-ciphertext:\t{:#034X}", cipher_cipher_text);
-    assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u128);
-    assert_eq!(cipher_cipher_text, plaintext);
+    let recovered_text = taes.decrypt_u128(ciphertext);
+    println!("Recovered text:\t{:#034X}", recovered_text);
+    assert_eq!(recovered_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
+    assert_eq!(recovered_text, plaintext);
     println!();
     
-
     // Operators
-    let mut tdes = BigCryptor64::new()
-                    + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEF_u128)
-                    - AES_128::encryptor_with_key_u128(0x_FEDCBA0987654321_u128)
-                    + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEF_u128);
-    let plaintext = 0x_1234567890ABCDEF_u128;
-    let ciphertext = tdes.encrypt_u128(plaintext);
+    let mut taes = BigCryptor128::new()
+                    + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)
+                    - AES_128::encryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+                    + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128);
+    let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
+    let ciphertext = taes.encrypt_u128(plaintext);
 
     println!("Plaintext:\t\t{:#034X}", plaintext);
     println!("Ciphertext:\t\t{:#034X}", ciphertext);
-    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u128);
+    assert_eq!(ciphertext, 0x_DB56B1B7D320D7481BF40A1964E9C7C4_u128);
 
-    let cipher_cipher_text = tdes.decrypt_u128(ciphertext);
-    println!("Cipher-ciphertext:\t{:#034X}", cipher_cipher_text);
-    assert_eq!(cipher_cipher_text, 0x_1234567890ABCDEF_u128);
-    assert_eq!(cipher_cipher_text, plaintext);
+    let recovered_text = taes.decrypt_u128(ciphertext);
+    println!("Recovered text:\t{:#034X}", recovered_text);
+    assert_eq!(recovered_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
+    assert_eq!(recovered_text, plaintext);
     println!("-------------------------------");
 }
 
 fn aes_decryptor_with_key()
 {
-    println!("aes_decryptor_with_key_u128");
-    use cryptocol::symmetric::{ AES_128, BigCryptor64, SmallCryptor };
+    println!("aes_decryptor_with_key");
+    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
     
-    let keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
-            = [ Box::new(AES_128::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])),
-                Box::new(AES_128::decryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])),
-                Box::new(AES_128::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])) ];
-    let mut tdes = BigCryptor64::new_with_small_cryptor_array(keys);
-    let plaintext = 0x_1234567890ABCDEF_u128;
-    let ciphertext = tdes.encrypt_u128(plaintext);
+    let keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+            = [ Box::new(AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])),
+                Box::new(AES_128::decryptor_with_key(&[0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])),
+                Box::new(AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])) ];
+    let mut taes = BigCryptor128::new_with_small_cryptor_array(keys);
+    let plaintext = 0x_1234567890ABCDEFFEDCA0987654321_u128;
+    let ciphertext = taes.encrypt_u128(plaintext);
     
     println!("Plaintext:\t\t{:#034X}", plaintext);
     println!("Ciphertext:\t\t{:#034X}", ciphertext);
-    assert_eq!(ciphertext, 0x272A2AC7B4E66748_u128);
+    assert_eq!(ciphertext, 0x_E301940B5A5DE1600D78C375BF58F232_u128);
     
-    let cipher_cipher_text = tdes.decrypt_u128(ciphertext);
-    println!("Cipher-ciphertext:\t{:#034X}", cipher_cipher_text);
-    assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u128);
-    assert_eq!(cipher_cipher_text, plaintext);
+    let recovered_text = taes.decrypt_u128(ciphertext);
+    println!("Recovered text:\t{:#034X}", recovered_text);
+    assert_eq!(recovered_text, 0x_1234567890ABCDEFFEDCA0987654321_u128);
+    assert_eq!(recovered_text, plaintext);
     println!();
 
     // Operators
-    let mut tdes = BigCryptor64::new()
-                    - AES_128::decryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])
-                    - AES_128::encryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])
-                    - AES_128::decryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
-    let plaintext = 0x_1234567890ABCDEF_u128;
-    let ciphertext = tdes.encrypt_u128(plaintext);
+    let mut taes = BigCryptor128::new()
+                    - AES_128::decryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])
+                    + AES_128::decryptor_with_key(&[0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])
+                    - AES_128::decryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]);
+    let plaintext = 0x_1234567890ABCDEFFEDCA0987654321_u128;
+    let ciphertext = taes.encrypt_u128(plaintext);
 
     println!("Plaintext:\t\t{:#034X}", plaintext);
     println!("Ciphertext:\t\t{:#034X}", ciphertext);
-    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u128);
+    assert_eq!(ciphertext, 0x_E301940B5A5DE1600D78C375BF58F232_u128);
 
-    let cipher_cipher_text = tdes.decrypt_u128(ciphertext);
-    println!("Cipher-ciphertext:\t{:#034X}", cipher_cipher_text);
-    assert_eq!(cipher_cipher_text, 0x_1234567890ABCDEF_u128);
-    assert_eq!(cipher_cipher_text, plaintext);
+    let recovered_text = taes.decrypt_u128(ciphertext);
+    println!("Recovered text:\t{:#034X}", recovered_text);
+    assert_eq!(recovered_text, 0x_1234567890ABCDEFFEDCA0987654321_u128);
+    assert_eq!(recovered_text, plaintext);
     println!("-------------------------------");
 }
 
 fn aes_decryptor_with_key_u128()
 {
     println!("aes_decryptor_with_key_u128");
-    use cryptocol::symmetric::{ BigCryptor64, AES_128 };
+    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
 
-    let mut tdes = BigCryptor64::new_with_small_cryptor_array(
-                    [ Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEF_u128)),
-                                    Box::new(AES_128::decryptor_with_key_u128(0x_FEDCBA0987654321_u128)),
-                                    Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEF_u128)) ] );
-    let plaintext = 0x_1234567890ABCDEF_u128;
-    let ciphertext = tdes.encrypt_u128(plaintext);
+    let mut taes = BigCryptor128::new_with_small_cryptor_array(
+                [Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
+                Box::new(AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
+                Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128))]
+    );
+    let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
+    let ciphertext = taes.encrypt_u128(plaintext);
 
     println!("Plaintext:\t\t{:#034X}", plaintext);
     println!("Ciphertext:\t\t{:#034X}", ciphertext);
-    assert_eq!(ciphertext, 0x272A2AC7B4E66748_u128);
+    assert_eq!(ciphertext, 0x_DB56B1B7D320D7481BF40A1964E9C7C4_u128);
 
-    let cipher_cipher_text = tdes.decrypt_u128(ciphertext);
-    println!("Cipher-ciphertext:\t{:#034X}", cipher_cipher_text);
-    assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u128);
-    assert_eq!(cipher_cipher_text, plaintext);
+    let recovered_text = taes.decrypt_u128(ciphertext);
+    println!("Recovered text:\t{:#034X}", recovered_text);
+    assert_eq!(recovered_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
+    assert_eq!(recovered_text, plaintext);
     println!();
     
-
     // Operators
-    let mut tdes = BigCryptor64::new()
-                    - AES_128::decryptor_with_key_u128(0x_1234567890ABCDEF_u128)
-                    + AES_128::decryptor_with_key_u128(0x_FEDCBA0987654321_u128)
-                    - AES_128::decryptor_with_key_u128(0x_1234567890ABCDEF_u128);
-    let plaintext = 0x_1234567890ABCDEF_u128;
-    let ciphertext = tdes.encrypt_u128(plaintext);
+    let mut taes = BigCryptor128::new()
+                    - AES_128::decryptor_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)
+                    + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+                    - AES_128::decryptor_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128);
+    let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
+    let ciphertext = taes.encrypt_u128(plaintext);
 
     println!("Plaintext:\t\t{:#034X}", plaintext);
     println!("Ciphertext:\t\t{:#034X}", ciphertext);
-    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u128);
+    assert_eq!(ciphertext, 0x_DB56B1B7D320D7481BF40A1964E9C7C4_u128);
 
-    let cipher_cipher_text = tdes.decrypt_u128(ciphertext);
-    println!("Cipher-ciphertext:\t{:#034X}", cipher_cipher_text);
-    assert_eq!(cipher_cipher_text, 0x_1234567890ABCDEF_u128);
-    assert_eq!(cipher_cipher_text, plaintext);
+    let recovered_text = taes.decrypt_u128(ciphertext);
+    println!("Recovered text:\t{:#034X}", recovered_text);
+    assert_eq!(recovered_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
+    assert_eq!(recovered_text, plaintext);
     println!("-------------------------------");
 }
-*/
+
 fn aes_get_key()
 {
     println!("aes_get_key()");
@@ -943,50 +942,50 @@ fn aes_set_key_u128()
     assert_eq!(key, [0x78563412_u32, 0xEFCDAB90]);
     println!("-------------------------------");
 }
-/*
+
 fn aes_turn_inverse()
 {
     println!("aes_turn_inverse");
-    use cryptocol::symmetric::{ BigCryptor64, AES_128, SmallCryptor };
+    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
 
-    let mut keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
-                = [ Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEF_u128)),
-                    Box::new(AES_128::new_with_key_u128(0x_FEDCBA0987654321_u128)),
-                    Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEF_u128)) ];
+    let mut keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+                = [ Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
+                    Box::new(AES_128::new_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
+                    Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)) ];
     keys[1].turn_inverse();
 
-    let mut tdes = BigCryptor64::new_with_small_cryptor_array(keys);
-    let plaintext = 0x_1234567890ABCDEF_u128;
-    let ciphertext = tdes.encrypt_u128(plaintext);
+    let mut taes = BigCryptor128::new_with_small_cryptor_array(keys);
+    let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
+    let ciphertext = taes.encrypt_u128(plaintext);
 
     println!("Plaintext:\t\t{:#034X}", plaintext);
     println!("Ciphertext:\t\t{:#034X}", ciphertext);
-    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u128);
+    assert_eq!(ciphertext, 0x_DB56B1B7D320D7481BF40A1964E9C7C4_u128);
 
-    let cipher_cipher_text = tdes.decrypt_u128(ciphertext);
-    println!("Cipher-ciphertext:\t{:#034X}", cipher_cipher_text);
-    assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u128);
-    assert_eq!(cipher_cipher_text, plaintext);
+    let recovered_text = taes.decrypt_u128(ciphertext);
+    println!("Recovered text:\t{:#034X}", recovered_text);
+    assert_eq!(recovered_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
+    assert_eq!(recovered_text, plaintext);
     println!();
     
 
     // Operators
-    let des1 = AES_128::new_with_key_u128(0x_1234567890ABCDEF_u128);
-    let mut des2 = AES_128::new_with_key_u128(0x_FEDCBA0987654321_u128);
-    let des3 = AES_128::new_with_key_u128(0x_1234567890ABCDEF_u128);
+    let des1 = AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128);
+    let mut des2 = AES_128::new_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128);
+    let des3 = AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128);
     des2.turn_inverse();
 
-    let mut tdes = BigCryptor64::new() + des1 + des2 + des3; 
-    let plaintext = 0x_1234567890ABCDEF_u128;
+    let mut tdes = BigCryptor128::new() + des1 + des2 + des3; 
+    let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
     let ciphertext = tdes.encrypt_u128(plaintext);
 
     println!("Plaintext:\t\t{:#034X}", plaintext);
     println!("Ciphertext:\t\t{:#034X}", ciphertext);
-    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u128);
+    assert_eq!(ciphertext, 0x_DB56B1B7D320D7481BF40A1964E9C7C4_u128);
 
     let cipher_cipher_text = tdes.decrypt_u128(ciphertext);
     println!("Cipher-ciphertext:\t{:#034X}", cipher_cipher_text);
-    assert_eq!(cipher_cipher_text, 0x_1234567890ABCDEF_u128);
+    assert_eq!(cipher_cipher_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
     assert_eq!(cipher_cipher_text, plaintext);
     println!("-------------------------------");
 }
@@ -994,97 +993,97 @@ fn aes_turn_inverse()
 fn aes_turn_encryptor()
 {
     println!("aes_turn_encryptor");
-    use cryptocol::symmetric::{ BigCryptor64, AES_128, SmallCryptor };
+    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
 
-    let mut keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
-            = [ Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEF_u128)),
-                Box::new(AES_128::new_with_key_u128(0x_FEDCBA0987654321_u128)),
-                Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEF_u128)) ];
+    let mut keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+            = [ Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
+                Box::new(AES_128::new_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
+                Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)) ];
     keys[0].turn_encryptor();
 
-    let mut tdes = BigCryptor64::new_with_small_cryptor_array(keys);
-    let plaintext = 0x_1234567890ABCDEF_u128;
-    let ciphertext = tdes.encrypt_u128(plaintext);
+    let mut taes = BigCryptor128::new_with_small_cryptor_array(keys);
+    let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
+    let ciphertext = taes.encrypt_u128(plaintext);
 
     println!("Plaintext:\t\t{:#034X}", plaintext);
     println!("Ciphertext:\t\t{:#034X}", ciphertext);
-    assert_eq!(ciphertext, 0x_CDAC175F3B7EAA2B_u128);
+    assert_eq!(ciphertext, 0x_5C842CA9ECB742B2F3164BC33E0BDCB6_u128);
 
-    let cipher_cipher_text = tdes.decrypt_u128(ciphertext);
-    println!("Cipher-ciphertext:\t{:#034X}", cipher_cipher_text);
-    assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u128);
-    assert_eq!(cipher_cipher_text, plaintext);
+    let recovered_text = taes.decrypt_u128(ciphertext);
+    println!("Recovered text:\t{:#034X}", recovered_text);
+    assert_eq!(recovered_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
+    assert_eq!(recovered_text, plaintext);
     println!();
     
 
     // Operators
-    let mut des1 = AES_128::new_with_key_u128(0x_1234567890ABCDEF_u128);
-    let des2 = AES_128::new_with_key_u128(0x_FEDCBA0987654321_u128);
-    let des3 = AES_128::new_with_key_u128(0x_1234567890ABCDEF_u128);
+    let mut des1 = AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128);
+    let des2 = AES_128::new_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128);
+    let des3 = AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128);
     des1.turn_encryptor();
 
-    let mut tdes = BigCryptor64::new() + des1 + des2 + des3; 
-    let plaintext = 0x_1234567890ABCDEF_u128;
-    let ciphertext = tdes.encrypt_u128(plaintext);
+    let mut taes = BigCryptor128::new() + des1 + des2 + des3; 
+    let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
+    let ciphertext = taes.encrypt_u128(plaintext);
 
     println!("Plaintext:\t\t{:#034X}", plaintext);
     println!("Ciphertext:\t\t{:#034X}", ciphertext);
-    assert_eq!(ciphertext, 0x_CDAC175F3B7EAA2B_u128);
+    assert_eq!(ciphertext, 0x_5C842CA9ECB742B2F3164BC33E0BDCB6_u128);
 
-    let cipher_cipher_text = tdes.decrypt_u128(ciphertext);
-    println!("Cipher-ciphertext:\t{:#034X}", cipher_cipher_text);
-    assert_eq!(cipher_cipher_text, 0x_1234567890ABCDEF_u128);
-    assert_eq!(cipher_cipher_text, plaintext);
+    let recovered_text = taes.decrypt_u128(ciphertext);
+    println!("Recovered text:\t{:#034X}", recovered_text);
+    assert_eq!(recovered_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
+    assert_eq!(recovered_text, plaintext);
     println!("-------------------------------");
 }
 
 fn aes_turn_decryptor()
 {
     println!("aes_turn_decryptor");
-    use cryptocol::symmetric::{ BigCryptor64, AES_128, SmallCryptor };
+    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
 
-    let mut keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
-                = [ Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEF_u128)),
-                    Box::new(AES_128::new_with_key_u128(0x_FEDCBA0987654321_u128)),
-                    Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEF_u128)) ];
+    let mut keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+                = [ Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
+                    Box::new(AES_128::new_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
+                    Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)) ];
     keys[1].turn_decryptor();
 
-    let mut tdes = BigCryptor64::new_with_small_cryptor_array(keys);
-    let plaintext = 0x_1234567890ABCDEF_u128;
-    let ciphertext = tdes.encrypt_u128(plaintext);
+    let mut taes = BigCryptor128::new_with_small_cryptor_array(keys);
+    let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
+    let ciphertext = taes.encrypt_u128(plaintext);
 
     println!("Plaintext:\t\t{:#034X}", plaintext);
     println!("Ciphertext:\t\t{:#034X}", ciphertext);
-    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u128);
+    assert_eq!(ciphertext, 0x_DB56B1B7D320D7481BF40A1964E9C7C4_u128);
 
-    let cipher_cipher_text = tdes.decrypt_u128(ciphertext);
-    println!("Cipher-ciphertext:\t{:#034X}", cipher_cipher_text);
-    assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u128);
-    assert_eq!(cipher_cipher_text, plaintext);
+    let recovered_text = taes.decrypt_u128(ciphertext);
+    println!("Recovered text:\t{:#034X}", recovered_text);
+    assert_eq!(recovered_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
+    assert_eq!(recovered_text, plaintext);
     println!();
     
 
     // Operators
-    let des1 = AES_128::new_with_key_u128(0x_1234567890ABCDEF_u128);
-    let mut des2 = AES_128::new_with_key_u128(0x_FEDCBA0987654321_u128);
-    let des3 = AES_128::new_with_key_u128(0x_1234567890ABCDEF_u128);
+    let des1 = AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128);
+    let mut des2 = AES_128::new_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128);
+    let des3 = AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128);
     des2.turn_decryptor();
 
-    let mut tdes = BigCryptor64::new() + des1 + des2 + des3; 
-    let plaintext = 0x_1234567890ABCDEF_u128;
-    let ciphertext = tdes.encrypt_u128(plaintext);
+    let mut taes = BigCryptor128::new() + des1 + des2 + des3; 
+    let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
+    let ciphertext = taes.encrypt_u128(plaintext);
 
     println!("Plaintext:\t\t{:#034X}", plaintext);
     println!("Ciphertext:\t\t{:#034X}", ciphertext);
-    assert_eq!(ciphertext, 0x_272A2AC7B4E66748_u128);
+    assert_eq!(ciphertext, 0x_DB56B1B7D320D7481BF40A1964E9C7C4_u128);
 
-    let cipher_cipher_text = tdes.decrypt_u128(ciphertext);
-    println!("Cipher-ciphertext:\t{:#034X}", cipher_cipher_text);
-    assert_eq!(cipher_cipher_text, 0x_1234567890ABCDEF_u128);
-    assert_eq!(cipher_cipher_text, plaintext);
+    let recovered_text = taes.decrypt_u128(ciphertext);
+    println!("Recovered text:\t{:#034X}", recovered_text);
+    assert_eq!(recovered_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
+    assert_eq!(recovered_text, plaintext);
     println!("-------------------------------");
 }
-*/
+
 
 fn aes_encrypt_unit()
 {

@@ -987,8 +987,25 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   of the key given as the argument will be ignored.
     ///
     /// # Example 1
-    /// ```text
-    /// // To do
+    /// ```
+    /// use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
+    /// 
+    /// let keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+    ///         = [ Box::new(AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])),
+    ///             Box::new(AES_128::decryptor_with_key(&[0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])),
+    ///             Box::new(AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])) ];
+    /// let mut taes = BigCryptor128::new_with_small_cryptor_array(keys);
+    /// let plaintext = 0x_1234567890ABCDEFFEDCA0987654321_u128;
+    /// let ciphertext = taes.encrypt_u128(plaintext);
+    /// 
+    /// println!("Plaintext:\t\t{:#034X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#034X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_E301940B5A5DE1600D78C375BF58F232_u128);
+    /// 
+    /// let recovered_text = taes.decrypt_u128(ciphertext);
+    /// println!("Recovered text:\t{:#034X}", recovered_text);
+    /// assert_eq!(recovered_text, 0x_1234567890ABCDEFFEDCA0987654321_u128);
+    /// assert_eq!(recovered_text, plaintext);
     /// ```
     ///
     /// # For more examples,
@@ -1024,8 +1041,25 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   128 bits will be set to be `zero`.
     ///
     /// # Example 1
-    /// ```text
-    /// // To do
+    /// ```
+    /// use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
+    /// 
+    /// let mut taes = BigCryptor128::new_with_small_cryptor_array(
+    ///             [Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
+    ///             Box::new(AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
+    ///             Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128))]
+    /// );
+    /// let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
+    /// let ciphertext = taes.encrypt_u128(plaintext);
+    /// 
+    /// println!("Plaintext:\t\t{:#034X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#034X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_DB56B1B7D320D7481BF40A1964E9C7C4_u128);
+    /// 
+    /// let recovered_text = taes.decrypt_u128(ciphertext);
+    /// println!("Recovered text:\t{:#034X}", recovered_text);
+    /// assert_eq!(recovered_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
+    /// assert_eq!(recovered_text, plaintext);
     /// ```
     ///
     /// # For more examples,
@@ -1055,8 +1089,25 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   of the key given as the argument will be ignored.
     ///
     /// # Example 1
-    /// ```text
-    /// // To do
+    /// ```
+    /// use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
+    /// 
+    /// let keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+    ///         = [ Box::new(AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])),
+    ///             Box::new(AES_128::decryptor_with_key(&[0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])),
+    ///             Box::new(AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])) ];
+    /// let mut taes = BigCryptor128::new_with_small_cryptor_array(keys);
+    /// let plaintext = 0x_1234567890ABCDEFFEDCA0987654321_u128;
+    /// let ciphertext = taes.encrypt_u128(plaintext);
+    /// 
+    /// println!("Plaintext:\t\t{:#034X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#034X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_E301940B5A5DE1600D78C375BF58F232_u128);
+    /// 
+    /// let recovered_text = taes.decrypt_u128(ciphertext);
+    /// println!("Recovered text:\t{:#034X}", recovered_text);
+    /// assert_eq!(recovered_text, 0x_1234567890ABCDEFFEDCA0987654321_u128);
+    /// assert_eq!(recovered_text, plaintext);
     /// ```
     ///
     /// # For more examples,
@@ -1093,8 +1144,25 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   128 bits will be set to be `zero`.
     ///
     /// # Example 1
-    /// ```text
-    /// // To do
+    /// ```
+    /// use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
+    /// 
+    /// let mut taes = BigCryptor128::new_with_small_cryptor_array(
+    ///             [Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
+    ///             Box::new(AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
+    ///             Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128))]
+    /// );
+    /// let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
+    /// let ciphertext = taes.encrypt_u128(plaintext);
+    /// 
+    /// println!("Plaintext:\t\t{:#034X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#034X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_DB56B1B7D320D7481BF40A1964E9C7C4_u128);
+    /// 
+    /// let recovered_text = taes.decrypt_u128(ciphertext);
+    /// println!("Recovered text:\t{:#034X}", recovered_text);
+    /// assert_eq!(recovered_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
+    /// assert_eq!(recovered_text, plaintext);
     /// ```
     ///
     /// # For more examples,
@@ -1270,8 +1338,27 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   it will be changed into encryptor.
     ///
     /// # Example 1
-    /// ```text
-    /// // To do
+    /// ```
+    /// use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
+    /// 
+    /// let mut keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+    ///             = [ Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
+    ///                 Box::new(AES_128::new_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
+    ///                 Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)) ];
+    /// keys[1].turn_inverse();
+    /// 
+    /// let mut taes = BigCryptor128::new_with_small_cryptor_array(keys);
+    /// let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
+    /// let ciphertext = taes.encrypt_u128(plaintext);
+    /// 
+    /// println!("Plaintext:\t\t{:#034X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#034X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_DB56B1B7D320D7481BF40A1964E9C7C4_u128);
+    /// 
+    /// let recovered_text = taes.decrypt_u128(ciphertext);
+    /// println!("Recovered text:\t{:#034X}", recovered_text);
+    /// assert_eq!(recovered_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
+    /// assert_eq!(recovered_text, plaintext);
     /// ```
     ///
     /// # For more examples,
@@ -1301,8 +1388,27 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   it will be changed into encryptor.
     ///
     /// # Example 1
-    /// ```text
-    /// // To do
+    /// ```
+    /// use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
+    /// 
+    /// let mut keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+    ///         = [ Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
+    ///             Box::new(AES_128::new_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
+    ///             Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)) ];
+    /// keys[0].turn_encryptor();
+    /// 
+    /// let mut taes = BigCryptor128::new_with_small_cryptor_array(keys);
+    /// let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
+    /// let ciphertext = taes.encrypt_u128(plaintext);
+    /// 
+    /// println!("Plaintext:\t\t{:#034X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#034X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_5C842CA9ECB742B2F3164BC33E0BDCB6_u128);
+    /// 
+    /// let recovered_text = taes.decrypt_u128(ciphertext);
+    /// println!("Recovered text:\t{:#034X}", recovered_text);
+    /// assert_eq!(recovered_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
+    /// assert_eq!(recovered_text, plaintext);
     /// ```
     ///
     /// # For more examples,
@@ -1332,8 +1438,27 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   it will not be changed at all.
     ///
     /// # Example 1
-    /// ```text
-    /// // To do
+    /// ```
+    /// use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
+    /// 
+    /// let mut keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+    ///             = [ Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
+    ///                 Box::new(AES_128::new_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
+    ///                 Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)) ];
+    /// keys[1].turn_decryptor();
+    /// 
+    /// let mut taes = BigCryptor128::new_with_small_cryptor_array(keys);
+    /// let plaintext = 0x_11223344556677889900AABBCCDDEEFF_u128;
+    /// let ciphertext = taes.encrypt_u128(plaintext);
+    /// 
+    /// println!("Plaintext:\t\t{:#034X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#034X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_DB56B1B7D320D7481BF40A1964E9C7C4_u128);
+    /// 
+    /// let recovered_text = taes.decrypt_u128(ciphertext);
+    /// println!("Recovered text:\t{:#034X}", recovered_text);
+    /// assert_eq!(recovered_text, 0x_11223344556677889900AABBCCDDEEFF_u128);
+    /// assert_eq!(recovered_text, plaintext);
     /// ```
     ///
     /// # For more examples,
