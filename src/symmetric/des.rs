@@ -2603,7 +2603,7 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::DES;
+    /// use cryptocol::symmetric::{ DES, ECB_PKCS7 };
     ///
     /// let key = 0x_1234567890ABCDEF_u64;
     /// println!("K =\t{:#018X}", key);
@@ -2612,7 +2612,7 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 8];
-    /// let len = a_des.encrypt_with_padding_pkcs7_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// let len = a_des.encrypt_str_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
     /// println!("The length of ciphertext = {}", len);
     /// assert_eq!(len, 8);
     /// let failure = a_des.is_failed();

@@ -336,6 +336,16 @@ pub type Rijndael_192_192 = Rijndael_Generic<12, 6, 6>;
 #[allow(non_camel_case_types)]
 pub type Rijndael_192_128 = Rijndael_Generic<12, 6, 4>;
 
+/// Rijndael_128_512 is one of Rijndael series. Its key is 512-bit and its
+/// encryption block is 128-bit.
+#[allow(non_camel_case_types)]
+pub type Rijndael_128_512 = Rijndael_Generic<22, 4, 16>;
+
+/// Rijndael_128_384 is one of Rijndael series. Its key is 384-bit and its
+/// encryption block is 128-bit.
+#[allow(non_camel_case_types)]
+pub type Rijndael_128_384 = Rijndael_Generic<18, 4, 12>;
+
 /// Rijndael_128_256 is one of Rijndael series. Its key is 256-bit and its
 /// encryption block is 128-bit. It is the same as the AES_256.
 #[allow(non_camel_case_types)]

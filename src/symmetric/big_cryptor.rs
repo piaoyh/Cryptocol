@@ -76,6 +76,7 @@ pub struct BigCryptor128
 
 impl BigCryptor128
 {
+    pub(super) const BLOCK_SIZE: u64 = 16;
     const SUCCESS: u128 = !0;
     const FAILURE: u128 = 0;
 
@@ -91,7 +92,6 @@ impl BigCryptor128
     /// # Example 1
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
     /// ```
     /// 
     /// # For more examples,
@@ -146,7 +146,6 @@ impl BigCryptor128
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::symmetric::DES;
-    /// 
     /// ```
     /// 
     /// # For more examples,
