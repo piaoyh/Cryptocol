@@ -819,7 +819,7 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// So, you can import (use) one of the following traits: ECB_PKCS7, ECB_ISO,
 /// CBC_PKCS7, CBC_ISO, PCBC_PKCS7, PCBC_ISO, CFB, OFB, and CTR. The following
 /// example 6 shows the case that you choose CBC operation mode and padding bits
-/// according to PKCS #7. 
+/// according to PKCS #7.
 /// 
 /// # Example 6
 /// ```
@@ -885,6 +885,33 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
 /// assert_eq!(recovered, message);
 /// ```
+/// 
+/// # Notice for Practical Use
+/// Now, you can freely use any methods with any paddings
+/// in any operation modes.
+/// - This crate provides six operation modes:
+///   ECB, CBC, PCBC, CFB, OFB, and CTR.
+/// - This crate provides two padding ways: ISO 7816-4 and PKCS #7.
+/// - The operation modes ECB, CBC and PCBC requires padding bytes.
+/// - You can combine three operation modes and two padding ways.
+/// - The operation modes CFB, OFB, and CTR does not require padding bytes.
+/// 
+/// encrypt(), 
+/// encrypt_[vec|array|str|string]_with_padding_[pkcs7|iso]_[ecb|cbc|pcbc]_into_vec()
+/// and encrypt_[vec|array|str|string]_[cfb|ofb|ctr]_into_vec() to encrypt,
+/// decrypt_[vec|array]_with_padding_[pkcs7|iso]_into_[vec|string]() and
+/// decrypt_[vec|array]_[cfb|ofb|ctr]_into_[vec|string]() to decrypt. However,
+/// you are encouraged to avoid using the methods such as
+/// encrypt_with_padding_[pkcs7|iso](), encrypt_[cfb|ofb|ctr](),
+/// decrypt_with_padding_[pkcs7|iso](), and decrypt_[cfb|ofb|ctr]()
+/// that receive pointer arguments and the data length
+/// unless you develope in hybrid programming context especially with C/C++. 
+/// Instead, you are highly encouraged to use the methods 
+/// encrypt_[vec|array|str|string]_with_padding_[pkcs7|iso]_[ecb|cbc|pcbc]_into_vec(),
+/// encrypt_[vec|array|str|string]_[cfb|ofb|ctr]_into_vec()
+/// decrypt_[vec|array]_with_padding_[pkcs7|iso]_into_[vec|string](), and
+/// decrypt_[vec|array]_[cfb|ofb|ctr]_into_[vec|string]() because you don't
+/// have to consider the length of data so that you will meak less mistakes.
 #[allow(non_camel_case_types)]
 #[derive(Clone)]
 pub struct DES_Generic<const ROUND: usize = 16, const SHIFT: u128 = 0b_1000000100000011,

@@ -548,162 +548,25 @@ impl BigCryptor128
 
 
 
-/// A BigCryptor64 symmetric-key algorithm for the encryption of digital data
-/// 
-/// # Note
-/// **This descryption about BigCryptor is according to big endianness.**
-/// MSB (Most Significant Bit) is the first bit and LSB (Least Significant Bit)
-/// is the 64th bit in this descryption.
+/// A BigCryptor64 wrapper struct for cascading encryption/decryption
+/// algorithms that has 64-bit block size
 /// 
 /// # Introduction
-/// BigCryptor64 is the acronym of N (any number) Data Encryption Standard. It is the
-/// symmetric key encryption/decryption algorithm composed of multiple DES. It
-/// was originally developed after DES was broken.
+/// BigCryptor64 is mainly used to make TDES which folds DES by cascading DES
+/// three times. However, it can be used to cascade any encryption/decryption
+/// algorithms that has 64-bit block size.
 ///
-/// 
-/// # Vulnerability
-/// - Its key length is only 56-bit. It is considered to be too short against
-///   modern computing power. Actually, in July, 1998, the DES key was broken by
-///   brute-force attack within 56 hours with a machine DES cracker (Deep Crack)
-///   made by EEF (Electronic Frontier Foundation). And, in January, 1999, Deep
-///   Crack and distributed.net broke a DES key together within 22 hours and
-///   15 minutes.
-/// - Weak keys: 0x0000000000000000, 0x0101010101010101, 0xFFFFFFFFFFFFFFFF,
-///   0xFEFEFEFEFEFEFEFE, 0xE0E0E0E0F1F1F1F1, 0xE1E1E1E1F0F0F0F0,
-///   0x1F1F1F1F0E0E0E0E, 0x1E1E1E1E0F0F0F0F in big-endianness.
-///   Actually, if the parity bits in keys are ignored,
-///   the keys 0x0000000000000000 and 0x0101010101010101 are the same key.
-///   In fact, not only 0x0101010101010101 is the same key as
-///   0x0000000000000000. 0x0100000000000000 is also the same key. All the 256
-///   keys that have only different parity bits and all other bits same are the
-///   same key as 0x0000000000000000, too. Though only representative keys will
-///   be mentioned in this description, please keep in mind that all the 256
-///   keys that have only different parity bits and all other bits same are the
-///   same key.
-///   And, the keys 0xFFFFFFFFFFFFFFFF and 0xFEFEFEFEFEFEFEFE are also the same key.
-///   And, The keys 0xE0E0E0E0F1F1F1F1 and 0xE1E1E1E1F0F0F0F0 are also the same key.
-///   And, the keys 0x1F1F1F1F0E0E0E0E and 0x1E1E1E1E0F0F0F0F are the same key, too.
-///   For instance, if you encrypt your data with the key 0x0000000000000000 and
-///   encrypt the output ciphertext again with the same key 0x0000000000000000,
-///   you will get the original plaintext! So, the ciphertext is only
-///   secure-looking.
-/// - Semi-week keys: The pairs 0x011F011F010E010E and 0x1F011F010E010E01,
-///   0x01E001E001F101F1 and 0xE001E001F101F101,
-///   0x01FE01FE01FE01FE and 0xFE01FE01FE01FE01,
-///   0x1FE01FE00EF10EF1 and 0xE01FE01FF10EF10E,
-///   0x1FFE1FFE0EFE0EFE and 0xFE1FFE1FFE0EFE0E, and
-///   0xE0FEE0FEF1FEF1FE and 0xFEE0FEE0FEF1FEF1 in big-endianness are considered
-///   to be week.
-///   For example, if you encrypt your data with the key 0x011F011F010E010E and
-///   encrypt the output ciphertext again with its counterpart key
-///   0xE001E001F101F101, you will get the original plaintext!
-///   So, the ciphertext is only secure-looking.
-/// 
-/// # Use of DES and its variants
-/// This algorithm is implemented generic way. Most of the constants are
-/// implemented as generic constants. So, without changing any code, you can
-/// change the algorithm by changing the generic parameter. You can design and
-/// implement your own algorithm based on DES which uses Feistel structure. 
-/// 
-/// # Generic Parameters
-/// - ROUND: You can determine how many times the Fiestel network will be
-///   repeated. Its maximum value is 128 and its minimum value is 0.
-///   Original DES has 16 rounds for its Feistel structure but you can increase
-///   the number of rounds up to 128 rounds, and decrease it down to 0.
-/// - SHIFT: According to the number of rounds, you have to determine `SHIFT`
-///   which is used for generating round keys. You can determine how many bits
-///   the half keys will be rotated left for the corresponding round in the key
-///   generator. If `SHIFT` is '0b10011001', the half keys will be rotated left
-///   by one bit for the first round, and will be rotated left by two bits for
-///   the second round, and will be rotated left by two bits for  the third round,
-///   and so on. The LSB (Least Significant Bit) is for the first round and the
-///   MSB (Most Significant Bit) is for the 128th round. `0` means that the half
-///   keys will be rotated left by two bits and `1` means that the half keys
-///   will be rotated left by one bit. Up to only `ROUND` bits from the LSB of
-///   `SHIFT` will be meaningful. For example, if `ROUND` is 5 and `SHIFT` is
-///   '0b10011001', only '0b11001' out of '0b10011001' is meaningful.
-///   If `ROUND` is 16 and `SHIFT` is '0b10011001', `SHIFT` will be understood
-///   to be '0b0000000010011001'.
-/// - PC101 ~ PC248: Permutation compression. In key generator, the 64-bit key
-///   which includes parity bits is compressed into 56-bit key by dropping all
-///   the parity bits (8th, 16th, 24th, 32th, 40th, 48th, 56th, and 64th bits)
-///   and permutating (or transposing or shuffling) all bits. They are 1-based.
-///   For this operation, PC101 ~ PC156 are used. You can change the permutation
-///   compression algorithm by changing these parameters. Note that PC101 ~
-///   PC248 should not include 8, 16, 24, 32, 40, 48, 56, and 64 because they
-///   are all parity bits. If you include any of those numbers, the whole DES
-///   encryption/decryption algorithm is broken or unstable or collapses. Also,
-///   in key generator, 56-bit key is compressed into 48-bit key by dropping all
-///   the bits (9th, 18th, 22nd, 25th, 35th, 43rd, and 54th bits) and
-///   permutating (or transposing or shuffling) all bits. For this operation,
-///   PC201 ~ PC248 are used. You can change the permutation compression
-///   algorithm by changing these parameters. In this case, you can drop other
-///   bits intead of dropping 9th, 18th, 22nd, 25th, 35th, 43rd, and 54th bits.
-///   Dropping other bits does not kill the whole DES encryption/decryption
-///   algorithm.
-/// - IP01 ~ IP64: Inital permutation constants. They are 1-based. For example,
-///   `IP01 = 58` means that the 58th bit of data is moved to the first bit of
-///   the data which is MSB at initial permutation. You can change inital
-///   permutation wire by changing these constants. However, when you change
-///   these constants, you have to remember that you should included all the
-///   bits. You cannot drop any bit. Your dropping any bit will surely kill the
-///   whole DES encryption/decryption algorithm. Final permutation constants is
-///   automatically calculated from Inital permutation constants. FP01 ~ FP64
-///   is inverse version of IP01 ~ IP64. So, FP01 ~ FP64 will be automagically
-///   determined. You don't have to determine them.
-/// - S000 ~ S763: S-Box constants. Its index such as 000, 212, etc. is
-///   0-based. S0XX means S-Box 0, S1XX means S-Box 1, and so on. S000 is the
-///   first element of S-Box 0.
-///   According to [the document](https://page.math.tu-berlin.de/~kant/teaching/hess/krypto-ws2006/des.htm),
-///   the input six bits determines the output of S-Box. The first and the last
-///   bit of the six bits represent in base 2 a number in the decimal range 0 to
-///   3 (or binary 00 to 11) which is row number. The rest middle four bits
-///   represent in base 2 a number in the decimal range 0 to 15 (binary 0000 to
-///   1111) which is column number. It is considered that the DES designers
-///   explained the S-box structure _unnecessarily too complicated_. The
-///   above-described S-box indexing way looks two dimensional, but actually is
-///   one dimensional. So, in this crate, S-boxes are implemented to be
-///   two-dimensional array which is an array of S-boxes. Each S-box is an array
-///   of 64 four-bit numbers. The input six-bit number is used as the index of
-///   the one-dimensional array of these 64 four-bit numbers. So, the S-box
-///   tables have been rearranged to be the one-dimensional array. You can cange
-///   S-Box by changing these constants. However, you have know that *the change
-///   of these constants may hurt the security a lot*. And the principle of
-///   S-box has been unknown so far.
-/// - EP01 ~ EP48: Expansion permutation constants. They are 1-based. For
-///   example, `EP01 = 28` means that the 28th bit of data is moved to the first
-///   bit of the data which is MSB at expansion permutation. They expand the
-///   32-bit right-half data from the Feistel structure of the corresponding
-///   round into 48 bits in order to perform XOR (exclusive OR) with the
-///   corresponding 48-bit round key. When you change these constants, you have
-///   to remember that you should included all the bits. You cannot drop any
-///   bit. Your dropping any bit will surely kill the whole DES
-///   encryption/decryption algorithm.
-/// - TP01 ~ TP32: Translation permutation constans.  They are 1-based. For
-///   example, `TP01 = 16` means that the 16th bit of data is moved to the
-///   first bit of the data which is MSB at translation permutation. You can
-///   change translation permutation wire by changing these constants. However,
-///   when you change these constants, you have to remember that you should
-///   included all the bits. You cannot drop any bit. Your dropping any bit will
-///   surely kill the whole DES encryption/decryption algorithm.
-/// 
-/// # Reference
-/// [Read more](https://en.wikipedia.org/wiki/Data_Encryption_Standard)
-/// about DES in brief.
-/// Watch [this video](https://www.youtube.com/watch?v=kPBJIhpcZgE)
-/// and [this video](https://www.youtube.com/watch?v=l-7YW06BFNs) in series
-/// for more (or deeper or full) understanding of DES.
-/// 
 /// # Quick Start
-/// You have to import (use) the module `des` in order to use official DES
+/// You have to import (use) the module `BigCryptor64` in order to cascade
+/// encryption/decryption algorithms that has 64-bit block size such as DES
 /// as shown in Example 1.
 /// 
 /// # Example 1
 /// ```
-/// use cryptocol::symmetric::{ BigCryptor64, SmallCryptor<u64, 8> };
+/// use cryptocol::symmetric::BigCryptor64;
 /// ```
 /// 
-/// You can instantiate the DES object with `u64` key as Example 2.
+/// You can instantiate the DES object with `u64` key as Example 2 for example.
 /// In this case, you have to take endianness into account.
 /// In little-endianness, 0x_1234567890ABCDEF_u64 is [0xEFu8, 0xCDu8, 0xABu8,
 /// 0x90u8, 0x78u8, 0x56u8, 0x34u8, 0x12u8] while the same 
@@ -780,7 +643,7 @@ impl BigCryptor64
     const FAILURE: u64 = 0;
 
     // pub fn new() -> Self
-    /// Constructs a new object BigCryptor.
+    /// Constructs a new object BigCryptor64.
     /// 
     /// # Features
     /// - In order to encrypt data, object should be instantiated mutable.

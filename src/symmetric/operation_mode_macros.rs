@@ -211,6 +211,146 @@ macro_rules! decrypt_into_array_without_padding {
 pub(super) use decrypt_into_array_without_padding;
 
 
+macro_rules! crypt_with_padding_iso {
+    (u64) => {
+        fn encrypt(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
+        {
+            let mut progress = 0_u64;
+            let mut encoded = iv;
+            let mut block = 0_u64;
+            for _ in 0..length_in_bytes >> 3    // length_in_bytes >> 3 == length_in_bytes / 8
+            {
+                unsafe { copy_nonoverlapping(message.add(progress as usize) as *const u8, (&mut block) as *mut u64 as *mut u8, 8); }
+                encoded = self.encrypt_u64(block ^ encoded);
+                unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
+                progress += 8;
+            }
+            block = 0_u64;
+            let mut block_union = LongUnion::new_with(0b_1000_0000);
+            if progress != length_in_bytes
+            {
+                let tail = (length_in_bytes - progress) as usize;
+                let addr = unsafe { message.add(progress as usize) as *const u8 };
+                unsafe { copy_nonoverlapping(addr, &mut block as *mut u64 as *mut u8, tail); }
+                block_union.set(block);
+                block_union.set_ubyte_(tail, 0b_1000_0000);
+            }
+            encoded = self.encrypt_u64(block_union.get() ^ encoded);
+            unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
+            self.set_successful();
+            progress + 8
+        }
+
+        fn decrypt(&mut self, mut iv: u64, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
+        {
+            let mut progress = 0_u64;
+            let mut decoded: u64;
+            let mut block = 0_u64;
+            for _ in 0..(length_in_bytes >> 3) - 1  // length_in_bytes >> 3 == length_in_bytes / 8
+            {
+                unsafe { copy_nonoverlapping(cipher.add(progress as usize) as *const u8, (&mut block) as *mut u64 as *mut u8, 8); }
+                decoded = iv ^ self.decrypt_u64(block);
+                iv = block;
+                unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), 8); }
+                progress += 8;
+            }
+
+            unsafe { copy_nonoverlapping(cipher.add(progress as usize) as *const u8, (&mut block) as *mut u64 as *mut u8, 8); }
+            decoded = iv ^ self.decrypt_u64(block);
+            let decoded_union = LongUnion::new_with(decoded);
+            for i in 0..8_usize
+            {
+                if decoded_union.get_ubyte_(7-i) == 0
+                    { continue; }
+                if decoded_union.get_ubyte_(7-i) == 0b_1000_0000_u8
+                {
+                    let message_bytes = 7-i;
+                    unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), message_bytes); }
+                    self.set_successful();
+                    return progress + message_bytes as u64;
+                }
+                else
+                {
+                    self.set_failed();
+                    return 0;
+                }
+            }
+            self.set_failed();
+            return 0;
+        }
+    };
+
+    (u128) => {
+        fn encrypt(&mut self, iv: u128, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
+        {
+            let mut progress = 0_u64;
+            let mut encoded = iv;
+            let mut block = 0_u128;
+            for _ in 0..length_in_bytes >> 4    // length_in_bytes >> 4 == length_in_bytes / 16
+            {
+                unsafe { copy_nonoverlapping(message.add(progress as usize) as *const u8, (&mut block) as *mut u128 as *mut u8, 16); }
+                encoded = self.encrypt_u128(block ^ encoded);
+                unsafe { copy_nonoverlapping(&encoded as *const u128 as *const u8, cipher.add(progress as usize), 16); }
+                progress += 16;
+            }
+            block = 0_u128;
+            let mut block_union = LongerUnion::new_with(0b_1000_0000);
+            if progress != length_in_bytes
+            {
+                let tail = (length_in_bytes - progress) as usize;
+                let addr = unsafe { message.add(progress as usize) as *const u8 };
+                unsafe { copy_nonoverlapping(addr, &mut block as *mut u128 as *mut u8, tail); }
+                block_union.set(block);
+                block_union.set_ubyte_(tail, 0b_1000_0000);
+            }
+            encoded = self.encrypt_u128(block_union.get() ^ encoded);
+            unsafe { copy_nonoverlapping(&encoded as *const u128 as *const u8, cipher.add(progress as usize), 16); }
+            self.set_successful();
+            progress + 16
+        }
+
+        fn decrypt(&mut self, mut iv: u128, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
+        {
+            let mut progress = 0_u64;
+            let mut decoded: u128;
+            let mut block = 0_u128;
+            for _ in 0..(length_in_bytes >> 4) - 1  // length_in_bytes >> 4 == length_in_bytes / 16
+            {
+                unsafe { copy_nonoverlapping(cipher.add(progress as usize) as *const u8, (&mut block) as *mut u128 as *mut u8, 16); }
+                decoded = iv ^ self.decrypt_u128(block);
+                iv = block;
+                unsafe { copy_nonoverlapping(&decoded as *const u128 as *const u8, message.add(progress as usize), 16); }
+                progress += 16;
+            }
+
+            unsafe { copy_nonoverlapping(cipher.add(progress as usize) as *const u8, (&mut block) as *mut u128 as *mut u8, 16); }
+            decoded = iv ^ self.decrypt_u128(block);
+            let decoded_union = LongerUnion::new_with(decoded);
+            for i in 0..16_usize
+            {
+                if decoded_union.get_ubyte_(15-i) == 0
+                    { continue; }
+                if decoded_union.get_ubyte_(15-i) == 0b_1000_0000_u8
+                {
+                    let message_bytes = 15-i;
+                    unsafe { copy_nonoverlapping(&decoded as *const u128 as *const u8, message.add(progress as usize), message_bytes); }
+                    self.set_successful();
+                    return progress + message_bytes as u64;
+                }
+                else
+                {
+                    self.set_failed();
+                    return 0;
+                }
+            }
+            self.set_failed();
+            return 0;
+        }
+    };
+}
+pub(super) use crypt_with_padding_iso;
+
+
 macro_rules! crypt_into_something_with_padding {
     ($type:ty) => {
         fn encrypt_into_array<U, const N: usize>(&mut self, iv: $type, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
@@ -281,3 +421,100 @@ macro_rules! crypt_into_something_without_padding {
     };
 }
 pub(super) use crypt_into_something_without_padding;
+
+
+
+
+
+
+/*
+macro_rules! mask_bits {
+    (u64)   => { 3 };
+    (u128)  => { 4 };
+}
+
+macro_rules! jump_bytes {
+    (u64)   => { 8 };
+    (u128)  => { 16 };
+}
+
+macro_rules! union_type {
+    (u64)   => { LongUnion };
+    (u128)  => { LongerUnion };
+}
+
+macro_rules! func {
+    (u64)   => { Self::encrypt_u64 };
+    (u128)  => { Self::encrypt_u128 };
+}
+
+macro_rules! crypt_with_padding_iso {
+    ($type:ty) => {
+        fn encrypt(&mut self, iv: $type, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
+        {
+            let mut progress = 0_u64;
+            let mut encoded = iv;
+            let mut block: $type = 0;
+            for _ in 0..length_in_bytes >> mask_bits!($type)    // length_in_bytes >> $multi == length_in_bytes / 8 (or 16)
+            {
+                unsafe { copy_nonoverlapping(message.add(progress as usize) as *const u8, (&mut block) as *mut $type as *mut u8, jump_bytes!{$type}); }
+                encoded = (func!{$type})(self, block ^ encoded);
+                unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), jump_bytes!{$type}); }
+                progress += jump_bytes!{$type};
+            }
+            block = 0;
+            let mut block_union = union_type!{$type}::new_with(0b_1000_0000);
+            if progress != length_in_bytes
+            {
+                let tail = (length_in_bytes - progress) as usize;
+                let addr = unsafe { message.add(progress as usize) as *const u8 };
+                unsafe { copy_nonoverlapping(addr, &mut block as *mut $type as *mut u8, tail); }
+                block_union.set(block);
+                block_union.set_ubyte_(tail, 0b_1000_0000);
+            }
+            encoded = (func!{$type})(self, block_union.get() ^ encoded);
+            unsafe { copy_nonoverlapping(&encoded as *const $type as *const u8, cipher.add(progress as usize), jump_bytes!{$type}); }
+            self.set_successful();
+            progress + jump_bytes!{$type}
+        }
+
+        fn decrypt(&mut self, mut iv: $type, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
+        {
+            let mut progress = 0_u64;
+            let mut decoded: $type;
+            let mut block: $type = 0;
+            for _ in 0..(length_in_bytes >> mask_bits!{$type}) - 1  // length_in_bytes >> 4 == length_in_bytes / 16
+            {
+                unsafe { copy_nonoverlapping(cipher.add(progress as usize) as *const u8, (&mut block) as *mut $type as *mut u8, jump_bytes!{$type}); }
+                decoded = iv ^ (func!{$type})(self, block);
+                iv = block;
+                unsafe { copy_nonoverlapping(&decoded as *const $type as *const u8, message.add(progress as usize), 1jump_bytes!{$type}); }
+                progress += jump_bytes!{$type};
+            }
+
+            unsafe { copy_nonoverlapping(cipher.add(progress as usize) as *const u8, (&mut block) as *mut $type as *mut u8, jump_bytes!{$type}); }
+            decoded = iv ^ (func!{$type})(self, block);
+            let decoded_union = union_type!{$type}::new_with(decoded);
+            for i in 0..jump_bytes!{$type}
+            {
+                if decoded_union.get_ubyte_(jump_bytes!{$type}-1-i) == 0
+                    { continue; }
+                if decoded_union.get_ubyte_(jump_bytes!{$type}-1-i) == 0b_1000_0000_u8
+                {
+                    let message_bytes = jump_bytes!{$type}-1-i;
+                    unsafe { copy_nonoverlapping(&decoded as *const $type as *const u8, message.add(progress as usize), message_bytes); }
+                    self.set_successful();
+                    return progress + message_bytes as u64;
+                }
+                else
+                {
+                    self.set_failed();
+                    return 0;
+                }
+            }
+            self.set_failed();
+            return 0;
+        }
+    };
+}
+*/
