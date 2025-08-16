@@ -43,16 +43,20 @@ ECB_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
 {
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
+        if (length_in_bytes < Self::BLOCK_SIZE as u64) || (length_in_bytes % Self::BLOCK_SIZE as u64 != 0)
+        {
+            self.set_failed();
+            return 0;
+        }
         let mut progress = 0_usize;
         let mut encoded: [IntUnion; NB];
         let mut block = [IntUnion::new(); NB];
-        let size = NB * 4;
-        for _ in 0..length_in_bytes / size as u64
+        for _ in 0..length_in_bytes / Self::BLOCK_SIZE as u64
         {
-            unsafe { copy_nonoverlapping(message.add(progress as usize), block.as_mut_ptr() as *mut u8, size); }
+            unsafe { copy_nonoverlapping(message.add(progress as usize), block.as_mut_ptr() as *mut u8, Self::BLOCK_SIZE); }
             encoded = self.encrypt_unit(&block);
-            unsafe { copy_nonoverlapping(encoded.as_ptr() as *const u8, cipher.add(progress as usize), size); }
-            progress += size;
+            unsafe { copy_nonoverlapping(encoded.as_ptr() as *const u8, cipher.add(progress as usize), Self::BLOCK_SIZE); }
+            progress += Self::BLOCK_SIZE;
         }
 
         block.fill(IntUnion::new());
@@ -65,15 +69,14 @@ ECB_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
             block[tail >> 2].set_ubyte_(tail & 0b11, 0b_1000_0000); // tail >> 2 == tail / 4,  tail & 0b11 == tail % 4
         }
         encoded = self.encrypt_unit(&block);
-        unsafe { copy_nonoverlapping(encoded.as_ptr() as *const u8, cipher.add(progress as usize), size); }
+        unsafe { copy_nonoverlapping(encoded.as_ptr() as *const u8, cipher.add(progress as usize), Self::BLOCK_SIZE); }
         self.set_successful();
-        progress as u64 + size as u64
+        progress as u64 + Self::BLOCK_SIZE as u64
     }
 
     fn decrypt(&mut self, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
     {
-        let size = NB * 4;
-        if length_in_bytes % size as u64 != 0
+        if length_in_bytes % Self::BLOCK_SIZE as u64 != 0
         {
             self.set_failed();
             return 0;
@@ -81,32 +84,32 @@ ECB_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
         let mut progress = 0_usize;
         let mut decoded: [IntUnion; NB];
         let mut block = [IntUnion::new(); NB];
-        if length_in_bytes > size as u64
+        if length_in_bytes > Self::BLOCK_SIZE as u64
         {
-            for _ in 0..(length_in_bytes / size as u64 - 1)
+            for _ in 0..(length_in_bytes / Self::BLOCK_SIZE as u64 - 1)
             {
-                unsafe { copy_nonoverlapping(cipher.add(progress as usize), block.as_mut_ptr() as *mut u8, size); }
+                unsafe { copy_nonoverlapping(cipher.add(progress as usize), block.as_mut_ptr() as *mut u8, Self::BLOCK_SIZE); }
                 decoded = self.decrypt_unit(&block);
-                unsafe { copy_nonoverlapping(decoded.as_ptr() as *const u8, message.add(progress as usize), size); }
-                progress += size;
+                unsafe { copy_nonoverlapping(decoded.as_ptr() as *const u8, message.add(progress as usize), Self::BLOCK_SIZE); }
+                progress += Self::BLOCK_SIZE;
             }
         }
 
-        unsafe { copy_nonoverlapping(cipher.add(progress as usize), block.as_mut_ptr() as *mut u8, size); }
+        unsafe { copy_nonoverlapping(cipher.add(progress as usize), block.as_mut_ptr() as *mut u8, Self::BLOCK_SIZE); }
         decoded = self.decrypt_unit(&block);
         let message_bytes: usize;
-        for i in 1..(size + 1)
+        for i in 1..(Self::BLOCK_SIZE + 1)
         {
-            if unsafe { *((decoded.as_ptr() as *const u8).add(size - i)) } == 0
+            if unsafe { *((decoded.as_ptr() as *const u8).add(Self::BLOCK_SIZE - i)) } == 0
                 { continue; }
-            if unsafe { *((decoded.as_ptr() as *const u8).add(size - i)) } != 0b_1000_0000_u8
+            if unsafe { *((decoded.as_ptr() as *const u8).add(Self::BLOCK_SIZE - i)) } != 0b_1000_0000_u8
             {
                 self.set_failed();
                 return 0;
             }
             else
             {
-                message_bytes = size - i;
+                message_bytes = Self::BLOCK_SIZE - i;
                 unsafe { copy_nonoverlapping(decoded.as_ptr() as *const u8, message.add(progress as usize), message_bytes); }
                 self.set_successful();
                 return progress as u64 + message_bytes as u64;

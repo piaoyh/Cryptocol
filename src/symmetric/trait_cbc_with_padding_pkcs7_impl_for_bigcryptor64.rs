@@ -17,16 +17,16 @@
 use std::ptr::copy_nonoverlapping;
 
 use crate::number::{ SmallUInt, LongUnion };
-use crate::symmetric::{ CBC_ISO, BigCryptor64 };
-use crate::symmetric::{ crypt_cbc_with_padding_iso, crypt_into_something_with_padding,
+use crate::symmetric::{ CBC_PKCS7, BigCryptor64 };
+use crate::symmetric::{ crypt_cbc_with_padding_pkcs7, crypt_into_something_with_padding,
                         encrypt_into_array, encrypt_into_vec,
                         decrypt_into_array,
                         pre_encrypt_into_array, pre_encrypt_into_vec,
                         pre_decrypt_into_array };
 
 
-impl CBC_ISO<u64> for BigCryptor64
+impl CBC_PKCS7<u64> for BigCryptor64
 {
-    crypt_cbc_with_padding_iso!{u64}
+    crypt_cbc_with_padding_pkcs7!{u64}
     crypt_into_something_with_padding!{u64}
 }

@@ -346,7 +346,8 @@ ECB_PKCS7<u64> for DES_Generic<ROUND, SHIFT,
 
     fn decrypt(&mut self, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
     {
-        if length_in_bytes & 0b111 != 0
+        
+        if (length_in_bytes < Self::BLOCK_SIZE as u64) || (length_in_bytes % Self::BLOCK_SIZE as u64 != 0)
         {
             self.set_failed();
             return 0;

@@ -273,22 +273,43 @@ fn aes_quick_start()
 fn aes_import_modules()
 {
     println!("aes_import_modules()");
+    
     use cryptocol::symmetric::AES_128;
     use cryptocol::symmetric::AES_192;
     use cryptocol::symmetric::AES_256;
-
-    use cryptocol::symmetric::Rijndael_256_256;
-    use cryptocol::symmetric::Rijndael_256_192;
-    use cryptocol::symmetric::Rijndael_256_128;
-    use cryptocol::symmetric::Rijndael_192_256;
-    use cryptocol::symmetric::Rijndael_192_192;
-    use cryptocol::symmetric::Rijndael_192_128;
-    use cryptocol::symmetric::Rijndael_128_256;
-    use cryptocol::symmetric::Rijndael_128_192;
+    
     use cryptocol::symmetric::Rijndael_128_128;
-
-    use cryptocol::symmetric::Rijndael_32_32;
+    use cryptocol::symmetric::Rijndael_128_192;
+    use cryptocol::symmetric::Rijndael_128_256;
+    use cryptocol::symmetric::Rijndael_128_384;
+    use cryptocol::symmetric::Rijndael_128_512;
+    
+    use cryptocol::symmetric::Rijndael_192_128;
+    use cryptocol::symmetric::Rijndael_192_192;
+    use cryptocol::symmetric::Rijndael_192_256;
+    use cryptocol::symmetric::Rijndael_192_384;
+    use cryptocol::symmetric::Rijndael_192_512;
+    
+    use cryptocol::symmetric::Rijndael_256_128;
+    use cryptocol::symmetric::Rijndael_256_192;
+    use cryptocol::symmetric::Rijndael_256_256;
+    use cryptocol::symmetric::Rijndael_256_384;
+    use cryptocol::symmetric::Rijndael_256_512;
+    
+    use cryptocol::symmetric::Rijndael_384_128;
+    use cryptocol::symmetric::Rijndael_384_192;
+    use cryptocol::symmetric::Rijndael_384_256;
+    use cryptocol::symmetric::Rijndael_384_384;
+    use cryptocol::symmetric::Rijndael_384_512;
+    
+    use cryptocol::symmetric::Rijndael_512_128;
+    use cryptocol::symmetric::Rijndael_512_192;
+    use cryptocol::symmetric::Rijndael_512_256;
+    use cryptocol::symmetric::Rijndael_512_384;
+    use cryptocol::symmetric::Rijndael_512_512;
+    
     use cryptocol::symmetric::Rijndael_64_64;
+    use cryptocol::symmetric::Rijndael_32_32;
     println!("-------------------------------");
 }
 

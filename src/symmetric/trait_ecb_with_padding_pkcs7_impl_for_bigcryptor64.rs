@@ -60,7 +60,7 @@ impl ECB_PKCS7<u64> for BigCryptor64
 
     fn decrypt(&mut self, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
     {
-        if length_in_bytes < 8
+        if (length_in_bytes < Self::BLOCK_SIZE as u64) || (length_in_bytes % Self::BLOCK_SIZE as u64 != 0)
         {
             self.set_failed();
             return 0;

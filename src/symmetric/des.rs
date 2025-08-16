@@ -894,24 +894,33 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 /// - This crate provides two padding ways: ISO 7816-4 and PKCS #7.
 /// - The operation modes ECB, CBC and PCBC requires padding bytes.
 /// - You can combine three operation modes and two padding ways.
-/// - The operation modes CFB, OFB, and CTR does not require padding bytes.
-/// 
-/// encrypt(), 
-/// encrypt_[vec|array|str|string]_with_padding_[pkcs7|iso]_[ecb|cbc|pcbc]_into_vec()
-/// and encrypt_[vec|array|str|string]_[cfb|ofb|ctr]_into_vec() to encrypt,
-/// decrypt_[vec|array]_with_padding_[pkcs7|iso]_into_[vec|string]() and
-/// decrypt_[vec|array]_[cfb|ofb|ctr]_into_[vec|string]() to decrypt. However,
-/// you are encouraged to avoid using the methods such as
-/// encrypt_with_padding_[pkcs7|iso](), encrypt_[cfb|ofb|ctr](),
-/// decrypt_with_padding_[pkcs7|iso](), and decrypt_[cfb|ofb|ctr]()
-/// that receive pointer arguments and the data length
-/// unless you develope in hybrid programming context especially with C/C++. 
-/// Instead, you are highly encouraged to use the methods 
-/// encrypt_[vec|array|str|string]_with_padding_[pkcs7|iso]_[ecb|cbc|pcbc]_into_vec(),
-/// encrypt_[vec|array|str|string]_[cfb|ofb|ctr]_into_vec()
-/// decrypt_[vec|array]_with_padding_[pkcs7|iso]_into_[vec|string](), and
-/// decrypt_[vec|array]_[cfb|ofb|ctr]_into_[vec|string]() because you don't
-/// have to consider the length of data so that you will meak less mistakes.
+/// - The operation modes
+///   [`CFB`](./trait.CFB.html#trait.CFB),
+///   [`OFB`](./trait.OFB.html#trait.OFB), and
+///   [`CTR`](./trait.CTR.html#trait.CTR)
+///   does not require padding bytes.
+/// - The traits that implements combination of operation modes and padding
+///   ways are provided such as
+///   [`ECB_PKCS7`](./trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+///   [`ECB_ISO`](./trait.ECB_ISO.html#trait.ECB_ISO),
+///   [`CBC_PKCS7`](./trait.CBC_PKCS7.html#trait.ECB_PKCS7),
+///   [`CBC_ISO`](./trait.CBC_ISO.html#trait.CBC_ISO),
+///   [`PCBC_PKCS7`](./trait.PCBC_PKCS7.html#trait.PCBC_PKCS7), and
+///   [`PCBC_ISO`](./trait.PCBC_ISO.html#trait.PCBC_ISO).
+/// - You can find detaild instructions and their helpful examples
+///   if you go through those links.
+///
+/// In summary,
+///
+/// |      | padding PKCS7                                          | padding ISO                                      | no padding                        |
+/// |------|--------------------------------------------------------|--------------------------------------------------|-----------------------------------|
+/// | ECB  | [ECB_PKCS7](./trait.ECB_PKCS7.html#trait.ECB_PKCS7)    | [ECB_ISO](./trait.ECB_ISO.html#trait.ECB_ISO)    |                                   |
+/// | CBC  | [CBC_PKCS7](./trait.CBC_PKCS7.html#trait.ECB_PKCS7)    | [CBC_ISO](./trait.CBC_ISO.html#trait.CBC_ISO)    |                                   |
+/// | PCBC | [PCBC_PKCS7](./trait.PCBC_PKCS7.html#trait.PCBC_PKCS7) | [PCBC_ISO](./trait.PCBC_ISO.html#trait.PCBC_ISO) |                                   |
+/// | CFB  |                                                        |                                                  | [CFB](./trait.CFB.html#trait.CFB) |
+/// | OFB  |                                                        |                                                  | [OFB](./trait.OFB.html#trait.OFB) |
+/// | CTR  |                                                        |                                                  | [CTR](./trait.CTR.html#trait.CTR) |
+///
 #[allow(non_camel_case_types)]
 #[derive(Clone)]
 pub struct DES_Generic<const ROUND: usize = 16, const SHIFT: u128 = 0b_1000000100000011,
@@ -1566,8 +1575,8 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///
     /// # Features
     /// - In order to encrypt data, object should be instantiated mutable.
-    /// - This method sets the key to be [0, 0, 0, 0, 0, 0, 0, 0].
-    /// - Do not use this default key [0, 0, 0, 0, 0, 0, 0, 0]
+    /// - This method sets the key to be [0_u8, 0, 0, 0, 0, 0, 0, 0].
+    /// - Do not use this default key [0_u8, 0, 0, 0, 0, 0, 0, 0]
     ///   because it is known as one of the weak keys.
     ///
     /// # Example 1
@@ -2209,6 +2218,24 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///
     /// # Output
     /// This method returns the encrypted data of `u64`-type from `message`.
+    /// 
+    /// # Counterpart Methods
+    /// For each trait
+    /// [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+    /// [`CBC_PKCS7`](symmetric/trait.CBC_PKCS7.html#trait.ECB_PKCS7),
+    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+    /// [`PCBC_PKCS7`](symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
+    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
+    /// there are provided useful counterpart methods:
+    /// encrypt(), encrypt_into_vec(), encrypt_into_array(),
+    /// encrypt_str(), encrypt_str_into_vec(), encrypt_str_into_array(),
+    /// encrypt_string(), encrypt_string_into_vec(), encrypt_string_into_array(),
+    /// encrypt_vec(), encrypt_vec_into_vec(), encrypt_vec_into_array(),
+    /// encrypt_array(), encrypt_array_into_vec(), and encrypt_array_into_array().
     ///
     /// # Example 1 for Normal case
     /// ```
@@ -2243,7 +2270,26 @@ impl <const ROUND: usize, const SHIFT: u128,
     ///
     /// # Output
     /// This method returns the decrypted data of `u64`-type from `cipher`.
-    ///
+    /// 
+    /// # Counterpart Methods
+    /// For each trait
+    /// [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+    /// [`CBC_PKCS7`](symmetric/trait.CBC_PKCS7.html#trait.ECB_PKCS7),
+    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+    /// [`PCBC_PKCS7`](symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
+    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
+    /// there are provided useful counterpart methods:
+    /// decrypt(), decrypt_into_vec(), decrypt_into_array(),
+    /// decrypt_into_string(),
+    /// decrypt_vec(), decrypt_vec_into_vec(), decrypt_vec_into_array(),
+    /// decrypt_vec_into_string(),
+    /// decrypt_array(), decrypt_array_into_vec(), decrypt_array_into_array(),
+    /// and decrypt_array_into_string().
+    /// 
     /// # Example 1 for Normal case
     /// ```
     /// use cryptocol::symmetric::DES;
@@ -2364,54 +2410,23 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// in ECB (Electronic CodeBook) mode.
     ///
     /// # Counterpart methods
-    /// - If you need to encrypt data with padding bits according
-    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
-    ///   in ECB operation mode, you may need to import (use)
-    ///   `cryptocol::symmetric::ECB_PKCS7`.
-    ///   see [here](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)
-    /// - If you need to encrypt data with padding bits according ISO
-    ///   in ECB operation mode, you may need to import (use)
-    ///   `cryptocol::symmetric::ECB_ISO`.
-    ///   see [here](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)
-    /// - If you need to encrypt data with padding bits according
-    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
-    ///   in CBC operation mode, you may need to import (use)
-    ///   `cryptocol::symmetric::CBC_PKCS7`.
-    ///   see [here](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)
-    /// - If you need to encrypt data with padding bits according ISO
-    ///   in CBC operation mode, you may need to import (use)
-    ///   `cryptocol::symmetric::CBC_ISO`.
-    ///   see [here](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)
-    /// - If you need to encrypt data with padding bits according
-    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
-    ///   in PCBC operation mode, you may need to import (use)
-    ///   `cryptocol::symmetric::PCBC_PKCS7`.
-    ///   see [here](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html)
-    /// - If you need to encrypt data with padding bits according ISO
-    ///   in PCBC operation mode, you may need to import (use)
-    ///   `cryptocol::symmetric::PCBC_ISO`.
-    ///   see [here](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html)
-    /// - If you need to encrypt data in CFB operation mode,
-    ///   you may need to import (use) `cryptocol::symmetric::CFB`.
-    ///   see [here](./traits_cfb/trait.CFB.html)
-    /// - If you need to encrypt data in OFB operation mode,
-    ///   you may need to import (use) `cryptocol::symmetric::OFB`.
-    ///   see [here](./traits_ofb/trait.OFB.html)
-    /// - If you need to encrypt data in CTR operation mode,
-    ///   you may need to import (use) `cryptocol::symmetric::CTR`.
-    ///   see [here](./traits_ctr/trait.CTR.html)
-    ///
-    /// In summary,
-    ///
-    /// |      | padding PKCS7                                                        | padding ISO                                                    | no padding                         |
-    /// |------|----------------------------------------------------------------------|----------------------------------------------------------------|------------------------------------|
-    /// | ECB  | [ECB_PKCS7](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)    | [ECB_ISO](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)    |                                    |
-    /// | CBC  | [CBC_PKCS7](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)    | [CBC_ISO](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)    |                                    |
-    /// | PCBC | [PCBC_PKCS7](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html) | [PCBC_ISO](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html) |                                    |
-    /// | CFB  |                                                                      |                                                                | [CFB](./traits_cfb/trait.CFB.html) |
-    /// | OFB  |                                                                      |                                                                | [OFB](./traits_ofb/trait.OFB.html) |
-    /// | CTR  |                                                                      |                                                                | [CTR](./traits_ctr/trait.CTR.html) |
-    ///
+    /// For each trait
+    /// [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+    /// [`CBC_PKCS7`](symmetric/trait.CBC_PKCS7.html#trait.ECB_PKCS7),
+    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+    /// [`PCBC_PKCS7`](symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
+    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
+    /// there are provided useful counterpart methods:
+    /// encrypt(), encrypt_into_vec(), encrypt_into_array(),
+    /// encrypt_str(), encrypt_str_into_vec(), encrypt_str_into_array(),
+    /// encrypt_string(), encrypt_string_into_vec(), encrypt_string_into_array(),
+    /// encrypt_vec(), encrypt_vec_into_vec(), encrypt_vec_into_array(),
+    /// encrypt_array(), encrypt_array_into_vec(), and encrypt_array_into_array(),.
+    /// 
     /// # Example 1 for Normal case
     /// ```
     /// use cryptocol::symmetric::DES;
@@ -2460,56 +2475,26 @@ impl <const ROUND: usize, const SHIFT: u128,
     /// # Features
     /// This method decrypts multiple of 64-bit data without padding anything
     /// in ECB (Electronic CodeBook) mode.
-    ///
-    /// # Counterpart methods
-    /// - If you need to decrypt data with padding bits according
-    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
-    ///   in ECB operation mode, you may need to import (use)
-    ///   `cryptocol::symmetric::ECB_PKCS7`.
-    ///   see [here](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)
-    /// - If you need to decrypt data with padding bits according ISO
-    ///   in ECB operation mode, you may need to import (use)
-    ///   `cryptocol::symmetric::ECB_ISO`.
-    ///   see [here](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)
-    /// - If you need to decrypt data with padding bits according
-    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
-    ///   in CBC operation mode, you may need to import (use)
-    ///   `cryptocol::symmetric::CBC_PKCS7`.
-    ///   see [here](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)
-    /// - If you need to decrypt data with padding bits according ISO
-    ///   in CBC operation mode, you may need to import (use)
-    ///   `cryptocol::symmetric::CBC_ISO`.
-    ///   see [here](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)
-    /// - If you need to decrypt data with padding bits according
-    ///   [PKCS #7](https://node-security.com/posts/cryptography-pkcs-7-padding/)
-    ///   in PCBC operation mode, you may need to import (use)
-    ///   `cryptocol::symmetric::PCBC_PKCS7`.
-    ///   see [here](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html)
-    /// - If you need to decrypt data with padding bits according ISO
-    ///   in PCBC operation mode, you may need to import (use)
-    ///   `cryptocol::symmetric::PCBC_ISO`.
-    ///   see [here](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html)
-    /// - If you need to decrypt data in CFB operation mode,
-    ///   you may need to import (use) `cryptocol::symmetric::CFB`.
-    ///   see [here](./traits_cfb/trait.CFB.html)
-    /// - If you need to decrypt data in OFB operation mode,
-    ///   you may need to import (use) `cryptocol::symmetric::OFB`.
-    ///   see [here](./traits_ofb/trait.OFB.html)
-    /// - If you need to decrypt data in CTR operation mode,
-    ///   you may need to import (use) `cryptocol::symmetric::CTR`.
-    ///   see [here](./traits_ctr/trait.CTR.html)
-    ///
-    /// In summary,
-    ///
-    /// |      | padding PKCS7                                                        | padding ISO                                                    | no padding                         |
-    /// |------|----------------------------------------------------------------------|----------------------------------------------------------------|------------------------------------|
-    /// | ECB  | [ECB_PKCS7](./traits_ecb_with_padding_pkcs7/trait.ECB_PKCS7.html)    | [ECB_ISO](./traits_ecb_with_padding_iso/trait.ECB_ISO.html)    |                                    |
-    /// | CBC  | [CBC_PKCS7](./traits_cbc_with_padding_pkcs7/trait.CBC_PKCS7.html)    | [CBC_ISO](./traits_cbc_with_padding_iso/trait.CBC_ISO.html)    |                                    |
-    /// | PCBC | [PCBC_PKCS7](./traits_pcbc_with_padding_pkcs7/trait.PCBC_PKCS7.html) | [PCBC_ISO](./traits_pcbc_with_padding_iso/trait.PCBC_ISO.html) |                                    |
-    /// | CFB  |                                                                      |                                                                | [CFB](./traits_cfb/trait.CFB.html) |
-    /// | OFB  |                                                                      |                                                                | [OFB](./traits_ofb/trait.OFB.html) |
-    /// | CTR  |                                                                      |                                                                | [CTR](./traits_ctr/trait.CTR.html) |
-    ///
+    /// 
+    /// # Counterpart Methods
+    /// For each trait
+    /// [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+    /// [`CBC_PKCS7`](symmetric/trait.CBC_PKCS7.html#trait.ECB_PKCS7),
+    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+    /// [`PCBC_PKCS7`](symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
+    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
+    /// there are provided useful counterpart methods:
+    /// decrypt(), decrypt_into_vec(), decrypt_into_array(),
+    /// decrypt_into_string(),
+    /// decrypt_vec(), decrypt_vec_into_vec(), decrypt_vec_into_array(),
+    /// decrypt_vec_into_string(),
+    /// decrypt_array(), decrypt_array_into_vec(), decrypt_array_into_array(),
+    /// and decrypt_array_into_string().
+    /// 
     /// # Example 1 for Normal case
     /// ```
     /// use cryptocol::symmetric::DES;

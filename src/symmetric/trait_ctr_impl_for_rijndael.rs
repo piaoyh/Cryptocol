@@ -43,20 +43,19 @@ CTR<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
 {
     fn encrypt(&mut self, nonce: [u32; NB], message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
-        let size = NB * 4;
         let mut progress = 0_usize;
         let mut block = [IntUnion::new(); NB];
         let mut nonce_union = [IntUnion::new(); NB];
         for i in 0..NB
             { nonce_union[i].set(nonce[i]); }
 
-        for _ in 0..length_in_bytes / size as u64
+        for _ in 0..length_in_bytes / Self::BLOCK_SIZE as u64
         {
-            unsafe { copy_nonoverlapping(message.add(progress as usize), block.as_mut_ptr() as *mut u8, size); }
+            unsafe { copy_nonoverlapping(message.add(progress as usize), block.as_mut_ptr() as *mut u8, Self::BLOCK_SIZE); }
             let mut coded = self.encrypt_unit(&nonce_union);
             for i in 0..NB
                 { coded[i] ^= block[i]; }
-            unsafe { copy_nonoverlapping(coded.as_ptr() as *const u8, cipher.add(progress as usize), size); }
+            unsafe { copy_nonoverlapping(coded.as_ptr() as *const u8, cipher.add(progress as usize), Self::BLOCK_SIZE); }
             for i in 0..NB
             {
                 let old = nonce_union[i];
@@ -64,7 +63,7 @@ CTR<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
                 if nonce_union[i] > old
                     { break; }
             }
-            progress += size;
+            progress += Self::BLOCK_SIZE;
         }
 
         if progress as u64 == length_in_bytes

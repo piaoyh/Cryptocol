@@ -8,7 +8,7 @@ keywords = ["aes", "sha2", "sha3", "sha512", "des"]
 license = "MIT OR Apache-2.0"
 name = "cryptocol"
 readme = "README.md"
-version = "0.13.0"
+version = "0.13.1"
 # repository = "https://github.com/piaoyh/cryptocol".
 
 

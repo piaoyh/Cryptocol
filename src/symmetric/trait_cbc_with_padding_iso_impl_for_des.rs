@@ -18,7 +18,7 @@ use std::ptr::copy_nonoverlapping;
 
 use crate::number::{ SmallUInt, LongUnion };
 use crate::symmetric::{ CBC_ISO, DES_Generic };
-use crate::symmetric::{ crypt_with_padding_iso, crypt_into_something_with_padding,
+use crate::symmetric::{ crypt_cbc_with_padding_iso, crypt_into_something_with_padding,
                         encrypt_into_array, encrypt_into_vec,
                         decrypt_into_array,
                         pre_encrypt_into_array, pre_encrypt_into_vec,
@@ -313,6 +313,6 @@ CBC_ISO<u64> for DES_Generic<ROUND, SHIFT,
                                 S748, S749, S750, S751, S752, S753, S754, S755,
                                 S756, S757, S758, S759, S760, S761, S762, S763>
 {
-    crypt_with_padding_iso!{u64}
+    crypt_cbc_with_padding_iso!{u64}
     crypt_into_something_with_padding!{u64}
 }

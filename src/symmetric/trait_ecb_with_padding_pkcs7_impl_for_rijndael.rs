@@ -47,20 +47,19 @@ ECB_PKCS7<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
         let mut progress = 0_usize;
         let mut encoded: [IntUnion; NB];
         let mut block = [IntUnion::new(); NB];
-        let size = NB * 4;
-        for _ in 0..length_in_bytes / size as u64
+        for _ in 0..length_in_bytes / Self::BLOCK_SIZE as u64
         {
-            unsafe { copy_nonoverlapping(message.add(progress as usize), block.as_mut_ptr() as *mut u8, size); }
+            unsafe { copy_nonoverlapping(message.add(progress as usize), block.as_mut_ptr() as *mut u8, Self::BLOCK_SIZE); }
             encoded = self.encrypt_unit(&block);
-            unsafe { copy_nonoverlapping(encoded.as_ptr() as *const u8, cipher.add(progress as usize), size); }
-            progress += size;
+            unsafe { copy_nonoverlapping(encoded.as_ptr() as *const u8, cipher.add(progress as usize), Self::BLOCK_SIZE); }
+            progress += Self::BLOCK_SIZE;
         }
 
-        block.fill(IntUnion::new_with_ubytes([size as u8, size as u8, size as u8, size as u8]));
+        block.fill(IntUnion::new_with_ubytes([Self::BLOCK_SIZE as u8, Self::BLOCK_SIZE as u8, Self::BLOCK_SIZE as u8, Self::BLOCK_SIZE as u8]));
         if progress as u64 != length_in_bytes
         {
             let tail = (length_in_bytes - progress as u64) as usize;
-            let padding = (size - tail) as u8;
+            let padding = (Self::BLOCK_SIZE - tail) as u8;
             let addr = unsafe { message.add(progress as usize) as *const u8 };
             unsafe { copy_nonoverlapping(addr, block.as_mut_ptr() as *mut u8, tail); }
             let nb = tail >> 2;     // tail >> 2 == tail / 4
@@ -74,15 +73,14 @@ ECB_PKCS7<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
             }
         }
         encoded = self.encrypt_unit(&block);
-        unsafe { copy_nonoverlapping(encoded.as_ptr() as *const u8, cipher.add(progress as usize), size); }
+        unsafe { copy_nonoverlapping(encoded.as_ptr() as *const u8, cipher.add(progress as usize), Self::BLOCK_SIZE); }
         self.set_successful();
-        progress as u64 + size as u64
+        progress as u64 + Self::BLOCK_SIZE as u64
     }
 
     fn decrypt(&mut self, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
     {
-        let size = NB * 4;
-        if length_in_bytes % size as u64 != 0
+        if (length_in_bytes < Self::BLOCK_SIZE as u64) || (length_in_bytes % Self::BLOCK_SIZE as u64 != 0)
         {
             self.set_failed();
             return 0;
@@ -90,27 +88,27 @@ ECB_PKCS7<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
         let mut progress = 0_usize;
         let mut decoded: [IntUnion; NB];
         let mut block = [IntUnion::new(); NB];
-        if length_in_bytes > size as u64
+        if length_in_bytes > Self::BLOCK_SIZE as u64
         {
-            for _ in 0..(length_in_bytes / size as u64 - 1)
+            for _ in 0..(length_in_bytes / Self::BLOCK_SIZE as u64 - 1)
             {
-                unsafe { copy_nonoverlapping(cipher.add(progress as usize), block.as_mut_ptr() as *mut u8, size); }
+                unsafe { copy_nonoverlapping(cipher.add(progress as usize), block.as_mut_ptr() as *mut u8, Self::BLOCK_SIZE); }
                 decoded = self.decrypt_unit(&block);
-                unsafe { copy_nonoverlapping(decoded.as_ptr() as *const u8, message.add(progress as usize), size); }
-                progress += size;
+                unsafe { copy_nonoverlapping(decoded.as_ptr() as *const u8, message.add(progress as usize), Self::BLOCK_SIZE); }
+                progress += Self::BLOCK_SIZE;
             }
         }
 
-        unsafe { copy_nonoverlapping(cipher.add(progress as usize), block.as_mut_ptr() as *mut u8, size); }
+        unsafe { copy_nonoverlapping(cipher.add(progress as usize), block.as_mut_ptr() as *mut u8, Self::BLOCK_SIZE); }
         decoded = self.decrypt_unit(&block);
         let padding_bytes = decoded[NB-1].get_ubyte_(3);
-        if padding_bytes as usize > size
+        if padding_bytes as usize > Self::BLOCK_SIZE
         {
             self.set_failed();
             return 0;
         }
-        let message_bytes = size - padding_bytes as usize;
-        for i in message_bytes..size
+        let message_bytes = Self::BLOCK_SIZE - padding_bytes as usize;
+        for i in message_bytes..Self::BLOCK_SIZE
         {
             if unsafe { *((decoded.as_ptr() as *const u8).add(i)) } != padding_bytes
             {

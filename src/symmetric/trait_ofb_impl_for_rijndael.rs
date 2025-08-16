@@ -44,21 +44,20 @@ OFB<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
 {
     fn encrypt(&mut self, iv: [u32; NB], message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
-        let size = NB * 4;
         let mut progress = 0_usize;
         let mut block = [IntUnion::new(); NB];
         let mut iivv = [IntUnion::new(); NB];
         let mut coded = [IntUnion::new(); NB];
         for i in 0..NB
             { iivv[i].set(iv[i]); }
-        for _ in 0..length_in_bytes / size as u64
+        for _ in 0..length_in_bytes / Self::BLOCK_SIZE as u64
         {
-            unsafe { copy_nonoverlapping(message.add(progress as usize), block.as_mut_ptr() as *mut u8, size); }
+            unsafe { copy_nonoverlapping(message.add(progress as usize), block.as_mut_ptr() as *mut u8, Self::BLOCK_SIZE); }
             iivv = self.encrypt_unit(&iivv);
             for i in 0..NB
                 { coded[i] = block[i] ^ iivv[i]; }
-            unsafe { copy_nonoverlapping(coded.as_ptr() as *const u8, cipher.add(progress as usize), size); }
-            progress += size;
+            unsafe { copy_nonoverlapping(coded.as_ptr() as *const u8, cipher.add(progress as usize), Self::BLOCK_SIZE); }
+            progress += Self::BLOCK_SIZE;
         }
 
         if progress as u64 == length_in_bytes

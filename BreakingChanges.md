@@ -1,13 +1,22 @@
 # Breaking Changes
 
+## Breaking changes from ver. 0.13.0 to ver. 0.13.1
+
+| Ver. 0.13.0                      | Ver. 0.13.1                             |
+|----------------------------------|-----------------------------------------|
+| pub fn set_successful(&mut self) | pub(super) fn set_successful(&mut self) |
+| pub fn set_failed(&mut self)     | pub(super) fn set_failed(&mut self)     |
+
+- The attribute of the above functions of BigCryptor64 and BigCryptor128 has been changed from `pub` into `pub(super)` for the security reason. 
+
 ## Breaking changes from ver. 0.12.1 to ver. 0.12.2
 
-| Ver. 0.12.1                      | Ver. 0.12.2                         |
-|----------------------------------|-------------------------------------|
-| pub fn set_successful(&mut self) | pub(super) fn set_failed(&mut self) |
-| pub fn set_failed(&mut self)     | pub(super) fn set_failed(&mut self) |
+| Ver. 0.12.1                      | Ver. 0.12.2                             |
+|----------------------------------|-----------------------------------------|
+| pub fn set_successful(&mut self) | pub(super) fn set_successful(&mut self) |
+| pub fn set_failed(&mut self)     | pub(super) fn set_failed(&mut self)     |
 
-- The attribute of the above functions of DES_Generic and Rijndael_Generic has been changed from `pub` into `pub(super)` for the security reason. 
+- The attribute of the above functions of DES_Generic and Rijndael_Generic has been changed from `pub` into `pub(super)` for the security reason.
 
 | Ver. 0.12.1                                                               | Ver. 0.12.2                                                                |
 |---------------------------------------------------------------------------|----------------------------------------------------------------------------|

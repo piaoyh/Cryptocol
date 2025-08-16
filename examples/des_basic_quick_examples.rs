@@ -12,393 +12,6 @@
 #![allow(unused_imports)]
 #![allow(non_snake_case)]
 
-///// For test during implementation //////
-/*
-use cryptocol::symmetric::DES;
-use cryptocol::number::{ IntUnion };
-
-pub fn main()
-{
-    des_permutate_initially_finally();
-    des_permutate_expansion();
-    des_split();
-    des_make_round_keys();
-    des_slice_indices_combine();
-    des_f();
-}
-
-trait TestDes
-{
-    fn get_block(&self) -> u64;
-    fn set_block(&mut self, block: u64);
-    fn permutate_initially(&mut self);
-    fn permutate_finally(&mut self);
-    fn expand(&self, right: u32) -> u64;
-    fn compress_into_56bits(&self) -> u64;
-    fn split(&self) -> (IntUnion, IntUnion);
-    fn make_round_keys(&mut self);
-    fn get_round_key(&self, round: usize) -> u64;
-    fn slice_indices(&self, indices: u64, array: &mut [usize; 8]);
-    fn combine(&self, collector: &mut u32, piece: u32);
-    fn f(&mut self, round: usize, right: u32) -> u32;
-}
-
-impl TestDes for DES
-{
-    fn get_block(&self) -> u64          { self.test_get_block() }
-    fn set_block(&mut self, block: u64) { self.test_set_block(block); }
-    fn permutate_initially(&mut self)   { self.test_permutate_initially(); }
-    fn permutate_finally(&mut self)     { self.test_permutate_finally(); }
-    fn expand(&self, right: u32) -> u64     { self.test_expand(right) }
-    fn compress_into_56bits(&self) -> u64   { self.test_compress_into_56bits() }
-    fn split(&self) -> (IntUnion, IntUnion)     { self.test_split() }
-    fn make_round_keys(&mut self)    { self.test_make_round_keys(); }
-    fn get_round_key(&self, round: usize) -> u64  { self.test_get_round_key(round) }
-    fn slice_indices(&self, indices: u64, array: &mut [usize; 8])   { self.test_slice_indices(indices, array) }
-    fn combine(&self, collector: &mut u32, piece: u32) { self.test_combine(collector, piece); }
-    fn f(&mut self, round: usize, right: u32) -> u32   { self.test_f(round, right) }
-}
-
-
-fn des_permutate_initially_finally()
-{
-    println!("des_permutate_initially_finally");
-    use std::io::Write;
-    use std::fmt::Write as _;
-    use cryptocol::number::LongUnion;
-    use cryptocol::symmetric::DES;
-
-    let mut a_des = DES::new();
-    let block = (1_u64 << (8-2)) | (1_u64 << ((50-1) / 8 * 8 + (7 - (50-1) % 8)));
-    a_des.set_block(block);
-    a_des.permutate_initially();
-    let out = a_des.get_block();
-    let bu = LongUnion::new_with(block);
-    print!("block =\t");
-    for i in 0..8
-        { print!("{:08b} ", bu.get_ubyte_(i)); }
-    println!();
-    let mut txt = String::new();
-    for i in 0..8
-        { write!(txt, "{:08b} ", bu.get_ubyte_(i)); }
-    assert_eq!(txt, "01000000 00000000 00000000 00000000 00000000 00000000 01000000 00000000 ");
-
-    let ou = LongUnion::new_with(out);
-    print!("out =\t");
-    for i in 0..8
-        { print!("{:08b} ", ou.get_ubyte_(i)); }
-    println!();
-    let mut txt = String::new();
-    for i in 0..8
-        { write!(txt, "{:08b} ", ou.get_ubyte_(i)); }
-    assert_eq!(txt, "01000001 00000000 00000000 00000000 00000000 00000000 00000000 00000000 ");
-
-    a_des.permutate_finally();
-    let back = a_des.get_block();
-    let cu = LongUnion::new_with(back);
-    print!("back =\t");
-    for i in 0..8
-        { print!("{:08b} ", cu.get_ubyte_(i)); }
-    println!();
-    let mut txt = String::new();
-    for i in 0..8
-        { write!(txt, "{:08b} ", cu.get_ubyte_(i)); }
-    assert_eq!(txt, "01000000 00000000 00000000 00000000 00000000 00000000 01000000 00000000 ");
-    println!("-------------------------------");
-}
-
-fn des_permutate_expansion()
-{
-    println!("des_permutate_expansion");
-    use std::io::Write;
-    use std::fmt::Write as _;
-    use cryptocol::number::{ IntUnion, LongUnion };
-    use cryptocol::symmetric::DES;
-    
-    let mut right = IntUnion::new();
-    let mut i = 0;
-    for val in [0b_1111_0000_u8, 0b_1010_1010, 0b_1111_0000, 0b_1010_1010]
-    {
-        right.set_ubyte_(i, val);
-        i += 1;
-    }
-    print!("right =\t");
-    for i in 0..4
-        { print!("{:08b} ", right.get_ubyte_(i)); }
-    println!();
-
-    let a_des = DES::new();
-    let out = a_des.expand(right.get());
-
-    let ou = LongUnion::new_with(out);
-    print!("out =\t");
-    for i in 0..6
-        { print!("{:08b} ", ou.get_ubyte_(i)); }
-    println!();
-    let mut txt = String::new();
-    for i in 0..6
-        { write!(txt, "{:08b} ", ou.get_ubyte_(i)); }
-    assert_eq!(txt, "01111010 00010101 01010101 01111010 00010101 01010101 ");
-    println!("-------------------------------");
-}
-
-fn des_split()
-{
-    println!("des_split");
-    use std::io::Write;
-    use std::fmt::Write as _;
-    use cryptocol::number::LongUnion;
-    use cryptocol::symmetric::DES;
-    
-    let key = [0b00010011_u8, 0b00110100, 0b01010111, 0b01111001, 0b10011011, 0b10111100, 0b11011111, 0b11110001];
-    print!("K =\t");
-    for i in 0..8
-        { print!("{:08b} ", key[i]); }
-    println!();
-    let mut txt = String::new();
-    for i in 0..8
-        { write!(txt, "{:08b} ", key[i]); }
-    assert_eq!(txt, "00010011 00110100 01010111 01111001 10011011 10111100 11011111 11110001 ");
-
-    let a_des = DES::new_with_key(key.clone());
-    let key_56bit = LongUnion::new_with(a_des.compress_into_56bits());
-    print!("K+ =\t");
-    for i in 0..7
-        { print!("{:08b} ", key_56bit.get_ubyte_(i)); }
-    println!();
-    let mut txt = String::new();
-    for i in 0..7
-        { write!(txt, "{:08b} ", key_56bit.get_ubyte_(i)); }
-    assert_eq!(txt, "11110000 11001100 10101010 11110101 01010110 01100111 10001111 ");
-
-    let a_des = DES::new_with_key(key.clone());
-    let (left, right) = a_des.split();
-    print!("L =\t");
-    for i in 0..4
-        { print!("{:08b} ", left.get_ubyte_(i)); }
-    println!();
-    let mut txt = String::new();
-    for i in 0..4
-        { write!(txt, "{:08b} ", left.get_ubyte_(i)); }
-    assert_eq!(txt, "11110000 11001100 10101010 11110000 ");
-
-    print!("R =\t");
-    for i in 0..4
-        { print!("{:08b} ", right.get_ubyte_(i)); }
-    println!();
-    let mut txt = String::new();
-    for i in 0..4
-        { write!(txt, "{:08b} ", right.get_ubyte_(i)); }
-    assert_eq!(txt, "01010101 01100110 01111000 11110000 ");
-    println!("-------------------------------");
-}
-
-fn des_make_round_keys()
-{
-    println!("des_make_round_keys");
-    use std::io::Write;
-    use std::fmt::Write as _;
-    use cryptocol::number::LongUnion;
-    use cryptocol::symmetric::DES;
-
-    let key = [0b00010011_u8, 0b00110100, 0b01010111, 0b01111001, 0b10011011, 0b10111100, 0b11011111, 0b11110001];
-    print!("K =\t");
-    for i in 0..8
-        { print!("{:08b} ", key[i]); }
-    println!();
-
-    let a_des = DES::new_with_key(key);
-    for i in 0..16
-    {
-        let round_key = LongUnion::new_with(a_des.get_round_key(i));
-        print!("K({}) =\t", i);
-        for j in 0..6
-            { print!("{:08b} ", round_key.get_ubyte_(j)); }
-        println!();
-    }
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(0));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "00011011 00000010 11101111 11111100 01110000 01110010 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(1));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "01111001 10101110 11011001 11011011 11001001 11100101 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(2));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "01010101 11111100 10001010 01000010 11001111 10011001 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(3));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "01110010 10101101 11010110 11011011 00110101 00011101 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(4));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "01111100 11101100 00000111 11101011 01010011 10101000 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(5));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "01100011 10100101 00111110 01010000 01111011 00101111 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(6));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "11101100 10000100 10110111 11110110 00011000 10111100 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(7));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "11110111 10001010 00111010 11000001 00111011 11111011 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(8));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "11100000 11011011 11101011 11101101 11100111 10000001 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(9));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "10110001 11110011 01000111 10111010 01000110 01001111 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(10));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "00100001 01011111 11010011 11011110 11010011 10000110 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(11));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "01110101 01110001 11110101 10010100 01100111 11101001 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(12));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "10010111 11000101 11010001 11111010 10111010 01000001 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(13));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "01011111 01000011 10110111 11110010 11100111 00111010 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(14));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "10111111 10010001 10001101 00111101 00111111 00001010 ");
-
-    let round_key = LongUnion::new_with(a_des.get_round_key(15));
-    let mut txt = String::new();
-    for j in 0..6
-        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
-    assert_eq!(txt, "11001011 00111101 10001011 00001110 00010111 11110101 ");
-    println!("-------------------------------");
-}
-
-fn des_slice_indices_combine()
-{
-    println!("des_slice_indices_combine");
-    use cryptocol::number::LongUnion;
-    use cryptocol::symmetric::DES;
-
-    let a_des = DES::new();
-    let mut indices = LongUnion::new();
-    indices.set_ubyte_(0, 0b_111111_00);
-    indices.set_ubyte_(1, 0b_0000_1010);
-    indices.set_ubyte_(2, 0b_10_100100);
-    indices.set_ubyte_(3, 0b_010101_00);
-    indices.set_ubyte_(4, 0b_1001_1101);
-    indices.set_ubyte_(5, 0b_10_011011);
-
-    let mut index = [0_usize; 8];
-    a_des.slice_indices(indices.get(), &mut index);
-    for i in 0..8
-        { println!("idx({}) = {:06b}", i, index[i]); }
-    assert_eq!(index[0], 0b111111);
-    assert_eq!(index[1], 0b000000);
-    assert_eq!(index[2], 0b101010);
-    assert_eq!(index[3], 0b100100);
-    assert_eq!(index[4], 0b010101);
-    assert_eq!(index[5], 0b001001);
-    assert_eq!(index[6], 0b110110);
-    assert_eq!(index[7], 0b011011);
-
-    let mut collector = 0_u32;
-    let small = [0b1111_u32, 0b0101, 0b1000, 0b0111, 0b1100, 0b0011, 0b0001, 0b1001];
-    let piece = [(small[0] << 4) | small[1], (small[2] << 4) | small[3],
-                            (small[4] << 4) | small[5], (small[6] << 4) | small[7]];
-    for i in 0..8
-        { println!("{:04b} ", small[i]); }
-    
-    a_des.combine(&mut collector, piece[0]);
-    a_des.combine(&mut collector, piece[1]);
-    a_des.combine(&mut collector, piece[2]);
-    a_des.combine(&mut collector, piece[3]);
-    let col = IntUnion::new_with(collector);
-    for i in 0..4
-        { println!("{:08b} ", col.get_ubyte_(i)); }
-    assert_eq!(col.get_ubyte_(0), 0b11110101);
-    assert_eq!(col.get_ubyte_(1), 0b10000111);
-    assert_eq!(col.get_ubyte_(2), 0b11000011);
-    assert_eq!(col.get_ubyte_(3), 0b00011001);
-    println!("-------------------------------");
-}
-
-fn des_f()
-{
-    println!("des_f");
-    use cryptocol::number::IntUnion;
-    use cryptocol::symmetric::DES;
-
-    let key = [0b00010011_u8, 0b00110100, 0b01010111, 0b01111001, 0b10011011, 0b10111100, 0b11011111, 0b11110001];
-    print!("K =\t");
-    for i in 0..8
-        { print!("{:08b} ", key[i]); }
-    println!();
-
-    let mut right = IntUnion::new();
-    right.set_ubyte_(0, 0b_1111_0000_u8);
-    right.set_ubyte_(1, 0b_1010_1010_u8);
-    right.set_ubyte_(2, 0b_1111_0000_u8);
-    right.set_ubyte_(3, 0b_1010_1010_u8);
-    print!("R =\t");
-    for i in 0..4
-        { print!("{:08b} ", right.get_ubyte_(i)); }
-    println!();
-
-    let mut a_des = DES::new_with_key(key);
-    let c = a_des.f(0, right.get());
-    let cipher = IntUnion::new_with(c);
-
-    print!("F =\t");
-    for i in 0..4
-        { print!("{:08b} ", cipher.get_ubyte_(i)); }
-    println!();
-    println!("-------------------------------");
-}
-*/
-
-// use std::io::Write;
 
 // #![allow(missing_docs)]
 // #![allow(rustdoc::missing_doc_code_examples)]
@@ -2614,7 +2227,7 @@ fn des_is_successful()
     {
         use cryptocol::symmetric::ECB_PKCS7;
 
-        // Normal case for the message of 0 bytes
+        // Successful case for the message of 0 bytes
         let key = 0x_1234567890ABCDEF_u64;
         println!("K =\t{:#018X}", key);
         let mut a_des = DES::new_with_key_u64(key);
@@ -2634,9 +2247,9 @@ fn des_is_successful()
         for c in cipher.clone()
             { write!(txt, "{:02X} ", c); }
         assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
+        println!();
     
-    
-        // Normal case for the original message of 0 bytes
+        // Successful case for the original message of 0 bytes
         let key = 0x_1234567890ABCDEF_u64;
         println!("K =\t{:#018X}", key);
         let mut a_des = DES::new_with_key_u64(key);
@@ -2671,35 +2284,45 @@ fn des_is_successful()
     }
 
     {
-        use cryptocol::symmetric::CFB;
+        use cryptocol::symmetric::CBC_ISO;
 
-        // Failed case for encryption
+        // Failure case for the message of 0 bytes
+        let iv = 0x_FEDCBA0987654321_u64;
+        println!("IV =	{}", iv);
         let key = 0x_1234567890ABCDEF_u64;
         println!("K =\t{:#018X}", key);
         let mut a_des = DES::new_with_key_u64(key);
-
-        let message = "In the beginning God created the heavens and the earth.";
+        let message = "";
         println!("M =\t{}", message);
-        let iv = 0x_FEDCBA0987654321_u64;
-        println!("IV =	{}", iv);
-        let mut cipher = [0_u8; 40];
+        let mut cipher = [0_u8; 4];
         let len = a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
         println!("The length of ciphertext = {}", len);
         assert_eq!(len, 0);
         let success = a_des.is_successful();
         assert_eq!(success, false);
-
-        // Failed case for decryption
-        let key = 0x_1234567890ABCDEF_u64;
-        println!("K =\t{:#018X}", key);
-        let mut a_des = DES::new_with_key_u64(key);
-
-        let cipher = [0x2Eu8, 0x1E, 0xE1, 0x51, 0xFD, 0xB3, 0xB0, 0x4B, 0x79, 0x3A, 0xA1, 0x78, 0xEC, 0xCD, 0x02, 0x72, 0x6A, 0xC4, 0x41, 0x7C, 0x25, 0xA4, 0x2C, 0x07, 0xFC, 0x77, 0x25, 0x49, 0x12, 0x55, 0x0F, 0x8A, 0xED, 0x44, 0xC3, 0xE4, 0xDC, 0x91, 0x69, 0x0F, 0x40, 0x72, 0x7F, 0xF2, 0xD9, 0xB7, 0x54, 0x9F, 0x36, 0x91, 0xC5, 0x85, 0x4F, 0x9B, 0x30];
         print!("C =\t");
         for c in cipher.clone()
             { print!("{:02X} ", c); }
         println!();
-        let mut recovered = [0u8; 40];
+        let mut txt = String::new();
+        for c in cipher.clone()
+            { write!(txt, "{:02X} ", c); }
+        assert_eq!(txt, "00 00 00 00 ");
+        println!();
+
+        // Failed case for decryption
+        let iv = 0x_FEDCBA0987654321_u64;
+        println!("IV =	{}", iv);
+        let key = 0x_1234567890ABCDEF_u64;
+        println!("K =\t{:#018X}", key);
+        let mut a_des = DES::new_with_key_u64(key);
+
+        let cipher = [0u8; 4];
+        print!("C =\t");
+        for c in cipher.clone()
+            { print!("{:02X} ", c); }
+        println!();
+        let mut recovered = [0u8; 8];
         let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
         println!("The length of plaintext = {}", len);
         assert_eq!(len, 0);
@@ -2719,11 +2342,10 @@ fn des_is_failed()
     {
         use cryptocol::symmetric::ECB_PKCS7;
 
-        // Normal case for the message of 0 bytes
+        // Successful case for the message of 0 bytes
         let key = 0x_1234567890ABCDEF_u64;
         println!("K =\t{:#018X}", key);
         let mut a_des = DES::new_with_key_u64(key);
-    
         let message = "";
         println!("M =\t{}", message);
         let mut cipher = [0_u8; 8];
@@ -2740,13 +2362,18 @@ fn des_is_failed()
         for c in cipher.clone()
             { write!(txt, "{:02X} ", c); }
         assert_eq!(txt, "41 7F 89 79 08 CD A1 4C ");
+        println!();
     
+        // Successful case for the original message of 0 bytes
+        let key = 0x_1234567890ABCDEF_u64;
+        println!("K =\t{:#018X}", key);
+        let mut a_des = DES::new_with_key_u64(key);
     
-        // Normal case for the original message of 0 bytes
         let cipher = [0x41u8, 0x7F, 0x89, 0x79, 0x08, 0xCD, 0xA1, 0x4C];
         print!("C =\t");
         for c in cipher.clone()
             { print!("{:02X} ", c); }
+        println!();
         let mut recovered = [0u8; 8];
         let len = a_des.decrypt_array_into_array(&cipher, &mut recovered);
         println!("The length of plaintext = {}", len);
@@ -2772,34 +2399,45 @@ fn des_is_failed()
     }
 
     {
-        // Failed case for encryption
-        use cryptocol::symmetric::CFB;
-    
+        use cryptocol::symmetric::CBC_ISO;
+
+        // Failure case for the message of 0 bytes
+        let iv = 0x_FEDCBA0987654321_u64;
+        println!("IV =	{}", iv);
         let key = 0x_1234567890ABCDEF_u64;
         println!("K =\t{:#018X}", key);
         let mut a_des = DES::new_with_key_u64(key);
-    
-        let message = "In the beginning God created the heavens and the earth.";
+        let message = "";
         println!("M =\t{}", message);
-        let iv = 0x_FEDCBA0987654321_u64;
-        println!("IV =	{}", iv);
-        let mut cipher = [0_u8; 40];
+        let mut cipher = [0_u8; 4];
         let len = a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
         println!("The length of ciphertext = {}", len);
         assert_eq!(len, 0);
         let failure = a_des.is_failed();
         assert_eq!(failure, true);
-    
-        // Failed case for decryption
-        let key = 0x_1234567890ABCDEF_u64;
-        println!("K =\t{:#018X}", key);
-        let mut a_des = DES::new_with_key_u64(key);
-    
-        let cipher = [0x2Eu8, 0x1E, 0xE1, 0x51, 0xFD, 0xB3, 0xB0, 0x4B, 0x79, 0x3A, 0xA1, 0x78, 0xEC, 0xCD, 0x02, 0x72, 0x6A, 0xC4, 0x41, 0x7C, 0x25, 0xA4, 0x2C, 0x07, 0xFC, 0x77, 0x25, 0x49, 0x12, 0x55, 0x0F, 0x8A, 0xED, 0x44, 0xC3, 0xE4, 0xDC, 0x91, 0x69, 0x0F, 0x40, 0x72, 0x7F, 0xF2, 0xD9, 0xB7, 0x54, 0x9F, 0x36, 0x91, 0xC5, 0x85, 0x4F, 0x9B, 0x30];
         print!("C =\t");
         for c in cipher.clone()
             { print!("{:02X} ", c); }
-        let mut recovered = [0u8; 40];
+        println!();
+        let mut txt = String::new();
+        for c in cipher.clone()
+            { write!(txt, "{:02X} ", c); }
+        assert_eq!(txt, "00 00 00 00 ");
+        println!();
+        
+        // Failed case for decryption
+        let iv = 0x_FEDCBA0987654321_u64;
+        println!("IV =	{}", iv);
+        let key = 0x_1234567890ABCDEF_u64;
+        println!("K =\t{:#018X}", key);
+        let mut a_des = DES::new_with_key_u64(key);
+
+        let cipher = [0u8; 4];
+        print!("C =\t");
+        for c in cipher.clone()
+            { print!("{:02X} ", c); }
+        println!();
+        let mut recovered = [0u8; 8];
         let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
         println!("The length of plaintext = {}", len);
         assert_eq!(len, 0);
@@ -2852,3 +2490,390 @@ fn des_has_weak_key()
     assert_eq!(weak_key, true);
     println!("-------------------------------");
 }
+
+
+///// For test during implementation //////
+/*
+use cryptocol::symmetric::DES;
+use cryptocol::number::{ IntUnion };
+
+pub fn main()
+{
+    des_permutate_initially_finally();
+    des_permutate_expansion();
+    des_split();
+    des_make_round_keys();
+    des_slice_indices_combine();
+    des_f();
+}
+
+trait TestDes
+{
+    fn get_block(&self) -> u64;
+    fn set_block(&mut self, block: u64);
+    fn permutate_initially(&mut self);
+    fn permutate_finally(&mut self);
+    fn expand(&self, right: u32) -> u64;
+    fn compress_into_56bits(&self) -> u64;
+    fn split(&self) -> (IntUnion, IntUnion);
+    fn make_round_keys(&mut self);
+    fn get_round_key(&self, round: usize) -> u64;
+    fn slice_indices(&self, indices: u64, array: &mut [usize; 8]);
+    fn combine(&self, collector: &mut u32, piece: u32);
+    fn f(&mut self, round: usize, right: u32) -> u32;
+}
+
+impl TestDes for DES
+{
+    fn get_block(&self) -> u64          { self.test_get_block() }
+    fn set_block(&mut self, block: u64) { self.test_set_block(block); }
+    fn permutate_initially(&mut self)   { self.test_permutate_initially(); }
+    fn permutate_finally(&mut self)     { self.test_permutate_finally(); }
+    fn expand(&self, right: u32) -> u64     { self.test_expand(right) }
+    fn compress_into_56bits(&self) -> u64   { self.test_compress_into_56bits() }
+    fn split(&self) -> (IntUnion, IntUnion)     { self.test_split() }
+    fn make_round_keys(&mut self)    { self.test_make_round_keys(); }
+    fn get_round_key(&self, round: usize) -> u64  { self.test_get_round_key(round) }
+    fn slice_indices(&self, indices: u64, array: &mut [usize; 8])   { self.test_slice_indices(indices, array) }
+    fn combine(&self, collector: &mut u32, piece: u32) { self.test_combine(collector, piece); }
+    fn f(&mut self, round: usize, right: u32) -> u32   { self.test_f(round, right) }
+}
+
+
+fn des_permutate_initially_finally()
+{
+    println!("des_permutate_initially_finally");
+    use std::io::Write;
+    use std::fmt::Write as _;
+    use cryptocol::number::LongUnion;
+    use cryptocol::symmetric::DES;
+
+    let mut a_des = DES::new();
+    let block = (1_u64 << (8-2)) | (1_u64 << ((50-1) / 8 * 8 + (7 - (50-1) % 8)));
+    a_des.set_block(block);
+    a_des.permutate_initially();
+    let out = a_des.get_block();
+    let bu = LongUnion::new_with(block);
+    print!("block =\t");
+    for i in 0..8
+        { print!("{:08b} ", bu.get_ubyte_(i)); }
+    println!();
+    let mut txt = String::new();
+    for i in 0..8
+        { write!(txt, "{:08b} ", bu.get_ubyte_(i)); }
+    assert_eq!(txt, "01000000 00000000 00000000 00000000 00000000 00000000 01000000 00000000 ");
+
+    let ou = LongUnion::new_with(out);
+    print!("out =\t");
+    for i in 0..8
+        { print!("{:08b} ", ou.get_ubyte_(i)); }
+    println!();
+    let mut txt = String::new();
+    for i in 0..8
+        { write!(txt, "{:08b} ", ou.get_ubyte_(i)); }
+    assert_eq!(txt, "01000001 00000000 00000000 00000000 00000000 00000000 00000000 00000000 ");
+
+    a_des.permutate_finally();
+    let back = a_des.get_block();
+    let cu = LongUnion::new_with(back);
+    print!("back =\t");
+    for i in 0..8
+        { print!("{:08b} ", cu.get_ubyte_(i)); }
+    println!();
+    let mut txt = String::new();
+    for i in 0..8
+        { write!(txt, "{:08b} ", cu.get_ubyte_(i)); }
+    assert_eq!(txt, "01000000 00000000 00000000 00000000 00000000 00000000 01000000 00000000 ");
+    println!("-------------------------------");
+}
+
+fn des_permutate_expansion()
+{
+    println!("des_permutate_expansion");
+    use std::io::Write;
+    use std::fmt::Write as _;
+    use cryptocol::number::{ IntUnion, LongUnion };
+    use cryptocol::symmetric::DES;
+    
+    let mut right = IntUnion::new();
+    let mut i = 0;
+    for val in [0b_1111_0000_u8, 0b_1010_1010, 0b_1111_0000, 0b_1010_1010]
+    {
+        right.set_ubyte_(i, val);
+        i += 1;
+    }
+    print!("right =\t");
+    for i in 0..4
+        { print!("{:08b} ", right.get_ubyte_(i)); }
+    println!();
+
+    let a_des = DES::new();
+    let out = a_des.expand(right.get());
+
+    let ou = LongUnion::new_with(out);
+    print!("out =\t");
+    for i in 0..6
+        { print!("{:08b} ", ou.get_ubyte_(i)); }
+    println!();
+    let mut txt = String::new();
+    for i in 0..6
+        { write!(txt, "{:08b} ", ou.get_ubyte_(i)); }
+    assert_eq!(txt, "01111010 00010101 01010101 01111010 00010101 01010101 ");
+    println!("-------------------------------");
+}
+
+fn des_split()
+{
+    println!("des_split");
+    use std::io::Write;
+    use std::fmt::Write as _;
+    use cryptocol::number::LongUnion;
+    use cryptocol::symmetric::DES;
+    
+    let key = [0b00010011_u8, 0b00110100, 0b01010111, 0b01111001, 0b10011011, 0b10111100, 0b11011111, 0b11110001];
+    print!("K =\t");
+    for i in 0..8
+        { print!("{:08b} ", key[i]); }
+    println!();
+    let mut txt = String::new();
+    for i in 0..8
+        { write!(txt, "{:08b} ", key[i]); }
+    assert_eq!(txt, "00010011 00110100 01010111 01111001 10011011 10111100 11011111 11110001 ");
+
+    let a_des = DES::new_with_key(key.clone());
+    let key_56bit = LongUnion::new_with(a_des.compress_into_56bits());
+    print!("K+ =\t");
+    for i in 0..7
+        { print!("{:08b} ", key_56bit.get_ubyte_(i)); }
+    println!();
+    let mut txt = String::new();
+    for i in 0..7
+        { write!(txt, "{:08b} ", key_56bit.get_ubyte_(i)); }
+    assert_eq!(txt, "11110000 11001100 10101010 11110101 01010110 01100111 10001111 ");
+
+    let a_des = DES::new_with_key(key.clone());
+    let (left, right) = a_des.split();
+    print!("L =\t");
+    for i in 0..4
+        { print!("{:08b} ", left.get_ubyte_(i)); }
+    println!();
+    let mut txt = String::new();
+    for i in 0..4
+        { write!(txt, "{:08b} ", left.get_ubyte_(i)); }
+    assert_eq!(txt, "11110000 11001100 10101010 11110000 ");
+
+    print!("R =\t");
+    for i in 0..4
+        { print!("{:08b} ", right.get_ubyte_(i)); }
+    println!();
+    let mut txt = String::new();
+    for i in 0..4
+        { write!(txt, "{:08b} ", right.get_ubyte_(i)); }
+    assert_eq!(txt, "01010101 01100110 01111000 11110000 ");
+    println!("-------------------------------");
+}
+
+fn des_make_round_keys()
+{
+    println!("des_make_round_keys");
+    use std::io::Write;
+    use std::fmt::Write as _;
+    use cryptocol::number::LongUnion;
+    use cryptocol::symmetric::DES;
+
+    let key = [0b00010011_u8, 0b00110100, 0b01010111, 0b01111001, 0b10011011, 0b10111100, 0b11011111, 0b11110001];
+    print!("K =\t");
+    for i in 0..8
+        { print!("{:08b} ", key[i]); }
+    println!();
+
+    let a_des = DES::new_with_key(key);
+    for i in 0..16
+    {
+        let round_key = LongUnion::new_with(a_des.get_round_key(i));
+        print!("K({}) =\t", i);
+        for j in 0..6
+            { print!("{:08b} ", round_key.get_ubyte_(j)); }
+        println!();
+    }
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(0));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "00011011 00000010 11101111 11111100 01110000 01110010 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(1));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "01111001 10101110 11011001 11011011 11001001 11100101 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(2));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "01010101 11111100 10001010 01000010 11001111 10011001 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(3));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "01110010 10101101 11010110 11011011 00110101 00011101 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(4));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "01111100 11101100 00000111 11101011 01010011 10101000 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(5));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "01100011 10100101 00111110 01010000 01111011 00101111 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(6));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "11101100 10000100 10110111 11110110 00011000 10111100 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(7));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "11110111 10001010 00111010 11000001 00111011 11111011 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(8));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "11100000 11011011 11101011 11101101 11100111 10000001 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(9));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "10110001 11110011 01000111 10111010 01000110 01001111 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(10));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "00100001 01011111 11010011 11011110 11010011 10000110 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(11));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "01110101 01110001 11110101 10010100 01100111 11101001 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(12));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "10010111 11000101 11010001 11111010 10111010 01000001 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(13));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "01011111 01000011 10110111 11110010 11100111 00111010 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(14));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "10111111 10010001 10001101 00111101 00111111 00001010 ");
+
+    let round_key = LongUnion::new_with(a_des.get_round_key(15));
+    let mut txt = String::new();
+    for j in 0..6
+        { write!(txt, "{:08b} ", round_key.get_ubyte_(j)); }
+    assert_eq!(txt, "11001011 00111101 10001011 00001110 00010111 11110101 ");
+    println!("-------------------------------");
+}
+
+fn des_slice_indices_combine()
+{
+    println!("des_slice_indices_combine");
+    use cryptocol::number::LongUnion;
+    use cryptocol::symmetric::DES;
+
+    let a_des = DES::new();
+    let mut indices = LongUnion::new();
+    indices.set_ubyte_(0, 0b_111111_00);
+    indices.set_ubyte_(1, 0b_0000_1010);
+    indices.set_ubyte_(2, 0b_10_100100);
+    indices.set_ubyte_(3, 0b_010101_00);
+    indices.set_ubyte_(4, 0b_1001_1101);
+    indices.set_ubyte_(5, 0b_10_011011);
+
+    let mut index = [0_usize; 8];
+    a_des.slice_indices(indices.get(), &mut index);
+    for i in 0..8
+        { println!("idx({}) = {:06b}", i, index[i]); }
+    assert_eq!(index[0], 0b111111);
+    assert_eq!(index[1], 0b000000);
+    assert_eq!(index[2], 0b101010);
+    assert_eq!(index[3], 0b100100);
+    assert_eq!(index[4], 0b010101);
+    assert_eq!(index[5], 0b001001);
+    assert_eq!(index[6], 0b110110);
+    assert_eq!(index[7], 0b011011);
+
+    let mut collector = 0_u32;
+    let small = [0b1111_u32, 0b0101, 0b1000, 0b0111, 0b1100, 0b0011, 0b0001, 0b1001];
+    let piece = [(small[0] << 4) | small[1], (small[2] << 4) | small[3],
+                            (small[4] << 4) | small[5], (small[6] << 4) | small[7]];
+    for i in 0..8
+        { println!("{:04b} ", small[i]); }
+    
+    a_des.combine(&mut collector, piece[0]);
+    a_des.combine(&mut collector, piece[1]);
+    a_des.combine(&mut collector, piece[2]);
+    a_des.combine(&mut collector, piece[3]);
+    let col = IntUnion::new_with(collector);
+    for i in 0..4
+        { println!("{:08b} ", col.get_ubyte_(i)); }
+    assert_eq!(col.get_ubyte_(0), 0b11110101);
+    assert_eq!(col.get_ubyte_(1), 0b10000111);
+    assert_eq!(col.get_ubyte_(2), 0b11000011);
+    assert_eq!(col.get_ubyte_(3), 0b00011001);
+    println!("-------------------------------");
+}
+
+fn des_f()
+{
+    println!("des_f");
+    use cryptocol::number::IntUnion;
+    use cryptocol::symmetric::DES;
+
+    let key = [0b00010011_u8, 0b00110100, 0b01010111, 0b01111001, 0b10011011, 0b10111100, 0b11011111, 0b11110001];
+    print!("K =\t");
+    for i in 0..8
+        { print!("{:08b} ", key[i]); }
+    println!();
+
+    let mut right = IntUnion::new();
+    right.set_ubyte_(0, 0b_1111_0000_u8);
+    right.set_ubyte_(1, 0b_1010_1010_u8);
+    right.set_ubyte_(2, 0b_1111_0000_u8);
+    right.set_ubyte_(3, 0b_1010_1010_u8);
+    print!("R =\t");
+    for i in 0..4
+        { print!("{:08b} ", right.get_ubyte_(i)); }
+    println!();
+
+    let mut a_des = DES::new_with_key(key);
+    let c = a_des.f(0, right.get());
+    let cipher = IntUnion::new_with(c);
+
+    print!("F =\t");
+    for i in 0..4
+        { print!("{:08b} ", cipher.get_ubyte_(i)); }
+    println!();
+    println!("-------------------------------");
+}
+*/
