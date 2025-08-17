@@ -14,7 +14,7 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 use std::ptr::{ copy_nonoverlapping, copy };
-use crate::number::{ IntUnion, LongerUnion };
+use crate::number::{ IntUnion, LongUnion, LongerUnion };
 
 
 // macro_rules! rijndael_pre_encrypt_into_vec {
@@ -1676,6 +1676,11 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// # Output
     /// This method returns the encrypted data of `u128`-type from `message`.
     /// 
+    /// # Caution
+    /// - This method is meaningful only when `NB` is `4`. 
+    /// - If `NB` is other than `4`, this method may panic.
+    /// - Even if this method does not panic, its behaviour is not defined.
+    /// 
     /// # Counterpart Methods
     /// For each trait
     /// [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
@@ -1696,7 +1701,6 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///
     /// # Example 1 for AES_128
     /// ```
-    /// use cryptocol::number::IntUnion;
     /// use cryptocol::symmetric::AES_128;
     ///
     /// let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
@@ -1715,6 +1719,112 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         self.set_block_u128(message);
         self.encrypt_block();
         self.get_block_u128()
+    }
+
+    // pub fn encrypt_u64(&mut self, message: u64) -> u64
+    /// Encrypts a 64-bit data.
+    ///
+    /// # Arguments
+    /// `message` is of `u64`-type and the plaintext to be encrypted.
+    ///
+    /// # Output
+    /// This method returns the encrypted data of `u64`-type from `message`.
+    /// 
+    /// # Caution
+    /// - This method is meaningful only when `NB` is `2`. 
+    /// - If `NB` is other than `2`, this method may panic.
+    /// - Even if this method does not panic, its behaviour is not defined.
+    /// 
+    /// # Counterpart Methods
+    /// For each trait
+    /// [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+    /// [`CBC_PKCS7`](symmetric/trait.CBC_PKCS7.html#trait.ECB_PKCS7),
+    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+    /// [`PCBC_PKCS7`](symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
+    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
+    /// there are provided useful counterpart methods:
+    /// encrypt(), encrypt_into_vec(), encrypt_into_array(),
+    /// encrypt_str(), encrypt_str_into_vec(), encrypt_str_into_array(),
+    /// encrypt_string(), encrypt_string_into_vec(), encrypt_string_into_array(),
+    /// encrypt_vec(), encrypt_vec_into_vec(), encrypt_vec_into_array(),
+    /// encrypt_array(), encrypt_array_into_vec(), and encrypt_array_into_array().
+    ///
+    /// # Example 1 for Rijndael_64_64
+    /// ```
+    /// use cryptocol::symmetric::Rijndael_64_64;
+    /// 
+    /// let mut rijndael = Rijndael_64_64::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let plaintext = 0x1234567890ABCDEF;
+    /// println!("Plaintext:\t{:#018X}", plaintext);
+    /// let ciphertext = rijndael.encrypt_u64(plaintext);
+    /// println!("Ciphertext:\t{:#018X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x4FAA3F0E49CC4DCF_u64);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.encrypt_u64)
+    pub fn encrypt_u64(&mut self, message: u64) -> u64
+    {
+        self.set_block_u64(message);
+        self.encrypt_block();
+        self.get_block_u64()
+    }
+
+    // pub fn encrypt_u32(&mut self, message: u32) -> u32
+    /// Encrypts a 32-bit data.
+    ///
+    /// # Arguments
+    /// `message` is of `u32`-type and the plaintext to be encrypted.
+    ///
+    /// # Output
+    /// This method returns the encrypted data of `u32`-type from `message`.
+    /// 
+    /// # Caution
+    /// - This method is meaningful only when `NB` is `1`. 
+    /// - If `NB` is other than `1`, this method may panic.
+    /// - Even if this method does not panic, its behaviour is not defined.
+    /// 
+    /// # Counterpart Methods
+    /// For each trait
+    /// [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+    /// [`CBC_PKCS7`](symmetric/trait.CBC_PKCS7.html#trait.ECB_PKCS7),
+    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+    /// [`PCBC_PKCS7`](symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
+    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
+    /// there are provided useful counterpart methods:
+    /// encrypt(), encrypt_into_vec(), encrypt_into_array(),
+    /// encrypt_str(), encrypt_str_into_vec(), encrypt_str_into_array(),
+    /// encrypt_string(), encrypt_string_into_vec(), encrypt_string_into_array(),
+    /// encrypt_vec(), encrypt_vec_into_vec(), encrypt_vec_into_array(),
+    /// encrypt_array(), encrypt_array_into_vec(), and encrypt_array_into_array().
+    ///
+    /// # Example 1 for Rijndael_32_32
+    /// ```
+    /// use cryptocol::symmetric::Rijndael_32_32;
+    /// 
+    /// let mut rijndael = Rijndael_32_32::new_with_key(&[0x12, 0x34, 0x56, 0x78]);
+    /// let plaintext = 0x1234567;
+    /// println!("Plaintext:\t{:#010X}", plaintext);
+    /// let ciphertext = rijndael.encrypt_u32(plaintext);
+    /// println!("Ciphertext:\t{:#010X}", ciphertext);
+    /// assert_eq!(ciphertext, 0xB25E4E09_u32);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.encrypt_u32)
+    pub fn encrypt_u32(&mut self, message: u32) -> u32
+    {
+        self.set_block_u32(message);
+        self.encrypt_block();
+        self.get_block_u32()
     }
 
     // pub fn decrypt_unit(&mut self, cipher: &[IntUnion; NB]) -> [IntUnion; NB]
@@ -1782,6 +1892,11 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// # Output
     /// This method returns the decrypted data of `u128`-type from `cipher`.
     /// 
+    /// # Caution
+    /// - This method is meaningful only when `NB` is `4`. 
+    /// - If `NB` is other than `4`, this method may panic.
+    /// - Even if this method does not panic, its behaviour is not defined.
+    /// 
     /// # Counterpart Methods
     /// For each trait
     /// [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
@@ -1822,6 +1937,114 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         self.set_block_u128(cipher);
         self.decrypt_block();
         self.get_block_u128()
+    }
+
+    // pub fn decrypt_u64(&mut self, cipher: u64) -> u64
+    /// Decrypts a 64-bit data.
+    ///
+    /// # Arguments
+    /// `cioher` is of `u64`-type and the ciphertext to be decrypted.
+    ///
+    /// # Output
+    /// This method returns the decrypted data of `u64`-type from `cipher`.
+    /// 
+    /// # Caution
+    /// - This method is meaningful only when `NB` is `2`. 
+    /// - If `NB` is other than `2`, this method may panic.
+    /// - Even if this method does not panic, its behaviour is not defined.
+    /// 
+    /// # Counterpart Methods
+    /// For each trait
+    /// [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+    /// [`CBC_PKCS7`](symmetric/trait.CBC_PKCS7.html#trait.ECB_PKCS7),
+    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+    /// [`PCBC_PKCS7`](symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
+    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
+    /// there are provided useful counterpart methods:
+    /// decrypt(), decrypt_into_vec(), decrypt_into_array(),
+    /// decrypt_into_string(),
+    /// decrypt_vec(), decrypt_vec_into_vec(), decrypt_vec_into_array(),
+    /// decrypt_vec_into_string(),
+    /// decrypt_array(), decrypt_array_into_vec(), decrypt_array_into_array(),
+    /// and decrypt_array_into_string().
+    ///
+    /// # Example 1 for Rijndael_64_64
+    /// ```
+    /// use cryptocol::symmetric::Rijndael_64_64;
+    /// 
+    /// let mut rijndael = Rijndael_64_64::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let ciphertext = 0x4FAA3F0E49CC4DCF_u64;
+    /// println!("Ciphertext:\t{:#018X}", ciphertext);
+    /// let plaintext = rijndael.decrypt_u64(ciphertext);
+    /// println!("Plaintext:\t{:#018X}", plaintext);
+    /// assert_eq!(plaintext, 0x1234567890ABCDEF_u64);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.decrypt_u64)
+    pub fn decrypt_u64(&mut self, cipher: u64) -> u64
+    {
+        self.set_block_u64(cipher);
+        self.decrypt_block();
+        self.get_block_u64()
+    }
+
+    // pub fn decrypt_u32(&mut self, cipher: u32) -> u32
+    /// Decrypts a 32-bit data.
+    ///
+    /// # Arguments
+    /// `cioher` is of `u32`-type and the ciphertext to be decrypted.
+    ///
+    /// # Output
+    /// This method returns the decrypted data of `u32`-type from `cipher`.
+    /// 
+    /// # Caution
+    /// - This method is meaningful only when `NB` is `1`. 
+    /// - If `NB` is other than `1`, this method may panic.
+    /// - Even if this method does not panic, its behaviour is not defined.
+    /// 
+    /// # Counterpart Methods
+    /// For each trait
+    /// [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+    /// [`CBC_PKCS7`](symmetric/trait.CBC_PKCS7.html#trait.ECB_PKCS7),
+    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+    /// [`PCBC_PKCS7`](symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
+    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
+    /// there are provided useful counterpart methods:
+    /// decrypt(), decrypt_into_vec(), decrypt_into_array(),
+    /// decrypt_into_string(),
+    /// decrypt_vec(), decrypt_vec_into_vec(), decrypt_vec_into_array(),
+    /// decrypt_vec_into_string(),
+    /// decrypt_array(), decrypt_array_into_vec(), decrypt_array_into_array(),
+    /// and decrypt_array_into_string().
+    ///
+    /// # Example 1 for Rijndael_32_32
+    /// ```
+    /// use cryptocol::symmetric::Rijndael_32_32;
+    /// 
+    /// let mut rijndael = Rijndael_32_32::new_with_key(&[0x12, 0x34, 0x56, 0x78]);
+    /// let ciphertext = 0xB25E4E09_u32;
+    /// println!("Ciphertext:\t{:#010X}", ciphertext);
+    /// let plaintext = rijndael.decrypt_u32(ciphertext);
+    /// println!("Plaintext:\t{:#010X}", plaintext);
+    /// assert_eq!(plaintext, 0x1234567_u32);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.decrypt_u32)
+    pub fn decrypt_u32(&mut self, cipher: u32) -> u32
+    {
+        self.set_block_u32(cipher);
+        self.decrypt_block();
+        self.get_block_u32()
     }
 
     #[inline]
@@ -2290,12 +2513,13 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         for i in 1..4
         {
             unsafe {
+                let j = i % NB;
                 let ptr_block_0 = self.block[i].as_mut_ptr();
-                let ptr_block_i = self.block[i].as_ptr().add(i);
-                let ptr_block_nb_i = self.block[i].as_mut_ptr().add(NB - i);
-                copy_nonoverlapping(ptr_block_0, tmp_ptr, i);
-                copy(ptr_block_i, ptr_block_0, NB - i);
-                copy_nonoverlapping(tmp_ptr, ptr_block_nb_i, i);
+                let ptr_block_i = self.block[i].as_ptr().add(j);
+                let ptr_block_nb_i = self.block[i].as_mut_ptr().add(NB - j);
+                copy_nonoverlapping(ptr_block_0, tmp_ptr, j);
+                copy(ptr_block_i, ptr_block_0, NB - j);
+                copy_nonoverlapping(tmp_ptr, ptr_block_nb_i, j);
             }
         }
     }
@@ -2307,12 +2531,13 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         for i in 0..4
         {
             unsafe {
+                let j = Self::SR[i] % NB;
                 let ptr_block_0 = self.block[i].as_mut_ptr();
-                let ptr_block_i = self.block[i].as_ptr().add(Self::SR[i]);
-                let ptr_block_nb_i = self.block[i].as_mut_ptr().add(NB - Self::SR[i]);
-                copy_nonoverlapping(ptr_block_0, tmp_ptr, Self::SR[i]);
-                copy(ptr_block_i, ptr_block_0, NB - Self::SR[i]);
-                copy_nonoverlapping(tmp_ptr, ptr_block_nb_i, Self::SR[i]);
+                let ptr_block_i = self.block[i].as_ptr().add(j);
+                let ptr_block_nb_i = self.block[i].as_mut_ptr().add(NB - j);
+                copy_nonoverlapping(ptr_block_0, tmp_ptr, j);
+                copy(ptr_block_i, ptr_block_0, NB - j);
+                copy_nonoverlapping(tmp_ptr, ptr_block_nb_i, j);
             }
         }
     }
@@ -2396,12 +2621,13 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         for i in 1..4
         {
             unsafe {
+                let j = i % NB;
                 let ptr_block_0 = self.block[i].as_mut_ptr();
-                let ptr_block_i = self.block[i].as_mut_ptr().add(i);
-                let ptr_block_nb_i = self.block[i].as_ptr().add(NB - i);
-                copy_nonoverlapping(ptr_block_nb_i, tmp_ptr, i);
-                copy(ptr_block_0, ptr_block_i, NB - i);
-                copy_nonoverlapping(tmp_ptr, ptr_block_0, i);
+                let ptr_block_i = self.block[i].as_mut_ptr().add(j);
+                let ptr_block_nb_i = self.block[i].as_ptr().add(NB - j);
+                copy_nonoverlapping(ptr_block_nb_i, tmp_ptr, j);
+                copy(ptr_block_0, ptr_block_i, NB - j);
+                copy_nonoverlapping(tmp_ptr, ptr_block_0, j);
             }
         }
     }
@@ -2413,12 +2639,13 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         for i in 0..4
         {
             unsafe {
+                let j = Self::SR[i] % NB;
                 let ptr_block_0 = self.block[i].as_mut_ptr();
-                let ptr_block_i = self.block[i].as_mut_ptr().add(Self::SR[i]);
-                let ptr_block_nb_i = self.block[i].as_ptr().add(NB - Self::SR[i]);
-                copy_nonoverlapping(ptr_block_nb_i, tmp_ptr, i);
-                copy(ptr_block_0, ptr_block_i, NB - Self::SR[i]);
-                copy_nonoverlapping(tmp_ptr, ptr_block_0, i);
+                let ptr_block_i = self.block[i].as_mut_ptr().add(j);
+                let ptr_block_nb_i = self.block[i].as_ptr().add(NB - j);
+                copy_nonoverlapping(ptr_block_nb_i, tmp_ptr, j);
+                copy(ptr_block_0, ptr_block_i, NB - j);
+                copy_nonoverlapping(tmp_ptr, ptr_block_0, j);
             }
         }
     }
@@ -2609,6 +2836,34 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         block.get()
     }
 
+    fn get_block_u64(&self) -> u64
+    {
+        let nb = if 2 < NB {2} else {NB};
+        let mut block = LongUnion::new();
+        let mut idx = 0;
+        for j in 0..nb
+        {
+            for i in 0..4
+            {
+                block.set_ubyte_(idx, self.block[i][j]);
+                idx += 1;
+            }
+        }
+        block.get()
+    }
+
+    fn get_block_u32(&self) -> u32
+    {
+        let mut block = IntUnion::new();
+        let mut idx = 0;
+        for i in 0..4
+        {
+            block.set_ubyte_(idx, self.block[i][0]);
+            idx += 1;
+        }
+        block.get()
+    }
+
     fn set_block(&mut self, block: &[IntUnion; NB])
     {
         let mut idx = 0;
@@ -2634,6 +2889,32 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
                 self.block[i][j] = block_union.get_ubyte_(idx);
                 idx += 1;
             }
+        }
+    }
+
+    fn set_block_u64(&mut self, block: u64)
+    {
+        let nb = if 2 < NB {2} else {NB};
+        let block_union = LongUnion::new_with(block);
+        let mut idx = 0;
+        for j in 0..nb
+        {
+            for i in 0..4
+            {
+                self.block[i][j] = block_union.get_ubyte_(idx);
+                idx += 1;
+            }
+        }
+    }
+
+    fn set_block_u32(&mut self, block: u32)
+    {
+        let block_union = IntUnion::new_with(block);
+        let mut idx = 0;
+        for i in 0..4
+        {
+            self.block[i][0] = block_union.get_ubyte_(idx);
+            idx += 1;
         }
     }
 

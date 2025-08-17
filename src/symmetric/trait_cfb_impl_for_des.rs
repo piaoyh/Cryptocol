@@ -18,7 +18,7 @@ use std::ptr::copy_nonoverlapping;
 
 use crate::number::SmallUInt;
 use crate::symmetric::{ DES_Generic, CFB };
-use crate::symmetric::{ crypt_into_something_without_padding,
+use crate::symmetric::{ crypt_cfb, crypt_into_something_without_padding,
                         pre_encrypt_into_array, pre_encrypt_into_vec,
                         pre_decrypt_into_array_without_padding,
                         encrypt_into_vec, encrypt_into_array_without_padding,
@@ -312,65 +312,6 @@ CFB<u64> for DES_Generic<ROUND, SHIFT,
                             S748, S749, S750, S751, S752, S753, S754, S755,
                             S756, S757, S758, S759, S760, S761, S762, S763>
 {
-    fn encrypt(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
-    {
-        let mut progress = 0_u64;
-        let mut encoded = iv;
-        let mut block = 0_u64;
-        for _ in 0..length_in_bytes >> 3    // length_in_bytes >> 3 == length_in_bytes / 8
-        {
-            unsafe { copy_nonoverlapping(message.add(progress as usize) as *const u8, (&mut block) as *mut u64 as *mut u8, 8); }
-            encoded = block ^ self.encrypt_u64(encoded);
-            unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
-            progress += 8;
-        }
-
-        if progress == length_in_bytes
-        {
-            self.set_successful();
-            progress
-        }
-        else
-        {
-            block = 0_u64;
-            let tail = (length_in_bytes - progress) as usize;
-            let addr = unsafe { message.add(progress as usize) as *const u8 };
-            unsafe { copy_nonoverlapping(addr, &mut block as *mut u64 as *mut u8, tail); }
-            encoded = block ^ self.encrypt_u64(encoded);
-            unsafe { copy_nonoverlapping(&encoded as *const u64 as *const u8, cipher.add(progress as usize), tail); }
-            self.set_successful();
-            progress + tail as u64
-        }
-    }
-
-    fn decrypt(&mut self, mut iv: u64, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
-    {
-        let mut progress = 0_u64;
-        let mut block = 0_u64;
-        for _ in 0..length_in_bytes >> 3    // length_in_bytes >> 3 == length_in_bytes / 8
-        {
-            unsafe { copy_nonoverlapping(cipher.add(progress as usize) as *const u8, (&mut block) as *mut u64 as *mut u8, 8); }
-            let decoded = block ^ self.encrypt_u64(iv);
-            iv = block;
-            unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), 8); }
-            progress += 8;
-        }
-
-        if progress == length_in_bytes
-        {
-            progress
-        }
-        else
-        {
-            let mut block = 0_u64;
-            let tail = (length_in_bytes - progress) as usize;
-            let addr = unsafe { cipher.add(progress as usize) as *const u8 };
-            unsafe { copy_nonoverlapping(addr, &mut block as *mut u64 as *mut u8, tail); }
-            let decoded = block ^ self.encrypt_u64(iv);
-            unsafe { copy_nonoverlapping(&decoded as *const u64 as *const u8, message.add(progress as usize), tail); }
-            progress + tail as u64
-        }
-    }
-
-    crypt_into_something_without_padding! {u64}
+    crypt_cfb!{u64}
+    crypt_into_something_without_padding!{u64}
 }

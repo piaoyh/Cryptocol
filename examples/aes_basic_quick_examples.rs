@@ -15,250 +15,12 @@
 use cryptocol::symmetric::documentation::rijndael_basic::Rijndael_Generic;
 
 
-///// For test during implementation //////
 pub fn main()
 {
     // aes_devel();
     aes_quick_start();
     aes_basic();
 }
-
-// fn aes_devel()
-// {
-//     aes_sbox();
-//     aes_invsbox();
-//     aes_mc();
-//     aes_invmc();
-//     aes_rc();
-//     aes_test();
-// }
-
-// fn aes_sbox()
-// {
-//     println!("aes_sbox");
-//     use cryptocol::symmetric::AES_128;
-//     AES_128::show_SBox();
-//     println!("-------------------------------");
-// }
-
-// fn aes_invsbox()
-// {
-//     println!("aes_invsbox");
-//     use cryptocol::symmetric::AES_128;
-//     AES_128::show_InvSBox();
-//     println!("-------------------------------");
-// }
-
-// fn aes_mc()
-// {
-//     println!("aes_mc");
-//     use cryptocol::symmetric::AES_128;
-//     AES_128::show_MC();
-//     println!("-------------------------------");
-// }
-
-// fn aes_invmc()
-// {
-//     println!("aes_invmc");
-//     use cryptocol::symmetric::AES_128;
-//     AES_128::show_InvMC();
-//     println!("-------------------------------");
-// }
-
-// fn aes_rc()
-// {
-//     println!("aes_rc");
-//     use cryptocol::symmetric::AES_128;
-//     AES_128::show_RC();
-//     println!("-------------------------------");
-// }
-
-// fn aes_test()
-// {
-//     println!("aes_test");
-//     use cryptocol::number::LongerUnion;
-//     use cryptocol::symmetric::{ AES_128, AES_192, AES_256 };
-
-//     // AES-128
-//     println!("AES-128");
-//     let mut aes = AES_128::new();
-//     let msg = LongerUnion::new_with_ubytes([0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
-//     print!("Message =\t");
-//     for i in 0..16
-//         { print!("{:02x}", msg.get_ubyte_(i)); }
-//     println!();
-//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
-//     print!("Cipher =\t");
-//     for i in 0..16
-//         { print!("{:02x}", cipher.get_ubyte_(i)); }
-//     println!();
-//     assert_eq!(cipher.get(), 0x3ad78e726c1ec02b7ebfe92b23d9ec34_u128.to_be());
-//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
-//     print!("Restored =\t");
-//     for i in 0..16
-//         { print!("{:02x}", restored.get_ubyte_(i)); }
-//     println!("\n");
-//     assert_eq!(restored.get(), 0x80000000000000000000000000000000_u128.to_be());
-    
-//     let mut aes = AES_128::new_with_key_u128(0x10a58869d74be5a374cf867cfb473859_u128.to_be());
-//     let msg = LongerUnion::new();
-//     print!("Message =\t");
-//     for i in 0..16
-//         { print!("{:02x}", msg.get_ubyte_(i)); }
-//     println!();
-//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
-//     print!("Cipher =\t");
-//     for i in 0..16
-//         { print!("{:02x}", cipher.get_ubyte_(i)); }
-//     println!();
-//     assert_eq!(cipher.get(), 0x6d251e6944b051e04eaa6fb4dbf78465_u128.to_be());
-//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
-//     print!("Restored =\t");
-//     for i in 0..16
-//         { print!("{:02x}", restored.get_ubyte_(i)); }
-//     println!("\n");
-//     assert_eq!(restored.get(), 0x00000000000000000000000000000000_u128.to_be());
-
-//     let mut aes = AES_128::new_with_key_u128(0x2b7e151628aed2a6abf7158809cf4f3c_u128.to_be());
-//     let msg = LongerUnion::new_with_ubytes([0x32, 0x43, 0xf6, 0xa8, 0x88, 0x5a, 0x30, 0x8d, 0x31, 0x31, 0x98, 0xa2, 0xe0, 0x37, 0x07, 0x34]);
-//     print!("Message =\t");
-//     for i in 0..16
-//         { print!("{:02x}", msg.get_ubyte_(i)); }
-//     println!();
-//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
-//     print!("Cipher =\t");
-//     for i in 0..16
-//         { print!("{:02x}", cipher.get_ubyte_(i)); }
-//     println!();
-//     assert_eq!(cipher.get(), 0x3925841d02dc09fbdc118597196a0b32_u128.to_be());
-//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
-//     print!("Restored =\t");
-//     for i in 0..16
-//         { print!("{:02x}", restored.get_ubyte_(i)); }
-//     println!("\n\n");
-//     assert_eq!(restored.get(), 0x3243f6a8885a308d313198a2e0370734_u128.to_be());
-
-
-//     // AES-192
-//     println!("AES-192");
-//     let mut aes = AES_192::new();
-//     let msg = LongerUnion::new_with_ubytes([0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
-//     print!("Message =\t");
-//     for i in 0..16
-//         { print!("{:02x}", msg.get_ubyte_(i)); }
-//     println!();
-//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
-//     print!("Cipher =\t");
-//     for i in 0..16
-//         { print!("{:02x}", cipher.get_ubyte_(i)); }
-//     println!();
-//     assert_eq!(cipher.get(), 0x6cd02513e8d4dc986b4afe087a60bd0c_u128.to_be());
-//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
-//     print!("Restored =\t");
-//     for i in 0..16
-//         { print!("{:02x}", restored.get_ubyte_(i)); }
-//     println!("\n");
-//     assert_eq!(restored.get(), 0x80000000000000000000000000000000_u128.to_be());
-    
-//     let mut aes = AES_192::new_with_key([0xe9, 0xf0, 0x65, 0xd7, 0xc1, 0x35, 0x73, 0x58, 0x7f, 0x78, 0x75, 0x35, 0x7d, 0xfb, 0xb1, 0x6c, 0x53, 0x48, 0x9f, 0x6a, 0x4b, 0xd0, 0xf7, 0xcd]);
-//     let msg = LongerUnion::new();
-//     print!("Message =\t");
-//     for i in 0..16
-//         { print!("{:02x}", msg.get_ubyte_(i)); }
-//     println!();
-//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
-//     print!("Cipher =\t");
-//     for i in 0..16
-//         { print!("{:02x}", cipher.get_ubyte_(i)); }
-//     println!();
-//     assert_eq!(cipher.get(), 0x0956259c9cd5cfd0181cca53380cde06_u128.to_be());
-//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
-//     print!("Restored =\t");
-//     for i in 0..16
-//         { print!("{:02x}", restored.get_ubyte_(i)); }
-//     println!("\n");
-//     assert_eq!(restored.get(), 0x00000000000000000000000000000000_u128.to_be());
-
-//     let mut aes = AES_192::new_with_key([0x8E, 0x73, 0xB0, 0xF7, 0xDA, 0x0E, 0x64, 0x52, 0xC8, 0x10, 0xF3, 0x2B, 0x80, 0x90, 0x79, 0xE5, 0x62, 0xF8, 0xEA, 0xD2, 0x52, 0x2C, 0x6B, 0x7B]);
-//     let msg = LongerUnion::new_with(0x6BC1BEE22E409F96E93D7E117393172A_u128.to_be());
-//     print!("Message =\t");
-//     for i in 0..16
-//         { print!("{:02x}", msg.get_ubyte_(i)); }
-//     println!();
-//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
-//     print!("Cipher =\t");
-//     for i in 0..16
-//         { print!("{:02x}", cipher.get_ubyte_(i)); }
-//     println!();
-//     assert_eq!(cipher.get(), 0xBD334F1D6E45F25FF712A214571FA5CC_u128.to_be());
-//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
-//     print!("Restored =\t");
-//     for i in 0..16
-//         { print!("{:02x}", restored.get_ubyte_(i)); }
-//     println!("\n");
-//     assert_eq!(restored.get(), 0x6BC1BEE22E409F96E93D7E117393172A_u128.to_be());
-
-
-//     // AES-256
-//     println!("AES-256");
-//     let mut aes = AES_256::new();
-//     let msg = LongerUnion::new_with_ubytes([0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
-//     print!("Message =\t");
-//     for i in 0..16
-//         { print!("{:02x}", msg.get_ubyte_(i)); }
-//     println!();
-//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
-//     print!("Cipher =\t");
-//     for i in 0..16
-//         { print!("{:02x}", cipher.get_ubyte_(i)); }
-//     println!();
-//     assert_eq!(cipher.get(), 0xddc6bf790c15760d8d9aeb6f9a75fd4e_u128.to_be());
-//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
-//     print!("Restored =\t");
-//     for i in 0..16
-//         { print!("{:02x}", restored.get_ubyte_(i)); }
-//     println!("\n");
-//     assert_eq!(restored.get(), 0x80000000000000000000000000000000_u128.to_be());
-    
-//     let mut aes = AES_256::new_with_key([0xc4, 0x7b, 0x02, 0x94, 0xdb, 0xbb, 0xee, 0x0f, 0xec, 0x47, 0x57, 0xf2, 0x2f, 0xfe, 0xee, 0x35, 0x87, 0xca, 0x47, 0x30, 0xc3, 0xd3, 0x3b, 0x69, 0x1d, 0xf3, 0x8b, 0xab, 0x07, 0x6b, 0xc5, 0x58]);
-//     let msg = LongerUnion::new();
-//     print!("Message =\t");
-//     for i in 0..16
-//         { print!("{:02x}", msg.get_ubyte_(i)); }
-//     println!();
-//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
-//     print!("Cipher =\t");
-//     for i in 0..16
-//         { print!("{:02x}", cipher.get_ubyte_(i)); }
-//     println!();
-//     assert_eq!(cipher.get(), 0x46f2fb342d6f0ab477476fc501242c5f_u128.to_be());
-//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
-//     print!("Restored =\t");
-//     for i in 0..16
-//         { print!("{:02x}", restored.get_ubyte_(i)); }
-//     println!("\n");
-//     assert_eq!(restored.get(), 0x00000000000000000000000000000000_u128.to_be());
-
-//     let mut aes = AES_256::new_with_key([0x60, 0x3D, 0xEB, 0x10, 0x15, 0xCA, 0x71, 0xBE, 0x2B, 0x73, 0xAE, 0xF0, 0x85, 0x7D, 0x77, 0x81, 0x1F, 0x35, 0x2C, 0x07, 0x3B, 0x61, 0x08, 0xD7, 0x2D, 0x98, 0x10, 0xA3, 0x09, 0x14, 0xDF, 0xF4]);
-//     let msg = LongerUnion::new_with(0x6BC1BEE22E409F96E93D7E117393172A_u128.to_be());
-//     print!("Message =\t");
-//     for i in 0..16
-//         { print!("{:02x}", msg.get_ubyte_(i)); }
-//     println!();
-//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
-//     print!("Cipher =\t");
-//     for i in 0..16
-//         { print!("{:02x}", cipher.get_ubyte_(i)); }
-//     println!();
-//     assert_eq!(cipher.get(), 0xF3EED1BDB5D2A03C064B5A7E3DB181F8_u128.to_be());
-//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
-//     print!("Restored =\t");
-//     for i in 0..16
-//         { print!("{:02x}", restored.get_ubyte_(i)); }
-//     println!("\n");
-//     assert_eq!(restored.get(), 0x6BC1BEE22E409F96E93D7E117393172A_u128.to_be());
-//     println!("-------------------------------");
-// }
 
 fn aes_quick_start()
 {
@@ -479,8 +241,12 @@ fn aes_basic()
     aes_turn_decryptor();
     aes_encrypt_unit();
     aes_encrypt_u128();
+    aes_encrypt_u64();
+    aes_encrypt_u32();
     aes_decrypt_unit();
     aes_decrypt_u128();
+    aes_decrypt_u64();
+    aes_decrypt_u32();
     // aes__encrypt();
     // aes__decrypt();
     aes_encrypt_array_unit();
@@ -1115,9 +881,8 @@ fn aes_encrypt_unit()
     // The case for AES_128
     let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     let plaintext = [IntUnion::new_with(0x90ABCDEF), IntUnion::new_with(0x12345678), IntUnion::new_with(0x90ABCDEF), IntUnion::new_with(0x12345678)];
-    let ciphertext = aes.encrypt_unit(&plaintext);
-
     println!("Plaintext:\t{:08X}{:08X}{:08X}{:08X}", plaintext[0].get(), plaintext[1].get(), plaintext[2].get(), plaintext[3].get());
+    let ciphertext = aes.encrypt_unit(&plaintext);
     println!("Ciphertext:\t{:08X}{:08X}{:08X}{:08X}", ciphertext[0].get(), ciphertext[1].get(), ciphertext[2].get(), ciphertext[3].get());
     assert_eq!(ciphertext[0].get(), 0x27584D87);
     assert_eq!(ciphertext[1].get(), 0x44E2BAE9);
@@ -1127,9 +892,8 @@ fn aes_encrypt_unit()
     // The case for AES_192
     let mut aes = AES_192::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     let plaintext = [IntUnion::new_with(0x90ABCDEF), IntUnion::new_with(0x12345678), IntUnion::new_with(0x90ABCDEF), IntUnion::new_with(0x12345678)];
-    let ciphertext = aes.encrypt_unit(&plaintext);
-
     println!("Plaintext:\t{:08X}{:08X}{:08X}{:08X}", plaintext[0].get(), plaintext[1].get(), plaintext[2].get(), plaintext[3].get());
+    let ciphertext = aes.encrypt_unit(&plaintext);
     println!("Ciphertext:\t{:08X}{:08X}{:08X}{:08X}", ciphertext[0].get(), ciphertext[1].get(), ciphertext[2].get(), ciphertext[3].get());
     assert_eq!(ciphertext[0].get(), 0x77047F1E);
     assert_eq!(ciphertext[1].get(), 0x008E2C5B);
@@ -1139,9 +903,8 @@ fn aes_encrypt_unit()
     // The case for Rijndael_Generic::<10, 4, 2>
     let mut rijndael = Rijndael_Generic::<10, 4, 2>::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     let plaintext = [IntUnion::new_with(0x90ABCDEF), IntUnion::new_with(0x12345678), IntUnion::new_with(0x90ABCDEF), IntUnion::new_with(0x12345678)];
-    let ciphertext = rijndael.encrypt_unit(&plaintext);
-
     println!("Plaintext:\t{:08X}{:08X}{:08X}{:08X}", plaintext[0].get(), plaintext[1].get(), plaintext[2].get(), plaintext[3].get());
+    let ciphertext = rijndael.encrypt_unit(&plaintext);
     println!("Ciphertext:\t{:08X}{:08X}{:08X}{:08X}", ciphertext[0].get(), ciphertext[1].get(), ciphertext[2].get(), ciphertext[3].get());
     assert_eq!(ciphertext[0].get(), 0xBF20110F);
     assert_eq!(ciphertext[1].get(), 0x70E7E05D);
@@ -1153,35 +916,61 @@ fn aes_encrypt_unit()
 fn aes_encrypt_u128()
 {
     println!("aes_encrypt_u128()");
-    use cryptocol::number::IntUnion;
     use cryptocol::symmetric::{ AES_128, AES_192, Rijndael_Generic };
 
     // The case for AES_128
     let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     let plaintext = 0x1234567890ABCDEF1234567890ABCDEF;
-    let ciphertext = aes.encrypt_u128(plaintext);
-
     println!("Plaintext:\t{:#034X}", plaintext);
+    let ciphertext = aes.encrypt_u128(plaintext);
     println!("Ciphertext:\t{:#034X}", ciphertext);
     assert_eq!(ciphertext, 0x01CCF8264AECB5D644E2BAE927584D87_u128);
 
     // The case for AES_192
     let mut aes = AES_192::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     let plaintext = 0x1234567890ABCDEF1234567890ABCDEF;
-    let ciphertext = aes.encrypt_u128(plaintext);
-
     println!("Plaintext:\t{:#034X}", plaintext);
+    let ciphertext = aes.encrypt_u128(plaintext);
     println!("Ciphertext:\t{:#034X}", ciphertext);
     assert_eq!(ciphertext, 0x0DB5608E6E5EB091008E2C5B77047F1E_u128);
 
     // The case for Rijndael_Generic::<10, 4, 2>
     let mut rijndael = Rijndael_Generic::<10, 4, 2>::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     let plaintext = 0x1234567890ABCDEF1234567890ABCDEF;
-    let ciphertext = rijndael.encrypt_u128(plaintext);
-
     println!("Plaintext:\t{:#034X}", plaintext);
+    let ciphertext = rijndael.encrypt_u128(plaintext);
     println!("Ciphertext:\t{:#034X}", ciphertext);
     assert_eq!(ciphertext, 0x9D6C20BD28996D5570E7E05DBF20110F_u128);
+    println!("-------------------------------");
+}
+
+fn aes_encrypt_u64()
+{
+    println!("aes_encrypt_u64()");
+    use cryptocol::symmetric::Rijndael_64_64;
+
+    // The case for Rijndael_64_64
+    let mut rijndael = Rijndael_64_64::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    let plaintext = 0x1234567890ABCDEF;
+    println!("Plaintext:\t{:#018X}", plaintext);
+    let ciphertext = rijndael.encrypt_u64(plaintext);
+    println!("Ciphertext:\t{:#018X}", ciphertext);
+    assert_eq!(ciphertext, 0x4FAA3F0E49CC4DCF_u64);
+    println!("-------------------------------");
+}
+
+fn aes_encrypt_u32()
+{
+    println!("aes_encrypt_u32()");
+    use cryptocol::symmetric::Rijndael_32_32;
+
+    // The case for Rijndael_32_32
+    let mut rijndael = Rijndael_32_32::new_with_key(&[0x12, 0x34, 0x56, 0x78]);
+    let plaintext = 0x1234567;
+    println!("Plaintext:\t{:#010X}", plaintext);
+    let ciphertext = rijndael.encrypt_u32(plaintext);
+    println!("Ciphertext:\t{:#010X}", ciphertext);
+    assert_eq!(ciphertext, 0xB25E4E09_u32);
     println!("-------------------------------");
 }
 
@@ -1194,9 +983,8 @@ fn aes_decrypt_unit()
     // The case for AES_128
     let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     let ciphertext = [IntUnion::new_with(0x27584D87), IntUnion::new_with(0x44E2BAE9), IntUnion::new_with(0x4AECB5D6), IntUnion::new_with(0x01CCF826)];
-    let plaintext = aes.decrypt_unit(&ciphertext);
-
     println!("Ciphertext:\t{:08X}{:08X}{:08X}{:08X}", ciphertext[0].get(), ciphertext[1].get(), ciphertext[2].get(), ciphertext[3].get());
+    let plaintext = aes.decrypt_unit(&ciphertext);
     println!("Plaintext:\t{:08X}{:08X}{:08X}{:08X}", plaintext[0].get(), plaintext[1].get(), plaintext[2].get(), plaintext[3].get());
     assert_eq!(plaintext[0].get(), 0x90ABCDEF);
     assert_eq!(plaintext[1].get(), 0x12345678);
@@ -1206,9 +994,8 @@ fn aes_decrypt_unit()
     // The case for AES_192
     let mut aes = AES_192::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     let ciphertext = [IntUnion::new_with(0x77047F1E), IntUnion::new_with(0x008E2C5B), IntUnion::new_with(0x6E5EB091), IntUnion::new_with(0x0DB5608E)];
-    let plaintext = aes.decrypt_unit(&ciphertext);
-
     println!("Ciphertext:\t{:08X}{:08X}{:08X}{:08X}", ciphertext[0].get(), ciphertext[1].get(), ciphertext[2].get(), ciphertext[3].get());
+    let plaintext = aes.decrypt_unit(&ciphertext);
     println!("Plaintext:\t{:08X}{:08X}{:08X}{:08X}", plaintext[0].get(), plaintext[1].get(), plaintext[2].get(), plaintext[3].get());
     assert_eq!(plaintext[0].get(), 0x90ABCDEF);
     assert_eq!(plaintext[1].get(), 0x12345678);
@@ -1218,10 +1005,9 @@ fn aes_decrypt_unit()
     // The case for Rijndael_Generic::<10, 4, 2>
     let mut rijndael = Rijndael_Generic::<10, 4, 2>::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     let ciphertext = [IntUnion::new_with(0xBF20110F), IntUnion::new_with(0x70E7E05D), IntUnion::new_with(0x28996D55), IntUnion::new_with(0x9D6C20BD)];
-    let plaintext = rijndael.decrypt_unit(&ciphertext);
-
-    println!("Plaintext:\t{:08X}{:08X}{:08X}{:08X}", plaintext[0].get(), plaintext[1].get(), plaintext[2].get(), plaintext[3].get());
     println!("Ciphertext:\t{:08X}{:08X}{:08X}{:08X}", ciphertext[0].get(), ciphertext[1].get(), ciphertext[2].get(), ciphertext[3].get());
+    let plaintext = rijndael.decrypt_unit(&ciphertext);
+    println!("Plaintext:\t{:08X}{:08X}{:08X}{:08X}", plaintext[0].get(), plaintext[1].get(), plaintext[2].get(), plaintext[3].get());
     assert_eq!(plaintext[0].get(), 0x90ABCDEF);
     assert_eq!(plaintext[1].get(), 0x12345678);
     assert_eq!(plaintext[2].get(), 0x90ABCDEF);
@@ -1238,29 +1024,56 @@ fn aes_decrypt_u128()
     // The case for AES_128
     let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     let ciphertext = 0x01CCF8264AECB5D644E2BAE927584D87_u128;
-    let plaintext = aes.decrypt_u128(ciphertext);
-
     println!("Ciphertext:\t{:#034X}", ciphertext);
+    let plaintext = aes.decrypt_u128(ciphertext);
     println!("Plaintext:\t{:#034X}", plaintext);
     assert_eq!(plaintext, 0x1234567890ABCDEF1234567890ABCDEF);
 
     // The case for AES_192
     let mut aes = AES_192::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     let ciphertext = 0x0DB5608E6E5EB091008E2C5B77047F1E_u128;
-    let plaintext = aes.decrypt_u128(ciphertext);
-
     println!("Ciphertext:\t{:#034X}", ciphertext);
+    let plaintext = aes.decrypt_u128(ciphertext);
     println!("Plaintext:\t{:#034X}", plaintext);
     assert_eq!(plaintext, 0x1234567890ABCDEF1234567890ABCDEF);
 
     // The case for Rijndael_Generic::<10, 4, 2>
     let mut rijndael = Rijndael_Generic::<10, 4, 2>::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
     let ciphertext = 0x9D6C20BD28996D5570E7E05DBF20110F_u128;
-    let plaintext = rijndael.decrypt_u128(ciphertext);
-
     println!("Ciphertext:\t{:#034X}", ciphertext);
+    let plaintext = rijndael.decrypt_u128(ciphertext);
     println!("Plaintext:\t{:#034X}", plaintext);
     assert_eq!(plaintext, 0x1234567890ABCDEF1234567890ABCDEF);
+    println!("-------------------------------");
+}
+
+fn aes_decrypt_u64()
+{
+    println!("aes_encrypt_u64()");
+    use cryptocol::symmetric::Rijndael_64_64;
+
+    // The case for Rijndael_64_64
+    let mut rijndael = Rijndael_64_64::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    let ciphertext = 0x4FAA3F0E49CC4DCF_u64;
+    println!("Ciphertext:\t{:#018X}", ciphertext);
+    let plaintext = rijndael.decrypt_u64(ciphertext);
+    println!("Plaintext:\t{:#018X}", plaintext);
+    assert_eq!(plaintext, 0x1234567890ABCDEF_u64);
+    println!("-------------------------------");
+}
+
+fn aes_decrypt_u32()
+{
+    println!("aes_encrypt_u64()");
+    use cryptocol::symmetric::Rijndael_32_32;
+
+    // The case for Rijndael_32_32
+    let mut rijndael = Rijndael_32_32::new_with_key(&[0x12, 0x34, 0x56, 0x78]);
+    let ciphertext = 0xB25E4E09_u32;
+    println!("Ciphertext:\t{:#010X}", ciphertext);
+    let plaintext = rijndael.decrypt_u32(ciphertext);
+    println!("Plaintext:\t{:#010X}", plaintext);
+    assert_eq!(plaintext, 0x1234567_u32);
     println!("-------------------------------");
 }
 
@@ -1768,3 +1581,243 @@ fn aes_get_desirable_round()
     assert_eq!(rounds, 22);
     println!("-------------------------------");
 }
+
+
+
+///// For test during implementation //////
+// fn aes_devel()
+// {
+//     aes_sbox();
+//     aes_invsbox();
+//     aes_mc();
+//     aes_invmc();
+//     aes_rc();
+//     aes_test();
+// }
+
+// fn aes_sbox()
+// {
+//     println!("aes_sbox");
+//     use cryptocol::symmetric::AES_128;
+//     AES_128::show_SBox();
+//     println!("-------------------------------");
+// }
+
+// fn aes_invsbox()
+// {
+//     println!("aes_invsbox");
+//     use cryptocol::symmetric::AES_128;
+//     AES_128::show_InvSBox();
+//     println!("-------------------------------");
+// }
+
+// fn aes_mc()
+// {
+//     println!("aes_mc");
+//     use cryptocol::symmetric::AES_128;
+//     AES_128::show_MC();
+//     println!("-------------------------------");
+// }
+
+// fn aes_invmc()
+// {
+//     println!("aes_invmc");
+//     use cryptocol::symmetric::AES_128;
+//     AES_128::show_InvMC();
+//     println!("-------------------------------");
+// }
+
+// fn aes_rc()
+// {
+//     println!("aes_rc");
+//     use cryptocol::symmetric::AES_128;
+//     AES_128::show_RC();
+//     println!("-------------------------------");
+// }
+
+// fn aes_test()
+// {
+//     println!("aes_test");
+//     use cryptocol::number::LongerUnion;
+//     use cryptocol::symmetric::{ AES_128, AES_192, AES_256 };
+
+//     // AES-128
+//     println!("AES-128");
+//     let mut aes = AES_128::new();
+//     let msg = LongerUnion::new_with_ubytes([0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
+//     print!("Message =\t");
+//     for i in 0..16
+//         { print!("{:02x}", msg.get_ubyte_(i)); }
+//     println!();
+//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
+//     print!("Cipher =\t");
+//     for i in 0..16
+//         { print!("{:02x}", cipher.get_ubyte_(i)); }
+//     println!();
+//     assert_eq!(cipher.get(), 0x3ad78e726c1ec02b7ebfe92b23d9ec34_u128.to_be());
+//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
+//     print!("Restored =\t");
+//     for i in 0..16
+//         { print!("{:02x}", restored.get_ubyte_(i)); }
+//     println!("\n");
+//     assert_eq!(restored.get(), 0x80000000000000000000000000000000_u128.to_be());
+    
+//     let mut aes = AES_128::new_with_key_u128(0x10a58869d74be5a374cf867cfb473859_u128.to_be());
+//     let msg = LongerUnion::new();
+//     print!("Message =\t");
+//     for i in 0..16
+//         { print!("{:02x}", msg.get_ubyte_(i)); }
+//     println!();
+//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
+//     print!("Cipher =\t");
+//     for i in 0..16
+//         { print!("{:02x}", cipher.get_ubyte_(i)); }
+//     println!();
+//     assert_eq!(cipher.get(), 0x6d251e6944b051e04eaa6fb4dbf78465_u128.to_be());
+//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
+//     print!("Restored =\t");
+//     for i in 0..16
+//         { print!("{:02x}", restored.get_ubyte_(i)); }
+//     println!("\n");
+//     assert_eq!(restored.get(), 0x00000000000000000000000000000000_u128.to_be());
+
+//     let mut aes = AES_128::new_with_key_u128(0x2b7e151628aed2a6abf7158809cf4f3c_u128.to_be());
+//     let msg = LongerUnion::new_with_ubytes([0x32, 0x43, 0xf6, 0xa8, 0x88, 0x5a, 0x30, 0x8d, 0x31, 0x31, 0x98, 0xa2, 0xe0, 0x37, 0x07, 0x34]);
+//     print!("Message =\t");
+//     for i in 0..16
+//         { print!("{:02x}", msg.get_ubyte_(i)); }
+//     println!();
+//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
+//     print!("Cipher =\t");
+//     for i in 0..16
+//         { print!("{:02x}", cipher.get_ubyte_(i)); }
+//     println!();
+//     assert_eq!(cipher.get(), 0x3925841d02dc09fbdc118597196a0b32_u128.to_be());
+//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
+//     print!("Restored =\t");
+//     for i in 0..16
+//         { print!("{:02x}", restored.get_ubyte_(i)); }
+//     println!("\n\n");
+//     assert_eq!(restored.get(), 0x3243f6a8885a308d313198a2e0370734_u128.to_be());
+
+
+//     // AES-192
+//     println!("AES-192");
+//     let mut aes = AES_192::new();
+//     let msg = LongerUnion::new_with_ubytes([0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
+//     print!("Message =\t");
+//     for i in 0..16
+//         { print!("{:02x}", msg.get_ubyte_(i)); }
+//     println!();
+//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
+//     print!("Cipher =\t");
+//     for i in 0..16
+//         { print!("{:02x}", cipher.get_ubyte_(i)); }
+//     println!();
+//     assert_eq!(cipher.get(), 0x6cd02513e8d4dc986b4afe087a60bd0c_u128.to_be());
+//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
+//     print!("Restored =\t");
+//     for i in 0..16
+//         { print!("{:02x}", restored.get_ubyte_(i)); }
+//     println!("\n");
+//     assert_eq!(restored.get(), 0x80000000000000000000000000000000_u128.to_be());
+    
+//     let mut aes = AES_192::new_with_key([0xe9, 0xf0, 0x65, 0xd7, 0xc1, 0x35, 0x73, 0x58, 0x7f, 0x78, 0x75, 0x35, 0x7d, 0xfb, 0xb1, 0x6c, 0x53, 0x48, 0x9f, 0x6a, 0x4b, 0xd0, 0xf7, 0xcd]);
+//     let msg = LongerUnion::new();
+//     print!("Message =\t");
+//     for i in 0..16
+//         { print!("{:02x}", msg.get_ubyte_(i)); }
+//     println!();
+//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
+//     print!("Cipher =\t");
+//     for i in 0..16
+//         { print!("{:02x}", cipher.get_ubyte_(i)); }
+//     println!();
+//     assert_eq!(cipher.get(), 0x0956259c9cd5cfd0181cca53380cde06_u128.to_be());
+//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
+//     print!("Restored =\t");
+//     for i in 0..16
+//         { print!("{:02x}", restored.get_ubyte_(i)); }
+//     println!("\n");
+//     assert_eq!(restored.get(), 0x00000000000000000000000000000000_u128.to_be());
+
+//     let mut aes = AES_192::new_with_key([0x8E, 0x73, 0xB0, 0xF7, 0xDA, 0x0E, 0x64, 0x52, 0xC8, 0x10, 0xF3, 0x2B, 0x80, 0x90, 0x79, 0xE5, 0x62, 0xF8, 0xEA, 0xD2, 0x52, 0x2C, 0x6B, 0x7B]);
+//     let msg = LongerUnion::new_with(0x6BC1BEE22E409F96E93D7E117393172A_u128.to_be());
+//     print!("Message =\t");
+//     for i in 0..16
+//         { print!("{:02x}", msg.get_ubyte_(i)); }
+//     println!();
+//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
+//     print!("Cipher =\t");
+//     for i in 0..16
+//         { print!("{:02x}", cipher.get_ubyte_(i)); }
+//     println!();
+//     assert_eq!(cipher.get(), 0xBD334F1D6E45F25FF712A214571FA5CC_u128.to_be());
+//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
+//     print!("Restored =\t");
+//     for i in 0..16
+//         { print!("{:02x}", restored.get_ubyte_(i)); }
+//     println!("\n");
+//     assert_eq!(restored.get(), 0x6BC1BEE22E409F96E93D7E117393172A_u128.to_be());
+
+
+//     // AES-256
+//     println!("AES-256");
+//     let mut aes = AES_256::new();
+//     let msg = LongerUnion::new_with_ubytes([0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
+//     print!("Message =\t");
+//     for i in 0..16
+//         { print!("{:02x}", msg.get_ubyte_(i)); }
+//     println!();
+//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
+//     print!("Cipher =\t");
+//     for i in 0..16
+//         { print!("{:02x}", cipher.get_ubyte_(i)); }
+//     println!();
+//     assert_eq!(cipher.get(), 0xddc6bf790c15760d8d9aeb6f9a75fd4e_u128.to_be());
+//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
+//     print!("Restored =\t");
+//     for i in 0..16
+//         { print!("{:02x}", restored.get_ubyte_(i)); }
+//     println!("\n");
+//     assert_eq!(restored.get(), 0x80000000000000000000000000000000_u128.to_be());
+    
+//     let mut aes = AES_256::new_with_key([0xc4, 0x7b, 0x02, 0x94, 0xdb, 0xbb, 0xee, 0x0f, 0xec, 0x47, 0x57, 0xf2, 0x2f, 0xfe, 0xee, 0x35, 0x87, 0xca, 0x47, 0x30, 0xc3, 0xd3, 0x3b, 0x69, 0x1d, 0xf3, 0x8b, 0xab, 0x07, 0x6b, 0xc5, 0x58]);
+//     let msg = LongerUnion::new();
+//     print!("Message =\t");
+//     for i in 0..16
+//         { print!("{:02x}", msg.get_ubyte_(i)); }
+//     println!();
+//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
+//     print!("Cipher =\t");
+//     for i in 0..16
+//         { print!("{:02x}", cipher.get_ubyte_(i)); }
+//     println!();
+//     assert_eq!(cipher.get(), 0x46f2fb342d6f0ab477476fc501242c5f_u128.to_be());
+//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
+//     print!("Restored =\t");
+//     for i in 0..16
+//         { print!("{:02x}", restored.get_ubyte_(i)); }
+//     println!("\n");
+//     assert_eq!(restored.get(), 0x00000000000000000000000000000000_u128.to_be());
+
+//     let mut aes = AES_256::new_with_key([0x60, 0x3D, 0xEB, 0x10, 0x15, 0xCA, 0x71, 0xBE, 0x2B, 0x73, 0xAE, 0xF0, 0x85, 0x7D, 0x77, 0x81, 0x1F, 0x35, 0x2C, 0x07, 0x3B, 0x61, 0x08, 0xD7, 0x2D, 0x98, 0x10, 0xA3, 0x09, 0x14, 0xDF, 0xF4]);
+//     let msg = LongerUnion::new_with(0x6BC1BEE22E409F96E93D7E117393172A_u128.to_be());
+//     print!("Message =\t");
+//     for i in 0..16
+//         { print!("{:02x}", msg.get_ubyte_(i)); }
+//     println!();
+//     let cipher = LongerUnion::new_with(aes.encrypt_u128(msg.get()));
+//     print!("Cipher =\t");
+//     for i in 0..16
+//         { print!("{:02x}", cipher.get_ubyte_(i)); }
+//     println!();
+//     assert_eq!(cipher.get(), 0xF3EED1BDB5D2A03C064B5A7E3DB181F8_u128.to_be());
+//     let restored = LongerUnion::new_with(aes.decrypt_u128(cipher.get()));
+//     print!("Restored =\t");
+//     for i in 0..16
+//         { print!("{:02x}", restored.get_ubyte_(i)); }
+//     println!("\n");
+//     assert_eq!(restored.get(), 0x6BC1BEE22E409F96E93D7E117393172A_u128.to_be());
+//     println!("-------------------------------");
+// }

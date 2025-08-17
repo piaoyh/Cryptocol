@@ -1031,10 +1031,14 @@ Rijndael_Generic<ROUND, NB, NK>
     ///
     /// # Output
     /// This method returns the encrypted data of `u128`-type from `message`.
+    /// 
+    /// # Caution
+    /// - This method is meaningful only when `NB` is `4`. 
+    /// - If `NB` is other than `4`, this method may panic.
+    /// - Even if this method does not panic, its behaviour is not defined.
     ///
     /// # Example 1 for AES_128
     /// ```
-    /// use cryptocol::number::IntUnion;
     /// use cryptocol::symmetric::AES_128;
     ///
     /// let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
@@ -1048,7 +1052,6 @@ Rijndael_Generic<ROUND, NB, NK>
     ///
     /// # Example 2 for AES_256
     /// ```
-    /// use cryptocol::number::IntUnion;
     /// use cryptocol::symmetric::AES_256;
     ///
     /// let mut aes = AES_192::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
@@ -1062,7 +1065,6 @@ Rijndael_Generic<ROUND, NB, NK>
     ///
     /// # Example 3 for Rijndael_Generic::<10, 4, 2>
     /// ```
-    /// use cryptocol::number::IntUnion;
     /// use cryptocol::symmetric::Rijndael_Generic;
     ///
     /// let mut rijndael = Rijndael_Generic::<10, 4, 2>::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
@@ -1074,6 +1076,102 @@ Rijndael_Generic<ROUND, NB, NK>
     /// assert_eq!(ciphertext, 0x9D6C20BD28996D5570E7E05DBF20110F_u128);
     /// ```
     pub fn encrypt_u128(&mut self, message: u128) -> u128
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn encrypt_u64(&mut self, message: u64) -> u64
+    /// Encrypts a 64-bit data.
+    ///
+    /// # Arguments
+    /// `message` is of `u64`-type and the plaintext to be encrypted.
+    ///
+    /// # Output
+    /// This method returns the encrypted data of `u64`-type from `message`.
+    /// 
+    /// # Caution
+    /// - This method is meaningful only when `NB` is `2`. 
+    /// - If `NB` is other than `2`, this method may panic.
+    /// - Even if this method does not panic, its behaviour is not defined.
+    /// 
+    /// # Counterpart Methods
+    /// For each trait
+    /// [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+    /// [`CBC_PKCS7`](symmetric/trait.CBC_PKCS7.html#trait.ECB_PKCS7),
+    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+    /// [`PCBC_PKCS7`](symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
+    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
+    /// there are provided useful counterpart methods:
+    /// encrypt(), encrypt_into_vec(), encrypt_into_array(),
+    /// encrypt_str(), encrypt_str_into_vec(), encrypt_str_into_array(),
+    /// encrypt_string(), encrypt_string_into_vec(), encrypt_string_into_array(),
+    /// encrypt_vec(), encrypt_vec_into_vec(), encrypt_vec_into_array(),
+    /// encrypt_array(), encrypt_array_into_vec(), and encrypt_array_into_array().
+    ///
+    /// # Example 1 for Rijndael_64_64
+    /// ```
+    /// use cryptocol::symmetric::Rijndael_64_64;
+    /// 
+    /// let mut rijndael = Rijndael_64_64::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let plaintext = 0x1234567890ABCDEF;
+    /// println!("Plaintext:\t{:#018X}", plaintext);
+    /// let ciphertext = rijndael.encrypt_u64(plaintext);
+    /// println!("Ciphertext:\t{:#018X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x4FAA3F0E49CC4DCF_u64);
+    /// ```
+    pub fn encrypt_u64(&mut self, message: u64) -> u64
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn encrypt_u32(&mut self, message: u32) -> u32
+    /// Encrypts a 32-bit data.
+    ///
+    /// # Arguments
+    /// `message` is of `u32`-type and the plaintext to be encrypted.
+    ///
+    /// # Output
+    /// This method returns the encrypted data of `u32`-type from `message`.
+    /// 
+    /// # Caution
+    /// - This method is meaningful only when `NB` is `1`. 
+    /// - If `NB` is other than `1`, this method may panic.
+    /// - Even if this method does not panic, its behaviour is not defined.
+    /// 
+    /// # Counterpart Methods
+    /// For each trait
+    /// [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+    /// [`CBC_PKCS7`](symmetric/trait.CBC_PKCS7.html#trait.ECB_PKCS7),
+    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+    /// [`PCBC_PKCS7`](symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
+    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
+    /// there are provided useful counterpart methods:
+    /// encrypt(), encrypt_into_vec(), encrypt_into_array(),
+    /// encrypt_str(), encrypt_str_into_vec(), encrypt_str_into_array(),
+    /// encrypt_string(), encrypt_string_into_vec(), encrypt_string_into_array(),
+    /// encrypt_vec(), encrypt_vec_into_vec(), encrypt_vec_into_array(),
+    /// encrypt_array(), encrypt_array_into_vec(), and encrypt_array_into_array().
+    ///
+    /// # Example 1 for Rijndael_32_32
+    /// ```
+    /// use cryptocol::symmetric::Rijndael_32_32;
+    /// 
+    /// let mut rijndael = Rijndael_32_32::new_with_key(&[0x12, 0x34, 0x56, 0x78]);
+    /// let plaintext = 0x1234567;
+    /// println!("Plaintext:\t{:#010X}", plaintext);
+    /// let ciphertext = rijndael.encrypt_u32(plaintext);
+    /// println!("Ciphertext:\t{:#010X}", ciphertext);
+    /// assert_eq!(ciphertext, 0xB25E4E09_u32);
+    /// ```
+    pub fn encrypt_u32(&mut self, message: u32) -> u32
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1152,6 +1250,11 @@ Rijndael_Generic<ROUND, NB, NK>
     ///
     /// # Output
     /// This method returns the decrypted data of `u128`-type from `cipher`.
+    /// 
+    /// # Caution
+    /// - This method is meaningful only when `NB` is `4`. 
+    /// - If `NB` is other than `4`, this method may panic.
+    /// - Even if this method does not panic, its behaviour is not defined.
     ///
     /// # Example 1 for AES_128
     /// ```
@@ -1195,6 +1298,66 @@ Rijndael_Generic<ROUND, NB, NK>
     /// assert_eq!(plaintext, 0x1234567890ABCDEF1234567890ABCDEF);
     /// ```
     pub fn decrypt_u128(&mut self, cipher: u128) -> u128
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn decrypt_u64(&mut self, cipher: u64) -> u64
+    /// Decrypts a 128-bit data.
+    ///
+    /// # Arguments
+    /// `cioher` is of `u128`-type and the ciphertext to be decrypted.
+    ///
+    /// # Output
+    /// This method returns the decrypted data of `u128`-type from `cipher`.
+    /// 
+    /// # Caution
+    /// - This method is meaningful only when `NB` is `2`. 
+    /// - If `NB` is other than `2`, this method may panic.
+    /// - Even if this method does not panic, its behaviour is not defined.
+    ///
+    /// # Example 1 for Rijndael_64_64
+    /// ```
+    /// use cryptocol::symmetric::Rijndael_64_64;
+    /// 
+    /// let mut rijndael = Rijndael_64_64::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let ciphertext = 0x4FAA3F0E49CC4DCF_u64;
+    /// println!("Ciphertext:\t{:#018X}", ciphertext);
+    /// let plaintext = rijndael.decrypt_u64(ciphertext);
+    /// println!("Plaintext:\t{:#018X}", plaintext);
+    /// assert_eq!(plaintext, 0x1234567890ABCDEF_u64);
+    /// ```
+    pub fn decrypt_u64(&mut self, cipher: u64) -> u64
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn decrypt_u32(&mut self, cipher: u32) -> u32
+    /// Decrypts a 128-bit data.
+    ///
+    /// # Arguments
+    /// `cioher` is of `u128`-type and the ciphertext to be decrypted.
+    ///
+    /// # Output
+    /// This method returns the decrypted data of `u128`-type from `cipher`.
+    /// 
+    /// # Caution
+    /// - This method is meaningful only when `NB` is `1`. 
+    /// - If `NB` is other than `1`, this method may panic.
+    /// - Even if this method does not panic, its behaviour is not defined.
+    ///
+    /// # Example 1 for Rijndael_32_32
+    /// ```
+    /// use cryptocol::symmetric::Rijndael_32_32;
+    /// 
+    /// let mut rijndael = Rijndael_32_32::new_with_key(&[0x12, 0x34, 0x56, 0x78]);
+    /// let ciphertext = 0xB25E4E09_u32;
+    /// println!("Ciphertext:\t{:#010X}", ciphertext);
+    /// let plaintext = rijndael.decrypt_u32(ciphertext);
+    /// println!("Plaintext:\t{:#010X}", plaintext);
+    /// assert_eq!(plaintext, 0x1234567_u32);
+    /// ```
+    pub fn decrypt_u32(&mut self, cipher: u32) -> u32
     {
         unimplemented!(); // Dummy code for documentation
     }

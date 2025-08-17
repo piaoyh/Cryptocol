@@ -53,35 +53,21 @@ The checked items have already been implemented including documentation __at lea
 
 ### Hash Algorithms
 
-<!--
-- [ ] MD2 hash algorithms based on 128 bits
-      --- Includes MD4 and its expanded versions.
-      ===> Moved to Roadmap for ver. 2.0
--->
-- [X] MD4 hash algorithms based on 128 bits --- Includes MD4 and its expanded versions.
-      [`MD4_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/md4/struct.MD4_Generic.html#struct.MD4_Generic)
-- [X] MD5 hash algorithms based on 128 bits --- Includes MD5 and its expanded versions.
-      [`MD5_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/md5/struct.MD5_Generic.html#struct.MD5_Generic)
-<!--
-- [ ] MD6 hash algorithms based on 256 bits
-      --- Includes MD4 and its expanded versions.
-      ===> Moved to Roadmap for ver. 2.0
--->
-- [X] SHA-1 hash algorithms based on 160 bits --- 
-      Includes SHA-1, SHA-0, and their expanded versions.
-      [`SHA1_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/sha1/struct.SHA1_Generic.html#struct.SHA1_Generic)
-- [X] SHA-2 hash algorithms based on 256 bits --- 
-      Includes SHA-256, SHA-224, and their expanded versions.
-      [`SHA2_256_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/sha2_256/struct.SHA2_256_Generic.html#struct.SHA2_256_Generic)
-- [X] SHA-2 hash algorithms based on 512 bits --- 
-      Includes SHA-512, SHA-384, SHA-512/256, and their expanded versions.
-      [`SHA2_512_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/sha2_512/struct.SHA2_512_Generic.html#struct.SHA2_512_Generic)
-- [X] SHA-2 hash algorithms based on 512/t bits --- 
-      Includes 512/256, SHA-512/224, and their expanded versions.
-      [`SHA2_512_t_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/sha2_512_t/struct.SHA2_512_t_Generic.html#struct.SHA2_512_t_Generic)
 - [X] SHA-3 and Keccak hash algorithms based on 8/16/32/64 bits --- 
       Includes SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE 128, SHAKE 256, and their expanded versions.
       [`Keccak_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/keccak/struct.Keccak_Generic.html#struct.Keccak_Generic)
+- [X] SHA-2 hash algorithms based on 512/t bits --- 
+      Includes 512/256, SHA-512/224, and their expanded versions.
+      [`SHA2_512_t_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/sha2_512_t/struct.SHA2_512_t_Generic.html#struct.SHA2_512_t_Generic)
+- [X] SHA-2 hash algorithms based on 512 bits --- 
+      Includes SHA-512, SHA-384, SHA-512/256, and their expanded versions.
+      [`SHA2_512_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/sha2_512/struct.SHA2_512_Generic.html#struct.SHA2_512_Generic)
+- [X] SHA-2 hash algorithms based on 256 bits --- 
+      Includes SHA-256, SHA-224, and their expanded versions.
+      [`SHA2_256_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/sha2_256/struct.SHA2_256_Generic.html#struct.SHA2_256_Generic)
+- [X] SHA-1 hash algorithms based on 160 bits --- 
+      Includes SHA-1, SHA-0, and their expanded versions.
+      [`SHA1_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/sha1/struct.SHA1_Generic.html#struct.SHA1_Generic)
 <!--
 - [ ] RIPEMD hash algorithms based on 256 bits
       --- Includes RIPEMD and its expanded versions.
@@ -92,27 +78,22 @@ The checked items have already been implemented including documentation __at lea
 - [ ] BLAKE3 hash algorithms based on 256 bits
       --- Includes BLAKE3 and its expanded versions.
       ===> Moved to Roadmap for ver. 2.0
+- [ ] MD6 hash algorithms based on 256 bits
+      --- Includes MD4 and its expanded versions.
+      ===> Moved to Roadmap for ver. 2.0
+-->
+- [X] MD5 hash algorithms based on 128 bits --- Includes MD5 and its expanded versions.
+      [`MD5_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/md5/struct.MD5_Generic.html#struct.MD5_Generic)
+- [X] MD4 hash algorithms based on 128 bits --- Includes MD4 and its expanded versions.
+      [`MD4_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/md4/struct.MD4_Generic.html#struct.MD4_Generic)
+<!--
+- [ ] MD2 hash algorithms based on 128 bits
+      --- Includes MD4 and its expanded versions.
+      ===> Moved to Roadmap for ver. 2.0
 -->
 
 ### Symmetric-key Algorithms for the Encryption/Decryption of digital data
 
-<!--
-- [ ] Lucifer symmetric-key encryption/decryption algorithm
-      --- Includes Lucifer and its expanded versions. `Lucifer_Generic`
-      ===> Moved to Roadmap for ver. 2.0
--->
-- [X] DES symmetric-key encryption/decryption algorithm and the traits and its implementations of Operation modes and padding bits for DES_Generic
-      --- Includes DES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
-      [`DES_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/des/struct.DES_Generic.html#struct.DES_Generic),
-      [`ECB_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
-      [`ECB_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
-      [`CBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_PKCS7.html#trait.CBC_PKCS7),
-      [`CBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
-      [`PCBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
-      [`PCBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO),
-      [`CFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CFB.html#trait.CFB),
-      [`OFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.OFB.html#trait.OFB), and
-      [`CTR`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CTR.html#trait.CTR).
 - [X] AES and Rijdael symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for Rijdael_Generic
       --- Includes AES, Rijndael and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
       [`Rijndael_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/rijndael/struct.Rijndael_Generic.html#struct.Rijndael_Generic),
@@ -129,14 +110,14 @@ The checked items have already been implemented including documentation __at lea
 - [ ] MARS symmetric-key encryption/decryption algorithm
       --- Includes MARS and its expanded versions. `MARS_Generic`
       ===> Moved to Roadmap for ver. 2.0
-- [ ] RC6 symmetric-key encryption/decryption algorithm
-      --- Includes RC6 and its expanded versions. `RC6_Generic`
-      ===> Moved to Roadmap for ver. 2.0
 - [ ] Serpent symmetric-key encryption/decryption algorithm
       --- Includes RC6 and its expanded versions. `RC6_Generic`
       ===> Moved to Roadmap for ver. 2.0
 - [ ] Twofish symmetric-key encryption/decryption algorithm
       --- Includes Twofish and its expanded versions. `Twofish_Generic`
+      ===> Moved to Roadmap for ver. 2.0
+- [ ] RC6 symmetric-key encryption/decryption algorithm
+      --- Includes RC6 and its expanded versions. `RC6_Generic`
       ===> Moved to Roadmap for ver. 2.0
 - [ ] SEED symmetric-key encryption/decryption algorithm
       --- Includes SEED and its expanded versions. `SEED_Generic`
@@ -156,26 +137,53 @@ The checked items have already been implemented including documentation __at lea
 - [ ] Bluefish symmetric-key encryption/decryption algorithm
       --- Includes Bluefish and its expanded versions. `Bluefish_Generic`
       ===> Moved to Roadmap for ver. 2.0
-- [ ] RC2 symmetric-key encryption/decryption algorithm
-      --- Includes RC2 and its expanded versions. `RC2_Generic`
-      ===> Moved to Roadmap for ver. 2.0
-- [ ] RC4 symmetric-key encryption/decryption algorithm
-      --- Includes RC4 and its expanded versions. `RC4_Generic`
-      ===> Moved to Roadmap for ver. 2.0
-- [ ] RC5 symmetric-key encryption/decryption algorithm
-      --- Includes RC5 and its expanded versions. `RC5_Generic`
+- [ ] Chacha20 symmetric-key encryption/decryption algorithm
+      --- Includes Chacha20 and its expanded versions. `Chacha20_Generic`
       ===> Moved to Roadmap for ver. 2.0
 - [ ] Salsa20 symmetric-key encryption/decryption algorithm
       --- Includes Salsa20 and its expanded versions. `Salsa20_Generic`
       ===> Moved to Roadmap for ver. 2.0
-- [ ] Chacha20 symmetric-key encryption/decryption algorithm
-      --- Includes Chacha20 and its expanded versions. `Chacha20_Generic`
+- [ ] RC5 symmetric-key encryption/decryption algorithm
+      --- Includes RC5 and its expanded versions. `RC5_Generic`
+      ===> Moved to Roadmap for ver. 2.0
+- [ ] RC4 symmetric-key encryption/decryption algorithm
+      --- Includes RC4 and its expanded versions. `RC4_Generic`
+      ===> Moved to Roadmap for ver. 2.0
+- [ ] RC2 symmetric-key encryption/decryption algorithm
+      --- Includes RC2 and its expanded versions. `RC2_Generic`
       ===> Moved to Roadmap for ver. 2.0
 -->
-- [ ] BigCryptor64 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor64
-      --- Includes 2DES, 3DES, 4DES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`.
+- [X] DES symmetric-key encryption/decryption algorithm and the traits and its implementations of Operation modes and padding bits for DES_Generic
+      --- Includes DES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
+      [`DES_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/des/struct.DES_Generic.html#struct.DES_Generic),
+      [`ECB_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+      [`ECB_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+      [`CBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_PKCS7.html#trait.CBC_PKCS7),
+      [`CBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+      [`PCBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+      [`PCBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO),
+      [`CFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CFB.html#trait.CFB),
+      [`OFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.OFB.html#trait.OFB), and
+      [`CTR`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CTR.html#trait.CTR).
+<!--
+- [ ] Lucifer symmetric-key encryption/decryption algorithm
+      --- Includes Lucifer and its expanded versions. `Lucifer_Generic`
+      ===> Moved to Roadmap for ver. 2.0
+-->
 - [ ] BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor128
       --- Includes 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`. However, it is considered that 2AES, 3AES, 4AES, etc. are not very meaningful because AES-256, Rijndael_128_384, Rijndael_128_512, etc. are considered to be better than 2AES, 3AES, 4AES, etc.
+- [ ] BigCryptor64 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor64
+      --- Includes 2DES, 3DES, 4DES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
+      [BigCryptor64](https://docs.rs/cryptocol/latest/cryptocol/symmetric/big_cryptor/struct.BigCryptor64.html#struct.BigCryptor64),
+      [`ECB_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+      [`ECB_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+      [`CBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_PKCS7.html#trait.CBC_PKCS7),
+      [`CBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+      [`PCBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+      [`PCBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO),
+      [`CFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CFB.html#trait.CFB),
+      [`OFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.OFB.html#trait.OFB), and
+      [`CTR`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CTR.html#trait.CTR).
 
 ### Pseudo-Random Number Generator Algorithms
 
@@ -183,19 +191,18 @@ The checked items have already been implemented including documentation __at lea
       struct [`Random_Generic`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_Generic.html#struct.Random_Generic) and
       trait [`Random_Engine`](https://docs.rs/cryptocol/latest/cryptocol/random/trait_random_engine/trait.Random_Engine.html#trait.Random_Engine)
 - [ ] Pseudo-random number generator engines using hash algorithms ---
-      [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD4.html#struct.Any_MD4),
-      [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD5.html#struct.Any_MD5),
-      [`Any_SHA0`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA0.html#struct.Any_SHA0),
-      [`Any_SHA1`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA1.html#struct.Any_SHA1),
-      [`Any_SHA2_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_256.html#struct.Any_SHA2_256),
-      [`Any_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_512.html#struct.Any_SHA2_512),
-      [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512),
-      [`Any_SHA3_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA3_256.html#struct.Any_SHA3_256),
-      [`Any_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA3_512.html#struct.Any_SHA3_512),
-      [`Any_SHAKE_128`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
-      [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512).
-      [`Random_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512), and
       [`Random_BIG_KECCAK_1024`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024),
+      [`Random_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512), and
+      [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512).
+      [`Any_SHAKE_128`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
+      [`Any_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA3_512.html#struct.Any_SHA3_512),
+      [`Any_SHA3_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA3_256.html#struct.Any_SHA3_256),
+      [`Any_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_512.html#struct.Any_SHA2_512),
+      [`Any_SHA2_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_256.html#struct.Any_SHA2_256),
+      [`Any_SHA1`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA1.html#struct.Any_SHA1),
+      [`Any_SHA0`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA0.html#struct.Any_SHA0),
+      [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD5.html#struct.Any_MD5),
+      [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD4.html#struct.Any_MD4),
 - [ ] Pseudo-random number generator engines using symmetric-key encryption algorithms ---
       [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES),
       `Any_AES`, and
@@ -205,16 +212,14 @@ The checked items have already been implemented including documentation __at lea
 
 ### Asymmetric-key Algorithms for the Encryption/Decryption of digital data
 
+- [ ] ECC (Elliptic Curve Cryptosystem)
+- [ ] RSA (Ron Rivest, Adi Shamir, Leonard Adleman)
 <!--
-- [ ] Diffie-Hellman
+- [ ] Rabin
     ===> Moved to Roadmap for ver. 2.0
 - [ ] ElGamal
     ===> Moved to Roadmap for ver. 2.0
--->
-- [ ] RSA (Ron Rivest, Adi Shamir, Leonard Adleman)
-- [ ] ECC (Elliptic Curve Cryptosystem)
-<!--
-- [ ] Rabin
+- [ ] Diffie-Hellman
     ===> Moved to Roadmap for ver. 2.0
 -->
 

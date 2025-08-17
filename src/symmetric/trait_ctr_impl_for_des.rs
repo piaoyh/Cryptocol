@@ -18,7 +18,7 @@ use std::ptr::copy_nonoverlapping;
 
 use crate::number::SmallUInt;
 use crate::symmetric::{ DES_Generic, CTR };
-use crate::symmetric::{ crypt_into_something_without_padding,
+use crate::symmetric::{ crypt_ctr, crypt_into_something_without_padding,
                         pre_encrypt_into_array, pre_encrypt_into_vec,
                         pre_decrypt_into_array_without_padding,
                         encrypt_into_vec, encrypt_into_array_without_padding,
@@ -313,37 +313,6 @@ CTR<u64> for DES_Generic<ROUND, SHIFT,
                             S748, S749, S750, S751, S752, S753, S754, S755,
                             S756, S757, S758, S759, S760, S761, S762, S763>
 {
-    fn encrypt(&mut self, mut nonce: u64, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
-    {
-        let mut progress = 0_u64;
-        let mut block = 0_u64;
-        nonce = nonce.wrapping_add(1);
-        for _ in 0..length_in_bytes >> 3    // length_in_bytes >> 3 == length_in_bytes / 8
-        {
-            unsafe { copy_nonoverlapping(message.add(progress as usize) as *const u8, (&mut block) as *mut u64 as *mut u8, 8); }
-            let coded = block ^ self.encrypt_u64(nonce);
-            nonce = nonce.wrapping_add(1);
-            unsafe { copy_nonoverlapping(&coded as *const u64 as *const u8, cipher.add(progress as usize), 8); }
-            progress += 8;
-        }
-
-        let mut tail = 8_usize;
-        if progress + 8 == length_in_bytes
-        {
-            unsafe { copy_nonoverlapping(message.add(progress as usize - 8) as *const u8, (&mut block) as *mut u64 as *mut u8, 8); }
-        }
-        else
-        {
-            block = 0_u64;
-            tail = (length_in_bytes - progress) as usize;
-            let addr = unsafe { message.add(progress as usize) as *const u8 };
-            unsafe { copy_nonoverlapping(addr, &mut block as *mut u64 as *mut u8, tail); }
-        }
-        let coded = block ^ self.encrypt_u64(nonce);
-        unsafe { copy_nonoverlapping(&coded as *const u64 as *const u8, cipher.add(progress as usize), tail); }
-        self.set_successful();
-        progress + tail as u64
-    }
-
-    crypt_into_something_without_padding! {u64}
+    crypt_ctr!{u64}
+    crypt_into_something_without_padding!{u64}
 }
