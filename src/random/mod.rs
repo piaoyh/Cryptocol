@@ -53,12 +53,14 @@
 //! - Any_SHA1: uses a hash algorithm SHA1. Read [here](random/random/struct.Any_SHA1.html#struct.Any_SHA1).
 //! - Any_SHA2_256: uses a hash algorithm SHA2_256. Read [here](random/random/struct.Any_SHA2_256.html#struct.Any_SHA2_256).
 //! - Any_SHA2_512: uses a hash algorithm SHA2_512. Read [here](random/random/struct.Any_SHA2_512.html#struct.Any_SHA2_512).
+//! - Any_SHAKE_128`: uses a hash algorithm SSHAKE_128. Read [here](random/random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
+//! - Any_SHAKE_256`: uses a hash algorithm SSHAKE_256. Read [here](random/random/struct.Any_SHAKE_256.html#struct.Any_SHAKE_256),
 //! - Random_SHA2_512: uses a hash algorithm SHA2_512. Read [here](random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512).
 //! - Random_SHA3_512: uses a hash algorithm SHA3_512. Read [here](random/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512).
 //! - Random_BIG_KECCAK_1024: uses a hash algorithm BIG_KECCAK_1024. Read [here](random/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024).
 //! - Any_DES: uses a symmetric-key encryption algorithm DES. Read [here](random/random/struct.Any_DES.html#struct.Any_DES).
-// ! - Any_AES: uses a symmetric-key encryption algorithm AES.
-// ! - Random_AES: uses a symmetric-key encryption algorithm AES.
+//! - Any_AES: uses a symmetric-key encryption algorithm AES. Read [here](random/random/struct.Any_AES.html#struct.Any_AES).
+//! - Random_AES: uses a symmetric-key encryption algorithm AES. Read [here](random/random/struct.Random_AES.html#struct.Random_AES).
 //! 
 //! # Quality Issues and Debate
 //! The pseudo-random number generators in this module use hash algorithms,
@@ -130,11 +132,9 @@
 //! - For `Any_SHA2_256`, read [here](random/type.Any_SHA2_256.html#type.Any_SHA2_256)
 //! - For `Any_SHA2_512`, read [here](random/type.Any_SHA2_512.html#type.Any_SHA2_512), and
 //! - For `Random_SHA2_512`, read [here](random/type.Random_SHA2_512.html#type.Random_SHA2_512).
-// ! - For `Any_DES`, read [head]
-// ! - For `Any_NDES`, read [head]
-// ! - For `Any_AES`, read [head]
-// ! - For `Any_NAES`, read [head]
-// ! - For `Random_AES`, read [head]
+//! - For `Any_DES`, read [head]
+//! - For `Any_Rijndael`, read [head]
+//! - For `Random_Rijndael`, read [head]
 //! 
 //! # How to embed OsRng in this module
 //! This is a simple illustration to embed OsRng in this module. It is assumed
@@ -304,28 +304,31 @@ pub mod any_number_engine_c_generic;
 pub mod trait_random_engine;
 
 /// The module that contains implementation of trait Random_Engine for MD4
-pub mod trait_impl_for_md4;
+pub mod trait_random_engine_impl_for_md4;
 
 /// The module that contains implementation of trait Random_Engine for MD5
-pub mod trait_impl_for_md5;
+pub mod trait_random_engine_impl_for_md5;
 
 /// The module that contains implementation of trait Random_Engine for SHA1
-pub mod trait_impl_for_sha1;
+pub mod trait_random_engine_impl_for_sha1;
 
 /// The module that contains implementation of trait Random_Engine for SHA2_256
-pub mod trait_impl_for_sha2_256;
+pub mod trait_random_engine_impl_for_sha2_256;
 
 /// The module that contains implementation of trait Random_Engine for SHA2_512
-pub mod trait_impl_for_sha2_512;
+pub mod trait_random_engine_impl_for_sha2_512;
 
 /// The module that contains implementation of trait Random_Engine for SHA3
-pub mod trait_impl_for_sha3;
+pub mod trait_random_engine_impl_for_sha3;
 
 /// The module that contains implementation of trait Random_Engine for AnyNumber
-pub mod trait_impl_for_any_number;
+pub mod trait_random_engine_impl_for_any_number;
 
 /// The module that contains implementation of trait Random_Engine for DES
-pub mod trait_impl_for_des;
+pub mod trait_random_engine_impl_for_des;
+
+/// The module that contains implementation of trait Random_Engine for Rijndael
+pub mod trait_random_engine_impl_for_rijndael;
 
 pub use random::*;
 pub use trait_random_engine::*;

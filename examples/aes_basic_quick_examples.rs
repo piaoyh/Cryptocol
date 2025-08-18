@@ -251,8 +251,12 @@ fn aes_basic()
     // aes__decrypt();
     aes_encrypt_array_unit();
     aes_encrypt_array_u128();
+    aes_encrypt_array_u64();
+    aes_encrypt_array_u32();
     aes_decrypt_array_unit();
     aes_decrypt_array_u128();
+    aes_decrypt_array_u64();
+    aes_decrypt_array_u32();
     aes_is_successful();
     aes_is_failed();
     aes_get_desirable_round();
@@ -1169,45 +1173,80 @@ fn aes_encrypt_array_unit()
 fn aes_encrypt_array_u128()
 {
     println!("aes_encrypt_array_u128()");
-    use cryptocol::number::IntUnion;
     use cryptocol::symmetric::{ AES_128, AES_192, Rijndael_Generic };
 
     // The case for AES_128
     let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
-    let plaintext = [0x1234567890ABCDEF1234567890ABCDEF_u128, 0x1234567890ABCDEF1234567890ABCDEF, 0x1234567890ABCDEF1234567890ABCDEF];
+    let plaintext = [0x1234567890ABCDEF1234567890ABCDEF_u128, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211];
     let mut ciphertext = [0_u128; 3];
     aes.encrypt_array_u128(&plaintext, &mut ciphertext);
 
     println!("Plaintext:\t{:#034X} {:#034X} {:#034X}", plaintext[0], plaintext[1], plaintext[2]);
     println!("Ciphertext:\t{:#034X} {:#034X} {:#034X}", ciphertext[0], ciphertext[1], ciphertext[2]);
     assert_eq!(ciphertext[0], 0x01CCF8264AECB5D644E2BAE927584D87_u128);
-    assert_eq!(ciphertext[1], 0x01CCF8264AECB5D644E2BAE927584D87_u128);
-    assert_eq!(ciphertext[2], 0x01CCF8264AECB5D644E2BAE927584D87_u128);
+    assert_eq!(ciphertext[1], 0x7601C1D6EA61791544C28D4004577BB9_u128);
+    assert_eq!(ciphertext[2], 0xB7225E77C077541D5055FE9C8D3894B9_u128);
 
     // The case for AES_192
     let mut aes = AES_192::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
-    let plaintext = [0x1234567890ABCDEF1234567890ABCDEF_u128, 0x1234567890ABCDEF1234567890ABCDEF, 0x1234567890ABCDEF1234567890ABCDEF];
+    let plaintext = [0x1234567890ABCDEF1234567890ABCDEF_u128, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211];
     let mut ciphertext = [0_u128; 3];
     aes.encrypt_array_u128(&plaintext, &mut ciphertext);
 
     println!("Plaintext:\t{:#034X} {:#034X} {:#034X}", plaintext[0], plaintext[1], plaintext[2]);
     println!("Ciphertext:\t{:#034X} {:#034X} {:#034X}", ciphertext[0], ciphertext[1], ciphertext[2]);
     assert_eq!(ciphertext[0], 0x0DB5608E6E5EB091008E2C5B77047F1E_u128);
-    assert_eq!(ciphertext[1], 0x0DB5608E6E5EB091008E2C5B77047F1E_u128);
-    assert_eq!(ciphertext[2], 0x0DB5608E6E5EB091008E2C5B77047F1E_u128);
+    assert_eq!(ciphertext[1], 0x5C6219135089CB0DD21E2983BF69CAE6_u128);
+    assert_eq!(ciphertext[2], 0x5494DA6FEFF29DAAA30B21360A35A5C1_u128);
 
     // The case for Rijndael_Generic::<10, 4, 2>
     let mut rijndael = Rijndael_Generic::<10, 4, 2>::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
-    let plaintext = [0x1234567890ABCDEF1234567890ABCDEF_u128, 0x1234567890ABCDEF1234567890ABCDEF, 0x1234567890ABCDEF1234567890ABCDEF];
+    let plaintext = [0x1234567890ABCDEF1234567890ABCDEF_u128, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211];
     let mut ciphertext = [0_u128; 3];
     rijndael.encrypt_array_u128(&plaintext, &mut ciphertext);
 
     println!("Plaintext:\t{:#034X} {:#034X} {:#034X}", plaintext[0], plaintext[1], plaintext[2]);
     println!("Ciphertext:\t{:#034X} {:#034X} {:#034X}", ciphertext[0], ciphertext[1], ciphertext[2]);
     assert_eq!(ciphertext[0], 0x9D6C20BD28996D5570E7E05DBF20110F_u128);
-    assert_eq!(ciphertext[1], 0x9D6C20BD28996D5570E7E05DBF20110F_u128);
-    assert_eq!(ciphertext[2], 0x9D6C20BD28996D5570E7E05DBF20110F_u128);
+    assert_eq!(ciphertext[1], 0x3D45E081D8E10DFFCEA581CCA60A12AD_u128);
+    assert_eq!(ciphertext[2], 0xACA72163837B9650C17D1FE3092B2995_u128);
     println!("-------------------------------");
+}
+
+fn aes_encrypt_array_u64()
+{
+    println!("aes_encrypt_array_u64()");
+    use cryptocol::symmetric::Rijndael_64_64;
+
+    // The case for Rijndael_64_64
+    let mut rijndael = Rijndael_64_64::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    let plaintext = [0x1234567890ABCDEF_u64, 0x1122334455667788, 0xFFEEDDCCBBAA0099];
+    let mut ciphertext = [0_u64; 3];
+    rijndael.encrypt_array_u64(&plaintext, &mut ciphertext);
+
+    println!("Plaintext:\t{:#018X} {:#018X} {:#018X}", plaintext[0], plaintext[1], plaintext[2]);
+    println!("Ciphertext:\t{:#018X} {:#018X} {:#018X}", ciphertext[0], ciphertext[1], ciphertext[2]);
+    assert_eq!(ciphertext[0], 0x4FAA3F0E49CC4DCF_u64);
+    assert_eq!(ciphertext[1], 0x036AAEDC0F1A5BEC_u64);
+    assert_eq!(ciphertext[2], 0x99B8209339BCC1EB_u64);
+}
+
+fn aes_encrypt_array_u32()
+{
+    println!("aes_encrypt_array_u32()");
+    use cryptocol::symmetric::Rijndael_32_32;
+
+    // The case for Rijndael_32_32
+    let mut rijndael = Rijndael_32_32::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    let plaintext = [0x12345678_u32, 0x90ABCDEF, 0xFFEEDDCC];
+    let mut ciphertext = [0_u32; 3];
+    rijndael.encrypt_array_u32(&plaintext, &mut ciphertext);
+
+    println!("Plaintext:\t{:#010X} {:#010X} {:#010X}", plaintext[0], plaintext[1], plaintext[2]);
+    println!("Ciphertext:\t{:#010X} {:#010X} {:#010X}", ciphertext[0], ciphertext[1], ciphertext[2]);
+    assert_eq!(ciphertext[0], 0x335228F6_u32);
+    assert_eq!(ciphertext[1], 0xBFB99AFB_u32);
+    assert_eq!(ciphertext[2], 0x2D114838_u32);
 }
 
 fn aes_decrypt_array_unit()
@@ -1302,45 +1341,126 @@ fn aes_decrypt_array_unit()
 fn aes_decrypt_array_u128()
 {
     println!("aes_decrypt_array_u128()");
-
-    use cryptocol::number::IntUnion;
     use cryptocol::symmetric::{ AES_128, AES_192, Rijndael_Generic };
 
     // The case for AES_128
     let mut aes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
-    let ciphertext = [0x01CCF8264AECB5D644E2BAE927584D87_u128, 0x01CCF8264AECB5D644E2BAE927584D87_u128, 0x01CCF8264AECB5D644E2BAE927584D87_u128];
-    let mut plaintext = [0_u128; 3];
-    aes.decrypt_array_u128(&ciphertext, &mut plaintext);
-
-    println!("Ciphertext:\t{:#034X} {:#034X} {:#034X}", ciphertext[0], ciphertext[1], ciphertext[2]);
+    let plaintext = [0x1234567890ABCDEF1234567890ABCDEF_u128, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211];
     println!("Plaintext:\t{:#034X} {:#034X} {:#034X}", plaintext[0], plaintext[1], plaintext[2]);
-    assert_eq!(plaintext[0], 0x1234567890ABCDEF1234567890ABCDEF_u128);
-    assert_eq!(plaintext[1], 0x1234567890ABCDEF1234567890ABCDEF_u128);
-    assert_eq!(plaintext[2], 0x1234567890ABCDEF1234567890ABCDEF_u128);
+    let mut ciphertext = [0_u128; 3];
+    aes.encrypt_array_u128(&plaintext, &mut ciphertext);
+    println!("Ciphertext:\t{:#034X} {:#034X} {:#034X}", ciphertext[0], ciphertext[1], ciphertext[2]);
+    assert_eq!(ciphertext[0], 0x01CCF8264AECB5D644E2BAE927584D87_u128);
+    assert_eq!(ciphertext[1], 0x7601C1D6EA61791544C28D4004577BB9_u128);
+    assert_eq!(ciphertext[2], 0xB7225E77C077541D5055FE9C8D3894B9_u128);
+
+    let mut recovered = [0_u128; 3];
+    aes.decrypt_array_u128(&ciphertext, &mut recovered);
+    println!("Recovered:\t{:#034X} {:#034X} {:#034X}", recovered[0], recovered[1], recovered[2]);
+    assert_eq!(recovered[0], 0x1234567890ABCDEF1234567890ABCDEF_u128);
+    assert_eq!(recovered[1], 0x11223344556677889900AABBCCDDEEFF_u128);
+    assert_eq!(recovered[2], 0xFFEEDDCCBBAA00998877665544332211_u128);
+    assert_eq!(recovered[0], plaintext[0]);
+    assert_eq!(recovered[1], plaintext[1]);
+    assert_eq!(recovered[2], plaintext[2]);
 
     // The case for AES_192
     let mut aes = AES_192::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
-    let ciphertext = [0x0DB5608E6E5EB091008E2C5B77047F1E_u128, 0x0DB5608E6E5EB091008E2C5B77047F1E_u128, 0x0DB5608E6E5EB091008E2C5B77047F1E_u128];
-    let mut plaintext = [0_u128; 3];
-    aes.decrypt_array_u128(&ciphertext, &mut plaintext);
-
-    println!("Ciphertext:\t{:#034X} {:#034X} {:#034X}", ciphertext[0], ciphertext[1], ciphertext[2]);
+    let plaintext = [0x1234567890ABCDEF1234567890ABCDEF_u128, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211];
     println!("Plaintext:\t{:#034X} {:#034X} {:#034X}", plaintext[0], plaintext[1], plaintext[2]);
-    assert_eq!(plaintext[0], 0x1234567890ABCDEF1234567890ABCDEF_u128);
-    assert_eq!(plaintext[1], 0x1234567890ABCDEF1234567890ABCDEF_u128);
-    assert_eq!(plaintext[2], 0x1234567890ABCDEF1234567890ABCDEF_u128);
+    let mut ciphertext = [0_u128; 3];
+    aes.encrypt_array_u128(&plaintext, &mut ciphertext);
+    println!("Ciphertext:\t{:#034X} {:#034X} {:#034X}", ciphertext[0], ciphertext[1], ciphertext[2]);
+    assert_eq!(ciphertext[0], 0x0DB5608E6E5EB091008E2C5B77047F1E_u128);
+    assert_eq!(ciphertext[1], 0x5C6219135089CB0DD21E2983BF69CAE6_u128);
+    assert_eq!(ciphertext[2], 0x5494DA6FEFF29DAAA30B21360A35A5C1_u128);
+
+    let mut recovered = [0_u128; 3];
+    aes.decrypt_array_u128(&ciphertext, &mut recovered);
+    println!("Recovered:\t{:#034X} {:#034X} {:#034X}", recovered[0], recovered[1], recovered[2]);
+    assert_eq!(recovered[0], 0x1234567890ABCDEF1234567890ABCDEF_u128);
+    assert_eq!(recovered[1], 0x11223344556677889900AABBCCDDEEFF_u128);
+    assert_eq!(recovered[2], 0xFFEEDDCCBBAA00998877665544332211_u128);
+    assert_eq!(recovered[0], plaintext[0]);
+    assert_eq!(recovered[1], plaintext[1]);
+    assert_eq!(recovered[2], plaintext[2]);
 
     // The case for Rijndael_Generic::<10, 4, 2>
     let mut rijndael = Rijndael_Generic::<10, 4, 2>::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
-    let ciphertext = [0x9D6C20BD28996D5570E7E05DBF20110F_u128, 0x9D6C20BD28996D5570E7E05DBF20110F_u128, 0x9D6C20BD28996D5570E7E05DBF20110F_u128];
-    let mut plaintext = [0_u128; 3];
-    rijndael.decrypt_array_u128(&ciphertext, &mut plaintext);
-
-    println!("Ciphertext:\t{:#034X} {:#034X} {:#034X}", ciphertext[0], ciphertext[1], ciphertext[2]);
+    let plaintext = [0x1234567890ABCDEF1234567890ABCDEF_u128, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211];
     println!("Plaintext:\t{:#034X} {:#034X} {:#034X}", plaintext[0], plaintext[1], plaintext[2]);
-    assert_eq!(plaintext[0], 0x1234567890ABCDEF1234567890ABCDEF_u128);
-    assert_eq!(plaintext[1], 0x1234567890ABCDEF1234567890ABCDEF_u128);
-    assert_eq!(plaintext[2], 0x1234567890ABCDEF1234567890ABCDEF_u128);
+    let mut ciphertext = [0_u128; 3];
+    rijndael.encrypt_array_u128(&plaintext, &mut ciphertext);
+    println!("Ciphertext:\t{:#034X} {:#034X} {:#034X}", ciphertext[0], ciphertext[1], ciphertext[2]);
+    assert_eq!(ciphertext[0], 0x9D6C20BD28996D5570E7E05DBF20110F_u128);
+    assert_eq!(ciphertext[1], 0x3D45E081D8E10DFFCEA581CCA60A12AD_u128);
+    assert_eq!(ciphertext[2], 0xACA72163837B9650C17D1FE3092B2995_u128);
+
+    let mut recovered = [0_u128; 3];
+    rijndael.decrypt_array_u128(&ciphertext, &mut recovered);
+    println!("Recovered:\t{:#034X} {:#034X} {:#034X}", recovered[0], recovered[1], recovered[2]);
+    assert_eq!(recovered[0], 0x1234567890ABCDEF1234567890ABCDEF_u128);
+    assert_eq!(recovered[1], 0x11223344556677889900AABBCCDDEEFF_u128);
+    assert_eq!(recovered[2], 0xFFEEDDCCBBAA00998877665544332211_u128);
+    assert_eq!(recovered[0], plaintext[0]);
+    assert_eq!(recovered[1], plaintext[1]);
+    assert_eq!(recovered[2], plaintext[2]);
+    println!("-------------------------------");
+}
+
+fn aes_decrypt_array_u64()
+{
+    println!("aes_decrypt_array_u64()");
+    use cryptocol::symmetric::Rijndael_64_64;
+
+    // The case for Rijndael_64_64
+    let mut rijndael = Rijndael_64_64::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    let plaintext = [0x1234567890ABCDEF_u64, 0x1122334455667788, 0xFFEEDDCCBBAA0099];
+    println!("Plaintext:\t{:#018X} {:#018X} {:#018X}", plaintext[0], plaintext[1], plaintext[2]);
+    let mut ciphertext = [0_u64; 3];
+    rijndael.encrypt_array_u64(&plaintext, &mut ciphertext);
+    println!("Ciphertext:\t{:#018X} {:#018X} {:#018X}", ciphertext[0], ciphertext[1], ciphertext[2]);
+    assert_eq!(ciphertext[0], 0x4FAA3F0E49CC4DCF_u64);
+    assert_eq!(ciphertext[1], 0x036AAEDC0F1A5BEC_u64);
+    assert_eq!(ciphertext[2], 0x99B8209339BCC1EB_u64);
+
+    let mut recovered = [0_u64; 3];
+    rijndael.decrypt_array_u64(&ciphertext, &mut recovered);
+    println!("Recovered:\t{:#018X} {:#018X} {:#018X}", recovered[0], recovered[1], recovered[2]);
+    assert_eq!(recovered[0], 0x1234567890ABCDEF_u64);
+    assert_eq!(recovered[1], 0x1122334455667788_u64);
+    assert_eq!(recovered[2], 0xFFEEDDCCBBAA0099_u64);
+    assert_eq!(recovered[0], plaintext[0]);
+    assert_eq!(recovered[1], plaintext[1]);
+    assert_eq!(recovered[2], plaintext[2]);
+    println!("-------------------------------");
+}
+
+fn aes_decrypt_array_u32()
+{
+    println!("aes_decrypt_array_u32()");
+    use cryptocol::symmetric::Rijndael_32_32;
+
+    // The case for Rijndael_32_32
+    let mut rijndael = Rijndael_32_32::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    let plaintext = [0x12345678_u32, 0x90ABCDEF, 0xFFEEDDCC];
+    println!("Plaintext:\t{:#010X} {:#010X} {:#010X}", plaintext[0], plaintext[1], plaintext[2]);
+    let mut ciphertext = [0_u32; 3];
+    rijndael.encrypt_array_u32(&plaintext, &mut ciphertext);
+    println!("Ciphertext:\t{:#010X} {:#010X} {:#010X}", ciphertext[0], ciphertext[1], ciphertext[2]);
+    assert_eq!(ciphertext[0], 0x335228F6_u32);
+    assert_eq!(ciphertext[1], 0xBFB99AFB_u32);
+    assert_eq!(ciphertext[2], 0x2D114838_u32);
+
+    let mut recovered = [0_u32; 3];
+    rijndael.decrypt_array_u32(&ciphertext, &mut recovered);
+    println!("Recovered:\t{:#010X} {:#010X} {:#010X}", recovered[0], recovered[1], recovered[2]);
+    assert_eq!(recovered[0], 0x12345678_u32);
+    assert_eq!(recovered[1], 0x90ABCDEF_u32);
+    assert_eq!(recovered[2], 0xFFEEDDCC_u32);
+    assert_eq!(recovered[0], plaintext[0]);
+    assert_eq!(recovered[1], plaintext[1]);
+    assert_eq!(recovered[2], plaintext[2]);
     println!("-------------------------------");
 }
 

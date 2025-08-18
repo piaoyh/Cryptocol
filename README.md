@@ -72,11 +72,11 @@ The checked items have already been implemented including documentation __at lea
 - [ ] RIPEMD hash algorithms based on 256 bits
       --- Includes RIPEMD and its expanded versions.
       ===> Moved to Roadmap for ver. 2.0
-- [ ] BLAKE2 hash algorithms based on 256 bits
-      --- Includes BLAKE2 and its expanded versions.
-      ===> Moved to Roadmap for ver. 2.0
 - [ ] BLAKE3 hash algorithms based on 256 bits
       --- Includes BLAKE3 and its expanded versions.
+      ===> Moved to Roadmap for ver. 2.0
+- [ ] BLAKE2 hash algorithms based on 256 bits
+      --- Includes BLAKE2 and its expanded versions.
       ===> Moved to Roadmap for ver. 2.0
 - [ ] MD6 hash algorithms based on 256 bits
       --- Includes MD4 and its expanded versions.
@@ -171,7 +171,18 @@ The checked items have already been implemented including documentation __at lea
       ===> Moved to Roadmap for ver. 2.0
 -->
 - [ ] BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor128
-      --- Includes 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4. `ECB_PKCS7`, `ECB_ISO`, `CBC_PKCS7`, `CBC_ISO`, `PCBC_PKCS7`, `PCBC_ISO`, `CFB`, `OFB`, and `CTR`. However, it is considered that 2AES, 3AES, 4AES, etc. are not very meaningful because AES-256, Rijndael_128_384, Rijndael_128_512, etc. are considered to be better than 2AES, 3AES, 4AES, etc.
+      --- Includes 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
+      [BigCryptor128](https://docs.rs/cryptocol/latest/cryptocol/symmetric/big_cryptor/struct.BigCryptor128.html#struct.BigCryptor128),
+      [`ECB_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
+      [`ECB_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+      [`CBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_PKCS7.html#trait.CBC_PKCS7),
+      [`CBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+      [`PCBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_PKCS7.html#trait.PCBC_PKCS7),
+      [`PCBC_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO),
+      [`CFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CFB.html#trait.CFB),
+      [`OFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.OFB.html#trait.OFB), and
+      [`CTR`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CTR.html#trait.CTR).
+      However, it is considered that 2AES, 3AES, 4AES, etc. are not very meaningful because AES-256, Rijndael_128_384, Rijndael_128_512, etc. are considered to be better than 2AES, 3AES, 4AES, etc.
 - [ ] BigCryptor64 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor64
       --- Includes 2DES, 3DES, 4DES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
       [BigCryptor64](https://docs.rs/cryptocol/latest/cryptocol/symmetric/big_cryptor/struct.BigCryptor64.html#struct.BigCryptor64),
@@ -194,6 +205,7 @@ The checked items have already been implemented including documentation __at lea
       [`Random_BIG_KECCAK_1024`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024),
       [`Random_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512), and
       [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512).
+      [`Any_SHAKE_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHAKE_256.html#struct.Any_SHAKE_256),
       [`Any_SHAKE_128`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
       [`Any_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA3_512.html#struct.Any_SHA3_512),
       [`Any_SHA3_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA3_256.html#struct.Any_SHA3_256),
@@ -204,11 +216,11 @@ The checked items have already been implemented including documentation __at lea
       [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD5.html#struct.Any_MD5),
       [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD4.html#struct.Any_MD4),
 - [ ] Pseudo-random number generator engines using symmetric-key encryption algorithms ---
-      [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES),
-      `Any_AES`, and
-      `Random_AES`.
+      [`Random_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_Rijndael.html#struct.Random_Rijndael),
+      [`Any_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Rijndael.html#struct.Any_Rijndael),
+      [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES), and
 - [ ] Pseudo-random number generator engines using simple randomization algorithm ---
-      [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Num_C.html#struct.Any_Num_C)
+      [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Num_C.html#struct.Any_Num_C).
 
 ### Asymmetric-key Algorithms for the Encryption/Decryption of digital data
 

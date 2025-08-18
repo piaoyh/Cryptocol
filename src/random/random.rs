@@ -27,9 +27,9 @@ use std::hash::{ BuildHasher, Hasher };
 
 use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime };
 use crate::hash::{ MD4, MD5, SHA0, SHA1, SHA2_256, SHA2_512,
-                    SHA3_256, SHA3_512, SHAKE_128, BIG_KECCAK_1024 };
+                    SHA3_256, SHA3_512, SHAKE_128, SHAKE_256, BIG_KECCAK_1024 };
 use crate::random::{ Random_Engine, AnyNumber_Engine_C };
-use crate::symmetric::{ DES };
+use crate::symmetric::{ Rijndael_64_64, DES };
 
 
 
@@ -41,9 +41,8 @@ const SECURE_COUNT: u128 = u16::MAX as u128;
 /// It means `Random` uses a hash algorithm Random_BIG_KECCAK_1024. It is
 /// cryptographically securer than its counterpart type `Any` and a bit slower
 /// than [`Any`](type@Any). _In the near future, `Random` may be silently
-/// changed to use Chacha20 alogrithm and to be a synonym of `Random_Chacha20`
-/// when `Random_Chacha20` is implemented._ If you want to keep using
-/// BIG_KECCAK_1024 for a pseudo-random number generator, you may want to use
+/// changed to use better alogrithm._ If you want to keep using BIG_KECCAK_1024
+/// for a pseudo-random number generator, you may want to use
 /// Random_BIG_KECCAK_1024. If you are happy that you will automatically use
 /// the better algotrithm in the future, you may want to use `Random`.
 pub type Random = Random_BIG_KECCAK_1024;
@@ -52,7 +51,7 @@ pub type Random = Random_BIG_KECCAK_1024;
 /// [`Any_SHAKE_128`](type@Any_SHAKE_128) at the moment. It means `Any` uses
 /// a hash algorithm SHAKE-128. It is cryptographically less secure than its
 /// counterpart struct `Random` and a bit faster than [`Random`](type@Random).
-/// _In the near future, `Any` may be silently changed to have better algorithm_
+/// _In the near future, `Any` may be silently changed to have better algorithm._
 /// If you want to keep using SHAKE_128 for a pseudo-random number generator,
 /// you may want to use Any_SHAKE_128. If you are happy that you will
 /// automatically use the better algotrithm in the future, you may want
@@ -3320,6 +3319,23 @@ impl Random_SHA3_512
     }
 }
 
+/// The type `Any_SHAKE_256` which is a pseudo-random number generator using
+/// a hash algorithm SHAKE-256. It is a specific version of the generic struct
+#[allow(non_camel_case_types)] 
+pub struct Any_SHAKE_256 {}
+impl Any_SHAKE_256
+{
+    pub fn new() -> Random_Generic
+    {
+        Random_Generic::new_with(SHAKE_256::new(), SHAKE_256::new())
+    }
+
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
+    {
+        Random_Generic::new_with_generators_seeds(SHAKE_256::new(), SHAKE_256::new(), seed, aux)
+    }
+}
+
 /// The type `Any_SHAKE_128` which is a pseudo-random number generator using
 /// a hash algorithm SHAKE-128. It is a specific version of the generic struct
 #[allow(non_camel_case_types)] 
@@ -3501,5 +3517,44 @@ impl Any_DES
     pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<340282366920938463463374607431768211455>   // COUNT = min(2^256, u128::MAX) because of hashing one time for each random number generation
     {
         Random_Generic::<340282366920938463463374607431768211455>::new_with_generators_seeds(DES::new(), DES::new(), seed, aux)
+    }
+}
+
+/// The type `Any_Rijndael` which is a pseudo-random number generator using
+/// a Rijndael_64_64 encryption/decryption algorithm.
+/// It is a specific version of the generic struct
+/// [`Random_Generic`](struct@Random_Generic).
+#[allow(non_camel_case_types)] 
+pub struct Any_Rijndael {}
+impl Any_Rijndael
+{
+    pub fn new() -> Random_Generic<340282366920938463463374607431768211455>   // COUNT = min(2^256, u128::MAX) because of hashing one time for each random number generation
+    {
+        Random_Generic::<340282366920938463463374607431768211455>::new_with(Rijndael_64_64::new(), Rijndael_64_64::new())
+    }
+
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<340282366920938463463374607431768211455>   // COUNT = min(2^256, u128::MAX) because of hashing one time for each random number generation
+    {
+        Random_Generic::<340282366920938463463374607431768211455>::new_with_generators_seeds(Rijndael_64_64::new(), Rijndael_64_64::new(), seed, aux)
+    }
+}
+
+
+/// The type `Random_AES` which is a pseudo-random number generator using
+/// an AES encryption/decryption algorithm AES.
+/// It is a specific version of the generic struct
+/// [`Random_Generic`](struct@Random_Generic).
+#[allow(non_camel_case_types)] 
+pub struct Random_Rijndael {}
+impl Random_Rijndael
+{
+    pub fn new() -> Random_Generic<SECURE_COUNT>
+    {
+        Random_Generic::<SECURE_COUNT>::new_with(Rijndael_64_64::new(), Rijndael_64_64::new())
+    }
+
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT> 
+    {
+        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(Rijndael_64_64::new(), Rijndael_64_64::new(), seed, aux)
     }
 }
