@@ -1002,7 +1002,7 @@ fn aes_encrypt_string_with_padding_iso_pcbc_into_vec()
     let message = "In the beginning God created the heavens and the earth.".to_string();
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    a_aes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    a_aes.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1026,7 +1026,7 @@ fn aes_encrypt_string_with_padding_iso_pcbc_into_vec()
     let message = "In the beginning God created the heavens and the earth.".to_string();
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    a_aes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    a_aes.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1050,7 +1050,7 @@ fn aes_encrypt_string_with_padding_iso_pcbc_into_vec()
     let message = "In the beginning God created the heavens and the earth.".to_string();
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    a_aes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    a_aes.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1074,7 +1074,7 @@ fn aes_encrypt_string_with_padding_iso_pcbc_into_vec()
     let message = "In the beginning God created the heavens and the earth.".to_string();
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    a_rijndael.encrypt_str_into_vec(iv, &message, &mut cipher);
+    a_rijndael.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1107,7 +1107,7 @@ fn aes_encrypt_string_with_padding_iso_pcbc_into_vec()
     let message = "In the beginning God created the heavens and the earth.".to_string();
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    a_rijndael.encrypt_str_into_vec(iv, &message, &mut cipher);
+    a_rijndael.encrypt_string_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1136,7 +1136,7 @@ fn aes_encrypt_string_with_padding_iso_pcbc_into_array()
     let message = "In the beginning God created the heavens and the earth.".to_string();
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 64];
-    a_aes.encrypt_str_into_array(iv, &message, &mut cipher);
+    a_aes.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1160,7 +1160,7 @@ fn aes_encrypt_string_with_padding_iso_pcbc_into_array()
     let message = "In the beginning God created the heavens and the earth.".to_string();
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 64];
-    a_aes.encrypt_str_into_array(iv, &message, &mut cipher);
+    a_aes.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1184,7 +1184,7 @@ fn aes_encrypt_string_with_padding_iso_pcbc_into_array()
     let message = "In the beginning God created the heavens and the earth.".to_string();
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 64];
-    a_aes.encrypt_str_into_array(iv, &message, &mut cipher);
+    a_aes.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1208,7 +1208,7 @@ fn aes_encrypt_string_with_padding_iso_pcbc_into_array()
     let message = "In the beginning God created the heavens and the earth.".to_string();
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 64];
-    a_rijndael.encrypt_str_into_array(iv, &message, &mut cipher);
+    a_rijndael.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1241,7 +1241,7 @@ fn aes_encrypt_string_with_padding_iso_pcbc_into_array()
     let message = "In the beginning God created the heavens and the earth.".to_string();
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 64];
-    a_rijndael.encrypt_str_into_array(iv, &message, &mut cipher);
+    a_rijndael.encrypt_string_into_array(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1689,7 +1689,7 @@ fn aes_encrypt_array_with_padding_iso_pcbc()
     let mut message = [0_u8; 55];
     message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
     let mut cipher = [0_u8; 64];
-    a_aes.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_aes.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1715,7 +1715,7 @@ fn aes_encrypt_array_with_padding_iso_pcbc()
     let mut message = [0_u8; 55];
     message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
     let mut cipher = [0_u8; 64];
-    a_aes.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_aes.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1741,7 +1741,7 @@ fn aes_encrypt_array_with_padding_iso_pcbc()
     let mut message = [0_u8; 55];
     message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
     let mut cipher = [0_u8; 64];
-    a_aes.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_aes.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1767,7 +1767,7 @@ fn aes_encrypt_array_with_padding_iso_pcbc()
     let mut message = [0_u8; 55];
     message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
     let mut cipher = [0_u8; 64];
-    a_rijndael.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_rijndael.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -1802,7 +1802,7 @@ fn aes_encrypt_array_with_padding_iso_pcbc()
     let mut message = [0_u8; 55];
     message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
     let mut cipher = [0_u8; 64];
-    a_rijndael.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_rijndael.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }

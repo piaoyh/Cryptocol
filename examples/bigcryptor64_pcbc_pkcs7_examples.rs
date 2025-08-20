@@ -21,42 +21,42 @@
 // #[allow(dead_code)]
 pub fn main()
 {
-    bigcryptor64_encrypt_with_padding_iso_cbc();
-    bigcryptor64_encrypt_with_padding_iso_cbc_into_vec();
-    bigcryptor64_encrypt_with_padding_iso_cbc_into_array();
-    bigcryptor64_encrypt_str_with_padding_iso_cbc();
-    bigcryptor64_encrypt_str_with_padding_iso_cbc_into_vec();
-    bigcryptor64_encrypt_str_with_padding_iso_cbc_into_array();
-    bigcryptor64_encrypt_string_with_padding_iso_cbc();
-    bigcryptor64_encrypt_string_with_padding_iso_cbc_into_vec();
-    bigcryptor64_encrypt_string_with_padding_iso_cbc_into_array();
-    bigcryptor64_encrypt_vec_with_padding_iso_cbc();
-    bigcryptor64_encrypt_vec_with_padding_iso_cbc_into_vec();
-    bigcryptor64_encrypt_vec_with_padding_iso_cbc_into_array();
-    bigcryptor64_encrypt_array_with_padding_iso_cbc();
-    bigcryptor64_encrypt_array_with_padding_iso_cbc_into_vec();
-    bigcryptor64_encrypt_array_with_padding_iso_cbc_into_array();
+    bigcryptor64_encrypt_with_padding_pkcs7_cbc();
+    bigcryptor64_encrypt_with_padding_pkcs7_cbc_into_vec();
+    bigcryptor64_encrypt_with_padding_pkcs7_cbc_into_array();
+    bigcryptor64_encrypt_str_with_padding_pkcs7_cbc();
+    bigcryptor64_encrypt_str_with_padding_pkcs7_cbc_into_vec();
+    bigcryptor64_encrypt_str_with_padding_pkcs7_cbc_into_array();
+    bigcryptor64_encrypt_string_with_padding_pkcs7_cbc();
+    bigcryptor64_encrypt_string_with_padding_pkcs7_cbc_into_vec();
+    bigcryptor64_encrypt_string_with_padding_pkcs7_cbc_into_array();
+    bigcryptor64_encrypt_vec_with_padding_pkcs7_cbc();
+    bigcryptor64_encrypt_vec_with_padding_pkcs7_cbc_into_vec();
+    bigcryptor64_encrypt_vec_with_padding_pkcs7_cbc_into_array();
+    bigcryptor64_encrypt_array_with_padding_pkcs7_cbc();
+    bigcryptor64_encrypt_array_with_padding_pkcs7_cbc_into_vec();
+    bigcryptor64_encrypt_array_with_padding_pkcs7_cbc_into_array();
 
-    bigcryptor64_decrypt_with_padding_iso_cbc();
-    bigcryptor64_decrypt_with_padding_iso_cbc_into_vec();
-    bigcryptor64_decrypt_with_padding_iso_cbc_into_array();
-    bigcryptor64_decrypt_with_padding_iso_cbc_into_string();
-    bigcryptor64_decrypt_vec_with_padding_iso_cbc();
-    bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_vec();
-    bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_array();
-    bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_string();
-    bigcryptor64_decrypt_array_with_padding_iso_cbc();
-    bigcryptor64_decrypt_array_with_padding_iso_cbc_into_vec();
-    bigcryptor64_decrypt_array_with_padding_iso_cbc_into_array();
-    bigcryptor64_decrypt_array_with_padding_iso_cbc_into_string();
+    bigcryptor64_decrypt_with_padding_pkcs7_cbc();
+    bigcryptor64_decrypt_with_padding_pkcs7_cbc_into_vec();
+    bigcryptor64_decrypt_with_padding_pkcs7_cbc_into_array();
+    bigcryptor64_decrypt_with_padding_pkcs7_cbc_into_string();
+    bigcryptor64_decrypt_vec_with_padding_pkcs7_cbc();
+    bigcryptor64_decrypt_vec_with_padding_pkcs7_cbc_into_vec();
+    bigcryptor64_decrypt_vec_with_padding_pkcs7_cbc_into_array();
+    bigcryptor64_decrypt_vec_with_padding_pkcs7_cbc_into_string();
+    bigcryptor64_decrypt_array_with_padding_pkcs7_cbc();
+    bigcryptor64_decrypt_array_with_padding_pkcs7_cbc_into_vec();
+    bigcryptor64_decrypt_array_with_padding_pkcs7_cbc_into_array();
+    bigcryptor64_decrypt_array_with_padding_pkcs7_cbc_into_string();
 }
 
-fn bigcryptor64_encrypt_with_padding_iso_cbc()
+fn bigcryptor64_encrypt_with_padding_pkcs7_cbc()
 {
-    println!("bigcryptor64_encrypt_with_padding_iso_cbc()");
+    println!("bigcryptor64_encrypt_with_padding_pkcs7_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -76,16 +76,16 @@ fn bigcryptor64_encrypt_with_padding_iso_cbc()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_with_padding_iso_cbc_into_vec()
+fn bigcryptor64_encrypt_with_padding_pkcs7_cbc_into_vec()
 {
-    println!("bigcryptor64_encrypt_with_padding_iso_cbc_into_vec()");
+    println!("bigcryptor64_encrypt_with_padding_pkcs7_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -105,16 +105,16 @@ fn bigcryptor64_encrypt_with_padding_iso_cbc_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_with_padding_iso_cbc_into_array()
+fn bigcryptor64_encrypt_with_padding_pkcs7_cbc_into_array()
 {
-    println!("bigcryptor64_encrypt_with_padding_iso_cbc_into_array()");
+    println!("bigcryptor64_encrypt_with_padding_pkcs7_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -134,16 +134,16 @@ fn bigcryptor64_encrypt_with_padding_iso_cbc_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_str_with_padding_iso_cbc()
+fn bigcryptor64_encrypt_str_with_padding_pkcs7_cbc()
 {
-    println!("bigcryptor64_encrypt_str_with_padding_iso_cbc()");
+    println!("bigcryptor64_encrypt_str_with_padding_pkcs7_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -163,16 +163,16 @@ fn bigcryptor64_encrypt_str_with_padding_iso_cbc()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_str_with_padding_iso_cbc_into_vec()
+fn bigcryptor64_encrypt_str_with_padding_pkcs7_cbc_into_vec()
 {
-    println!("bigcryptor64_encrypt_str_with_padding_iso_cbc_into_vec()");
+    println!("bigcryptor64_encrypt_str_with_padding_pkcs7_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -191,16 +191,16 @@ fn bigcryptor64_encrypt_str_with_padding_iso_cbc_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_str_with_padding_iso_cbc_into_array()
+fn bigcryptor64_encrypt_str_with_padding_pkcs7_cbc_into_array()
 {
-    println!("bigcryptor64_encrypt_str_with_padding_iso_cbc_into_array()");
+    println!("bigcryptor64_encrypt_str_with_padding_pkcs7_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -219,16 +219,16 @@ fn bigcryptor64_encrypt_str_with_padding_iso_cbc_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_string_with_padding_iso_cbc()
+fn bigcryptor64_encrypt_string_with_padding_pkcs7_cbc()
 {
-    println!("bigcryptor64_encrypt_string_with_padding_iso_cbc()");
+    println!("bigcryptor64_encrypt_string_with_padding_pkcs7_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -247,16 +247,16 @@ fn bigcryptor64_encrypt_string_with_padding_iso_cbc()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_string_with_padding_iso_cbc_into_vec()
+fn bigcryptor64_encrypt_string_with_padding_pkcs7_cbc_into_vec()
 {
-    println!("bigcryptor64_encrypt_string_with_padding_iso_cbc_into_vec()");
+    println!("bigcryptor64_encrypt_string_with_padding_pkcs7_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -275,16 +275,16 @@ fn bigcryptor64_encrypt_string_with_padding_iso_cbc_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_string_with_padding_iso_cbc_into_array()
+fn bigcryptor64_encrypt_string_with_padding_pkcs7_cbc_into_array()
 {
-    println!("bigcryptor64_encrypt_string_with_padding_iso_cbc_into_array()");
+    println!("bigcryptor64_encrypt_string_with_padding_pkcs7_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -303,16 +303,16 @@ fn bigcryptor64_encrypt_string_with_padding_iso_cbc_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_vec_with_padding_iso_cbc()
+fn bigcryptor64_encrypt_vec_with_padding_pkcs7_cbc()
 {
-    println!("bigcryptor64_encrypt_vec_with_padding_iso_cbc()");
+    println!("bigcryptor64_encrypt_vec_with_padding_pkcs7_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -333,16 +333,16 @@ fn bigcryptor64_encrypt_vec_with_padding_iso_cbc()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_vec_with_padding_iso_cbc_into_vec()
+fn bigcryptor64_encrypt_vec_with_padding_pkcs7_cbc_into_vec()
 {
-    println!("bigcryptor64_encrypt_vec_with_padding_iso_cbc_into_vec()");
+    println!("bigcryptor64_encrypt_vec_with_padding_pkcs7_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -363,16 +363,16 @@ fn bigcryptor64_encrypt_vec_with_padding_iso_cbc_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_vec_with_padding_iso_cbc_into_array()
+fn bigcryptor64_encrypt_vec_with_padding_pkcs7_cbc_into_array()
 {
-    println!("bigcryptor64_encrypt_vec_with_padding_iso_cbc_into_array()");
+    println!("bigcryptor64_encrypt_vec_with_padding_pkcs7_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -393,16 +393,16 @@ fn bigcryptor64_encrypt_vec_with_padding_iso_cbc_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_array_with_padding_iso_cbc()
+fn bigcryptor64_encrypt_array_with_padding_pkcs7_cbc()
 {
-    println!("bigcryptor64_encrypt_array_with_padding_iso_cbc()");
+    println!("bigcryptor64_encrypt_array_with_padding_pkcs7_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -424,16 +424,16 @@ fn bigcryptor64_encrypt_array_with_padding_iso_cbc()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_array_with_padding_iso_cbc_into_vec()
+fn bigcryptor64_encrypt_array_with_padding_pkcs7_cbc_into_vec()
 {
-    println!("bigcryptor64_encrypt_array_with_padding_iso_cbc_into_vec()");
+    println!("bigcryptor64_encrypt_array_with_padding_pkcs7_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -455,16 +455,16 @@ fn bigcryptor64_encrypt_array_with_padding_iso_cbc_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_array_with_padding_iso_cbc_into_array()
+fn bigcryptor64_encrypt_array_with_padding_pkcs7_cbc_into_array()
 {
-    println!("bigcryptor64_encrypt_array_with_padding_iso_cbc_into_array()");
+    println!("bigcryptor64_encrypt_array_with_padding_pkcs7_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -485,16 +485,16 @@ fn bigcryptor64_encrypt_array_with_padding_iso_cbc_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_with_padding_iso_cbc()
+fn bigcryptor64_decrypt_with_padding_pkcs7_cbc()
 {
-    println!("bigcryptor64_decrypt_with_padding_iso_cbc()");
+    println!("bigcryptor64_decrypt_with_padding_pkcs7_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -514,7 +514,7 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
 
     let mut recovered = vec![0; 55];
     tdes.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -536,12 +536,12 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_with_padding_iso_cbc_into_vec()
+fn bigcryptor64_decrypt_with_padding_pkcs7_cbc_into_vec()
 {
-    println!("bigcryptor64_decrypt_with_padding_iso_cbc_into_vec()");
+    println!("bigcryptor64_decrypt_with_padding_pkcs7_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -561,7 +561,7 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
 
     let mut recovered = Vec::<u8>::new();
     tdes.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -583,12 +583,12 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc_into_vec()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_with_padding_iso_cbc_into_array()
+fn bigcryptor64_decrypt_with_padding_pkcs7_cbc_into_array()
 {
-    println!("bigcryptor64_decrypt_with_padding_iso_cbc_into_array()");
+    println!("bigcryptor64_decrypt_with_padding_pkcs7_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -608,7 +608,7 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
 
     let mut recovered = [0u8; 56];
     let len = tdes.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -630,12 +630,12 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc_into_array()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_with_padding_iso_cbc_into_string()
+fn bigcryptor64_decrypt_with_padding_pkcs7_cbc_into_string()
 {
-    println!("bigcryptor64_decrypt_with_padding_iso_cbc_into_string()");
+    println!("bigcryptor64_decrypt_with_padding_pkcs7_cbc_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -655,7 +655,7 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
 
     let mut recovered = String::new();
     tdes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -665,12 +665,12 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc_into_string()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_vec_with_padding_iso_cbc()
+fn bigcryptor64_decrypt_vec_with_padding_pkcs7_cbc()
 {
-    println!("bigcryptor64_decrypt_vec_with_padding_iso_cbc()");
+    println!("bigcryptor64_decrypt_vec_with_padding_pkcs7_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -690,7 +690,7 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
 
     let mut recovered = vec![0; 55];
     tdes.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
@@ -712,12 +712,12 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_vec()
+fn bigcryptor64_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
 {
-    println!("bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_vec()");
+    println!("bigcryptor64_decrypt_vec_with_padding_pkcs7_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -737,7 +737,7 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
 
     let mut recovered = Vec::<u8>::new();
     tdes.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
@@ -759,12 +759,12 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_vec()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_array()
+fn bigcryptor64_decrypt_vec_with_padding_pkcs7_cbc_into_array()
 {
-    println!("bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_array()");
+    println!("bigcryptor64_decrypt_vec_with_padding_pkcs7_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -784,7 +784,7 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
 
     let mut recovered = [0u8; 56];
     let len = tdes.decrypt_vec_into_array(iv, &cipher, &mut recovered);
@@ -806,12 +806,12 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_array()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_string()
+fn bigcryptor64_decrypt_vec_with_padding_pkcs7_cbc_into_string()
 {
-    println!("bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_string()");
+    println!("bigcryptor64_decrypt_vec_with_padding_pkcs7_cbc_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -831,7 +831,7 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
 
     let mut recovered = String::new();
     tdes.decrypt_vec_into_string(iv, &cipher, &mut recovered);
@@ -841,12 +841,12 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_string()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_array_with_padding_iso_cbc()
+fn bigcryptor64_decrypt_array_with_padding_pkcs7_cbc()
 {
-    println!("bigcryptor64_decrypt_array_with_padding_iso_cbc()");
+    println!("bigcryptor64_decrypt_array_with_padding_pkcs7_cbc()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -865,7 +865,7 @@ fn bigcryptor64_decrypt_array_with_padding_iso_cbc()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
 
     let mut recovered = vec![0; 55];
     let len = tdes.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
@@ -888,12 +888,12 @@ fn bigcryptor64_decrypt_array_with_padding_iso_cbc()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_array_with_padding_iso_cbc_into_vec()
+fn bigcryptor64_decrypt_array_with_padding_pkcs7_cbc_into_vec()
 {
-    println!("bigcryptor64_decrypt_array_with_padding_iso_cbc_into_vec()");
+    println!("bigcryptor64_decrypt_array_with_padding_pkcs7_cbc_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -912,7 +912,7 @@ fn bigcryptor64_decrypt_array_with_padding_iso_cbc_into_vec()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
 
     let mut recovered = Vec::<u8>::new();
     tdes.decrypt_array_into_vec(iv, &cipher, &mut recovered);
@@ -934,12 +934,12 @@ fn bigcryptor64_decrypt_array_with_padding_iso_cbc_into_vec()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_array_with_padding_iso_cbc_into_array()
+fn bigcryptor64_decrypt_array_with_padding_pkcs7_cbc_into_array()
 {
-    println!("bigcryptor64_decrypt_array_with_padding_iso_cbc_into_array()");
+    println!("bigcryptor64_decrypt_array_with_padding_pkcs7_cbc_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -958,7 +958,7 @@ fn bigcryptor64_decrypt_array_with_padding_iso_cbc_into_array()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
 
     let mut recovered = [0u8; 56];
     let len = tdes.decrypt_array_into_array(iv, &cipher, &mut recovered);
@@ -980,12 +980,12 @@ fn bigcryptor64_decrypt_array_with_padding_iso_cbc_into_array()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_array_with_padding_iso_cbc_into_string()
+fn bigcryptor64_decrypt_array_with_padding_pkcs7_cbc_into_string()
 {
-    println!("bigcryptor64_decrypt_array_with_padding_iso_cbc_into_string()");
+    println!("bigcryptor64_decrypt_array_with_padding_pkcs7_cbc_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
+    use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
@@ -1004,7 +1004,7 @@ fn bigcryptor64_decrypt_array_with_padding_iso_cbc_into_string()
     let mut txt = String::new();
     for c in cipher.clone()
         { write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 ED 3C 12 45 CA 1D 7E A3 ");
+    assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
 
     let mut recovered = String::new();
     tdes.decrypt_array_into_string(iv, &cipher, &mut recovered);

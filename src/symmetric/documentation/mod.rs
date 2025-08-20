@@ -54,6 +54,13 @@ pub mod des_cbc_pkcs7;
 /// examples were moved to rijndael_cbc_pkcs7.rs.
 pub mod rijndael_cbc_pkcs7;
 
+/// trait_cbc_with_padding_pkcs7.rs may be too big
+/// because of documentation and plenty of examples.
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to big_cryptor64_cbc_pkcs7.rs.
+pub mod big_cryptor64_cbc_pkcs7;
+
 /// trait_cbc_with_padding_iso.rs may be too big
 /// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
@@ -67,6 +74,13 @@ pub mod des_cbc_iso;
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to rijndael_cbc_iso.rs.
 pub mod rijndael_cbc_iso;
+
+/// trait_cbc_with_padding_iso.rs may be too big
+/// because of documentation and plenty of examples.
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to big_cryptor64_cbc_iso.rs.
+pub mod big_cryptor64_cbc_iso;
 
 /// trait_pcbc_with_padding_pkcs7.rs may be too big
 /// because of documentation and plenty of examples.
@@ -82,6 +96,13 @@ pub mod des_pcbc_pkcs7;
 /// examples were moved to rijndael_pcbc_pkcs7.rs.
 pub mod rijndael_pcbc_pkcs7;
 
+/// trait_pcbc_with_padding_pkcs7.rs may be too big
+/// because of documentation and plenty of examples.
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to big_cryptor64_pcbc_pkcs7.rs.
+pub mod big_cryptor64_pcbc_pkcs7;
+
 /// trait_pcbc_with_padding_iso.rs may be too big
 /// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
@@ -95,6 +116,13 @@ pub mod des_pcbc_iso;
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to rijndael_pcbc_iso.rs.
 pub mod rijndael_pcbc_iso;
+
+/// trait_pcbc_with_padding_iso.rs may be too big
+/// because of documentation and plenty of examples.
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to big_cryptor64_pcbc_iso.rs.
+pub mod big_cryptor64_pcbc_iso;
 
 /// trait_cfb.rs may be too big
 /// because of documentation and plenty of examples.
