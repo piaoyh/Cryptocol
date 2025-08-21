@@ -18,11 +18,11 @@ use std::vec::Vec;
 use crate::number::{ SmallUInt, LongUnion };
 use crate::symmetric::SmallCryptor;
 
-/// big_cryptor64_cbc_pkcs7.rs may be too big
+/// big_cryptor64_pcbc_pkcs7.rs may be too big
 /// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
-/// examples were moved to big_cryptor64_cbc_pkcs7.rs.
+/// examples were moved to big_cryptor64_pcbc_pkcs7.rs.
 /// And, most of generic parameters are omitted.
 /// It is not actual code but dummy code for compilation!!!
 #[allow(non_camel_case_types)]
@@ -33,11 +33,11 @@ pub struct BigCryptor64<S: SmallCryptor<u64, 8>>
     des: Vec<S>,
 }
 
-/// big_cryptor64_cbc_pkcs7.rs may be too big
+/// big_cryptor64_pcbc_pkcs7.rs may be too big
 /// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
-/// examples were moved to big_cryptor64_cbc_pkcs7.rs.
+/// examples were moved to big_cryptor64_pcbc_pkcs7.rs.
 /// And, most of generic parameters are omitted.
 /// It is not actual code but dummy code for compilation!!!
 impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
@@ -84,7 +84,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -103,7 +103,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
@@ -150,7 +150,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -169,7 +169,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt_into_vec<U>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
@@ -229,7 +229,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -248,7 +248,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt_into_array<U, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
@@ -294,7 +294,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -313,7 +313,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt_str(&mut self, iv: u64, message: &str, cipher: *mut u8) -> u64
     {
@@ -353,7 +353,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -371,7 +371,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt_str_into_vec<U>(&mut self, iv: u64, message: &str, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
@@ -425,7 +425,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -443,7 +443,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt_str_into_array<U, const N: usize>(&mut self, iv: u64, message: &str, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
@@ -490,7 +490,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -508,7 +508,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt_string(&mut self, iv: u64, message: &String, cipher: *mut u8) -> u64
     {
@@ -549,7 +549,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -567,7 +567,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt_string_into_vec<U>(&mut self, iv: u64, message: &String, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
@@ -622,7 +622,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -640,7 +640,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt_string_into_array<U, const N: usize>(&mut self, iv: u64, message: &String, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
@@ -688,7 +688,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -708,7 +708,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt_vec<U>(&mut self, iv: u64, message: &Vec<U>, cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -750,7 +750,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -770,7 +770,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt_vec_into_vec<U, V>(&mut self, iv: u64, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -829,7 +829,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -849,7 +849,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: u64, message: &Vec<U>, cipher: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -896,7 +896,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -917,7 +917,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt_array<U, const N: usize>(&mut self, iv: u64, message: &[U; N], cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -958,7 +958,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -979,7 +979,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: u64, message: &[U; N], cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -1036,7 +1036,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -1056,7 +1056,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// ```
     pub fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: u64, message: &[U; N], cipher: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -1111,7 +1111,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -1130,7 +1130,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// tdes.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -1197,7 +1197,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -1216,7 +1216,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// tdes.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -1287,7 +1287,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -1306,7 +1306,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// 
     /// let mut recovered = [0u8; 56];
     /// let len = tdes.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -1376,7 +1376,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -1395,7 +1395,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// 
     /// let mut recovered = String::new();
     /// tdes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -1454,7 +1454,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -1473,7 +1473,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// tdes.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
@@ -1535,7 +1535,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -1554,7 +1554,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// tdes.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
@@ -1625,7 +1625,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -1644,7 +1644,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// 
     /// let mut recovered = [0u8; 56];
     /// let len = tdes.decrypt_vec_into_array(iv, &cipher, &mut recovered);
@@ -1707,7 +1707,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -1726,7 +1726,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// 
     /// let mut recovered = String::new();
     /// tdes.decrypt_vec_into_string(iv, &cipher, &mut recovered);
@@ -1786,7 +1786,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -1804,7 +1804,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// let len = tdes.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
@@ -1867,7 +1867,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -1885,7 +1885,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// tdes.decrypt_array_into_vec(iv, &cipher, &mut recovered);
@@ -1956,7 +1956,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -1974,7 +1974,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// 
     /// let mut recovered = [0u8; 56];
     /// let len = tdes.decrypt_array_into_array(iv, &cipher, &mut recovered);
@@ -2038,7 +2038,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ BigCryptor64, DES, CBC_PKCS7 };
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, PCBC_PKCS7 };
     /// 
     /// let mut tdes = BigCryptor64::new()
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
@@ -2056,7 +2056,7 @@ impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB DD AC 7F 93 37 1B A6 28 89 A6 19 D3 9E E6 A0 29 B6 EA 99 D9 D1 F1 F0 E4 9D 54 E9 55 2B FD 40 DA B7 B3 3D 5F 86 2D 30 BF B2 28 DD A3 42 A4 70 06 ");
     /// 
     /// let mut recovered = String::new();
     /// tdes.decrypt_array_into_string(iv, &cipher, &mut recovered);
