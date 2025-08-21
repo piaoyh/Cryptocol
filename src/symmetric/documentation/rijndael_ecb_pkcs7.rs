@@ -2798,7 +2798,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2843,7 +2843,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2888,7 +2888,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2896,7 +2896,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "F2 8F C2 CA 9D 3A AC 96 69 7B 52 0D 5F CB 10 4B 31 26 61 63 CE A4 EB 2B EE 9F C3 4C A1 40 F4 FF 0F 70 8E 7C 6F 42 BC 93 4F CF DA 45 BB F6 6F 6B A9 4F E6 98 36 61 FF 71 9C FF AB 3A 34 D7 BE 3C ");
+    /// assert_eq!(txt, "09 74 04 A7 68 1F 4D 00 ED CA 85 39 90 0E A1 AC E1 AC 90 60 D8 C9 BC AB ED 8D 66 89 3F 85 2B 86 3E CE 84 00 57 F2 B9 14 43 FB DD D9 19 70 46 25 B1 F8 7D 38 27 58 A0 C9 5D AE C0 12 7D 6A 7C D0 ");
     /// 
     /// let mut recovered = vec![0; 55];
     /// a_aes.decrypt(cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
@@ -2933,7 +2933,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2978,11 +2978,10 @@ Rijndael_Generic<ROUND, NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_512_512::new_with_key(&key);
-    /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt(iv.clone(), message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3065,7 +3064,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str(&message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3074,6 +3073,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "E8 96 2E 8D BA 45 C6 D9 45 06 DC 98 D9 2F 1F 86 B8 05 A9 B8 D2 B2 1E 82 DA 51 DA B1 F9 81 B7 B3 95 C5 46 72 A8 D9 D8 B0 9E 62 AB 4F F8 36 31 54 5B D2 91 45 68 4B B4 C0 70 D1 8E C0 F3 FF 85 D1 ");
+    /// println!();
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_aes.decrypt_into_vec(cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -3110,7 +3110,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str(&message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3119,6 +3119,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "F2 8F C2 CA 9D 3A AC 96 69 7B 52 0D 5F CB 10 4B 31 26 61 63 CE A4 EB 2B EE 9F C3 4C A1 40 F4 FF 0F 70 8E 7C 6F 42 BC 93 4F CF DA 45 BB F6 6F 6B A9 4F E6 98 36 61 FF 71 9C FF AB 3A 34 D7 BE 3C ");
+    /// println!();
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_aes.decrypt_into_vec(cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -3155,7 +3156,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str(&message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3163,7 +3164,8 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let mut txt = String::new();
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "F2 8F C2 CA 9D 3A AC 96 69 7B 52 0D 5F CB 10 4B 31 26 61 63 CE A4 EB 2B EE 9F C3 4C A1 40 F4 FF 0F 70 8E 7C 6F 42 BC 93 4F CF DA 45 BB F6 6F 6B A9 4F E6 98 36 61 FF 71 9C FF AB 3A 34 D7 BE 3C ");
+    /// assert_eq!(txt, "09 74 04 A7 68 1F 4D 00 ED CA 85 39 90 0E A1 AC E1 AC 90 60 D8 C9 BC AB ED 8D 66 89 3F 85 2B 86 3E CE 84 00 57 F2 B9 14 43 FB DD D9 19 70 46 25 B1 F8 7D 38 27 58 A0 C9 5D AE C0 12 7D 6A 7C D0 ");
+    /// println!();
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_aes.decrypt_into_vec(cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -3182,7 +3184,6 @@ Rijndael_Generic<ROUND, NB, NK>
     /// println!("Bb =\t{}", converted);
     /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
     /// assert_eq!(converted, message);
-    /// println!();
     /// ```
     /// 
     /// # Example 4 for Rijndael-256-256
@@ -3201,7 +3202,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt_str(&message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3210,6 +3211,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// for c in cipher.clone()
     ///     { write!(txt, "{:02X} ", c); }
     /// assert_eq!(txt, "9A 05 BF D4 01 B1 D9 A1 31 C5 13 A9 D1 50 83 C6 E4 F7 B9 40 E2 29 59 E2 42 96 3A DC 22 65 88 F7 33 86 40 28 99 94 21 6D 08 7F 9B B5 40 C4 D3 63 88 A2 67 DB 24 E1 6F 26 49 13 DE 4C A4 B9 4F 3B ");
+    /// println!();
     /// 
     /// let mut recovered = Vec::<u8>::new();
     /// a_rijndael.decrypt_into_vec(cipher.as_ptr(), cipher.len() as u64, &mut recovered);
@@ -3246,11 +3248,10 @@ Rijndael_Generic<ROUND, NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_512_512::new_with_key(&key);
-    /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt(iv.clone(), message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt(message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3342,7 +3343,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str(&message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3388,7 +3389,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str(&message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3435,7 +3436,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str(&message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3481,7 +3482,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt_str(&message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3530,7 +3531,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt_str(&message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3617,7 +3618,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str(&message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3650,7 +3651,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str(&message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3683,7 +3684,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str(&message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3716,7 +3717,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt_str(&message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3753,7 +3754,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt_str(&message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4837,7 +4838,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4882,7 +4883,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4927,7 +4928,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4972,7 +4973,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5021,7 +5022,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5099,7 +5100,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5144,7 +5145,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5189,7 +5190,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5234,7 +5235,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5283,7 +5284,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5370,7 +5371,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5415,7 +5416,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5460,7 +5461,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5505,7 +5506,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5554,7 +5555,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5634,7 +5635,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5667,7 +5668,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5700,7 +5701,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5733,7 +5734,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5770,7 +5771,7 @@ Rijndael_Generic<ROUND, NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }

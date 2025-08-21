@@ -5800,54 +5800,6 @@ impl <const ROUND: usize> DES_Generic<ROUND>
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the plaintext will be stored is enough.
     /// 
-    /// # For Rijndael or AES, and its variants
-    /// ## Example 1 for AES-128
-    /// ```
-    /// use std::io::Write;
-    /// use std::fmt::Write as _;
-    /// use cryptocol::symmetric::{ AES_128, CBC_PKCS7 };
-    /// 
-    /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
-    /// println!("K =\t{:#016X}", key);
-    /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
-    /// 
-    /// let message = "In the beginning God created the heavens and the earth.";
-    /// println!("M =\t{}", message);
-    /// let mut cipher = Vec::<u8>::new();
-    /// a_aes.encrypt_str_into_vec(iv, &message, &mut cipher);
-    /// print!("C =\t");
-    /// for c in cipher.clone()
-    ///     { print!("{:02X} ", c); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in cipher.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "C9 1C 27 CE 83 92 A1 CF 7D A4 64 35 16 48 01 72 CC E3 6D CD BB 19 FC D0 80 22 09 9F 23 32 73 27 58 37 F9 9B 3C 44 7B 03 B3 80 7E 99 DF 97 4E E9 A3 89 67 0C 21 29 3E 4D DC AD B6 44 09 D4 3B 02 ");
-    /// 
-    /// let mut recovered = Vec::<u8>::new();
-    /// a_aes.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
-    /// print!("Ba =\t");
-    /// for b in recovered.clone()
-    ///     { print!("{:02X} ", b); }
-    /// println!();
-    /// let mut txt = String::new();
-    /// for c in recovered.clone()
-    ///     { write!(txt, "{:02X} ", c); }
-    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
-    /// 
-    /// let mut converted = String::new();
-    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
-    /// 
-    /// println!("Bb =\t{}", converted);
-    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
-    /// assert_eq!(converted, message);
-    /// ```
-    /// 
-    /// ## For more examples,
-    /// click [here](./documentation/rijndael_ecb_pkcs7/struct.Rijndal_Generic.html#method.decrypt_vec_into_vec)
-    /// 
     /// # Example 1 for Normal case
     /// ```
     /// use std::io::Write;

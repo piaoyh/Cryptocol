@@ -26,6 +26,13 @@ pub mod des_ecb_pkcs7;
 /// examples were moved to rijndael_ecb_pkcs7.rs.
 pub mod rijndael_ecb_pkcs7;
 
+/// trait_ecb_with_padding_pkcs7.rs may be too big
+/// because of documentation and plenty of examples.
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to big_cryptor64_ecb_pkcs7.rs.
+pub mod big_cryptor64_ecb_pkcs7;
+
 /// trait_ecb_with_padding_iso.rs may be too big
 /// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
@@ -39,6 +46,13 @@ pub mod des_ecb_iso;
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to rijndael_ecb_iso.rs.
 pub mod rijndael_ecb_iso;
+
+/// trait_ecb_with_padding_iso.rs may be too big
+/// because of documentation and plenty of examples.
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to big_cryptor64_ecb_iso.rs.
+pub mod big_cryptor64_ecb_iso;
 
 /// trait_cbc_with_padding_pkcs7.rs may be too big
 /// because of documentation and plenty of examples.

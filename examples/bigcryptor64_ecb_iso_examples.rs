@@ -21,48 +21,50 @@
 // #[allow(dead_code)]
 pub fn main()
 {
-    bigcryptor64_encrypt_with_padding_pkcs7_ecb();
-    bigcryptor64_encrypt_with_padding_pkcs7_ecb_into_vec();
-    bigcryptor64_encrypt_with_padding_pkcs7_ecb_into_array();
-    bigcryptor64_encrypt_str_with_padding_pkcs7_ecb();
-    bigcryptor64_encrypt_str_with_padding_pkcs7_ecb_into_vec();
-    bigcryptor64_encrypt_str_with_padding_pkcs7_ecb_into_array();
-    bigcryptor64_encrypt_string_with_padding_pkcs7_ecb();
-    bigcryptor64_encrypt_string_with_padding_pkcs7_ecb_into_vec();
-    bigcryptor64_encrypt_string_with_padding_pkcs7_ecb_into_array();
-    bigcryptor64_encrypt_vec_with_padding_pkcs7_ecb();
-    bigcryptor64_encrypt_vec_with_padding_pkcs7_ecb_into_vec();
-    bigcryptor64_encrypt_vec_with_padding_pkcs7_ecb_into_array();
-    bigcryptor64_encrypt_array_with_padding_pkcs7_ecb();
-    bigcryptor64_encrypt_array_with_padding_pkcs7_ecb_into_vec();
-    bigcryptor64_encrypt_array_with_padding_pkcs7_ecb_into_array();
+    bigcryptor64_encrypt_with_padding_iso_ecb();
+    bigcryptor64_encrypt_with_padding_iso_ecb_into_vec();
+    bigcryptor64_encrypt_with_padding_iso_ecb_into_array();
+    bigcryptor64_encrypt_str_with_padding_iso_ecb();
+    bigcryptor64_encrypt_str_with_padding_iso_ecb_into_vec();
+    bigcryptor64_encrypt_str_with_padding_iso_ecb_into_array();
+    bigcryptor64_encrypt_string_with_padding_iso_ecb();
+    bigcryptor64_encrypt_string_with_padding_iso_ecb_into_vec();
+    bigcryptor64_encrypt_string_with_padding_iso_ecb_into_array();
+    bigcryptor64_encrypt_vec_with_padding_iso_ecb();
+    bigcryptor64_encrypt_vec_with_padding_iso_ecb_into_vec();
+    bigcryptor64_encrypt_vec_with_padding_iso_ecb_into_array();
+    bigcryptor64_encrypt_array_with_padding_iso_ecb();
+    bigcryptor64_encrypt_array_with_padding_iso_ecb_into_vec();
+    bigcryptor64_encrypt_array_with_padding_iso_ecb_into_array();
 
-    bigcryptor64_decrypt_with_padding_pkcs7_ecb();
-    bigcryptor64_decrypt_with_padding_pkcs7_ecb_into_vec();
-    bigcryptor64_decrypt_with_padding_pkcs7_ecb_into_array();
-    bigcryptor64_decrypt_with_padding_pkcs7_ecb_into_string();
-    bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb();
-    bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb_into_vec();
-    bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb_into_array();
-    bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb_into_string();
-    bigcryptor64_decrypt_array_with_padding_pkcs7_ecb();
-    bigcryptor64_decrypt_array_with_padding_pkcs7_ecb_into_vec();
-    bigcryptor64_decrypt_array_with_padding_pkcs7_ecb_into_array();
-    bigcryptor64_decrypt_array_with_padding_pkcs7_ecb_into_string();
+    bigcryptor64_decrypt_with_padding_iso_ecb();
+    bigcryptor64_decrypt_with_padding_iso_ecb_into_vec();
+    bigcryptor64_decrypt_with_padding_iso_ecb_into_array();
+    bigcryptor64_decrypt_with_padding_iso_ecb_into_string();
+    bigcryptor64_decrypt_vec_with_padding_iso_ecb();
+    bigcryptor64_decrypt_vec_with_padding_iso_ecb_into_vec();
+    bigcryptor64_decrypt_vec_with_padding_iso_ecb_into_array();
+    bigcryptor64_decrypt_vec_with_padding_iso_ecb_into_string();
+    bigcryptor64_decrypt_array_with_padding_iso_ecb();
+    bigcryptor64_decrypt_array_with_padding_iso_ecb_into_vec();
+    bigcryptor64_decrypt_array_with_padding_iso_ecb_into_array();
+    bigcryptor64_decrypt_array_with_padding_iso_ecb_into_string();
 }
 
-fn bigcryptor64_encrypt_with_padding_pkcs7_ecb()
+fn bigcryptor64_encrypt_with_padding_iso_ecb()
 {
-    println!("bigcryptor64_encrypt_with_padding_pkcs7_ecb()");
+    println!("bigcryptor64_encrypt_with_padding_iso_ecb()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 56];
@@ -78,18 +80,20 @@ fn bigcryptor64_encrypt_with_padding_pkcs7_ecb()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_with_padding_pkcs7_ecb_into_vec()
+fn bigcryptor64_encrypt_with_padding_iso_ecb_into_vec()
 {
-    println!("bigcryptor64_encrypt_with_padding_pkcs7_ecb_into_vec()");
+    println!("bigcryptor64_encrypt_with_padding_iso_ecb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
@@ -105,18 +109,20 @@ fn bigcryptor64_encrypt_with_padding_pkcs7_ecb_into_vec()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_with_padding_pkcs7_ecb_into_array()
+fn bigcryptor64_encrypt_with_padding_iso_ecb_into_array()
 {
-    println!("bigcryptor64_encrypt_with_padding_pkcs7_ecb_into_array()");
+    println!("bigcryptor64_encrypt_with_padding_iso_ecb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 56];
@@ -132,18 +138,20 @@ fn bigcryptor64_encrypt_with_padding_pkcs7_ecb_into_array()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_str_with_padding_pkcs7_ecb()
+fn bigcryptor64_encrypt_str_with_padding_iso_ecb()
 {
-    println!("bigcryptor64_encrypt_str_with_padding_pkcs7_ecb()");
+    println!("bigcryptor64_encrypt_str_with_padding_iso_ecb()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 56];
@@ -159,18 +167,20 @@ fn bigcryptor64_encrypt_str_with_padding_pkcs7_ecb()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_str_with_padding_pkcs7_ecb_into_vec()
+fn bigcryptor64_encrypt_str_with_padding_iso_ecb_into_vec()
 {
-    println!("bigcryptor64_encrypt_str_with_padding_pkcs7_ecb_into_vec()");
+    println!("bigcryptor64_encrypt_str_with_padding_iso_ecb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     let mut cipher = Vec::<u8>::new();
     tdes.encrypt_str_into_vec(&message, &mut cipher);
@@ -185,18 +195,20 @@ fn bigcryptor64_encrypt_str_with_padding_pkcs7_ecb_into_vec()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_str_with_padding_pkcs7_ecb_into_array()
+fn bigcryptor64_encrypt_str_with_padding_iso_ecb_into_array()
 {
-    println!("bigcryptor64_encrypt_str_with_padding_pkcs7_ecb_into_array()");
+    println!("bigcryptor64_encrypt_str_with_padding_iso_ecb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     let mut cipher = [0_u8; 56];
     tdes.encrypt_str_into_array(&message, &mut cipher);
@@ -211,18 +223,20 @@ fn bigcryptor64_encrypt_str_with_padding_pkcs7_ecb_into_array()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_string_with_padding_pkcs7_ecb()
+fn bigcryptor64_encrypt_string_with_padding_iso_ecb()
 {
-    println!("bigcryptor64_encrypt_string_with_padding_pkcs7_ecb()");
+    println!("bigcryptor64_encrypt_string_with_padding_iso_ecb()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.".to_string();
     let mut cipher = [0_u8; 56];
     tdes.encrypt_string(&message, cipher.as_mut_ptr());
@@ -237,18 +251,20 @@ fn bigcryptor64_encrypt_string_with_padding_pkcs7_ecb()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_string_with_padding_pkcs7_ecb_into_vec()
+fn bigcryptor64_encrypt_string_with_padding_iso_ecb_into_vec()
 {
-    println!("bigcryptor64_encrypt_string_with_padding_pkcs7_ecb_into_vec()");
+    println!("bigcryptor64_encrypt_string_with_padding_iso_ecb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.".to_string();
     let mut cipher = Vec::<u8>::new();
     tdes.encrypt_string_into_vec(&message, &mut cipher);
@@ -263,18 +279,20 @@ fn bigcryptor64_encrypt_string_with_padding_pkcs7_ecb_into_vec()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_string_with_padding_pkcs7_ecb_into_array()
+fn bigcryptor64_encrypt_string_with_padding_iso_ecb_into_array()
 {
-    println!("bigcryptor64_encrypt_string_with_padding_pkcs7_ecb_into_array()");
+    println!("bigcryptor64_encrypt_string_with_padding_iso_ecb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.".to_string();
     let mut cipher = [0_u8; 56];
     tdes.encrypt_string_into_array(&message, &mut cipher);
@@ -289,18 +307,20 @@ fn bigcryptor64_encrypt_string_with_padding_pkcs7_ecb_into_array()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_vec_with_padding_pkcs7_ecb()
+fn bigcryptor64_encrypt_vec_with_padding_iso_ecb()
 {
-    println!("bigcryptor64_encrypt_vec_with_padding_pkcs7_ecb()");
+    println!("bigcryptor64_encrypt_vec_with_padding_iso_ecb()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let message = unsafe { message.to_string().as_mut_vec().clone() };
@@ -317,18 +337,20 @@ fn bigcryptor64_encrypt_vec_with_padding_pkcs7_ecb()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_vec_with_padding_pkcs7_ecb_into_vec()
+fn bigcryptor64_encrypt_vec_with_padding_iso_ecb_into_vec()
 {
-    println!("bigcryptor64_encrypt_vec_with_padding_pkcs7_ecb_into_vec()");
+    println!("bigcryptor64_encrypt_vec_with_padding_iso_ecb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let message = unsafe { message.to_string().as_mut_vec().clone() };
@@ -345,18 +367,20 @@ fn bigcryptor64_encrypt_vec_with_padding_pkcs7_ecb_into_vec()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_vec_with_padding_pkcs7_ecb_into_array()
+fn bigcryptor64_encrypt_vec_with_padding_iso_ecb_into_array()
 {
-    println!("bigcryptor64_encrypt_vec_with_padding_pkcs7_ecb_into_array()");
+    println!("bigcryptor64_encrypt_vec_with_padding_iso_ecb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let message = unsafe { message.to_string().as_mut_vec().clone() };
@@ -373,18 +397,20 @@ fn bigcryptor64_encrypt_vec_with_padding_pkcs7_ecb_into_array()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_array_with_padding_pkcs7_ecb()
+fn bigcryptor64_encrypt_array_with_padding_iso_ecb()
 {
-    println!("bigcryptor64_encrypt_array_with_padding_pkcs7_ecb()");
+    println!("bigcryptor64_encrypt_array_with_padding_iso_ecb()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
@@ -402,18 +428,20 @@ fn bigcryptor64_encrypt_array_with_padding_pkcs7_ecb()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_array_with_padding_pkcs7_ecb_into_vec()
+fn bigcryptor64_encrypt_array_with_padding_iso_ecb_into_vec()
 {
-    println!("bigcryptor64_encrypt_array_with_padding_pkcs7_ecb_into_vec()");
+    println!("bigcryptor64_encrypt_array_with_padding_iso_ecb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
@@ -431,18 +459,20 @@ fn bigcryptor64_encrypt_array_with_padding_pkcs7_ecb_into_vec()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_encrypt_array_with_padding_pkcs7_ecb_into_array()
+fn bigcryptor64_encrypt_array_with_padding_iso_ecb_into_array()
 {
-    println!("bigcryptor64_encrypt_array_with_padding_pkcs7_ecb_into_array()");
+    println!("bigcryptor64_encrypt_array_with_padding_iso_ecb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
@@ -459,18 +489,20 @@ fn bigcryptor64_encrypt_array_with_padding_pkcs7_ecb_into_array()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_with_padding_pkcs7_ecb()
+fn bigcryptor64_decrypt_with_padding_iso_ecb()
 {
-    println!("bigcryptor64_decrypt_with_padding_pkcs7_ecb()");
+    println!("bigcryptor64_decrypt_with_padding_iso_ecb()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
@@ -504,18 +536,20 @@ fn bigcryptor64_decrypt_with_padding_pkcs7_ecb()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_with_padding_pkcs7_ecb_into_vec()
+fn bigcryptor64_decrypt_with_padding_iso_ecb_into_vec()
 {
-    println!("bigcryptor64_decrypt_with_padding_pkcs7_ecb_into_vec()");
+    println!("bigcryptor64_decrypt_with_padding_iso_ecb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
@@ -549,18 +583,20 @@ fn bigcryptor64_decrypt_with_padding_pkcs7_ecb_into_vec()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_with_padding_pkcs7_ecb_into_array()
+fn bigcryptor64_decrypt_with_padding_iso_ecb_into_array()
 {
-    println!("bigcryptor64_decrypt_with_padding_pkcs7_ecb_into_array()");
+    println!("bigcryptor64_decrypt_with_padding_iso_ecb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
@@ -594,18 +630,20 @@ fn bigcryptor64_decrypt_with_padding_pkcs7_ecb_into_array()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_with_padding_pkcs7_ecb_into_string()
+fn bigcryptor64_decrypt_with_padding_iso_ecb_into_string()
 {
-    println!("bigcryptor64_decrypt_with_padding_pkcs7_ecb_into_string()");
+    println!("bigcryptor64_decrypt_with_padding_iso_ecb_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
@@ -627,18 +665,20 @@ fn bigcryptor64_decrypt_with_padding_pkcs7_ecb_into_string()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb()
+fn bigcryptor64_decrypt_vec_with_padding_iso_ecb()
 {
-    println!("bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb()");
+    println!("bigcryptor64_decrypt_vec_with_padding_iso_ecb()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
@@ -672,18 +712,20 @@ fn bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb_into_vec()
+fn bigcryptor64_decrypt_vec_with_padding_iso_ecb_into_vec()
 {
-    println!("bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb_into_vec()");
+    println!("bigcryptor64_decrypt_vec_with_padding_iso_ecb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
@@ -717,18 +759,20 @@ fn bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb_into_vec()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb_into_array()
+fn bigcryptor64_decrypt_vec_with_padding_iso_ecb_into_array()
 {
-    println!("bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb_into_array()");
+    println!("bigcryptor64_decrypt_vec_with_padding_iso_ecb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
@@ -762,18 +806,20 @@ fn bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb_into_array()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb_into_string()
+fn bigcryptor64_decrypt_vec_with_padding_iso_ecb_into_string()
 {
-    println!("bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb_into_string()");
+    println!("bigcryptor64_decrypt_vec_with_padding_iso_ecb_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
@@ -795,18 +841,20 @@ fn bigcryptor64_decrypt_vec_with_padding_pkcs7_ecb_into_string()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_array_with_padding_pkcs7_ecb()
+fn bigcryptor64_decrypt_array_with_padding_iso_ecb()
 {
-    println!("bigcryptor64_decrypt_array_with_padding_pkcs7_ecb()");
+    println!("bigcryptor64_decrypt_array_with_padding_iso_ecb()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);    let mut cipher = [0_u8; 56];
     tdes.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
@@ -840,18 +888,20 @@ fn bigcryptor64_decrypt_array_with_padding_pkcs7_ecb()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_array_with_padding_pkcs7_ecb_into_vec()
+fn bigcryptor64_decrypt_array_with_padding_iso_ecb_into_vec()
 {
-    println!("bigcryptor64_decrypt_array_with_padding_pkcs7_ecb_into_vec()");
+    println!("bigcryptor64_decrypt_array_with_padding_iso_ecb_into_vec()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);    let mut cipher = [0_u8; 56];
     tdes.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
@@ -884,18 +934,20 @@ fn bigcryptor64_decrypt_array_with_padding_pkcs7_ecb_into_vec()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_array_with_padding_pkcs7_ecb_into_array()
+fn bigcryptor64_decrypt_array_with_padding_iso_ecb_into_array()
 {
-    println!("bigcryptor64_decrypt_array_with_padding_pkcs7_ecb_into_array()");
+    println!("bigcryptor64_decrypt_array_with_padding_iso_ecb_into_array()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);    let mut cipher = [0_u8; 56];
     tdes.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
@@ -928,18 +980,20 @@ fn bigcryptor64_decrypt_array_with_padding_pkcs7_ecb_into_array()
     println!("-------------------------------");
 }
 
-fn bigcryptor64_decrypt_array_with_padding_pkcs7_ecb_into_string()
+fn bigcryptor64_decrypt_array_with_padding_iso_ecb_into_string()
 {
-    println!("bigcryptor64_decrypt_array_with_padding_pkcs7_ecb_into_string()");
+    println!("bigcryptor64_decrypt_array_with_padding_iso_ecb_into_string()");
     use std::io::Write;
     use std::fmt::Write as _;
-    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
+    use cryptocol::symmetric::{ BigCryptor64, DES, ECB_ISO };
 
     // TDES case
     let mut tdes = BigCryptor64::new()
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
+    let  = 0x_FEDCBA0987654321_u64;
+    println!("IV =	{:#018X}", );
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);    let mut cipher = [0_u8; 56];
     tdes.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
