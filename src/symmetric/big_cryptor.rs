@@ -1189,10 +1189,29 @@ impl BigCryptor64
 }
 
 
+/// struct that generates BigCryptor64 with three DES objects
 pub struct TDES {}
 
 impl TDES
 {
+    // pub fn new_with_2_keys_u64(key1: u64, key2: u64) -> BigCryptor64
+    /// Constructs a new object BigCryptor64 with three DES objects.
+    /// 
+    /// # Arguments
+    /// - `key1` is a key for the first and third DES objects, and is of `u64`.
+    /// - `key2` is a key for the second DES object, and is of `u64`.
+    /// 
+    /// # Features
+    /// - In order to encrypt data, object should be instantiated mutable.
+    /// - This method set three small cryptors (components) with given two keys.
+    /// - All the three small cryptors (components) should have the block
+    ///   size 64-bit.
+    /// - The first and third DES objects are encryptors
+    /// - The second DES object is a decryptor.
+    /// 
+    /// # Example 1
+    /// ```
+    /// ```
     pub fn new_with_2_keys_u64(key1: u64, key2: u64) -> BigCryptor64
     {
         BigCryptor64::new() + DES::encryptor_with_key_u64(key1)
@@ -1200,13 +1219,51 @@ impl TDES
                             + DES::encryptor_with_key_u64(key1)
     }
 
+    // pub fn new_with_3_keys_u64(key1: u64, key2: u64, key3: u64) -> BigCryptor64
+    /// Constructs a new object BigCryptor64 with three DES objects.
+    /// 
+    /// # Arguments
+    /// - `key1` is a key for the first DES object, and is of `u64`.
+    /// - `key2` is a key for the second DES object, and is of `u64`.
+    /// - `key1` is a key for the third DES object, and is of `u64`.
+    /// 
+    /// # Features
+    /// - In order to encrypt data, object should be instantiated mutable.
+    /// - This method set three small cryptors (components) with given two keys.
+    /// - All the three small cryptors (components) should have the block
+    ///   size 64-bit.
+    /// - The first and third DES objects are encryptors
+    /// - The second DES object is a decryptor.
+    /// 
+    /// # Example 1
+    /// ```
+    /// ```
     pub fn new_with_3_keys_u64(key1: u64, key2: u64, key3: u64) -> BigCryptor64
     {
         BigCryptor64::new() + DES::encryptor_with_key_u64(key1)
                             + DES::decryptor_with_key_u64(key2)
                             + DES::encryptor_with_key_u64(key3)
     }
-    
+
+    // pub fn new_with_2_keys(key1: [u8; 8], key2: [u8; 8]) -> BigCryptor64
+    /// Constructs a new object BigCryptor64 with three DES objects.
+    /// 
+    /// # Arguments
+    /// - `key1` is a key for the first and third DES objects,
+    ///   and is of `[u8; 8]`.
+    /// - `key2` is a key for the second DES object, and is of `[u8; 8]`.
+    /// 
+    /// # Features
+    /// - In order to encrypt data, object should be instantiated mutable.
+    /// - This method set three small cryptors (components) with given two keys.
+    /// - All the three small cryptors (components) should have the block
+    ///   size 64-bit.
+    /// - The first and third DES objects are encryptors
+    /// - The second DES object is a decryptor.
+    /// 
+    /// # Example 1
+    /// ```
+    /// ```
     pub fn new_with_2_keys(key1: [u8; 8], key2: [u8; 8]) -> BigCryptor64
     {
         BigCryptor64::new() + DES::encryptor_with_key(key1)
@@ -1214,6 +1271,25 @@ impl TDES
                             + DES::encryptor_with_key(key1)
     }
 
+    // pub fn new_with_3_keys(key1: [u8; 8], key2: [u8; 8], key3: [u8; 8]) -> BigCryptor64
+    /// Constructs a new object BigCryptor64 with three DES objects.
+    /// 
+    /// # Arguments
+    /// - `key1` is a key for the first and third DES objects,
+    ///   and is of `[u8; 8]`.
+    /// - `key2` is a key for the second DES object, and is of `[u8; 8]`.
+    /// 
+    /// # Features
+    /// - In order to encrypt data, object should be instantiated mutable.
+    /// - This method set three small cryptors (components) with given two keys.
+    /// - All the three small cryptors (components) should have the block
+    ///   size 64-bit.
+    /// - The first and third DES objects are encryptors
+    /// - The second DES object is a decryptor.
+    /// 
+    /// # Example 1
+    /// ```
+    /// ```
     pub fn new_with_3_keys(key1: [u8; 8], key2: [u8; 8], key3: [u8; 8]) -> BigCryptor64
     {
         BigCryptor64::new() + DES::encryptor_with_key(key1)
@@ -1221,6 +1297,25 @@ impl TDES
                             + DES::encryptor_with_key(key3)
     }
 
+    // pub fn new_with_keys_u128(key: u128) -> BigCryptor64
+    /// Constructs a new object BigCryptor64 with three DES objects.
+    /// 
+    /// # Arguments
+    /// - `key1` is a key for the first and third DES objects,
+    ///   and is of `[u8; 8]`.
+    /// - `key2` is a key for the second DES object, and is of `[u8; 8]`.
+    /// 
+    /// # Features
+    /// - In order to encrypt data, object should be instantiated mutable.
+    /// - This method set three small cryptors (components) with given two keys.
+    /// - All the three small cryptors (components) should have the block
+    ///   size 64-bit.
+    /// - The first and third DES objects are encryptors
+    /// - The second DES object is a decryptor.
+    /// 
+    /// # Example 1
+    /// ```
+    /// ```
     pub fn new_with_keys_u128(key: u128) -> BigCryptor64
     {
         let key: LongerUnion = LongerUnion::new_with(key);
@@ -1231,22 +1326,77 @@ impl TDES
 }
 
 
+/// struct that generates BigCryptor64 with two DES objects
 pub struct DDES {}
 
 impl DDES
 {
+    // pub fn new_with_2_keys_u64(key1: u64, key2: u64) -> BigCryptor64
+    /// Constructs a new object BigCryptor64 with two DES objects.
+    /// 
+    /// # Arguments
+    /// - `key1` is a key for the first DES object, and is of `u64`.
+    /// - `key2` is a key for the second DES object, and is of `u64`.
+    /// 
+    /// # Features
+    /// - In order to encrypt data, object should be instantiated mutable.
+    /// - This method set three small cryptors (components) with given two keys.
+    /// - All the three small cryptors (components) should have the block
+    ///   size 64-bit.
+    /// - The first DES object is an encryptor.
+    /// - The second DES object is a decryptor.
+    /// 
+    /// # Example 1
+    /// ```
+    /// ```
     pub fn new_with_2_keys_u64(key1: u64, key2: u64) -> BigCryptor64
     {
         BigCryptor64::new() + DES::encryptor_with_key_u64(key1)
                             + DES::decryptor_with_key_u64(key2)
     }
-    
+
+    // pub fn new_with_2_keys(key1: [u8; 8], key2: [u8; 8]) -> BigCryptor64
+    /// Constructs a new object BigCryptor64 with two DES objects.
+    /// 
+    /// # Arguments
+    /// - `key1` is a key for the first DES object, and is of `[u8; 8]`.
+    /// - `key2` is a key for the second DES object, and is of `[u8; 8]`.
+    /// 
+    /// # Features
+    /// - In order to encrypt data, object should be instantiated mutable.
+    /// - This method set two small cryptors (components) with given two keys.
+    /// - All the two small cryptors (components) should have the block
+    ///   size 64-bit.
+    /// - The first DES object is encryptor.
+    /// - The second DES object is a decryptor.
+    /// 
+    /// # Example 1
+    /// ```
+    /// ```
     pub fn new_with_2_keys(key1: [u8; 8], key2: [u8; 8]) -> BigCryptor64
     {
         BigCryptor64::new() + DES::encryptor_with_key(key1)
                             + DES::decryptor_with_key(key2)
     }
 
+    // pub fn new_with_keys_u128(key: u128) -> BigCryptor64
+    /// Constructs a new object BigCryptor64 with two DES objects.
+    /// 
+    /// # Arguments
+    /// - `key` is a key for all the two DES objects,
+    ///   and is of `u128`.
+    /// 
+    /// # Features
+    /// - In order to encrypt data, object should be instantiated mutable.
+    /// - This method set two small cryptors (components) with given two keys.
+    /// - All the two small cryptors (components) should have the block
+    ///   size 64-bit.
+    /// - The first DES object is encryptor.
+    /// - The second DES object is a decryptor.
+    /// 
+    /// # Example 1
+    /// ```
+    /// ```
     pub fn new_with_keys_u128(key: u128) -> BigCryptor64
     {
         let key: LongerUnion = LongerUnion::new_with(key);
