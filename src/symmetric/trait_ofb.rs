@@ -23,10 +23,10 @@ use crate::symmetric::pre_decrypt_into_vec_no_padding;
 pub trait OFB<T> : Sized
 {
     // fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
-    /// Encrypts the data without any padding in OFB (Output feedback) mode.
+    /// Encrypts the data without any padding in OFB (Output FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -111,14 +111,26 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 
     // fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data without any padding in OFB (Output feedback) mode,
+    /// Encrypts the data without any padding in OFB (Output FeedBack) mode,
     /// and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -200,15 +212,27 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_into_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     fn encrypt_into_vec<U>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone;
 
     // fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
-    /// Encrypts the data without any padding in OFB (Output feedback) mode,
+    /// Encrypts the data without any padding in OFB (Output FeedBack) mode,
     /// and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -300,15 +324,27 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_into_array)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     fn encrypt_into_array<U, const N: usize>(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone;
 
     // fn encrypt_str(&mut self, iv: T, message: &str, cipher: *mut u8) -> u64
-    /// Encrypts the data in a `str` object without any padding in CFB (Cipher
+    /// Encrypts the data in a `str` object without any padding in OFB (Output
     /// FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -390,6 +426,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_str)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn encrypt_str(&mut self, iv: T, message: &str, cipher: *mut u8) -> u64
     {
@@ -397,11 +448,11 @@ pub trait OFB<T> : Sized
     }
 
     // fn encrypt_str_into_vec<U>(&mut self, iv: T, message: &str, cipher: &mut Vec<U>) -> u64
-    /// Encrypts the data in `str` without any padding in OFB (Output feedback)
+    /// Encrypts the data in `str` without any padding in OFB (Output FeedBack)
     /// mode, and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -477,6 +528,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_str_into_vec)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn encrypt_str_into_vec<U>(&mut self, iv: T, message: &str, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
@@ -485,11 +551,11 @@ pub trait OFB<T> : Sized
     }
 
     // fn encrypt_str_into_array<U, const N: usize>(&mut self, iv: T, message: &str, cipher: &mut [U; N]) -> u64
-    /// Encrypts the data in a `str` object without any padding in CFB (Cipher
+    /// Encrypts the data in a `str` object without any padding in OFB (Output
     /// FeedBack) mode, and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable reference to `str` object which is `&str`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -575,6 +641,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_str_into_array)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn encrypt_str_into_array<U, const N: usize>(&mut self, iv: T, message: &str, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
@@ -584,10 +665,10 @@ pub trait OFB<T> : Sized
 
     // fn encrypt_string(&mut self, iv: T, message: &String, cipher: *mut u8) -> u64
     /// Encrypts the data stored in a `String` object without any padding
-    /// in OFB (Output feedback) mode.
+    /// in OFB (Output FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -670,6 +751,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_string)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn encrypt_string(&mut self, iv: T, message: &String, cipher: *mut u8) -> u64
     {
@@ -678,10 +774,10 @@ pub trait OFB<T> : Sized
 
     // fn encrypt_string_into_vec<U>(&mut self, iv: T, message: &String, cipher: &mut Vec<U>) -> u64
     /// Encrypts the data stored in a `String` object without any padding in
-    /// OFB (Output feedback) mode, and stores the encrypted data in `Vec<U>`.
+    /// OFB (Output FeedBack) mode, and stores the encrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -758,6 +854,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_string_into_vec)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn encrypt_string_into_vec<U>(&mut self, iv: T, message: &String, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
@@ -766,11 +877,11 @@ pub trait OFB<T> : Sized
     }
 
     // fn encrypt_string_into_array<U, const N: usize>(&mut self, iv: T, message: &String, cipher: &mut [U; N]) -> u64
-    /// Encrypts the data stored in a `String` object without any padding in CFB
-    /// (Cipher FeedBack) mode, and stores the encrypted data in array `[U; N]`.
+    /// Encrypts the data stored in a `String` object without any padding in OFB
+    /// (Output FeedBack) mode, and stores the encrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable reference to `String` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -856,6 +967,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_string_into_array)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn encrypt_string_into_array<U, const N: usize>(&mut self, iv: T, message: &String, cipher: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone
@@ -865,10 +991,10 @@ pub trait OFB<T> : Sized
 
     // fn encrypt_vec<U>(&mut self, iv: T, message: &Vec<U>, cipher: *mut u8) -> u64
     /// Encrypts the data stored in a `Vec<U>` object without any padding
-    /// in OFB (Output feedback) mode.
+    /// in OFB (Output FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -953,6 +1079,18 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn encrypt_vec<U>(&mut self, iv: T, message: &Vec<U>, cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -962,10 +1100,10 @@ pub trait OFB<T> : Sized
 
     // fn encrypt_vec_into_vec<U, V>(&mut self, iv: T, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
     /// Encrypts the data stored in a `Vec<U>` object without any padding in
-    /// OFB (Output feedback) mode, and stores the encrypted data in `Vec<V>`.
+    /// OFB (Output FeedBack) mode, and stores the encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -1044,6 +1182,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec_into_vec)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn encrypt_vec_into_vec<U, V>(&mut self, iv: T, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -1052,11 +1205,11 @@ pub trait OFB<T> : Sized
     }
 
     // fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, message: &Vec<U>, cipher: &mut [V; N]) -> u64
-    /// Encrypts the data stored in a `Vec<U>` object without any padding in CFB
-    /// (Cipher FeedBack) mode, and stores the encrypted data in array `[V; N]`.
+    /// Encrypts the data stored in a `Vec<U>` object without any padding in OFB
+    /// (Output FeedBack) mode, and stores the encrypted data in array `[V; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[U; N]` object, and
@@ -1147,6 +1300,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec_into_array)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, message: &Vec<U>, cipher: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -1156,10 +1324,10 @@ pub trait OFB<T> : Sized
 
     // fn encrypt_array<U, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: *mut u8) -> u64
     /// Encrypts the data stored in an array `[U; N]` object without any
-    /// padding in OFB (Output feedback) mode.
+    /// padding in OFB (Output FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -1245,6 +1413,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_array)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn encrypt_array<U, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -1254,10 +1437,10 @@ pub trait OFB<T> : Sized
 
     // fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut Vec<V>) -> u64
     /// Encrypts the data stored in an array `[U; N]` object without any padding
-    /// in OFB (Output feedback) mode, and stores the encrypted data in `Vec<V>`.
+    /// in OFB (Output FeedBack) mode, and stores the encrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to `Vec<U>` object, and
@@ -1337,6 +1520,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_array_into_vec)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -1346,11 +1544,11 @@ pub trait OFB<T> : Sized
 
     // fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut [V; M]) -> u64
     /// Encrypts the data stored in an array `[U; N]` object without any padding
-    /// in OFB (Output feedback) mode, and stores the encrypted data
+    /// in OFB (Output FeedBack) mode, and stores the encrypted data
     /// in array `[V; M]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `message` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be encrypted is stored.
     /// - `cipher` is a mutable reference to an array `[V; M]` object, and
@@ -1440,6 +1638,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_array_into_array)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, message: &[U; N], cipher: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -1448,10 +1661,10 @@ pub trait OFB<T> : Sized
     }
 
     // fn decrypt(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64;
-    /// Decrypts the data without any padding in OFB (Output feedback) mode.
+    /// Decrypts the data without any padding in OFB (Output FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -1577,6 +1790,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn decrypt(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: *mut u8) -> u64
     {
@@ -1584,11 +1812,11 @@ pub trait OFB<T> : Sized
     }
 
     // fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
-    /// Decrypts the data without any padding in OFB (Output feedback) mode,
+    /// Decrypts the data without any padding in OFB (Output FeedBack) mode,
     /// and stores the decrypted data in `Vec<U>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -1709,6 +1937,18 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_into_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     fn decrypt_into_vec<U>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone
     {
@@ -1719,11 +1959,11 @@ pub trait OFB<T> : Sized
     }
 
     // fn decrypt_into_array<U, const N: usize>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
-    /// Decrypts the data without any padding in OFB (Output feedback) mode,
+    /// Decrypts the data without any padding in OFB (Output FeedBack) mode,
     /// and stores the decrypted data in array `[U; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -1853,15 +2093,27 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_into_array)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     fn decrypt_into_array<U, const N: usize>(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
     where U: SmallUInt + Copy + Clone;
 
     // fn decrypt_into_string(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
-    /// Decrypts the data without any padding in OFB (Output feedback) mode,
+    /// Decrypts the data without any padding in OFB (Output FeedBack) mode,
     /// and stores the decrypted data in a `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `cipher` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the ciphertext to be decrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
@@ -1961,6 +2213,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_into_string)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn decrypt_into_string(&mut self, iv: T, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
     {
@@ -1969,10 +2236,10 @@ pub trait OFB<T> : Sized
 
     // fn decrypt_vec<U>(&mut self, iv: T, cipher: &Vec<U>, message: *mut u8) -> u64
     /// Decrypts the data stored in a `Vec<U>` object without any padding
-    /// in OFB (Output feedback) mode.
+    /// in OFB (Output FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -2098,6 +2365,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_vec)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn decrypt_vec<U>(&mut self, iv: T, cipher: &Vec<U>, message: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -2107,10 +2389,10 @@ pub trait OFB<T> : Sized
 
     // fn decrypt_vec_into_vec<U, V>(&mut self, iv: T, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
     /// Decrypts the data stored in a `Vec<U>` object without any padding in
-    /// OFB (Output feedback) mode, and stores the decrypted data in `Vec<V>`.
+    /// OFB (Output FeedBack) mode, and stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to `Vec<U>` object, and
@@ -2227,6 +2509,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_vec_into_vec)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn decrypt_vec_into_vec<U, V>(&mut self, iv: T, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -2235,11 +2532,11 @@ pub trait OFB<T> : Sized
     }
 
     // fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, cipher: &Vec<U>, message: &mut [V; N]) -> u64
-    /// Decrypts the data stored in a `Vec<U>` object without any padding in CFB
-    /// (Cipher FeedBack) mode, and stores the decrypted data in array `[V; N]`.
+    /// Decrypts the data stored in a `Vec<U>` object without any padding in OFB
+    /// (Output FeedBack) mode, and stores the decrypted data in array `[V; N]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to an array `[V; N]` object, and
@@ -2365,6 +2662,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_vec_into_array)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: T, cipher: &Vec<U>, message: &mut [V; N]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -2373,11 +2685,11 @@ pub trait OFB<T> : Sized
     }
 
     // fn decrypt_vec_into_string(&mut self, iv: T, cipher: &str, message: &mut String) -> u64
-    /// Decrypts the data in `str` without any padding in OFB (Output feedback)
+    /// Decrypts the data in `str` without any padding in OFB (Output FeedBack)
     /// mode, and stores the decrypted data in `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `cipher` is an immutable reference to `Vec<U>` object, and
     ///   is the place where the ciphertext to be decrypted is stored.
     /// - `message` is a mutable reference to a `String` object, and
@@ -2472,6 +2784,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_vec_into_string)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn decrypt_vec_into_string<U>(&mut self, iv: T, cipher: &Vec<U>, message: &mut String) -> u64
     where U: SmallUInt + Copy + Clone
@@ -2481,10 +2808,10 @@ pub trait OFB<T> : Sized
 
     // fn decrypt_array<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: *mut u8) -> u64
     /// Decrypts the data stored in an array `[U; N]` object without any padding
-    /// in OFB (Output feedback) mode.
+    /// in OFB (Output FeedBack) mode.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable pointer to `u8` which is `*mut u8`, and
@@ -2611,6 +2938,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_array)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn decrypt_array<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: *mut u8) -> u64
     where U: SmallUInt + Copy + Clone
@@ -2620,10 +2962,10 @@ pub trait OFB<T> : Sized
 
     // fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut Vec<V>) -> u64
     /// Decrypts the data stored in an array `[U; N]` object without any padding
-    /// in OFB (Output feedback) mode, and stores the decrypted data in `Vec<V>`.
+    /// in OFB (Output FeedBack) mode, and stores the decrypted data in `Vec<V>`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to `Vec<U>` object, and
@@ -2740,6 +3082,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_array_into_vec)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut Vec<V>) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -2749,11 +3106,11 @@ pub trait OFB<T> : Sized
 
     // fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut [V; M]) -> u64
     /// Decrypts the data stored in an array `[U; N]` object without any padding
-    /// in OFB (Output feedback) mode, and stores the decrypted data
+    /// in OFB (Output FeedBack) mode, and stores the decrypted data
     /// in array `[V; M]`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to an array `[U; N]` object, and
@@ -2879,6 +3236,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_array_into_array)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut [V; M]) -> u64
     where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
@@ -2888,10 +3260,10 @@ pub trait OFB<T> : Sized
 
     // fn decrypt_array_into_string<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut String) -> u64
     /// Decrypts the data stored in an array `[U; N]` object without any padding
-    /// in OFB (Output feedback) mode, and stores the decrypted data in `String`.
+    /// in OFB (Output FeedBack) mode, and stores the decrypted data in `String`.
     /// 
     /// # Arguments
-    /// - `iv` is an initialization vector for CFB mode.
+    /// - `iv` is an initialization vector for OFB mode.
     /// - `cipher` is an immutable reference to an array `[U; N]` object, and
     ///   is the place where the plaintext to be decrypted is stored.
     /// - `message` is a mutable reference to a `String` object, and
@@ -2987,6 +3359,21 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_array_into_string)
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
+    /// # For BigCryptor64
+    /// ## Example 1 for TDES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
+    /// 
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor64_ofb/struct.BigCryptor64.html#method.encrypt)
     #[inline]
     fn decrypt_array_into_string<U, const N: usize>(&mut self, iv: T, cipher: &[U; N], message: &mut String) -> u64
     where U: SmallUInt + Copy + Clone

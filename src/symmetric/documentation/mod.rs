@@ -152,6 +152,13 @@ pub mod des_cfb;
 /// examples were moved to rijndael_cfb.rs.
 pub mod rijndael_cfb;
 
+/// trait_cfb.rs may be too big
+/// because of documentation and plenty of examples.
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to big_cryptor64_cfb.rs.
+pub mod big_cryptor64_cfb;
+
 /// trait_ofb.rs may be too big
 /// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing

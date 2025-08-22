@@ -25,10 +25,11 @@ use crate::symmetric::SmallCryptor;
 /// examples were moved to big_cryptor64_basic.rs. And, most of generic parameters
 /// are omitted. It is not actual code but dummy code for compilation!!!
 #[allow(non_camel_case_types)]
-pub struct BigCryptor64<S: SmallCryptor<u64, 8>>
+pub struct BigCryptor64
 {
+    // Dummy struct for documentation
     block: LongUnion,
-    des: Vec<S>,
+    smallcryptor: Vec<Box<dyn SmallCryptor<u64, 8>>>
 }
 
 /// big_cryptor.rs may be too big
@@ -37,7 +38,7 @@ pub struct BigCryptor64<S: SmallCryptor<u64, 8>>
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to big_cryptor64_basic.rs. And, most of generic parameters
 /// are omitted. It is not actual code but dummy code for compilation!!!
-impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
+impl BigCryptor64
 {
     // pub fn new() -> Self
     /// Constructs a new object BigCryptor64.

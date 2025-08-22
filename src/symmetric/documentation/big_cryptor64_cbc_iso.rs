@@ -26,11 +26,11 @@ use crate::symmetric::SmallCryptor;
 /// And, most of generic parameters are omitted.
 /// It is not actual code but dummy code for compilation!!!
 #[allow(non_camel_case_types)]
-pub struct BigCryptor64<S: SmallCryptor<u64, 8>>
+pub struct BigCryptor64
 {
     // Dummy struct for documentation
     block: LongUnion,
-    des: Vec<S>,
+    smallcryptor: Vec<Box<dyn SmallCryptor<u64, 8>>>
 }
 
 /// trait_cbc_with_padding_iso.rs may be too big
@@ -40,7 +40,7 @@ pub struct BigCryptor64<S: SmallCryptor<u64, 8>>
 /// examples were moved to big_cryptor64_cbc_iso.rs.
 /// And, most of generic parameters are omitted.
 /// It is not actual code but dummy code for compilation!!!
-impl <S: SmallCryptor<u64, 8>> BigCryptor64<S>
+impl BigCryptor64
 {
     // fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
     /// Encrypts the data with the padding defined according to ISO 7816-4
