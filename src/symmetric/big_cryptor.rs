@@ -1201,6 +1201,9 @@ impl TDES
     /// - `key1` is a key for the first and third DES objects, and is of `u64`.
     /// - `key2` is a key for the second DES object, and is of `u64`.
     /// 
+    /// # Output
+    /// The new object `BigCryptor64` with three DES objects
+    /// 
     /// # Features
     /// - In order to encrypt data, object should be instantiated mutable.
     /// - This method set three small cryptors (components) with given two keys.
@@ -1211,6 +1214,31 @@ impl TDES
     /// 
     /// # Example 1
     /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ TDES, CBC_PKCS7 };
+    /// 
+    /// let mut tdes = TDES::new_with_2_keys_u64(0x_1234567890ABCDEF_u64, 0x_FEDCBA0987654321_u64);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{:#018X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "01 A5 7E BC ED 83 28 FB 7A 06 61 60 7D 8B BA AF 5C A7 76 0B FE 94 1C C4 C2 BC DD 15 98 A9 98 6C 85 18 92 6B 00 72 FB 72 DB 9D 46 BD B1 3C 56 C0 DC 0E 37 04 69 4F 62 68 ");
+    /// 
+    /// let mut recovered = String::new();
+    /// tdes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// println!("B =\t{}", recovered);
+    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(recovered, message);
     /// ```
     pub fn new_with_2_keys_u64(key1: u64, key2: u64) -> BigCryptor64
     {
@@ -1227,6 +1255,9 @@ impl TDES
     /// - `key2` is a key for the second DES object, and is of `u64`.
     /// - `key1` is a key for the third DES object, and is of `u64`.
     /// 
+    /// # Output
+    /// The new object `BigCryptor64` with three DES objects
+    /// 
     /// # Features
     /// - In order to encrypt data, object should be instantiated mutable.
     /// - This method set three small cryptors (components) with given two keys.
@@ -1237,6 +1268,31 @@ impl TDES
     /// 
     /// # Example 1
     /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ TDES, CBC_PKCS7 };
+    /// 
+    /// let mut tdes = TDES::new_with_3_keys_u64(0x_1234567890ABCDEF_u64, 0x_1122334455667788_u64, 0x_9900AABBCCDDEEFF_u64);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{:#018X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "B4 6C 2D 9A F5 67 60 45 A0 2B 68 E8 76 8E BD EF 7E 2D 7A 49 9A DE 43 0D 4C 3C 50 1E B6 8B 0A E8 A4 88 6E E7 FF 99 B9 2D 83 67 C9 3C 4A 2D C7 BA 40 F3 19 88 05 F2 2C D9 ");
+    /// 
+    /// let mut recovered = String::new();
+    /// tdes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// println!("B =\t{}", recovered);
+    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(recovered, message);
     /// ```
     pub fn new_with_3_keys_u64(key1: u64, key2: u64, key3: u64) -> BigCryptor64
     {
@@ -1253,6 +1309,9 @@ impl TDES
     ///   and is of `[u8; 8]`.
     /// - `key2` is a key for the second DES object, and is of `[u8; 8]`.
     /// 
+    /// # Output
+    /// The new object `BigCryptor64` with three DES objects
+    /// 
     /// # Features
     /// - In order to encrypt data, object should be instantiated mutable.
     /// - This method set three small cryptors (components) with given two keys.
@@ -1263,10 +1322,37 @@ impl TDES
     /// 
     /// # Example 1
     /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ TDES, CBC_PKCS7 };
+    /// 
+    /// let key1 = [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
+    /// let key2 = [0xFE, 0xDC, 0xBA, 0x09, 0x87, 0x65, 0x43, 0x21];
+    /// let mut tdes = TDES::new_with_2_keys(key1, key2);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{:#018X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "86 2B D7 BF 00 2E CD 70 ED 0C E3 8D 75 18 CE 0F BD A7 AE AF E5 19 46 F8 15 7A 24 0E CB 20 91 C0 03 B9 56 C5 77 01 33 E8 8E 84 CA B9 F2 99 63 AC 3A 3D 1F EF CA CA CB 67 ");
+    /// 
+    /// let mut recovered = String::new();
+    /// tdes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// println!("B =\t{}", recovered);
+    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(recovered, message);
     /// ```
     pub fn new_with_2_keys(key1: [u8; 8], key2: [u8; 8]) -> BigCryptor64
     {
-        BigCryptor64::new() + DES::encryptor_with_key(key1)
+        BigCryptor64::new() + DES::encryptor_with_key(key1.clone())
                             + DES::decryptor_with_key(key2)
                             + DES::encryptor_with_key(key1)
     }
@@ -1279,6 +1365,9 @@ impl TDES
     ///   and is of `[u8; 8]`.
     /// - `key2` is a key for the second DES object, and is of `[u8; 8]`.
     /// 
+    /// # Output
+    /// The new object `BigCryptor64` with three DES objects
+    /// 
     /// # Features
     /// - In order to encrypt data, object should be instantiated mutable.
     /// - This method set three small cryptors (components) with given two keys.
@@ -1289,6 +1378,34 @@ impl TDES
     /// 
     /// # Example 1
     /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ TDES, CBC_PKCS7 };
+    /// 
+    /// let key1 = [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
+    /// let key2 = [0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88];
+    /// let key3 = [0x99, 0x00, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF];
+    /// let mut tdes = TDES::new_with_3_keys(key1, key2, key3);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{:#018X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "93 8E 74 E3 51 84 23 B5 36 76 B6 82 D1 8B 7A A3 1F 87 D2 48 9A 75 BF 59 0D 93 6D 8D A7 86 4A CC 0F D8 0D E0 CD 0D F9 A8 B9 38 36 0C E7 24 73 3F 5F 4D 61 AB 92 D6 34 14 ");
+    /// 
+    /// let mut recovered = String::new();
+    /// tdes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// println!("B =\t{}", recovered);
+    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(recovered, message);
     /// ```
     pub fn new_with_3_keys(key1: [u8; 8], key2: [u8; 8], key3: [u8; 8]) -> BigCryptor64
     {
@@ -1305,6 +1422,9 @@ impl TDES
     ///   and is of `[u8; 8]`.
     /// - `key2` is a key for the second DES object, and is of `[u8; 8]`.
     /// 
+    /// # Output
+    /// The new object `BigCryptor64` with three DES objects
+    /// 
     /// # Features
     /// - In order to encrypt data, object should be instantiated mutable.
     /// - This method set three small cryptors (components) with given two keys.
@@ -1315,6 +1435,31 @@ impl TDES
     /// 
     /// # Example 1
     /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ TDES, CBC_PKCS7 };
+    /// 
+    /// let mut tdes = TDES::new_with_keys_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{:#018X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 AE B5 A8 D2 77 21 0C 73 52 2F EB 5B 7C 9B 82 47 71 D2 7A F0 A9 F0 EA EC 0A D5 61 CB 63 86 33 8C 1F F2 F1 16 62 A0 55 22 9E 12 7A 91 88 D1 37 7B CB 43 32 19 0D AA B0 ");
+    /// 
+    /// let mut recovered = String::new();
+    /// tdes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// println!("B =\t{}", recovered);
+    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(recovered, message);
     /// ```
     pub fn new_with_keys_u128(key: u128) -> BigCryptor64
     {
@@ -1338,6 +1483,9 @@ impl DDES
     /// - `key1` is a key for the first DES object, and is of `u64`.
     /// - `key2` is a key for the second DES object, and is of `u64`.
     /// 
+    /// # Output
+    /// The new object `BigCryptor64` with two DES objects
+    /// 
     /// # Features
     /// - In order to encrypt data, object should be instantiated mutable.
     /// - This method set three small cryptors (components) with given two keys.
@@ -1348,6 +1496,31 @@ impl DDES
     /// 
     /// # Example 1
     /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DDES, CBC_PKCS7 };
+    /// 
+    /// let mut ddes = DDES::new_with_2_keys_u64(0x_1234567890ABCDEF_u64, 0x_FEDCBA0987654321_u64);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{:#018X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// ddes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "B0 56 0C 03 A4 38 1F 70 C1 21 99 C6 23 06 05 30 DA 57 5F CD 17 FB 11 BF E1 05 92 B3 FD A8 70 15 24 3F A1 29 B9 D1 F6 7A 1D 58 86 BE 40 41 26 15 4A DA D3 EB 4E 84 85 60 ");
+    /// 
+    /// let mut recovered = String::new();
+    /// ddes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// println!("B =\t{}", recovered);
+    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(recovered, message);
     /// ```
     pub fn new_with_2_keys_u64(key1: u64, key2: u64) -> BigCryptor64
     {
@@ -1362,6 +1535,9 @@ impl DDES
     /// - `key1` is a key for the first DES object, and is of `[u8; 8]`.
     /// - `key2` is a key for the second DES object, and is of `[u8; 8]`.
     /// 
+    /// # Output
+    /// The new object `BigCryptor64` with two DES objects
+    /// 
     /// # Features
     /// - In order to encrypt data, object should be instantiated mutable.
     /// - This method set two small cryptors (components) with given two keys.
@@ -1372,6 +1548,33 @@ impl DDES
     /// 
     /// # Example 1
     /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DDES, CBC_PKCS7 };
+    /// 
+    /// let key1 = [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
+    /// let key2 = [0xFE, 0xDC, 0xBA, 0x09, 0x87, 0x65, 0x43, 0x21];
+    /// let mut ddes = DDES::new_with_2_keys(key1, key2);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{:#018X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// ddes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "26 FB A9 70 99 13 83 84 63 A7 17 79 DD C6 1D D0 3D 37 12 07 B3 79 FE 5F E7 E2 6A 06 FF EC 43 26 CB 38 D6 A0 74 05 C0 E8 18 86 3F AF EA 54 AC 12 64 B7 20 C5 7F 36 02 2F ");
+    /// 
+    /// let mut recovered = String::new();
+    /// ddes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// println!("B =\t{}", recovered);
+    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(recovered, message);
     /// ```
     pub fn new_with_2_keys(key1: [u8; 8], key2: [u8; 8]) -> BigCryptor64
     {
@@ -1386,6 +1589,9 @@ impl DDES
     /// - `key` is a key for all the two DES objects,
     ///   and is of `u128`.
     /// 
+    /// # Output
+    /// The new object `BigCryptor64` with two DES objects
+    /// 
     /// # Features
     /// - In order to encrypt data, object should be instantiated mutable.
     /// - This method set two small cryptors (components) with given two keys.
@@ -1396,6 +1602,31 @@ impl DDES
     /// 
     /// # Example 1
     /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ DDES, CBC_PKCS7 };
+    /// 
+    /// let mut tdes = DDES::new_with_keys_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA0987654321_u64;
+    /// println!("IV =	{:#018X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "8E C3 47 07 38 6E 5F E1 BA 9C AF C1 41 B5 22 E3 55 22 DE 83 60 21 41 86 5D 94 06 1A 6C 54 32 F8 58 BE 43 23 FC 80 99 5B 1C 9D 4B 5D 1B E7 8B 9F 91 9D 83 1B C7 3D C0 55 ");
+    /// 
+    /// let mut recovered = String::new();
+    /// tdes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// println!("B =\t{}", recovered);
+    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(recovered, message);
     /// ```
     pub fn new_with_keys_u128(key: u128) -> BigCryptor64
     {
