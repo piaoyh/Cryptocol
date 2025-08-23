@@ -294,7 +294,7 @@ macro_rules! crypt_ecb_with_padding_pkcs7 {
         }
     };
     (u64) => { crypt_ecb_with_padding_pkcs7!{u64, Self::encrypt_u64, Self::decrypt_u64, LongUnion, 0x_08_08_08_08__08_08_08_08} };
-    (u128) => { crypt_ecb_with_padding_pkcs7!{u128, Self::encrypt_u128, Self::decrypt_u128, LongerUnion, 0x_08_08_08_08__08_08_08_08__08_08_08_08__08_08_08_08} };
+    (u128) => { crypt_ecb_with_padding_pkcs7!{u128, Self::encrypt_u128, Self::decrypt_u128, LongerUnion, 0x_10_10_10_10__10_10_10_10__10_10_10_10__10_10_10_10} };
 }
 pub(super) use crypt_ecb_with_padding_pkcs7;
 
@@ -465,7 +465,7 @@ macro_rules! crypt_cbc_with_padding_pkcs7 {
         }
     };
     (u64) => { crypt_cbc_with_padding_pkcs7!{u64, Self::encrypt_u64, Self::decrypt_u64, LongUnion, 0x_08_08_08_08__08_08_08_08} };
-    (u128) => { crypt_cbc_with_padding_pkcs7!{u128, Self::encrypt_u128, Self::decrypt_u128, LongerUnion, 0x_08_08_08_08__08_08_08_08__08_08_08_08__08_08_08_08} };
+    (u128) => { crypt_cbc_with_padding_pkcs7!{u128, Self::encrypt_u128, Self::decrypt_u128, LongerUnion, 0x_10_10_10_10__10_10_10_10__10_10_10_10__10_10_10_10} };
 }
 pub(super) use crypt_cbc_with_padding_pkcs7;
 
@@ -630,7 +630,7 @@ macro_rules! crypt_pcbc_with_padding_pkcs7 {
         }
     };
     (u64) => { crypt_pcbc_with_padding_pkcs7!{u64, Self::encrypt_u64, Self::decrypt_u64, LongUnion, 0x_08_08_08_08__08_08_08_08} };
-    (u128) => { crypt_pcbc_with_padding_pkcs7!{u128, Self::encrypt_u128, Self::decrypt_u128, LongerUnion, 0x_08_08_08_08__08_08_08_08__08_08_08_08__08_08_08_08} };
+    (u128) => { crypt_pcbc_with_padding_pkcs7!{u128, Self::encrypt_u128, Self::decrypt_u128, LongerUnion, 0x_10_10_10_10__10_10_10_10__10_10_10_10__10_10_10_10} };
 }
 pub(super) use crypt_pcbc_with_padding_pkcs7;
 
