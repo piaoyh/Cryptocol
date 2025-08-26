@@ -127,6 +127,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -253,6 +264,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -394,6 +416,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_into_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -520,6 +553,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_str)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -643,6 +687,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_str_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -781,6 +836,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_str_into_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -910,6 +976,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_string)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -1173,6 +1250,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_string_into_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -1306,6 +1394,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_vec)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -1434,6 +1533,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_vec_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -1581,6 +1691,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_vec_into_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -1717,6 +1838,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -1847,6 +1979,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_array_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -1994,6 +2137,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.encrypt_array_into_array)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2170,6 +2324,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2353,6 +2518,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2553,6 +2729,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt_into_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -2714,6 +2901,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt_into_string)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2893,6 +3091,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -3075,6 +3284,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt_vec_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -3267,6 +3487,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt_vec_into_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -3425,6 +3656,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt_vec_into_string)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -3607,6 +3849,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -3788,6 +4041,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt_array_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -3979,6 +4243,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt_array_into_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -4137,6 +4412,17 @@ pub trait CBC_PKCS7<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_cbc_pkcs7/struct.DES_Generic.html#method.decrypt_array_into_string)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, CBC_PKCS7 };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_cbc_pkcs7/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case

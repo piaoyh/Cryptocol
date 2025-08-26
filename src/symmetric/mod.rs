@@ -40,7 +40,8 @@
 
 mod des;
 mod rijndael;
-mod big_cryptor;
+mod big_cryptor64;
+mod big_cryptor128;
 
 mod operation_mode_macros;
 mod trait_ecb_with_padding_pkcs7;
@@ -57,9 +58,11 @@ mod trait_small_cryptor;
 mod trait_ecb_with_padding_pkcs7_impl_for_des;
 mod trait_ecb_with_padding_pkcs7_impl_for_rijndael;
 mod trait_ecb_with_padding_pkcs7_impl_for_bigcryptor64;
+mod trait_ecb_with_padding_pkcs7_impl_for_bigcryptor128;
 mod trait_ecb_with_padding_iso_impl_for_des;
 mod trait_ecb_with_padding_iso_impl_for_rijndael;
 mod trait_ecb_with_padding_iso_impl_for_bigcryptor64;
+mod trait_ecb_with_padding_iso_impl_for_bigcryptor128;
 mod trait_cbc_with_padding_pkcs7_impl_for_des;
 mod trait_cbc_with_padding_pkcs7_impl_for_rijndael;
 mod trait_cbc_with_padding_pkcs7_impl_for_bigcryptor64;
@@ -71,18 +74,23 @@ mod trait_cbc_with_padding_iso_impl_for_bigcryptor128;
 mod trait_pcbc_with_padding_pkcs7_impl_for_des;
 mod trait_pcbc_with_padding_pkcs7_impl_for_rijndael;
 mod trait_pcbc_with_padding_pkcs7_impl_for_bigcryptor64;
+mod trait_pcbc_with_padding_pkcs7_impl_for_bigcryptor128;
 mod trait_pcbc_with_padding_iso_impl_for_des;
 mod trait_pcbc_with_padding_iso_impl_for_rijndael;
 mod trait_pcbc_with_padding_iso_impl_for_bigcryptor64;
+mod trait_pcbc_with_padding_iso_impl_for_bigcryptor128;
 mod trait_cfb_impl_for_des;
 mod trait_cfb_impl_for_rijndael;
 mod trait_cfb_impl_for_bigcryptor64;
+mod trait_cfb_impl_for_bigcryptor128;
 mod trait_ofb_impl_for_des;
 mod trait_ofb_impl_for_rijndael;
 mod trait_ofb_impl_for_bigcryptor64;
+mod trait_ofb_impl_for_bigcryptor128;
 mod trait_ctr_impl_for_des;
 mod trait_ctr_impl_for_rijndael;
 mod trait_ctr_impl_for_bigcryptor64;
+mod trait_ctr_impl_for_bigcryptor128;
 mod trait_small_cryptor64_impl_for_des;
 mod trait_small_cryptor64_impl_for_rijndael;
 mod trait_small_cryptor128_impl_for_rijndael;
@@ -90,7 +98,8 @@ mod trait_for_big_cryptor_impl;
 
 pub use des::*;
 pub use rijndael::*;
-pub use big_cryptor::*;
+pub use big_cryptor64::*;
+pub use big_cryptor128::*;
 use operation_mode_macros::*;
 
 pub use trait_ecb_with_padding_pkcs7::ECB_PKCS7;

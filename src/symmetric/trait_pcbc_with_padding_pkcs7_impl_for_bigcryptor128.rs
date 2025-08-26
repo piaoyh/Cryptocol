@@ -16,17 +16,17 @@
 
 use std::ptr::copy_nonoverlapping;
 
-use crate::number::{ SmallUInt, LongUnion };
-use crate::symmetric::{ ECB_ISO, BigCryptor64 };
-use crate::symmetric::{ crypt_ecb_with_padding_iso, crypt_into_something_with_padding_without_iv,
+use crate::number::{ SmallUInt, LongerUnion };
+use crate::symmetric::{ PCBC_PKCS7, BigCryptor128 };
+use crate::symmetric::{ crypt_pcbc_with_padding_pkcs7, crypt_into_something_with_padding,
                         encrypt_into_array, encrypt_into_vec,
                         decrypt_into_array,
                         pre_encrypt_into_array, pre_encrypt_into_vec,
                         pre_decrypt_into_array };
 
 
-impl ECB_ISO<u64> for BigCryptor64
+impl PCBC_PKCS7<u128> for BigCryptor128
 {
-    crypt_ecb_with_padding_iso!{u64}
-    crypt_into_something_with_padding_without_iv!{}
+    crypt_pcbc_with_padding_pkcs7!{u128}
+    crypt_into_something_with_padding!{u128}
 }

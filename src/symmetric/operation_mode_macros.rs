@@ -10,13 +10,12 @@
 macro_rules! pre_encrypt_into_vec {
     ($to:expr, $length_in_bytes:expr, $type:ty) => {{
         let len = ($length_in_bytes + 1).next_multiple_of(Self::BLOCK_SIZE as u64) as usize / <$type>::size_in_bytes() as usize;
-        $to.truncate(len);
-        $to.resize(len + 1, <$type>::zero());
+        $to.truncate(len - 1);
+        $to.resize(len, <$type>::zero());
     }};
     // pre_encrypt_into_vec!(cipher, length_in_bytes, T);
     //
-    // let mut len = if T::size_in_bytes() == 16 {16_usize} else {8};
-    // len = (length_in_bytes + 1).next_multiple_of(Self::BLOCK_SIZE as u64) as usize / T::size_in_bytes();
+    // let mut len = (length_in_bytes + 1).next_multiple_of(Self::BLOCK_SIZE as u64) as usize / T::size_in_bytes();
     // cipher.truncate(len - 1);
     // cipher.resize(len, T::zero());
 }
@@ -220,7 +219,7 @@ macro_rules! crypt_ecb_with_padding_pkcs7 {
             #[allow(non_snake_case)]    let SHR = Self::BLOCK_SIZE.ilog2();
             let mut progress = 0_u64;
             let mut block: $type = 0;
-            let mut encoded: u64;
+            let mut encoded: $type;
             for _ in 0..length_in_bytes >> SHR    // length_in_bytes >> 4 == length_in_bytes / 16
             {
                 unsafe { copy_nonoverlapping(message.add(progress as usize) as *const u8, (&mut block) as *mut $type as *mut u8, Self::BLOCK_SIZE); }
@@ -228,9 +227,9 @@ macro_rules! crypt_ecb_with_padding_pkcs7 {
                 unsafe { copy_nonoverlapping(&encoded as *const $type as *const u8, cipher.add(progress as usize), Self::BLOCK_SIZE); }
                 progress += Self::BLOCK_SIZE as u64;
             }
-            
-            block = 0;
+
             let mut block_union = <$container>::new_with($initial);
+            block = 0;
             if progress != length_in_bytes
             {
                 let tail = (length_in_bytes - progress) as usize;
@@ -257,11 +256,11 @@ macro_rules! crypt_ecb_with_padding_pkcs7 {
                 return 0;
             }
             let mut progress = 0_u64;
-            let mut block: $type = 0;
             let mut decoded: $type;
+            let mut block: $type = 0;
             if length_in_bytes > Self::BLOCK_SIZE as u64
             {
-                for _ in 0..(length_in_bytes >> SHR) - 1  // length_in_bytes >> 4 == length_in_bytes / 16
+                for _ in 0..(length_in_bytes >> SHR) - 1    // length_in_bytes >> 3 == length_in_bytes / 8
                 {
                     unsafe { copy_nonoverlapping(cipher.add(progress as usize) as *const u8, (&mut block) as *mut $type as *mut u8, Self::BLOCK_SIZE); }
                     decoded = $func_dec(self, block);
@@ -269,16 +268,10 @@ macro_rules! crypt_ecb_with_padding_pkcs7 {
                     progress += Self::BLOCK_SIZE as u64;
                 }
             }
-
             unsafe { copy_nonoverlapping(cipher.add(progress as usize) as *const u8, (&mut block) as *mut $type as *mut u8, Self::BLOCK_SIZE); }
             decoded = $func_dec(self, block);
             let decoded_union = <$container>::new_with(decoded);
             let padding_bytes = decoded_union.get_ubyte_(MASK);
-            if padding_bytes > Self::BLOCK_SIZE as u8
-            {
-                self.set_failed();
-                return 0;
-            }
             let message_bytes = Self::BLOCK_SIZE - padding_bytes as usize;
             for i in message_bytes..Self::BLOCK_SIZE
             {
@@ -343,7 +336,7 @@ macro_rules! crypt_ecb_with_padding_iso {
             let mut progress = 0_u64;
             let mut block: $type = 0;
             let mut decoded: $type;
-            if length_in_bytes > 8
+            if length_in_bytes > Self::BLOCK_SIZE as u64
             {
                 for _ in 0..(length_in_bytes >> SHR) - 1  // length_in_bytes >> 4 == length_in_bytes / 16
                 {
@@ -880,9 +873,9 @@ macro_rules! crypt_ctr {
             }
 
             let mut tail = Self::BLOCK_SIZE;
-            if progress + 8 == length_in_bytes
+            if progress + Self::BLOCK_SIZE as u64 == length_in_bytes
             {
-                unsafe { copy_nonoverlapping(message.add(progress as usize - Self::BLOCK_SIZE) as *const u8, (&mut block) as *mut u64 as *mut u8, Self::BLOCK_SIZE); }
+                unsafe { copy_nonoverlapping(message.add(progress as usize - Self::BLOCK_SIZE) as *const u8, (&mut block) as *mut $type as *mut u8, Self::BLOCK_SIZE); }
             }
             else
             {

@@ -19,15 +19,16 @@ use crate::number::{IntUnion, LongUnion};
 use crate::symmetric::{ SmallCryptor,  Rijndael_Generic };
 
 
-impl <const ROUND: usize, const IRREDUCIBLE: u8, const AFFINE_MUL: u64,
-        const AFFINE_ADD: u8, const SR0: usize, const SR1: usize, const SR2: usize, const SR3: usize,
+impl <const ROUND: usize, const NK: usize,
+        const IRREDUCIBLE: u8, const AFFINE_MUL: u64, const AFFINE_ADD: u8,
+        const SR0: usize, const SR1: usize, const SR2: usize, const SR3: usize,
         const MC00: u8, const MC01: u8, const MC02: u8, const MC03: u8,
         const MC10: u8, const MC11: u8, const MC12: u8, const MC13: u8,
         const MC20: u8, const MC21: u8, const MC22: u8, const MC23: u8,
         const MC30: u8, const MC31: u8, const MC32: u8, const MC33: u8,
         const RC0: u32, const RC1: u32, const RC2: u32, const RC3: u32, const RC4: u32,
         const RC5: u32, const RC6: u32, const RC7: u32, const RC8: u32, const RC9: u32, const ROT: u32>
-SmallCryptor<u64, 8> for Rijndael_Generic<ROUND, 2, 2, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, SR2, SR3,
+SmallCryptor<u64, 8> for Rijndael_Generic<ROUND, 2, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, SR2, SR3,
         MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13, MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
         RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
