@@ -16,8 +16,6 @@
 
 pub trait SmallCryptor<T, const N: usize>
 {
-    fn set_key(&mut self, key: [u8; N]);
-    fn set_key_unit(&mut self, key: T);
     fn encrypt_unit(&mut self, message: T) -> T;
     fn decrypt_unit(&mut self, cipher: T) -> T;
     fn turn_inverse(&mut self);

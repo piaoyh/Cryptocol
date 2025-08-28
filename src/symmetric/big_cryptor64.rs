@@ -181,6 +181,8 @@ pub struct BigCryptor64
 {
     block: LongUnion,
     smallcryptor: Vec<Box<dyn SmallCryptor<u64, 8>>>,
+    enc: fn (s: &mut Self, message: u64) -> u64,
+    dec: fn (s: &mut Self, cipher: u64) -> u64,
 }
 
 impl BigCryptor64
@@ -215,7 +217,13 @@ impl BigCryptor64
     #[inline]
     pub fn new() -> Self
     {
-        Self { block: LongUnion::zero(), smallcryptor: Vec::new() }
+        Self
+        {
+            block:          LongUnion::zero(),
+            smallcryptor:   Vec::new(),
+            enc:            Self::encrypt_u64,
+            dec:            Self::decrypt_u64,
+        }
     }
 
     // pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor<u64, 8>>; N]) -> Self
@@ -371,6 +379,24 @@ impl BigCryptor64
         self.smallcryptor = smallcryptor;
     }
 
+    #[inline]
+    pub fn turn_inverse(&mut self)
+    {
+        (self.enc, self.dec) = (self.dec, self.enc);
+    }
+
+    pub fn turn_encryptor(&mut self)
+    {
+        self.enc = Self::encrypt_u64;
+        self.dec = Self::decrypt_u64;
+    }
+
+    pub fn turn_decryptor(&mut self)
+    {
+        self.enc = Self::decrypt_u64;
+        self.dec = Self::encrypt_u64;
+    }
+
     // pub fn encrypt_u64(&mut self, message: u64) -> u64
     /// Encrypts a 64-bit data.
     /// 
@@ -440,6 +466,18 @@ impl BigCryptor64
         self.set_block(cipher);
         self.decrypt_block();
         self.block.get()
+    }
+
+    #[inline]
+    pub(super) fn _encrypt(&mut self, message: u64) -> u64
+    {
+        (self.enc)(self, message)
+    }
+
+    #[inline]
+    pub(super) fn _decrypt(&mut self, cipher: u64) -> u64
+    {
+        (self.dec)(self, cipher)
     }
 
     // pub fn encrypt_array_u64<const M: usize>(&mut self, message: &[u64; M], cipher: &mut [u64; M])

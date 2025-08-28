@@ -129,7 +129,7 @@ impl BigCryptor128
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
     /// 
-    /// ## Example 1 for TAES case
+    /// # Example 1 for TAES case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
@@ -197,7 +197,7 @@ impl BigCryptor128
     ///   as `length_in_bytes` at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
     /// 
-    /// ## Example 1 for TAES case
+    /// # Example 1 for TAES case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
@@ -974,7 +974,7 @@ impl BigCryptor128
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// taes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1052,7 +1052,7 @@ impl BigCryptor128
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// taes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1139,7 +1139,7 @@ impl BigCryptor128
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// taes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1220,7 +1220,7 @@ impl BigCryptor128
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// taes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1291,7 +1291,7 @@ impl BigCryptor128
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// taes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1366,7 +1366,7 @@ impl BigCryptor128
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// taes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1450,7 +1450,7 @@ impl BigCryptor128
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// taes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1526,7 +1526,7 @@ impl BigCryptor128
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// taes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }

@@ -180,6 +180,8 @@ pub struct BigCryptor128
 {
     block: LongerUnion,
     smallcryptor: Vec<Box<dyn SmallCryptor<u128, 16>>>,
+    enc: fn (s: &mut Self, message: u128) -> u128,
+    dec: fn (s: &mut Self, cipher: u128) -> u128,
 }
 
 impl BigCryptor128
@@ -215,7 +217,13 @@ impl BigCryptor128
     #[inline]
     pub fn new() -> Self
     {
-        Self { block: LongerUnion::zero(), smallcryptor: Vec::new() }
+        Self
+        {
+            block:          LongerUnion::zero(),
+            smallcryptor:   Vec::new(),
+            enc:            Self::encrypt_u128,
+            dec:            Self::decrypt_u128,
+        }
     }
 
     // pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor<u128, 16>>; N]) -> Self
@@ -368,6 +376,24 @@ impl BigCryptor128
         self.smallcryptor = smallcryptor;
     }
 
+    #[inline]
+    pub fn turn_inverse(&mut self)
+    {
+        (self.enc, self.dec) = (self.dec, self.enc);
+    }
+
+    pub fn turn_encryptor(&mut self)
+    {
+        self.enc = Self::encrypt_u128;
+        self.dec = Self::decrypt_u128;
+    }
+
+    pub fn turn_decryptor(&mut self)
+    {
+        self.enc = Self::decrypt_u128;
+        self.dec = Self::encrypt_u128;
+    }
+
     // pub fn encrypt_u128(&mut self, message: u128) -> u128
     /// Encrypts a 128-bit data.
     /// 
@@ -437,6 +463,18 @@ impl BigCryptor128
         self.set_block(cipher);
         self.decrypt_block();
         self.block.get()
+    }
+
+    #[inline]
+    pub(super) fn _encrypt(&mut self, message: u128) -> u128
+    {
+        (self.enc)(self, message)
+    }
+
+    #[inline]
+    pub(super) fn _decrypt(&mut self, cipher: u128) -> u128
+    {
+        (self.dec)(self, cipher)
     }
 
     // pub fn encrypt_array_u128<const N: usize>(&mut self, message: &[u128; N], cipher: &mut [u128; N])
@@ -586,7 +624,11 @@ impl BigCryptor128
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_cryptor128_basic/struct.BigCryptor128.html#method.is_successful)
-    #[inline] pub fn is_successful(&self) -> bool { self.block.get() == Self::SUCCESS }
+    #[inline]
+    pub fn is_successful(&self) -> bool
+    {
+        self.block.get() == Self::SUCCESS
+    }
 
     // pub fn is_failed(&self) -> bool
     /// Checks whether the previous encryption or decryption was failed.
@@ -638,7 +680,11 @@ impl BigCryptor128
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_cryptor128_basic/struct.BigCryptor128.html#method.is_failed)
-    #[inline] pub fn is_failed(&self) -> bool   { self.block.get() == Self::FAILURE }
+    #[inline]
+    pub fn is_failed(&self) -> bool
+    {
+        self.block.get() == Self::FAILURE
+    }
 
     // pub fn set_successful(&mut self)
     /// Sets the flag to mean that the previous encryption or decryption

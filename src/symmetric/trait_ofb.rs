@@ -112,6 +112,17 @@ pub trait OFB<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -230,6 +241,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -361,6 +383,17 @@ pub trait OFB<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_into_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -481,6 +514,17 @@ pub trait OFB<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_str)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -597,6 +641,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_str_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -725,6 +780,17 @@ pub trait OFB<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_str_into_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -849,6 +915,17 @@ pub trait OFB<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_string)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -965,6 +1042,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_string_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -1093,6 +1181,17 @@ pub trait OFB<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_string_into_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -1216,6 +1315,17 @@ pub trait OFB<T> : Sized
     /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -1337,6 +1447,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -1472,6 +1593,17 @@ pub trait OFB<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec_into_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -1601,6 +1733,17 @@ pub trait OFB<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -1724,6 +1867,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_array_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -1859,6 +2013,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_array_into_array)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2027,6 +2192,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2207,6 +2383,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2400,6 +2587,17 @@ pub trait OFB<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_into_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -2555,6 +2753,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_into_string)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2728,6 +2937,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2905,6 +3125,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_vec_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -3092,6 +3323,17 @@ pub trait OFB<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_vec_into_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -3245,6 +3487,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_vec_into_string)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -3420,6 +3673,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_array)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -3597,6 +3861,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_array_into_vec)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -3784,6 +4059,17 @@ pub trait OFB<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_array_into_array)
     /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
     /// ```
@@ -3938,6 +4224,17 @@ pub trait OFB<T> : Sized
     /// 
     /// ## For more examples,
     /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.decrypt_array_into_string)
+    /// 
+    /// # For BigCryptor128
+    /// ## Example 1 for TAES case
+    /// ```
+    /// use std::io::Write;
+    /// use std::fmt::Write as _;
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// ```
+    /// 
+    /// ## For more examples,
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case

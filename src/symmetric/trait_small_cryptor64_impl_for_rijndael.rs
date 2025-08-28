@@ -14,7 +14,6 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use std::ptr::copy_nonoverlapping;
 use crate::number::{IntUnion, LongUnion};
 use crate::symmetric::{ SmallCryptor,  Rijndael_Generic };
 
@@ -32,22 +31,6 @@ SmallCryptor<u64, 8> for Rijndael_Generic<ROUND, 2, NK, IRREDUCIBLE, AFFINE_MUL,
         MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13, MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
         RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
-    #[inline]
-    fn set_key(&mut self, key: [u8; 8])
-    {
-        self.set_key(&key);
-    }
-
-    fn set_key_unit(&mut self, key: u64)
-    {
-        let mut k = [0_u8; 8];
-        unsafe {
-            copy_nonoverlapping(&key as *const u64 as *const u8,
-                                 k.as_mut_ptr() as *mut u8, 8);
-        }
-        self.set_key(&k);
-    }
-
     fn encrypt_unit(&mut self, message: u64) -> u64
     {
         let long = LongUnion::new_with(message);

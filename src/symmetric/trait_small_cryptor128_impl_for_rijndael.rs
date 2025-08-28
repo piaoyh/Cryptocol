@@ -14,7 +14,6 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use std::ptr::copy_nonoverlapping;
 use crate::number::{IntUnion, LongerUnion};
 use crate::symmetric::{ SmallCryptor,  Rijndael_Generic };
 
@@ -34,22 +33,6 @@ SmallCryptor<u128, 16> for Rijndael_Generic<ROUND, 4, NK,
                                                 MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
                                                 RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
-    #[inline]
-    fn set_key(&mut self, key: [u8; 16])
-    {
-        self.set_key(&key);
-    }
-
-    fn set_key_unit(&mut self, key: u128)
-    {
-        let mut k = [0_u8; 16];
-        unsafe {
-            copy_nonoverlapping(&key as *const u128 as *const u8,
-                                 k.as_mut_ptr() as *mut u8, 16);
-        }
-        self.set_key(&k);
-    }
-
     fn encrypt_unit(&mut self, message: u128) -> u128
     {
         let longer = LongerUnion::new_with(message);
@@ -61,7 +44,7 @@ SmallCryptor<u128, 16> for Rijndael_Generic<ROUND, 4, NK,
         LongerUnion::new_with_uints([res[0].get(), res[1].get(), res[2].get(), res[3].get()]).get()
     }
     
-    #[inline] fn decrypt_unit(&mut self, cipher: u128) -> u128
+    fn decrypt_unit(&mut self, cipher: u128) -> u128
     {
         let longer = LongerUnion::new_with(cipher);
         let c = [IntUnion::new_with(longer.get_uint_(0)),
