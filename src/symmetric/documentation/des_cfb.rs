@@ -15,7 +15,7 @@
 
 
 use std::vec::Vec;
-use crate::number::{ SmallUInt, LongUnion };
+use crate::number::SmallUInt;
 
 
 /// trait_cfb.rs may be too big
@@ -25,14 +25,9 @@ use crate::number::{ SmallUInt, LongUnion };
 /// examples were moved to des_cfb.rs. And, most of generic parameters
 /// are omitted. It is not actual code but dummy code for compilation!!!
 #[allow(non_camel_case_types)]
-pub struct DES_Generic<const ROUND: usize = 16>
+pub struct DES_Generic
 {
     // Dummy struct for documentation
-    key: LongUnion,
-    block: LongUnion,
-    round_key: [u64; ROUND],
-    enc: fn (s: &mut Self, message: u64) -> u64,
-    dec: fn (s: &mut Self, cipher: u64) -> u64,
 }
 
 /// trait_cfb.rs may be too big
@@ -41,7 +36,7 @@ pub struct DES_Generic<const ROUND: usize = 16>
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_cfb.rs. And, most of generic parameters
 /// are omitted. It is not actual code but dummy code for compilation!!!
-impl <const ROUND: usize> DES_Generic<ROUND>
+impl DES_Generic
 {
     // fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
     /// Encrypts the data without any padding in CFB (Cipher FeedBack) mode.

@@ -20,6 +20,8 @@ use crate::symmetric::pre_decrypt_into_vec;
 
 
 
+/// CBC (Cipher-Block Chaining) is one of the operation modes for
+/// encryption/decryption. And ISO 7816-4 is the one of the padding ways.
 #[allow(non_camel_case_types)]
 pub trait CBC_ISO<T> : Sized
 {

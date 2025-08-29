@@ -376,18 +376,123 @@ impl BigCryptor128
         self.smallcryptor = smallcryptor;
     }
 
+    // pub fn turn_inverse(&mut self)
+    /// Flips its role in BigCryptor128.
+    ///
+    /// # Features
+    /// - If it is constructed as encryptor for embracing BigCryptor128,
+    ///   it will be changed into decryptor.
+    /// - If it is constructed as decryptor for embracing BigCryptor128,
+    ///   it will be changed into encryptor.
+    ///
+    /// # Example 1
+    /// ```
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, AES_192, SmallCryptor };
+    /// let mut taes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0xFE, 0xDC, 0xBA, 0x09, 0x87, 0x65, 0x43, 0x21])
+    ///                 - AES_128::new_with_key(&[0xFE, 0xDC, 0xBA, 0x09, 0x87, 0x65, 0x43, 0x21, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF])
+    ///                 + AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0xFE, 0xDC, 0xBA, 0x09, 0x87, 0x65, 0x43, 0x21]);
+    /// 
+    /// let aes = AES_128::new_with_key(&[0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]);
+    /// let rijndael = AES_192::new_with_key(&[0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]);
+    /// taes.turn_inverse();
+    /// let mut bigcryptor = aes + rijndael + taes;
+    /// 
+    /// let plaintext = 0x_1234567890ABCDEFFEDCBA0987654321_u128;
+    /// println!("Plaintext:\t\t{:#034X}", plaintext);
+    /// let ciphertext = bigcryptor.encrypt_u128(plaintext);
+    /// println!("Ciphertext:\t\t{:#034X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_B881F06147B26243D0742CAA82602E97_u128);
+    /// 
+    /// let recovered_text = bigcryptor.decrypt_u128(ciphertext);
+    /// println!("Recovered text:\t{:#034X}", recovered_text);
+    /// assert_eq!(recovered_text, 0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// assert_eq!(recovered_text, plaintext);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/big_cryptor128_basic/struct.BigCryptor128.html#method.turn_inverse)
     #[inline]
     pub fn turn_inverse(&mut self)
     {
         (self.enc, self.dec) = (self.dec, self.enc);
     }
 
+    // pub fn turn_encryptor(&mut self)
+    /// Changes its role in BigCryptor128 to encryptor.
+    ///
+    /// # Features
+    /// - If it is constructed as encryptor for embracing BigCryptor128,
+    ///   it will not be changed at all.
+    /// - If it is constructed as decryptor for embracing BigCryptor128,
+    ///   it will be changed into encryptor.
+    ///
+    /// # Example 1
+    /// ```
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, AES_192, SmallCryptor };
+    /// let mut taes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0xFE, 0xDC, 0xBA, 0x09, 0x87, 0x65, 0x43, 0x21])
+    ///                 - AES_128::new_with_key(&[0xFE, 0xDC, 0xBA, 0x09, 0x87, 0x65, 0x43, 0x21, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF])
+    ///                 + AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0xFE, 0xDC, 0xBA, 0x09, 0x87, 0x65, 0x43, 0x21]);
+    /// 
+    /// let aes = AES_128::new_with_key(&[0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]);
+    /// let rijndael = AES_192::new_with_key(&[0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]);
+    /// taes.turn_encryptor();
+    /// let mut bigcryptor = aes + rijndael + taes;
+    /// 
+    /// let plaintext = 0x_1234567890ABCDEFFEDCBA0987654321_u128;
+    /// println!("Plaintext:\t\t{:#034X}", plaintext);
+    /// let ciphertext = bigcryptor.encrypt_u128(plaintext);
+    /// println!("Ciphertext:\t\t{:#034X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_1E561632CF3EDD44E8955A26ABA0AF7E_u128);
+    /// 
+    /// let recovered_text = bigcryptor.decrypt_u128(ciphertext);
+    /// println!("Recovered text:\t{:#034X}", recovered_text);
+    /// assert_eq!(recovered_text, 0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// assert_eq!(recovered_text, plaintext);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/big_cryptor128_basic/struct.BigCryptor128.html#method.turn_encryptor)
     pub fn turn_encryptor(&mut self)
     {
         self.enc = Self::encrypt_u128;
         self.dec = Self::decrypt_u128;
     }
 
+    // pub fn turn_encryptor(&mut self)
+    /// Changes its role in BigCryptor128 to encryptor.
+    ///
+    /// # Features
+    /// - If it is constructed as encryptor for embracing BigCryptor128,
+    ///   it will not be changed at all.
+    /// - If it is constructed as decryptor for embracing BigCryptor128,
+    ///   it will be changed into encryptor.
+    ///
+    /// # Example 1
+    /// ```
+    /// use cryptocol::symmetric::{ BigCryptor128, AES_128, AES_192, SmallCryptor };
+    /// let mut taes = AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0xFE, 0xDC, 0xBA, 0x09, 0x87, 0x65, 0x43, 0x21])
+    ///                 - AES_128::new_with_key(&[0xFE, 0xDC, 0xBA, 0x09, 0x87, 0x65, 0x43, 0x21, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF])
+    ///                 + AES_128::new_with_key(&[0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0xFE, 0xDC, 0xBA, 0x09, 0x87, 0x65, 0x43, 0x21]);
+    /// 
+    /// let aes = AES_128::new_with_key(&[0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]);
+    /// let rijndael = AES_192::new_with_key(&[0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]);
+    /// taes.turn_decryptor();
+    /// let mut bigcryptor = aes + rijndael + taes;
+    /// 
+    /// let plaintext = 0x_1234567890ABCDEFFEDCBA0987654321_u128;
+    /// println!("Plaintext:\t\t{:#034X}", plaintext);
+    /// let ciphertext = bigcryptor.encrypt_u128(plaintext);
+    /// println!("Ciphertext:\t\t{:#034X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_B881F06147B26243D0742CAA82602E97_u128);
+    /// 
+    /// let recovered_text = bigcryptor.decrypt_u128(ciphertext);
+    /// println!("Recovered text:\t{:#034X}", recovered_text);
+    /// assert_eq!(recovered_text, 0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// assert_eq!(recovered_text, plaintext);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/big_cryptor128_basic/struct.BigCryptor128.html#method.turn_decryptor)
     pub fn turn_decryptor(&mut self)
     {
         self.enc = Self::decrypt_u128;

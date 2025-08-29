@@ -20,8 +20,8 @@ use crate::symmetric::pre_decrypt_into_vec;
 
 
 
-/// CBC (Cipher-Block Chaining) is one of the operation modes for 
-/// encryption/decryption.
+/// CBC (Cipher-Block Chaining) is one of the operation modes for
+/// encryption/decryption. And PKCS #7 is the one of the padding ways.
 /// 
 /// # Caution
 /// For Rijndael or AES, if NB > 64, you are not supposed to use the padding

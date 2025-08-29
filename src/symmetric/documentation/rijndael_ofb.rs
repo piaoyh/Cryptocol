@@ -15,7 +15,7 @@
 
 
 use std::vec::Vec;
-use crate::number::{ SmallUInt, IntUnion };
+use crate::number::SmallUInt;
 
 
 /// trait_ofb.rs may be too big
@@ -25,14 +25,9 @@ use crate::number::{ SmallUInt, IntUnion };
 /// examples were moved to rijndael_ofb.rs. And, most of generic parameters
 /// are omitted. It is not actual code but dummy code for compilation!!!
 #[allow(non_camel_case_types)]
-pub struct Rijndael_Generic<const ROUND: usize = 10, const NB: usize = 4, const NK: usize = 4>
+pub struct Rijndael_Generic<const NB: usize = 4, const NK: usize = 4>
 {
     // Dummy struct for documentation
-    key:        [IntUnion; NK],
-    block:      [[u8; NB]; 4],
-    round_key:  Vec<[IntUnion; NB]>,
-    enc:        fn (s: &mut Self, message: &[IntUnion; NB]) -> [IntUnion; NB],
-    dec:        fn (s: &mut Self, cipher: &[IntUnion; NB]) -> [IntUnion; NB],
 }
 
 /// trait_ofb.rs may be too big
@@ -41,8 +36,7 @@ pub struct Rijndael_Generic<const ROUND: usize = 10, const NB: usize = 4, const 
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to rijndael_ofb.rs. And, most of generic parameters
 /// are omitted. It is not actual code but dummy code for compilation!!!
-impl <const ROUND: usize, const NB: usize, const NK: usize>
-Rijndael_Generic<ROUND, NB, NK>
+impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
 {
     // fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
     /// Encrypts the data without any padding in OFB (Output feedback) mode.

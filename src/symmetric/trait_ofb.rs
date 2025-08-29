@@ -20,6 +20,8 @@ use crate::symmetric::pre_decrypt_into_vec_no_padding;
 
 
 
+/// OFB (Output FeedBack) is one of the operation modes for
+/// encryption/decryption.
 pub trait OFB<T> : Sized
 {
     // fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
@@ -118,6 +120,24 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 55];
+    /// taes.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
@@ -248,10 +268,28 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// taes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt_into_vec)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -389,10 +427,28 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 55];
+    /// taes.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt_into_array)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -520,10 +576,28 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = [0_u8; 55];
+    /// taes.encrypt_str(iv, &message, cipher.as_mut_ptr());
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt_str)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -648,10 +722,27 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// let mut cipher = Vec::<u8>::new();
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt_str_into_vec)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -786,10 +877,27 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// let mut cipher = [0_u8; 55];
+    /// taes.encrypt_str_into_array(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt_str_into_array)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -921,10 +1029,27 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.".to_string();
+    /// let mut cipher = [0_u8; 55];
+    /// taes.encrypt_string(iv, &message, cipher.as_mut_ptr());
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt_string)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -1049,10 +1174,27 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.".to_string();
+    /// let mut cipher = Vec::<u8>::new();
+    /// taes.encrypt_string_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt_string_into_vec)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -1187,10 +1329,27 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.".to_string();
+    /// let mut cipher = [0_u8; 55];
+    /// taes.encrypt_string_into_array(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt_string_into_array)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -1315,16 +1474,38 @@ pub trait OFB<T> : Sized
     /// assert_eq!(txt, "2E 1E E1 51 FD B3 B0 4B 2A EF BC 49 21 FA C0 27 FB 9F DD BB 17 8D 21 3B 49 66 A2 94 AB 4D 08 8E B9 8D D6 7F 9F 8B 8D 0E E3 E7 5D F4 57 BB 96 2D 63 C3 2F 9E 71 8C 72 ");
     /// ```
     /// 
+    /// ## For more examples,
+    /// click [here](./documentation/des_ofb/struct.DES_Generic.html#method.encrypt_vec)
+    /// 
     /// # For BigCryptor128
     /// ## Example 1 for TAES case
     /// ```
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let message = unsafe { message.to_string().as_mut_vec().clone() };
+    /// let mut cipher = [0_u8; 55];
+    /// taes.encrypt_vec(iv, &message, cipher.as_mut_ptr());
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt_vec)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -1454,10 +1635,29 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let message = unsafe { message.to_string().as_mut_vec().clone() };
+    /// let mut cipher = Vec::<u8>::new();
+    /// taes.encrypt_vec_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt_vec_into_vec)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -1599,10 +1799,29 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let message = unsafe { message.to_string().as_mut_vec().clone() };
+    /// let mut cipher = [0_u8; 55];
+    /// taes.encrypt_vec_into_array(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt_vec_into_array)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -1739,10 +1958,30 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let mes = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", mes);
+    /// let mut message = [0_u8; 55];
+    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// let mut cipher = [0_u8; 55];
+    /// taes.encrypt_array(iv, &message, cipher.as_mut_ptr());
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt_array)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -1874,10 +2113,30 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let mes = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", mes);
+    /// let mut message = [0_u8; 55];
+    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// let mut cipher = Vec::<u8>::new();
+    /// taes.encrypt_array_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt_array_into_vec)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2020,10 +2279,29 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let mes = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", mes);
+    /// let mut message = [0_u8; 55];
+    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// let mut cipher = [0_u8; 55];
+    /// taes.encrypt_array_into_array(iv, &message, &mut cipher);
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt_array_into_array)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2199,10 +2477,46 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
+    /// 
+    /// let mut recovered = vec![0; 55];
+    /// taes.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    /// print!("Ba =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    /// 
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.decrypt)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2390,10 +2704,46 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
+    /// 
+    /// let mut recovered = Vec::<u8>::new();
+    /// taes.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// print!("Ba =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    /// 
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.decrypt_into_vec)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2593,10 +2943,46 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
+    /// 
+    /// let mut recovered = [0u8; 56];
+    /// let len = taes.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// print!("Ba =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E 00 ");
+    /// 
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.write(&recovered);
+    /// unsafe { converted.as_mut_vec() }.truncate(len as usize);
+    /// println!("Bb =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.decrypt_into_array)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2760,10 +3146,34 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
+    /// 
+    /// let mut recovered = String::new();
+    /// taes.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// println!("B =\t{}", recovered);
+    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(recovered, message);
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.decrypt_into_string)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -2944,10 +3354,46 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
+    /// 
+    /// let mut recovered = vec![0; 55];
+    /// taes.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
+    /// print!("Ba =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    /// 
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.decrypt_vec)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -3132,10 +3578,46 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
+    /// 
+    /// let mut recovered = Vec::<u8>::new();
+    /// taes.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
+    /// print!("Ba =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    /// 
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.decrypt_vec_into_vec)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -3329,10 +3811,45 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
+    /// 
+    /// let mut recovered = [0u8; 56];
+    /// let len = taes.decrypt_vec_into_array(iv, &cipher, &mut recovered);
+    /// print!("Ba =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E 00 ");
+    /// 
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.write(&recovered);
+    /// unsafe { converted.as_mut_vec() }.truncate(len as usize);
+    /// println!("Bb =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.decrypt_vec_into_array)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -3494,10 +4011,34 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);
+    /// let mut cipher = Vec::<u8>::new();
+    /// taes.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
+    /// 
+    /// let mut recovered = String::new();
+    /// taes.decrypt_vec_into_string(iv, &cipher, &mut recovered);
+    /// println!("B =\t{}", recovered);
+    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(recovered, message);
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.decrypt_vec_into_string)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -3680,10 +4221,46 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);    let mut cipher = [0_u8; 55];
+    /// taes.encrypt_str_into_array(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
+    /// 
+    /// let mut recovered = vec![0; 55];
+    /// let len = taes.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
+    /// recovered.truncate(len as usize);
+    /// print!("Ba =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    /// 
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.decrypt_array)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -3868,10 +4445,45 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);    let mut cipher = [0_u8; 55];
+    /// taes.encrypt_str_into_array(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
+    /// 
+    /// let mut recovered = Vec::<u8>::new();
+    /// taes.decrypt_array_into_vec(iv, &cipher, &mut recovered);
+    /// print!("Ba =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
+    /// 
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.append(&mut recovered);
+    /// 
+    /// println!("Bb =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.decrypt_array_into_vec)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -4065,10 +4677,45 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);    let mut cipher = [0_u8; 55];
+    /// taes.encrypt_str_into_array(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
+    /// 
+    /// let mut recovered = [0u8; 56];
+    /// let len = taes.decrypt_array_into_array(iv, &cipher, &mut recovered);
+    /// print!("Ba =\t");
+    /// for b in recovered.clone()
+    ///     { print!("{:02X} ", b); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in recovered.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E 00 ");
+    /// 
+    /// let mut converted = String::new();
+    /// unsafe { converted.as_mut_vec() }.write(&recovered);
+    /// unsafe { converted.as_mut_vec() }.truncate(len as usize);
+    /// println!("Bb =\t{}", converted);
+    /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(converted, message);
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.decrypt_array_into_array)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case
@@ -4231,10 +4878,33 @@ pub trait OFB<T> : Sized
     /// use std::io::Write;
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor128, AES_128, OFB };
+    /// 
+    /// let mut taes = AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)
+    ///                 + AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)
+    ///                 + AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128);
+    /// let iv = 0x_FEDCBA09876543211234567890ABCDEF_u128;
+    /// println!("IV =	{:#034X}", iv);
+    /// let message = "In the beginning God created the heavens and the earth.";
+    /// println!("M =\t{}", message);    let mut cipher = [0_u8; 55];
+    /// taes.encrypt_str_into_array(iv, &message, &mut cipher);
+    /// print!("C =\t");
+    /// for c in cipher.clone()
+    ///     { print!("{:02X} ", c); }
+    /// println!();
+    /// let mut txt = String::new();
+    /// for c in cipher.clone()
+    ///     { write!(txt, "{:02X} ", c); }
+    /// assert_eq!(txt, "17 89 CA DE E0 32 FA BE EB 2C 22 5C 43 00 12 ED B0 53 37 D6 64 AB 13 40 05 7E CC 2B 68 2F EA D7 12 C4 D5 A9 A3 E0 3E 62 A5 F1 95 B9 2E B1 73 16 1F DC 15 35 7C 9F 0D ");
+    /// 
+    /// let mut recovered = String::new();
+    /// taes.decrypt_array_into_string(iv, &cipher, &mut recovered);
+    /// println!("B =\t{}", recovered);
+    /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    /// assert_eq!(recovered, message);
     /// ```
     /// 
     /// ## For more examples,
-    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.encrypt)
+    /// click [here](./documentation/big_cryptor128_ofb/struct.BigCryptor128.html#method.decrypt_array_into_string)
     /// 
     /// # For BigCryptor64
     /// ## Example 1 for TDES case

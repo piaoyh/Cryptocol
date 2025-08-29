@@ -14,7 +14,6 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use crate::number::LongUnion;
 
 /// des.rs may be too big
 /// because of documentation and plenty of examples.
@@ -22,14 +21,9 @@ use crate::number::LongUnion;
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_basic.rs.
 #[allow(non_camel_case_types)]
-pub struct DES_Generic<const ROUND: usize = 16>
+pub struct DES_Generic
 {
     // Dummy struct for documentation
-    key: LongUnion,
-    block: LongUnion,
-    round_key: [u64; ROUND],
-    enc: fn (s: &mut Self, message: u64) -> u64,
-    dec: fn (s: &mut Self, cipher: u64) -> u64,
 }
 
 /// des.rs may be too big
@@ -38,7 +32,7 @@ pub struct DES_Generic<const ROUND: usize = 16>
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to des_basic.rs. And, most of generic parameters
 /// are omitted. It is not actual code but dummy code for compilation!!!
-impl <const ROUND: usize> DES_Generic<ROUND>
+impl DES_Generic
 {
     // pub fn new() -> Self
     /// Constructs a new object DES_Generic.

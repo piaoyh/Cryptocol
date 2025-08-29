@@ -36,31 +36,63 @@
 //! 
 //! # The algorithms of cryptographic hash functions
 //! This module provides several kinds of cryptographic hash algorithms:
-//! - MD4 hash algorithms based on 128 bits --- Includes MD4 and its expanded versions. [`MD4_Generic`](struct@MD4_Generic)
-//! - MD5 hash algorithms based on 128 bits --- Includes MD5 and its expanded versions. [`MD5_Generic`](struct@MD5_Generic)
-//! - SHA-1 hash algorithms based on 160 bits --- Includes SHA-1, SHA-0, and their expanded versions. [`SHA1_Generic`](struct@SHA1_Generic)
-//! - SHA-2 hash algorithms based on 256 bits --- Includes SHA-256, SHA-224, and their expanded versions. [`SHA2_Generic_256`](struct@SHA2_256_Generic)
-//! - SHA-2 hash algorithms based on 512 bits --- Includes SHA-512, SHA-384, SHA-512/256, and their expanded versions. [`SHA2_512_Generic`](struct@SHA2_512_Generic)
-//! - SHA-2 hash algorithms based on 512/t bits --- Includes 512/256, SHA-512/224, and their expanded versions. [`SHA2_512_t_Generic`](struct@SHA2_512_t_Generic)
-//! - Keccak hash algorithms --- Includes SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE-128, SHAKE-256, cSHAKE-128, cSHAKE-256, Keccak-224, Keccak-256, Keccak-384, Keccak-512, and their expanded versions. [`Keccak_Generic`](struct@Keccak_Generic)
+//! - SHA-3 and Keccak hash algorithms based on 8/16/32/64 bits
+//!   --- Includes SHA3-224, SHA3-256, SHA3-384, SHA3-512,
+//!       SHAKE 128, SHAKE 256, cSHAKE-128, cSHAKE-256,
+//!       Keccak family and their expanded versions.
+//!   [`Keccak_Generic`](struct@Keccak_Generic)
+//! - SHA-2 hash algorithms based on 512/t bits
+//!   --- Includes 512/256, SHA-512/224, and their expanded versions.
+//!   [`SHA2_512_t_Generic`](struct@SHA2_512_t_Generic)
+//! - SHA-2 hash algorithms based on 512 bits
+//!   --- Includes SHA-512, SHA-384, SHA-512/256, and their expanded versions.
+//!   [`SHA2_512_Generic`](struct@SHA2_512_Generic)
+//! - SHA-2 hash algorithms based on 256 bits
+//!   --- Includes SHA-256, SHA-224, and their expanded versions.
+//!   [`SHA2_Generic_256`](struct@SHA2_256_Generic)
+//! - SHA-1 hash algorithms based on 160 bits
+//!   --- Includes SHA-1, SHA-0, and their expanded versions.
+//!   [`SHA1_Generic`](struct@SHA1_Generic)
+// ! - RIPEMD hash algorithms based on 256 bits
+// !   --- Includes RIPEMD and its expanded versions.
+// !   ===> Moved to Roadmap for ver. 2.0
+// ! - BLAKE3 hash algorithms based on 256 bits
+// !   --- Includes BLAKE3 and its expanded versions.
+// !   ===> Moved to Roadmap for ver. 2.0
+// ! - BLAKE2 hash algorithms based on 256 bits
+// !   --- Includes BLAKE2 and its expanded versions.
+// !   ===> Moved to Roadmap for ver. 2.0
+// ! - MD6 hash algorithms based on 256 bits
+// !   --- Includes MD4 and its expanded versions.
+// !   ===> Moved to Roadmap for ver. 2.0
+//! - MD5 hash algorithms based on 128 bits
+//!   --- Includes MD5 and its expanded versions.
+//!   [`MD5_Generic`](struct@MD5_Generic)
+//! - MD4 hash algorithms based on 128 bits
+//!   --- Includes MD4 and its expanded versions.
+//!   [`MD4_Generic`](struct@MD4_Generic)
+// ! -  MD2 hash algorithms based on 128 bits
+// !    --- Includes MD2 and its expanded versions.
+// !    ===> Moved to Roadmap for ver. 2.0
+//! 
 //! 
 //! # QUICK START
-//! - For `MD4`, read [here](struct@MD4_Generic#quick-start).
-//! - For `MD5`, read [here](struct@MD5_Generic#quick-start).
-//! - For `SHA-1`, read [here](struct@SHA1_Generic#quick-start).
-//! - For `SHA-256`, read [here](struct@SHA2_256_Generic#quick-start).
-//! - For `SHA-512`, read [here](struct@SHA2_512_Generic#quick-start).
-//! - For `SHA-512/t`, read [here](struct@SHA2_512_t_Generic#quick-start).
 //! - For `Keccak`, read [here](struct@Keccak_Generic#quick-start).
+//! - For `SHA-512/t`, read [here](struct@SHA2_512_t_Generic#quick-start).
+//! - For `SHA-512`, read [here](struct@SHA2_512_Generic#quick-start).
+//! - For `SHA-256`, read [here](struct@SHA2_256_Generic#quick-start).
+//! - For `SHA-1`, read [here](struct@SHA1_Generic#quick-start).
+//! - For `MD5`, read [here](struct@MD5_Generic#quick-start).
+//! - For `MD4`, read [here](struct@MD4_Generic#quick-start).
 //! 
 //! # Simple but Useful Applications using cryptocol
-//! - For `MD4`, try [this](struct@MD4_Generic#a-simple-but-useful-application-using-cryptocol).
-//! - For `MD5`, try [this](struct@MD5_Generic#a-simple-but-useful-application-using-cryptocol).
-//! - For `SHA-1`, try [this](struct@SHA1_Generic#a-simple-but-useful-application-using-cryptocol).
-//! - For `SHA-256`, try [this](struct@SHA2_256_Generic#a-simple-but-useful-application-using-cryptocol).
-//! - For `SHA-512`, try [this](struct@SHA2_512_Generic#a-simple-but-useful-application-using-cryptocol).
-//! - For `SHA-512/t`, try [this](struct@SHA2_512_t_Generic#a-simple-but-useful-application-using-cryptocol).
 //! - For `SHA3`, try [this](struct@Keccak_Generic#a-simple-but-useful-application-using-cryptocol).
+//! - For `SHA-512/t`, try [this](struct@SHA2_512_t_Generic#a-simple-but-useful-application-using-cryptocol).
+//! - For `SHA-512`, try [this](struct@SHA2_512_Generic#a-simple-but-useful-application-using-cryptocol).
+//! - For `SHA-256`, try [this](struct@SHA2_256_Generic#a-simple-but-useful-application-using-cryptocol).
+//! - For `SHA-1`, try [this](struct@SHA1_Generic#a-simple-but-useful-application-using-cryptocol).
+//! - For `MD5`, try [this](struct@MD5_Generic#a-simple-but-useful-application-using-cryptocol).
+//! - For `MD4`, try [this](struct@MD4_Generic#a-simple-but-useful-application-using-cryptocol).
 //! 
 //! The following application is made by combining above all applications.
 //! 

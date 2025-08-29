@@ -15,7 +15,7 @@
 
 
 use std::vec::Vec;
-use crate::number::LongUnion;
+
 use crate::symmetric::SmallCryptor;
 
 /// big_cryptor.rs may be too big
@@ -28,8 +28,6 @@ use crate::symmetric::SmallCryptor;
 pub struct BigCryptor64
 {
     // Dummy struct for documentation
-    block: LongUnion,
-    smallcryptor: Vec<Box<dyn SmallCryptor<u64, 8>>>
 }
 
 /// big_cryptor.rs may be too big
@@ -177,6 +175,118 @@ impl BigCryptor64
     /// tdes.push_small_cryptor_vec(cryptors);
     /// ```
     pub fn push_small_cryptor_vec(&mut self, smallcryptor: Vec<Box<dyn SmallCryptor<u64, 8>>>)
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn turn_inverse(&mut self)
+    /// Flips its role in BigCryptor64.
+    ///
+    /// # Features
+    /// - If it is constructed as encryptor for embracing BigCryptor64,
+    ///   it will be changed into decryptor.
+    /// - If it is constructed as decryptor for embracing BigCryptor64,
+    ///   it will be changed into encryptor.
+    ///
+    /// # Example 1
+    /// ```
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, Rijndael_64_64, SmallCryptor };
+    /// let mut tdes = BigCryptor64::new()
+    ///                             + DES::new_with_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF])
+    ///                             - DES::new_with_key([0xFE, 0xDC, 0xBA, 0x09, 0x87, 0x65, 0x43, 0x21])
+    ///                             + DES::new_with_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let des = DES::new_with_key([0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
+    /// let rijndael = Rijndael_64_64::new_with_key(&[0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]);
+    /// tdes.turn_inverse();
+    /// let mut bigcryptor = des + rijndael + tdes;
+    /// 
+    /// let plaintext = 0x_1234567890ABCDEF_u64;
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// let ciphertext = bigcryptor.encrypt_u64(plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_0036D446DF6D218F_u64);
+    /// 
+    /// let recovered_text = bigcryptor.decrypt_u64(ciphertext);
+    /// println!("Recovered text:\t{:#018X}", recovered_text);
+    /// assert_eq!(recovered_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(recovered_text, plaintext);
+    /// ```
+    #[inline]
+    pub fn turn_inverse(&mut self)
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn turn_encryptor(&mut self)
+    /// Changes its role in BigCryptor64 or NDES to encryptor.
+    ///
+    /// # Features
+    /// - If it is constructed as encryptor for embracing BigCryptor64,
+    ///   it will not be changed at all.
+    /// - If it is constructed as decryptor for embracing BigCryptor64,
+    ///   it will be changed into encryptor.
+    ///
+    /// # Example 1
+    /// ```
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, Rijndael_64_64, SmallCryptor };
+    /// let mut tdes= BigCryptor64::new()
+    ///                             + DES::new_with_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF])
+    ///                             - DES::new_with_key([0xFE, 0xDC, 0xBA, 0x09, 0x87, 0x65, 0x43, 0x21])
+    ///                             + DES::new_with_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let des = DES::new_with_key([0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
+    /// let rijndael = Rijndael_64_64::new_with_key(&[0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]);
+    /// tdes.turn_encryptor();
+    /// let mut bigcryptor = des + rijndael + tdes;
+    /// 
+    /// let plaintext = 0x_1234567890ABCDEF_u64;
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// let ciphertext = bigcryptor.encrypt_u64(plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_911ED9892E52BC7C_u64);
+    /// 
+    /// let recovered_text = bigcryptor.decrypt_u64(ciphertext);
+    /// println!("Recovered text:\t{:#018X}", recovered_text);
+    /// assert_eq!(recovered_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(recovered_text, plaintext);
+    /// ```
+    pub fn turn_encryptor(&mut self)
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn turn_decryptor(&mut self)
+    /// Changes its role in BigCryptor64 or NDES to decryptor.
+    ///
+    /// # Features
+    /// - If it is constructed as encryptor for embracing BigCryptor64,
+    ///   it will be changed into decryptor.
+    /// - If it is constructed as decryptor for embracing BigCryptor64,
+    ///   it will not be changed at all.
+    ///
+    /// # Example 1
+    /// ```
+    /// use cryptocol::symmetric::{ BigCryptor64, DES, Rijndael_64_64, SmallCryptor };
+    /// let mut tdes = BigCryptor64::new()
+    ///                             + DES::new_with_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF])
+    ///                             - DES::new_with_key([0xFE, 0xDC, 0xBA, 0x09, 0x87, 0x65, 0x43, 0x21])
+    ///                             + DES::new_with_key([0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF]);
+    /// let des = DES::new_with_key([0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
+    /// let rijndael = Rijndael_64_64::new_with_key(&[0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE]);
+    /// tdes.turn_decryptor();
+    /// let mut bigcryptor = des + rijndael + tdes;
+    /// 
+    /// let plaintext = 0x_1234567890ABCDEF_u64;
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// let ciphertext = bigcryptor.encrypt_u64(plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x_0036D446DF6D218F_u64);
+    /// 
+    /// let recovered_text = bigcryptor.decrypt_u64(ciphertext);
+    /// println!("Recovered text:\t{:#018X}", recovered_text);
+    /// assert_eq!(recovered_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(recovered_text, plaintext);
+    /// ```
+    pub fn turn_decryptor(&mut self)
     {
         unimplemented!(); // Dummy code for documentation
     }

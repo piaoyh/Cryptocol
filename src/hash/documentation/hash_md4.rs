@@ -13,7 +13,7 @@
 
 use std::fmt::{ self, Debug, Display, Formatter };
 
-use crate::number::{ SmallUInt, IntUnion };
+use crate::number::SmallUInt;
 
 /// md4.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
@@ -22,25 +22,12 @@ use crate::number::{ SmallUInt, IntUnion };
 #[derive(Debug, Clone)]
 #[allow(non_camel_case_types)]
 #[allow(dead_code)]
-pub struct MD4_Generic<const N: usize = 4,
-        const H0: u32 = 0x67452301, const H1: u32 = 0xefcdab89,
-        const H2: u32 = 0x98badcfe, const H3: u32 = 0x10325476, const ROUND: usize = 48,
-        const K0: u32 = 0x00000000, const K1: u32 = 0x5A827999, const K2: u32 = 0x6ED9EBA1,
-        const R00: u32 = 3, const R01: u32 = 7, const R02: u32 = 11, const R03: u32 = 19,
-        const R10: u32 = 3, const R11: u32 = 5, const R12: u32 = 9, const R13: u32 = 13, 
-        const R20: u32 = 3, const R21: u32 = 9, const R22: u32 = 11, const R23: u32 = 15>
+pub struct MD4_Generic<const N: usize>
 {
     // Dummy struct for documentation
-    hash_code: [IntUnion; 4],
 }
 
-impl<const N: usize, const H0: u32, const H1: u32, const H2: u32, const H3: u32,
-    const ROUND: usize, const K0: u32, const K1: u32, const K2: u32,
-    const R00: u32, const R01: u32, const R02: u32, const R03: u32,
-    const R10: u32, const R11: u32, const R12: u32, const R13: u32,
-    const R20: u32, const R21: u32, const R22: u32, const R23: u32>
-MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2, 
-            R00, R01, R02, R03, R10, R11, R12, R13, R20, R21, R22, R23>
+impl<const N: usize> MD4_Generic<N>
 {
     // pub fn new() -> Self
     /// Constructs a new `MD4` object or a new MD4-based hash object.
@@ -910,14 +897,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
 }
 
 
-impl<const N: usize,
-    const H0: u32, const H1: u32, const H2: u32, const H3: u32,
-    const ROUND: usize, const K0: u32, const K1: u32, const K2: u32,
-    const R00: u32, const R01: u32, const R02: u32, const R03: u32,
-    const R10: u32, const R11: u32, const R12: u32, const R13: u32,
-    const R20: u32, const R21: u32, const R22: u32, const R23: u32>
-Display for MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2, 
-                        R00, R01, R02, R03, R10, R11, R12, R13, R20, R21, R22, R23>
+impl<const N: usize> Display for MD4_Generic<N>
 {
     /// Formats the value using the given formatter.
     /// You will hardly use this method directly.

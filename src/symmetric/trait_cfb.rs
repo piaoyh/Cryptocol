@@ -20,6 +20,8 @@ use crate::symmetric::pre_decrypt_into_vec_no_padding;
 
 
 
+/// CFB (Cipher FeedBack) is one of the operation modes for
+/// encryption/decryption.
 pub trait CFB<T> : Sized
 {
     // fn encrypt(&mut self, iv: T, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;

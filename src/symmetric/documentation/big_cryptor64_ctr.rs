@@ -15,8 +15,7 @@
 
 
 use std::vec::Vec;
-use crate::number::{ SmallUInt, LongUnion };
-use crate::symmetric::SmallCryptor;
+use crate::number::SmallUInt;
 
 /// trait_ctr.rs may be too big
 /// because of documentation and plenty of examples.
@@ -29,8 +28,6 @@ use crate::symmetric::SmallCryptor;
 pub struct BigCryptor64
 {
     // Dummy struct for documentation
-    block: LongUnion,
-    smallcryptor: Vec<Box<dyn SmallCryptor<u64, 8>>>
 }
 
 /// trait_ctr.rs may be too big

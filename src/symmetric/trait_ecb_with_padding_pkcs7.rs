@@ -21,7 +21,7 @@ use crate::symmetric::pre_decrypt_into_vec;
 
 
 /// ECB (Electronic CodeBook) is one of the operation modes for 
-/// encryption/decryption.
+/// encryption/decryption. And PKCS #7 is the one of the padding ways.
 /// 
 /// # Caution
 /// For Rijndael or AES, if NB > 64, you are not supposed to use the padding

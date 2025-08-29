@@ -25,42 +25,52 @@
 //! indicates cryptographically secure.
 //! 
 //! There are provided predefined pseudo-random number generators:
-//! - Any: is a synonym of Any_SHA2_256 at the moment and can be __silently
-//!     changed__ to have better algorithm in the future. If you want to keep
-//!     using SHA2_256 for a pseudo-random number generator, you may want to
-//!     use Any_SHA2_256. If you are happy that you will automatically use the
-//!     better algotrithm in the future, you may want to use `Any`.
-//!     Read [here](random/random/struct.Any.html#struct.Any).
-//! - Random: is a synonym of Random_SHA2_512 at the moment and can be
+//! ## Pseudo-random number generator
+//!   - struct [`Random_Generic`](struct@Random_Generic)
+//!   - trait [Random_Engine](trait@Random_Engine)
+//! ## Pseudo-random number generator engines using hash algorithms
+//!   - [`Random_BIG_KECCAK_1024`](struct@Random_BIG_KECCAK_1024): uses a hash algorithm BIG_KECCAK_1024.
+//!   - [`Random_SHA3_512`](struct@Random_SHA3_512): uses a hash algorithm SHA3_512.
+//!   - [`Random_SHA2_512`](struct@Random_SHA2_512): uses a hash algorithm SHA2_512.
+//!   - [`Any_SHAKE_256`](struct@Any_SHAKE_256)`: uses a hash algorithm SSHAKE_256.
+//!   - [`Any_SHAKE_128`](struct@Any_SHAKE_128)`: uses a hash algorithm SSHAKE_128.
+//!   - [`Any_SHA3_512`](struct@Any_SHA3_512): uses a hash algorithm SHA3_512.
+//!   - [`Any_SHA3_256`](struct@Any_SHA3_256): uses a hash algorithm SHA3_256.
+//!   - [`Any_SHA2_512`](struct@Any_SHA2_512): uses a hash algorithm SHA2_512.
+//!   - [`Any_SHA2_256`](struct@Any_SHA2_256): uses a hash algorithm SHA2_256.
+//!   - [`Any_SHA1`](struct@Any_SHA1): uses a hash algorithm SHA1.
+//!   - [`Any_SHA0`](struct@Any_SHA0): uses a hash algorithm SHA0.
+//!   - [`Any_MD5`](struct@Any_MD5): uses a hash algorithm MD5.
+//!   - [`Any_MD4`](struct@Any_MD4): uses a hash algorithm MD4.
+//! ## Pseudo-random number generator engines using symmetric-key encryption
+//!   algorithms
+//!   - [`Random_Rijndael`](struct@Random_Rijndael): uses a symmetric-key encryption algorithm Rijndael.
+//!   - [`Any_Rijndael`](struct@Any_Rijndael): uses a symmetric-key encryption algorithm Rijndael.
+//!   - [`Any_DES`](struct@Any_DES): uses a symmetric-key encryption algorithm DES.
+//! ## Pseudo-random number generator engines using simple randomization
+//!   algorithm
+//!   - [`Any_Num_C`](struct@Any_Num_C): uses a pseudo-random number generator
+//!     algorithm of the function rand() of C standard library at the moment. 
+//! ## Synonyms
+//!   - Random: is a synonym of Random_SHA2_512 at the moment and can be
 //!     __silently changed__ to have better algorithm in the future. If you want
 //!     to keep using SHA2_512 for a pseudo-random number generator, you may
 //!     want to use Random_SHA2_512. If you are happy that you will automatically
 //!     use the better algotrithm in the future, you may want to use `Random`.
-//!     Read [here](random/random/struct.Random.html#struct.Random).
-//! - Any_Num: is a synonym of Any_Num_C at the moment and can be __silently
+//!     Read [here](struct@Random).
+//!   - Any: is a synonym of Any_SHA2_256 at the moment and can be __silently
+//!     changed__ to have better algorithm in the future. If you want to keep
+//!     using SHA2_256 for a pseudo-random number generator, you may want to
+//!     use Any_SHA2_256. If you are happy that you will automatically use the
+//!     better algotrithm in the future, you may want to use `Any`.
+//!     Read [here](struct@Any).
+//!   - Any_Num: is a synonym of Any_Num_C at the moment and can be __silently
 //!     changed__ to have better algorithm in the future. If you want to keep
 //!     using the algorithm of C standard libraray for a pseudo-random number
 //!     generator, you may want to use Any_Num_C. If you are happy that you
 //!     will automatically use the better algotrithm in the future, you may
 //!     want to use `Any_Num`.
-//!     Read [here](random/random/struct.Any_Num.html#struct.Any_Num).
-//! - Any_Num_C: uses a pseudo-random number generator algorithm of the
-//!     function rand() of C standard library at the moment.
-//!     Read [here](random/type.Any_Num_C.html#struct.Any_Num_C).
-//! - Any_MD4: uses a hash algorithm MD4. Read [here](random/random/struct.Any_MD4.html#struct.Any_MD4).
-//! - Any_MD5: uses a hash algorithm MD5. Read [here](random/random/struct.Any_MD5.html#struct.Any_MD5).
-//! - Any_SHA0: uses a hash algorithm SHA0. Read [here](random/random/struct.Any_SHA0.html#struct.Any_SHA0).
-//! - Any_SHA1: uses a hash algorithm SHA1. Read [here](random/random/struct.Any_SHA1.html#struct.Any_SHA1).
-//! - Any_SHA2_256: uses a hash algorithm SHA2_256. Read [here](random/random/struct.Any_SHA2_256.html#struct.Any_SHA2_256).
-//! - Any_SHA2_512: uses a hash algorithm SHA2_512. Read [here](random/random/struct.Any_SHA2_512.html#struct.Any_SHA2_512).
-//! - Any_SHAKE_128`: uses a hash algorithm SSHAKE_128. Read [here](random/random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
-//! - Any_SHAKE_256`: uses a hash algorithm SSHAKE_256. Read [here](random/random/struct.Any_SHAKE_256.html#struct.Any_SHAKE_256),
-//! - Random_SHA2_512: uses a hash algorithm SHA2_512. Read [here](random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512).
-//! - Random_SHA3_512: uses a hash algorithm SHA3_512. Read [here](random/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512).
-//! - Random_BIG_KECCAK_1024: uses a hash algorithm BIG_KECCAK_1024. Read [here](random/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024).
-//! - Any_DES: uses a symmetric-key encryption algorithm DES. Read [here](random/random/struct.Any_DES.html#struct.Any_DES).
-//! - Any_AES: uses a symmetric-key encryption algorithm AES. Read [here](random/random/struct.Any_AES.html#struct.Any_AES).
-//! - Random_AES: uses a symmetric-key encryption algorithm AES. Read [here](random/random/struct.Random_AES.html#struct.Random_AES).
+//!     Read [here](struct@Any_Num).
 //! 
 //! # Quality Issues and Debate
 //! The pseudo-random number generators in this module use hash algorithms,
@@ -120,21 +130,6 @@
 //! pseudo-random number generator for cryptographical purpose.
 //! 
 //! - For `Random_Generic`, read [here](struct@Random_Generic#quick-start).
-//! - For `Any`, read [here](random/random/type.Any.html#type.Any).
-//! - For `Random`, read [here](random/type.Random.html#type.Random).
-//! - For `Any_Num`, read [here](random/type.Any_Num.html#type.Any_Num).
-//! - For `Any_Num_C`, read [here](random/type.Any_Num_C.html#type.Any_Num_C).
-// ! - For `AnyNumber_C_Generic`, read [here](any_number_c_generic/struct.AnyNumber_C_Generic.html#struct.AnyNumber_C_Generic).
-//! - For `Any_MD4`, read [here](random/type.Any_MD4.html#type.Any_MD4).
-//! - For `Any_MD5`, read [here](random/type.Any_MD5.html#type.Any_MD5),
-//! - For `Any_SHA0`, read [here](random/type.Any_SHA0.html#type.Any_SHA0),
-//! - For `Any_SHA1`, read [here](random/type.Any_SHA1.html#type.Any_SHA1),
-//! - For `Any_SHA2_256`, read [here](random/type.Any_SHA2_256.html#type.Any_SHA2_256)
-//! - For `Any_SHA2_512`, read [here](random/type.Any_SHA2_512.html#type.Any_SHA2_512), and
-//! - For `Random_SHA2_512`, read [here](random/type.Random_SHA2_512.html#type.Random_SHA2_512).
-//! - For `Any_DES`, read [head]
-//! - For `Any_Rijndael`, read [head]
-//! - For `Random_Rijndael`, read [head]
 //! 
 //! # How to embed OsRng in this module
 //! This is a simple illustration to embed OsRng in this module. It is assumed

@@ -21,7 +21,7 @@ use crate::symmetric::pre_decrypt_into_vec;
 
 
 /// ECB (Electronic CodeBook) is one of the operation modes for 
-/// encryption/decryption.
+/// encryption/decryption. And ISO 7816-4 is the one of the padding ways.
 #[allow(non_camel_case_types)]
 pub trait ECB_ISO<T> : Sized
 {

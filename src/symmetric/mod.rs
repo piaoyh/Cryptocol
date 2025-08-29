@@ -20,21 +20,127 @@
 // ! to learn symmetric encryption/decryption algorithms more in detail.
 //! 
 //! # The symmetric-key algorithms for the encryption/decryption of digital data
-//! This module provides several kinds of symmetric-key algorithms for the encryption/decryption of digital data:
-//! - DES encryption/decryption algorithms --- Includes DES and its expanded versions. `DES_Generic`
-//! (struct@DES_Generic)
-//! - NDES encryption/decryption algorithms --- Includes 2DES, 3DES and its expanded versions. `NDES_Generic`
-//! (struct@NDES_Generic)
-//! - AES encryption/decryption algorithms --- Includes AES and its expanded versions. `AES_Generic`
-// ! (struct@AES_Generic)
-//! - NAES encryption/decryption algorithms --- Includes 2AES, 3AES and its expanded versions. `NAES_Generic`
-// ! (struct@NAES_Generic)
+//!   This module provides several kinds of symmetric-key algorithms for the
+//!   encryption/decryption of digital data:
+//! - AES and Rijdael symmetric-key encryption/decryption algorithm and the
+//!   trait implementations of Operation modes and padding bits for AES_Generic
+//!   --- Includes AES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB,
+//!   and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
+//!   [`Rijdael_Generic`](struct@Rijndael_Generic),
+//!   [`ECB_PKCS7`](trait@ECB_PKCS7),
+//!   [`ECB_ISO`](trait@ECB_ISO),
+//!   [`CBC_PKCS7`](trait@ECB_PKCS7),
+//!   [`CBC_ISO`](trait@CBC_ISO),
+//!   [`PCBC_PKCS7`](trait@PCBC_PKCS7),
+//!   [`PCBC_ISO`](trait@PCBC_ISO),
+//!   [`CFB`](trait@CFB),
+//!   [`OFB`](trait@OFB), and
+//!   [`CTR`](trait@CTR).
+// ! - [ ] MARS symmetric-key encryption/decryption algorithm
+// !       --- Includes MARS and its expanded versions. `MARS_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] Serpent symmetric-key encryption/decryption algorithm
+// !       --- Includes RC6 and its expanded versions. `RC6_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] Twofish symmetric-key encryption/decryption algorithm
+// !       --- Includes Twofish and its expanded versions. `Twofish_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] RC6 symmetric-key encryption/decryption algorithm
+// !       --- Includes RC6 and its expanded versions. `RC6_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] SEED symmetric-key encryption/decryption algorithm
+// !       --- Includes SEED and its expanded versions. `SEED_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] HIGHT symmetric-key encryption/decryption algorithm
+// !       --- Includes HIGHT and its expanded versions. `HIGHT_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] ARIA symmetric-key encryption/decryption algorithm
+// !       --- Includes ARIA and its expanded versions. `ARIA_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] LEA symmetric-key encryption/decryption algorithm
+// !       --- Includes LEA and its expanded versions. `LEA_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] IDEA symmetric-key encryption/decryption algorithm
+// !       --- Includes IDEA and its expanded versions. `IDEA_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] Bluefish symmetric-key encryption/decryption algorithm
+// !       --- Includes Bluefish and its expanded versions. `Bluefish_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] Chacha20 symmetric-key encryption/decryption algorithm
+// !       --- Includes Chacha20 and its expanded versions. `Chacha20_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] Salsa20 symmetric-key encryption/decryption algorithm
+// !       --- Includes Salsa20 and its expanded versions. `Salsa20_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] RC5 symmetric-key encryption/decryption algorithm
+// !       --- Includes RC5 and its expanded versions. `RC5_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] RC4 symmetric-key encryption/decryption algorithm
+// !       --- Includes RC4 and its expanded versions. `RC4_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] RC2 symmetric-key encryption/decryption algorithm
+// !       --- Includes RC2 and its expanded versions. `RC2_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+//! - DES symmetric-key encryption/decryption algorithm and the traits and
+//!   its implementations of Operation modes and padding bits for DES_Generic
+//!   --- Includes DES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB,
+//!   and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
+//!   [`DES_Generic`](struct@DES_Generic),
+//!   [`ECB_PKCS7`](trait@ECB_PKCS7),
+//!   [`ECB_ISO`](trait@ECB_ISO),
+//!   [`CBC_PKCS7`](trait@ECB_PKCS7),
+//!   [`CBC_ISO`](trait@CBC_ISO),
+//!   [`PCBC_PKCS7`](trait@PCBC_PKCS7),
+//!   [`PCBC_ISO`](trait@PCBC_ISO),
+//!   [`CFB`](trait@CFB),
+//!   [`OFB`](trait@OFB), and
+//!   [`CTR`](trait@CTR).
+// ! - [ ] Lucifer symmetric-key encryption/decryption algorithm
+// !       --- Includes Lucifer and its expanded versions. `Lucifer_Generic`
+// !       ===> Moved to Roadmap for ver. 2.0
+//! - BigCryptor128 combinations of symmetric-key encryption/decryption
+//!   algorithms and the trait implementations of Operation modes and padding
+//!   bits for BigCryptor128
+//!   --- Includes 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB,
+//!   CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7
+//!   and ISO 7816-4.
+//!   [`BigCryptor128`](struct@BigCryptor128)
+//!   [`ECB_PKCS7`](trait@ECB_PKCS7),
+//!   [`ECB_ISO`](trait@ECB_ISO),
+//!   [`CBC_PKCS7`](trait@ECB_PKCS7),
+//!   [`CBC_ISO`](trait@CBC_ISO),
+//!   [`PCBC_PKCS7`](trait@PCBC_PKCS7),
+//!   [`PCBC_ISO`](trait@PCBC_ISO),
+//!   [`CFB`](trait@CFB),
+//!   [`OFB`](trait@OFB), and
+//!   [`CTR`](trait@CTR).
+//!   However, it is considered that 2AES, 3AES, 4AES, etc. are not very
+//!   meaningful because AES-256, Rijndael_128_384, Rijndael_128_512, etc. are
+//!   considered to be better than 2AES, 3AES, 4AES, etc.
+//! - BigCryptor64 combinations of symmetric-key encryption/decryption
+//!   algorithms and the trait implementations of Operation modes and padding
+//!   bits for BigCryptor64
+//!   --- Includes 2DES, 3DES, 4DES, etc., and their expanded versions, and
+//!   ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to
+//!   PKCS#7 and ISO 7816-4.
+//!   [`BigCryptor64`](struct@BigCryptor64)
+//!   [`BigCryptor128`](struct@BigCryptor128)
+//!   [`ECB_PKCS7`](trait@ECB_PKCS7),
+//!   [`ECB_ISO`](trait@ECB_ISO),
+//!   [`CBC_PKCS7`](trait@ECB_PKCS7),
+//!   [`CBC_ISO`](trait@CBC_ISO),
+//!   [`PCBC_PKCS7`](trait@PCBC_PKCS7),
+//!   [`PCBC_ISO`](trait@PCBC_ISO),
+//!   [`CFB`](trait@CFB),
+//!   [`OFB`](trait@OFB), and
+//!   [`CTR`](trait@CTR).
+//! 
 //! 
 //! # QUICK START
+//! - For `AES` or `Rijndael`, read [here](struct@Rijndael_Generic#quick-start).
 //! - For `DES`, read [here](struct@DES_Generic#quick-start).
-// ! - For `NDES`, read [here](struct@NDES_Generic#quick-start).
-// ! - For `AES`, read [here](struct@AES_Generic#quick-start).
-// ! - For `NAES`, read [here](struct@NAES_Generic#quick-start).
+//! - For `BigCryptor128`, read [here](struct@BigCryptor128#quick-start).
+//! - For `BigCryptor64`, read [here](struct@BigCryptor64#quick-start).
 
 
 

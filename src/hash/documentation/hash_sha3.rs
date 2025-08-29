@@ -10,9 +10,6 @@
 // #![warn(missing_docs)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
-use std::fmt::{ Debug, Display };
-use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign,
-                BitXor, BitXorAssign, Not, Shl };
 
 use crate::number::SmallUInt;
 
@@ -23,36 +20,13 @@ use crate::number::SmallUInt;
 #[allow(missing_docs)]
 #[allow(non_camel_case_types)]
 #[allow(dead_code)]
-pub struct Keccak_Generic<const RATE: usize = 72, const PADDING: usize = 0,
-        const ROUNDS: usize = 24, T = u64, const LFSR: u8 = 0b_0111_0001,
-        const THETA_SUB: usize = 1, const THETA_ADD: usize = 1, const THETA_ROT: u32 = 1,
-        const RHO_MUL_X: usize = 2, const RHO_MUL_Y: usize = 3, const RHO_T: u32 = 24,
-        const PI_MUL_X: usize = 1, const PI_MUL_Y: usize = 3,
-        const CHI_ADD_1: usize = 1, const CHI_ADD_2: usize = 2>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + Shl<Output = T>
+pub struct Keccak_Generic<const RATE: usize = 72>
 {
     // Dummy struct for documentation
-    state: [[T; 5]; 5],
 }
 
-impl<const RATE: usize, const PADDING: usize, const ROUNDS: usize, T, const LFSR: u8,
-    const THETA_SUB: usize, const THETA_ADD: usize, const THETA_ROT: u32,
-    const RHO_MUL_X: usize, const RHO_MUL_Y: usize, const RHO_T: u32,
-    const PI_MUL_X: usize, const PI_MUL_Y: usize,
-    const CHI_ADD_1: usize, const CHI_ADD_2: usize>
-Keccak_Generic<RATE, PADDING, ROUNDS, T, LFSR,
-                THETA_SUB, THETA_ADD, THETA_ROT,
-                RHO_MUL_X, RHO_MUL_Y, RHO_T,
-                PI_MUL_X, PI_MUL_Y, CHI_ADD_1, CHI_ADD_2>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + Shl<Output = T>
+impl<const RATE: usize> Keccak_Generic<RATE>
 {
-    
     // pub fn new() -> Self
     /// Creates the new object of `Self`.
     /// 

@@ -14,6 +14,8 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
+/// SmallCryptor<u64, 8> and SmallCryptor<u128, 16> are the traits for the
+/// components for BigCryptor128 and BigCryptor64, respectively.
 pub trait SmallCryptor<T, const N: usize>
 {
     fn encrypt_unit(&mut self, message: T) -> T;

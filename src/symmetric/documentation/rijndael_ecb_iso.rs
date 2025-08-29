@@ -15,7 +15,7 @@
 
 
 use std::vec::Vec;
-use crate::number::{ SmallUInt, IntUnion };
+use crate::number::SmallUInt;
 
 
 /// trait_ecb_with_padding_iso.rs may be too big
@@ -26,14 +26,9 @@ use crate::number::{ SmallUInt, IntUnion };
 /// generic parameters are omitted. It is not actual code but dummy code for
 /// compilation!!!
 #[allow(non_camel_case_types)]
-pub struct Rijndael_Generic<const ROUND: usize = 10, const NB: usize = 4, const NK: usize = 4>
+pub struct Rijndael_Generic<const NB: usize = 4, const NK: usize = 4>
 {
     // Dummy struct for documentation
-    key:        [IntUnion; NK],
-    block:      [[u8; NB]; 4],
-    round_key:  Vec<[IntUnion; NB]>,
-    enc:        fn (s: &mut Self, message: &[IntUnion; NB]) -> [IntUnion; NB],
-    dec:        fn (s: &mut Self, cipher: &[IntUnion; NB]) -> [IntUnion; NB],
 }
 
 /// trait_ecb_with_padding_iso.rs may be too big
@@ -43,8 +38,7 @@ pub struct Rijndael_Generic<const ROUND: usize = 10, const NB: usize = 4, const 
 /// examples were moved to des_ecb_iso.rs. And, most of
 /// generic parameters are omitted. It is not actual code but dummy code for
 /// compilation!!!
-impl <const ROUND: usize, const NB: usize, const NK: usize>
-Rijndael_Generic<ROUND, NB, NK>
+impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
 {
     // pub fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
     /// Encrypts the data with the padding defined according to ISO 7816-4

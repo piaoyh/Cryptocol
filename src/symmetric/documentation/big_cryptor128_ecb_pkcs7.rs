@@ -15,8 +15,7 @@
 
 
 use std::vec::Vec;
-use crate::number::{ SmallUInt, LongerUnion };
-use crate::symmetric::SmallCryptor;
+use crate::number::SmallUInt;
 
 /// big_cryptor128_ecb_pkcs7.rs may be too big
 /// because of documentation and plenty of examples.
@@ -29,8 +28,6 @@ use crate::symmetric::SmallCryptor;
 pub struct BigCryptor128
 {
     // Dummy struct for documentation
-    block: LongerUnion,
-    smallcryptor: Vec<Box<dyn SmallCryptor<u128, 16>>>
 }
 
 /// big_cryptor128_ecb_pkcs7.rs may be too big
