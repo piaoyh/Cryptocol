@@ -185,7 +185,7 @@
 // ! - [ ] Lucifer symmetric-key encryption/decryption algorithm
 // !       --- Includes Lucifer and its expanded versions. `Lucifer_Generic`
 // !       ===> Moved to Roadmap for ver. 2.0
-//! - [ ] BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor128
+//! - [X] BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor128
 //!       --- Includes 2AES, 3AES, 4AES, etc., and their expanded versions, and
 //!       ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
 //!       [`BigCryptor128`](symmetric/big_cryptor/struct.BigCryptor128.html#struct.BigCryptor128)

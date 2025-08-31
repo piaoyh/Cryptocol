@@ -2979,7 +2979,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3018,7 +3018,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3124,7 +3124,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3164,7 +3164,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3204,7 +3204,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3244,7 +3244,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3285,7 +3285,7 @@ fn des_decrypt_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3333,7 +3333,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3372,7 +3372,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3478,7 +3478,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3517,7 +3517,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3556,7 +3556,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3595,7 +3595,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3634,7 +3634,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3681,7 +3681,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3720,7 +3720,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3827,7 +3827,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3867,7 +3867,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3907,7 +3907,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3947,7 +3947,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3987,7 +3987,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4035,7 +4035,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4062,7 +4062,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4134,7 +4134,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4161,7 +4161,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4188,7 +4188,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4215,7 +4215,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4242,7 +4242,7 @@ fn des_decrypt_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4277,7 +4277,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4316,7 +4316,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4422,7 +4422,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4462,7 +4462,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4502,7 +4502,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4542,7 +4542,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4582,7 +4582,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4630,7 +4630,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4669,7 +4669,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4775,7 +4775,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4814,7 +4814,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4853,7 +4853,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4892,7 +4892,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4931,7 +4931,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_vec()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4978,7 +4978,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5017,7 +5017,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5124,7 +5124,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5164,7 +5164,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5204,7 +5204,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5244,7 +5244,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5284,7 +5284,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_array()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5332,7 +5332,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5359,7 +5359,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5431,7 +5431,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5458,7 +5458,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5485,7 +5485,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5512,7 +5512,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5539,7 +5539,7 @@ fn des_decrypt_vec_with_padding_pkcs7_cbc_into_string()
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =\t{}", iv);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }

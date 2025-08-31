@@ -2124,7 +2124,7 @@ fn aes_decrypt_ctr()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_aes.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_aes.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2166,7 +2166,7 @@ fn aes_decrypt_ctr()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_aes.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_aes.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2208,7 +2208,7 @@ fn aes_decrypt_ctr()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_aes.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_aes.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2250,7 +2250,7 @@ fn aes_decrypt_ctr()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_rijndael.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_rijndael.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2349,7 +2349,7 @@ fn aes_decrypt_ctr_into_vec()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_aes.encrypt_str(nonce.clone(), &message, cipher.as_mut_ptr());
+    a_aes.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2392,7 +2392,7 @@ fn aes_decrypt_ctr_into_vec()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_aes.encrypt_str(nonce.clone(), &message, cipher.as_mut_ptr());
+    a_aes.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2435,7 +2435,7 @@ fn aes_decrypt_ctr_into_vec()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_aes.encrypt_str(nonce.clone(), &message, cipher.as_mut_ptr());
+    a_aes.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2478,7 +2478,7 @@ fn aes_decrypt_ctr_into_vec()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_rijndael.encrypt_str(nonce.clone(), &message, cipher.as_mut_ptr());
+    a_rijndael.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2530,7 +2530,7 @@ fn aes_decrypt_ctr_into_vec()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_rijndael.encrypt(nonce.clone(), message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    a_rijndael.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2577,7 +2577,7 @@ fn aes_decrypt_ctr_into_array()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_aes.encrypt_str(nonce.clone(), &message, cipher.as_mut_ptr());
+    a_aes.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2620,7 +2620,7 @@ fn aes_decrypt_ctr_into_array()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_aes.encrypt_str(nonce.clone(), &message, cipher.as_mut_ptr());
+    a_aes.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2664,7 +2664,7 @@ fn aes_decrypt_ctr_into_array()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_aes.encrypt_str(nonce.clone(), &message, cipher.as_mut_ptr());
+    a_aes.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2707,7 +2707,7 @@ fn aes_decrypt_ctr_into_array()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_rijndael.encrypt_str(nonce.clone(), &message, cipher.as_mut_ptr());
+    a_rijndael.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2759,7 +2759,7 @@ fn aes_decrypt_ctr_into_array()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_rijndael.encrypt_str(nonce.clone(), &message, cipher.as_mut_ptr());
+    a_rijndael.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2807,7 +2807,7 @@ fn aes_decrypt_ctr_into_string()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_aes.encrypt_str(nonce.clone(), &message, cipher.as_mut_ptr());
+    a_aes.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2837,7 +2837,7 @@ fn aes_decrypt_ctr_into_string()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_aes.encrypt_str(nonce.clone(), &message, cipher.as_mut_ptr());
+    a_aes.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2867,7 +2867,7 @@ fn aes_decrypt_ctr_into_string()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_aes.encrypt_str(nonce.clone(), &message, cipher.as_mut_ptr());
+    a_aes.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2897,7 +2897,7 @@ fn aes_decrypt_ctr_into_string()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_rijndael.encrypt_str(nonce.clone(), &message, cipher.as_mut_ptr());
+    a_rijndael.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -2936,7 +2936,7 @@ fn aes_decrypt_ctr_into_string()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 55];
-    a_rijndael.encrypt_str(nonce.clone(), &message, cipher.as_mut_ptr());
+    a_rijndael.encrypt_str_into_array(nonce.clone(), &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }

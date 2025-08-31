@@ -821,8 +821,7 @@ impl DES_Generic
     /// ```
     /// use cryptocol::symmetric::{ DES, BigCryptor64, SmallCryptor };
     ///
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])
+    /// let mut tdes = DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])
     ///                 - DES::encryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])
     ///                 + DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12]);
     /// let plaintext = 0x_1234567890ABCDEF_u64;
@@ -886,8 +885,7 @@ impl DES_Generic
     /// ```
     /// use cryptocol::symmetric::{ BigCryptor64, DES };
     ///
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 - DES::encryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let plaintext = 0x_1234567890ABCDEF_u64;

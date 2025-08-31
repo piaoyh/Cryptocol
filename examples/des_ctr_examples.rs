@@ -2968,7 +2968,7 @@ fn des_decrypt_ctr()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3007,7 +3007,7 @@ fn des_decrypt_ctr()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3113,7 +3113,7 @@ fn des_decrypt_ctr()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3153,7 +3153,7 @@ fn des_decrypt_ctr()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3193,7 +3193,7 @@ fn des_decrypt_ctr()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3233,7 +3233,7 @@ fn des_decrypt_ctr()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3273,7 +3273,7 @@ fn des_decrypt_ctr()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3321,7 +3321,7 @@ fn des_decrypt_ctr_into_vec()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3360,7 +3360,7 @@ fn des_decrypt_ctr_into_vec()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3466,7 +3466,7 @@ fn des_decrypt_ctr_into_vec()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3505,7 +3505,7 @@ fn des_decrypt_ctr_into_vec()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3544,7 +3544,7 @@ fn des_decrypt_ctr_into_vec()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3583,7 +3583,7 @@ fn des_decrypt_ctr_into_vec()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3622,7 +3622,7 @@ fn des_decrypt_ctr_into_vec()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3669,7 +3669,7 @@ fn des_decrypt_ctr_into_array()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3708,7 +3708,7 @@ fn des_decrypt_ctr_into_array()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3815,7 +3815,7 @@ fn des_decrypt_ctr_into_array()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3855,7 +3855,7 @@ fn des_decrypt_ctr_into_array()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3895,7 +3895,7 @@ fn des_decrypt_ctr_into_array()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3935,7 +3935,7 @@ fn des_decrypt_ctr_into_array()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -3975,7 +3975,7 @@ fn des_decrypt_ctr_into_array()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4023,7 +4023,7 @@ fn des_decrypt_ctr_into_string()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4050,7 +4050,7 @@ fn des_decrypt_ctr_into_string()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4122,7 +4122,7 @@ fn des_decrypt_ctr_into_string()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4149,7 +4149,7 @@ fn des_decrypt_ctr_into_string()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4176,7 +4176,7 @@ fn des_decrypt_ctr_into_string()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4203,7 +4203,7 @@ fn des_decrypt_ctr_into_string()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4230,7 +4230,7 @@ fn des_decrypt_ctr_into_string()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4265,7 +4265,7 @@ fn des_decrypt_vec_ctr()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4304,7 +4304,7 @@ fn des_decrypt_vec_ctr()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4410,7 +4410,7 @@ fn des_decrypt_vec_ctr()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4450,7 +4450,7 @@ fn des_decrypt_vec_ctr()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4490,7 +4490,7 @@ fn des_decrypt_vec_ctr()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4530,7 +4530,7 @@ fn des_decrypt_vec_ctr()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4570,7 +4570,7 @@ fn des_decrypt_vec_ctr()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4618,7 +4618,7 @@ fn des_decrypt_vec_ctr_into_vec()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4657,7 +4657,7 @@ fn des_decrypt_vec_ctr_into_vec()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4763,7 +4763,7 @@ fn des_decrypt_vec_ctr_into_vec()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4802,7 +4802,7 @@ fn des_decrypt_vec_ctr_into_vec()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4841,7 +4841,7 @@ fn des_decrypt_vec_ctr_into_vec()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4880,7 +4880,7 @@ fn des_decrypt_vec_ctr_into_vec()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4919,7 +4919,7 @@ fn des_decrypt_vec_ctr_into_vec()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -4966,7 +4966,7 @@ fn des_decrypt_vec_ctr_into_array()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5005,7 +5005,7 @@ fn des_decrypt_vec_ctr_into_array()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5112,7 +5112,7 @@ fn des_decrypt_vec_ctr_into_array()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5152,7 +5152,7 @@ fn des_decrypt_vec_ctr_into_array()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5192,7 +5192,7 @@ fn des_decrypt_vec_ctr_into_array()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5232,7 +5232,7 @@ fn des_decrypt_vec_ctr_into_array()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5272,7 +5272,7 @@ fn des_decrypt_vec_ctr_into_array()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5320,7 +5320,7 @@ fn des_decrypt_vec_ctr_into_string()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (16 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5347,7 +5347,7 @@ fn des_decrypt_vec_ctr_into_string()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C (128 rounds) =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5419,7 +5419,7 @@ fn des_decrypt_vec_ctr_into_string()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5446,7 +5446,7 @@ fn des_decrypt_vec_ctr_into_string()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5473,7 +5473,7 @@ fn des_decrypt_vec_ctr_into_string()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5500,7 +5500,7 @@ fn des_decrypt_vec_ctr_into_string()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -5527,7 +5527,7 @@ fn des_decrypt_vec_ctr_into_string()
     let nonce = 0x_FEDCBA0987654321_u64;
     println!("Nonce =	{}", nonce);
     let mut cipher = Vec::<u8>::new();
-    a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }

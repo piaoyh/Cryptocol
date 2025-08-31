@@ -87,8 +87,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -116,8 +114,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -145,8 +141,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -174,8 +168,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -271,8 +263,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -300,8 +290,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -329,8 +317,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -358,8 +344,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -467,8 +451,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -496,8 +478,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -525,8 +505,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -554,8 +532,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -650,8 +626,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -679,8 +653,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -708,8 +680,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -737,8 +707,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -827,8 +795,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -856,8 +822,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -885,8 +849,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -914,8 +876,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -1018,8 +978,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -1047,8 +1005,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -1076,8 +1032,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -1105,8 +1059,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -1202,8 +1154,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
@@ -1231,8 +1181,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
@@ -1260,8 +1208,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
@@ -1289,8 +1235,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
@@ -1381,8 +1325,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
@@ -1410,8 +1352,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
@@ -1439,8 +1379,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
@@ -1468,8 +1406,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
@@ -1574,8 +1510,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
@@ -1603,8 +1537,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
@@ -1632,8 +1564,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
@@ -1661,8 +1591,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
@@ -1759,8 +1687,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -1789,8 +1715,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -1819,8 +1743,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -1849,8 +1771,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -1944,8 +1864,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -1974,8 +1892,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -2004,8 +1920,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -2034,8 +1948,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -2146,8 +2058,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -2176,8 +2086,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -2207,8 +2115,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -2237,8 +2143,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
 /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -2337,8 +2241,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
@@ -2368,8 +2270,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
@@ -2399,8 +2299,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
@@ -2430,8 +2328,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
@@ -2526,8 +2422,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
@@ -2557,8 +2451,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
@@ -2588,8 +2480,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
@@ -2619,8 +2509,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
@@ -2731,8 +2619,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
@@ -2762,8 +2648,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
@@ -2793,8 +2677,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
@@ -2824,8 +2706,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
@@ -2934,13 +2814,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2981,13 +2859,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3028,13 +2904,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3075,13 +2949,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3131,7 +3003,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt(iv.clone(), message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3211,13 +3083,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3258,13 +3128,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3305,13 +3173,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3353,13 +3219,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3405,11 +3269,10 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// println!();
     /// let mut a_rijndael = Rijndael_512_512::new_with_key(&key);
     /// 
-    /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt(iv.clone(), message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3498,13 +3361,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3546,13 +3407,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3595,13 +3454,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3643,13 +3500,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3699,7 +3554,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3783,13 +3638,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3818,13 +3671,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3853,13 +3704,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3888,13 +3737,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3928,11 +3775,10 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// println!();
     /// let mut a_rijndael = Rijndael_512_512::new_with_key(&key);
     /// 
-    /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str(iv.clone(), &message, cipher.as_mut_ptr());
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4004,8 +3850,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4051,8 +3895,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4098,8 +3940,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4145,8 +3985,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4276,8 +4114,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4323,8 +4159,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4370,8 +4204,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4417,8 +4249,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4557,8 +4387,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4604,8 +4432,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4651,8 +4477,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4698,8 +4522,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4831,8 +4653,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4866,8 +4686,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4901,8 +4719,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -4936,8 +4752,6 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
@@ -5053,13 +4867,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5100,13 +4912,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5147,13 +4957,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5194,13 +5002,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5249,7 +5055,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5324,13 +5130,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5371,13 +5175,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5418,13 +5220,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5465,13 +5265,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5520,7 +5318,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5604,13 +5402,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5651,13 +5447,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5698,13 +5492,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5745,13 +5537,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5800,7 +5590,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5877,13 +5667,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let key = 0x_1234567890ABCDEF1234567890ABCDEF_u128;
     /// println!("K =\t{:#016X}", key);
     /// let mut a_aes = AES_128::new_with_key_u128(key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5912,13 +5700,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_192::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5947,13 +5733,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_aes = AES_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_aes.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_aes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5982,13 +5766,11 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     ///     { print!("{:02X}", key[i]); }
     /// println!();
     /// let mut a_rijndael = Rijndael_256_256::new_with_key(&key);
-    /// let iv = [0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32, 0x87654321_u32, 0xFEDCBA09_u32];
-    /// println!("IV =\t{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}{:08X}", iv[0].to_be(), iv[1].to_be(), iv[2].to_be(), iv[3].to_be(), iv[4].to_be(), iv[5].to_be(), iv[6].to_be(), iv[7].to_be());
     /// 
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6025,7 +5807,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 64];
-    /// a_rijndael.encrypt_str_into_array(iv.clone(), &message, &mut cipher);
+    /// a_rijndael.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }

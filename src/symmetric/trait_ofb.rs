@@ -150,8 +150,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -298,8 +297,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -457,8 +455,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -606,8 +603,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -751,8 +747,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -906,8 +901,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -1058,8 +1052,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -1203,8 +1196,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -1358,8 +1350,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -1514,8 +1505,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -1666,8 +1656,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -1830,8 +1819,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -1990,8 +1978,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -2145,8 +2132,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -2310,8 +2296,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -2439,7 +2424,7 @@ pub trait OFB<T> : Sized
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2525,8 +2510,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -2534,7 +2518,7 @@ pub trait OFB<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2666,7 +2650,7 @@ pub trait OFB<T> : Sized
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2752,8 +2736,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -2761,7 +2744,7 @@ pub trait OFB<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2905,7 +2888,7 @@ pub trait OFB<T> : Sized
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2991,8 +2974,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -3000,7 +2982,7 @@ pub trait OFB<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3120,7 +3102,7 @@ pub trait OFB<T> : Sized
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3182,8 +3164,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -3191,7 +3172,7 @@ pub trait OFB<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3316,7 +3297,7 @@ pub trait OFB<T> : Sized
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3402,8 +3383,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -3411,7 +3391,7 @@ pub trait OFB<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3540,7 +3520,7 @@ pub trait OFB<T> : Sized
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3626,8 +3606,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -3635,7 +3614,7 @@ pub trait OFB<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3773,7 +3752,7 @@ pub trait OFB<T> : Sized
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3858,8 +3837,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -3867,7 +3845,7 @@ pub trait OFB<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3985,7 +3963,7 @@ pub trait OFB<T> : Sized
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4047,8 +4025,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -4056,7 +4033,7 @@ pub trait OFB<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4269,8 +4246,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -4492,8 +4468,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -4724,8 +4699,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;
@@ -4913,8 +4887,7 @@ pub trait OFB<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, OFB };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let iv = 0x_FEDCBA0987654321_u64;

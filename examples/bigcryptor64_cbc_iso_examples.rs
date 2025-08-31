@@ -59,8 +59,7 @@ fn bigcryptor64_encrypt_with_padding_iso_cbc()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -88,8 +87,7 @@ fn bigcryptor64_encrypt_with_padding_iso_cbc_into_vec()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -117,8 +115,7 @@ fn bigcryptor64_encrypt_with_padding_iso_cbc_into_array()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -146,8 +143,7 @@ fn bigcryptor64_encrypt_str_with_padding_iso_cbc()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -175,8 +171,7 @@ fn bigcryptor64_encrypt_str_with_padding_iso_cbc_into_vec()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -203,8 +198,7 @@ fn bigcryptor64_encrypt_str_with_padding_iso_cbc_into_array()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -231,8 +225,7 @@ fn bigcryptor64_encrypt_string_with_padding_iso_cbc()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -259,8 +252,7 @@ fn bigcryptor64_encrypt_string_with_padding_iso_cbc_into_vec()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -287,8 +279,7 @@ fn bigcryptor64_encrypt_string_with_padding_iso_cbc_into_array()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -315,8 +306,7 @@ fn bigcryptor64_encrypt_vec_with_padding_iso_cbc()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -345,8 +335,7 @@ fn bigcryptor64_encrypt_vec_with_padding_iso_cbc_into_vec()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -375,8 +364,7 @@ fn bigcryptor64_encrypt_vec_with_padding_iso_cbc_into_array()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -405,8 +393,7 @@ fn bigcryptor64_encrypt_array_with_padding_iso_cbc()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -436,8 +423,7 @@ fn bigcryptor64_encrypt_array_with_padding_iso_cbc_into_vec()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -467,8 +453,7 @@ fn bigcryptor64_encrypt_array_with_padding_iso_cbc_into_array()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -497,8 +482,7 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -506,7 +490,7 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -544,8 +528,7 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc_into_vec()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -553,7 +536,7 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc_into_vec()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -591,8 +574,7 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc_into_array()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -600,7 +582,7 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc_into_array()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -638,8 +620,7 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc_into_string()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -647,7 +628,7 @@ fn bigcryptor64_decrypt_with_padding_iso_cbc_into_string()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -673,8 +654,7 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -682,7 +662,7 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -720,8 +700,7 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_vec()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -729,7 +708,7 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_vec()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -767,8 +746,7 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_array()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -776,7 +754,7 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_array()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -814,8 +792,7 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_string()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -823,7 +800,7 @@ fn bigcryptor64_decrypt_vec_with_padding_iso_cbc_into_string()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    tdes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    tdes.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -849,8 +826,7 @@ fn bigcryptor64_decrypt_array_with_padding_iso_cbc()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -896,8 +872,7 @@ fn bigcryptor64_decrypt_array_with_padding_iso_cbc_into_vec()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -942,8 +917,7 @@ fn bigcryptor64_decrypt_array_with_padding_iso_cbc_into_array()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;
@@ -988,8 +962,7 @@ fn bigcryptor64_decrypt_array_with_padding_iso_cbc_into_string()
     use cryptocol::symmetric::{ BigCryptor64, DES, CBC_ISO };
 
     // TDES case
-    let mut tdes = BigCryptor64::new()
-                    + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
                     + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
                     + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     let iv = 0x_FEDCBA0987654321_u64;

@@ -98,21 +98,24 @@ pub type Any_Num = Any_Num_C;
 /// such as `new()` and `new_with_seeds()` will panic!
 /// 
 /// # Predetermined Provided Specific `struct`s
-/// - Any_Num_C: uses a pseudo-random number generator algorithm of the function
-/// rand() of C standard library, and may not be cryptographically secure.
-/// - Any_MD4: uses a hash algorithm MD4, and may not be cryptographically secure.
-/// - Any_MD5: uses a hash algorithm MD5, and may not be cryptographically secure.
-/// - Any_SHA0: uses a hash algorithm SHA0, and may not be cryptographically secure.
-/// - Any_SHA1: uses a hash algorithm SHA1, and may not be cryptographically secure.
-/// - Any_SHA2_256: uses a hash algorithm SHA2_256, and may not be cryptographically secure.
-/// - Any_SHA2_512: uses a hash algorithm SHA2_512, and may not be cryptographically secure.
-/// - Random_SHA2_512: uses a hash algorithm SHA2_512, and is cryptographically secure.
-/// - Any_SHA3_256: uses a hash algorithm SHA3_256, and may not be cryptographically secure.
-/// - Any_SHA3_512: uses a hash algorithm SHA3_512, and may not be cryptographically secure.
-/// - Random_SHA3_512: uses a hash algorithm SHA3_512, and is cryptographically secure.
-/// - Any_SHAKE_128: uses a hash algorithm SHAKE_128, and may not be cryptographically secure.
 /// - Random_BIG_KECCAK_1024: uses a hash algorithm BIG_KECCAK_1024, and is cryptographically secure.
-/// - Any_DES: uses an encryption/decryption algorithm DES, and may not be cryptographically secure.
+/// - Random_SHA3_512: uses a hash algorithm SHA3_512, and is cryptographically secure.
+/// - Random_SHA2_512: uses a hash algorithm SHA2_512, and is cryptographically secure.
+/// - Any_SHAKE_256: uses a hash algorithm SHAKE_256, and may not be cryptographically secure.
+/// - Any_SHAKE_128: uses a hash algorithm SHAKE_128, and may not be cryptographically secure.
+/// - Any_SHA3_512: uses a hash algorithm SHA3_512, and may not be cryptographically secure.
+/// - Any_SHA3_256: uses a hash algorithm SHA3_256, and may not be cryptographically secure.
+/// - Any_SHA2_512: uses a hash algorithm SHA2_512, and may not be cryptographically secure.
+/// - Any_SHA2_256: uses a hash algorithm SHA2_256, and may not be cryptographically secure.
+/// - Any_SHA1: uses a hash algorithm SHA1, and may not be cryptographically secure.
+/// - Any_SHA0: uses a hash algorithm SHA0, and may not be cryptographically secure.
+/// - Any_Num_C: uses a pseudo-random number generator algorithm of the function
+///   rand() of C standard library, and may not be cryptographically secure.
+/// - Any_MD5: uses a hash algorithm MD5, and may not be cryptographically secure.
+/// - Any_MD4: uses a hash algorithm MD4, and may not be cryptographically secure.
+/// - Random_Rijndael: uses a symmetric-key encryption algorithm Rijndael.
+/// - Any_Rijndael: uses a symmetric-key encryption algorithm Rijndael.
+/// - Any_DES: uses a symmetric-key encryption algorithm DES, and may not be cryptographically secure.
 /// 
 /// - Any: a synonym of Any_SHAKE_128 at the moment, and may not be cryptographically secure.
 /// - Random: a synonym of Random_BIG_KECCAK_1024 at the moment, and is cryptographically secure.

@@ -82,8 +82,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
@@ -145,8 +144,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
@@ -221,8 +219,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
@@ -283,8 +280,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
@@ -339,8 +335,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
@@ -408,8 +403,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
@@ -470,8 +464,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
@@ -526,8 +519,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
@@ -596,8 +588,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
@@ -659,8 +650,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
@@ -718,8 +708,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
@@ -794,8 +783,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
@@ -858,8 +846,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let mes = "In the beginning God created the heavens and the earth.";
@@ -917,8 +904,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let mes = "In the beginning God created the heavens and the earth.";
@@ -992,8 +978,7 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let mes = "In the beginning God created the heavens and the earth.";
@@ -1064,14 +1049,13 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1147,14 +1131,13 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1234,14 +1217,13 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1320,14 +1302,13 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1395,14 +1376,13 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1473,14 +1453,13 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1560,14 +1539,13 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1639,14 +1617,13 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1715,13 +1692,12 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);    let mut cipher = [0_u8; 56];
-    /// tdes.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1793,13 +1769,12 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);    let mut cipher = [0_u8; 56];
-    /// tdes.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1879,13 +1854,12 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);    let mut cipher = [0_u8; 56];
-    /// tdes.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1958,13 +1932,12 @@ impl BigCryptor64
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, ECB_PKCS7 };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);    let mut cipher = [0_u8; 56];
-    /// tdes.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }

@@ -3980,7 +3980,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4024,7 +4024,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4141,7 +4141,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4186,7 +4186,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4231,7 +4231,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4276,7 +4276,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4321,7 +4321,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4401,7 +4401,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4445,7 +4445,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4562,7 +4562,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4606,7 +4606,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4650,7 +4650,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4694,7 +4694,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4738,7 +4738,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4826,7 +4826,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4870,7 +4870,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4988,7 +4988,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5033,7 +5033,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5078,7 +5078,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5123,7 +5123,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5168,7 +5168,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5251,7 +5251,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5283,7 +5283,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5366,7 +5366,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5398,7 +5398,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5430,7 +5430,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5462,7 +5462,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5494,7 +5494,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5566,7 +5566,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5610,7 +5610,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5727,7 +5727,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5772,7 +5772,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5817,7 +5817,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5862,7 +5862,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5907,7 +5907,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5984,7 +5984,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6028,7 +6028,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6145,7 +6145,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6189,7 +6189,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6233,7 +6233,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6277,7 +6277,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6321,7 +6321,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6406,7 +6406,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6450,7 +6450,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6568,7 +6568,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6613,7 +6613,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6658,7 +6658,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6703,7 +6703,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6748,7 +6748,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6827,7 +6827,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6859,7 +6859,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6942,7 +6942,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6974,7 +6974,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7006,7 +7006,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7038,7 +7038,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7070,7 +7070,7 @@ impl DES_Generic
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }

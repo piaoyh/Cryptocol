@@ -3857,7 +3857,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3899,7 +3899,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3945,8 +3945,8 @@ impl DES_Generic
     /// println!("M =\t{}", message);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_str_into_vec(&message, &mut cipher1);
+    /// d_des.encrypt_str_into_vec(&message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -4012,7 +4012,7 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4055,7 +4055,7 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4098,7 +4098,7 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4141,7 +4141,7 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4184,7 +4184,7 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4268,7 +4268,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4310,7 +4310,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4356,8 +4356,8 @@ impl DES_Generic
     /// println!("M =\t{}", message);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_str_into_vec(&message, &mut cipher1);
+    /// d_des.encrypt_str_into_vec(&message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -4423,7 +4423,7 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4465,7 +4465,7 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4507,7 +4507,7 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4549,7 +4549,7 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4591,7 +4591,7 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4683,7 +4683,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4725,7 +4725,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4771,8 +4771,8 @@ impl DES_Generic
     /// println!("M =\t{}", message);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_str_into_vec(&message, &mut cipher1);
+    /// d_des.encrypt_str_into_vec(&message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -4839,7 +4839,7 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4882,7 +4882,7 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4925,7 +4925,7 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4968,7 +4968,7 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5011,7 +5011,7 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5098,7 +5098,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5128,7 +5128,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5162,8 +5162,8 @@ impl DES_Generic
     /// println!("M =\t{}", message);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_str_into_vec(&message, &mut cipher1);
+    /// d_des.encrypt_str_into_vec(&message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -5207,7 +5207,7 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5237,7 +5237,7 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5267,7 +5267,7 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5297,7 +5297,7 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5327,7 +5327,7 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5402,7 +5402,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5444,7 +5444,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5490,8 +5490,8 @@ impl DES_Generic
     /// println!("M =\t{}", message);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_str_into_vec(&message, &mut cipher1);
+    /// d_des.encrypt_str_into_vec(&message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -5557,7 +5557,7 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5600,7 +5600,7 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5643,7 +5643,7 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5686,7 +5686,7 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5729,7 +5729,7 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5808,7 +5808,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5850,7 +5850,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5896,8 +5896,8 @@ impl DES_Generic
     /// println!("M =\t{}", message);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_str_into_vec(&message, &mut cipher1);
+    /// d_des.encrypt_str_into_vec(&message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -5963,7 +5963,7 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6005,7 +6005,7 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6047,7 +6047,7 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6089,7 +6089,7 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6131,7 +6131,7 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6218,7 +6218,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6260,7 +6260,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6306,8 +6306,8 @@ impl DES_Generic
     /// println!("M =\t{}", message);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_str_into_vec(&message, &mut cipher1);
+    /// d_des.encrypt_str_into_vec(&message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -6374,7 +6374,7 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6417,7 +6417,7 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6460,7 +6460,7 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6503,7 +6503,7 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6546,7 +6546,7 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6627,7 +6627,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6657,7 +6657,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6691,8 +6691,8 @@ impl DES_Generic
     /// println!("M =\t{}", message);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_str_into_vec(&message, &mut cipher1);
+    /// d_des.encrypt_str_into_vec(&message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -6736,7 +6736,7 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6766,7 +6766,7 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6796,7 +6796,7 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6826,7 +6826,7 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6856,7 +6856,7 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6932,7 +6932,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 56];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6975,7 +6975,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 56];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7092,7 +7092,7 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7136,7 +7136,7 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7180,7 +7180,7 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7224,7 +7224,7 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7267,7 +7267,7 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 24];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7347,7 +7347,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 56];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7389,7 +7389,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 56];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7502,7 +7502,7 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7544,7 +7544,7 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7586,7 +7586,7 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7628,7 +7628,7 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7670,7 +7670,7 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 24];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7757,7 +7757,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 56];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7799,7 +7799,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 56];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7913,7 +7913,7 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7956,7 +7956,7 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7999,7 +7999,7 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8042,7 +8042,7 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8085,7 +8085,7 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 24];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8166,7 +8166,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 56];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8196,7 +8196,7 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 56];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8275,7 +8275,7 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8305,7 +8305,7 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8335,7 +8335,7 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8365,7 +8365,7 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8395,7 +8395,7 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let mut cipher = [0_u8; 24];
-    /// a_des.encrypt_into_array(message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_array(&message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }

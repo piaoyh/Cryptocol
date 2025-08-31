@@ -79,10 +79,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// a_des.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -106,10 +106,10 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     ///
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// a_des.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -135,12 +135,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = [0_u8; 55];
     /// let mut cipher2 = [0_u8; 55];
-    /// c_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher1.as_mut_ptr());
-    /// d_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher2.as_mut_ptr());
+    /// c_des.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher1.as_mut_ptr());
+    /// d_des.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher2.as_mut_ptr());
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -171,10 +171,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 0];
-    /// a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// a_des.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -197,10 +197,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 7];
-    /// a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// a_des.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -223,10 +223,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// a_des.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -249,10 +249,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 12];
-    /// a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// a_des.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -275,10 +275,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
+    /// a_des.encrypt(nonce, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -333,10 +333,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -359,10 +359,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -388,12 +388,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher1);
+    /// d_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -424,10 +424,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -450,10 +450,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -476,10 +476,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -502,10 +502,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -528,10 +528,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -597,10 +597,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -623,10 +623,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -652,12 +652,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = [0_u8; 55];
     /// let mut cipher2 = [0_u8; 55];
-    /// c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher1);
+    /// d_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -688,10 +688,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 0];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -714,10 +714,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 7];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -740,10 +740,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -766,10 +766,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 12];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -792,10 +792,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -851,10 +851,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_str(nonce, &message, cipher.as_mut_ptr());
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -877,10 +877,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_str(nonce, &message, cipher.as_mut_ptr());
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -906,12 +906,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = [0_u8; 55];
     /// let mut cipher2 = [0_u8; 55];
-    /// c_des.encrypt_str(iv, &message, cipher1.as_mut_ptr());
-    /// d_des.encrypt_str(iv, &message, cipher2.as_mut_ptr());
+    /// c_des.encrypt_str(nonce, &message, cipher1.as_mut_ptr());
+    /// d_des.encrypt_str(nonce, &message, cipher2.as_mut_ptr());
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -942,10 +942,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 0];
-    /// a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_str(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -968,10 +968,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 7];
-    /// a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_str(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -994,10 +994,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_str(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1020,10 +1020,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 12];
-    /// a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_str(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1046,10 +1046,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_str(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_str(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1098,10 +1098,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1124,10 +1124,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1153,12 +1153,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_str_into_vec(iv, &message, &mut cipher1);
-    /// d_des.encrypt_str_into_vec(iv, &message, &mut cipher2);
+    /// c_des.encrypt_str_into_vec(nonce, &message, &mut cipher1);
+    /// d_des.encrypt_str_into_vec(nonce, &message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -1189,10 +1189,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1215,10 +1215,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1241,10 +1241,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1267,10 +1267,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1293,10 +1293,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_str_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1356,10 +1356,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_str_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_str_into_array(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1382,10 +1382,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_str_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_str_into_array(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1411,12 +1411,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = [0_u8; 55];
     /// let mut cipher2 = [0_u8; 55];
-    /// c_des.encrypt_str_into_array(iv, &message, &mut cipher1);
-    /// d_des.encrypt_str_into_array(iv, &message, &mut cipher2);
+    /// c_des.encrypt_str_into_array(nonce, &message, &mut cipher1);
+    /// d_des.encrypt_str_into_array(nonce, &message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -1447,10 +1447,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 0];
-    /// a_des.encrypt_str_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_str_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1473,10 +1473,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 7];
-    /// a_des.encrypt_str_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_str_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1499,10 +1499,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_str_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_str_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1525,10 +1525,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 12];
-    /// a_des.encrypt_str_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_str_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1551,10 +1551,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_str_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_str_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1611,10 +1611,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_string(nonce, &message, cipher.as_mut_ptr());
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1637,10 +1637,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_string(nonce, &message, cipher.as_mut_ptr());
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1666,12 +1666,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = [0_u8; 55];
     /// let mut cipher2 = [0_u8; 55];
-    /// c_des.encrypt_string(iv, &message, cipher1.as_mut_ptr());
-    /// d_des.encrypt_string(iv, &message, cipher2.as_mut_ptr());
+    /// c_des.encrypt_string(nonce, &message, cipher1.as_mut_ptr());
+    /// d_des.encrypt_string(nonce, &message, cipher2.as_mut_ptr());
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -1702,10 +1702,10 @@ impl DES_Generic
     ///
     /// let message = "".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 0];
-    /// a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_string(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1728,10 +1728,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 7];
-    /// a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_string(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1754,10 +1754,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_string(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1780,10 +1780,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 12];
-    /// a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_string(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1806,10 +1806,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_string(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_string(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1859,10 +1859,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_string_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1885,10 +1885,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_string_into_vec(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1914,12 +1914,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_string_into_vec(iv, &message, &mut cipher1);
-    /// d_des.encrypt_string_into_vec(iv, &message, &mut cipher2);
+    /// c_des.encrypt_string_into_vec(nonce, &message, &mut cipher1);
+    /// d_des.encrypt_string_into_vec(nonce, &message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -1950,10 +1950,10 @@ impl DES_Generic
     ///
     /// let message = "".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_string_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -1976,10 +1976,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_string_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2002,10 +2002,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_string_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2028,10 +2028,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_string_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2054,10 +2054,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_string_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_string_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2117,10 +2117,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_string_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_string_into_array(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2143,10 +2143,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_string_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_string_into_array(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2172,12 +2172,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = [0_u8; 55];
     /// let mut cipher2 = [0_u8; 55];
-    /// c_des.encrypt_string_into_array(iv, &message, &mut cipher1);
-    /// d_des.encrypt_string_into_array(iv, &message, &mut cipher2);
+    /// c_des.encrypt_string_into_array(nonce, &message, &mut cipher1);
+    /// d_des.encrypt_string_into_array(nonce, &message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -2208,10 +2208,10 @@ impl DES_Generic
     ///
     /// let message = "".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 0];
-    /// a_des.encrypt_string_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_string_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2234,10 +2234,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 7];
-    /// a_des.encrypt_string_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_string_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2260,10 +2260,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_string_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_string_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2286,10 +2286,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 12];
-    /// a_des.encrypt_string_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_string_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2312,10 +2312,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.".to_string();
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_string_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_string_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2373,10 +2373,10 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_vec(nonce, &message, cipher.as_mut_ptr());
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2400,10 +2400,10 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_vec(nonce, &message, cipher.as_mut_ptr());
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2430,12 +2430,12 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = [0_u8; 55];
     /// let mut cipher2 = [0_u8; 55];
-    /// c_des.encrypt_vec(iv, &message, cipher1.as_mut_ptr());
-    /// d_des.encrypt_vec(iv, &message, cipher2.as_mut_ptr());
+    /// c_des.encrypt_vec(nonce, &message, cipher1.as_mut_ptr());
+    /// d_des.encrypt_vec(nonce, &message, cipher2.as_mut_ptr());
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -2467,10 +2467,10 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 0];
-    /// a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_vec(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2494,10 +2494,10 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 7];
-    /// a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_vec(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2521,10 +2521,10 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_vec(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2548,10 +2548,10 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 12];
-    /// a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_vec(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2575,10 +2575,10 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_vec(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_vec(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2630,10 +2630,10 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_vec_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2657,10 +2657,10 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_vec_into_vec(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2688,12 +2688,12 @@ impl DES_Generic
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
     ///
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_vec_into_vec(iv, &message, &mut cipher1);
-    /// d_des.encrypt_vec_into_vec(iv, &message, &mut cipher2);
+    /// c_des.encrypt_vec_into_vec(nonce, &message, &mut cipher1);
+    /// d_des.encrypt_vec_into_vec(nonce, &message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -2725,10 +2725,10 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_vec_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2752,10 +2752,10 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_vec_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2779,10 +2779,10 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_vec_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2806,10 +2806,10 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_vec_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2833,10 +2833,10 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_vec_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_vec_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2900,10 +2900,10 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_vec_into_array(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2927,10 +2927,10 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_vec_into_array(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2957,12 +2957,12 @@ impl DES_Generic
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = [0_u8; 55];
     /// let mut cipher2 = [0_u8; 55];
-    /// c_des.encrypt_vec_into_array(iv, &message, &mut cipher1);
-    /// d_des.encrypt_vec_into_array(iv, &message, &mut cipher2);
+    /// c_des.encrypt_vec_into_array(nonce, &message, &mut cipher1);
+    /// d_des.encrypt_vec_into_array(nonce, &message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -2994,10 +2994,10 @@ impl DES_Generic
     /// let message = "";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 0];
-    /// a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_vec_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3021,10 +3021,10 @@ impl DES_Generic
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 7];
-    /// a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_vec_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3048,10 +3048,10 @@ impl DES_Generic
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_vec_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3075,10 +3075,10 @@ impl DES_Generic
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 12];
-    /// a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_vec_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3102,10 +3102,10 @@ impl DES_Generic
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
     /// let message = unsafe { message.to_string().as_mut_vec().clone() };
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_vec_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_vec_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3163,10 +3163,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_array(nonce, &message, cipher.as_mut_ptr());
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3191,10 +3191,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_array(nonce, &message, cipher.as_mut_ptr());
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3222,12 +3222,12 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = [0_u8; 55];
     /// let mut cipher2 = [0_u8; 55];
-    /// c_des.encrypt_array(iv, &message, cipher1.as_mut_ptr());
-    /// d_des.encrypt_array(iv, &message, cipher2.as_mut_ptr());
+    /// c_des.encrypt_array(nonce, &message, cipher1.as_mut_ptr());
+    /// d_des.encrypt_array(nonce, &message, cipher2.as_mut_ptr());
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -3260,10 +3260,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 0];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 0];
-    /// a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_array(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3288,10 +3288,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 7];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 7];
-    /// a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_array(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3316,10 +3316,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 8];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_array(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3344,10 +3344,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 12];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 12];
-    /// a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_array(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3372,10 +3372,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 16];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_array(iv, &message, cipher.as_mut_ptr());
+    /// a_des.encrypt_array(nonce, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3427,10 +3427,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_array_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3455,10 +3455,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_array_into_vec(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3487,12 +3487,12 @@ impl DES_Generic
     /// let mut message = [0_u8; 55];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
     ///
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_array_into_vec(iv, &message, &mut cipher1);
-    /// d_des.encrypt_array_into_vec(iv, &message, &mut cipher2);
+    /// c_des.encrypt_array_into_vec(nonce, &message, &mut cipher1);
+    /// d_des.encrypt_array_into_vec(nonce, &message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -3525,10 +3525,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 0];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_array_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3553,10 +3553,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 7];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_array_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3581,10 +3581,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 8];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_array_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3609,10 +3609,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 12];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_array_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3637,10 +3637,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 16];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_array_into_vec(iv, &message, &mut cipher);
+    /// a_des.encrypt_array_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3704,10 +3704,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_array_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_array_into_array(nonce, &message, &mut cipher);
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
     /// println!();
@@ -3731,10 +3731,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_array_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_array_into_array(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3762,12 +3762,12 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = [0_u8; 55];
     /// let mut cipher2 = [0_u8; 55];
-    /// c_des.encrypt_array_into_array(iv, &message, &mut cipher1);
-    /// d_des.encrypt_array_into_array(iv, &message, &mut cipher2);
+    /// c_des.encrypt_array_into_array(nonce, &message, &mut cipher1);
+    /// d_des.encrypt_array_into_array(nonce, &message, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -3800,10 +3800,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 0];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 0];
-    /// a_des.encrypt_array_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_array_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3828,10 +3828,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 7];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 7];
-    /// a_des.encrypt_array_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_array_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3856,10 +3856,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 8];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_array_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_array_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3884,10 +3884,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 12];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 12];
-    /// a_des.encrypt_array_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_array_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3912,10 +3912,10 @@ impl DES_Generic
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 16];
     /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_array_into_array(iv, &message, &mut cipher);
+    /// a_des.encrypt_array_into_array(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3978,10 +3978,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3992,7 +3992,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     ///
     /// let mut recovered = vec![0; 55];
-    /// a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    /// a_des.decrypt(nonce, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     /// print!("Ba (16 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4022,10 +4022,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4036,7 +4036,7 @@ impl DES_Generic
     /// assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     ///
     /// let mut recovered = vec![0; 55];
-    /// a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    /// a_des.decrypt(nonce, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     /// print!("Ba (128 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4069,12 +4069,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher1);
+    /// d_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -4094,8 +4094,8 @@ impl DES_Generic
     ///
     /// let mut recovered1 = vec![0; 55];
     /// let mut recovered2 = vec![0; 55];
-    /// c_des.decrypt(iv, cipher1.as_ptr(), cipher1.len() as u64, recovered1.as_mut_ptr());
-    /// d_des.decrypt(iv, cipher2.as_ptr(), cipher2.len() as u64, recovered2.as_mut_ptr());
+    /// c_des.decrypt(nonce, cipher1.as_ptr(), cipher1.len() as u64, recovered1.as_mut_ptr());
+    /// d_des.decrypt(nonce, cipher2.as_ptr(), cipher2.len() as u64, recovered2.as_mut_ptr());
     /// print!("B1a (0 rounds) =\t");
     /// for b in recovered1.clone()
     ///     { print!("{:02X} ", b); }
@@ -4139,10 +4139,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4153,7 +4153,7 @@ impl DES_Generic
     /// assert_eq!(txt, "");
     ///
     /// let mut recovered = vec![0; 8];
-    /// let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt(nonce, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4184,10 +4184,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4198,7 +4198,7 @@ impl DES_Generic
     /// assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     /// 
     /// let mut recovered = vec![0; 8];
-    /// let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt(nonce, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4229,10 +4229,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4243,7 +4243,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     /// 
     /// let mut recovered = vec![0; 16];
-    /// let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt(nonce, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4274,10 +4274,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4288,7 +4288,7 @@ impl DES_Generic
     /// assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     ///
     /// let mut recovered = vec![0; 16];
-    /// let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt(nonce, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4319,10 +4319,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4333,7 +4333,7 @@ impl DES_Generic
     /// assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     ///
     /// let mut recovered = vec![0; 24];
-    /// let len = a_des.decrypt(iv, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt(nonce, cipher.as_ptr(), cipher.len() as u64, recovered.as_mut_ptr());
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4399,10 +4399,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4413,7 +4413,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// a_des.decrypt_into_vec(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// print!("Ba (16 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4443,10 +4443,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4457,7 +4457,7 @@ impl DES_Generic
     /// assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// a_des.decrypt_into_vec(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// print!("Ba (128 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4490,12 +4490,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher1);
+    /// d_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -4515,8 +4515,8 @@ impl DES_Generic
     ///
     /// let mut recovered1 = Vec::<u8>::new();
     /// let mut recovered2 = Vec::<u8>::new();
-    /// c_des.decrypt_into_vec(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
-    /// d_des.decrypt_into_vec(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
+    /// c_des.decrypt_into_vec(nonce, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
+    /// d_des.decrypt_into_vec(nonce, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
     /// print!("B1a (0 rounds) =\t");
     /// for b in recovered1.clone()
     ///     { print!("{:02X} ", b); }
@@ -4560,10 +4560,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4574,7 +4574,7 @@ impl DES_Generic
     /// assert_eq!(txt, "");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// a_des.decrypt_into_vec(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4604,10 +4604,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4618,7 +4618,7 @@ impl DES_Generic
     /// assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// a_des.decrypt_into_vec(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4648,10 +4648,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4662,7 +4662,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// a_des.decrypt_into_vec(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4692,10 +4692,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4706,7 +4706,7 @@ impl DES_Generic
     /// assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// a_des.decrypt_into_vec(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4736,10 +4736,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4750,7 +4750,7 @@ impl DES_Generic
     /// assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_into_vec(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// a_des.decrypt_into_vec(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4824,10 +4824,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4838,7 +4838,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     ///
     /// let mut recovered = [0u8; 56];
-    /// let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// let len = a_des.decrypt_into_array(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// print!("Ba (16 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4868,10 +4868,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4882,7 +4882,7 @@ impl DES_Generic
     /// assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     ///
     /// let mut recovered = [0u8; 56];
-    /// let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// let len = a_des.decrypt_into_array(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// print!("Ba (16 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -4915,12 +4915,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher1);
+    /// d_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -4940,8 +4940,8 @@ impl DES_Generic
     ///
     /// let mut recovered1 = [0u8; 56];
     /// let mut recovered2 = [0u8; 56];
-    /// let len1 = c_des.decrypt_into_array(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
-    /// let len2 = d_des.decrypt_into_array(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
+    /// let len1 = c_des.decrypt_into_array(nonce, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
+    /// let len2 = d_des.decrypt_into_array(nonce, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
     /// print!("B1a (0 rounds) =\t");
     /// for b in recovered1.clone()
     ///     { print!("{:02X} ", b); }
@@ -4986,10 +4986,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5000,7 +5000,7 @@ impl DES_Generic
     /// assert_eq!(txt, "");
     ///
     /// let mut recovered = [0u8; 8];
-    /// let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// let len = a_des.decrypt_into_array(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -5031,10 +5031,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5045,7 +5045,7 @@ impl DES_Generic
     /// assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     ///
     /// let mut recovered = [0u8; 8];
-    /// let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// let len = a_des.decrypt_into_array(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -5076,10 +5076,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5090,7 +5090,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     ///
     /// let mut recovered = [0u8; 16];
-    /// let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// let len = a_des.decrypt_into_array(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -5121,10 +5121,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5135,7 +5135,7 @@ impl DES_Generic
     /// assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     ///
     /// let mut recovered = [0u8; 16];
-    /// let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// let len = a_des.decrypt_into_array(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -5166,10 +5166,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5180,7 +5180,7 @@ impl DES_Generic
     /// assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     ///
     /// let mut recovered = [0u8; 24];
-    /// let len = a_des.decrypt_into_array(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// let len = a_des.decrypt_into_array(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -5249,10 +5249,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5263,7 +5263,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// a_des.decrypt_into_string(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// println!("B (16 rounds) =\t{}", recovered);
     /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     /// assert_eq!(recovered, message);
@@ -5281,10 +5281,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5295,7 +5295,7 @@ impl DES_Generic
     /// assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// a_des.decrypt_into_string(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// println!("B (128 rounds) =\t{}", recovered);
     /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     /// assert_eq!(recovered, message);
@@ -5316,12 +5316,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher1);
+    /// d_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -5341,8 +5341,8 @@ impl DES_Generic
     ///
     /// let mut recovered1 = String::new();
     /// let mut recovered2 = String::new();
-    /// c_des.decrypt_into_string(iv, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
-    /// d_des.decrypt_into_string(iv, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
+    /// c_des.decrypt_into_string(nonce, cipher1.as_ptr(), cipher1.len() as u64, &mut recovered1);
+    /// d_des.decrypt_into_string(nonce, cipher2.as_ptr(), cipher2.len() as u64, &mut recovered2);
     /// println!("B1 (0 rounds) =\t{}", recovered1);
     /// println!("B2 (0 rounds) =\t{}", recovered2);
     /// assert_eq!(recovered1, "In the beginning God created the heavens and the earth.");
@@ -5364,10 +5364,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5378,7 +5378,7 @@ impl DES_Generic
     /// assert_eq!(txt, "");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// a_des.decrypt_into_string(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "");
     /// assert_eq!(recovered, message);
@@ -5396,10 +5396,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5410,7 +5410,7 @@ impl DES_Generic
     /// assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// a_des.decrypt_into_string(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "7 bytes");
     /// assert_eq!(recovered, message);
@@ -5428,10 +5428,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5442,7 +5442,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// a_des.decrypt_into_string(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "I am OK.");
     /// assert_eq!(recovered, message);
@@ -5460,10 +5460,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5474,7 +5474,7 @@ impl DES_Generic
     /// assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// a_des.decrypt_into_string(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "PARK Youngho");
     /// assert_eq!(recovered, message);
@@ -5492,10 +5492,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5506,7 +5506,7 @@ impl DES_Generic
     /// assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_into_string(iv, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
+    /// a_des.decrypt_into_string(nonce, cipher.as_ptr(), cipher.len() as u64, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "고맙습니다.");
     /// assert_eq!(recovered, message);
@@ -5564,10 +5564,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5578,7 +5578,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     ///
     /// let mut recovered = vec![0; 55];
-    /// a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
+    /// a_des.decrypt_vec(nonce, &cipher, recovered.as_mut_ptr());
     /// print!("Ba (16 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -5608,10 +5608,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5622,7 +5622,7 @@ impl DES_Generic
     /// assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     ///
     /// let mut recovered = vec![0; 55];
-    /// a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
+    /// a_des.decrypt_vec(nonce, &cipher, recovered.as_mut_ptr());
     /// print!("Ba (128 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -5655,12 +5655,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher1);
+    /// d_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -5680,8 +5680,8 @@ impl DES_Generic
     ///
     /// let mut recovered1 = vec![0; 55];
     /// let mut recovered2 = vec![0; 55];
-    /// c_des.decrypt_vec(iv, &cipher1, recovered1.as_mut_ptr());
-    /// d_des.decrypt_vec(iv, &cipher2, recovered2.as_mut_ptr());
+    /// c_des.decrypt_vec(nonce, &cipher1, recovered1.as_mut_ptr());
+    /// d_des.decrypt_vec(nonce, &cipher2, recovered2.as_mut_ptr());
     /// print!("B1a (0 rounds) =\t");
     /// for b in recovered1.clone()
     ///     { print!("{:02X} ", b); }
@@ -5725,10 +5725,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5739,7 +5739,7 @@ impl DES_Generic
     /// assert_eq!(txt, "");
     ///
     /// let mut recovered = vec![0; 8];
-    /// let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt_vec(nonce, &cipher, recovered.as_mut_ptr());
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -5770,10 +5770,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5784,7 +5784,7 @@ impl DES_Generic
     /// assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     /// 
     /// let mut recovered = vec![0; 8];
-    /// let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt_vec(nonce, &cipher, recovered.as_mut_ptr());
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -5815,10 +5815,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5829,7 +5829,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     /// 
     /// let mut recovered = vec![0; 16];
-    /// let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt_vec(nonce, &cipher, recovered.as_mut_ptr());
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -5860,10 +5860,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5874,7 +5874,7 @@ impl DES_Generic
     /// assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     ///
     /// let mut recovered = vec![0; 16];
-    /// let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt_vec(nonce, &cipher, recovered.as_mut_ptr());
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -5905,10 +5905,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5919,7 +5919,7 @@ impl DES_Generic
     /// assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     ///
     /// let mut recovered = vec![0; 24];
-    /// let len = a_des.decrypt_vec(iv, &cipher, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt_vec(nonce, &cipher, recovered.as_mut_ptr());
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -5982,10 +5982,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -5996,7 +5996,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_vec_into_vec(nonce, &cipher, &mut recovered);
     /// print!("Ba (16 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -6026,10 +6026,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6040,7 +6040,7 @@ impl DES_Generic
     /// assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_vec_into_vec(nonce, &cipher, &mut recovered);
     /// print!("Ba (128 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -6073,12 +6073,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher1);
+    /// d_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -6098,8 +6098,8 @@ impl DES_Generic
     ///
     /// let mut recovered1 = Vec::<u8>::new();
     /// let mut recovered2 = Vec::<u8>::new();
-    /// c_des.decrypt_vec_into_vec(iv, &cipher1, &mut recovered1);
-    /// d_des.decrypt_vec_into_vec(iv, &cipher2, &mut recovered2);
+    /// c_des.decrypt_vec_into_vec(nonce, &cipher1, &mut recovered1);
+    /// d_des.decrypt_vec_into_vec(nonce, &cipher2, &mut recovered2);
     /// print!("B1a (0 rounds) =\t");
     /// for b in recovered1.clone()
     ///     { print!("{:02X} ", b); }
@@ -6143,10 +6143,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6157,7 +6157,7 @@ impl DES_Generic
     /// assert_eq!(txt, "");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_vec_into_vec(nonce, &cipher, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -6187,10 +6187,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6201,7 +6201,7 @@ impl DES_Generic
     /// assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_vec_into_vec(nonce, &cipher, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -6231,10 +6231,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6245,7 +6245,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_vec_into_vec(nonce, &cipher, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -6275,10 +6275,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6289,7 +6289,7 @@ impl DES_Generic
     /// assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_vec_into_vec(nonce, &cipher, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -6319,10 +6319,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6333,7 +6333,7 @@ impl DES_Generic
     /// assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_vec_into_vec(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_vec_into_vec(nonce, &cipher, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -6404,10 +6404,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6418,7 +6418,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     ///
     /// let mut recovered = [0u8; 56];
-    /// let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
+    /// let len = a_des.decrypt_vec_into_array(nonce, &cipher, &mut recovered);
     /// print!("Ba (16 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -6448,10 +6448,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6462,7 +6462,7 @@ impl DES_Generic
     /// assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     ///
     /// let mut recovered = [0u8; 56];
-    /// let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
+    /// let len = a_des.decrypt_vec_into_array(nonce, &cipher, &mut recovered);
     /// print!("Ba (16 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -6495,12 +6495,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher1);
+    /// d_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -6520,8 +6520,8 @@ impl DES_Generic
     ///
     /// let mut recovered1 = [0u8; 56];
     /// let mut recovered2 = [0u8; 56];
-    /// let len1 = c_des.decrypt_vec_into_array(iv, &cipher1, &mut recovered1);
-    /// let len2 = d_des.decrypt_vec_into_array(iv, &cipher2, &mut recovered2);
+    /// let len1 = c_des.decrypt_vec_into_array(nonce, &cipher1, &mut recovered1);
+    /// let len2 = d_des.decrypt_vec_into_array(nonce, &cipher2, &mut recovered2);
     /// print!("B1a (0 rounds) =\t");
     /// for b in recovered1.clone()
     ///     { print!("{:02X} ", b); }
@@ -6566,10 +6566,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6580,7 +6580,7 @@ impl DES_Generic
     /// assert_eq!(txt, "");
     ///
     /// let mut recovered = [0u8; 8];
-    /// let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
+    /// let len = a_des.decrypt_vec_into_array(nonce, &cipher, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -6611,10 +6611,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6625,7 +6625,7 @@ impl DES_Generic
     /// assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     ///
     /// let mut recovered = [0u8; 8];
-    /// let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
+    /// let len = a_des.decrypt_vec_into_array(nonce, &cipher, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -6656,10 +6656,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6670,7 +6670,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     ///
     /// let mut recovered = [0u8; 16];
-    /// let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
+    /// let len = a_des.decrypt_vec_into_array(nonce, &cipher, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -6701,10 +6701,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6715,7 +6715,7 @@ impl DES_Generic
     /// assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     ///
     /// let mut recovered = [0u8; 16];
-    /// let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
+    /// let len = a_des.decrypt_vec_into_array(nonce, &cipher, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -6746,10 +6746,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6760,7 +6760,7 @@ impl DES_Generic
     /// assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     ///
     /// let mut recovered = [0u8; 24];
-    /// let len = a_des.decrypt_vec_into_array(iv, &cipher, &mut recovered);
+    /// let len = a_des.decrypt_vec_into_array(nonce, &cipher, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -6825,10 +6825,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6839,7 +6839,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_vec_into_string(nonce, &cipher, &mut recovered);
     /// println!("B (16 rounds) =\t{}", recovered);
     /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     /// assert_eq!(recovered, message);
@@ -6857,10 +6857,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6871,7 +6871,7 @@ impl DES_Generic
     /// assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_vec_into_string(nonce, &cipher, &mut recovered);
     /// println!("B (128 rounds) =\t{}", recovered);
     /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     /// assert_eq!(recovered, message);
@@ -6892,12 +6892,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = Vec::<u8>::new();
     /// let mut cipher2 = Vec::<u8>::new();
-    /// c_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher1);
+    /// d_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -6917,8 +6917,8 @@ impl DES_Generic
     ///
     /// let mut recovered1 = String::new();
     /// let mut recovered2 = String::new();
-    /// c_des.decrypt_vec_into_string(iv, &cipher1, &mut recovered1);
-    /// d_des.decrypt_vec_into_string(iv, &cipher2, &mut recovered2);
+    /// c_des.decrypt_vec_into_string(nonce, &cipher1, &mut recovered1);
+    /// d_des.decrypt_vec_into_string(nonce, &cipher2, &mut recovered2);
     /// println!("B1 (0 rounds) =\t{}", recovered1);
     /// println!("B2 (0 rounds) =\t{}", recovered2);
     /// assert_eq!(recovered1, "In the beginning God created the heavens and the earth.");
@@ -6940,10 +6940,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6954,7 +6954,7 @@ impl DES_Generic
     /// assert_eq!(txt, "");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_vec_into_string(nonce, &cipher, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "");
     /// assert_eq!(recovered, message);
@@ -6972,10 +6972,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -6986,7 +6986,7 @@ impl DES_Generic
     /// assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_vec_into_string(nonce, &cipher, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "7 bytes");
     /// assert_eq!(recovered, message);
@@ -7004,10 +7004,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7018,7 +7018,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_vec_into_string(nonce, &cipher, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "I am OK.");
     /// assert_eq!(recovered, message);
@@ -7036,10 +7036,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7050,7 +7050,7 @@ impl DES_Generic
     /// assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_vec_into_string(nonce, &cipher, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "PARK Youngho");
     /// assert_eq!(recovered, message);
@@ -7068,10 +7068,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7082,7 +7082,7 @@ impl DES_Generic
     /// assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_vec_into_string(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_vec_into_string(nonce, &cipher, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "고맙습니다.");
     /// assert_eq!(recovered, message);
@@ -7140,10 +7140,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7154,7 +7154,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     ///
     /// let mut recovered = vec![0; 55];
-    /// let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt_array(nonce, &cipher, recovered.as_mut_ptr());
     /// recovered.truncate(len as usize);
     /// print!("Ba (16 rounds) =\t");
     /// for b in recovered.clone()
@@ -7185,10 +7185,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7199,7 +7199,7 @@ impl DES_Generic
     /// assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     ///
     /// let mut recovered = vec![0; 55];
-    /// let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt_array(nonce, &cipher, recovered.as_mut_ptr());
     /// recovered.truncate(len as usize);
     /// print!("Ba (128 rounds) =\t");
     /// for b in recovered.clone()
@@ -7233,12 +7233,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = [0_u8; 55];
     /// let mut cipher2 = [0_u8; 55];
-    /// c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher1);
+    /// d_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -7258,8 +7258,8 @@ impl DES_Generic
     ///
     /// let mut recovered1 = vec![0; 55];
     /// let mut recovered2 = vec![0; 55];
-    /// let len1 = c_des.decrypt_array(iv, &cipher1, recovered1.as_mut_ptr());
-    /// let len2 = d_des.decrypt_array(iv, &cipher2, recovered2.as_mut_ptr());
+    /// let len1 = c_des.decrypt_array(nonce, &cipher1, recovered1.as_mut_ptr());
+    /// let len2 = d_des.decrypt_array(nonce, &cipher2, recovered2.as_mut_ptr());
     /// recovered1.truncate(len1 as usize);
     /// recovered2.truncate(len2 as usize);
     ///
@@ -7306,10 +7306,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 0];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7320,7 +7320,7 @@ impl DES_Generic
     /// assert_eq!(txt, "");
     ///
     /// let mut recovered = vec![0; 8];
-    /// let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt_array(nonce, &cipher, recovered.as_mut_ptr());
     /// recovered.truncate(len as usize);
     ///
     /// print!("Ba =\t");
@@ -7352,10 +7352,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 7];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7366,7 +7366,7 @@ impl DES_Generic
     /// assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     /// 
     /// let mut recovered = vec![0; 8];
-    /// let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt_array(nonce, &cipher, recovered.as_mut_ptr());
     /// recovered.truncate(len as usize);
     ///
     /// print!("Ba =\t");
@@ -7398,10 +7398,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7412,7 +7412,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     /// 
     /// let mut recovered = vec![0; 16];
-    /// let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt_array(nonce, &cipher, recovered.as_mut_ptr());
     /// recovered.truncate(len as usize);
     ///
     /// print!("Ba =\t");
@@ -7444,10 +7444,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 12];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7458,7 +7458,7 @@ impl DES_Generic
     /// assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     ///
     /// let mut recovered = vec![0; 16];
-    /// let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt_array(nonce, &cipher, recovered.as_mut_ptr());
     /// recovered.truncate(len as usize);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -7489,10 +7489,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7503,7 +7503,7 @@ impl DES_Generic
     /// assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     ///
     /// let mut recovered = vec![0; 24];
-    /// let len = a_des.decrypt_array(iv, &cipher, recovered.as_mut_ptr());
+    /// let len = a_des.decrypt_array(nonce, &cipher, recovered.as_mut_ptr());
     /// recovered.truncate(len as usize);
     ///
     /// print!("Ba =\t");
@@ -7566,10 +7566,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7580,7 +7580,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_array_into_vec(nonce, &cipher, &mut recovered);
     /// print!("Ba (16 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -7610,10 +7610,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7624,7 +7624,7 @@ impl DES_Generic
     /// assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_array_into_vec(nonce, &cipher, &mut recovered);
     /// print!("Ba (128 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -7657,12 +7657,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = [0_u8; 55];
     /// let mut cipher2 = [0_u8; 55];
-    /// c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher1);
+    /// d_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -7682,8 +7682,8 @@ impl DES_Generic
     ///
     /// let mut recovered1 = Vec::<u8>::new();
     /// let mut recovered2 = Vec::<u8>::new();
-    /// c_des.decrypt_array_into_vec(iv, &cipher1, &mut recovered1);
-    /// d_des.decrypt_array_into_vec(iv, &cipher2, &mut recovered2);
+    /// c_des.decrypt_array_into_vec(nonce, &cipher1, &mut recovered1);
+    /// d_des.decrypt_array_into_vec(nonce, &cipher2, &mut recovered2);
     /// print!("B1a (0 rounds) =\t");
     /// for b in recovered1.clone()
     ///     { print!("{:02X} ", b); }
@@ -7727,10 +7727,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 0];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7741,7 +7741,7 @@ impl DES_Generic
     /// assert_eq!(txt, "");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_array_into_vec(nonce, &cipher, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -7771,10 +7771,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 7];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7785,7 +7785,7 @@ impl DES_Generic
     /// assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_array_into_vec(nonce, &cipher, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -7815,10 +7815,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7829,7 +7829,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     /// 
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_array_into_vec(nonce, &cipher, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -7859,10 +7859,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 12];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7873,7 +7873,7 @@ impl DES_Generic
     /// assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_array_into_vec(nonce, &cipher, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -7903,10 +7903,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -7917,7 +7917,7 @@ impl DES_Generic
     /// assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     ///
     /// let mut recovered = Vec::<u8>::new();
-    /// a_des.decrypt_array_into_vec(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_array_into_vec(nonce, &cipher, &mut recovered);
     /// print!("Ba =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -7988,10 +7988,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8002,7 +8002,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     ///
     /// let mut recovered = [0u8; 56];
-    /// let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
+    /// let len = a_des.decrypt_array_into_array(nonce, &cipher, &mut recovered);
     /// print!("Ba (16 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -8032,10 +8032,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8046,7 +8046,7 @@ impl DES_Generic
     /// assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     ///
     /// let mut recovered = [0u8; 56];
-    /// let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
+    /// let len = a_des.decrypt_array_into_array(nonce, &cipher, &mut recovered);
     /// print!("Ba (16 rounds) =\t");
     /// for b in recovered.clone()
     ///     { print!("{:02X} ", b); }
@@ -8079,12 +8079,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = [0_u8; 55];
     /// let mut cipher2 = [0_u8; 55];
-    /// c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher1);
+    /// d_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -8104,8 +8104,8 @@ impl DES_Generic
     ///
     /// let mut recovered1 = [0u8; 56];
     /// let mut recovered2 = [0u8; 56];
-    /// let len1 = c_des.decrypt_array_into_array(iv, &cipher1, &mut recovered1);
-    /// let len2 = d_des.decrypt_array_into_array(iv, &cipher2, &mut recovered2);
+    /// let len1 = c_des.decrypt_array_into_array(nonce, &cipher1, &mut recovered1);
+    /// let len2 = d_des.decrypt_array_into_array(nonce, &cipher2, &mut recovered2);
     /// print!("B1a (0 rounds) =\t");
     /// for b in recovered1.clone()
     ///     { print!("{:02X} ", b); }
@@ -8150,10 +8150,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 0];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8164,7 +8164,7 @@ impl DES_Generic
     /// assert_eq!(txt, "");
     ///
     /// let mut recovered = [0u8; 8];
-    /// let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
+    /// let len = a_des.decrypt_array_into_array(nonce, &cipher, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -8195,10 +8195,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 7];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8209,7 +8209,7 @@ impl DES_Generic
     /// assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     ///
     /// let mut recovered = [0u8; 8];
-    /// let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
+    /// let len = a_des.decrypt_array_into_array(nonce, &cipher, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -8240,10 +8240,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8254,7 +8254,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     ///
     /// let mut recovered = [0u8; 16];
-    /// let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
+    /// let len = a_des.decrypt_array_into_array(nonce, &cipher, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -8285,10 +8285,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 12];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8299,7 +8299,7 @@ impl DES_Generic
     /// assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     ///
     /// let mut recovered = [0u8; 16];
-    /// let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
+    /// let len = a_des.decrypt_array_into_array(nonce, &cipher, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -8330,10 +8330,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8344,7 +8344,7 @@ impl DES_Generic
     /// assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     ///
     /// let mut recovered = [0u8; 24];
-    /// let len = a_des.decrypt_array_into_array(iv, &cipher, &mut recovered);
+    /// let len = a_des.decrypt_array_into_array(nonce, &cipher, &mut recovered);
     ///
     /// print!("Ba =\t");
     /// for b in recovered.clone()
@@ -8409,10 +8409,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8423,7 +8423,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 50 6F 31 60 BA 91 7E D0 DE 38 A6 FD 50 DE BC F5 BF CA 3D A4 15 03 C5 2A 8B 35 94 F9 1B 0B 64 FE C4 32 98 5B 3B 20 FC DE B6 88 E4 BD 4E 7D 8E 5A E8 41 79 F0 DC 2E ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_array_into_string(nonce, &cipher, &mut recovered);
     /// println!("B (16 rounds) =\t{}", recovered);
     /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     /// assert_eq!(recovered, message);
@@ -8441,10 +8441,10 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 55];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C (128 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8455,7 +8455,7 @@ impl DES_Generic
     /// assert_eq!(txt, "FA 29 57 1F C9 60 9F 98 4C 48 14 62 7B 72 B4 D6 5D 09 1F C8 FB CE 1C 86 92 DF E2 3E 3F 91 75 62 F8 47 77 BB 86 8A 7D F0 BF E9 E4 52 EC 4D 42 F6 D4 7B 41 19 43 C5 5B ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_array_into_string(nonce, &cipher, &mut recovered);
     /// println!("B (128 rounds) =\t{}", recovered);
     /// assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     /// assert_eq!(recovered, message);
@@ -8476,12 +8476,12 @@ impl DES_Generic
     ///
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher1 = [0_u8; 55];
     /// let mut cipher2 = [0_u8; 55];
-    /// c_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher1);
-    /// d_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher2);
+    /// c_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher1);
+    /// d_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher2);
     /// print!("C (0 rounds) =\t");
     /// for c in cipher1.clone()
     ///     { print!("{:02X} ", c); }
@@ -8501,8 +8501,8 @@ impl DES_Generic
     ///
     /// let mut recovered1 = String::new();
     /// let mut recovered2 = String::new();
-    /// c_des.decrypt_array_into_string(iv, &cipher1, &mut recovered1);
-    /// d_des.decrypt_array_into_string(iv, &cipher2, &mut recovered2);
+    /// c_des.decrypt_array_into_string(nonce, &cipher1, &mut recovered1);
+    /// d_des.decrypt_array_into_string(nonce, &cipher2, &mut recovered2);
     /// println!("B1 (0 rounds) =\t{}", recovered1);
     /// println!("B2 (0 rounds) =\t{}", recovered2);
     /// assert_eq!(recovered1, "In the beginning God created the heavens and the earth.");
@@ -8524,10 +8524,10 @@ impl DES_Generic
     ///
     /// let message = "";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 0];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8538,7 +8538,7 @@ impl DES_Generic
     /// assert_eq!(txt, "");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_array_into_string(nonce, &cipher, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "");
     /// assert_eq!(recovered, message);
@@ -8556,10 +8556,10 @@ impl DES_Generic
     ///
     /// let message = "7 bytes";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 7];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8570,7 +8570,7 @@ impl DES_Generic
     /// assert_eq!(txt, "4E 1E 2D 3C 7C BA C2 ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_array_into_string(nonce, &cipher, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "7 bytes");
     /// assert_eq!(recovered, message);
@@ -8588,10 +8588,10 @@ impl DES_Generic
     ///
     /// let message = "I am OK.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 8];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8602,7 +8602,7 @@ impl DES_Generic
     /// assert_eq!(txt, "30 1E 2E 28 28 90 FA 32 ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_array_into_string(nonce, &cipher, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "I am OK.");
     /// assert_eq!(recovered, message);
@@ -8620,10 +8620,10 @@ impl DES_Generic
     ///
     /// let message = "PARK Youngho";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 12];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8634,7 +8634,7 @@ impl DES_Generic
     /// assert_eq!(txt, "29 7F 1D 0E 28 86 DE 69 DB DE 39 A7 ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_array_into_string(nonce, &cipher, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "PARK Youngho");
     /// assert_eq!(recovered, message);
@@ -8652,10 +8652,10 @@ impl DES_Generic
     ///
     /// let message = "고맙습니다.";
     /// println!("M =\t{}", message);
-    /// let iv = 0x_FEDCBA0987654321_u64;
-    /// println!("IV =	{}", iv);
+    /// let nonce = 0x_FEDCBA0987654321_u64;
+    /// println!("Nonce =	{}", nonce);
     /// let mut cipher = [0_u8; 16];
-    /// a_des.encrypt_into_array(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -8666,7 +8666,7 @@ impl DES_Generic
     /// assert_eq!(txt, "93 8D EF AE AF 46 5D 96 00 52 DA 40 78 B2 14 F5 ");
     ///
     /// let mut recovered = String::new();
-    /// a_des.decrypt_array_into_string(iv, &cipher, &mut recovered);
+    /// a_des.decrypt_array_into_string(nonce, &cipher, &mut recovered);
     /// println!("B =\t{}", recovered);
     /// assert_eq!(recovered, "고맙습니다.");
     /// assert_eq!(recovered, message);

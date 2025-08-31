@@ -57,20 +57,20 @@
 //!     to keep using SHA2_512 for a pseudo-random number generator, you may
 //!     want to use Random_SHA2_512. If you are happy that you will automatically
 //!     use the better algotrithm in the future, you may want to use `Random`.
-//!     Read [here](struct@Random).
+//!     Read [here](type@Random).
 //!   - Any: is a synonym of Any_SHA2_256 at the moment and can be __silently
 //!     changed__ to have better algorithm in the future. If you want to keep
 //!     using SHA2_256 for a pseudo-random number generator, you may want to
 //!     use Any_SHA2_256. If you are happy that you will automatically use the
 //!     better algotrithm in the future, you may want to use `Any`.
-//!     Read [here](struct@Any).
+//!     Read [here](type@Any).
 //!   - Any_Num: is a synonym of Any_Num_C at the moment and can be __silently
 //!     changed__ to have better algorithm in the future. If you want to keep
 //!     using the algorithm of C standard libraray for a pseudo-random number
 //!     generator, you may want to use Any_Num_C. If you are happy that you
 //!     will automatically use the better algotrithm in the future, you may
 //!     want to use `Any_Num`.
-//!     Read [here](struct@Any_Num).
+//!     Read [here](type@Any_Num).
 //! 
 //! # Quality Issues and Debate
 //! The pseudo-random number generators in this module use hash algorithms,

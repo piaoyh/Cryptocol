@@ -13,11 +13,16 @@
 //! algorithms for the encryption/decryption of digital data
 //! 
 //! # Background: Symmetric encryption/decryption algorithms
-//! // Todo
+//! There are two caregories in encryption/decryption algorithms:
+//! Symmetric-Key cryptographic algorithms and Asymmetric-Key cryptographic
+//! algorithms. The Symmetric-Key cryptographic algorithms use the same keys
+//! to encrypt and to decrypt, and are way faster than the Symmetric-Key
+//! cryptographic algorithms. This module implements a few Symmetric-Key
+//! cryptographic algorithms in Rust codes.
 //! 
-// ! Read [this article](https://en.wikipedia.org/wiki/Cryptographic_hash_function)
-// ! and/or Watch [this lecture](https://www.youtube.com/watch?v=kPBJIhpcZgE)
-// ! to learn symmetric encryption/decryption algorithms more in detail.
+//! Read [this article](https://en.wikipedia.org/wiki/Symmetric-key_algorithm)
+//! and/or Watch [this lecture](https://www.youtube.com/watch?v=sx1jUqdNxQc)
+//! to learn symmetric encryption/decryption algorithms more in detail.
 //! 
 //! # The symmetric-key algorithms for the encryption/decryption of digital data
 //!   This module provides several kinds of symmetric-key algorithms for the

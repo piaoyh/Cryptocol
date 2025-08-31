@@ -227,7 +227,7 @@ fn aes_encrypt_cfb_into_vec()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    a_aes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_aes.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -251,7 +251,7 @@ fn aes_encrypt_cfb_into_vec()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    a_aes.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_aes.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -275,7 +275,7 @@ fn aes_encrypt_cfb_into_vec()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    a_rijndael.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_rijndael.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }
@@ -308,7 +308,7 @@ fn aes_encrypt_cfb_into_vec()
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = Vec::<u8>::new();
-    a_rijndael.encrypt_into_vec(iv, message.as_ptr(), message.len() as u64, &mut cipher);
+    a_rijndael.encrypt_str_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
     for c in cipher.clone()
         { print!("{:02X} ", c); }

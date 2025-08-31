@@ -149,8 +149,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -326,8 +325,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -485,8 +483,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -633,8 +630,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -778,8 +774,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -932,8 +927,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -1084,8 +1078,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -1229,8 +1222,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -1384,8 +1376,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -1540,8 +1531,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -1692,8 +1682,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -1856,8 +1845,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -2016,8 +2004,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -2171,8 +2158,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -2336,8 +2322,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -2465,7 +2450,7 @@ pub trait CTR<T> : Sized
     /// let nonce = 0x_FEDCBA0987654321_u64;
     /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2551,8 +2536,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -2560,7 +2544,7 @@ pub trait CTR<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2692,7 +2676,7 @@ pub trait CTR<T> : Sized
     /// let nonce = 0x_FEDCBA0987654321_u64;
     /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2778,8 +2762,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -2787,7 +2770,7 @@ pub trait CTR<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -2931,7 +2914,7 @@ pub trait CTR<T> : Sized
     /// let nonce = 0x_FEDCBA0987654321_u64;
     /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3017,8 +3000,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -3026,7 +3008,7 @@ pub trait CTR<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3146,7 +3128,7 @@ pub trait CTR<T> : Sized
     /// let nonce = 0x_FEDCBA0987654321_u64;
     /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3208,8 +3190,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -3217,7 +3198,7 @@ pub trait CTR<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3342,7 +3323,7 @@ pub trait CTR<T> : Sized
     /// let nonce = 0x_FEDCBA0987654321_u64;
     /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3428,8 +3409,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -3437,7 +3417,7 @@ pub trait CTR<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3566,7 +3546,7 @@ pub trait CTR<T> : Sized
     /// let nonce = 0x_FEDCBA0987654321_u64;
     /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3652,8 +3632,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -3661,7 +3640,7 @@ pub trait CTR<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3799,7 +3778,7 @@ pub trait CTR<T> : Sized
     /// let nonce = 0x_FEDCBA0987654321_u64;
     /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -3884,8 +3863,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -3893,7 +3871,7 @@ pub trait CTR<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4011,7 +3989,7 @@ pub trait CTR<T> : Sized
     /// let nonce = 0x_FEDCBA0987654321_u64;
     /// println!("Nonce =	{}", nonce);
     /// let mut cipher = Vec::<u8>::new();
-    /// a_des.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// a_des.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C (16 rounds) =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4073,8 +4051,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -4082,7 +4059,7 @@ pub trait CTR<T> : Sized
     /// let message = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", message);
     /// let mut cipher = Vec::<u8>::new();
-    /// tdes.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, &mut cipher);
+    /// tdes.encrypt_str_into_vec(nonce, &message, &mut cipher);
     /// print!("C =\t");
     /// for c in cipher.clone()
     ///     { print!("{:02X} ", c); }
@@ -4295,8 +4272,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -4518,8 +4494,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -4750,8 +4725,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
@@ -4939,8 +4913,7 @@ pub trait CTR<T> : Sized
     /// use std::fmt::Write as _;
     /// use cryptocol::symmetric::{ BigCryptor64, DES, CTR };
     /// 
-    /// let mut tdes = BigCryptor64::new()
-    ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
+    /// let mut tdes = DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)
     ///                 + DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)
     ///                 + DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64);
     /// let nonce = 0x_FEDCBA0987654321_u64;
