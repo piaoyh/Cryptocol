@@ -668,6 +668,8 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
             /// primne number.
             /// [Read more](trait@SmallUInt#tymethod.is_prime_using_miller_rabin)
             /// in detail.
+            /// [Read more](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test?utm_source=chatgpt.com#Deterministic_variants)
+            /// to learn deterministic decision with Millar-Rabin algorithm.
             fn is_prime_using_miller_rabin(self, repetition: usize) -> bool
             {
                 if self == 2 ||  self == 3
@@ -676,20 +678,39 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
                 if self.is_zero_or_one() || self.is_even()
                     { return false; }
                 
-                if self <= (u8::MAX as Self)    // repetition is meaningless.
-                {
-                    return self.test_miller_rabin(2 as Self);
-                }
-
                 let a_list;
-                if self <= (u16::MAX as Self)
-                    { a_list = vec![2_u8, 3]; }
-                else if self <= (u32::MAX as Self)
-                    { a_list = vec![2_u8, 3, 5, 7]; }
-                else if self <= u64::MAX as Self
-                    { a_list = vec![2_u8, 3, 5, 7, 11, 13, 17]; }
-                else    // if self <= u124::MAX as Self
-                    { a_list = vec![2_u8, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]; }
+                // if self.into_u128() <= u8::MAX as u128   // > u8::MAX, repetition is meaningless.
+                //     { a_list = vec![2_u32]; } else
+                if self.into_u128() <= 2047_u128    // > u8::MAX, repetition is meaningless.
+                    { a_list = vec![2_u32]; }
+                // else if self.into_u128() <= u16::MAX as u128
+                //     { a_list = vec![2_u32, 3]; }
+                else if self.into_u128() <= 137_3653_u128    // > u16::MAX
+                    { a_list = vec![2_u32, 3]; }
+                else if self.into_u128() <= 908_0191_u128    // < u32::MAX
+                    { a_list = vec![31_u32, 73]; }
+                // else if self.into_u128() <= u32::MAX as u128
+                //     { a_list = vec![2_u32, 7, 61]; }
+                else if self.into_u128() <= 2532_6001_u128  // > u32::MAX == 47_5912_3141
+                    { a_list = vec![2_u32, 7, 61]; }
+                else if self.into_u128() <= 1_1220_0466_9633_u128   // < u64::MAX
+                    { a_list = vec![2_u32, 13, 23, 1662803]; }
+                else if self.into_u128() <= 2_1523_0289_8747_u128   // < u64::MAX
+                    { a_list = vec![2_u32, 3, 5, 7, 11]; }
+                else if self.into_u128() <= 3_4747_4966_0383_u128   // < u64::MAX
+                    { a_list = vec![2_u32, 3, 5, 7, 11, 13]; }
+                else if self.into_u128() <= 341_5500_7172_8321_u128   // < u64::MAX
+                    { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17]; }
+                else if self.into_u128() <= 382_5123_0565_4641_3051_u128   // < u64::MAX
+                    { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23]; }
+                // else if self.into_u128() <= u64::MAX as u128
+                //     { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]; }
+                else if self.into_u128() <= 3186_6585_7834_0311_5116_7461_u128   // < u128::MAX
+                    { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]; }
+                else if self.into_u128() <=  3_3170_4406_4679_8873_8596_1981_u128   // < u128::MAX
+                    { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41]; }
+                else    // if self <= u128::MAX as Self
+                    { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71]; }
 
                 let len = a_list.len();
                 let common = if len < repetition { len } else { repetition };
@@ -702,7 +723,9 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
             }
 
             /// Tests a `SmallUInt`-type object to find whether or not it is a
-            /// primne number.
+            /// primne number. If the `self` is less than or equal to than
+            /// 3_3170_4406_4679_8873_8596_1981_u128, it is deterministic.
+            /// Otherwise, it is probabilistic. 
             /// [Read more](trait@SmallUInt#tymethod.is_prime_using_miller_rabin)
             /// in detail.
             fn is_prime(self) -> bool
@@ -713,44 +736,7 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
                 if self.is_zero_or_one() || self.is_even()
                     { return false; }
                 
-                if self <= (u8::MAX as Self)
-                {
-                    return self.test_miller_rabin(2 as Self);
-                }
-                else if self <= (u16::MAX as Self)
-                {
-                    return self.test_miller_rabin(2 as Self) && return self.test_miller_rabin(3 as Self);
-                }
-                else if self <= (u32::MAX as Self)
-                {
-                    let a_list = [2_u8, 3, 5, 7];
-                    for a in a_list
-                    {
-                        if !self.test_miller_rabin(a as Self)
-                            { return false; }
-                    }
-                    return true;
-                }
-                else if self <= u64::MAX as Self
-                {
-                    let a_list = [2_u8, 3, 5, 7, 11, 13, 17];
-                    for a in a_list
-                    {
-                        if !self.test_miller_rabin(a as Self)
-                            { return false; }
-                    }
-                    return true;
-                }
-                else
-                {
-                    let a_list = [2_u8, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37];
-                    for a in a_list
-                    {
-                        if !self.test_miller_rabin(a as Self)
-                            { return false; }
-                    }
-                    return true;
-                }
+                self.is_prime_using_miller_rabin(20)
             }
 
             /// Tests a `SmallUInt`-type object to find whether or not `self`

@@ -27,11 +27,11 @@
 //! # The symmetric-key algorithms for the encryption/decryption of digital data
 //!   This module provides several kinds of symmetric-key algorithms for the
 //!   encryption/decryption of digital data:
-//! - AES and Rijdael symmetric-key encryption/decryption algorithm and the
+//! - AES and Rijndael symmetric-key encryption/decryption algorithm and the
 //!   trait implementations of Operation modes and padding bits for AES_Generic
 //!   --- Includes AES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB,
 //!   and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
-//!   [`Rijdael_Generic`](struct@Rijndael_Generic),
+//!   [`Rijndael_Generic`](struct@Rijndael_Generic),
 //!   [`ECB_PKCS7`](trait@ECB_PKCS7),
 //!   [`ECB_ISO`](trait@ECB_ISO),
 //!   [`CBC_PKCS7`](trait@ECB_PKCS7),

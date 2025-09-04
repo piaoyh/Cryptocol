@@ -110,10 +110,10 @@
 // !       ===> Moved to Roadmap for ver. 2.0
 //! 
 //! ## Symmetric-key Algorithms for the Encryption/Decryption of digital data
-//! - [X] AES and Rijdael symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for AES_Generic
+//! - [X] AES and Rijndael symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for AES_Generic
 //!       --- Includes AES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits
 //!       according to PKCS#7 and ISO 7816-4.
-//!       [`Rijdael_Generic`](symmetric/rijndael/struct.Rijndael_Generic.html#struct.Rijndael_Generic),
+//!       [`Rijndael_Generic`](symmetric/rijndael/struct.Rijndael_Generic.html#struct.Rijndael_Generic),
 //!       [`ECB_PKCS7`](symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
 //!       [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
 //!       [`CBC_PKCS7`](symmetric/trait.CBC_PKCS7.html#trait.ECB_PKCS7),
