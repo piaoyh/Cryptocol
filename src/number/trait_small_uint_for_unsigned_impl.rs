@@ -677,7 +677,7 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
 
                 if self.is_zero_or_one() || self.is_even()
                     { return false; }
-                
+
                 let a_list;
                 // if self.into_u128() <= u8::MAX as u128   // > u8::MAX, repetition is meaningless.
                 //     { a_list = vec![2_u32]; } else
@@ -714,10 +714,20 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
 
                 let len = a_list.len();
                 let common = if len < repetition { len } else { repetition };
-                for i in 0..common
+                let mut i = 0;
+                while i < common
                 {
                     if !self.test_miller_rabin(a_list[i] as Self)
                         { return false; }
+                    i += 1;
+                }
+                
+                let mut a = a_list[len-1] as u32 + 2;
+                for _ in i..repetition
+                {
+                    if !self.test_miller_rabin(a as Self)
+                        { return false; }
+                    a += 2;
                 }
                 true
             }
