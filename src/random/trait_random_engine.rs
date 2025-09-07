@@ -9,10 +9,11 @@
 
 /// The supporting trait for `Random_Generic`
 /// `Random_Generic` uses whatever object that has this trait for pseudo-random
-/// number generator engine. So, if you plug in any hash algorithm that has
-/// this trait to `Random_Generic`, `Random_Generic` will use the object
-/// as its pseudo-random number generator engine.
-/// You will hardly use the object that has this trait except the case
+/// number generator engine. So, if you plug any hash algorithm or any
+/// symmetric-key crytographic algorithm, which implement this trait, in
+/// `Random_Generic` , `Random_Generic` will use the object as its pseudo-random
+/// number generator engine.
+/// You will hardly use the object that has this trait except in the case
 /// that you use it in order to plug it in the `Random_Generic`. 
 #[allow(non_camel_case_types)]
 pub trait Random_Engine
