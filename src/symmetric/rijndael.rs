@@ -295,8 +295,9 @@ macro_rules! make_RC_ARRAY {
 pub type Rijndael_32_32 = Rijndael_Generic<7, 1, 1>;
 
 /// Rijndael_64_64 is not really practical too, but it can be used with DES
-/// cryptographic algorithm along. Its key is 64-bit and its encryption block
-/// is 64-bit. So, it can work with DES.
+/// cryptographic algorithm along or as random number generator engine.
+/// Its key is 64-bit and its encryption block is 64-bit.
+/// So, it can work with DES.
 #[allow(non_camel_case_types)]
 pub type Rijndael_64_64 = Rijndael_Generic<8, 2, 2>;
 
@@ -515,10 +516,12 @@ pub type AES_128 = Rijndael_Generic;
 ///   You can change the size of block by changing the value `NB`.
 ///   The default value of `NB` is `4`. The default value `4` is for AES
 ///   which is most frequently used.
+///   If `NB` is `0`, the behavior is not defined.
 /// - NK: Indicates the size of key. The key size is (`NK` * 4) bytes.
 ///   You can change the size of Key by changing the value `NK`.
 ///   The default value of `NK` is `4`. The default value `4` is for AES-128
 ///   which is most frequently used.
+///   If `NK` is `0`, the behavior is not defined.
 /// - IRREDUCIBLE: Indicates the irreducible polynomial. You can change the
 ///   irreducible polynomial by changing `IRREDUCIBLE`. The default value of
 ///   `IRREDUCIBLE` is `0b_0001_1011` which means x^8 + x^4 + x^3 + x + 1. In
@@ -1073,7 +1076,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// # Features
     /// - This method sets the key to be the given argument `key`.
     /// - If `NK` is less than `4`, the rest bits at the address higher than
-    ///   `4 * NK` of the key given as the argument will be ignored.
+    ///   `4 * NK * 8` bits of the key given as the argument will be ignored.
     /// - If `NK` is greater than `4`, the rest bits of the key to be set after
     ///   128 bits will be set to be `zero`.
     ///
@@ -1179,7 +1182,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   and NAES.
     /// - This method sets the key to be the given argument `key`.
     /// - If `NK` is less than `4`, the rest bits at the address higher than
-    ///   `4 * NK` of the key given as the argument will be ignored.
+    ///   `4 * NK * 8` bits of the key given as the argument will be ignored.
     /// - If `NK` is greater than `4`, the rest bits of the key to be set after
     ///   128 bits will be set to be `zero`.
     ///
@@ -1227,8 +1230,8 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   and NAES.
     /// - This method sets the key to be the given argument `key`.
     /// - If `K` is less than `4 * NK`, the rest bits of
-    ///   the key to be set after `K` bits will be set to be `zero`.
-    /// - If `K` is greater than `4 * NK`, the rest bits after `4 * NB` bits
+    ///   the key to be set after `K * 8` bits will be set to be `zero`.
+    /// - If `K` is greater than `4 * NK`, the rest bits after `4 * NB * 8` bits
     ///   of the key given as the argument will be ignored.
     ///
     /// # Example 1
@@ -1282,7 +1285,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///   and NAES.
     /// - This method sets the key to be the given argument `key`.
     /// - If `NK` is less than `4`, the rest bits at the address higher than
-    ///   `4 * NK` of the key given as the argument will be ignored.
+    ///   `4 * NK * 8` bits of the key given as the argument will be ignored.
     /// - If `NK` is greater than `4`, the rest bits of the key to be set after
     ///   128 bits will be set to be `zero`.
     ///
@@ -1354,7 +1357,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     ///
     /// # Features
     /// - If `NK` is less than `4`, the rest bits at the address higher than
-    ///   `4 * NK` of the returned key will be set to be `zero`.
+    ///   `4 * NK * 8` bits of the returned key will be set to be `zero`.
     /// - If `NK` is greater than `4`, the rest bits of the key to be returned
     ///   after 128 bits will be ignored.
     ///
@@ -1388,8 +1391,8 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// # Features
     /// - This method sets the key to be the given argument `key`.
     /// - If `K` is less than `4 * NK`, the rest bits of
-    ///   the key to be set after `K` bits will be set to be `zero`.
-    /// - If `K` is greater than `4 * NK`, the rest bits after `4 * NK` bits
+    ///   the key to be set after `K * 8` bits will be set to be `zero`.
+    /// - If `K` is greater than `4 * NK`, the rest bits after `4 * NK * 8` bits
     ///   of the key given as the argument will be ignored.
     ///
     /// # Example 1 for normal case
@@ -1417,6 +1420,12 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         Self::method_make_round_keys(self);
     }
 
+    pub(crate) fn set_original_key(&mut self, key: &[u32; NK])
+    {
+        for i in 0..NK
+            { self.key[i].set(key[i]); }
+    }
+
     //  pub fn set_key_u128(&mut self, key: u128)
     /// Constructs a new object Rijndael_Generic.
     ///
@@ -1432,7 +1441,7 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
     /// # Features
     /// - This method sets the key to be the given argument `key`.
     /// - If `NK` is less than `4`, the rest bits at the address higher than
-    ///   `4 * NK` of the key given as the argument will be ignored.
+    ///   `4 * NK * 8` bits of the key given as the argument will be ignored.
     /// - If `NK` is greater than `4`, the rest bits of the key to be set after
     ///   128 bits will be set to be `zero`.
     ///

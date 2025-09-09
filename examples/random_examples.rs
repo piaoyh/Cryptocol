@@ -15,6 +15,7 @@ pub fn main()
 {
     random_quick_start();
     random_new();
+    random_new_with();
     random_new_with_seeds();
     random_random_u8();
     random_random_u16();
@@ -129,69 +130,187 @@ fn random_quick_start()
 fn random_new()
 {
     println!("random_new");
+    use cryptocol::define_utypes_with;
+    define_utypes_with!(u64);
+
     // Example for Random
     use cryptocol::random::Random;
     let mut rand = Random::new();
-    println!("Random number = {}", rand.random_u128());
+    let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Random number = {}", num);
 
     // Example for Any
     use cryptocol::random::Any;
     let mut any = Any::new();
-    println!("Any number = {}", any.random_u64());
+    let num: U256 = any.random_prime_using_miller_rabin_biguint(5);
+    println!("Any number = {}", num);
 
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any_num = Any_Num::new();
-    println!("Any number = {}", any_num.random_u32());
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    let num: U1024 = rand.random_with_msb_set_biguint();
+    println!("Random number = {}", num);
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any_num_c = Any_Num_C::new();
-    println!("Any number = {}", any_num_c.random_u16());
-
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any_md4 = Any_MD4::new();
-    println!("Any number = {}", any_md4.random_u8());
-
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any_md5 = Any_MD5::new();
-    println!("Any number = {}", any_md5.random_usize());
-
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any_sha0 = Any_SHA0::new();
-    println!("Any number = {}", any_sha0.random_uint::<u8>());
-
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any_sha1 = Any_SHA1::new();
-    if let Some(num) = any_sha1.random_under_uint(1234_u16)
-        { println!("Any number = {}", num); }
-
-    // Example for Any_SHA2_256
-    use cryptocol::random::Any_SHA2_256;
-    let mut any_sha2_256 = Any_SHA2_256::new();
-    if let Some(num) = any_sha2_256.random_minmax_uint(12345678_u32, 87654321)
-        { println!("Any number = {}", num); }
-
-    // Example for Any_SHA2_512
-    use cryptocol::random::Any_SHA2_512;
-    let mut any_sha2_512 = Any_SHA2_512::new();
-    println!("Any odd number = {}", any_sha2_512.random_odd_uint::<u64>());
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    let num: U768 = rand.random_odd_biguint();
+    println!("Random number = {}", num);
 
     // Example for Random_SHA2_512
     use cryptocol::random::Random_SHA2_512;
-    let mut random_sha2_512 = Random_SHA2_512::new();
-    println!("Random prime number = {}", random_sha2_512.random_prime_using_miller_rabin_uint::<u128>(5));
+    let mut rand = Random_SHA2_512::new();
+    let num: U512 = rand.random_biguint();
+    println!("Random number = {}", num);
 
-    // Example for Random_Generic
-    use cryptocol::random::Random_Generic;
-    use cryptocol::hash::MD4_Expanded;
-    type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
-    let mut any_md4_expanded = Random_Generic::<1000>::new_with(MyMD4::new(), MyMD4::new());
-    println!("Any number = {}", any_md4_expanded.random_biguint::<u128, 4>());
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    let num: U384 = any.random_biguint();
+    println!("Any number = {}", num);
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    println!("Any number = {}", any.random_u128());
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    println!("Any number = {}", any.random_u64());
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    println!("Any number = {}", any.random_u32());
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    println!("Any number = {}", any.random_u16());
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    println!("Any number = {}", any.random_u8());
+
+    // Example for Any_SHA1
+    use cryptocol::random::Any_SHA1;
+    let mut any = Any_SHA1::new();
+    println!("Any number = {}", any.random_usize());
+
+    // Example for Any_SHA0
+    use cryptocol::random::Any_SHA0;
+    let mut any = Any_SHA0::new();
+    println!("Any number = {}", any.random_u64());
+
+    // Example for Any_MD5
+    use cryptocol::random::Any_MD5;
+    let mut any = Any_MD5::new();
+    println!("Any number = {}", any.random_u32());
+
+    // Example for Any_MD4
+    use cryptocol::random::Any_MD4;
+    let mut any = Any_MD4::new();
+    println!("Any number = {}", any.random_u16());
+
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    let num: U512 = rand.random_with_msb_set_biguint();
+    println!("Random number = {}", num);
+
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    let num: U384 = any.random_biguint();
+    println!("Any number = {}", num);
+
+    // Example for Any_DES
+    use cryptocol::random::Any_DES;
+    let mut any = Any_DES::new();
+    let num: U256 = any.random_odd_biguint();
+    println!("Any number = {}", num);
+
+    // Example for Any_Num_C
+    use cryptocol::random::Any_Num_C;
+    let mut any = Any_Num_C::new();
+    println!("Any number = {}", any.random_usize());
+
+    // Example for Any_Num
+    use cryptocol::random::Any_Num;
+    let mut any = Any_Num::new();
+    println!("Any number = {}", any.random_u8());
+    println!("-------------------------------");
+}
+
+fn random_new_with()
+{
+    println!("random_new_with");
+    use cryptocol::random::{ AnyGen, RandGen };
+    use cryptocol::define_utypes_with;
+    define_utypes_with!(u64);
+
+    // Example for BIG_KECCAK_1024
+    use cryptocol::hash::BIG_KECCAK_1024;
+    let mut rand = RandGen::new_with(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new());
+    let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Random number = {}", num);
+
+    // Example for SHA3_512
+    use cryptocol::hash::SHA3_512;
+    let mut any = AnyGen::new_with(SHA3_512::new(), SHA3_512::new());
+    let num: U256 = any.random_prime_using_miller_rabin_biguint(5);
+    println!("Any number = {}", num);
+
+    // Example for SHA2_512
+    use cryptocol::hash::SHA2_512;
+    let mut any = AnyGen::new_with(SHA2_512::new(), SHA2_512::new());
+    let num: U1024 = any.random_with_msb_set_biguint();
+    println!("Any number = {}", num);
+
+    // Example for SHAKE_256
+    use cryptocol::hash::SHAKE_256;
+    let mut rand = RandGen::new_with(SHAKE_256::new(), SHAKE_256::new());
+    let num: U768 = rand.random_odd_biguint();
+    println!("Random number = {}", num);
+
+    // Example for SHAKE_128
+    use cryptocol::hash::SHAKE_128;
+    let mut any = AnyGen::new_with(SHAKE_128::new(), SHAKE_128::new());
+    let num: U512 = any.random_biguint();
+    println!("Any number = {}", num);
+
+    // Example for SHA3_256
+    use cryptocol::hash::SHA3_256;
+    let mut any = AnyGen::new_with(SHA3_256::new(), SHA3_256::new());
+    let num: U384 = any.random_biguint();
+    println!("Any number = {}", num);
+
+    // Example for SHA2_256
+    use cryptocol::hash::SHA2_256;
+    let mut any = AnyGen::new_with(SHA2_256::new(), SHA2_256::new());
+    println!("Any number = {}", any.random_u128());
+
+    // Example for SHA1 and SHA0
+    use cryptocol::hash::{ SHA1, SHA0 };
+    let mut any = AnyGen::new_with(SHA1::new(), SHA0::new());
+    println!("Any number = {}", any.random_u64());
+
+    // Example for MD5 and MD4
+    use cryptocol::hash::{ MD5, MD4 };
+    let mut any = AnyGen::new_with(MD5::new(), MD4::new());
+    println!("Any number = {}", any.random_u32());
+
+    // Example for AES_128
+    use cryptocol::symmetric::AES_128;
+    let mut any = RandGen::new_with(AES_128::new(), AES_128::new());
+    println!("Random number = {}", any.random_u16());
+
+    // Example for DES
+    use cryptocol::symmetric::DES;
+    let mut any = AnyGen::new_with(DES::new(), DES::new());
+    println!("Any number = {}", any.random_u8());
     println!("-------------------------------");
 }
 

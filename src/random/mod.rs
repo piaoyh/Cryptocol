@@ -325,6 +325,12 @@ pub mod trait_random_engine_impl_for_des;
 /// The module that contains implementation of trait Random_Engine for Rijndael
 pub mod trait_random_engine_impl_for_rijndael;
 
+/// The module that contains implementation of trait Random_Engine for BigCryptor64
+pub mod trait_random_engine_impl_for_big_cryptor64;
+
+/// The module that contains implementation of trait Random_Engine for BigCryptor128
+pub mod trait_random_engine_impl_for_big_cryptor128;
+
 pub use random::*;
 pub use trait_random_engine::*;
 pub use any_number_engine_c_generic::{ AnyNumber_Engine_C_Generic, AnyNumber_Engine_C };

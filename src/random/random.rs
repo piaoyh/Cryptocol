@@ -29,11 +29,17 @@ use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime }
 use crate::hash::{ MD4, MD5, SHA0, SHA1, SHA2_256, SHA2_512,
                     SHA3_256, SHA3_512, SHAKE_128, SHAKE_256, BIG_KECCAK_1024 };
 use crate::random::{ Random_Engine, AnyNumber_Engine_C };
-use crate::symmetric::{ Rijndael_64_64, DES };
+use crate::symmetric::{ Rijndael_64_64, AES_128, DES };
 
 
 
 const SECURE_COUNT: u128 = u16::MAX as u128;
+
+/// AnyGen is the Random_Generic with the default generic parameter.
+pub type AnyGen = Random_Generic;
+
+/// RandGen is the Random_Generic with the generic parameter u16::MAX which is 65535.
+pub type RandGen = Random_Generic<SECURE_COUNT>;
 
 
 /// The type `Random` which is a random number generator and is a synonym of
@@ -73,12 +79,11 @@ pub type Any = Any_SHAKE_128;
 pub type Any_Num = Any_Num_C;
 
 
-/// This generic struct Random_Generic<const COUNT: u128 = {u128::MAX}> is
-/// the struct for implementing a pseudo-random number generator both for
-/// primitive unsigned integers such as `u8`, `u16`, `u32`, `u64`, `u128`,
-/// and `usize`, and for `BigUInt`. Depending on the engine object, it uses
-/// hash algorithms or symmetric-key cryptographic algorithm to generate
-/// pseudo random numbers.
+/// This generic struct `Random_Generic` is the struct for implementing a
+/// pseudo-random number generator both for primitive unsigned integers
+/// such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`, and for `BigUInt`.
+/// Depending on the engine object, it uses hash algorithms or symmetric-key
+/// cryptographic algorithm to generate pseudo random numbers.
 /// 
 /// # Feature
 /// - The generic parameter `COUNT` should be `1` ~ `u128::MAX` inclusively.
@@ -94,7 +99,7 @@ pub type Any_Num = Any_Num_C;
 ///   [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
 /// 
 /// # Panics
-/// If `COUNT` is `0`, the constructor method
+/// If `COUNT` is `0`, the constructor methods
 /// such as `new()` and `new_with_seeds()` will panic!
 /// 
 /// # Predetermined Provided Specific `struct`s
@@ -218,27 +223,28 @@ pub struct Random_Generic<const COUNT: u128 = {u128::MAX}>
 impl<const COUNT: u128> Random_Generic<COUNT>
 {
     // pub fn new() -> Self
-    /// Constructs a new struct Random_Generic.
+    /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
-    /// It returns a new object of Random_Generic.
+    /// It returns a new object of `Random_Generic`.
     /// 
     /// # Panics
-    /// If `COUNT` is `0` or greator than `i32::MAX`, this method will panic!
+    /// If `COUNT` is `0`, this method will panic!
     /// 
     /// # Cryptographical Security
     /// - If you use `Random`, it is considered to be cryptographically secure.
     /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
+    ///   insecure.
     /// 
     /// # Example 1 for Random
     /// ```
     /// use cryptocol::random::Random;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
     /// let mut rand = Random::new();
-    /// println!("Random number = {}", rand.random_u128());
+    /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random number = {}", num);
     /// ```
     /// 
     /// # For more examples,
@@ -265,6 +271,41 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         }
     }
 
+    // pub fn new_with<SG, AG>(mut seed_generator: SG, mut aux_generator: AG) -> Self
+    /// Constructs a new `Random_Generic` object.
+    /// 
+    /// # Arguments
+    /// - `seed_generator` is a seed generator which is of `Random_Engine`-type
+    ///   and for generating pseudo-random numbers.
+    /// - `aux_generator` is a seed generator which is of `Random_Engine`-type
+    ///   and for generating auxiliary pseudo-random numbers to use in
+    ///   generating pseudo-random numbers.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Panics
+    /// If `COUNT` is `0`, this method will panic!
+    /// 
+    /// # Cryptographical Security
+    /// - If you use `Random`, it is considered to be cryptographically secure.
+    /// - If you use `Any`, it is considered that it may be cryptographically
+    ///   insecure.
+    /// 
+    /// # Example 1 for BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::RandGen;
+    /// use cryptocol::hash::BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = RandGen::new_with(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new());
+    /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random number = {}", num);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with)
     pub fn new_with<SG, AG>(mut seed_generator: SG, mut aux_generator: AG) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
@@ -2823,7 +2864,7 @@ impl Any_Rijndael
 
 
 /// The type `Random_AES` which is a pseudo-random number generator using
-/// an AES encryption/decryption algorithm AES.
+/// an AES-128 encryption/decryption algorithm AES-128.
 /// It is a specific version of the generic struct
 /// [`Random_Generic`](struct@Random_Generic).
 #[allow(non_camel_case_types)] 
@@ -2832,11 +2873,11 @@ impl Random_Rijndael
 {
     pub fn new() -> Random_Generic<SECURE_COUNT>
     {
-        Random_Generic::<SECURE_COUNT>::new_with(Rijndael_64_64::new(), Rijndael_64_64::new())
+        Random_Generic::<SECURE_COUNT>::new_with(AES_128::new(), AES_128::new())
     }
 
     pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT> 
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(Rijndael_64_64::new(), Rijndael_64_64::new(), seed, aux)
+        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(AES_128::new(), AES_128::new(), seed, aux)
     }
 }

@@ -29,8 +29,14 @@ use crate::number::{ SmallUInt, LongerUnion, SharedValues, SharedArrays, NumberE
 /// 256-bit unsigned integer implemented by `BigUInt<u128, 2>` made with two `u128`s
 #[allow(non_camel_case_types)] pub type U256_with_u128 = BigUInt<u128, 2>;
 
+/// 384-bit unsigned integer implemented by `BigUInt<u128, 3>` made with two `u128`s
+#[allow(non_camel_case_types)] pub type U384_with_u128 = BigUInt<u128, 3>;
+
 /// 512-bit unsigned integer implemented by `BigUInt<u128, 4>` made with four `u128`s
 #[allow(non_camel_case_types)] pub type U512_with_u128 = BigUInt<u128, 4>;
+
+/// 768-bit unsigned integer implemented by `BigUInt<u128, 6>` made with two `u128`s
+#[allow(non_camel_case_types)] pub type U768_with_u128 = BigUInt<u128, 6>;
 
 /// 1024-bit unsigned integer implemented by `BigUInt<u128, 8>` made with eight `u128`s
 #[allow(non_camel_case_types)] pub type U1024_with_u128 = BigUInt<u128, 8>;
@@ -63,8 +69,14 @@ use crate::number::{ SmallUInt, LongerUnion, SharedValues, SharedArrays, NumberE
 /// 256-bit unsigned integer implemented by `BigUInt<u64, 4>` made with four `u64`s
 #[allow(non_camel_case_types)] pub type U256_with_u64 = BigUInt<u64, 4>;
 
+/// 384-bit unsigned integer implemented by `BigUInt<u64, 6>` made with four `u64`s
+#[allow(non_camel_case_types)] pub type U384_with_u64 = BigUInt<u64, 6>;
+
 /// 512-bit unsigned integer implemented by `BigUInt<u64, 8>` made with eight `u64`s
 #[allow(non_camel_case_types)] pub type U512_with_u64 = BigUInt<u64, 8>;
+
+/// 768-bit unsigned integer implemented by `BigUInt<u64, 12>` made with four `u64`s
+#[allow(non_camel_case_types)] pub type U768_with_u64 = BigUInt<u64, 12>;
 
 /// 1024-bit unsigned integer implemented by `BigUInt<u64, 16>` made with sixteen `u64`s
 #[allow(non_camel_case_types)] pub type U1024_with_u64 = BigUInt<u64, 16>;
@@ -97,42 +109,54 @@ use crate::number::{ SmallUInt, LongerUnion, SharedValues, SharedArrays, NumberE
 /// 256-bit unsigned integer implemented by `BigUInt<u32, 8>` made with eight `u32`s
 #[allow(non_camel_case_types)] pub type U256_with_u32 = BigUInt<u32, 8>;
 
-/// 512-bit unsigned integer implemented by `BigUInt<u32, 8>` made with sixteen `u32`s
+/// 384-bit unsigned integer implemented by `BigUInt<u32, 12>` made with eight `u32`s
+#[allow(non_camel_case_types)] pub type U384_with_u32 = BigUInt<u32, 12>;
+
+/// 512-bit unsigned integer implemented by `BigUInt<u32, 16>` made with sixteen `u32`s
 #[allow(non_camel_case_types)] pub type U512_with_u32 = BigUInt<u32, 16>;
 
-/// 1024-bit unsigned integer implemented by `BigUInt<u32, 8>` made with thirty-two `u32`s
+/// 768-bit unsigned integer implemented by `BigUInt<u32, 24>` made with eight `u32`s
+#[allow(non_camel_case_types)] pub type U768_with_u32 = BigUInt<u32, 24>;
+
+/// 1024-bit unsigned integer implemented by `BigUInt<u32, 32>` made with thirty-two `u32`s
 #[allow(non_camel_case_types)] pub type U1024_with_u32 = BigUInt<u32, 32>;
 
-/// 2048-bit unsigned integer implemented by `BigUInt<u32, 8>` made with sixty-four `u32`s
+/// 2048-bit unsigned integer implemented by `BigUInt<u32, 64>` made with sixty-four `u32`s
 #[allow(non_camel_case_types)] pub type U2048_with_u32 = BigUInt<u32, 64>;
 
-/// 3072-bit unsigned integer implemented by `BigUInt<u32, 8>` made with ninety-six `u32`s
+/// 3072-bit unsigned integer implemented by `BigUInt<u32, 96>` made with ninety-six `u32`s
 #[allow(non_camel_case_types)] pub type U3072_with_u32 = BigUInt<u32, 96>;
 
-/// 4096-bit unsigned integer implemented by `BigUInt<u32, 8>` made with one hundred twenty-eight `u32`s
+/// 4096-bit unsigned integer implemented by `BigUInt<u32, 128>` made with one hundred twenty-eight `u32`s
 #[allow(non_camel_case_types)] pub type U4096_with_u32 = BigUInt<u32, 128>;
 
 /// 5120-bit unsigned integer implemented by `BigUInt<u32, 8>` made with one hundred sixty `u32`s
 #[allow(non_camel_case_types)] pub type U5120_with_u32 = BigUInt<u32, 160>;
 
-/// 6144-bit unsigned integer implemented by `BigUInt<u32, 8>` made with one hundred ninety-two `u32`s
+/// 6144-bit unsigned integer implemented by `BigUInt<u32, 192>` made with one hundred ninety-two `u32`s
 #[allow(non_camel_case_types)] pub type U6144_with_u32 = BigUInt<u32, 192>;
 
-/// 7168-bit unsigned integer implemented by `BigUInt<u32, 8>` made with two hundred twenty-four `u32`s
+/// 7168-bit unsigned integer implemented by `BigUInt<u32, 224>` made with two hundred twenty-four `u32`s
 #[allow(non_camel_case_types)] pub type U7168_with_u32 = BigUInt<u32, 224>;
 
-/// 8192-bit unsigned integer implemented by `BigUInt<u32, 8>` made with two hundred fifty-six `u32`s
+/// 8192-bit unsigned integer implemented by `BigUInt<u32, 256>` made with two hundred fifty-six `u32`s
 #[allow(non_camel_case_types)] pub type U8192_with_u32 = BigUInt<u32, 256>;
 
-/// 16384-bit unsigned integer implemented by `BigUInt<u32, 8>` made with five hundred twelve `u32`s
+/// 16384-bit unsigned integer implemented by `BigUInt<u32, 512>` made with five hundred twelve `u32`s
 #[allow(non_camel_case_types)] pub type U16384_with_u32 = BigUInt<u32, 512>;
 
 
 /// 256-bit unsigned integer implemented by `BigUInt<u16, 16>` made with sixteen `u16`s
 #[allow(non_camel_case_types)] pub type U256_with_u16 = BigUInt<u16, 16>;
 
+/// 256-bit unsigned integer implemented by `BigUInt<u16, 24>` made with sixteen `u16`s
+#[allow(non_camel_case_types)] pub type U384_with_u16 = BigUInt<u16, 24>;
+
 /// 512-bit unsigned integer implemented by `BigUInt<u16, 32>` made with thirty-two `u16`s
 #[allow(non_camel_case_types)] pub type U512_with_u16 = BigUInt<u16, 32>;
+
+/// 256-bit unsigned integer implemented by `BigUInt<u16, 48>` made with sixteen `u16`s
+#[allow(non_camel_case_types)] pub type U768_with_u16 = BigUInt<u16, 48>;
 
 /// 1024-bit unsigned integer implemented by `BigUInt<u16, 64>` made with sixty-four `u16`s
 #[allow(non_camel_case_types)] pub type U1024_with_u16 = BigUInt<u16, 64>;
@@ -165,8 +189,14 @@ use crate::number::{ SmallUInt, LongerUnion, SharedValues, SharedArrays, NumberE
 /// 256-bit unsigned integer implemented by `BigUInt<u8, 32>` made with thirty-two `u8`s
 #[allow(non_camel_case_types)] pub type U256_with_u8 = BigUInt<u8, 32>;
 
+/// 256-bit unsigned integer implemented by `BigUInt<u8, 48>` made with thirty-two `u8`s
+#[allow(non_camel_case_types)] pub type U384_with_u8 = BigUInt<u8, 48>;
+
 /// 512-bit unsigned integer implemented by `BigUInt<u8, 64>` made with sixty-four `u8`s
 #[allow(non_camel_case_types)] pub type U512_with_u8 = BigUInt<u8, 64>;
+
+/// 256-bit unsigned integer implemented by `BigUInt<u8, 96>` made with thirty-two `u8`s
+#[allow(non_camel_case_types)] pub type U768_with_u8 = BigUInt<u8, 96>;
 
 /// 1024-bit unsigned integer implemented by `BigUInt<u8, 128>` made with one hundred twenty-eight `u8`s
 #[allow(non_camel_case_types)] pub type U1024_with_u8 = BigUInt<u8, 128>;
