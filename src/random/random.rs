@@ -212,12 +212,12 @@ pub type Any_Num = Any_Num_C;
 #[allow(non_camel_case_types)]
 pub struct Random_Generic<const COUNT: u128 = {u128::MAX}>
 {
+    seed_array: [u64; 8],
+    aux_array: [u64; 8],
     seed_generator: Box<dyn Random_Engine>,
     aux_generator: Box<dyn Random_Engine>,
     count: u128,
-    sugar: u64,
-    seed_array: [u64; 8],
-    aux_array: [u64; 8],
+    sugar: bool,
 }
 
 impl<const COUNT: u128> Random_Generic<COUNT>
@@ -262,12 +262,12 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         aux_generator.sow_array(&aux_array);
         Self
         {
+            seed_array,
+            aux_array,
             seed_generator,
             aux_generator,
             count: COUNT,
-            sugar: 0,
-            seed_array,
-            aux_array,
+            sugar: false,
         }
     }
 
@@ -318,12 +318,12 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         aux_generator.sow_array(&aux_array);
         Self
         {
+            seed_array,
+            aux_array,
             seed_generator: Box::new(seed_generator),
             aux_generator: Box::new(aux_generator),
             count: COUNT,
-            sugar: 0,
-            seed_array,
-            aux_array,
+            sugar: false,
         }
     }
 
@@ -384,12 +384,12 @@ impl<const COUNT: u128> Random_Generic<COUNT>
 
         Self
         {
+            seed_array,
+            aux_array,
             seed_generator,
             aux_generator,
             count: COUNT,
-            sugar: 0,
-            seed_array,
-            aux_array,
+            sugar: false,
         }
     }
 
@@ -417,12 +417,12 @@ impl<const COUNT: u128> Random_Generic<COUNT>
 
         Self
         {
+            seed_array,
+            aux_array,
             seed_generator: Box::new(seed_generator),
             aux_generator: Box::new(aux_generator),
             count: COUNT,
-            sugar: 0,
-            seed_array,
-            aux_array,
+            sugar: false,
         }
     }
 
@@ -541,18 +541,19 @@ impl<const COUNT: u128> Random_Generic<COUNT>
 
     // fn change_count_and_sugar(&mut self)
     /// Changes`self.count` and `self.sugar` when `self.count` becomes `0`,
-    /// changes the seeds for both generators when `self.sugar` becomes `0`.
+    /// changes the seeds for both generators when `self.sugar` becomes `true`.
     /// Otherwise, subracts `1` from `self.count`.
     fn change_count_and_sugar(&mut self)
     {
-        if self.sugar == 0
+        if self.sugar == true
         {
             self.seed_generator.sow_array(&Self::collect_seed());
             self.aux_generator.sow_array(&Self::collect_seed());
+            self.sugar = false;
         }
         if self.count == 0
         {
-            self.sugar = self.sugar.wrapping_add(1);
+            self.sugar = true;
             self.count = COUNT;
         }
         self.count = self.count.wrapping_sub(1);

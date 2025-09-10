@@ -857,6 +857,7 @@ impl BigCryptor64
 
     #[inline] fn get_block(&self) -> u64            { self.block.get() }
     #[inline] fn set_block(&mut self, block: u64)   { self.block.set(block); }
+    #[inline] pub(crate) fn get_smallcryptor(&self) -> &Vec<Box<dyn SmallCryptor<u64, 8>>>  { &self.smallcryptor }
 }
 
 

@@ -13,14 +13,14 @@ use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign,
 
 use crate::number::{ SmallUInt, SharedArrays };
 use crate::hash::Keccak_Generic;
-use crate::random::Random_Engine;
+use crate::random::{ Random_Engine, SALT };
 
 
 impl<const RATE: usize, const PADDING: usize, const ROUNDS: usize, T, const LFSR: u8,
-    const THETA_SUB: usize, const THETA_ADD: usize, const THETA_ROT: u32,
-    const RHO_MUL_X: usize, const RHO_MUL_Y: usize, const RHO_T: u32,
-    const PI_MUL_X: usize, const PI_MUL_Y: usize,
-    const CHI_ADD_1: usize, const CHI_ADD_2: usize>
+        const THETA_SUB: usize, const THETA_ADD: usize, const THETA_ROT: u32,
+        const RHO_MUL_X: usize, const RHO_MUL_Y: usize, const RHO_T: u32,
+        const PI_MUL_X: usize, const PI_MUL_Y: usize,
+        const CHI_ADD_1: usize, const CHI_ADD_2: usize>
 Random_Engine for Keccak_Generic<RATE, PADDING, ROUNDS, T, LFSR,
                                     THETA_SUB, THETA_ADD, THETA_ROT,
                                     RHO_MUL_X, RHO_MUL_Y, RHO_T,
@@ -35,9 +35,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         self.digest_array(message);
     }
 
-    fn harvest(&mut self, sugar: u64, _: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, sugar: bool, _: &[u64; 8]) -> [u64; 8]
     {
-        self.tangle(sugar);
+        self.tangle(if sugar {SALT} else {0});
         let src: [u8; 64] = self.get_hash_value_in_array();
         unsafe { SharedArrays::<u64, 8, u8, 64>::from_src(&src).des }
     }

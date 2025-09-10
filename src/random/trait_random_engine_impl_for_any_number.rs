@@ -7,7 +7,7 @@
 // except according to those terms.
 
 
-use crate::random::{ Random_Engine, AnyNumber_Engine_C_Generic };
+use crate::random::{ Random_Engine, AnyNumber_Engine_C_Generic, SALT };
 
 impl<const MULTIPLIER: u64, const ADDER: u64>
 Random_Engine for AnyNumber_Engine_C_Generic<MULTIPLIER, ADDER>
@@ -38,15 +38,16 @@ Random_Engine for AnyNumber_Engine_C_Generic<MULTIPLIER, ADDER>
     // }
 
 
-    fn harvest(&mut self, sugar: u64, message: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, sugar: bool, message: &[u64; 8]) -> [u64; 8]
     {
         let mut any_numbers = [0_u64; 8];
+        let salt = if sugar { SALT } else { 0 };
         for i in 0..8
         {
-            any_numbers[i] = message[i].wrapping_add(sugar)
+            any_numbers[i] = message[i].wrapping_add(salt)
                                         .wrapping_mul(MULTIPLIER)
                                         .wrapping_add(ADDER)
-                                        ^ sugar;
+                                        ^ salt;
         }
         any_numbers
     }

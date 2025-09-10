@@ -7,8 +7,14 @@
 // except according to those terms.
 
 
+#![allow(missing_docs)]
+#![allow(unused_must_use)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+// #![warn(rustdoc::missing_doc_code_examples)]
+
 use crate::symmetric::DES_Generic;
-use crate::random::{ Random_Engine, Key };
+use crate::random::Key;
 
 
 impl <const ROUND: usize, const SHIFT: u128,
@@ -202,7 +208,7 @@ impl <const ROUND: usize, const SHIFT: u128,
         const S752: u8, const S753: u8, const S754: u8, const S755: u8,
         const S756: u8, const S757: u8, const S758: u8, const S759: u8,
         const S760: u8, const S761: u8, const S762: u8, const S763: u8>
-Random_Engine for DES_Generic<ROUND, SHIFT,
+    Key for DES_Generic<ROUND, SHIFT,
                         PC101, PC102, PC103, PC104, PC105, PC106, PC107, PC108,
                         PC109, PC110, PC111, PC112, PC113, PC114, PC115, PC116,
                         PC117, PC118, PC119, PC120, PC121, PC122, PC123, PC124,
@@ -299,11 +305,22 @@ Random_Engine for DES_Generic<ROUND, SHIFT,
                         S748, S749, S750, S751, S752, S753, S754, S755,
                         S756, S757, S758, S759, S760, S761, S762, S763>
 {
-    fn harvest(&mut self, sugar: bool, message: &[u64; 8]) -> [u64; 8]
+    fn change_key(&mut self, sugar: bool)
     {
-        self.change_key(sugar);
-        let mut cipher = [0_u64; 8];
-        self.encrypt_array_u64(message, &mut cipher);
-        cipher
+        if !sugar
+            { return; }
+
+        let mut key = self.get_key_u64();
+        key = key.wrapping_add(2);
+        while self.is_equivalent_key_u64(key)
+            { key = key.wrapping_add(2); }
+        self.set_key_u64(key);
+        while self.has_weak_key()
+        {
+            key = key.wrapping_add(2);
+            while self.is_equivalent_key_u64(key)
+                { key = key.wrapping_add(2); }
+            self.set_key_u64(key);
+        }
     }
 }

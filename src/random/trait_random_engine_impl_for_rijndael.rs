@@ -11,7 +11,7 @@ use std::ptr::copy_nonoverlapping;
 
 use crate::number::IntUnion;
 use crate::symmetric::Rijndael_Generic;
-use crate::random::Random_Engine;
+use crate::random::{ Random_Engine, Key };
 
 impl <const ROUND: usize, const NB: usize, const NK: usize, const IRREDUCIBLE: u8, const AFFINE_MUL: u64,
         const AFFINE_ADD: u8, const SR0: usize, const SR1: usize, const SR2: usize, const SR3: usize,
@@ -25,23 +25,9 @@ Random_Engine for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFIN
         MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13, MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
         RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
-    fn harvest(&mut self, sugar: u64, message: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, sugar: bool, message: &[u64; 8]) -> [u64; 8]
     {
-        // let mut key = LongUnion::new_with_uints(self.get_key());
-        let mut key = self.get_key();
-        let mut salt = [0_u32; NK];
-        salt[0] = sugar as u32;
-        salt[1] = (sugar >> 32) as u32;
-        let mut old = key[0];
-        let mut carry = 0;
-        for i in 0..NK
-        {
-            key[i] = key[i].wrapping_add(salt[i]).wrapping_add(carry);
-            carry = if key[i] < old {1} else {0};
-            old = key[i];
-        }
-        self.set_original_key(&salt);
-
+        self.change_key(sugar);
         let mut cipher = [0_u64; 8];
         if NB >= 16
         {

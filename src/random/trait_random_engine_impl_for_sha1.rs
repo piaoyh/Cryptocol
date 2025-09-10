@@ -8,7 +8,7 @@
 
 
 use crate::hash::SHA1_Generic;
-use crate::random::Random_Engine;
+use crate::random::{ Random_Engine, SALT };
 
 
 impl<const H0: u32, const H1: u32, const H2: u32, const H3: u32,
@@ -22,16 +22,24 @@ Random_Engine for SHA1_Generic<5, H0, H1, H2, H3, H4,
         self.digest_array(message);
     }
 
-    fn harvest(&mut self, sugar: u64, _: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, sugar: bool, _: &[u64; 8]) -> [u64; 8]
     {
-        self.tangle(sugar);
+        let mut salt = [0_u64; 4];
+        if sugar
+        {
+            for i in 0..4
+                { salt[i] = SALT.rotate_left(i as u32); }
+        }
+
+        self.tangle(salt[0]);
         let a: [u32; 5] = self.get_hash_value_in_array();
-        self.tangle(sugar);
+        self.tangle(salt[1]);
         let b: [u32; 5] = self.get_hash_value_in_array();
-        self.tangle(sugar);
+        self.tangle(salt[2]);
         let c: [u32; 5] = self.get_hash_value_in_array();
-        self.tangle(sugar);
+        self.tangle(salt[3]);
         let d: [u32; 5] = self.get_hash_value_in_array();
+        
         let mut res = [0_u64; 8];
         for i in 0..5
             { res[i] = ((a[i] as u64) << 32) | (b[i] as u64); }

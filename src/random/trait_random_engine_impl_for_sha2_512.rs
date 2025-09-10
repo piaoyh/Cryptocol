@@ -8,7 +8,7 @@
 
 
 use crate::hash::SHA2_512_Generic;
-use crate::random::Random_Engine;
+use crate::random::{ Random_Engine, SALT };
 
 
 impl<const H0: u64, const H1: u64, const H2: u64, const H3: u64,
@@ -56,9 +56,9 @@ Random_Engine for SHA2_512_Generic<8,
         self.digest_array(message);
     }
 
-    fn harvest(&mut self, sugar: u64, _: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, sugar: bool, _: &[u64; 8]) -> [u64; 8]
     {
-        self.tangle(sugar);
+        self.tangle(if sugar {SALT} else {0});
         self.get_hash_value_in_array()
     }
 }

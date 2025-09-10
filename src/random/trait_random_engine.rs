@@ -7,6 +7,9 @@
 // except according to those terms.
 
 
+pub(super) const SALT: u64 = 0x9999_9999_9999_9999;
+
+
 /// The supporting trait for `Random_Generic`
 /// `Random_Generic` uses whatever object that has this trait for pseudo-random
 /// number generator engine. So, if you plug any hash algorithm or any
@@ -68,11 +71,11 @@ pub trait Random_Engine
     /// Outputs the pseudo-random number array.
     /// 
     /// # Argument
-    /// `sugar` is `u64`-typed unsigned integer that changes the direction of
-    /// its pseudo-random number sequence so that the period of the
+    /// `sugar` is `bool`-typed. If `sugar` is `true`, the direction of its
+    /// pseudo-random number sequence is changed so that the period of the
     /// pseudo-random number sequence may not repeated.
     /// 
     /// # Example
-    /// Refer to the souce codes of `Random` to see how to use this method.
-    fn harvest(&mut self, sugar: u64, message: &[u64; 8]) -> [u64; 8];
+    /// Refer to the source codes of `Random` to see how to use this method.
+    fn harvest(&mut self, sugar: bool, message: &[u64; 8]) -> [u64; 8];
 }
