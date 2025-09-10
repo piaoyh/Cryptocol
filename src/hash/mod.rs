@@ -280,7 +280,7 @@ pub use sha2_512::*;
 pub use sha2_512_t::*;
 pub use keccak::*;
 
-/// keccak.rs was too big because of documentation and plenty of examples
+/// many *.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to all the *.rs in documentation folder.

@@ -103,8 +103,6 @@
 //! purposes,__ all the pseudo-random number generators in this module are
 //! completely fine to use.
 //! 
-//! However, __for serious cryptographical purpose,__ it is still
-//! debatable.
 //! So, if you really want one of the best quality pseudo-random number
 //! generator rather than this module for serious cryptographical purpose,
 //! you are encouraged to use the crate
@@ -203,7 +201,7 @@
 //!     {}
 //! 
 //!     #[inline]
-//!     fn harvest(&mut self, _: u64) -> [u64; 8]
+//!     fn harvest(&mut self, _: bool) -> [u64; 8]
 //!     {
 //!         [rngs::OsRng.next_u64(), rngs::OsRng.next_u64(),
 //!         rngs::OsRng.next_u64(), rngs::OsRng.next_u64(),
@@ -288,56 +286,63 @@
 //! hash function as its message again, and this process is repeated.
 //! 
 
-
-
-pub mod random;
+mod random;
 
 /// The module that contains struct AnyMumber_C_Generic
-pub mod any_number_engine_c_generic;
+mod any_number_engine_c_generic;
 
 /// The module that contains trait Random_Engine
-pub mod trait_random_engine;
+mod trait_random_engine;
 
 /// The module that contains implementation of trait Random_Engine for MD4
-pub mod trait_random_engine_impl_for_md4;
+mod trait_random_engine_impl_for_md4;
 
 /// The module that contains implementation of trait Random_Engine for MD5
-pub mod trait_random_engine_impl_for_md5;
+mod trait_random_engine_impl_for_md5;
 
 /// The module that contains implementation of trait Random_Engine for SHA1
-pub mod trait_random_engine_impl_for_sha1;
+mod trait_random_engine_impl_for_sha1;
 
 /// The module that contains implementation of trait Random_Engine for SHA2_256
-pub mod trait_random_engine_impl_for_sha2_256;
+mod trait_random_engine_impl_for_sha2_256;
 
 /// The module that contains implementation of trait Random_Engine for SHA2_512
-pub mod trait_random_engine_impl_for_sha2_512;
+mod trait_random_engine_impl_for_sha2_512;
 
 /// The module that contains implementation of trait Random_Engine for SHA3
-pub mod trait_random_engine_impl_for_sha3;
+mod trait_random_engine_impl_for_sha3;
 
 /// The module that contains implementation of trait Random_Engine for AnyNumber
-pub mod trait_random_engine_impl_for_any_number;
+mod trait_random_engine_impl_for_any_number;
 
 /// The module that contains implementation of trait Random_Engine for DES
-pub mod trait_random_engine_impl_for_des;
+mod trait_random_engine_impl_for_des;
 
 /// The module that contains implementation of trait Random_Engine for Rijndael
-pub mod trait_random_engine_impl_for_rijndael;
+mod trait_random_engine_impl_for_rijndael;
 
 /// The module that contains implementation of trait Random_Engine for BigCryptor64
-pub mod trait_random_engine_impl_for_big_cryptor64;
+mod trait_random_engine_impl_for_big_cryptor64;
 
 /// The module that contains implementation of trait Random_Engine for BigCryptor128
-pub mod trait_random_engine_impl_for_big_cryptor128;
+mod trait_random_engine_impl_for_big_cryptor128;
 
-pub mod trait_key;
-pub mod trait_key_impl_for_des;
-pub mod trait_key_impl_for_rijndael;
-pub mod trait_key_impl_for_big_cryptor64;
-pub mod trait_key_impl_for_big_cryptor128;
+mod trait_key;
+mod trait_key_impl_for_des;
+mod trait_key_impl_for_rijndael;
+mod trait_key_impl_for_big_cryptor64;
+mod trait_key_impl_for_big_cryptor128;
 
 pub use random::*;
-pub use trait_random_engine::*;
 pub use any_number_engine_c_generic::{ AnyNumber_Engine_C_Generic, AnyNumber_Engine_C };
-pub use trait_key::Key;
+pub use trait_random_engine::*;
+
+use trait_key::Key;
+
+
+/// many *.rs was too big because of documentation and plenty of examples
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to all the *.rs in documentation folder.
+mod documentation;
+pub use documentation::*;
