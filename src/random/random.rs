@@ -594,10 +594,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Cryptographical Security
     /// - If you use `Random`, it is considered to be cryptographically secure.
     /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
+    ///   insecure.
     /// 
     /// # Example 1 for Random
     /// ```
@@ -2479,6 +2476,290 @@ impl<const COUNT: u128> Random_Generic<COUNT>
 
 
 
+/// The struct `Random_BIG_KECCAK_1024` that constructs the
+/// [`Random_Generic`](struct@Random_Generic) 
+/// object for implementing a pseudo-random number generator both for primitive
+/// unsigned integers such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`,
+/// and for `BigUInt`. The object which this `Random_BIG_KECCAK_1024` constructs
+/// uses the hash algorithm `BIG_KECCAK_1024` as a pseudo-random number engine
+/// generator.
+/// 
+/// # QUICK START
+/// You can use `Random_BIG_KECCAK_1024` to create an if you use random number
+/// for cryptographic purpose. `Random_BIG_KECCAK_1024` is for normal
+/// cryptographical purpose Look into the following examples.
+/// 
+/// ## Example
+/// ```
+/// use cryptocol::random::Random_BIG_KECCAK_1024;
+/// use cryptocol::define_utypes_with;
+/// define_utypes_with!(u64);
+/// 
+/// let mut rand = Random_BIG_KECCAK_1024::new();
+/// println!("Random number = {}", rand.random_u128());
+/// println!("Random number = {}", rand.random_u64());
+/// println!("Random number = {}", rand.random_u32());
+/// println!("Random number = {}", rand.random_u16());
+/// println!("Random number = {}", rand.random_u8());
+/// 
+/// if let Some(num) = rand.random_under_uint(1234567890123456_u64)
+///     { println!("Random number u64 = {}", num); }
+/// 
+/// if let Some(num) = rand.random_minmax_uint(1234_u16, 6321)
+///     { println!("Random number u16 = {}", num); }
+/// 
+/// println!("Random odd number usize = {}", rand.random_odd_uint::<usize>());
+/// if let Some(num) = rand.random_odd_under_uint(1234_u16)
+///     { println!("Random odd number u16 = {}", num); }
+/// 
+/// println!("Random 128-bit number u128 = {}", rand.random_with_msb_set_uint::<u128>());
+/// println!("Random 16-bit odd number u16 = {}", rand.random_with_msb_set_uint::<u16>());
+/// println!("Random prime number u64 = {}", rand.random_prime_using_miller_rabin_uint::<u64>(5));
+/// println!("Random usize-sized prime number usize = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+/// 
+/// let num: [u128; 20] = rand.random_array();
+/// for i in 0..20
+///     { println!("Random number {} => {}", i, num[i]); }
+/// 
+/// let mut num = [0_u64; 32];
+/// rand.put_random_in_array(&mut num);
+/// for i in 0..32
+///     { println!("Random number {} => {}", i, num[i]); }
+/// 
+/// let mut biguint: U512 = rand.random_biguint();
+/// println!("Random Number: {}", biguint);
+/// 
+/// let mut ceiling = U1024::max().wrapping_div_uint(3_u8);
+/// if let Some(r) = rand.random_under_biguint(&ceiling)
+/// {
+///     println!("Random Number less than {} is\n{}", ceiling, r);
+///     assert!(r < ceiling);
+/// }
+/// 
+/// ceiling = U1024::max().wrapping_div_uint(5_u8);
+/// let r = rand.random_under_biguint_(&ceiling);
+/// println!("Random Number less than {} is\n{}", ceiling, r);
+/// assert!(r < ceiling);
+/// 
+/// ceiling = U1024::max().wrapping_div_uint(4_u8);
+/// if let Some(r) = rand.random_odd_under_biguint(&ceiling)
+/// {
+///     println!("Random odd Number less than {} is\n{}", ceiling, r);
+///     assert!(r < ceiling);
+/// }
+/// 
+/// biguint = rand.random_with_msb_set_biguint();
+/// println!("Random Number: {}", biguint);
+/// 
+/// biguint = rand.random_odd_with_msb_set_biguint();
+/// println!("512-bit Random Odd Number = {}", biguint);
+/// assert!(biguint > U512::halfmax());
+/// assert!(biguint.is_odd());
+/// 
+/// biguint = rand.random_prime_using_miller_rabin_biguint(5);
+/// println!("Random Prime Number = {}", biguint);
+/// assert!(biguint.is_odd());
+/// 
+/// biguint = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+/// println!("512-bit Random Prime Number = {}", biguint);
+/// assert!(biguint.is_odd());
+/// ```
+#[allow(non_camel_case_types)] 
+pub struct Random_BIG_KECCAK_1024 {}
+impl Random_BIG_KECCAK_1024
+{
+    // pub fn new() -> Random_Generic<{u32::MAX as u128}>
+    /// Constructs a new `Random_Generic` object.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Example 1 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let num: U1024 = rand.random_with_msb_set_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
+    pub fn new() -> Random_Generic<SECURE_COUNT>
+    {
+        Random_Generic::<SECURE_COUNT>::new_with(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new())
+    }
+
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>
+    /// Constructs a new struct Random_Generic with two seeds of type `u64`.
+    /// 
+    /// # Arguments
+    /// - `seed` is the seed number of the type `u64`.
+    /// - `aux` is the seed number of the type `u64`.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Example 1 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_BIG_KECCAK_1024::new_with_seeds(0, 0);
+    /// let num: U1024 = rand.random_with_msb_set_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    {
+        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed, aux)
+    }
+}
+
+
+
+/// The struct `Random_SHA3_512` that constructs the
+/// [`Random_Generic`](struct@Random_Generic) 
+/// object for implementing a pseudo-random number generator both for primitive
+/// unsigned integers such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`,
+/// and for `BigUInt`. The object which this `Random_SHA3_512` constructs
+/// uses the hash algorithm `Random_SHA3_512` as a pseudo-random number engine
+/// generator.
+/// 
+/// # QUICK START
+/// You can use `Random_SHA3_512` to create an if you use random number
+/// for cryptographic purpose. `Random_SHA3_512` is for normal
+/// cryptographical purpose Look into the following examples.
+/// 
+/// ## Example
+/// ```
+/// use cryptocol::random::Random_SHA3_512;
+/// use cryptocol::define_utypes_with;
+/// define_utypes_with!(u64);
+/// 
+/// let mut rand = Random_SHA3_512::new();
+/// println!("Random number = {}", rand.random_u128());
+/// println!("Random number = {}", rand.random_u64());
+/// println!("Random number = {}", rand.random_u32());
+/// println!("Random number = {}", rand.random_u16());
+/// println!("Random number = {}", rand.random_u8());
+/// 
+/// if let Some(num) = rand.random_under_uint(1234567890123456_u64)
+///     { println!("Random number u64 = {}", num); }
+/// 
+/// if let Some(num) = rand.random_minmax_uint(1234_u16, 6321)
+///     { println!("Random number u16 = {}", num); }
+/// 
+/// println!("Random odd number usize = {}", rand.random_odd_uint::<usize>());
+/// if let Some(num) = rand.random_odd_under_uint(1234_u16)
+///     { println!("Random odd number u16 = {}", num); }
+/// 
+/// println!("Random 128-bit number u128 = {}", rand.random_with_msb_set_uint::<u128>());
+/// println!("Random 16-bit odd number u16 = {}", rand.random_with_msb_set_uint::<u16>());
+/// println!("Random prime number u64 = {}", rand.random_prime_using_miller_rabin_uint::<u64>(5));
+/// println!("Random usize-sized prime number usize = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+/// 
+/// let num: [u128; 20] = rand.random_array();
+/// for i in 0..20
+///     { println!("Random number {} => {}", i, num[i]); }
+/// 
+/// let mut num = [0_u64; 32];
+/// rand.put_random_in_array(&mut num);
+/// for i in 0..32
+///     { println!("Random number {} => {}", i, num[i]); }
+/// 
+/// let mut biguint: U512 = rand.random_biguint();
+/// println!("Random Number: {}", biguint);
+/// 
+/// let mut ceiling = U1024::max().wrapping_div_uint(3_u8);
+/// if let Some(r) = rand.random_under_biguint(&ceiling)
+/// {
+///     println!("Random Number less than {} is\n{}", ceiling, r);
+///     assert!(r < ceiling);
+/// }
+/// 
+/// ceiling = U1024::max().wrapping_div_uint(5_u8);
+/// let r = rand.random_under_biguint_(&ceiling);
+/// println!("Random Number less than {} is\n{}", ceiling, r);
+/// assert!(r < ceiling);
+/// 
+/// ceiling = U1024::max().wrapping_div_uint(4_u8);
+/// if let Some(r) = rand.random_odd_under_biguint(&ceiling)
+/// {
+///     println!("Random odd Number less than {} is\n{}", ceiling, r);
+///     assert!(r < ceiling);
+/// }
+/// 
+/// biguint = rand.random_with_msb_set_biguint();
+/// println!("Random Number: {}", biguint);
+/// 
+/// biguint = rand.random_odd_with_msb_set_biguint();
+/// println!("512-bit Random Odd Number = {}", biguint);
+/// assert!(biguint > U512::halfmax());
+/// assert!(biguint.is_odd());
+/// 
+/// biguint = rand.random_prime_using_miller_rabin_biguint(5);
+/// println!("Random Prime Number = {}", biguint);
+/// assert!(biguint.is_odd());
+/// 
+/// biguint = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+/// println!("512-bit Random Prime Number = {}", biguint);
+/// assert!(biguint.is_odd());
+/// ```
+#[allow(non_camel_case_types)] 
+pub struct Random_SHA3_512 {}
+impl Random_SHA3_512
+{
+    // pub fn new() -> Random_Generic<{u32::MAX as u128}>
+    /// Constructs a new `Random_Generic` object.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Example 1 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_SHA3_512::new();
+    /// let num: U768 = rand.random_odd_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
+    pub fn new() -> Random_Generic<SECURE_COUNT>
+    {
+        Random_Generic::<SECURE_COUNT>::new_with(SHA3_512::new(), SHA3_512::new())
+    }
+
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>
+    /// Constructs a new struct Random_Generic with two seeds of type `u64`.
+    /// 
+    /// # Arguments
+    /// - `seed` is the seed number of the type `u64`.
+    /// - `aux` is the seed number of the type `u64`.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Example 1 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_SHA3_512::new_with_seeds(u64::MAX, u64::MAX);
+    /// let num: U768 = rand.random_odd_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    {
+        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), seed, aux)
+    }
+}
+
+
+
+///////////////////////
+
 /// The type `Any_MD4` which is a pseudo-random number generator using a hash
 /// algorithm MD4.
 /// It is a specific version of the generic struct
@@ -2650,25 +2931,6 @@ impl Any_SHA3_512
     }
 }
 
-/// The type `Random_SHA3_512` which is a pseudo-random number generator using
-/// a hash algorithm SHA-3-512.
-/// It is a specific version of the generic struct
-/// [`Random_Generic`](struct@Random_Generic).
-#[allow(non_camel_case_types)] 
-pub struct Random_SHA3_512 {}
-impl Random_SHA3_512
-{
-    pub fn new() -> Random_Generic<SECURE_COUNT>
-    {
-        Random_Generic::<SECURE_COUNT>::new_with(SHA3_512::new(), SHA3_512::new())
-    }
-
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
-    {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), seed, aux)
-    }
-}
-
 /// The type `Any_SHAKE_256` which is a pseudo-random number generator using
 /// a hash algorithm SHAKE-256. It is a specific version of the generic struct
 #[allow(non_camel_case_types)] 
@@ -2700,146 +2962,6 @@ impl Any_SHAKE_128
     pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
     {
         Random_Generic::new_with_generators_seeds(SHAKE_128::new(), SHAKE_128::new(), seed, aux)
-    }
-}
-
-/// The struct `Random_BIG_KECCAK_1024` that constructs the
-/// [`Random_Generic`](struct@Random_Generic) 
-/// object for implementing a pseudo-random number generator both for primitive
-/// unsigned integers such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`,
-/// and for `BigUInt`. The object which this `Random_BIG_KECCAK_1024` constructs
-/// uses the hash algorithm `BIG_KECCAK_1024` as a pseudo-random number engine
-/// generator.
-/// 
-/// # QUICK START
-/// You can use `Random_BIG_KECCAK_1024` to create an if you use random number
-/// for cryptographic purpose. `Random_BIG_KECCAK_1024` is for normal
-/// cryptographical purpose Look into the following examples.
-/// 
-/// ## Example
-/// ```
-/// use cryptocol::random::Random_BIG_KECCAK_1024;
-/// use cryptocol::define_utypes_with;
-/// define_utypes_with!(u64);
-/// 
-/// let mut rand = Random_BIG_KECCAK_1024::new();
-/// // let mut rand = Any::new();
-/// println!("Random number = {}", rand.random_u128());
-/// println!("Random number = {}", rand.random_u64());
-/// println!("Random number = {}", rand.random_u32());
-/// println!("Random number = {}", rand.random_u16());
-/// println!("Random number = {}", rand.random_u8());
-/// 
-/// if let Some(num) = rand.random_under_uint(1234567890123456_u64)
-///     { println!("Random number u64 = {}", num); }
-/// 
-/// if let Some(num) = rand.random_minmax_uint(1234_u16, 6321)
-///     { println!("Random number u16 = {}", num); }
-/// 
-/// println!("Random odd number usize = {}", rand.random_odd_uint::<usize>());
-/// if let Some(num) = rand.random_odd_under_uint(1234_u16)
-///     { println!("Random odd number u16 = {}", num); }
-/// 
-/// println!("Random 128-bit number u128 = {}", rand.random_with_msb_set_uint::<u128>());
-/// println!("Random 16-bit odd number u16 = {}", rand.random_with_msb_set_uint::<u16>());
-/// println!("Random prime number u64 = {}", rand.random_prime_using_miller_rabin_uint::<u64>(5));
-/// println!("Random usize-sized prime number usize = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
-/// 
-/// let num: [u128; 20] = rand.random_array();
-/// for i in 0..20
-///     { println!("Random number {} => {}", i, num[i]); }
-/// 
-/// let mut num = [0_u64; 32];
-/// rand.put_random_in_array(&mut num);
-/// for i in 0..32
-///     { println!("Random number {} => {}", i, num[i]); }
-/// 
-/// let mut biguint: U512 = rand.random_biguint();
-/// println!("Random Number: {}", biguint);
-/// 
-/// let mut ceiling = U1024::max().wrapping_div_uint(3_u8);
-/// if let Some(r) = rand.random_under_biguint(&ceiling)
-/// {
-///     println!("Random Number less than {} is\n{}", ceiling, r);
-///     assert!(r < ceiling);
-/// }
-/// 
-/// ceiling = U1024::max().wrapping_div_uint(5_u8);
-/// let r = rand.random_under_biguint_(&ceiling);
-/// println!("Random Number less than {} is\n{}", ceiling, r);
-/// assert!(r < ceiling);
-/// 
-/// ceiling = U1024::max().wrapping_div_uint(4_u8);
-/// if let Some(r) = rand.random_odd_under_biguint(&ceiling)
-/// {
-///     println!("Random odd Number less than {} is\n{}", ceiling, r);
-///     assert!(r < ceiling);
-/// }
-/// 
-/// biguint = rand.random_with_msb_set_biguint();
-/// println!("Random Number: {}", biguint);
-/// 
-/// biguint = rand.random_odd_with_msb_set_biguint();
-/// println!("512-bit Random Odd Number = {}", biguint);
-/// assert!(biguint > U512::halfmax());
-/// assert!(biguint.is_odd());
-/// 
-/// biguint = rand.random_prime_using_miller_rabin_biguint(5);
-/// println!("Random Prime Number = {}", biguint);
-/// assert!(biguint.is_odd());
-/// 
-/// biguint = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
-/// println!("512-bit Random Prime Number = {}", biguint);
-/// assert!(biguint.is_odd());
-/// ```
-#[allow(non_camel_case_types)] 
-pub struct Random_BIG_KECCAK_1024 {}
-impl Random_BIG_KECCAK_1024
-{
-    // pub fn new() -> Random_Generic<{u32::MAX as u128}>
-    /// Constructs a new `Random_Generic` object.
-    /// 
-    /// # Output
-    /// It returns a new object of `Random_Generic`.
-    /// 
-    /// # Example 1 for Random_BIG_KECCAK_1024
-    /// ```
-    /// use cryptocol::random::Random_BIG_KECCAK_1024;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut rand = Random_BIG_KECCAK_1024::new();
-    /// let num: U1024 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ```
-    pub fn new() -> Random_Generic<SECURE_COUNT>
-    {
-        Random_Generic::<SECURE_COUNT>::new_with(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new())
-    }
-
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>
-    /// Constructs a new struct Random_Generic with two seeds of type `u64`.
-    /// 
-    /// # Arguments
-    /// - `seed` is the seed number of the type `u64`.
-    /// - `aux` is the seed number of the type `u64`.
-    /// 
-    /// # Output
-    /// It returns a new object of `Random_Generic`.
-    /// 
-    /// # Example 1 for Random_BIG_KECCAK_1024
-    /// ```
-    /// use cryptocol::random::Random_BIG_KECCAK_1024;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut rand = Random_BIG_KECCAK_1024::new_with_seeds(0, 0);
-    /// let num: U1024 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ```
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
-    {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed, aux)
     }
 }
 
