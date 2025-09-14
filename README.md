@@ -219,7 +219,7 @@ The checked items have already been implemented including documentation __at lea
       [`Random_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_Rijndael.html#struct.Random_Rijndael),
       [`Any_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Rijndael.html#struct.Any_Rijndael), and
       [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES).
-- [ ] Pseudo-random number generator engines using simple randomization algorithm ---
+- [X] Pseudo-random number generator engines using simple randomization algorithm ---
       [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Num_C.html#struct.Any_Num_C).
 
 ### Asymmetric-key Algorithms for the Encryption/Decryption of digital data

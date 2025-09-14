@@ -207,7 +207,7 @@ pub trait Random_Engine
     /// ```
     /// impl<const COUNT: u128> Random_Generic<COUNT>
     /// {
-    ///     fn change_count_and_sugar(&mut self)
+    ///     fn change_count(&mut self)
     ///     {
     ///         if self.is_restarted()
     ///         {
@@ -239,7 +239,7 @@ pub trait Random_Engine
     /// {
     ///     fn produce_seed(&mut self)
     ///     {
-    ///         self.change_count_and_sugar();
+    ///         self.change_count();
     ///         self.seed_array = self.main_generator.harvest(self.is_restarted(), &self.seed_array);
     ///     }
     /// }
@@ -251,7 +251,7 @@ pub trait Random_Engine
     /// {
     ///     fn produce_aux(&mut self)
     ///     {
-    ///         self.change_count_and_sugar();
+    ///         self.change_count();
     ///         self.aux_array = self.aux_generator.harvest(self.is_restarted(), &self.aux_array);
     ///     }
     /// }

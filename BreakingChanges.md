@@ -1,5 +1,14 @@
 # Breaking Changes
 
+## Breaking changes from ver. 0.15.1 to ver. 0.16.0
+
+| Ver. 0.15.1                                       | Ver. 0.15.2 |
+|---------------------------------------------------|-------------|
+| pub fn new() -> Self                              | removed     |
+| pub fn new_with_seeds<T>(seed: T, aux: T) -> Self | removed     |
+
+- The methods above have been removed from the trait Random_Generic.
+
 ## Breaking changes from ver. 0.14.1 to ver. 0.15.0
 
 | Ver. 0.14.1                         | Ver. 0.15.0 |

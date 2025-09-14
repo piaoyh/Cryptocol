@@ -249,26 +249,6 @@ impl Random_Generic
     /// let mut any = Any_DES::new();
     /// println!("Any number = {}", any.random_odd_biguint());
     /// ```
-    /// 
-    /// # Example 19 for Any_Num_C
-    /// ```
-    /// use cryptocol::random::Any_Num_C;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut any = Any_Num_C::new();
-    /// println!("Any number = {}", any.random_usize());
-    /// ```
-    /// 
-    /// # Example 20 for Any_Num
-    /// ```
-    /// use cryptocol::random::Any_Num;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut any = Any_Num::new();
-    /// println!("Any number = {}", any.random_u8());
-    /// ```
     pub fn new() -> Self
     {
         unimplemented!(); // Dummy code for documentation
@@ -600,21 +580,6 @@ impl Random_Generic
     /// 
     /// let mut any = Any_DES::new_with_seeds(u8::MAX as u64, u8::MAX as u64);
     /// println!("Any number = {}", any.random_u8());
-    /// ```
-    /// 
-    /// # Example 17 for Any_Num_C
-    /// ```
-    /// use cryptocol::random::Any_Num_C;
-    /// 
-    /// let mut any = Any_Num_C::new_with_seeds(458861005, 793621585);
-    /// println!("Any number = {}", any.random_u64());
-    /// ```
-    /// 
-    /// # Example 18 for Any_Num
-    /// ```
-    /// use cryptocol::random::Any_Num;
-    /// let mut any = Any_Num::new_with_seeds(50558, 18782);
-    /// println!("Any number = {}", any.random_u32());
     /// ```
     pub fn new_with_seeds(seed: u64, aux: u64) -> Self
     {

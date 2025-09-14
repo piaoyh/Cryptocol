@@ -236,7 +236,7 @@
 //!       [`Random_Rijndael`](random/random/struct.Random_Rijndael.html#struct.Random_Rijndael),
 //!       [`Any_Rijndael`](random/random/struct.Any_Rijndael.html#struct.Any_Rijndael), and
 //!       [`Any_DES`](random/random/struct.Any_DES.html#struct.Any_DES).
-//! - [ ] Pseudo-random number generator engines using simple randomization algorithm
+//! - [X] Pseudo-random number generator engines using simple randomization algorithm
 //!       --- [`Any_Num_C`](random/random/struct.Any_Num.html#struct.Any_Num_C).
 //! 
 //! ## Asymmetric-Key Algorithms for the Encryption/Decryption of digital data
