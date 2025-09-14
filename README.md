@@ -213,12 +213,12 @@ The checked items have already been implemented including documentation __at lea
       [`Any_SHA2_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_256.html#struct.Any_SHA2_256),
       [`Any_SHA1`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA1.html#struct.Any_SHA1),
       [`Any_SHA0`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA0.html#struct.Any_SHA0),
-      [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD5.html#struct.Any_MD5),
-      [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD4.html#struct.Any_MD4),
+      [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD5.html#struct.Any_MD5), and
+      [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD4.html#struct.Any_MD4).
 - [ ] Pseudo-random number generator engines using symmetric-key encryption algorithms ---
       [`Random_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_Rijndael.html#struct.Random_Rijndael),
-      [`Any_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Rijndael.html#struct.Any_Rijndael),
-      [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES), and
+      [`Any_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Rijndael.html#struct.Any_Rijndael), and
+      [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES).
 - [ ] Pseudo-random number generator engines using simple randomization algorithm ---
       [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Num_C.html#struct.Any_Num_C).
 

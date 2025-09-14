@@ -56,9 +56,9 @@ Random_Engine for SHA2_512_Generic<8,
         self.digest_array(message);
     }
 
-    fn harvest(&mut self, sugar: bool, _: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, restarted: bool, _: &[u64; 8]) -> [u64; 8]
     {
-        self.tangle(if sugar {SALT} else {0});
+        self.tangle(if restarted {SALT} else {0});
         self.get_hash_value_in_array()
     }
 }

@@ -214,10 +214,9 @@ pub struct Random_Generic<const COUNT: u128 = {u128::MAX}>
 {
     seed_array: [u64; 8],
     aux_array: [u64; 8],
-    seed_generator: Box<dyn Random_Engine>,
-    aux_generator: Box<dyn Random_Engine>,
     count: u128,
-    sugar: bool,
+    main_generator: Box<dyn Random_Engine>,
+    aux_generator: Box<dyn Random_Engine>,
 }
 
 impl<const COUNT: u128> Random_Generic<COUNT>
@@ -254,32 +253,34 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
 
-        let mut seed_generator = Box::new(SHA2_512::new());
+        let mut main_generator = Box::new(SHA2_512::new());
         let mut aux_generator = Box::new(SHA2_512::new());
         let seed_array = Self::collect_seed();
         let aux_array = Self::collect_seed();
-        seed_generator.sow_array(&seed_array);
+        main_generator.sow_array(&seed_array);
         aux_generator.sow_array(&aux_array);
         Self
         {
             seed_array,
             aux_array,
-            seed_generator,
-            aux_generator,
             count: COUNT,
-            sugar: false,
+            main_generator,
+            aux_generator,
         }
     }
 
-    // pub fn new_with<SG, AG>(mut seed_generator: SG, mut aux_generator: AG) -> Self
-    /// Constructs a new `Random_Generic` object.
+    // pub fn new_with<SG, AG>(mut main_generator: SG, mut aux_generator: AG) -> Self
+    /// Constructs a new `Random_Generic` object
+    /// with two random number generator engines.
     /// 
     /// # Arguments
-    /// - `seed_generator` is a seed generator which is of `Random_Engine`-type
-    ///   and for generating pseudo-random numbers.
-    /// - `aux_generator` is a seed generator which is of `Random_Engine`-type
-    ///   and for generating auxiliary pseudo-random numbers to use in
-    ///   generating pseudo-random numbers.
+    /// - `main_generator` is a main random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating main pseudo-random numbers.
+    /// - `aux_generator` is an auxiliary random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating auxiliary pseudo-random numbers to use in
+    ///   generating the main pseudo-random numbers.
     /// 
     /// # Output
     /// It returns a new object of `Random_Generic`.
@@ -306,7 +307,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # For more examples,
     /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with)
-    pub fn new_with<SG, AG>(mut seed_generator: SG, mut aux_generator: AG) -> Self
+    pub fn new_with<SG, AG>(mut main_generator: SG, mut aux_generator: AG) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
         if COUNT == 0
@@ -314,16 +315,15 @@ impl<const COUNT: u128> Random_Generic<COUNT>
 
         let seed_array = Self::collect_seed();
         let aux_array = Self::collect_seed();
-        seed_generator.sow_array(&seed_array);
+        main_generator.sow_array(&seed_array);
         aux_generator.sow_array(&aux_array);
         Self
         {
             seed_array,
             aux_array,
-            seed_generator: Box::new(seed_generator),
-            aux_generator: Box::new(aux_generator),
             count: COUNT,
-            sugar: false,
+            main_generator: Box::new(main_generator),
+            aux_generator: Box::new(aux_generator),
         }
     }
 
@@ -332,9 +332,9 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # Arguments
     /// - `seed` is the seed number of any type that has the trait `SmallUInt`
-    /// such as `u8`, `u16`, `u32`, `u64`, u128`, and `usize`.
+    ///   such as `u8`, `u16`, `u32`, `u64`, u128`, and `usize`.
     /// - `aux` is the seed number of any type that has trait `SmallUInt`
-    /// such as `u8`, `u16`, `u32`, `u64`, u128`, and `usize`.
+    ///   such as `u8`, `u16`, `u32`, `u64`, u128`, and `usize`.
     /// 
     /// # Output
     /// It returns a new object of Random_Generic.
@@ -345,16 +345,17 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Cryptographical Security
     /// - If you use `Random`, it is considered to be cryptographically secure.
     /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
+    ///   insecure.
     /// 
     /// #  Example 1 for Random
     /// ```
     /// use cryptocol::random::Random;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
     /// let mut rand = Random::new_with_seeds(10500872879054459758_u64, 15887751380961987625_u64);
-    /// println!("Random number = {}", rand.random_u8());
+    /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random number = {}", num);
     /// ```
     /// 
     /// # For more examples,
@@ -370,8 +371,8 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         seed_array[3] = aux;
         for i in 4..8
             { seed_array[i] = seed_array[i-1].wrapping_add(seed_array[i-2]); }
-        let mut seed_generator = Box::new(SHA2_512::new());
-        seed_generator.sow_array(&seed_array);
+        let mut main_generator = Box::new(SHA2_512::new());
+        main_generator.sow_array(&seed_array);
 
         let mut aux_array = [0_u64; 8];
         aux_array[0] = 1;
@@ -386,14 +387,55 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         {
             seed_array,
             aux_array,
-            seed_generator,
-            aux_generator,
             count: COUNT,
-            sugar: false,
+            main_generator,
+            aux_generator,
         }
     }
 
-    pub fn new_with_generators_seeds<SG, AG>(mut seed_generator: SG, mut aux_generator: AG, seed: u64, aux: u64) -> Self
+    // pub fn new_with_generators_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: u64, aux: u64) -> Self
+    /// Constructs a new `Random_Generic` object with
+    /// two random number generator engines and two seeds of type `T` given.
+    /// 
+    /// # Arguments
+    /// - `main_generator` is a main random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating main pseudo-random numbers.
+    /// - `aux_generator` is an auxiliary random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating auxiliary pseudo-random numbers to use in
+    ///   generating the main pseudo-random numbers.
+    /// - `seed` is the seed number of any type that has the trait `SmallUInt`
+    ///   such as `u8`, `u16`, `u32`, `u64`, u128`, and `usize`.
+    /// - `aux` is the seed number of any type that has trait `SmallUInt`
+    ///   such as `u8`, `u16`, `u32`, `u64`, u128`, and `usize`.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Panics
+    /// If `COUNT` is `0`, this method will panic!
+    /// 
+    /// # Cryptographical Security
+    /// - If you use `Random`, it is considered to be cryptographically secure.
+    /// - If you use `Any`, it is considered that it may be cryptographically
+    ///   insecure.
+    /// 
+    /// # Example 1 for BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::hash::BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = RandGen::new_with_generators_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), 10500872879054459758_u64, 15887751380961987625_u64);
+    /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random number = {}", num);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seeds)
+    pub fn new_with_generators_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: u64, aux: u64) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
         if COUNT == 0
@@ -405,7 +447,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         seed_array[3] = aux;
         for i in 4..8
             { seed_array[i] = seed_array[i-1].wrapping_add(seed_array[i-2]); }
-        seed_generator.sow_array(&seed_array);
+        main_generator.sow_array(&seed_array);
 
         let mut aux_array = [0_u64; 8];
         aux_array[0] = 1;
@@ -419,28 +461,11 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         {
             seed_array,
             aux_array,
-            seed_generator: Box::new(seed_generator),
-            aux_generator: Box::new(aux_generator),
             count: COUNT,
-            sugar: false,
+            main_generator: Box::new(main_generator),
+            aux_generator: Box::new(aux_generator),
         }
     }
-
-/*
-    pub fn new_with_generator(seed_generator: GenFunc, aux_generator: GenFunc) -> Self
-    {
-        let mut res = Self
-            {
-                seed_generator,
-                aux_generator,
-                i_seed: Self::COUNT as i32,
-                i_aux: Self::COUNT as i32,
-            };
-        res.seed_generator.absorb_array(&Self::get_seed());
-        res.aux_generator.absorb_array(&Self::get_seed());
-        res
-    }
-*/
 
     // fn collect_seed() -> [u64; 8]
     /// Collects seed from a system.
@@ -524,7 +549,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     fn produce_seed(&mut self)
     {
         self.change_count_and_sugar();
-        self.seed_array = self.seed_generator.harvest(self.sugar, &self.seed_array);
+        self.seed_array = self.main_generator.harvest(self.is_restarted(), &self.seed_array);
     }
 
     // fn produce_aux(&mut self) -> [u64; 8]
@@ -536,7 +561,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     fn produce_aux(&mut self)
     {
         self.change_count_and_sugar();
-        self.aux_array = self.aux_generator.harvest(self.sugar, &self.aux_array);
+        self.aux_array = self.aux_generator.harvest(self.is_restarted(), &self.aux_array);
     }
 
     // fn change_count_and_sugar(&mut self)
@@ -545,19 +570,20 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// Otherwise, subracts `1` from `self.count`.
     fn change_count_and_sugar(&mut self)
     {
-        if self.sugar == true
+        if self.is_restarted()
         {
-            self.seed_generator.sow_array(&Self::collect_seed());
-            self.aux_generator.sow_array(&Self::collect_seed());
-            self.sugar = false;
-        }
-        if self.count == 0
-        {
-            self.sugar = true;
             self.count = COUNT;
         }
         self.count = self.count.wrapping_sub(1);
+        if self.is_restarted()
+        {
+            self.main_generator.sow_array(&Self::collect_seed());
+            self.aux_generator.sow_array(&Self::collect_seed());
+        }
     }
+
+    #[inline]
+    fn is_restarted(&self) -> bool    { self.count == 0 }
 
     // pub fn random_u8(&mut self) -> u8
     /// Generates random numbers of type `u8`.

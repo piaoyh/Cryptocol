@@ -299,9 +299,9 @@ Random_Engine for DES_Generic<ROUND, SHIFT,
                         S748, S749, S750, S751, S752, S753, S754, S755,
                         S756, S757, S758, S759, S760, S761, S762, S763>
 {
-    fn harvest(&mut self, sugar: bool, message: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, restarted: bool, message: &[u64; 8]) -> [u64; 8]
     {
-        self.change_key(sugar);
+        self.change_key(restarted);
         let mut cipher = [0_u64; 8];
         self.encrypt_array_u64(message, &mut cipher);
         cipher

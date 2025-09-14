@@ -11,6 +11,7 @@
 #![allow(unused_must_use)]
 #![allow(dead_code)]
 #![allow(unused_variables)]
+#![allow(unused_mut)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
@@ -20,18 +21,9 @@ use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, 
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
                 Shl, ShlAssign, Shr, ShrAssign };
 use std::cmp::{ PartialEq, PartialOrd};
-use std::ptr::copy_nonoverlapping;
-use std::time::{ SystemTime, UNIX_EPOCH };
-use std::collections::hash_map::RandomState;
-use std::hash::{ BuildHasher, Hasher };
-#[cfg(not(target_family = "windows"))] use std::fs::File;
-#[cfg(not(target_family = "windows"))] use std::io::Read;
 
-use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime };
-use crate::hash::{ MD4, MD5, SHA0, SHA1, SHA2_256, SHA2_512,
-                    SHA3_256, SHA3_512, SHAKE_128, SHAKE_256, BIG_KECCAK_1024 };
-use crate::random::{ Random_Engine, AnyNumber_Engine_C };
-use crate::symmetric::{ Rijndael_64_64, DES };
+use crate::number::{ SmallUInt, BigUInt };
+use crate::random::Random_Engine;
 
 
 /// Random.rs may be too big
@@ -282,15 +274,18 @@ impl Random_Generic
         unimplemented!(); // Dummy code for documentation
     }
 
-    // pub fn new_with<SG, AG>(mut seed_generator: SG, mut aux_generator: AG) -> Self
-    /// Constructs a new `Random_Generic` object.
+    // pub fn new_with<SG, AG>(mut main_generator: SG, mut aux_generator: AG) -> Self
+    /// Constructs a new `Random_Generic` object
+    /// with two random number generator engines.
     /// 
     /// # Arguments
-    /// - `seed_generator` is a seed generator which is of `Random_Engine`-type
-    ///   and for generating pseudo-random numbers.
-    /// - `aux_generator` is a seed generator which is of `Random_Engine`-type
-    ///   and for generating auxiliary pseudo-random numbers to use in
-    ///   generating pseudo-random numbers.
+    /// - `main_generator` is a main random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating main pseudo-random numbers.
+    /// - `aux_generator` is an auxiliary random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating auxiliary pseudo-random numbers to use in
+    ///   generating the main pseudo-random numbers.
     /// 
     /// # Output
     /// It returns a new object of `Random_Generic`.
@@ -419,7 +414,7 @@ impl Random_Generic
     /// let mut any = AnyGen::new_with(DES::new(), DES::new());
     /// println!("Any number = {}", any.random_u8());
     /// ```
-    pub fn new_with<SG, AG>(mut seed_generator: SG, mut aux_generator: AG) -> Self
+    pub fn new_with<SG, AG>(mut main_generator: SG, mut aux_generator: AG) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
         unimplemented!(); // Dummy code for documentation
@@ -443,100 +438,336 @@ impl Random_Generic
     /// # Cryptographical Security
     /// - If you use `Random`, it is considered to be cryptographically secure.
     /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
+    ///   insecure.
     /// 
     /// #  Example 1 for Random
     /// ```
     /// use cryptocol::random::Random;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
     /// let mut rand = Random::new_with_seeds(10500872879054459758_u64, 15887751380961987625_u64);
-    /// println!("Random number = {}", rand.random_u8());
+    /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random number = {}", num);
     /// ```
     /// 
     /// # Example 2 for Any
     /// ```
     /// use cryptocol::random::Any;
-    /// let mut any = Any::new_with_seeds(100_u8, 25_u8);
-    /// println!("Any number = {}", any.random_u16());
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any::new_with_seeds(100, 25);
+    /// let num: U256 = any.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Any number = {}", num);
     /// ```
     /// 
-    /// # Example 3 for Any_Num
+    /// # Example 3 for Random_BIG_KECCAK_1024
     /// ```
-    /// use cryptocol::random::Any_Num;
-    /// let mut any_num = Any_Num::new_with_seeds(50558_u16, 18782_u16);
-    /// println!("Any number = {}", any_num.random_u32());
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_BIG_KECCAK_1024::new_with_seeds(0, 0);
+    /// let num: U1024 = rand.random_with_msb_set_biguint();
+    /// println!("Random number = {}", num);
     /// ```
     /// 
-    /// # Example 4 for Any_Num_C
+    /// # Example 4 for Random_SHA3_512
     /// ```
-    /// use cryptocol::random::Any_Num_C;
-    /// let mut any_num_c = Any_Num_C::new_with_seeds(458861005_u32, 793621585_u32);
-    /// println!("Any number = {}", any_num_c.random_u64());
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_SHA3_512::new_with_seeds(u64::MAX, u64::MAX);
+    /// let num: U768 = rand.random_odd_biguint();
+    /// println!("Any number = {}", num);
     /// ```
     /// 
-    /// # Example 5 for Any_MD4
+    /// # Example 5 for Any_SHA3_256
     /// ```
-    /// use cryptocol::random::Any_MD4;
-    /// let mut any_md4 = Any_MD4::new_with_seeds(106842379157284697258430057945771605458_u128, 156987312156874563258964453432556087625_u128);
-    /// println!("Any number = {}", any_md4.random_usize());
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHA3_256::new_with_seeds(u64::MAX, u64::MAX);
+    /// let num: U768 = any.random_odd_with_msb_set_biguint();
+    /// println!("Any number = {}", num);
     /// ```
     /// 
-    /// # Example 6 for Any_MD5
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHAKE_256::new_with_seeds(123456789, 987654321);
+    /// let num: U512 = any.random_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
+    /// 
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHAKE_128::new_with_seeds(u32::MAX as u64, u32::MAX as u64);
+    /// let num: U384 = any.random_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 8 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_SHA2_512::new_with_seeds(15698731215687456325, 10684237915728469725);
+    /// let num: U256 = rand.random_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
+    /// 
+    /// # Example 9 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// 
+    /// let mut any = Any_SHA2_512::new_with_seeds(2879054410500759758, 15887876257513809619);
+    /// if let Some(num) = any.random_minmax_uint(12345678_u32, 87654321)
+    ///     { println!("Any number = {}", num); }
+    /// ```
+    /// 
+    /// # Example 10 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// 
+    /// let mut any = Any_SHA2_256::new_with_seeds(610458805, 215793685);
+    /// if let Some(num) = any.random_under_uint(1234_u16)
+    ///     { println!("Any number = {}", num); }
+    /// ```
+    /// 
+    /// # Example 11 for Any_SHA1
+    /// ```
+    /// use cryptocol::random::Any_SHA1;
+    /// 
+    /// let mut any = Any_SHA1::new_with_seeds(18782, 50558);
+    /// println!("Any number = {}", any.random_uint::<u8>());
+    /// ```
+    /// 
+    /// # Example 12 for Any_SHA0
+    /// ```
+    /// use cryptocol::random::Any_SHA0;
+    /// 
+    /// let mut any = Any_SHA0::new_with_seeds(0, 125);
+    /// println!("Any prime number = {}", any.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// ```
+    /// 
+    /// # Example 13 for Any_MD5
     /// ```
     /// use cryptocol::random::Any_MD5;
-    /// let mut any_md5 = Any_MD5::new_with_seeds(58_usize, 161_usize);
+    /// 
+    /// let mut any_md5 = Any_MD5::new_with_seeds(58, 161);
     /// println!("Any number = {}", any_md5.random_u128());
     /// ```
     /// 
-    /// # Example 7 for Any_SHA0
+    /// # Example 14 for Any_MD4
     /// ```
-    /// use cryptocol::random::Any_SHA0;
-    /// let mut any_sha0 = Any_SHA0::new_with_seeds(0_u8, 125_u8);
-    /// println!("Any prime number = {}", any_sha0.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// use cryptocol::random::Any_MD4;
+    /// 
+    /// let mut any_md4 = Any_MD4::new_with_seeds(106842379157284697, 18446744073709551615);
+    /// println!("Any number = {}", any_md4.random_u64());
     /// ```
     /// 
-    /// # Example 8 for Any_SHA1
+    /// # Example 14 for Random_Rijndael
     /// ```
-    /// use cryptocol::random::Any_SHA1;
-    /// let mut any_sha1 = Any_SHA1::new_with_seeds(18782_u16, 50558_u16);
-    /// println!("Any number = {}", any_sha1.random_uint::<u8>());
+    /// use cryptocol::random::Random_Rijndael;
+    /// 
+    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
+    /// println!("Any number = {}", rand.random_u32());
     /// ```
     /// 
-    /// # Example 9 for Any_SHA2_256
+    /// # Example 15 for Any_Rijndael
     /// ```
-    /// use cryptocol::random::Any_SHA2_256;
-    /// let mut any_sha2_256 = Any_SHA2_256::new_with_seeds(610458805_u32, 215793685_u32);
-    /// if let Some(num) = any_sha2_256.random_under_uint(1234_u16)
-    ///     { println!("Any number = {}", num); }
+    /// use cryptocol::random::Any_Rijndael;
+    /// 
+    /// let mut any = Any_Rijndael::new_with_seeds(u16::MAX as u64, u16::MAX as u64);
+    /// println!("Any number = {}", any.random_u16());
     /// ```
     /// 
-    /// # Example 10 for Any_SHA2_512
+    /// # Example 16 for Any_DES
     /// ```
-    /// use cryptocol::random::Any_SHA2_512;
-    /// let mut any_sha2_512 = Any_SHA2_512::new_with_seeds(2879054410500759758_u64, 15887876257513809619_u64);
-    /// if let Some(num) = any_sha2_512.random_minmax_uint(12345678_u32, 87654321)
-    ///     { println!("Any number = {}", num); }
+    /// use cryptocol::random::Any_DES;
+    /// 
+    /// let mut any = Any_DES::new_with_seeds(u8::MAX as u64, u8::MAX as u64);
+    /// println!("Any number = {}", any.random_u8());
     /// ```
     /// 
-    /// # Example 11 for Random_SHA2_512
+    /// # Example 17 for Any_Num_C
     /// ```
-    /// use cryptocol::random::Random_SHA2_512;
-    /// let mut random_sha2_512 = Random_SHA2_512::new_with_seeds(156987312156874563258964453432556087625_u128, 106842379157284697258430057945771605458_u128);
-    /// println!("Random odd number = {}", random_sha2_512.random_odd_uint::<u128>());
+    /// use cryptocol::random::Any_Num_C;
+    /// 
+    /// let mut any = Any_Num_C::new_with_seeds(458861005, 793621585);
+    /// println!("Any number = {}", any.random_u64());
     /// ```
     /// 
-    /// # Example 12 for Random_Generic
+    /// # Example 18 for Any_Num
     /// ```
-    /// use cryptocol::random::Random_Generic;
-    /// use cryptocol::hash::MD5_Expanded;
-    /// type MyMD5 = MD5_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
-    /// type MyAny = Random_Generic<MyMD5>;
-    /// let mut any_md5_expanded = MyAny::new_with_seeds(6445332556087625_u64, 43057945771605458_u64);
-    /// println!("Any number = {}", any_md5_expanded.random_biguint::<u64, 8>());
+    /// use cryptocol::random::Any_Num;
+    /// let mut any = Any_Num::new_with_seeds(50558, 18782);
+    /// println!("Any number = {}", any.random_u32());
     /// ```
     pub fn new_with_seeds(seed: u64, aux: u64) -> Self
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn new_with_generators_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: u64, aux: u64) -> Self
+    /// Constructs a new `Random_Generic` object with
+    /// two random number generator engines and two seeds of type `T` given.
+    /// 
+    /// # Arguments
+    /// - `main_generator` is a main random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating main pseudo-random numbers.
+    /// - `aux_generator` is an auxiliary random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating auxiliary pseudo-random numbers to use in
+    ///   generating the main pseudo-random numbers.
+    /// - `seed` is the seed number of any type that has the trait `SmallUInt`
+    ///   such as `u8`, `u16`, `u32`, `u64`, u128`, and `usize`.
+    /// - `aux` is the seed number of any type that has trait `SmallUInt`
+    ///   such as `u8`, `u16`, `u32`, `u64`, u128`, and `usize`.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Panics
+    /// If `COUNT` is `0`, this method will panic!
+    /// 
+    /// # Cryptographical Security
+    /// - If you use `Random`, it is considered to be cryptographically secure.
+    /// - If you use `Any`, it is considered that it may be cryptographically
+    ///   insecure.
+    /// 
+    /// # Example 1 for BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::hash::BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = RandGen::new_with_generators_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), 10500872879054459758_u64, 15887751380961987625_u64);
+    /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random number = {}", num);
+    /// ```
+    /// 
+    /// # Example 2 for SHA3_512
+    /// ```
+    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::hash::SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), 100, 25);
+    /// let num: U256 = any.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 3 for SHA2_512
+    /// ```
+    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::hash::SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seeds(SHA2_512::new(), SHA2_512::new(), 0, 0);
+    /// let num: U1024 = any.random_with_msb_set_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 4 for SHAKE_256
+    /// ```
+    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::hash::SHAKE_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = RandGen::new_with_generators_seeds(SHAKE_256::new(), SHAKE_256::new(), u64::MAX, u64::MAX);
+    /// let num: U768 = rand.random_odd_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
+    /// 
+    /// # Example 5 for SHAKE_128
+    /// ```
+    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::hash::SHAKE_128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seeds(SHAKE_128::new(), SHAKE_128::new(), 123456789, 987654321);
+    /// let num: U512 = any.random_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 6 for SHA3_256
+    /// ```
+    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::hash::SHA3_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seeds(SHA3_256::new(), SHA3_256::new(), u32::MAX as u64, u32::MAX as u64);
+    /// let num: U384 = any.random_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 7 for SHA2_256
+    /// ```
+    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::hash::SHA2_256;
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seeds(SHA2_256::new(), SHA2_256::new(), 15698731215687456325, 10684237915728469725);
+    /// println!("Any number = {}", any.random_u128());
+    /// ```
+    /// 
+    /// # Example 8 for SHA1 and SHA0
+    /// ```
+    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::hash::{ SHA1, SHA0 };
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seeds(SHA1::new(), SHA0::new(), 2879054410500759758, 15887876257513809619);
+    /// println!("Any number = {}", any.random_u64());
+    /// ```
+    /// 
+    /// # Example 9 for MD5 and MD4
+    /// ```
+    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::hash::{ MD5, MD4 };
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seeds(MD5::new(), MD4::new(), 610458805, 215793685);
+    /// println!("Any number = {}", any.random_u32());
+    /// ```
+    /// 
+    /// # Example 10 for AES_128
+    /// ```
+    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::symmetric::AES_128;
+    /// 
+    /// let mut any = RandGen::new_with_generators_seeds(AES_128::new(), AES_128::new(), 18782, 50558);
+    /// println!("Random number = {}", any.random_u16());
+    /// ```
+    /// 
+    /// # Example 11 for DES
+    /// ```
+    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::symmetric::AES_128;
+    /// 
+    /// use cryptocol::symmetric::DES;
+    /// let mut any = AnyGen::new_with_generators_seeds(DES::new(), DES::new(), 0, 125);
+    /// println!("Any number = {}", any.random_u8());
+    /// ```
+    pub fn new_with_generators_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: u64, aux: u64) -> Self
+    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
         unimplemented!(); // Dummy code for documentation
     }

@@ -25,9 +25,9 @@ Random_Engine for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFIN
         MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13, MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
         RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
-    fn harvest(&mut self, sugar: bool, message: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, restarted: bool, message: &[u64; 8]) -> [u64; 8]
     {
-        self.change_key(sugar);
+        self.change_key(restarted);
         let mut cipher = [0_u64; 8];
         if NB >= 16
         {

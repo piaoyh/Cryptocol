@@ -35,9 +35,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         self.digest_array(message);
     }
 
-    fn harvest(&mut self, sugar: bool, _: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, restarted: bool, _: &[u64; 8]) -> [u64; 8]
     {
-        self.tangle(if sugar {SALT} else {0});
+        self.tangle(if restarted {SALT} else {0});
         let src: [u8; 64] = self.get_hash_value_in_array();
         unsafe { SharedArrays::<u64, 8, u8, 64>::from_src(&src).des }
     }

@@ -38,10 +38,10 @@ Random_Engine for AnyNumber_Engine_C_Generic<MULTIPLIER, ADDER>
     // }
 
 
-    fn harvest(&mut self, sugar: bool, message: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, restarted: bool, message: &[u64; 8]) -> [u64; 8]
     {
         let mut any_numbers = [0_u64; 8];
-        let salt = if sugar { SALT } else { 0 };
+        let salt = if restarted { SALT } else { 0 };
         for i in 0..8
         {
             any_numbers[i] = message[i].wrapping_add(salt)
