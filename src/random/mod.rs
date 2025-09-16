@@ -136,45 +136,50 @@
 //! hash function as its message again, and this process is repeated.
 //! 
 
+
+/// The module that contains struct `Random_Generic`
 mod random;
 
-/// The module that contains struct AnyMumber_C_Generic
+/// The module that contains `struct`s that construct `Random_Generic` objects with specific engines
+mod random_specific;
+
+/// The module that contains struct `AnyMumber_C_Generic`
 mod any_number_engine_c_generic;
 
-/// The module that contains trait Random_Engine
+/// The module that contains trait `Random_Engine`
 mod trait_random_engine;
 
-/// The module that contains implementation of trait Random_Engine for MD4
+/// The module that contains implementation of trait `Random_Engine` for `MD4`
 mod trait_random_engine_impl_for_md4;
 
-/// The module that contains implementation of trait Random_Engine for MD5
+/// The module that contains implementation of trait `Random_Engine` for `MD5`
 mod trait_random_engine_impl_for_md5;
 
-/// The module that contains implementation of trait Random_Engine for SHA1
+/// The module that contains implementation of trait `Random_Engine` for `SHA1`
 mod trait_random_engine_impl_for_sha1;
 
-/// The module that contains implementation of trait Random_Engine for SHA2_256
+/// The module that contains implementation of trait `Random_Engine` for `SHA2_256`
 mod trait_random_engine_impl_for_sha2_256;
 
-/// The module that contains implementation of trait Random_Engine for SHA2_512
+/// The module that contains implementation of trait `Random_Engine` for `SHA2_512`
 mod trait_random_engine_impl_for_sha2_512;
 
-/// The module that contains implementation of trait Random_Engine for SHA3
+/// The module that contains implementation of trait `Random_Engine` for `SHA3`
 mod trait_random_engine_impl_for_sha3;
 
-/// The module that contains implementation of trait Random_Engine for AnyNumber
+/// The module that contains implementation of trait `Random_Engine` for `AnyNumber`
 mod trait_random_engine_impl_for_any_number;
 
-/// The module that contains implementation of trait Random_Engine for DES
+/// The module that contains implementation of trait `Random_Engine` for `DES`
 mod trait_random_engine_impl_for_des;
 
-/// The module that contains implementation of trait Random_Engine for Rijndael
+/// The module that contains implementation of trait `Random_Engine` for `Rijndael`
 mod trait_random_engine_impl_for_rijndael;
 
-/// The module that contains implementation of trait Random_Engine for BigCryptor64
+/// The module that contains implementation of trait `Random_Engine` for `BigCryptor64`
 mod trait_random_engine_impl_for_big_cryptor64;
 
-/// The module that contains implementation of trait Random_Engine for BigCryptor128
+/// The module that contains implementation of trait `Random_Engine` for `BigCryptor128`
 mod trait_random_engine_impl_for_big_cryptor128;
 
 mod trait_key;
@@ -184,6 +189,7 @@ mod trait_key_impl_for_big_cryptor64;
 mod trait_key_impl_for_big_cryptor128;
 
 pub use random::*;
+pub use random_specific::*;
 pub use any_number_engine_c_generic::{ AnyNumber_Engine_C_Generic, AnyNumber_Engine_C };
 pub use trait_random_engine::*;
 
