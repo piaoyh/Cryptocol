@@ -48,8 +48,9 @@ Random_Engine for MD5_Generic<4, H0, H1, H2, H3, ROUND,
         self.digest_array(message);
     }
 
-    fn harvest(&mut self, count: u128, _: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]
     {
+        self.digest_array(message);
         let mut salt = [0_u64; 4];
         if count == 0
         {

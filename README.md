@@ -92,8 +92,8 @@ The checked items have already been implemented including documentation __at lea
       ===> Moved to Roadmap for ver. 2.0
 -->
 
-### Symmetric-key Algorithms for the Encryption/Decryption of digital data
-
+### Symmetric-key Algorithms for Block Encryption/Decryption of digital data
+<!-- #### AES Finalists -->
 - [X] AES and Rijndael symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for Rijndael_Generic
       --- Includes AES, Rijndael and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
       [`Rijndael_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/rijndael/struct.Rijndael_Generic.html#struct.Rijndael_Generic),
@@ -119,6 +119,8 @@ The checked items have already been implemented including documentation __at lea
 - [ ] RC6 symmetric-key encryption/decryption algorithm
       --- Includes RC6 and its expanded versions. `RC6_Generic`
       ===> Moved to Roadmap for ver. 2.0
+
+#### South Korean Encryption/Decryption algorithms
 - [ ] SEED symmetric-key encryption/decryption algorithm
       --- Includes SEED and its expanded versions. `SEED_Generic`
       ===> Moved to Roadmap for ver. 2.0
@@ -134,21 +136,16 @@ The checked items have already been implemented including documentation __at lea
 - [ ] IDEA symmetric-key encryption/decryption algorithm
       --- Includes IDEA and its expanded versions. `IDEA_Generic`
       ===> Moved to Roadmap for ver. 2.0
+
+#### Miscellaneous Encryption/Decryption algorithms
 - [ ] Bluefish symmetric-key encryption/decryption algorithm
       --- Includes Bluefish and its expanded versions. `Bluefish_Generic`
-      ===> Moved to Roadmap for ver. 2.0
-- [ ] Chacha20 symmetric-key encryption/decryption algorithm
-      --- Includes Chacha20 and its expanded versions. `Chacha20_Generic`
-      ===> Moved to Roadmap for ver. 2.0
-- [ ] Salsa20 symmetric-key encryption/decryption algorithm
-      --- Includes Salsa20 and its expanded versions. `Salsa20_Generic`
       ===> Moved to Roadmap for ver. 2.0
 - [ ] RC5 symmetric-key encryption/decryption algorithm
       --- Includes RC5 and its expanded versions. `RC5_Generic`
       ===> Moved to Roadmap for ver. 2.0
-- [ ] RC4 symmetric-key encryption/decryption algorithm
-      --- Includes RC4 and its expanded versions. `RC4_Generic`
-      ===> Moved to Roadmap for ver. 2.0
+
+#### Insecure Block Encryption/Decryption algorithms
 - [ ] RC2 symmetric-key encryption/decryption algorithm
       --- Includes RC2 and its expanded versions. `RC2_Generic`
       ===> Moved to Roadmap for ver. 2.0
@@ -170,6 +167,8 @@ The checked items have already been implemented including documentation __at lea
       --- Includes Lucifer and its expanded versions. `Lucifer_Generic`
       ===> Moved to Roadmap for ver. 2.0
 -->
+
+<!-- #### Containers for combining encryption/decryption algorithms -->
 - [X] BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor128
       --- Includes 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
       [BigCryptor128](https://docs.rs/cryptocol/latest/cryptocol/symmetric/big_cryptor/struct.BigCryptor128.html#struct.BigCryptor128),
@@ -195,7 +194,21 @@ The checked items have already been implemented including documentation __at lea
       [`CFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CFB.html#trait.CFB),
       [`OFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.OFB.html#trait.OFB), and
       [`CTR`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CTR.html#trait.CTR).
+<!--
+### Symmetric-key Algorithms for Stream Encryption/Decryption of digital data
 
+- [ ] Chacha20 symmetric-key encryption/decryption algorithm
+      --- Includes Chacha20 and its expanded versions. `Chacha20_Generic`
+      ===> Moved to Roadmap for ver. 2.0
+- [ ] Salsa20 symmetric-key encryption/decryption algorithm
+      --- Includes Salsa20 and its expanded versions. `Salsa20_Generic`
+      ===> Moved to Roadmap for ver. 2.0
+
+#### Insecure Stream Encryption/Decryption algorithms
+- [ ] RC4 symmetric-key encryption/decryption algorithm
+      --- Includes RC4 and its expanded versions. `RC4_Generic`
+      ===> Moved to Roadmap for ver. 2.0
+-->
 ### Pseudo-Random Number Generator Algorithms
 
 - [ ] Pseudo-random number generator ---
@@ -215,14 +228,14 @@ The checked items have already been implemented including documentation __at lea
       [`Any_SHA0`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA0.html#struct.Any_SHA0),
       [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD5.html#struct.Any_MD5), and
       [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD4.html#struct.Any_MD4).
-- [ ] Pseudo-random number generator engines using symmetric-key encryption algorithms ---
+- [ ] Pseudo-random number generator engines using symmetric-key block encryption algorithms ---
       [`Random_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_Rijndael.html#struct.Random_Rijndael),
       [`Any_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Rijndael.html#struct.Any_Rijndael), and
       [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES).
 - [X] Pseudo-random number generator engines using simple randomization algorithm ---
       [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Num_C.html#struct.Any_Num_C).
 
-### Asymmetric-key Algorithms for the Encryption/Decryption of digital data
+### Asymmetric-key Algorithms for Encryption/Decryption of digital data
 
 - [ ] ECC (Elliptic Curve Cryptosystem)
 - [ ] RSA (Ron Rivest, Adi Shamir, Leonard Adleman)

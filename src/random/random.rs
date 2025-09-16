@@ -170,8 +170,10 @@ pub type RandGen = Random_Generic<SECURE_COUNT>;
 #[allow(non_camel_case_types)]
 pub struct Random_Generic<const COUNT: u128 = {u128::MAX}>
 {
-    seed_array: [u64; 8],
-    aux_array: [u64; 8],
+    original_seed: [u64; 8],
+    original_aux: [u64; 8],
+    main_state: [u64; 8],
+    aux_state: [u64; 8],
     count: u128,
     main_generator: Box<dyn Random_Engine>,
     aux_generator: Box<dyn Random_Engine>,
@@ -213,14 +215,14 @@ impl<const COUNT: u128> Random_Generic<COUNT>
 
     //     let mut main_generator = Box::new(SHA2_512::new());
     //     let mut aux_generator = Box::new(SHA2_512::new());
-    //     let seed_array = Self::collect_seed();
-    //     let aux_array = Self::collect_seed();
-    //     main_generator.sow_array(&seed_array);
-    //     aux_generator.sow_array(&aux_array);
+    //     let main_state = Self::collect_seed();
+    //     let aux_state = Self::collect_seed();
+    //     main_generator.sow_array(&main_state);
+    //     aux_generator.sow_array(&aux_state);
     //     Self
     //     {
-    //         seed_array,
-    //         aux_array,
+    //         main_state,
+    //         aux_state,
     //         count: COUNT,
     //         main_generator,
     //         aux_generator,
@@ -271,14 +273,18 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
 
-        let seed_array = Self::collect_seed();
-        let aux_array = Self::collect_seed();
-        main_generator.sow_array(&seed_array);
-        aux_generator.sow_array(&aux_array);
+        let original_seed = Self::collect_seed();
+        let original_aux = Self::collect_seed();
+        let main_state = original_seed.clone();
+        let aux_state = original_aux.clone();
+        main_generator.sow_array(&main_state);
+        aux_generator.sow_array(&aux_state);
         Self
         {
-            seed_array,
-            aux_array,
+            original_seed,
+            original_aux,
+            main_state,
+            aux_state,
             count: COUNT,
             main_generator: Box::new(main_generator),
             aux_generator: Box::new(aux_generator),
@@ -323,28 +329,28 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     //     if COUNT == 0
     //         { panic!("COUNT should be greater than 0."); }
 
-    //     let mut seed_array = [0_u64; 8];
-    //     seed_array[1] = 1;
-    //     seed_array[2] = seed;
-    //     seed_array[3] = aux;
+    //     let mut main_state = [0_u64; 8];
+    //     main_state[1] = 1;
+    //     main_state[2] = seed;
+    //     main_state[3] = aux;
     //     for i in 4..8
-    //         { seed_array[i] = seed_array[i-1].wrapping_add(seed_array[i-2]); }
+    //         { main_state[i] = main_state[i-1].wrapping_add(main_state[i-2]); }
     //     let mut main_generator = Box::new(SHA2_512::new());
-    //     main_generator.sow_array(&seed_array);
+    //     main_generator.sow_array(&main_state);
 
-    //     let mut aux_array = [0_u64; 8];
-    //     aux_array[0] = 1;
-    //     aux_array[2] = aux;
-    //     aux_array[3] = seed;
+    //     let mut aux_state = [0_u64; 8];
+    //     aux_state[0] = 1;
+    //     aux_state[2] = aux;
+    //     aux_state[3] = seed;
     //     for i in 4..8
-    //         { aux_array[i] = !aux_array[i]; }
+    //         { aux_state[i] = !aux_state[i]; }
     //     let mut aux_generator = Box::new(SHA2_512::new());
-    //     aux_generator.sow_array(&aux_array);
+    //     aux_generator.sow_array(&aux_state);
 
     //     Self
     //     {
-    //         seed_array,
-    //         aux_array,
+    //         main_state,
+    //         aux_state,
     //         count: COUNT,
     //         main_generator,
     //         aux_generator,
@@ -399,26 +405,30 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
 
-        let mut seed_array = [0_u64; 8];
-        seed_array[1] = 1;
-        seed_array[2] = seed;
-        seed_array[3] = aux;
+        let mut main_state = [0_u64; 8];
+        main_state[1] = 1;
+        main_state[2] = seed;
+        main_state[3] = aux;
         for i in 4..8
-            { seed_array[i] = seed_array[i-1].wrapping_add(seed_array[i-2]); }
-        main_generator.sow_array(&seed_array);
+            { main_state[i] = main_state[i-1].wrapping_add(main_state[i-2]); }
+        let original_seed = main_state.clone(); 
+        main_generator.sow_array(&main_state);
 
-        let mut aux_array = [0_u64; 8];
-        aux_array[0] = 1;
-        aux_array[2] = aux;
-        aux_array[3] = seed;
+        let mut aux_state = [0_u64; 8];
+        aux_state[0] = 1;
+        aux_state[2] = aux;
+        aux_state[3] = seed;
         for i in 4..8
-            { aux_array[i] = !aux_array[i]; }
-        aux_generator.sow_array(&aux_array);
+            { aux_state[i] = !aux_state[i]; }
+        let original_aux = aux_state.clone();
+        aux_generator.sow_array(&aux_state);
 
         Self
         {
-            seed_array,
-            aux_array,
+            original_seed,
+            original_aux,
+            main_state,
+            aux_state,
             count: COUNT,
             main_generator: Box::new(main_generator),
             aux_generator: Box::new(aux_generator),
@@ -498,28 +508,32 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         }
     }
 */
-    // fn produce_seed(&mut self) -> [u64; 8]
+    // fn produce_main_state(&mut self) -> [u64; 8]
     /// Runs the registered pseudo-random number generator to prepare for
-    /// generating a random number for seed.
+    /// generating a random number for main_state.
     /// 
     /// # Output
     /// It returns a random number array `[u64; 8]`.
-    fn produce_seed(&mut self)
+    fn produce_main_state(&mut self)
     {
         self.change_count();
-        self.seed_array = self.main_generator.harvest(self.count, &self.seed_array);
+        for i in 0..8
+            { self.main_state[i] ^= self.original_seed[i]; }
+        self.main_state = self.main_generator.harvest(self.count, &self.main_state);
     }
 
-    // fn produce_aux(&mut self) -> [u64; 8]
+    // fn produce_aux_state(&mut self) -> [u64; 8]
     /// Runs the registered pseudo-random number generator to prepare for
-    /// generating a random number for aux.
+    /// generating a random number for aux_state.
     /// 
     /// # Output
     /// It returns a random number array `[u64; 8]`.
-    fn produce_aux(&mut self)
+    fn produce_aux_state(&mut self)
     {
         self.change_count();
-        self.aux_array = self.aux_generator.harvest(self.count, &self.aux_array);
+        for i in 0..8
+            { self.aux_state[i] ^= self.original_aux[i]; }
+        self.aux_state = self.aux_generator.harvest(self.count, &self.aux_state);
     }
 
     // fn change_count(&mut self)
@@ -535,8 +549,15 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         self.count = self.count.wrapping_sub(1);
         if self.is_restarted()
         {
-            self.main_generator.sow_array(&Self::collect_seed());
-            self.aux_generator.sow_array(&Self::collect_seed());
+            self.original_seed = Self::collect_seed();
+            self.original_aux = Self::collect_seed();
+            for i in 0..8
+            {
+                self.main_state[i] ^= self.original_aux[i];
+                self.aux_state[i] ^= self.original_seed[i];
+            }
+            self.main_generator.sow_array(&self.main_state);
+            self.aux_generator.sow_array(&self.aux_state);
         }
     }
 
@@ -566,13 +587,13 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_u8)
     pub fn random_u8(&mut self) -> u8
     {
-        self.produce_aux();
-        self.produce_seed();
-        let mut i = self.seed_array[0] as usize & 0b111;
-        let mut j = self.seed_array[1] as usize & 0b111;
-        i = self.aux_array[i] as usize & 0b111;
-        j = self.aux_array[j] as usize & 0b111;
-        LongUnion::new_with(self.seed_array[i]).get_ubyte_(j)
+        self.produce_aux_state();
+        self.produce_main_state();
+        let mut i = self.main_state[0] as usize & 0b111;
+        let mut j = self.main_state[1] as usize & 0b111;
+        i = self.aux_state[i] as usize & 0b111;
+        j = self.aux_state[j] as usize & 0b111;
+        LongUnion::new_with(self.main_state[i]).get_ubyte_(j)
     }
 
     // pub fn random_u16(&mut self) -> u16
@@ -598,13 +619,13 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_u16)
     pub fn random_u16(&mut self) -> u16
     {
-        self.produce_aux();
-        self.produce_seed();
-        let mut i = self.seed_array[2] as usize & 0b111;
-        let mut j = self.seed_array[3] as usize & 0b111;
-        i = self.aux_array[i] as usize & 0b111;
-        j = self.aux_array[j] as usize & 0b11;
-        LongUnion::new_with(self.seed_array[i]).get_ushort_(j)
+        self.produce_aux_state();
+        self.produce_main_state();
+        let mut i = self.main_state[2] as usize & 0b111;
+        let mut j = self.main_state[3] as usize & 0b111;
+        i = self.aux_state[i] as usize & 0b111;
+        j = self.aux_state[j] as usize & 0b11;
+        LongUnion::new_with(self.main_state[i]).get_ushort_(j)
     }
 //////////////////////
     // pub fn random_u32(&mut self) -> u32
@@ -633,13 +654,13 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_u32)
     pub fn random_u32(&mut self) -> u32
     {
-        self.produce_aux();
-        self.produce_seed();
-        let mut i = self.seed_array[4] as usize & 0b111;
-        let mut j = self.seed_array[5] as usize & 0b111;
-        i = self.aux_array[i] as usize & 0b111;
-        j = self.aux_array[j] as usize & 1;
-        LongUnion::new_with(self.seed_array[i]).get_uint_(j)
+        self.produce_aux_state();
+        self.produce_main_state();
+        let mut i = self.main_state[4] as usize & 0b111;
+        let mut j = self.main_state[5] as usize & 0b111;
+        i = self.aux_state[i] as usize & 0b111;
+        j = self.aux_state[j] as usize & 1;
+        LongUnion::new_with(self.main_state[i]).get_uint_(j)
     }
 
     // pub fn random_u64(&mut self) -> u64
@@ -668,11 +689,11 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_u64)
     pub fn random_u64(&mut self) -> u64
     {
-        self.produce_aux();
-        self.produce_seed();
-        let mut i = self.seed_array[0] as usize & 0b111;
-        i = self.aux_array[i] as usize & 0b111;
-        self.seed_array[i]
+        self.produce_aux_state();
+        self.produce_main_state();
+        let mut i = self.main_state[0] as usize & 0b111;
+        i = self.aux_state[i] as usize & 0b111;
+        self.main_state[i]
     }
 
     // pub fn random_u128(&mut self) -> u128
@@ -701,15 +722,15 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_u128)
     pub fn random_u128(&mut self) -> u128
     {
-        self.produce_aux();
-        self.produce_seed();
-        let mut i = self.seed_array[6] as usize & 0b111;
-        let mut j = self.seed_array[7] as usize & 0b111;
-        i = self.aux_array[i] as usize & 0b111;
-        j = self.aux_array[j] as usize & 0b111;
+        self.produce_aux_state();
+        self.produce_main_state();
+        let mut i = self.main_state[6] as usize & 0b111;
+        let mut j = self.main_state[7] as usize & 0b111;
+        i = self.aux_state[i] as usize & 0b111;
+        j = self.aux_state[j] as usize & 0b111;
         let mut res = LongerUnion::new();
-        res.set_ulong(0, self.seed_array[i]);
-        res.set_ulong(1, self.seed_array[j]);
+        res.set_ulong(0, self.main_state[i]);
+        res.set_ulong(1, self.main_state[j]);
         res.get()
     }
 
@@ -1535,18 +1556,18 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             + BitXor<Output=T> + BitXorAssign + Not<Output=T>
             + PartialEq + PartialOrd
     {
-        self.produce_aux();
-        self.produce_seed();
+        self.produce_aux_state();
+        self.produce_main_state();
         let mut tsize = T::size_in_bytes() as usize * N;
         let asize = u64::size_in_bytes() as usize * 8;
         while tsize > 0
         {
-            let mut array = self.aux_array.clone();
+            let mut array = self.aux_state.clone();
             for i in 0..8
-                { array[i] ^= self.seed_array[i]; }
+                { array[i] ^= self.main_state[i]; }
             let count = if tsize < asize { tsize } else { asize };
             unsafe { copy_nonoverlapping(array.as_ptr() as *const u8, out.as_mut_ptr() as *mut u8, count); }
-            self.produce_seed();
+            self.produce_main_state();
             tsize -= count;
         }
     }
