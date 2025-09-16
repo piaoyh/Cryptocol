@@ -7,7 +7,7 @@
 // except according to those terms.
 
 
-use crate::symmetric::DES_Generic;
+use crate::symmetric::{ DES_Generic, CTR };
 use crate::random::{ Random_Engine, Key };
 
 
@@ -299,11 +299,11 @@ Random_Engine for DES_Generic<ROUND, SHIFT,
                         S748, S749, S750, S751, S752, S753, S754, S755,
                         S756, S757, S758, S759, S760, S761, S762, S763>
 {
-    fn harvest(&mut self, restarted: bool, message: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]
     {
-        self.change_key(restarted);
+        self.change_key(count == 0);
         let mut cipher = [0_u64; 8];
-        self.encrypt_array_u64(message, &mut cipher);
+        self.encrypt_array_into_array(count as u64, message, &mut cipher);
         cipher
     }
 }

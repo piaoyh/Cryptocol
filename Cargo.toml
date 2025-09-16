@@ -8,7 +8,7 @@ keywords = ["aes", "sha2", "sha3", "sha512", "des"]
 license = "MIT OR Apache-2.0"
 name = "cryptocol"
 readme = "README.md"
-version = "0.16.0"
+version = "0.16.1"
 # repository = "https://github.com/piaoyh/cryptocol".
 
 
@@ -19,283 +19,283 @@ incremental = false
 
 [dependencies]
 
-####################################
-## [package.metadata.docs.rs]
-## cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]
-## 
-## 
-## [[example]]
-## name = "aes_basic_quick_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "aes_cbc_iso_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "aes_cbc_pkcs7_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "aes_cfb_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "aes_ctr_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "aes_ecb_iso_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "aes_ecb_pkcs7_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "aes_ofb_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "aes_pcbc_iso_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "aes_pcbc_pkcs7_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor128_basic_quick_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor128_cbc_iso_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor128_cbc_pkcs7_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor128_cfb_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor128_ctr_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor128_ecb_iso_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor128_ecb_pkcs7_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor128_ofb_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor128_pcbc_iso_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor128_pcbc_pkcs7_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor64_basic_quick_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor64_cbc_iso_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor64_cbc_pkcs7_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor64_cfb_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor64_ctr_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor64_ecb_iso_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor64_ecb_pkcs7_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor64_ofb_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor64_pcbc_iso_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "bigcryptor64_pcbc_pkcs7_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "biguint_arithmatic_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "biguint_arithmatic_uint_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "biguint_basic_quick_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "biguint_etc_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "biguint_exponentiation_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "biguint_miscellaneous_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "biguint_modular_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "biguint_more_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "biguint_panic_free_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "biguint_prime_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "des_basic_quick_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "des_cbc_iso_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "des_cbc_pkcs7_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "des_cfb_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "des_ctr_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "des_ecb_iso_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "des_ecb_pkcs7_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "des_ofb_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "des_pcbc_iso_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "des_pcbc_pkcs7_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "hash_app"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "md4_app"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "md4_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "md5_app"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "md5_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "ndes_basic_quick_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "performance_test_biguint"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "random_generic_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "random_specific_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "sha1_app"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "sha1_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "sha2_256_app"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "sha2_512_224_app"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "sha2_512_app"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "sha2_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "sha3_app"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "sha3_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "small_uint_examples"
-## doc-scrape-examples = false
-## 
-## [[example]]
-## name = "unions_examples"
-## doc-scrape-examples = false
+#################################
+[package.metadata.docs.rs]
+cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]
+
+
+[[example]]
+name = "aes_basic_quick_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "aes_cbc_iso_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "aes_cbc_pkcs7_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "aes_cfb_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "aes_ctr_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "aes_ecb_iso_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "aes_ecb_pkcs7_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "aes_ofb_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "aes_pcbc_iso_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "aes_pcbc_pkcs7_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor128_basic_quick_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor128_cbc_iso_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor128_cbc_pkcs7_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor128_cfb_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor128_ctr_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor128_ecb_iso_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor128_ecb_pkcs7_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor128_ofb_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor128_pcbc_iso_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor128_pcbc_pkcs7_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor64_basic_quick_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor64_cbc_iso_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor64_cbc_pkcs7_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor64_cfb_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor64_ctr_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor64_ecb_iso_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor64_ecb_pkcs7_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor64_ofb_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor64_pcbc_iso_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "bigcryptor64_pcbc_pkcs7_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "biguint_arithmatic_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "biguint_arithmatic_uint_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "biguint_basic_quick_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "biguint_etc_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "biguint_exponentiation_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "biguint_miscellaneous_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "biguint_modular_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "biguint_more_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "biguint_panic_free_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "biguint_prime_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "des_basic_quick_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "des_cbc_iso_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "des_cbc_pkcs7_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "des_cfb_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "des_ctr_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "des_ecb_iso_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "des_ecb_pkcs7_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "des_ofb_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "des_pcbc_iso_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "des_pcbc_pkcs7_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "hash_app"
+doc-scrape-examples = false
+
+[[example]]
+name = "md4_app"
+doc-scrape-examples = false
+
+[[example]]
+name = "md4_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "md5_app"
+doc-scrape-examples = false
+
+[[example]]
+name = "md5_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "ndes_basic_quick_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "performance_test_biguint"
+doc-scrape-examples = false
+
+[[example]]
+name = "random_generic_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "random_specific_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "sha1_app"
+doc-scrape-examples = false
+
+[[example]]
+name = "sha1_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "sha2_256_app"
+doc-scrape-examples = false
+
+[[example]]
+name = "sha2_512_224_app"
+doc-scrape-examples = false
+
+[[example]]
+name = "sha2_512_app"
+doc-scrape-examples = false
+
+[[example]]
+name = "sha2_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "sha3_app"
+doc-scrape-examples = false
+
+[[example]]
+name = "sha3_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "small_uint_examples"
+doc-scrape-examples = false
+
+[[example]]
+name = "unions_examples"
+doc-scrape-examples = false

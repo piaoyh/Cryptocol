@@ -7,26 +7,16 @@
 // except according to those terms.
 
 
-use crate::symmetric::BigCryptor64;
-use crate::random::{ Random_Engine, Key, SALT };
+use crate::symmetric::{ BigCryptor64, CTR };
+use crate::random::{ Random_Engine, Key };
 
 impl Random_Engine for BigCryptor64
 {
-    fn harvest(&mut self, restarted: bool, message: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]
     {
         let mut cipher = [0_u64; 8];
-        if restarted
-        {
-            self.change_key(restarted);
-            let mut m = [0_u64; 8];
-            for i in 0..message.len()
-                { m[i] = message[i].wrapping_add(SALT); }
-            self.encrypt_array_u64(&m, &mut cipher);
-        }
-        else
-        {
-            self.encrypt_array_u64(message, &mut cipher);
-        }
+        self.change_key(count == 0);
+        self.encrypt_array_into_array(count as u64, &message, &mut cipher);
         cipher
     }
 }

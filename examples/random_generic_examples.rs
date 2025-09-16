@@ -281,68 +281,114 @@ fn random_random_u8()
     let mut any = Any::new();
     for i in 0..10
         { println!("{} Any number (Any) = {}", i, any.random_u8()); }
-  
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any_num = Any_Num::new();
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num) = {}", i, any_num.random_u8()); }
+        { println!("{} Random number (Random_BIG_KECCAK_1024) = {}", i, rand.random_u8()); }
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA3_512) = {}", i, rand.random_u8()); }
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA2_512) = {}", i, rand.random_u8()); }
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    for i in 0..10
+        { println!("{} Any number (Any_SHAKE_256) = {}", i, any.random_u8()); }
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    for i in 0..10
+        { println!("{} Any number (Any_SHAKE_128) = {}", i, any.random_u8()); }
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    for i in 0..10
+        { println!("{} Any number (Any_SHA3_512) = {}", i, any.random_u8()); }
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    for i in 0..10
+        { println!("{} Random number (Any_SHA3_256) = {}", i, any.random_u8()); }
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    for i in 0..10
+        { println!("{} Any number (Any_SHA2_512) = {}", i, any.random_u8()); }
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA2_512) = {}", i, any.random_u8()); }
+
+    // Example for Any_SHA1
+    use cryptocol::random::Any_SHA1;
+    let mut any = Any_SHA1::new();
+    for i in 0..10
+        { println!("{} Any number (Any_SHA1) = {}", i, any.random_u8()); }
+
+    // Example for Any_SHA0
+    use cryptocol::random::Any_SHA0;
+    let mut any = Any_SHA0::new();
+    for i in 0..10
+        { println!("{} Any number (Any_SHA0) = {}", i, any.random_u8()); }
+
+    // Example for Any_MD5
+    use cryptocol::random::Any_MD5;
+    let mut any = Any_MD5::new();
+    for i in 0..10
+        { println!("{} Any number (Any_MD5) = {}", i, any.random_u8()); }
+        
+    // Example for Any_MD4
+    use cryptocol::random::Any_MD4;
+    let mut any = Any_MD4::new();
+    for i in 0..10
+        { println!("{} Any number (Any_MD4) = {}", i, any.random_u8()); }
+        
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    for i in 0..10
+        { println!("{} Any number (Random_Rijndael) = {}", i, rand.random_u8()); }
+        
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Rijndael) = {}", i, any.random_u8()); }
+        
+    // Example for Any_DES
+    use cryptocol::random::Any_DES;
+    let mut any = Any_DES::new();
+    for i in 0..10
+        { println!("{} Any number (Any_DES) = {}", i, any.random_u8()); }
 
     // Example for Any_Num_C
     use cryptocol::random::Any_Num_C;
     let mut any_num_c = Any_Num_C::new();
     for i in 0..10
         { println!("{} Any number (Any_Num_C) = {}", i, any_num_c.random_u8()); }
-
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any_md4 = Any_MD4::new();
+        
+    // Example for Any_Num
+    use cryptocol::random::Any_Num;
+    let mut any = Any_Num::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD4) = {}", i, any_md4.random_u8()); }
-
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any_md5 = Any_MD5::new();
-    for i in 0..10
-        { println!("{} Any number (Any_MD5) = {}", i, any_md5.random_u8()); }
-
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any_sha0 = Any_SHA0::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA0) = {}", i, any_sha0.random_u8()); }
-
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any_sha1 = Any_SHA1::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA1) = {}", i, any_sha1.random_u8()); }
-
-    // Example for Any_SHA2_256
-    use cryptocol::random::Any_SHA2_256;
-    let mut any_sha2_256 = Any_SHA2_256::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA2_256) = {}", i, any_sha2_256.random_u8()); }
-
-    // Example for Any_SHA2_512
-    use cryptocol::random::Any_SHA2_512;
-    let mut any_sha2_512 = Any_SHA2_512::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA2_512) = {}", i, any_sha2_512.random_u8()); }
-
-    // Example for Random_SHA2_512
-    use cryptocol::random::Random_SHA2_512;
-    let mut rand_sha2_512 = Random_SHA2_512::new();
-    for i in 0..10
-        { println!("{} Random number (Any_SHA2_512) = {}", i, rand_sha2_512.random_u8()); }
-
-    // Example for Random_Generic
-    use cryptocol::random::Random_Generic;
-    use cryptocol::hash::SHA0_Expanded;
-    type MySHA0 = SHA0_Expanded<5, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xcccc_cccc, 0xffff_ffff, 160>;
-    let mut any_sha0_expanded = Random_Generic::<1000000000>::new_with_generators_seeds(MySHA0::new(), MySHA0::new(), 6445332556087625_u64, 43057945771605458_u64);
-    for i in 0..10
-        { println!(" {} Any number (Any_SHA2_512) = {}", i, any_sha0_expanded.random_u8()); }
+        { println!("{} Any number (Any_Num) = {}", i, any.random_u8()); }
     println!("-------------------------------");
 }
 
@@ -360,68 +406,114 @@ fn random_random_u16()
     let mut any = Any::new();
     for i in 0..10
         { println!("{} Any number (Any) = {}", i, any.random_u16()); }
-  
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any_num = Any_Num::new();
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num) = {}", i, any_num.random_u16()); }
+        { println!("{} Random number (Random_BIG_KECCAK_1024) = {}", i, rand.random_u16()); }
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA3_512) = {}", i, rand.random_u16()); }
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA2_512) = {}", i, rand.random_u16()); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any_num_c = Any_Num_C::new();
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num_C) = {}", i, any_num_c.random_u16()); }
+        { println!("{} Any number (Any_SHAKE_256) = {}", i, any.random_u16()); }
 
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any_md4 = Any_MD4::new();
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD4) = {}", i, any_md4.random_u16()); }
+        { println!("{} Any number (Any_SHAKE_128) = {}", i, any.random_u16()); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any_md5 = Any_MD5::new();
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD5) = {}", i, any_md5.random_u16()); }
+        { println!("{} Any number (Any_SHA3_512) = {}", i, any.random_u16()); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any_sha0 = Any_SHA0::new();
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA0) = {}", i, any_sha0.random_u16()); }
-
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any_sha1 = Any_SHA1::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA1) = {}", i, any_sha1.random_u16()); }
-
-    // Example for Any_SHA2_256
-    use cryptocol::random::Any_SHA2_256;
-    let mut any_sha2_256 = Any_SHA2_256::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA2_256) = {}", i, any_sha2_256.random_u16()); }
+        { println!("{} Random number (Any_SHA3_256) = {}", i, any.random_u16()); }
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
-    let mut any_sha2_512 = Any_SHA2_512::new();
+    let mut any = Any_SHA2_512::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA2_512) = {}", i, any_sha2_512.random_u16()); }
+        { println!("{} Any number (Any_SHA2_512) = {}", i, any.random_u16()); }
 
-    // Example for Random_SHA2_512
-    use cryptocol::random::Random_SHA2_512;
-    let mut rand_sha2_512 = Random_SHA2_512::new();
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
     for i in 0..10
-        { println!("{} Random number (Random_SHA2_512) = {}", i, rand_sha2_512.random_u16()); }
+        { println!("{} Random number (Random_SHA2_512) = {}", i, any.random_u16()); }
 
-    // Example for Random_Generic
-    use cryptocol::random::Random_Generic;
-    use cryptocol::hash::SHA1_Expanded;
-    type MySHA1 = SHA1_Expanded<5, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xcccc_cccc, 0xffff_ffff, 160>;
-    let mut any_sha1_expanded = Random_Generic::<500000000>::new_with_generators_seeds(MySHA1::new(), MySHA1::new(), 6445332556087625_u64, 43057945771605458_u64);
+    // Example for Any_SHA1
+    use cryptocol::random::Any_SHA1;
+    let mut any = Any_SHA1::new();
     for i in 0..10
-        { println!("{} Any number (Random_Generic) = {}", i, any_sha1_expanded.random_u16()); }
+        { println!("{} Any number (Any_SHA1) = {}", i, any.random_u16()); }
+
+    // Example for Any_SHA0
+    use cryptocol::random::Any_SHA0;
+    let mut any = Any_SHA0::new();
+    for i in 0..10
+        { println!("{} Any number (Any_SHA0) = {}", i, any.random_u16()); }
+
+    // Example for Any_MD5
+    use cryptocol::random::Any_MD5;
+    let mut any = Any_MD5::new();
+    for i in 0..10
+        { println!("{} Any number (Any_MD5) = {}", i, any.random_u16()); }
+        
+    // Example for Any_MD4
+    use cryptocol::random::Any_MD4;
+    let mut any = Any_MD4::new();
+    for i in 0..10
+        { println!("{} Any number (Any_MD4) = {}", i, any.random_u16()); }
+        
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    for i in 0..10
+        { println!("{} Any number (Random_Rijndael) = {}", i, rand.random_u16()); }
+        
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Rijndael) = {}", i, any.random_u16()); }
+        
+    // Example for Any_DES
+    use cryptocol::random::Any_DES;
+    let mut any = Any_DES::new();
+    for i in 0..10
+        { println!("{} Any number (Any_DES) = {}", i, any.random_u16()); }
+
+    // Example for Any_Num_C
+    use cryptocol::random::Any_Num_C;
+    let mut any = Any_Num_C::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Num_C) = {}", i, any.random_u16()); }
+        
+    // Example for Any_Num
+    use cryptocol::random::Any_Num;
+    let mut any = Any_Num::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Num) = {}", i, any.random_u16()); }
     println!("-------------------------------");
 }
 
@@ -439,68 +531,114 @@ fn random_random_u32()
     let mut any = Any::new();
     for i in 0..10
         { println!("{} Any number (Any) = {}", i, any.random_u32()); }
-  
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any_num = Any_Num::new();
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num) = {}", i, any_num.random_u32()); }
+        { println!("{} Random number (Random_BIG_KECCAK_1024) = {}", i, rand.random_u32()); }
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA3_512) = {}", i, rand.random_u32()); }
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA2_512) = {}", i, rand.random_u32()); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any_num_c = Any_Num_C::new();
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num_C) = {}", i, any_num_c.random_u32()); }
+        { println!("{} Any number (Any_SHAKE_256) = {}", i, any.random_u32()); }
 
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any_md4 = Any_MD4::new();
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD4) = {}", i, any_md4.random_u32()); }
+        { println!("{} Any number (Any_SHAKE_128) = {}", i, any.random_u32()); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any_md5 = Any_MD5::new();
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD5) = {}", i, any_md5.random_u32()); }
+        { println!("{} Any number (Any_SHA3_512) = {}", i, any.random_u32()); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any_sha0 = Any_SHA0::new();
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA0) = {}", i, any_sha0.random_u32()); }
-
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any_sha1 = Any_SHA1::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA1) = {}", i, any_sha1.random_u32()); }
-
-    // Example for Any_SHA2_256
-    use cryptocol::random::Any_SHA2_256;
-    let mut any_sha2_256 = Any_SHA2_256::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA2_256) = {}", i, any_sha2_256.random_u32()); }
+        { println!("{} Random number (Any_SHA3_256) = {}", i, any.random_u32()); }
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
-    let mut any_sha2_512 = Any_SHA2_512::new();
+    let mut any = Any_SHA2_512::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA2_512) = {}", i, any_sha2_512.random_u32()); }
+        { println!("{} Any number (Any_SHA2_512) = {}", i, any.random_u32()); }
 
-    // Example for Random_SHA2_512
-    use cryptocol::random::Random_SHA2_512;
-    let mut rand_sha2_512 = Random_SHA2_512::new();
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
     for i in 0..10
-        { println!("{} Random number (Random_SHA2_512) = {}", i, rand_sha2_512.random_u32()); }
+        { println!("{} Random number (Random_SHA2_512) = {}", i, any.random_u32()); }
 
-    // Example for Random_Generic
-    use cryptocol::random::Random_Generic;
-    use cryptocol::hash::SHA2_256_Expanded;
-    type MySHA2 = SHA2_256_Expanded<0x1111_1111, 0x2222_2222, 0x4444_4444, 0x6666_6666, 0x8888_8888, 0xaaaa_aaaa, 0xcccc_cccc, 0xeeee_eeee, 128>;
-    let mut any_sha2_expanded = Random_Generic::<102030405060708090>::new_with_generators_seeds(MySHA2::new(), MySHA2::new(), 6445332556087625_u64, 43057945771605458_u64);
+    // Example for Any_SHA1
+    use cryptocol::random::Any_SHA1;
+    let mut any = Any_SHA1::new();
     for i in 0..10
-        { println!("{} Any number (Random_Generic) = {}", i, any_sha2_expanded.random_u32()); }
+        { println!("{} Any number (Any_SHA1) = {}", i, any.random_u32()); }
+
+    // Example for Any_SHA0
+    use cryptocol::random::Any_SHA0;
+    let mut any = Any_SHA0::new();
+    for i in 0..10
+        { println!("{} Any number (Any_SHA0) = {}", i, any.random_u32()); }
+
+    // Example for Any_MD5
+    use cryptocol::random::Any_MD5;
+    let mut any = Any_MD5::new();
+    for i in 0..10
+        { println!("{} Any number (Any_MD5) = {}", i, any.random_u32()); }
+        
+    // Example for Any_MD4
+    use cryptocol::random::Any_MD4;
+    let mut any = Any_MD4::new();
+    for i in 0..10
+        { println!("{} Any number (Any_MD4) = {}", i, any.random_u32()); }
+        
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    for i in 0..10
+        { println!("{} Any number (Random_Rijndael) = {}", i, rand.random_u32()); }
+        
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Rijndael) = {}", i, any.random_u32()); }
+        
+    // Example for Any_DES
+    use cryptocol::random::Any_DES;
+    let mut any = Any_DES::new();
+    for i in 0..10
+        { println!("{} Any number (Any_DES) = {}", i, any.random_u32()); }
+
+    // Example for Any_Num_C
+    use cryptocol::random::Any_Num_C;
+    let mut any = Any_Num_C::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Num_C) = {}", i, any.random_u32()); }
+        
+    // Example for Any_Num
+    use cryptocol::random::Any_Num;
+    let mut any = Any_Num::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Num) = {}", i, any.random_u32()); }
     println!("-------------------------------");
 }
 
@@ -518,68 +656,114 @@ fn random_random_u64()
     let mut any = Any::new();
     for i in 0..10
         { println!("{} Any number (Any) = {}", i, any.random_u64()); }
-  
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any_num = Any_Num::new();
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num) = {}", i, any_num.random_u64()); }
+        { println!("{} Random number (Random_BIG_KECCAK_1024) = {}", i, rand.random_u64()); }
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA3_512) = {}", i, rand.random_u64()); }
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA2_512) = {}", i, rand.random_u64()); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any_num_c = Any_Num_C::new();
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num_C) = {}", i, any_num_c.random_u64()); }
+        { println!("{} Any number (Any_SHAKE_256) = {}", i, any.random_u64()); }
 
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any_md4 = Any_MD4::new();
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD4) = {}", i, any_md4.random_u64()); }
+        { println!("{} Any number (Any_SHAKE_128) = {}", i, any.random_u64()); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any_md5 = Any_MD5::new();
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD5) = {}", i, any_md5.random_u64()); }
+        { println!("{} Any number (Any_SHA3_512) = {}", i, any.random_u64()); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any_sha0 = Any_SHA0::new();
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA0) = {}", i, any_sha0.random_u64()); }
-
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any_sha1 = Any_SHA1::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA1) = {}", i, any_sha1.random_u64()); }
-
-    // Example for Any_SHA2_256
-    use cryptocol::random::Any_SHA2_256;
-    let mut any_sha2_256 = Any_SHA2_256::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA2_256) = {}", i, any_sha2_256.random_u64()); }
+        { println!("{} Random number (Any_SHA3_256) = {}", i, any.random_u64()); }
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
-    let mut any_sha2_512 = Any_SHA2_512::new();
+    let mut any = Any_SHA2_512::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA2_512) = {}", i, any_sha2_512.random_u64()); }
+        { println!("{} Any number (Any_SHA2_512) = {}", i, any.random_u64()); }
 
-    // Example for Random_SHA2_512
-    use cryptocol::random::Random_SHA2_512;
-    let mut rand_sha2_512 = Random_SHA2_512::new();
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
     for i in 0..10
-        { println!("{} Random number (Random_SHA2_512) = {}", i, rand_sha2_512.random_u64()); }
+        { println!("{} Random number (Random_SHA2_512) = {}", i, any.random_u64()); }
 
-    // Example for Random_Generic
-    use cryptocol::random::Random_Generic;
-    use cryptocol::hash::SHA2_512_Expanded;
-    type MySHA2 = SHA2_512_Expanded<0x1111_1111_1111_1111, 0x3333_3333_3333_3333, 0x5555_5555_5555_5555, 0x7777_7777_7777_7777, 0x9999_9999_9999_9999, 0xbbbb_bbbb_bbbb_bbbb, 0xdddd_dddd_dddd_dddd, 0xffff_ffff_ffff_ffff, 160>;
-    let mut any_sha2_expanded = Random_Generic::<100000>::new_with_generators_seeds(MySHA2::new(), MySHA2::new(), 6445332556087625_u64, 43057945771605458_u64);
+    // Example for Any_SHA1
+    use cryptocol::random::Any_SHA1;
+    let mut any = Any_SHA1::new();
     for i in 0..10
-        { println!("{} Any number (Random_Generic) = {}", i, any_sha2_expanded.random_u64()); }
+        { println!("{} Any number (Any_SHA1) = {}", i, any.random_u64()); }
+
+    // Example for Any_SHA0
+    use cryptocol::random::Any_SHA0;
+    let mut any = Any_SHA0::new();
+    for i in 0..10
+        { println!("{} Any number (Any_SHA0) = {}", i, any.random_u64()); }
+
+    // Example for Any_MD5
+    use cryptocol::random::Any_MD5;
+    let mut any = Any_MD5::new();
+    for i in 0..10
+        { println!("{} Any number (Any_MD5) = {}", i, any.random_u64()); }
+        
+    // Example for Any_MD4
+    use cryptocol::random::Any_MD4;
+    let mut any = Any_MD4::new();
+    for i in 0..10
+        { println!("{} Any number (Any_MD4) = {}", i, any.random_u64()); }
+        
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    for i in 0..10
+        { println!("{} Any number (Random_Rijndael) = {}", i, rand.random_u64()); }
+        
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Rijndael) = {}", i, any.random_u64()); }
+        
+    // Example for Any_DES
+    use cryptocol::random::Any_DES;
+    let mut any = Any_DES::new();
+    for i in 0..10
+        { println!("{} Any number (Any_DES) = {}", i, any.random_u64()); }
+
+    // Example for Any_Num_C
+    use cryptocol::random::Any_Num_C;
+    let mut any = Any_Num_C::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Num_C) = {}", i, any.random_u64()); }
+        
+    // Example for Any_Num
+    use cryptocol::random::Any_Num;
+    let mut any = Any_Num::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Num) = {}", i, any.random_u64()); }
     println!("-------------------------------");
 }
 
@@ -597,67 +781,114 @@ fn random_random_u128()
     let mut any = Any::new();
     for i in 0..10
         { println!("{} Any number (Any) = {}", i, any.random_u128()); }
-  
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any_num = Any_Num::new();
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num) = {}", i, any_num.random_u128()); }
+        { println!("{} Random number (Random_BIG_KECCAK_1024) = {}", i, rand.random_u128()); }
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA3_512) = {}", i, rand.random_u128()); }
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA2_512) = {}", i, rand.random_u128()); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any_num_c = Any_Num_C::new();
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num_C) = {}", i, any_num_c.random_u128()); }
+        { println!("{} Any number (Any_SHAKE_256) = {}", i, any.random_u128()); }
 
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any_md4 = Any_MD4::new();
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD4) = {}", i, any_md4.random_u128()); }
+        { println!("{} Any number (Any_SHAKE_128) = {}", i, any.random_u128()); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any_md5 = Any_MD5::new();
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD5) = {}", i, any_md5.random_u128()); }
+        { println!("{} Any number (Any_SHA3_512) = {}", i, any.random_u128()); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any_sha0 = Any_SHA0::new();
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA0) = {}", i, any_sha0.random_u128()); }
-
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any_sha1 = Any_SHA1::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA1) = {}", i, any_sha1.random_u128()); }
-
-    // Example for Any_SHA2_256
-    use cryptocol::random::Any_SHA2_256;
-    let mut any_sha2_256 = Any_SHA2_256::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA2_256) = {}", i, any_sha2_256.random_u128()); }
+        { println!("{} Random number (Any_SHA3_256) = {}", i, any.random_u128()); }
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
-    let mut any_sha2_512 = Any_SHA2_512::new();
+    let mut any = Any_SHA2_512::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA2_512) = {}", i, any_sha2_512.random_u128()); }
+        { println!("{} Any number (Any_SHA2_512) = {}", i, any.random_u128()); }
 
-    // Example for Random_SHA2_512
-    use cryptocol::random::Random_SHA2_512;
-    let mut rand_sha2_512 = Random_SHA2_512::new();
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
     for i in 0..10
-        { println!("{} Random number (Random_SHA2_512) = {}", i, rand_sha2_512.random_u128()); }
+        { println!("{} Random number (Random_SHA2_512) = {}", i, any.random_u128()); }
 
-    // Example for Random_Generic
-    use cryptocol::random::{ Random_Generic, AnyNumber_Engine_C_Generic };
-    type MyAnyNumberEngineCExpanded = AnyNumber_Engine_C_Generic<1234567890987654321_u64, 987654321_u64>;
-    let mut any_num_c_expanded = Random_Generic::<258963147>::new_with(MyAnyNumberEngineCExpanded::new(), MyAnyNumberEngineCExpanded::new());
+    // Example for Any_SHA1
+    use cryptocol::random::Any_SHA1;
+    let mut any = Any_SHA1::new();
     for i in 0..10
-        { println!("{} Any number (Random_Generic) = {}", i, any_num_c_expanded.random_u128()); }
+        { println!("{} Any number (Any_SHA1) = {}", i, any.random_u128()); }
+
+    // Example for Any_SHA0
+    use cryptocol::random::Any_SHA0;
+    let mut any = Any_SHA0::new();
+    for i in 0..10
+        { println!("{} Any number (Any_SHA0) = {}", i, any.random_u128()); }
+
+    // Example for Any_MD5
+    use cryptocol::random::Any_MD5;
+    let mut any = Any_MD5::new();
+    for i in 0..10
+        { println!("{} Any number (Any_MD5) = {}", i, any.random_u128()); }
+        
+    // Example for Any_MD4
+    use cryptocol::random::Any_MD4;
+    let mut any = Any_MD4::new();
+    for i in 0..10
+        { println!("{} Any number (Any_MD4) = {}", i, any.random_u128()); }
+        
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    for i in 0..10
+        { println!("{} Any number (Random_Rijndael) = {}", i, rand.random_u128()); }
+        
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Rijndael) = {}", i, any.random_u128()); }
+        
+    // Example for Any_DES
+    use cryptocol::random::Any_DES;
+    let mut any = Any_DES::new();
+    for i in 0..10
+        { println!("{} Any number (Any_DES) = {}", i, any.random_u128()); }
+
+    // Example for Any_Num_C
+    use cryptocol::random::Any_Num_C;
+    let mut any = Any_Num_C::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Num_C) = {}", i, any.random_u128()); }
+        
+    // Example for Any_Num
+    use cryptocol::random::Any_Num;
+    let mut any = Any_Num::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Num) = {}", i, any.random_u128()); }
     println!("-------------------------------");
 }
 
@@ -675,68 +906,114 @@ fn random_random_usize()
     let mut any = Any::new();
     for i in 0..10
         { println!("{} Any number (Any) = {}", i, any.random_usize()); }
-  
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any_num = Any_Num::new();
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num) = {}", i, any_num.random_usize()); }
+        { println!("{} Random number (Random_BIG_KECCAK_1024) = {}", i, rand.random_usize()); }
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA3_512) = {}", i, rand.random_usize()); }
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA2_512) = {}", i, rand.random_usize()); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any_num_c = Any_Num_C::new();
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num_C) = {}", i, any_num_c.random_usize()); }
+        { println!("{} Any number (Any_SHAKE_256) = {}", i, any.random_usize()); }
 
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any_md4 = Any_MD4::new();
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD4) = {}", i, any_md4.random_usize()); }
+        { println!("{} Any number (Any_SHAKE_128) = {}", i, any.random_usize()); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any_md5 = Any_MD5::new();
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD5) = {}", i, any_md5.random_usize()); }
+        { println!("{} Any number (Any_SHA3_512) = {}", i, any.random_usize()); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any_sha0 = Any_SHA0::new();
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA0) = {}", i, any_sha0.random_usize()); }
-
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any_sha1 = Any_SHA1::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA1) = {}", i, any_sha1.random_usize()); }
-
-    // Example for Any_SHA2_256
-    use cryptocol::random::Any_SHA2_256;
-    let mut any_sha2_256 = Any_SHA2_256::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA2_256) = {}", i, any_sha2_256.random_usize()); }
+        { println!("{} Random number (Any_SHA3_256) = {}", i, any.random_usize()); }
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
-    let mut any_sha2_512 = Any_SHA2_512::new();
+    let mut any = Any_SHA2_512::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA2_512) = {}", i, any_sha2_512.random_usize()); }
+        { println!("{} Any number (Any_SHA2_512) = {}", i, any.random_usize()); }
 
-    // Example for Random_SHA2_512
-    use cryptocol::random::Random_SHA2_512;
-    let mut rand_sha2_512 = Random_SHA2_512::new();
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
     for i in 0..10
-        { println!("{} Random number (Random_SHA2_512) = {}", i, rand_sha2_512.random_usize()); }
+        { println!("{} Random number (Random_SHA2_512) = {}", i, any.random_usize()); }
 
-    // Example for Random_Generic
-    use cryptocol::random::Random_Generic;
-    use cryptocol::hash::SHA2_512_Expanded;
-    type MySHA2 = SHA2_512_Expanded<0x1212_1212_1212_1212, 0x3434_3434_3434_3434, 0x5454_5454_5454_5454, 0x7878_7878_7878_7878, 0x9A9A_9A9A_9A9A_9A9A, 0xbcbc_bcbc_bcbc_bcbc, 0xdede_dede_dede_dede, 0xf0f0_f0f0_f0f0_f0f0, 240>;
-    let mut any_sha2_expanded1 = Random_Generic::<75315964852>::new_with(MySHA2::new(), MySHA2::new());
+    // Example for Any_SHA1
+    use cryptocol::random::Any_SHA1;
+    let mut any = Any_SHA1::new();
     for i in 0..10
-        { println!("{} Any number (Random_Generic) = {}", i, any_sha2_expanded1.random_usize()); }
+        { println!("{} Any number (Any_SHA1) = {}", i, any.random_usize()); }
+
+    // Example for Any_SHA0
+    use cryptocol::random::Any_SHA0;
+    let mut any = Any_SHA0::new();
+    for i in 0..10
+        { println!("{} Any number (Any_SHA0) = {}", i, any.random_usize()); }
+
+    // Example for Any_MD5
+    use cryptocol::random::Any_MD5;
+    let mut any = Any_MD5::new();
+    for i in 0..10
+        { println!("{} Any number (Any_MD5) = {}", i, any.random_usize()); }
+        
+    // Example for Any_MD4
+    use cryptocol::random::Any_MD4;
+    let mut any = Any_MD4::new();
+    for i in 0..10
+        { println!("{} Any number (Any_MD4) = {}", i, any.random_usize()); }
+        
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    for i in 0..10
+        { println!("{} Any number (Random_Rijndael) = {}", i, rand.random_usize()); }
+        
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Rijndael) = {}", i, any.random_usize()); }
+        
+    // Example for Any_DES
+    use cryptocol::random::Any_DES;
+    let mut any = Any_DES::new();
+    for i in 0..10
+        { println!("{} Any number (Any_DES) = {}", i, any.random_usize()); }
+
+    // Example for Any_Num_C
+    use cryptocol::random::Any_Num_C;
+    let mut any = Any_Num_C::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Num_C) = {}", i, any.random_usize()); }
+        
+    // Example for Any_Num
+    use cryptocol::random::Any_Num;
+    let mut any = Any_Num::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Num) = {}", i, any.random_usize()); }
     println!("-------------------------------");
 }
 
@@ -754,68 +1031,114 @@ fn random_random_uint()
     let mut any = Any::new();
     for i in 0..10
         { println!("{} Any number (Any) = {}", i, any.random_uint::<u16>()); }
-  
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any_num = Any_Num::new();
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num) = {}", i, any_num.random_uint::<u32>()); }
+        { println!("{} Random number (Random_BIG_KECCAK_1024) = {}", i, rand.random_uint::<u32>()); }
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA3_512) = {}", i, rand.random_uint::<u64>()); }
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    for i in 0..10
+        { println!("{} Random number (Random_SHA2_512) = {}", i, rand.random_uint::<u128>()); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any_num_c = Any_Num_C::new();
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num_C) = {}", i, any_num_c.random_uint::<u64>()); }
+        { println!("{} Any number (Any_SHAKE_256) = {}", i, any.random_uint::<usize>()); }
 
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any_md4 = Any_MD4::new();
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD4) = {}", i, any_md4.random_uint::<u128>()); }
+        { println!("{} Any number (Any_SHAKE_128) = {}", i, any.random_uint::<u16>()); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any_md5 = Any_MD5::new();
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD5) = {}", i, any_md5.random_uint::<usize>()); }
+        { println!("{} Any number (Any_SHA3_512) = {}", i, any.random_uint::<u32>()); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any_sha0 = Any_SHA0::new();
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA0) = {}", i, any_sha0.random_uint::<u8>()); }
-
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any_sha1 = Any_SHA1::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA1) = {}", i, any_sha1.random_uint::<u16>()); }
-
-    // Example for Any_SHA2_256
-    use cryptocol::random::Any_SHA2_256;
-    let mut any_sha2_256 = Any_SHA2_256::new();
-    for i in 0..10
-        { println!("{} Any number (Any_SHA2_256) = {}", i, any_sha2_256.random_uint::<u32>()); }
+        { println!("{} Random number (Any_SHA3_256) = {}", i, any.random_uint::<u64>()); }
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
-    let mut any_sha2_512 = Any_SHA2_512::new();
+    let mut any = Any_SHA2_512::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA2_512) = {}", i, any_sha2_512.random_uint::<u64>()); }
+        { println!("{} Any number (Any_SHA2_512) = {}", i, any.random_uint::<u128>()); }
 
-    // Example for Random_SHA2_512
-    use cryptocol::random::Random_SHA2_512;
-    let mut rand_sha2_512 = Random_SHA2_512::new();
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
     for i in 0..10
-        { println!("{} Random number (Random_SHA2_512) = {}", i, rand_sha2_512.random_uint::<u128>()); }
+        { println!("{} Random number (Random_SHA2_512) = {}", i, any.random_uint::<u8>()); }
 
-    // Example for Random_Generic
-    use cryptocol::random::Random_Generic;
-    use cryptocol::hash::SHA2_512_Expanded;
-    type MySHA2 = SHA2_512_Expanded<0x1212_1212_1212_1212, 0x3434_3434_3434_3434, 0x5454_5454_5454_5454, 0x7878_7878_7878_7878, 0x9A9A_9A9A_9A9A_9A9A, 0xbcbc_bcbc_bcbc_bcbc, 0xdede_dede_dede_dede, 0xf0f0_f0f0_f0f0_f0f0, 240>;
-    let mut any_sha2_expanded2 = Random_Generic::<555555555>::new_with(MySHA2::new(), MySHA2::new());
+    // Example for Any_SHA1
+    use cryptocol::random::Any_SHA1;
+    let mut any = Any_SHA1::new();
     for i in 0..10
-        { println!("{} Any number (Random_Generic) = {}", i, any_sha2_expanded2.random_uint::<u128>()); }
+        { println!("{} Any number (Any_SHA1) = {}", i, any.random_uint::<usize>()); }
+
+    // Example for Any_SHA0
+    use cryptocol::random::Any_SHA0;
+    let mut any = Any_SHA0::new();
+    for i in 0..10
+        { println!("{} Any number (Any_SHA0) = {}", i, any.random_uint::<u32>()); }
+
+    // Example for Any_MD5
+    use cryptocol::random::Any_MD5;
+    let mut any = Any_MD5::new();
+    for i in 0..10
+        { println!("{} Any number (Any_MD5) = {}", i, any.random_uint::<u64>()); }
+        
+    // Example for Any_MD4
+    use cryptocol::random::Any_MD4;
+    let mut any = Any_MD4::new();
+    for i in 0..10
+        { println!("{} Any number (Any_MD4) = {}", i, any.random_uint::<u128>()); }
+        
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    for i in 0..10
+        { println!("{} Any number (Random_Rijndael) = {}", i, rand.random_uint::<u8>()); }
+        
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Rijndael) = {}", i, any.random_uint::<u16>()); }
+        
+    // Example for Any_DES
+    use cryptocol::random::Any_DES;
+    let mut any = Any_DES::new();
+    for i in 0..10
+        { println!("{} Any number (Any_DES) = {}", i, any.random_uint::<usize>()); }
+
+    // Example for Any_Num_C
+    use cryptocol::random::Any_Num_C;
+    let mut any = Any_Num_C::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Num_C) = {}", i, any.random_uint::<u64>()); }
+        
+    // Example for Any_Num
+    use cryptocol::random::Any_Num;
+    let mut any = Any_Num::new();
+    for i in 0..10
+        { println!("{} Any number (Any_Num) = {}", i, any.random_uint::<u128>()); }
     println!("-------------------------------");
 }
 
@@ -839,7 +1162,7 @@ fn random_random_under_uint()
     if let Some(num) = rand.random_under_uint(0_usize)
         { println!("Random number usize = {}", num); }
     else
-        { println!("No random unsigned number number under 0!"); }
+        { println!("No random unsigned number under 0!"); }
     println!("-------------------------------");
 }
 

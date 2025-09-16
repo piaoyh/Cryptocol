@@ -50,11 +50,11 @@ Random_Engine for SHA2_256_Generic<8, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
         self.digest_array(message);
     }
 
-    fn harvest(&mut self, restarted: bool, _: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, count: u128, _: &[u64; 8]) -> [u64; 8]
     {
         let salt1: u64;
         let salt2: u64;
-        if restarted
+        if count == 0
         {
             salt1 = SALT;
             salt2 = SALT.rotate_left(1);

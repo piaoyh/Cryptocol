@@ -26,10 +26,10 @@ Random_Engine for MD4_Generic<4, H0, H1, H2, H3,
         self.digest_array(message);
     }
 
-    fn harvest(&mut self, restarted: bool, _: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, count: u128, _: &[u64; 8]) -> [u64; 8]
     {
         let mut salt = [0_u64; 4];
-        if restarted
+        if count == 0
         {
             for i in 0..4
                 { salt[i] = SALT.rotate_left(i as u32); }

@@ -225,11 +225,11 @@ pub trait Random_Engine
     #[allow(unused_variables)]
     fn sow_array(&mut self, message: &[u64; 8]) {}
 
-    // fn harvest(&mut self, restarted: u64) -> [u64; 8]
+    // fn harvest(&mut self, count: u128) -> [u64; 8]
     /// Outputs the pseudo-random number array.
     /// 
     /// # Argument
-    /// `restarted` is `bool`-typed. If `restarted` is `true`, the direction of
+    /// `count` is `u128`-typed. If `count` is `0`, the direction of
     /// its pseudo-random number sequence is changed so that the period of the
     /// pseudo-random number sequence may not repeated.
     /// 
@@ -240,7 +240,7 @@ pub trait Random_Engine
     ///     fn produce_seed(&mut self)
     ///     {
     ///         self.change_count();
-    ///         self.seed_array = self.main_generator.harvest(self.is_restarted(), &self.seed_array);
+    ///         self.seed_array = self.main_generator.harvest(self.count, &self.seed_array);
     ///     }
     /// }
     /// ```
@@ -252,9 +252,9 @@ pub trait Random_Engine
     ///     fn produce_aux(&mut self)
     ///     {
     ///         self.change_count();
-    ///         self.aux_array = self.aux_generator.harvest(self.is_restarted(), &self.aux_array);
+    ///         self.aux_array = self.aux_generator.harvest(self.count, &self.aux_array);
     ///     }
     /// }
     /// ```
-    fn harvest(&mut self, restarted: bool, message: &[u64; 8]) -> [u64; 8];
+    fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8];
 }

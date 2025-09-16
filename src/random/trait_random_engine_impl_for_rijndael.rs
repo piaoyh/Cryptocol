@@ -9,8 +9,7 @@
 
 use std::ptr::copy_nonoverlapping;
 
-use crate::number::IntUnion;
-use crate::symmetric::Rijndael_Generic;
+use crate::symmetric::{ Rijndael_Generic, CTR };
 use crate::random::{ Random_Engine, Key };
 
 impl <const ROUND: usize, const NB: usize, const NK: usize, const IRREDUCIBLE: u8, const AFFINE_MUL: u64,
@@ -25,49 +24,14 @@ Random_Engine for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFIN
         MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13, MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
         RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
-    fn harvest(&mut self, restarted: bool, message: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]
     {
-        self.change_key(restarted);
+        self.change_key(count == 0);
         let mut cipher = [0_u64; 8];
-        if NB >= 16
-        {
-            let mut m = [IntUnion::new(); NB];
-            unsafe { copy_nonoverlapping(message.as_ptr() as *const u32, m.as_mut_ptr() as *mut u32, 16); }
-            let c = self.encrypt_unit(&m);
-            unsafe { copy_nonoverlapping(c.as_ptr() as *const u32, cipher.as_mut_ptr() as *mut u32, 16); }
-        }
-        else if NB >= 8
-        {
-            let mut m = [[IntUnion::new(); NB]; 2];
-            let mut c = [[IntUnion::new(); NB]; 2];
-            unsafe { copy_nonoverlapping(message.as_ptr() as *const u32, m.as_mut_ptr() as *mut u32, 16); }
-            self.encrypt_array_unit(&m, &mut c);
-            unsafe { copy_nonoverlapping(c.as_ptr() as *const u32, cipher.as_mut_ptr() as *mut u32, 16); }
-        }
-        else if NB >= 4
-        {
-            let mut m = [[IntUnion::new(); NB]; 4];
-            let mut c = [[IntUnion::new(); NB]; 4];
-            unsafe { copy_nonoverlapping(message.as_ptr() as *const u32, m.as_mut_ptr() as *mut u32, 16); }
-            self.encrypt_array_unit(&m, &mut c);
-            unsafe { copy_nonoverlapping(c.as_ptr() as *const u32, cipher.as_mut_ptr() as *mut u32, 16); }
-        }
-        else if NB >= 2
-        {
-            let mut m = [[IntUnion::new(); NB]; 8];
-            let mut c = [[IntUnion::new(); NB]; 8];
-            unsafe { copy_nonoverlapping(message.as_ptr() as *const u32, m.as_mut_ptr() as *mut u32, 16); }
-            self.encrypt_array_unit(&m, &mut c);
-            unsafe { copy_nonoverlapping(c.as_ptr() as *const u32, cipher.as_mut_ptr() as *mut u32, 16); }
-        }
-        else
-        {
-            let mut m = [[IntUnion::new(); NB]; 16];
-            let mut c = [[IntUnion::new(); NB]; 16];
-            unsafe { copy_nonoverlapping(message.as_ptr() as *const u32, m.as_mut_ptr() as *mut u32, 16); }
-            self.encrypt_array_unit(&m, &mut c);
-            unsafe { copy_nonoverlapping(c.as_ptr() as *const u32, cipher.as_mut_ptr() as *mut u32, 16); }
-        }
+        let mut nonce = [0_u32; NB];
+        let len = if NB < 4 {NB} else {4};
+        unsafe { copy_nonoverlapping(&count as  *const u128 as *const u32, nonce.as_mut_ptr() as *mut u32, len); }
+        self.encrypt_array_into_array(nonce, message, &mut cipher);
         cipher
     }
 }
