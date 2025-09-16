@@ -549,7 +549,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     fn produce_seed(&mut self)
     {
         self.change_count();
-        self.seed_array = self.main_generator.harvest(self.is_restarted(), &self.seed_array);
+        self.seed_array = self.main_generator.harvest(self.count, &self.seed_array);
     }
 
     // fn produce_aux(&mut self) -> [u64; 8]
@@ -561,7 +561,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     fn produce_aux(&mut self)
     {
         self.change_count();
-        self.aux_array = self.aux_generator.harvest(self.is_restarted(), &self.aux_array);
+        self.aux_array = self.aux_generator.harvest(self.count, &self.aux_array);
     }
 
     // fn change_count(&mut self)
