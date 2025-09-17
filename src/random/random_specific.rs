@@ -149,7 +149,7 @@ pub type Any_Num = Any_Num_C;
 pub struct Random_BIG_KECCAK_1024 {}
 impl Random_BIG_KECCAK_1024
 {
-    // pub fn new() -> Random_Generic<{u32::MAX as u128}>
+    // pub fn new() -> Random_Generic<SECURE_COUNT>
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -170,7 +170,7 @@ impl Random_BIG_KECCAK_1024
         Random_Generic::<SECURE_COUNT>::new_with(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -290,7 +290,7 @@ impl Random_BIG_KECCAK_1024
 pub struct Random_SHA3_512 {}
 impl Random_SHA3_512
 {
-    // pub fn new() -> Random_Generic<{u32::MAX as u128}>
+    // pub fn new() -> Random_Generic<SECURE_COUNT>
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -311,7 +311,7 @@ impl Random_SHA3_512
         Random_Generic::<SECURE_COUNT>::new_with(SHA3_512::new(), SHA3_512::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -336,6 +336,7 @@ impl Random_SHA3_512
         Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), seed, aux)
     }
 }
+
 
 
 /*---------------------------- */
@@ -431,30 +432,8 @@ impl Random_SHA3_512
 pub struct Random_Rijndael {}
 impl Random_Rijndael
 {
-    // pub fn new() -> Random_Generic<{u32::MAX as u128}>
+    // pub fn new() -> Random_Generic<SECURE_COUNT>
     /// Constructs a new `Random_Generic` object.
-    /// 
-    /// # Output
-    /// It returns a new object of `Random_Generic`.
-    /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
-    /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ```
-    pub fn new() -> Random_Generic<SECURE_COUNT>
-    {
-        Random_Generic::<SECURE_COUNT>::new_with(AES_128::new(), AES_128::new())
-    }
-
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>
-    /// Constructs a new struct Random_Generic with two seeds of type `u64`.
-    /// 
-    /// # Arguments
-    /// - `seed` is the seed number of the type `u64`.
-    /// - `aux` is the seed number of the type `u64`.
     /// 
     /// # Output
     /// It returns a new object of `Random_Generic`.
@@ -469,14 +448,174 @@ impl Random_Rijndael
     /// let num: U512 = rand.random_with_msb_set_biguint();
     /// println!("Random number = {}", num);
     /// ```
+    pub fn new() -> Random_Generic<SECURE_COUNT>
+    {
+        Random_Generic::<SECURE_COUNT>::new_with(AES_128::new(), AES_128::new())
+    }
+
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT> 
+    /// Constructs a new struct Random_Generic with two seeds of type `u64`.
+    /// 
+    /// # Arguments
+    /// - `seed` is the seed number of the type `u64`.
+    /// - `aux` is the seed number of the type `u64`.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Example 1 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// 
+    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
+    /// println!("Any number = {}", rand.random_u32());
+    /// ```
     pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT> 
     {
         Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(AES_128::new(), AES_128::new(), seed, aux)
     }
 }
 
-/*----------------------------*/
 
+/// The struct `Any_Rijndael` that constructs the
+/// [`Random_Generic`](struct@Random_Generic) 
+/// object for implementing a pseudo-random number generator both for primitive
+/// unsigned integers such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`,
+/// and for `BigUInt`. The object which this `Any_Rijndael` constructs
+/// uses the encryption/decryption algorithm `Any_Rijndael` with CTR
+/// (CounTeR) mode as a pseudo-random number engine generator.
+/// 
+/// # QUICK START
+/// You can use `Any_Rijndael` to create an if you use random number
+/// for cryptographic purpose. `Any_Rijndael` is for normal
+/// cryptographical purpose. Look into the following examples.
+/// 
+/// ## Example
+/// ```
+/// use cryptocol::random::Any_Rijndael;
+/// use cryptocol::define_utypes_with;
+/// define_utypes_with!(u64);
+///
+/// let mut any = Any_Rijndael::new();
+/// println!("Any number = {}", any.random_u128());
+/// println!("Any number = {}", any.random_u64());
+/// println!("Any number = {}", any.random_u32());
+/// println!("Any number = {}", any.random_u16());
+/// println!("Any number = {}", any.random_u8());
+///
+/// if let Some(num) = any.random_under_uint(1234567890123456_u64)
+///     { println!("Any number u64 = {}", num); }
+///
+/// if let Some(num) = any.random_minmax_uint(1234_u16, 6321)
+///     { println!("Any number u16 = {}", num); }
+///
+/// println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
+/// if let Some(num) = any.random_odd_under_uint(1234_u16)
+///     { println!("Any odd number u16 = {}", num); }
+///
+/// println!("Any 128-bit number u128 = {}", any.random_with_msb_set_uint::<u128>());
+/// println!("Any 16-bit odd number u16 = {}", any.random_with_msb_set_uint::<u16>());
+/// println!("Any prime number u64 = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+/// println!("Any usize-sized prime number usize = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+///
+/// let num: [u128; 20] = any.random_array();
+/// for i in 0..20
+///     { println!("Any number {} => {}", i, num[i]); }
+///
+/// let mut num = [0_u64; 32];
+/// any.put_random_in_array(&mut num);
+/// for i in 0..32
+///     { println!("Any number {} => {}", i, num[i]); }
+///
+/// let mut biguint: U512 = any.random_biguint();
+/// println!("Any Number: {}", biguint);
+///
+/// let mut ceiling = U1024::max().wrapping_div_uint(3_u8);
+/// if let Some(r) = any.random_under_biguint(&ceiling)
+/// {
+///     println!("Any Number less than {} is\n{}", ceiling, r);
+///     assert!(r < ceiling);
+/// }
+///
+/// ceiling = U1024::max().wrapping_div_uint(5_u8);
+/// let r = any.random_under_biguint_(&ceiling);
+/// println!("Any Number less than {} is\n{}", ceiling, r);
+/// assert!(r < ceiling);
+///
+/// ceiling = U1024::max().wrapping_div_uint(4_u8);
+/// if let Some(r) = any.random_odd_under_biguint(&ceiling)
+/// {
+///     println!("Any odd Number less than {} is\n{}", ceiling, r);
+///     assert!(r < ceiling);
+/// }
+///
+/// biguint = any.random_with_msb_set_biguint();
+/// println!("Any Number: {}", biguint);
+///
+/// biguint = any.random_odd_with_msb_set_biguint();
+/// println!("512-bit Any Odd Number = {}", biguint);
+/// assert!(biguint > U512::halfmax());
+/// assert!(biguint.is_odd());
+///
+/// biguint = any.random_prime_using_miller_rabin_biguint(5);
+/// println!("Any Prime Number = {}", biguint);
+/// assert!(biguint.is_odd());
+///
+/// biguint = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+/// println!("512-bit Any Prime Number = {}", biguint);
+/// assert!(biguint.is_odd());
+/// ```
+#[allow(non_camel_case_types)] 
+pub struct Any_Rijndael {}
+impl Any_Rijndael
+{
+    // pub fn new() -> Random_Generic<340282366920938463463374607431768211455>
+    /// Constructs a new `Random_Generic` object.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Example 1 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_Rijndael::new();
+    /// let num: U384 = any.random_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    pub fn new() -> Random_Generic<340282366920938463463374607431768211455>   // COUNT = min(2^256, u128::MAX) because of hashing one time for each random number generation
+    {
+        Random_Generic::<340282366920938463463374607431768211455>::new_with(Rijndael_64_64::new(), Rijndael_64_64::new())
+    }
+
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<340282366920938463463374607431768211455>
+    /// Constructs a new struct Random_Generic with two seeds of type `u64`.
+    /// 
+    /// # Arguments
+    /// - `seed` is the seed number of the type `u64`.
+    /// - `aux` is the seed number of the type `u64`.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Example 1 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// 
+    /// let mut any = Any_Rijndael::new_with_seeds(u16::MAX as u64, u16::MAX as u64);
+    /// println!("Any number = {}", any.random_u16());
+    /// ```
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<340282366920938463463374607431768211455>   // COUNT = min(2^256, u128::MAX) because of hashing one time for each random number generation
+    {
+        Random_Generic::<340282366920938463463374607431768211455>::new_with_generators_seeds(Rijndael_64_64::new(), Rijndael_64_64::new(), seed, aux)
+    }
+}
+
+
+
+/*----------------------------*/
 /// The struct `Any_Num_C` that constructs the
 /// [`Random_Generic`](struct@Random_Generic) 
 /// object for implementing a pseudo-random number generator both for primitive
@@ -654,25 +793,6 @@ impl Any_DES
     pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<340282366920938463463374607431768211455>   // COUNT = min(2^256, u128::MAX) because of hashing one time for each random number generation
     {
         Random_Generic::<340282366920938463463374607431768211455>::new_with_generators_seeds(DES::new(), DES::new(), seed, aux)
-    }
-}
-
-/// The type `Any_Rijndael` which is a pseudo-random number generator using
-/// a Rijndael_64_64 encryption/decryption algorithm.
-/// It is a specific version of the generic struct
-/// [`Random_Generic`](struct@Random_Generic).
-#[allow(non_camel_case_types)] 
-pub struct Any_Rijndael {}
-impl Any_Rijndael
-{
-    pub fn new() -> Random_Generic<340282366920938463463374607431768211455>   // COUNT = min(2^256, u128::MAX) because of hashing one time for each random number generation
-    {
-        Random_Generic::<340282366920938463463374607431768211455>::new_with(Rijndael_64_64::new(), Rijndael_64_64::new())
-    }
-
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<340282366920938463463374607431768211455>   // COUNT = min(2^256, u128::MAX) because of hashing one time for each random number generation
-    {
-        Random_Generic::<340282366920938463463374607431768211455>::new_with_generators_seeds(Rijndael_64_64::new(), Rijndael_64_64::new(), seed, aux)
     }
 }
 

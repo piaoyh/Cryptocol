@@ -41,10 +41,7 @@ pub(super) const SALT: u64 = 0x9999_9999_9999_9999;
 /// 
 /// ## Example 2
 /// ```
-/// use std::ops::*;
-/// use std::fmt::{ Display, Debug };
 /// use rand::{ rngs, RngCore };
-/// use cryptocol::number::SmallUInt;
 /// use cryptocol::random::{ Random_Engine, Random_Generic };
 /// ```
 /// 
@@ -53,7 +50,13 @@ pub(super) const SALT: u64 = 0x9999_9999_9999_9999;
 /// 
 /// ## Example 3
 /// ```
-/// pub struct OsRng;
+/// pub struct OsRng
+/// {
+///     pub fn new() -> Random_Generic<340282366920938463463374607431768211455>
+///     {
+///         Random_Generic::<340282366920938463463374607431768211455>::new_with(rngs::OsRng, rngs::OsRng)
+///     }
+/// }
 /// ```
 /// 
 /// Fourth, you are supposed to make implementation of trait Random_Engine
@@ -64,39 +67,14 @@ pub(super) const SALT: u64 = 0x9999_9999_9999_9999;
 /// impl Random_Engine for OsRng
 /// {
 ///     #[inline]
-///     fn new() -> Self    { Self }
-/// 
-///     #[inline]
-///     fn new_with<T, const N: usize>(_: &[T; N]) -> Self
-///     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-///         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-///         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-///         + Rem<Output=T> + RemAssign
-///         + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-///         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-///         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-///         + PartialEq + PartialOrd
-///     { Self::new() }
-/// 
-///     #[inline]
-///     fn sow_array<T, const N: usize>(&mut self, _: &[T; N])
-///     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-///         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-///         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-///         + Rem<Output=T> + RemAssign
-///         + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-///         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-///         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-///         + PartialEq + PartialOrd
-///     {}
-/// 
-///     #[inline]
-///     fn harvest(&mut self, _: bool) -> [u64; 8]
+///     fn harvest(&mut self, _: u128, _: &[u64; 8]) -> [u64; 8]
 ///     {
-///         [rngs::OsRng.next_u64(), rngs::OsRng.next_u64(),
-///         rngs::OsRng.next_u64(), rngs::OsRng.next_u64(),
-///         rngs::OsRng.next_u64(), rngs::OsRng.next_u64(),
-///         rngs::OsRng.next_u64(), rngs::OsRng.next_u64()]
+///         [
+///             rngs::OsRng.next_u64(), rngs::OsRng.next_u64(),
+///             rngs::OsRng.next_u64(), rngs::OsRng.next_u64(),
+///             rngs::OsRng.next_u64(), rngs::OsRng.next_u64(),
+///             rngs::OsRng.next_u64(), rngs::OsRng.next_u64()
+///         ]
 ///     }
 /// }
 /// ```
@@ -110,14 +88,11 @@ pub(super) const SALT: u64 = 0x9999_9999_9999_9999;
 /// ```
 /// 
 /// If you correctly follow the above-instructions, your `os_rng.rs` will
-/// look like as Example 8.
+/// look like as Example 6.
 /// 
 /// ## Example 6 (os_rng.rs)
 /// ```
-/// use std::ops::*;
-/// use std::fmt::{ Display, Debug };
 /// use rand::{ rngs, RngCore };
-/// use cryptocol::number::SmallUInt;
 /// use cryptocol::random::{ Random_Engine, Random_Generic };
 /// 
 /// pub struct OsRng;
@@ -125,7 +100,7 @@ pub(super) const SALT: u64 = 0x9999_9999_9999_9999;
 /// impl Random_Engine for OsRng
 /// {
 ///     #[inline]
-///     fn harvest(&mut self, _: u64, _: &[u64; 8]) -> [u64; 8]
+///     fn harvest(&mut self, _: u128, _: &[u64; 8]) -> [u64; 8]
 ///     {
 ///         [
 ///             rngs::OsRng.next_u64(), rngs::OsRng.next_u64(),
@@ -136,7 +111,7 @@ pub(super) const SALT: u64 = 0x9999_9999_9999_9999;
 ///     }
 /// }
 /// 
-/// pub type Random_OsRng = Random_Generic<OsRng>;
+/// pub type Random_OsRng = Random_Generic;
 /// ```
 /// 
 /// Now, you are very ready to use `Random_OsRng` in your own project. And,
