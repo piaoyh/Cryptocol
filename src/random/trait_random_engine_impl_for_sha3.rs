@@ -30,9 +30,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
         + Shl<Output = T>
 {
-    fn sow_array(&mut self, message: &[u64; 8])
+    fn sow_array(&mut self, message: &[u64; 8], original: &[u64; 8])
     {
-        self.digest_array(message);
+        let mut m = [0_u64; 8];
+        for i in 0..8
+            { m[i] = message[i] ^ original[i]; }
+        self.digest_array(&m);
     }
 
     fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]

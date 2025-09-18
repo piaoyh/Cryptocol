@@ -43,9 +43,12 @@ Random_Engine for MD5_Generic<4, H0, H1, H2, H3, ROUND,
                                 R00, R01, R02, R03, R10, R11, R12, R13,
                                 R20, R21, R22, R23, R30, R31, R32, R33>
 {
-    fn sow_array(&mut self, message: &[u64; 8])
+    fn sow_array(&mut self, message: &[u64; 8], original: &[u64; 8])
     {
-        self.digest_array(message);
+        let mut m = [0_u64; 8];
+        for i in 0..8
+            { m[i] = message[i] ^ original[i]; }
+        self.digest_array(&m);
     }
 
     fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]

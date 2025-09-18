@@ -17,9 +17,12 @@ impl<const H0: u32, const H1: u32, const H2: u32, const H3: u32,
 Random_Engine for SHA1_Generic<5, H0, H1, H2, H3, H4,
                                 ROUND, K0, K1, K2, K3, RL1, RL5, RL30>
 {
-    fn sow_array(&mut self, message: &[u64; 8])
+    fn sow_array(&mut self, message: &[u64; 8], original: &[u64; 8])
     {
-        self.digest_array(message);
+        let mut m = [0_u64; 8];
+        for i in 0..8
+            { m[i] = message[i] ^ original[i]; }
+        self.digest_array(&m);
     }
 
     fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]

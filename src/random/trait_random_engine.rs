@@ -198,7 +198,7 @@ pub trait Random_Engine
     /// }
     /// ```
     #[allow(unused_variables)]
-    fn sow_array(&mut self, message: &[u64; 8]) {}
+    fn sow_array(&mut self, message: &[u64; 8], original: &[u64; 8]);
 
     // fn harvest(&mut self, count: u128) -> [u64; 8]
     /// Outputs the pseudo-random number array.

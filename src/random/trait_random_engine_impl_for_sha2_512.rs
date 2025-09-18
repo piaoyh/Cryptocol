@@ -51,9 +51,12 @@ Random_Engine for SHA2_512_Generic<8,
                                     RR1, RR8, RR14, RR18, RR19, RR28, RR34,
                                     RR39, RR41, RR61, SR6, SR7>
 {
-    fn sow_array(&mut self, message: &[u64; 8])
+    fn sow_array(&mut self, message: &[u64; 8], original: &[u64; 8])
     {
-        self.digest_array(message);
+        let mut m = [0_u64; 8];
+        for i in 0..8
+            { m[i] = message[i] ^ original[i]; }
+        self.digest_array(&m);
     }
 
     fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]

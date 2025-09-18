@@ -12,10 +12,17 @@ use crate::random::{ Random_Engine, Key };
 
 impl Random_Engine for BigCryptor64
 {
+    fn sow_array(&mut self, _: &[u64; 8], original: &[u64; 8])
+    {
+        if original[0] & 1 == 1
+            { self.turn_inverse(); }
+    }
+
     fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]
     {
         let mut cipher = [0_u64; 8];
-        self.change_key(count == 0);
+        if count == 0
+            { self.change_key(message); }
         self.encrypt_array_into_array(count as u64, &message, &mut cipher);
         cipher
     }

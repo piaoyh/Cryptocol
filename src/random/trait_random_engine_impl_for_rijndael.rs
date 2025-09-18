@@ -24,9 +24,15 @@ Random_Engine for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFIN
         MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13, MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
         RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
+    fn sow_array(&mut self, _: &[u64; 8], original: &[u64; 8])
+    {
+        self.change_key(original);
+    }
+
     fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]
     {
-        self.change_key(count == 0);
+        if count == 0
+            { self.change_key(message); }
         let mut cipher = [0_u64; 8];
         let mut nonce = [0_u32; NB];
         let len = if NB < 4 {NB} else {4};

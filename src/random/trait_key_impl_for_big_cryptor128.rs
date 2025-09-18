@@ -19,9 +19,8 @@ use crate::random::Key;
 
 impl Key for BigCryptor128
 {
-    fn change_key(&mut self, sugar: bool)
+    fn change_key(&mut self, _: &[u64; 8])
     {
-        if sugar
-            { self.turn_inverse(); }
+        self.turn_inverse();
     }
 }

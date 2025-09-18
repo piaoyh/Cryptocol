@@ -13,6 +13,8 @@
 #![allow(unused_variables)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
+use std::ptr::copy_nonoverlapping;
+
 use crate::symmetric::Rijndael_Generic;
 use crate::random::Key;
 
@@ -29,23 +31,20 @@ Key for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0
         MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13, MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
         RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
-    fn change_key(&mut self, sugar: bool)
+    fn change_key(&mut self, sugar: &[u64; 8])
     {
-        if !sugar
-            { return; }
-
         let mut key = self.get_key();
-        let mut salt = [0_u32; NK];
-        salt[0] = 1;
-        salt[1] = 1;
-        let mut old = key[0];
+        let mut seed = [0_u32; NK];
+        let len = if NK < 16 {NK} else {16};
+        unsafe { copy_nonoverlapping(sugar.as_ptr() as *const u32, seed.as_mut_ptr() as *mut u32, len); }
         let mut carry = 0;
+        let mut old: u32;
         for i in 0..NK
         {
-            key[i] = key[i].wrapping_add(salt[i]).wrapping_add(carry);
-            carry = if key[i] < old {1} else {0};
             old = key[i];
+            key[i] = key[i].wrapping_add(seed[i]).wrapping_add(carry);
+            carry = if key[i] < old {1} else {0};
         }
-        self.set_original_key(&salt);
+        self.set_original_key(&key);
     }
 }

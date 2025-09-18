@@ -277,8 +277,8 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         let original_aux = Self::collect_seed();
         let main_state = original_seed.clone();
         let aux_state = original_aux.clone();
-        main_generator.sow_array(&main_state);
-        aux_generator.sow_array(&aux_state);
+        main_generator.sow_array(&main_state, &original_seed);
+        aux_generator.sow_array(&aux_state, &original_aux);
         Self
         {
             original_seed,
@@ -411,8 +411,8 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         main_state[3] = aux;
         for i in 4..8
             { main_state[i] = main_state[i-1].wrapping_add(main_state[i-2]); }
-        let original_seed = main_state.clone(); 
-        main_generator.sow_array(&main_state);
+        let original_seed = [seed, 0, 0, 0, 0, 0, 0, 0];
+        main_generator.sow_array(&main_state, &original_seed);
 
         let mut aux_state = [0_u64; 8];
         aux_state[0] = 1;
@@ -420,8 +420,8 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         aux_state[3] = seed;
         for i in 4..8
             { aux_state[i] = !aux_state[i]; }
-        let original_aux = aux_state.clone();
-        aux_generator.sow_array(&aux_state);
+        let original_aux = [aux, 0, 0, 0, 0, 0, 0, 0];
+        aux_generator.sow_array(&aux_state, &original_aux);
 
         Self
         {
@@ -556,8 +556,8 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                 self.main_state[i] ^= self.original_aux[i];
                 self.aux_state[i] ^= self.original_seed[i];
             }
-            self.main_generator.sow_array(&self.main_state);
-            self.aux_generator.sow_array(&self.aux_state);
+            self.main_generator.sow_array(&self.main_state, &self.original_seed);
+            self.aux_generator.sow_array(&self.aux_state, &self.original_aux);
         }
     }
 

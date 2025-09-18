@@ -45,9 +45,12 @@ Random_Engine for SHA2_256_Generic<8, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
                                     RR2, RR6, RR7, RR11, RR13, RR17, RR18, RR19, 
                                     RR22, RR25, SR3, SR10>
 {
-    fn sow_array(&mut self, message: &[u64; 8])
+    fn sow_array(&mut self, message: &[u64; 8], original: &[u64; 8])
     {
-        self.digest_array(message);
+        let mut m = [0_u64; 8];
+        for i in 0..8
+            { m[i] = message[i] ^ original[i]; }
+        self.digest_array(&m);
     }
 
     fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]

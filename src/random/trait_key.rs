@@ -17,5 +17,5 @@
 
 pub trait Key
 {
-    fn change_key(&mut self, sugar: bool);
+    fn change_key(&mut self, sugar: &[u64; 8]);
 }
