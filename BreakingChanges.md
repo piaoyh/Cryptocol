@@ -2,13 +2,13 @@
 
 ## Breaking changes from ver. 0.16.1 to ver. 0.16.2
 
-| Ver. 0.16.1                                 | Ver. 0.16.2                                                      |
+| Ver. 0.16.1                                 | Ver. 0.17.0                                                      |
 |---------------------------------------------|------------------------------------------------------------------|
 | fn sow_array(&mut self, message: &[u64; 8]) | fn sow_array(&mut self, message: &[u64; 8], original: &[u64; 8]) |
 
 - The above method of the trait Random_Engine has been changed.
 
-| Ver. 0.16.1                           | Ver. 0.16.2                                |
+| Ver. 0.16.1                           | Ver. 0.17.0                                |
 |---------------------------------------|--------------------------------------------|
 | fn change_key(&mut self, sugar: bool) | fn change_key(&mut self, sugar: &[u64; 8]) |
 

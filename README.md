@@ -228,7 +228,7 @@ The checked items have already been implemented including documentation __at lea
       [`Any_SHA0`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA0.html#struct.Any_SHA0),
       [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD5.html#struct.Any_MD5), and
       [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD4.html#struct.Any_MD4).
-- [ ] Pseudo-random number generator engines using symmetric-key block encryption algorithms ---
+- [X] Pseudo-random number generator engines using symmetric-key block encryption algorithms ---
       [`Random_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_Rijndael.html#struct.Random_Rijndael),
       [`Any_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Rijndael.html#struct.Any_Rijndael), and
       [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES).

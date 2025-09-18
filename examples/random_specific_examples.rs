@@ -21,11 +21,12 @@ pub fn main()
 
 fn random_specific_quick_start()
 {
-    random_any_num_c_quick_start();
     random_random_big_keccak_1024_quick_start();
     random_random_sha3_512_quick_start();
     random_random_riindael_quick_start();
     random_any_riindael_quick_start();
+    random_any_des_quick_start();
+    random_any_num_c_quick_start();
 }
 
 fn random_any_num_c_quick_start()
@@ -346,6 +347,83 @@ fn random_any_riindael_quick_start()
     define_utypes_with!(u64);
 
     let mut any = Any_Rijndael::new();
+    println!("Any number = {}", any.random_u128());
+    println!("Any number = {}", any.random_u64());
+    println!("Any number = {}", any.random_u32());
+    println!("Any number = {}", any.random_u16());
+    println!("Any number = {}", any.random_u8());
+
+    if let Some(num) = any.random_under_uint(1234567890123456_u64)
+        { println!("Any number u64 = {}", num); }
+
+    if let Some(num) = any.random_minmax_uint(1234_u16, 6321)
+        { println!("Any number u16 = {}", num); }
+
+    println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
+    if let Some(num) = any.random_odd_under_uint(1234_u16)
+        { println!("Any odd number u16 = {}", num); }
+
+    println!("Any 128-bit number u128 = {}", any.random_with_msb_set_uint::<u128>());
+    println!("Any 16-bit odd number u16 = {}", any.random_with_msb_set_uint::<u16>());
+    println!("Any prime number u64 = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+    println!("Any usize-sized prime number usize = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+
+    let num: [u128; 20] = any.random_array();
+    for i in 0..20
+        { println!("Any number {} => {}", i, num[i]); }
+
+    let mut num = [0_u64; 32];
+    any.put_random_in_array(&mut num);
+    for i in 0..32
+        { println!("Any number {} => {}", i, num[i]); }
+
+    let mut biguint: U512 = any.random_biguint();
+    println!("Any Number: {}", biguint);
+
+    let mut ceiling = U1024::max().wrapping_div_uint(3_u8);
+    if let Some(r) = any.random_under_biguint(&ceiling)
+    {
+        println!("Any Number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+    }
+
+    ceiling = U1024::max().wrapping_div_uint(5_u8);
+    let r = any.random_under_biguint_(&ceiling);
+    println!("Any Number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+
+    ceiling = U1024::max().wrapping_div_uint(4_u8);
+    if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    {
+        println!("Any odd Number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+    }
+
+    biguint = any.random_with_msb_set_biguint();
+    println!("Any Number: {}", biguint);
+
+    biguint = any.random_odd_with_msb_set_biguint();
+    println!("512-bit Any Odd Number = {}", biguint);
+    assert!(biguint > U512::halfmax());
+    assert!(biguint.is_odd());
+
+    biguint = any.random_prime_using_miller_rabin_biguint(5);
+    println!("Any Prime Number = {}", biguint);
+    assert!(biguint.is_odd());
+
+    biguint = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("512-bit Any Prime Number = {}", biguint);
+    assert!(biguint.is_odd());
+    println!("-------------------------------");
+}
+
+fn random_any_des_quick_start()
+{
+    use cryptocol::random::Any_DES;
+    use cryptocol::define_utypes_with;
+    define_utypes_with!(u64);
+
+    let mut any = Any_DES::new();
     println!("Any number = {}", any.random_u128());
     println!("Any number = {}", any.random_u64());
     println!("Any number = {}", any.random_u32());
