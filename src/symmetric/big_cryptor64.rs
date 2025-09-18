@@ -791,6 +791,15 @@ impl BigCryptor64
         self.block.get() == Self::FAILURE
     }
 
+    #[inline] pub(crate) fn get_smallcryptor(&self) -> &Vec<Box<dyn SmallCryptor<u64, 8>>>  { &self.smallcryptor }
+
+    pub(crate) fn move_to_next_key(&mut self)
+    {
+        let len = self.smallcryptor.len();
+        for i in 0..len
+            { self.smallcryptor[i].move_to_next_key(); }
+    }
+
     // pub(super) fn set_successful(&mut self)
     /// Sets the flag to mean that the previous encryption or decryption
     /// was successful.
@@ -857,7 +866,6 @@ impl BigCryptor64
 
     #[inline] fn get_block(&self) -> u64            { self.block.get() }
     #[inline] fn set_block(&mut self, block: u64)   { self.block.set(block); }
-    #[inline] pub(crate) fn get_smallcryptor(&self) -> &Vec<Box<dyn SmallCryptor<u64, 8>>>  { &self.smallcryptor }
 }
 
 

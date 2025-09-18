@@ -305,6 +305,7 @@ SmallCryptor<u64, 8> for DES_Generic<ROUND, SHIFT,
                                     S748, S749, S750, S751, S752, S753, S754, S755,
                                     S756, S757, S758, S759, S760, S761, S762, S763>
 {
+    #[inline] fn move_to_next_key(&mut self)    { self.move_to_next_key(); }
     #[inline] fn encrypt_unit(&mut self, message: u64) -> u64    { self._encrypt(message) }
     #[inline] fn decrypt_unit(&mut self, cipher: u64) -> u64     { self._decrypt(cipher) }
     #[inline] fn turn_inverse(&mut self)    { self.turn_inverse(); }

@@ -37,13 +37,16 @@ Key for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0
         let mut seed = [0_u32; NK];
         let len = if NK < 16 {NK} else {16};
         unsafe { copy_nonoverlapping(sugar.as_ptr() as *const u32, seed.as_mut_ptr() as *mut u32, len); }
-        let mut carry = 0;
+        let mut carry = 0_u32;
         let mut old: u32;
         for i in 0..NK
         {
             old = key[i];
-            key[i] = key[i].wrapping_add(seed[i]).wrapping_add(carry);
+            key[i] = key[i].wrapping_add(carry);
             carry = if key[i] < old {1} else {0};
+            key[i] = key[i].wrapping_add(seed[i]);
+            if carry == 0
+                { carry = if key[i] < old {1} else {0}; }
         }
         self.set_original_key(&key);
     }

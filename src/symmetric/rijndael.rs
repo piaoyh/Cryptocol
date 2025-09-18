@@ -1420,12 +1420,6 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         Self::method_make_round_keys(self);
     }
 
-    pub(crate) fn set_original_key(&mut self, key: &[u32; NK])
-    {
-        for i in 0..NK
-            { self.key[i].set(key[i]); }
-    }
-
     //  pub fn set_key_u128(&mut self, key: u128)
     /// Constructs a new object Rijndael_Generic.
     ///
@@ -1469,6 +1463,26 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
                                 self.key.as_mut_ptr() as *mut u8, len);
         }
         Self::method_make_round_keys(self);
+    }
+
+    pub(crate) fn set_original_key(&mut self, key: &[u32; NK])
+    {
+        for i in 0..NK
+            { self.key[i].set(key[i]); }
+    }
+
+    pub(crate) fn move_to_next_key(&mut self)
+    {
+        let mut key = self.get_key();
+        let mut carry = 1;
+        let mut old: u32;
+        for i in 0..NK
+        {
+            old = key[i];
+            key[i] = key[i].wrapping_add(carry);
+            carry = if key[i] < old {1} else {0};
+        }
+        self.set_original_key(&key);
     }
 
     // pub fn turn_inverse(&mut self)

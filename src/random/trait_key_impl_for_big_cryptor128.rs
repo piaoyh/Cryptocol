@@ -21,6 +21,6 @@ impl Key for BigCryptor128
 {
     fn change_key(&mut self, _: &[u64; 8])
     {
-        self.turn_inverse();
+        self.move_to_next_key();
     }
 }

@@ -18,6 +18,7 @@
 /// components for BigCryptor128 and BigCryptor64, respectively.
 pub trait SmallCryptor<T, const N: usize>
 {
+    fn move_to_next_key(&mut self);
     fn encrypt_unit(&mut self, message: T) -> T;
     fn decrypt_unit(&mut self, cipher: T) -> T;
     fn turn_inverse(&mut self);

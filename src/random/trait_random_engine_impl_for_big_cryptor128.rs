@@ -15,7 +15,7 @@ impl Random_Engine for BigCryptor128
     fn sow_array(&mut self, _: &[u64; 8], original: &[u64; 8])
     {
         if original[0] & 1 == 1
-            { self.turn_inverse(); }
+            { self.move_to_next_key(); }
     }
 
     fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]

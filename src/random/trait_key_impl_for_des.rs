@@ -308,16 +308,8 @@ impl <const ROUND: usize, const SHIFT: u128,
     fn change_key(&mut self, sugar: &[u64; 8])
     {
         let idx = sugar[0] as usize & 0b111;
-        let mut key = self.get_key_u64().wrapping_add(sugar[idx]);
-        while self.is_equivalent_key_u64(key)
-            { key = key.wrapping_add(2); }
+        let key = self.get_key_u64().wrapping_add(sugar[idx]);
         self.set_key_u64(key);
-        while self.has_weak_key()
-        {
-            key = key.wrapping_add(2);
-            while self.is_equivalent_key_u64(key)
-                { key = key.wrapping_add(2); }
-            self.set_key_u64(key);
-        }
+        self.avoid_undesirable_key();
     }
 }

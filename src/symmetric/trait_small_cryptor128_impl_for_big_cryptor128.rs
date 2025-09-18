@@ -19,6 +19,7 @@ use crate::symmetric::{ SmallCryptor,  BigCryptor128 };
 
 impl SmallCryptor<u128, 16> for BigCryptor128
 {
+    #[inline] fn move_to_next_key(&mut self)    { self.move_to_next_key(); }
     #[inline] fn encrypt_unit(&mut self, message: u128) -> u128   { self._encrypt(message) }
     #[inline] fn decrypt_unit(&mut self, cipher: u128) -> u128    { self._decrypt(cipher) }
     #[inline] fn turn_inverse(&mut self)    { self.turn_inverse(); }

@@ -31,6 +31,8 @@ SmallCryptor<u64, 8> for Rijndael_Generic<ROUND, 2, NK, IRREDUCIBLE, AFFINE_MUL,
         MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13, MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
         RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
+    #[inline] fn move_to_next_key(&mut self)    { self.move_to_next_key(); }
+
     fn encrypt_unit(&mut self, message: u64) -> u64
     {
         let long = LongUnion::new_with(message);
@@ -40,7 +42,7 @@ SmallCryptor<u64, 8> for Rijndael_Generic<ROUND, 2, NK, IRREDUCIBLE, AFFINE_MUL,
         LongUnion::new_with_uints([res[0].get(), res[1].get()]).get()
     }
     
-    #[inline] fn decrypt_unit(&mut self, cipher: u64) -> u64
+    fn decrypt_unit(&mut self, cipher: u64) -> u64
     {
         let long = LongUnion::new_with(cipher);
         let c = [IntUnion::new_with(long.get_uint_(0)),

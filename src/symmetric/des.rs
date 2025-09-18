@@ -1568,7 +1568,7 @@ impl <const ROUND: usize, const SHIFT: u128,
 
     const SUCCESS: u64 = !0;
     const FAILURE: u64 = 0;
-    const MASK: u64 = 0x0101010101010101;
+    const MASK: u64 = 0xFEFEFEFEFEFEFEFE;
 
     // pub fn new() -> Self
     /// Constructs a new object DES_Generic.
@@ -2058,6 +2058,27 @@ impl <const ROUND: usize, const SHIFT: u128,
     {
         self.key.set(key);
         self.make_round_keys();
+    }
+
+    pub(crate) fn move_to_next_key(&mut self)
+    {
+        let mut key = self.get_key();
+        let mut carry = 2;
+        let mut old: u8;
+        for i in 0..8
+        {
+            old = key[i];
+            key[i] = key[i].wrapping_add(carry);
+            carry = if key[i] < old {2} else {0};
+        }
+        self.set_key(key);
+        self.avoid_undesirable_key();
+    }
+
+    pub(crate) fn avoid_undesirable_key(&mut self)
+    {
+        while self.has_weak_key()
+            { self.move_to_next_key(); }
     }
 
     // pub fn turn_inverse(&mut self)

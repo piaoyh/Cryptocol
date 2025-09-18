@@ -791,6 +791,13 @@ impl BigCryptor128
         self.block.get() == Self::FAILURE
     }
 
+    pub(crate) fn move_to_next_key(&mut self)
+    {
+        let len = self.smallcryptor.len();
+        for i in 0..len
+            { self.smallcryptor[i].move_to_next_key(); }
+    }
+
     // pub fn set_successful(&mut self)
     /// Sets the flag to mean that the previous encryption or decryption
     /// was successful.
@@ -809,7 +816,7 @@ impl BigCryptor128
     /// assert_eq!(a_aes.is_successful(), true);
     /// ```
     #[inline]
-    pub fn set_successful(&mut self)
+    pub(super) fn set_successful(&mut self)
     {
         self.block.set(Self::SUCCESS);
     }
@@ -833,7 +840,7 @@ impl BigCryptor128
     /// assert_eq!(a_aes.is_failed(), true);
     /// ```
     #[inline]
-    pub fn set_failed(&mut self)
+    pub(super) fn set_failed(&mut self)
     {
         self.block.set(Self::FAILURE);
     }

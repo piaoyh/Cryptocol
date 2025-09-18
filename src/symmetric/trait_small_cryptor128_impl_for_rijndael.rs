@@ -33,6 +33,8 @@ SmallCryptor<u128, 16> for Rijndael_Generic<ROUND, 4, NK,
                                                 MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
                                                 RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
 {
+    #[inline] fn move_to_next_key(&mut self)    { self.move_to_next_key(); }
+    
     fn encrypt_unit(&mut self, message: u128) -> u128
     {
         let longer = LongerUnion::new_with(message);
