@@ -798,7 +798,7 @@ impl BigCryptor128
             { self.smallcryptor[i].move_to_next_key(); }
     }
 
-    // pub fn set_successful(&mut self)
+    // pub(super) fn set_successful(&mut self)
     /// Sets the flag to mean that the previous encryption or decryption
     /// was successful.
     /// 
@@ -821,7 +821,7 @@ impl BigCryptor128
         self.block.set(Self::SUCCESS);
     }
 
-    // pub fn set_failed(&mut self)
+    // pub(super) fn set_failed(&mut self)
     /// Sets the flag to mean that the previous encryption or decryption
     /// was failed.
     /// 
