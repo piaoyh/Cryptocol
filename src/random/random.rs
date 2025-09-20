@@ -1051,7 +1051,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             _ => T::u128_as_smalluint(self.random_u128()),
         }
     }
-//////////////////////
+
     // pub fn random_under_uint<T>(&mut self, ceiling: T) -> Option<T>
     /// Generates random numbers of type `T` less than `ceiling`.
     /// 
@@ -1068,24 +1068,12 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// - If you use `Any`, it is considered that it may be cryptographically
     ///   insecure.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random_SHA2_512;
-    /// let mut rand = Random_SHA2_512::new();
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
     /// if let Some(num) = rand.random_under_uint(12_u8)
     ///     { println!("Random number u8 = {}", num); }
-    /// if let Some(num) = rand.random_under_uint(1234_u16)
-    ///     { println!("Random number u16 = {}", num); }
-    /// if let Some(num) = rand.random_under_uint(12345678_u32)
-    ///     { println!("Random number u32 = {}", num); }
-    /// if let Some(num) = rand.random_under_uint(1234567890123456_u64)
-    ///     { println!("Random number u64 = {}", num); }
-    /// if let Some(num) = rand.random_under_uint(12345678901234567890_u128)
-    ///     { println!("Random number u128 = {}", num); }
-    /// if let Some(num) = rand.random_under_uint(123456789_usize)
-    ///     { println!("Random number usize = {}", num); }
-    /// else
-    ///     { println!("No random unsigned number number under 0!"); }
     /// ```
     /// 
     /// # For more examples,
@@ -1103,7 +1091,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     {
         if ceiling != T::zero() { Some(self.random_under_uint_::<T>(ceiling)) } else {None}
     }
-
+//////////////////////
     // pub fn random_under_uint_<T>(&mut self, ceiling: T) -> T
     /// Generates random numbers of type `T` less than `ceiling`.
     /// 
@@ -1167,7 +1155,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     {
         self.random_uint::<T>() % ceiling
     }
-
+//////////////////////
     // pub fn random_minmax_uint<T>(&mut self, from: T, ceiling: T) -> Option<T>
     /// Generates random numbers of type `T` less than `ceiling` exclusively
     /// and greater than or equal to `from` inclusively.

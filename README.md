@@ -220,8 +220,8 @@ The checked items have already been implemented including documentation __at lea
       trait [`Random_Engine`](https://docs.rs/cryptocol/latest/cryptocol/random/trait_random_engine/trait.Random_Engine.html#trait.Random_Engine)
 - [ ] Pseudo-random number generator engines using hash algorithms ---
       [`Random_BIG_KECCAK_1024`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024),
-      [`Random_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512), and
-      [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512).
+      [`Random_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512),
+      [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512),
       [`Any_SHAKE_256`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHAKE_256.html#struct.Any_SHAKE_256),
       [`Any_SHAKE_128`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
       [`Any_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA3_512.html#struct.Any_SHA3_512),
