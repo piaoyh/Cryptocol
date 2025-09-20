@@ -43,7 +43,11 @@ The checked items have already been implemented including documentation __at lea
       You can find most of the methods you need for big integer calculation at
       [`BigUInt`](https://docs.rs/cryptocol/latest/cryptocol/number/big_uint/struct.BigUInt.html#struct.BigUInt).
 - [X] Auxiliary Fixed Sized Big Unsigned Integer Operation --- If you don't find what you need at
-      [`BigUInt`](https://docs.rs/cryptocol/latest/cryptocol/number/big_uint/struct.BigUInt.html#struct.BigUInt), you may find it at [`BigUInt_More`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_more/trait.BigUInt_More.html#trait.BigUInt_More), [`BigUInt_Modular`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_modular/trait.BigUInt_Modular.html#trait.BigUInt_Modular), [`BigUInt_Prime`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_prime/trait.BigUInt_Prime.html#trait.BigUInt_Prime), and [`BigUInt_Panic_Free`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_panic_free/trait.BigUInt_Panic_Free.html#trait.BigUInt_Panic_Free).
+      [`BigUInt`](https://docs.rs/cryptocol/latest/cryptocol/number/big_uint/struct.BigUInt.html#struct.BigUInt), you may find it at
+      [`BigUInt_More`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_more/trait.BigUInt_More.html#trait.BigUInt_More),
+      [`BigUInt_Modular`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_modular/trait.BigUInt_Modular.html#trait.BigUInt_Modular),
+      [`BigUInt_Prime`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_prime/trait.BigUInt_Prime.html#trait.BigUInt_Prime), and
+      [`BigUInt_Panic_Free`](https://docs.rs/cryptocol/latest/cryptocol/number/trait_big_uint_panic_free/trait.BigUInt_Panic_Free.html#trait.BigUInt_Panic_Free).
 <!--
 - [ ] Fixed Sized Big Signed Integer Operation --- BigSInt
       ===> Moved to Roadmap for ver. 2.0
@@ -212,28 +216,28 @@ The checked items have already been implemented including documentation __at lea
 ### Pseudo-Random Number Generator Algorithms
 
 - [ ] Pseudo-random number generator ---
-      struct [`Random_Generic`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_Generic.html#struct.Random_Generic) and
+      struct [`Random_Generic`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_Generic.html#struct.Random_Generic) and
       trait [`Random_Engine`](https://docs.rs/cryptocol/latest/cryptocol/random/trait_random_engine/trait.Random_Engine.html#trait.Random_Engine)
 - [ ] Pseudo-random number generator engines using hash algorithms ---
-      [`Random_BIG_KECCAK_1024`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024),
-      [`Random_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512), and
-      [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512).
-      [`Any_SHAKE_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHAKE_256.html#struct.Any_SHAKE_256),
-      [`Any_SHAKE_128`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
-      [`Any_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA3_512.html#struct.Any_SHA3_512),
-      [`Any_SHA3_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA3_256.html#struct.Any_SHA3_256),
-      [`Any_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_512.html#struct.Any_SHA2_512),
-      [`Any_SHA2_256`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA2_256.html#struct.Any_SHA2_256),
-      [`Any_SHA1`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA1.html#struct.Any_SHA1),
-      [`Any_SHA0`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_SHA0.html#struct.Any_SHA0),
-      [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD5.html#struct.Any_MD5), and
-      [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_MD4.html#struct.Any_MD4).
+      [`Random_BIG_KECCAK_1024`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024),
+      [`Random_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512), and
+      [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512).
+      [`Any_SHAKE_256`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHAKE_256.html#struct.Any_SHAKE_256),
+      [`Any_SHAKE_128`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
+      [`Any_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA3_512.html#struct.Any_SHA3_512),
+      [`Any_SHA3_256`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA3_256.html#struct.Any_SHA3_256),
+      [`Any_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA2_512.html#struct.Any_SHA2_512),
+      [`Any_SHA2_256`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA2_256.html#struct.Any_SHA2_256),
+      [`Any_SHA1`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA1.html#struct.Any_SHA1),
+      [`Any_SHA0`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA0.html#struct.Any_SHA0),
+      [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_MD5.html#struct.Any_MD5), and
+      [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_MD4.html#struct.Any_MD4).
 - [X] Pseudo-random number generator engines using symmetric-key block encryption algorithms ---
-      [`Random_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Random_Rijndael.html#struct.Random_Rijndael),
-      [`Any_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Rijndael.html#struct.Any_Rijndael), and
-      [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_DES.html#struct.Any_DES).
+      [`Random_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/struct.Random_Rijndael.html#struct.Random_Rijndael),
+      [`Any_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_Rijndael.html#struct.Any_Rijndael), and
+      [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_DES.html#struct.Any_DES).
 - [X] Pseudo-random number generator engines using simple randomization algorithm ---
-      [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/random/struct.Any_Num_C.html#struct.Any_Num_C).
+      [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_Num_C.html#struct.Any_Num_C).
 
 ### Asymmetric-key Algorithms for Encryption/Decryption of digital data
 

@@ -231,29 +231,29 @@
 // !
 //! ## Pseudo-Random Number Generator Algorithms
 //! - [ ] Pseudo-random number generator --- struct
-//!       [`Random_Generic`](random/random/struct.Random_Generic.html#struct.Random_Generic)
+//!       [`Random_Generic`](random/struct.Random_Generic.html#struct.Random_Generic)
 //!       and trait
 //!       [Random_Engine](random/trait_random_engine/trait.Random_Engine.html#trait.Random_Engine)
 //! - [ ] Pseudo-random number generator engines using hash algorithms ---
-//!       [`Random_BIG_KECCAK_1024`](random/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024)
-//!       [`Random_SHA3_512`](random/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512),
-//!       [`Random_SHA2_512`](random/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512),
-//!       [`Any_SHAKE_256`](random/random/struct.Any_SHAKE_256.html#struct.Any_SHAKE_256),
-//!       [`Any_SHAKE_128`](random/random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
-//!       [`Any_SHA3_512`](random/random/struct.Any_SHA3_512.html#struct.Any_SHA3_512),
-//!       [`Any_SHA3_256`](random/random/struct.Any_SHA3_256.html#struct.Any_SHA3_256),
-//!       [`Any_SHA2_512`](random/random/struct.Any_SHA2_512.html#struct.Any_SHA2_512),
-//!       [`Any_SHA2_256`](random/random/struct.Any_SHA2_256.html#struct.Any_SHA2_256),
-//!       [`Any_SHA1`](random/random/struct.Any_SHA1.html#struct.Any_SHA1),
-//!       [`Any_SHA0`](random/random/struct.Any_SHA0.html#struct.Any_SHA0),
-//!       [`Any_MD5`](random/random/struct.Any_MD5.html#struct.Any_MD5), and,
-//!       [`Any_MD4`](random/random/struct.Any_MD4.html#struct.Any_MD4).
+//!       [`Random_BIG_KECCAK_1024`](random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024)
+//!       [`Random_SHA3_512`](random/struct.Random_SHA3_512.html#struct.Random_SHA3_512),
+//!       [`Random_SHA2_512`](random/struct.Random_SHA2_512.html#struct.Random_SHA2_512),
+//!       [`Any_SHAKE_256`](random/struct.Any_SHAKE_256.html#struct.Any_SHAKE_256),
+//!       [`Any_SHAKE_128`](random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
+//!       [`Any_SHA3_512`](random/struct.Any_SHA3_512.html#struct.Any_SHA3_512),
+//!       [`Any_SHA3_256`](random/struct.Any_SHA3_256.html#struct.Any_SHA3_256),
+//!       [`Any_SHA2_512`](random/struct.Any_SHA2_512.html#struct.Any_SHA2_512),
+//!       [`Any_SHA2_256`](random/struct.Any_SHA2_256.html#struct.Any_SHA2_256),
+//!       [`Any_SHA1`](random/struct.Any_SHA1.html#struct.Any_SHA1),
+//!       [`Any_SHA0`](random/struct.Any_SHA0.html#struct.Any_SHA0),
+//!       [`Any_MD5`](random/struct.Any_MD5.html#struct.Any_MD5), and,
+//!       [`Any_MD4`](random/struct.Any_MD4.html#struct.Any_MD4).
 //! - [X] Pseudo-random number generator engines using symmetric-key block encryption algorithms ---
-//!       [`Random_Rijndael`](random/random/struct.Random_Rijndael.html#struct.Random_Rijndael),
-//!       [`Any_Rijndael`](random/random/struct.Any_Rijndael.html#struct.Any_Rijndael), and
-//!       [`Any_DES`](random/random/struct.Any_DES.html#struct.Any_DES).
+//!       [`Random_Rijndael`](random/struct.Random_Rijndael.html#struct.Random_Rijndael),
+//!       [`Any_Rijndael`](random/struct.Any_Rijndael.html#struct.Any_Rijndael), and
+//!       [`Any_DES`](random/struct.Any_DES.html#struct.Any_DES).
 //! - [X] Pseudo-random number generator engines using simple randomization algorithm
-//!       --- [`Any_Num_C`](random/random/struct.Any_Num.html#struct.Any_Num_C).
+//!       --- [`Any_Num_C`](random/struct.Any_Num.html#struct.Any_Num_C).
 //! 
 //! ## Asymmetric-Key Algorithms for Encryption/Decryption of digital data
 //! - [ ] ECC (Elliptic Curve Cryptosystem)
