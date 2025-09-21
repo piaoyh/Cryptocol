@@ -15,7 +15,7 @@
 
 use std::ptr::{ copy_nonoverlapping, copy };
 
-use crate::number::{ BigUInt, SmallUInt, IntUnion, LongUnion, LongerUnion, BigUInt_Prime };
+use crate::number::{ BigUInt, SmallUInt, IntUnion, LongUnion, LongerUnion, BigUInt_Prime, BigUInt_Modular };
 use crate::random::Random;
 use cryptocol::define_utypes_with;
 
@@ -30,9 +30,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
         + PartialEq + PartialOrd
 {
-    prime:  [BigUInt<T, N>; 2],
-    number: BigUInt<T, {N * 2}>,
-    key:    BigUInt<T, N>,
+    number: BigUInt<T, N>,
+    key:    [BigUInt<T, N>; 2],
     block:  [T; N],
     enc:    fn (s: &mut Self, message: &[T; N]) -> [T; N],
     dec:    fn (s: &mut Self, cipher: &[T; N]) -> [T; N],
@@ -48,14 +47,28 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
         + PartialEq + PartialOrd
 {
-    type Prime = BigUInt<T, N>;
-    type Number = BigUInt<T, {N * 2}>;
+    type Prime = BigUInt<T, {N / 2}>;
+    type Number = BigUInt<T, N>;
     
-    fn choose_prime_numbers(&mut self)
+    fn choose_prime_numbers() -> (Prime, Prime)
     {
         let rand = Random::new();
-        self.prime[0] = rand.random_prime_using_miller_rabin_biguint(5);
-        self.prime[1] = rand.random_prime_using_miller_rabin_biguint(5);
-        self.number = self.prime[0].expanding_mul(&self.prime[1]);
+        let prime_1: Prime = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+        let prime_2: Prime = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+        (prime_1, prime_2)
+    }
+
+    fn find_keys(&mut self)
+    {
+        let (prime_1, prime_2) = Self::choose_prime_numbers();
+        self.number = prime_1.expanding_mul(&prime_2);
+        let phi = prime_1.wrapping_sub_uint(1).expanding_mul(&prime_2.wrapping_sub_uint(1));
+        self.key[0] = Number::from_uint(2);
+        while !self.key[0].gcd(phi).is_one()
+            { self.key[0].wrapping_add_uint(1); }
+        self.key[1] = phi.wrapping_sub_uint(1);
+        // Extended Euclidan Algorithm will be substituted.
+        while !self.key[0].modular_mul(&self.key[1], &phi)
+            { self.key[1].wrapping_sub_uint(1); }
     }
 }

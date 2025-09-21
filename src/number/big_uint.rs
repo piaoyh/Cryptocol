@@ -9960,19 +9960,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - `rhs` is to be added to `self`, and is of `&Self` type.
     /// 
     /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `M` is less than `N`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
+    /// If `size_of::<T>() * N` <= `128`, this method may panic
+    /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Outputs
     /// It returns the multiplication result `self` * `rhs` in the form of
     /// `BigUInt<T, M\>` of a different size of the result.
     /// 
     /// # Features
-    /// - It performs "long multiplication", and returns the result in
-    ///   `BigUInt<T, M\>` of a different size of the result.
-    /// - If `M` is less than 2 * `N`, it can be overflowed.
+    /// It performs "long multiplication", and returns the result in
+    /// `BigUInt<T, M\>` of a different size of the result.
     /// 
     /// # Counterpart Methods
     /// - If you also need to add a carry to the wide result, then you want to
@@ -10017,24 +10014,42 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     // /// assert_eq!(res_biguint_low.is_left_carry(), false);
     // /// assert_eq!(res_biguint_low.is_right_carry(), false);
     /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.widening_mul)
+    // /// 
+    // /// # For more examples,
+    // /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.widening_mul)
     pub fn expanding_mul<const M: usize>(&self, rhs: &Self) -> BigUInt<T, M>
     {
-        let (low, high) = self.widening_mul(rhs);
-        let mut res = BigUInt::<T, M>::new();
-        unsafe { copy_nonoverlapping(low.get_number().as_ptr(), res.get_number_mut().as_mut_ptr(), N); }
-        unsafe { copy_nonoverlapping(high.get_number().as_ptr(), res.get_number_mut().as_mut_ptr().add(N), M - N); }
-        for i in M-N..N
+        let mut target = BigUInt::<T, M>::new();
+        if M > N
         {
-            if !high.get_num_(i).is_zero()
+            let (low, high) = self.widening_mul(rhs);
+            let k = if M < 2 * N {M - N} else {N};
+            unsafe { copy_nonoverlapping(low.get_number().as_ptr(), target.get_number_mut().as_mut_ptr(), N); }
+            unsafe { copy_nonoverlapping(high.get_number().as_ptr(), target.get_number_mut().as_mut_ptr().add(N), k); }
+            for i in k..N
             {
-                res.set_overflow();
-                break;
+                if !high.get_num_(i).is_zero()
+                {
+                    target.set_overflow();
+                    break;
+                }
             }
         }
-        res
+        else
+        {
+            let res = self.wrapping_mul(rhs);
+            unsafe { copy_nonoverlapping(res.get_number().as_ptr(), target.get_number_mut().as_mut_ptr(), M); }
+            target.set_all_flags(res.get_all_flags());
+            for i in M..N
+            {
+                if !res.get_num_(i).is_zero()
+                {
+                    target.set_overflow();
+                    break;
+                }
+            }
+        }
+        target
     }
 
 
