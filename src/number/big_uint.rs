@@ -15,6 +15,8 @@
 // #![allow(rustdoc::missing_doc_code_examples)]
 
 use std::mem::size_of;
+use std::ptr::copy_nonoverlapping;
+
 use std::convert::From;
 use std::str::FromStr;
 use std::fmt::{ Display, Debug };
@@ -2687,9 +2689,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         &self.number
     }
 
-    // pub fn get_number_mut(&self) -> &mut [T; N]
-    /// Returns the reference of its array of `T`-type for borrowing instead
-    /// of giving its ownership. `BigUInt` has an array of `T` in order
+    // pub fn get_number_as_mut_ptr(&self) -> *mut T
+    /// Returns the mutable reference of its array of `T`-type for borrowing
+    /// instead of giving its ownership. `BigUInt` has an array of `T` in order
     /// to present long-sized unsigned integers.
     /// 
     /// # Features
@@ -2707,8 +2709,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// }
     /// ```
     #[inline]
-    #[cfg(target_endian = "big")]
-    pub fn get_number_mut(&self) -> &mut [T; N]
+    pub fn get_number_mut(&mut self) -> &mut [T; N]
     {
         &mut self.number
     }
@@ -6310,7 +6311,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     /*
-    // pub fn expanded_mul<U, const M: usize>(&self, rhs: U) -> BigUInt<T, M>
+    // pub fn expanding_mul<U, const M: usize>(&self, rhs: U) -> BigUInt<T, M>
     // where U: SmallUInt + Copy + Clone + Display + Debug + ToString
     //         + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
     //         + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
@@ -6326,7 +6327,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     //     BigUInt::<T, M>::new()
     // }
     */
-
 
 
     /*** DIVISION ***/
@@ -9952,6 +9952,90 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         biguint_overflowing_calc_assign!(self, Self::wrapping_mul_assign, rhs);
     }
 
+    // pub fn expanding_mul<const M: usize>(&self, rhs: &Self) -> BigUInt<T, M>
+    /// Calculates `self` * `rhs`,
+    /// and returns a BigUInt<T, M\> of a different size.
+    /// 
+    /// # Arguments
+    /// - `rhs` is to be added to `self`, and is of `&Self` type.
+    /// 
+    /// # Panics
+    /// - If `size_of::<T>() * N` <= `128`, this method may panic
+    ///   or its behavior may be undefined though it may not panic.
+    /// - If `M` is less than `N`, this method may panic
+    ///   or its behavior may be undefined though it may not panic.
+    /// 
+    /// # Outputs
+    /// It returns the multiplication result `self` * `rhs` in the form of
+    /// `BigUInt<T, M\>` of a different size of the result.
+    /// 
+    /// # Features
+    /// - It performs "long multiplication", and returns the result in
+    ///   `BigUInt<T, M\>` of a different size of the result.
+    /// - If `M` is less than 2 * `N`, it can be overflowed.
+    /// 
+    /// # Counterpart Methods
+    /// - If you also need to add a carry to the wide result, then you want to
+    ///   use [carrying_mul()](struct@BigUInt#method.carrying_mul)
+    ///   instead.
+    /// - The value of the first field in the returned tuple matches what
+    ///   you’d get the method
+    ///   [wrapping_mul()](struct@BigUInt#method.wrapping_mul).
+    ///   `self.widening_mul(rhs).0` == `self.wrapping_mul(rhs)`.
+    /// - The method
+    ///   [widening_mul_uint()](struct@BigUInt#method.widening_mul_uint)
+    ///   is a bit faster than this method `widening_mul()`.
+    ///   So, if `rhs` is primitive unsigned integral data type such as u8,
+    ///   u16, u32, u64, and u128, use the method
+    ///   [widening_mul_uint()](struct@BigUInt#method.widening_mul_uint).
+    /// 
+    /// # Example 1 for Normal case
+    /// ```
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let a_biguint = U256::from_string("876801874298166903427690031858186486050853753882811946569946433649006084094").unwrap();
+    /// let b_biguint = U256::from_string("123456789098765432101234566789098765432101234567890987654321012345678909876").unwrap();
+    /// let res_biguint: U512 = a_biguint.expanding_mul(&b_biguint);
+    /// 
+    // /// println!("{} X {} = {}", a_biguint, b_biguint, res_biguint);
+    // /// assert_eq!(res_biguint_high.to_string(), "934840581853378776614741519244947987886551255599166686673415072970125925");
+    // /// assert_eq!(res_biguint_high.is_overflow(), false);
+    // /// assert_eq!(res_biguint_high.is_underflow(), false);
+    // /// assert_eq!(res_biguint_high.is_divided_by_zero(), false);
+    // /// assert_eq!(res_biguint_high.is_infinity(), false);
+    // /// assert_eq!(res_biguint_high.is_undefined(), false);
+    // /// assert_eq!(res_biguint_high.is_left_carry(), false);
+    // /// assert_eq!(reres_biguint_highs.is_right_carry(), false);
+    // /// 
+    // /// assert_eq!(res_biguint_low.to_string(), "99383456710232708163688724311017197312314189592099594761784803361525674171544");
+    // /// assert_eq!(res_biguint_low.is_overflow(), true);
+    // /// assert_eq!(res_biguint_low.is_underflow(), false);
+    // /// assert_eq!(res_biguint_low.is_divided_by_zero(), false);
+    // /// assert_eq!(res_biguint_low.is_infinity(), false);
+    // /// assert_eq!(res_biguint_low.is_undefined(), false);
+    // /// assert_eq!(res_biguint_low.is_left_carry(), false);
+    // /// assert_eq!(res_biguint_low.is_right_carry(), false);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.widening_mul)
+    pub fn expanding_mul<const M: usize>(&self, rhs: &Self) -> BigUInt<T, M>
+    {
+        let (low, high) = self.widening_mul(rhs);
+        let mut res = BigUInt::<T, M>::new();
+        unsafe { copy_nonoverlapping(low.get_number().as_ptr(), res.get_number_mut().as_mut_ptr(), N); }
+        unsafe { copy_nonoverlapping(high.get_number().as_ptr(), res.get_number_mut().as_mut_ptr().add(N), M - N); }
+        for i in M-N..N
+        {
+            if !high.get_num_(i).is_zero()
+            {
+                res.set_overflow();
+                break;
+            }
+        }
+        res
+    }
 
 
     /*** DIVISION ***/
