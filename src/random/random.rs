@@ -724,7 +724,9 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         self.change_count();
         for i in 0..8
             { self.main_state[i] ^= self.original_seed[i]; }
-        self.main_state = self.main_generator.harvest(self.count, &self.main_state);
+        let xor = self.count ^ (self.original_aux[0] as u128 | (self.original_aux[1] as u128) << 64);
+        let count = if (self.count == 0) || (xor == 0) {self.count} else {xor};
+        self.main_state = self.main_generator.harvest(count, &self.main_state);
     }
 
     // fn produce_aux_state(&mut self) -> [u64; 8]
@@ -738,7 +740,9 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         self.change_count();
         for i in 0..8
             { self.aux_state[i] ^= self.original_aux[i]; }
-        self.aux_state = self.aux_generator.harvest(self.count, &self.aux_state);
+        let xor = self.count ^ (self.original_seed[0] as u128 | (self.original_seed[1] as u128) << 64);
+        let count = if (self.count == 0) || (xor == 0) {self.count} else {xor};
+        self.aux_state = self.aux_generator.harvest(count, &self.aux_state);
     }
 
     // fn change_count(&mut self)
@@ -1107,10 +1111,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Cryptographical Security
     /// - If you use `Random`, it is considered to be cryptographically secure.
     /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
+    ///   insecure.
     /// 
     /// # Example
     /// ```
