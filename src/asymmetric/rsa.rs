@@ -64,11 +64,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         self.number = prime_1.expanding_mul(&prime_2);
         let phi = prime_1.wrapping_sub_uint(1).expanding_mul(&prime_2.wrapping_sub_uint(1));
         self.key[0] = Number::from_uint(2);
-        while !self.key[0].gcd(phi).is_one()
-            { self.key[0].wrapping_add_uint(1); }
-        self.key[1] = phi.wrapping_sub_uint(1);
-        // Extended Euclidan Algorithm will be substituted.
-        while !self.key[0].modular_mul(&self.key[1], &phi)
-            { self.key[1].wrapping_sub_uint(1); }
+        let mut one: Number;
+        (one, self.key[1], _) = self.key[0].extended_gcd(phi);
+        while !one.is_one()
+        {
+            self.key[0].wrapping_add_uint(1);
+            (one, self.key[1], _) = self.key[0].extended_gcd(phi);
+        }
+        self.key[1].wrapping_rem_assign(&self.number);
     }
 }

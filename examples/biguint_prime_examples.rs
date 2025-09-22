@@ -19,9 +19,10 @@ pub fn main()
     biguint_prime_lcm_assign_uint();
     biguint_prime_gcd();
     biguint_prime_gcd_assign();
-    biguint_prime_lcm();
-    biguint_prime_lcm_assign();
-    biguint_prime_is_prime_using_miller_rabin();
+    biguint_prime_extended_gcd();
+    // biguint_prime_lcm();
+    // biguint_prime_lcm_assign();
+    // biguint_prime_is_prime_using_miller_rabin();
 }
 
 
@@ -974,6 +975,21 @@ fn biguint_prime_gcd_assign()
     let _b_biguint = U256::zero();
     // It will panic!
     // _a_biguint.gcd_assign(&_b_biguint);
+    println!("---------------------------");
+}
+
+fn biguint_prime_extended_gcd()
+{
+    println!("biguint_prime_extended_gcd()");
+    use cryptocol::define_utypes_with;
+    use cryptocol::number::BigUInt_Prime;
+    define_utypes_with!(u128);
+
+    // normal case
+    let a_biguint = U256::from_string("240").unwrap();
+    let b_biguint = U256::from_string("46").unwrap();
+    let (c_biguint, x, y) = a_biguint.extended_gcd(&b_biguint);
+    println!("The greatest common divisor of {} and {} is {} and x = -{}, y = {}.", a_biguint, b_biguint, c_biguint, U256::zero().wrapping_sub(&x), y);
     println!("---------------------------");
 }
 

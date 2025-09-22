@@ -187,6 +187,38 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         biguint_calc_to_calc_assign!(self, Self::gcd, other);
     }
 
+    fn extended_gcd(&self, other: &Self) -> (Self, Self, Self)
+    {
+        if self.is_zero() || other.is_zero()
+            { panic!(); }
+
+        let mut a = self.clone();
+        let mut b = BigUInt::<T, N>::from_biguint(other);
+        let mut x0 = BigUInt::<T, N>::one();
+        let mut y0 = BigUInt::<T, N>::zero();
+        let mut x1 = BigUInt::<T, N>::zero();
+        let mut y1 = BigUInt::<T, N>::one();
+        let mut t: BigUInt<T, N>;
+        let mut q: BigUInt<T, N>;
+        while !b.is_zero()
+        {
+            q = a.wrapping_div(&b);
+
+            t = x1.clone();
+            x1 = x0.wrapping_sub(&q.wrapping_mul(&x1));
+            x0 = t;
+
+            t = y1.clone();
+            y1 = y0.wrapping_sub(&q.wrapping_mul(&y1));
+            y0 = t;
+            
+            t = b;
+            b = a.wrapping_rem(&t);
+            a = t;
+        }
+        (a, x0, y0)
+    }
+    
     fn lcm(&self, other: &Self) -> Self
     {
         if self.is_zero() || other.is_zero()

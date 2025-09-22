@@ -456,6 +456,62 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.gcd_assign)
     fn gcd_assign(&mut self, other: &Self);
 
+    // fn extended_gcd(&self, other: &Self) -> (Self, Self, Self);
+    /// Calculates the greatest common divisor of `self` and `other`,
+    /// and returns the result, `x`, and `y` that satisfy
+    /// `self` * `x` + `other` * `y` = self.gcd(other).
+    /// If you would like to know greatest common divisor more in detail,
+    /// read [here](https://en.wikipedia.org/wiki/Greatest_common_divisor).
+    /// 
+    /// # Argument
+    /// The greatest common diviser of `self` and `other` is calculated.
+    /// `other` is of `Self` type.
+    ///
+    /// # Panics
+    /// - If `size_of::<T>() * N` <= `128`, this method may panic
+    ///   or its behavior may be undefined though it may not panic.
+    /// - If either `self` or `other` is zero, it will panic.
+    /// - If both `self` and `other` is zero, it will panic.
+    /// 
+    /// # Output
+    /// It returns The greatest common diviser of `self` and `other`,
+    /// `x`, and `y` that satisfy
+    /// `self` * `x` + `other` * `y` = self.gcd(other).
+    /// 
+    /// # Features
+    /// Both `self` and `other` should natural numbers. So, if either `self`
+    /// or `other` is zero, getting greatest common diviser is meaningless.
+    /// In this case, this method will panic.
+    /// 
+    /// # Counterpart Method
+    /// The method [gcd()](trait@BigUInt_Prime#tymethod.gcd)
+    /// is more efficient than this method `extended_gcd()`
+    /// when you want only the greatest common diviser.
+/*  /// 
+    /// # Example 1 for normal case
+    /// ```
+    /// use cryptocol::define_utypes_with;
+    /// use cryptocol::number::BigUInt_Prime;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let a_biguint = U256::from_string("12345678911111222223333344444555556666677777888889999900000").unwrap();
+    /// let b_biguint = U256::from_string("99999888887777766666555554444433333222221111100000123456789").unwrap();
+    /// let c_biguint = a_biguint.gcd(&b_biguint);
+    /// println!("The greatest common divisor of {} and {} is {}.", a_biguint, b_biguint, c_biguint);
+    /// assert_eq!(c_biguint.to_string(), "27");
+    /// assert_eq!(c_biguint.is_overflow(), false);
+    /// assert_eq!(c_biguint.is_underflow(), false);
+    /// assert_eq!(c_biguint.is_infinity(), false);
+    /// assert_eq!(c_biguint.is_undefined(), false);
+    /// assert_eq!(c_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(c_biguint.is_left_carry(), false);
+    /// assert_eq!(c_biguint.is_right_carry(), false);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.gcd) */
+    fn extended_gcd(&self, other: &Self) -> (Self, Self, Self);
+
     // fn lcm(&self, other: &Self) -> Self
     /// Calculates the least common multiple of `self` and `other`,
     /// and returns the result.
