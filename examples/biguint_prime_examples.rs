@@ -990,6 +990,7 @@ fn biguint_prime_extended_gcd()
     let b_biguint = U256::from_string("46").unwrap();
     let (c_biguint, x, y) = a_biguint.extended_gcd(&b_biguint);
     println!("The greatest common divisor of {} and {} is {} and x = -{}, y = {}.", a_biguint, b_biguint, c_biguint, U256::zero().wrapping_sub(&x), y);
+    println!("overflow = {}, underflow = {}", x.is_overflow(), x.is_underflow());
     println!("---------------------------");
 }
 

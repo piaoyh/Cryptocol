@@ -200,6 +200,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         let mut y1 = BigUInt::<T, N>::one();
         let mut t: BigUInt<T, N>;
         let mut q: BigUInt<T, N>;
+        let mut x0_flags = 0_u8;
+        let mut y0_flags = 0_u8;
         while !b.is_zero()
         {
             q = a.wrapping_div(&b);
@@ -207,15 +209,19 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             t = x1.clone();
             x1 = x0.wrapping_sub(&q.wrapping_mul(&x1));
             x0 = t;
+            x0_flags |= x0.get_all_flags();
 
             t = y1.clone();
             y1 = y0.wrapping_sub(&q.wrapping_mul(&y1));
             y0 = t;
+            y0_flags |= y0.get_all_flags();
             
             t = b;
             b = a.wrapping_rem(&t);
             a = t;
         }
+        x0.set_all_flags(x0_flags);
+        y0.set_all_flags(y0_flags);
         (a, x0, y0)
     }
     
