@@ -36,7 +36,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     block:          [T; N],
 }
 
-impl<const N: usize, T, const MR: usize> RSA<N, T>
+impl<const N: usize, T, const MR: usize> RSA_Generic<N, T>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
@@ -131,35 +131,236 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             { self.key_private.wrapping_rem_assign(&self.number); }
     }
 
-    // pub fn encrypt_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
-    /// 
+    // pub fn encrypt_unit(&self, message: &BigUInt<[T, N>) -> BigUInt<T, N>
+    /// Encrypts data in the form of `BigUInt<T, N>`.
+    ///
+    /// # Arguments
+    /// `message` is of the type `&BigUInt<T, N>`
+    /// and the plaintext to be encrypted.
+    ///
+    /// # Output
+    /// This method returns the encrypted data in the form of `BigUInt<T, N>`.
     #[inline]
     pub fn encrypt_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
     {
-        message.to_be().modular_pow(&self.key_public, &number).to_be()
+        message.modular_pow(&self.key_public, &number)
     }
 
     // pub fn decrypt_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
+    /// Decrypts data in the form of `BigUInt<T, N>`.
     ///
+    /// # Arguments
+    /// `cipher` is of the type `&BigUInt<T, N>`
+    /// and the ciphertext to be decrypted.
+    ///
+    /// # Output
+    /// This method returns the decrypted data in the form of `BigUInt<T, N>`.
     #[inline]
     pub fn decrypt_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
     {
-        cipher.to_be().modular_pow(&self.key_private, &number).to_be()
+        cipher.modular_pow(&self.key_private, &number)
     }
 
-    // pub fn sign_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
-    /// 
-    #[inline]
-    pub fn sign_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
-    {
-        message.to_be().modular_pow(&self.key_private, &number).to_be()
-    }
-
-    // pub fn unsign_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
+    // pub fn encrypt_array_unit<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
+    /// Encrypts data in the array of `BigUInt<T, N>`.
     ///
-    #[inline]
-    pub fn unsign_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
+    /// # Arguments
+    /// `message` is of the type `&[BigUInt<T, N>; M]`
+    /// and the plaintext to be encrypted.
+    ///
+    /// # Output
+    /// This method returns the encrypted data as the array of `BigUInt<T, N>`.
+    pub fn encrypt_array_unit<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
     {
-        cipher.to_be().modular_pow(&self.key_public, &number).to_be()
+        let mut cipher = [BigUInt::<T, N>::new(); M];
+        for i in 0..M
+            { cipher[i] = message[i].modular_pow(&self.key_public, &number); }
+        cipher
     }
+
+    // pub fn decrypt_array_unit(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
+    /// Decrypts data in the array of `BigUInt<T, N>`.
+    ///
+    /// # Arguments
+    /// `cipher` is of the type `&[BigUInt<T, N>; M]`
+    /// and the ciphertext to be decrypted.
+    ///
+    /// # Output
+    /// This method returns the decrypted data as the array of `BigUInt<T, N>`.
+    #[inline]
+    pub fn decrypt_array_unit(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
+    {
+        let mut message = [BigUInt::<T, N>::new(); M];
+        for i in 0..M
+            { message[i] = cipher[i].modular_pow(&self.key_private, &number); }
+        message
+    }
+
+    // pub fn encrypt_chunck(&self, message: &[T; N]) -> [T; N]
+    /// Encrypts data in the array of `T`.
+    ///
+    /// # Arguments
+    /// `message` is of the type `&[T; N]`
+    /// and the plaintext to be encrypted.
+    ///
+    /// # Output
+    /// This method returns the encrypted data as the array of `T`.
+    ///
+    /// # Counterpart methods
+    /// For each trait
+    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
+    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
+    /// there are provided useful counterpart methods:
+    /// encrypt(), encrypt_into_vec(), encrypt_into_array(),
+    /// encrypt_str(), encrypt_str_into_vec(), encrypt_str_into_array(),
+    /// encrypt_string(), encrypt_string_into_vec(), encrypt_string_into_array(),
+    /// encrypt_vec(), encrypt_vec_into_vec(), encrypt_vec_into_array(),
+    /// encrypt_array(), encrypt_array_into_vec(), and encrypt_array_into_array().
+    #[inline]
+    pub fn encrypt_chunck(&self, message: &[T; N]) -> [T; N]
+    {
+        let mut m = BigUInt::<T, N>::from_array(message.clone());
+        m.to_be_assign();
+        let mut c = m.modular_pow(&self.key_public, &number);
+        c.to_be_assign();
+        *c.get_number()
+    }
+
+    // pub fn decrypt_chunk(&self, cipher: &[T; N]) -> [T; N]
+    /// Decrypts data in the form of `BigUInt<T, N>`.
+    ///
+    /// # Arguments
+    /// `cipher` is of the type `&BigUInt<T, N>`
+    /// and the ciphertext to be decrypted.
+    ///
+    /// # Output
+    /// This method returns the decrypted data in the array of `BigUInt<T, N>`.
+    /// 
+    /// # Counterpart Methods
+    /// For each trait
+    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
+    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
+    /// there are provided useful counterpart methods:
+    /// decrypt(), decrypt_into_vec(), decrypt_into_array(),
+    /// decrypt_into_string(),
+    /// decrypt_vec(), decrypt_vec_into_vec(), decrypt_vec_into_array(),
+    /// decrypt_vec_into_string(),
+    /// decrypt_array(), decrypt_array_into_vec(), decrypt_array_into_array(),
+    /// and decrypt_array_into_string().
+    #[inline]
+    pub fn decrypt_chunk(&self, cipher: &[T; N]) -> [T; N]
+    {
+        let mut c = BigUInt::<T, N>::from_array(cipher.clone());
+        c.to_be_assign();
+        let mut m = c.modular_pow(&self.key_private, &number);
+        m.to_be_assign();
+        *m.get_number()
+    }
+
+    // pub fn encrypt_array_chunk<const M: usize>(&self, message: &[[T; N]; M]) -> [[T; N]; M]
+    /// Encrypts data in the array of `[T; N]`.
+    ///
+    /// # Arguments
+    /// `message` is of the type `&[[T; N]; M]`
+    /// and the plaintext to be encrypted.
+    ///
+    /// # Output
+    /// This method returns the encrypted data in the array of `[T; N]`.
+    ///
+    /// # Counterpart methods
+    /// For each trait
+    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
+    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
+    /// there are provided useful counterpart methods:
+    /// encrypt(), encrypt_into_vec(), encrypt_into_array(),
+    /// encrypt_str(), encrypt_str_into_vec(), encrypt_str_into_array(),
+    /// encrypt_string(), encrypt_string_into_vec(), encrypt_string_into_array(),
+    /// encrypt_vec(), encrypt_vec_into_vec(), encrypt_vec_into_array(),
+    /// encrypt_array(), encrypt_array_into_vec(), and encrypt_array_into_array().
+    pub fn encrypt_array_chunk<const M: usize>(&self, message: &[[T; N]; M]) -> [[T; N]; M]
+    {
+        let mut cipher = [[T::zero(); N]; M];
+        for i in 0..M
+        {
+            let mut m = BigUInt::<T, N>::from_array(message[i].clone());
+            m.to_be_assign();
+            let mut c = m.modular_pow(&self.key_public, &number);
+            c.to_be_assign();
+            cipher[i] = *c.get_number();
+        }
+        cipher
+    }
+
+    // pub fn decrypt_array_chunk(&self, cipher: &[[T; N]; M]) -> [[T; N]; M]
+    /// Decrypts data in the array of `[T; N]`.
+    ///
+    /// # Arguments
+    /// `cipher` is of the type `&[[T; N]; M]`
+    /// and the ciphertext to be decrypted.
+    ///
+    /// # Output
+    /// This method returns the decrypted data in the array of `[T; N]`.
+    /// 
+    /// # Counterpart Methods
+    /// For each trait
+    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
+    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
+    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
+    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
+    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
+    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
+    /// there are provided useful counterpart methods:
+    /// decrypt(), decrypt_into_vec(), decrypt_into_array(),
+    /// decrypt_into_string(),
+    /// decrypt_vec(), decrypt_vec_into_vec(), decrypt_vec_into_array(),
+    /// decrypt_vec_into_string(),
+    /// decrypt_array(), decrypt_array_into_vec(), decrypt_array_into_array(),
+    /// and decrypt_array_into_string().
+    #[inline]
+    pub fn decrypt_array_chunk(&self, cipher: &[[T; N]; M]) -> [[T; N]; M]
+    {
+        let mut message = [BigUInt::<T, N>::new(); M];
+        for i in 0..M
+        {
+            let mut c = BigUInt::<T, N>::from_array(cipher[i].clone());
+            c.to_be_assign();
+            let mut m = c.modular_pow(&self.key_private, &number);
+            m.to_be_assign();
+             message[i] = *m.get_number();
+        }
+        message
+    }
+
+    // // pub fn sign_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
+    // /// 
+    // #[inline]
+    // pub fn sign_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
+    // {
+    //     message.to_be().modular_pow(&self.key_private, &number).to_be()
+    // }
+
+    // // pub fn unsign_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
+    // ///
+    // #[inline]
+    // pub fn unsign_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
+    // {
+    //     cipher.to_be().modular_pow(&self.key_public, &number).to_be()
+    // }
+
+    // pub fn verify_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
+    // {
+    //     cipher.to_be().modular_pow(&self.key_public, &number).to_be()
+    // }
 }
