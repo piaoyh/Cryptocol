@@ -1,5 +1,20 @@
 # Breaking Changes
 
+## Breaking changes from ver. 0.17.1 to ver. 0.17.2
+
+| Ver. 0.17.1                                                                            | Ver. 0.17.2                                                                                             |
+|----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| pub fn encrypt_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>                   | pub fn encrypt_biguint(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>                                 |
+| pub fn decrypt_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>                    | pub fn decrypt_biguint(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>                                  |
+| pub fn encrypt_array_unit(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]   | pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M] |
+| pub fn decrypt_array_unit(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]    | pub fn decrypt_array_biguint<const M: usize>(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]  |
+| pub fn encrypt_chunck(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>                 | pub fn encrypt_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>                                    |
+| pub fn decrypt_chunck(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>                  | pub fn decrypt_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>                                     |
+| pub fn encrypt_array_chunck(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M] | pub fn encrypt_array_unit<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]    |
+| pub fn decrypt_array_chunck(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]  | pub fn decrypt_array_unit<const M: usize>(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]     |
+
+- The names of the above methods of the struct RSA_Generic has been changed.
+
 ## Breaking changes from ver. 0.16.1 to ver. 0.16.2
 
 | Ver. 0.16.1                                 | Ver. 0.17.0                                                      |

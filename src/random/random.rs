@@ -1095,7 +1095,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     {
         if ceiling != T::zero() { Some(self.random_under_uint_::<T>(ceiling)) } else {None}
     }
-//////////////////////
+
     // pub fn random_under_uint_<T>(&mut self, ceiling: T) -> T
     /// Generates random numbers of type `T` less than `ceiling`.
     /// 
@@ -1113,32 +1113,12 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// - If you use `Any`, it is considered that it may be cryptographically
     ///   insecure.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::AnyNum_C;
-    /// let mut rand = AnyNum_C::new();
-    /// 
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
     /// let num = rand.random_under_uint_(12_u8);
     /// println!("Random number u8 = {}", num);
-    /// 
-    /// let num = rand.random_under_uint_(1234_u16);
-    /// println!("Random number u16 = {}", num);
-    /// 
-    /// let num = rand.random_under_uint_(12345678_u32);
-    /// println!("Random number u32 = {}", num);
-    /// 
-    /// let num = rand.random_under_uint_(1234567890123456_u64);
-    /// println!("Random number u64 = {}", num);
-    /// 
-    /// let num = rand.random_under_uint_(12345678901234567890_u128);
-    /// println!("Random number u128 = {}", num);
-    /// 
-    /// let num = rand.random_under_uint_(123456789_usize);
-    /// println!("Random number usize = {}", num);
-    /// 
-    /// // It will panic.
-    /// // let num = rand.random_under_uint_::<usize>(0_usize);
-    /// // println!("Random number usize = {}", num);
     /// ```
     /// 
     /// # For more examples,

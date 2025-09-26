@@ -149,7 +149,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             { self.key_private.wrapping_rem_assign(&self.number); }
     }
 
-    // pub fn encrypt_unit(&self, message: &BigUInt<[T, N>) -> BigUInt<T, N>
+    // pub fn encrypt_biguint(&self, message: &BigUInt<[T, N>) -> BigUInt<T, N>
     /// Encrypts data in the form of `BigUInt<T, N>`.
     ///
     /// # Arguments
@@ -159,12 +159,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Output
     /// This method returns the encrypted data in the form of `BigUInt<T, N>`.
     #[inline]
-    pub fn encrypt_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
+    pub fn encrypt_biguint(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
     {
         message.modular_pow(&self.key_public, &number)
     }
 
-    // pub fn decrypt_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
+    // pub fn decrypt_biguint(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
     /// Decrypts data in the form of `BigUInt<T, N>`.
     ///
     /// # Arguments
@@ -174,12 +174,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Output
     /// This method returns the decrypted data in the form of `BigUInt<T, N>`.
     #[inline]
-    pub fn decrypt_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
+    pub fn decrypt_biguint(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
     {
         cipher.modular_pow(&self.key_private, &number)
     }
 
-    // pub fn encrypt_array_unit<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
+    // pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
     /// Encrypts data in the array of `BigUInt<T, N>`.
     ///
     /// # Arguments
@@ -194,7 +194,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// in encryption/decryption compared to AES. So, almost nobody would use
     /// RSA in the same way of AES. You are not encourged to use this
     /// method unless you really have to use this method.
-    pub fn encrypt_array_unit<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
+    pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
     {
         let mut cipher = [BigUInt::<T, N>::new(); M];
         for i in 0..M
@@ -202,7 +202,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         cipher
     }
 
-    // pub fn decrypt_array_unit(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
+    // pub fn decrypt_array_biguint(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
     /// Decrypts data in the array of `BigUInt<T, N>`.
     ///
     /// # Arguments
@@ -217,7 +217,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// in encryption/decryption compared to AES. So, almost nobody would use
     /// RSA in the same way of AES. You are not encourged to use this
     /// method unless you really have to use this method.
-    pub fn decrypt_array_unit(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
+    pub fn decrypt_array_biguint(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
     {
         let mut message = [BigUInt::<T, N>::new(); M];
         for i in 0..M
@@ -225,7 +225,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         message
     }
 
-    // pub fn encrypt_chunck(&self, message: &[T; N]) -> [T; N]
+    // pub fn encrypt_unit(&self, message: &[T; N]) -> [T; N]
     /// Encrypts data in the array of `T`.
     ///
     /// # Arguments
@@ -234,16 +234,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///
     /// # Output
     /// This method returns the encrypted data as the array of `T`.
-    pub fn encrypt_chunck(&self, message: &[T; N]) -> [T; N]
+    pub fn encrypt_unit(&self, message: &[T; N]) -> [T; N]
     {
         let mut m = BigUInt::<T, N>::from_array(message.clone());
         m.to_be_assign();
-        let mut c = self.encrypt_unit(&m);
+        let mut c = self.encrypt_biguint(&m);
         c.to_be_assign();
         *c.get_number()
     }
 
-    // pub fn decrypt_chunk(&self, cipher: &[T; N]) -> [T; N]
+    // pub fn decrypt_unit(&self, cipher: &[T; N]) -> [T; N]
     /// Decrypts data in the form of `BigUInt<T, N>`.
     ///
     /// # Arguments
@@ -253,16 +253,16 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Output
     /// This method returns the decrypted data in the array of `BigUInt<T, N>`.
     #[inline]
-    pub fn decrypt_chunk(&self, cipher: &[T; N]) -> [T; N]
+    pub fn decrypt_unit(&self, cipher: &[T; N]) -> [T; N]
     {
         let mut c = BigUInt::<T, N>::from_array(cipher.clone());
         c.to_be_assign();
-        let mut m = self.decrypt_unit(&c);
+        let mut m = self.decrypt_biguint(&c);
         m.to_be_assign();
         *m.get_number()
     }
 
-    // pub fn encrypt_array_chunk<const M: usize>(&self, message: &[[T; N]; M]) -> [[T; N]; M]
+    // pub fn encrypt_array_unit<const M: usize>(&self, message: &[[T; N]; M]) -> [[T; N]; M]
     /// Encrypts data in the array of `[T; N]`.
     ///
     /// # Arguments
@@ -277,15 +277,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// in encryption/decryption compared to AES. So, almost nobody would use
     /// RSA in the same way of AES. You are not encourged to use this
     /// method unless you really have to use this method.
-    pub fn encrypt_array_chunk<const M: usize>(&self, message: &[[T; N]; M]) -> [[T; N]; M]
+    pub fn encrypt_array_unit<const M: usize>(&self, message: &[[T; N]; M]) -> [[T; N]; M]
     {
         let mut cipher = [[T::zero(); N]; M];
         for i in 0..M
-            { cipher[i] = self.encrypt_chunck(message[i]); }
+            { cipher[i] = self.encrypt_unit(message[i]); }
         cipher
     }
 
-    // pub fn decrypt_array_chunk(&self, cipher: &[[T; N]; M]) -> [[T; N]; M]
+    // pub fn decrypt_array_unit(&self, cipher: &[[T; N]; M]) -> [[T; N]; M]
     /// Decrypts data in the array of `[T; N]`.
     ///
     /// # Arguments
@@ -301,11 +301,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// RSA in the same way of AES. You are not encourged to use this
     /// method unless you really have to use this method.
     #[inline]
-    pub fn decrypt_array_chunk(&self, cipher: &[[T; N]; M]) -> [[T; N]; M]
+    pub fn decrypt_array_unit(&self, cipher: &[[T; N]; M]) -> [[T; N]; M]
     {
         let mut message = [BigUInt::<T, N>::new(); M];
         for i in 0..M
-            { message[i] = self.decrypt_chunck(cipher[i]); }
+            { message[i] = self.decrypt_unit(cipher[i]); }
         message
     }
 
