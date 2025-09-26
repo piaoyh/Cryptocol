@@ -86,6 +86,19 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
     }
 
+    pub fn new_with_primes(&mut self, prime_1: BigUInt<T, {N / 2}>, prime_2: BigUInt<T, {N / 2}>) -> Self
+    {
+        let mut rsa = Self
+        {
+            number:         Number::new(),
+            key_public:     Number::new(),
+            key_private:    Number::new(),
+            block:          [T; N],
+        };
+        rsa.calculate_keys(prime_1, prime_2);
+        rsa
+    }
+
     #[inline]
     pub fn set_public_key(key_public: BigUInt<T, N>)
     {
@@ -115,6 +128,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     pub fn find_keys(&mut self)
     {
         let (prime_1, prime_2) = Self::choose_prime_numbers();
+        self.calculate_keys(prime_1, prime_2);
+    }
+
+    pub fn calculate_keys(&mut self, prime_1: BigUInt<T, {N / 2}>, prime_2: BigUInt<T, {N / 2}>)
+    {
         self.number = prime_1.expanding_mul(&prime_2);
         let phi = prime_1.wrapping_sub_uint(1).expanding_mul(&prime_2.wrapping_sub_uint(1));
         self.key_public = Number::from_uint(2);
@@ -170,11 +188,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///
     /// # Output
     /// This method returns the encrypted data as the array of `BigUInt<T, N>`.
+    /// 
+    /// # Caution
+    /// This method is very impractical. Normally, RSA is extremely slow
+    /// in encryption/decryption compared to AES. So, almost nobody would use
+    /// RSA in the same way of AES. You are not encourged to use this
+    /// method unless you really have to use this method.
     pub fn encrypt_array_unit<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
     {
         let mut cipher = [BigUInt::<T, N>::new(); M];
         for i in 0..M
-            { cipher[i] = message[i].modular_pow(&self.key_public, &number); }
+            { cipher[i] = self.encrypt_unit(message[i]); }
         cipher
     }
 
@@ -187,12 +211,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///
     /// # Output
     /// This method returns the decrypted data as the array of `BigUInt<T, N>`.
-    #[inline]
+    /// 
+    /// # Caution
+    /// This method is very impractical. Normally, RSA is extremely slow
+    /// in encryption/decryption compared to AES. So, almost nobody would use
+    /// RSA in the same way of AES. You are not encourged to use this
+    /// method unless you really have to use this method.
     pub fn decrypt_array_unit(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
     {
         let mut message = [BigUInt::<T, N>::new(); M];
         for i in 0..M
-            { message[i] = cipher[i].modular_pow(&self.key_private, &number); }
+            { message[i] = self.decrypt_unit(cipher[i]); }
         message
     }
 
@@ -205,27 +234,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///
     /// # Output
     /// This method returns the encrypted data as the array of `T`.
-    ///
-    /// # Counterpart methods
-    /// For each trait
-    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
-    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
-    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
-    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
-    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
-    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
-    /// there are provided useful counterpart methods:
-    /// encrypt(), encrypt_into_vec(), encrypt_into_array(),
-    /// encrypt_str(), encrypt_str_into_vec(), encrypt_str_into_array(),
-    /// encrypt_string(), encrypt_string_into_vec(), encrypt_string_into_array(),
-    /// encrypt_vec(), encrypt_vec_into_vec(), encrypt_vec_into_array(),
-    /// encrypt_array(), encrypt_array_into_vec(), and encrypt_array_into_array().
-    #[inline]
     pub fn encrypt_chunck(&self, message: &[T; N]) -> [T; N]
     {
         let mut m = BigUInt::<T, N>::from_array(message.clone());
         m.to_be_assign();
-        let mut c = m.modular_pow(&self.key_public, &number);
+        let mut c = self.encrypt_unit(&m);
         c.to_be_assign();
         *c.get_number()
     }
@@ -239,28 +252,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///
     /// # Output
     /// This method returns the decrypted data in the array of `BigUInt<T, N>`.
-    /// 
-    /// # Counterpart Methods
-    /// For each trait
-    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
-    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
-    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
-    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
-    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
-    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
-    /// there are provided useful counterpart methods:
-    /// decrypt(), decrypt_into_vec(), decrypt_into_array(),
-    /// decrypt_into_string(),
-    /// decrypt_vec(), decrypt_vec_into_vec(), decrypt_vec_into_array(),
-    /// decrypt_vec_into_string(),
-    /// decrypt_array(), decrypt_array_into_vec(), decrypt_array_into_array(),
-    /// and decrypt_array_into_string().
     #[inline]
     pub fn decrypt_chunk(&self, cipher: &[T; N]) -> [T; N]
     {
         let mut c = BigUInt::<T, N>::from_array(cipher.clone());
         c.to_be_assign();
-        let mut m = c.modular_pow(&self.key_private, &number);
+        let mut m = self.decrypt_unit(&c);
         m.to_be_assign();
         *m.get_number()
     }
@@ -274,32 +271,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///
     /// # Output
     /// This method returns the encrypted data in the array of `[T; N]`.
-    ///
-    /// # Counterpart methods
-    /// For each trait
-    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
-    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
-    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
-    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
-    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
-    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
-    /// there are provided useful counterpart methods:
-    /// encrypt(), encrypt_into_vec(), encrypt_into_array(),
-    /// encrypt_str(), encrypt_str_into_vec(), encrypt_str_into_array(),
-    /// encrypt_string(), encrypt_string_into_vec(), encrypt_string_into_array(),
-    /// encrypt_vec(), encrypt_vec_into_vec(), encrypt_vec_into_array(),
-    /// encrypt_array(), encrypt_array_into_vec(), and encrypt_array_into_array().
+    /// 
+    /// # Caution
+    /// This method is very impractical. Normally, RSA is extremely slow
+    /// in encryption/decryption compared to AES. So, almost nobody would use
+    /// RSA in the same way of AES. You are not encourged to use this
+    /// method unless you really have to use this method.
     pub fn encrypt_array_chunk<const M: usize>(&self, message: &[[T; N]; M]) -> [[T; N]; M]
     {
         let mut cipher = [[T::zero(); N]; M];
         for i in 0..M
-        {
-            let mut m = BigUInt::<T, N>::from_array(message[i].clone());
-            m.to_be_assign();
-            let mut c = m.modular_pow(&self.key_public, &number);
-            c.to_be_assign();
-            cipher[i] = *c.get_number();
-        }
+            { cipher[i] = self.encrypt_chunck(message[i]); }
         cipher
     }
 
@@ -313,33 +295,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Output
     /// This method returns the decrypted data in the array of `[T; N]`.
     /// 
-    /// # Counterpart Methods
-    /// For each trait
-    /// [`ECB_ISO`](symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
-    /// [`CBC_ISO`](symmetric/trait.CBC_ISO.html#trait.CBC_ISO),
-    /// [`PCBC_ISO`](symmetric/trait.PCBC_ISO.html#trait.PCBC_ISO).
-    /// [`CFB`](symmetric/trait.CFB.html#trait.CFB),
-    /// [`OFB`](symmetric/trait.OFB.html#trait.OFB), and
-    /// [`CTR`](symmetric/trait.CTR.html#trait.CTR),
-    /// there are provided useful counterpart methods:
-    /// decrypt(), decrypt_into_vec(), decrypt_into_array(),
-    /// decrypt_into_string(),
-    /// decrypt_vec(), decrypt_vec_into_vec(), decrypt_vec_into_array(),
-    /// decrypt_vec_into_string(),
-    /// decrypt_array(), decrypt_array_into_vec(), decrypt_array_into_array(),
-    /// and decrypt_array_into_string().
+    /// # Caution
+    /// This method is very impractical. Normally, RSA is extremely slow
+    /// in encryption/decryption compared to AES. So, almost nobody would use
+    /// RSA in the same way of AES. You are not encourged to use this
+    /// method unless you really have to use this method.
     #[inline]
     pub fn decrypt_array_chunk(&self, cipher: &[[T; N]; M]) -> [[T; N]; M]
     {
         let mut message = [BigUInt::<T, N>::new(); M];
         for i in 0..M
-        {
-            let mut c = BigUInt::<T, N>::from_array(cipher[i].clone());
-            c.to_be_assign();
-            let mut m = c.modular_pow(&self.key_private, &number);
-            m.to_be_assign();
-             message[i] = *m.get_number();
-        }
+            { message[i] = self.decrypt_chunck(cipher[i]); }
         message
     }
 
