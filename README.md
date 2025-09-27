@@ -242,7 +242,7 @@ The checked items have already been implemented including documentation __at lea
 ### Asymmetric-key Algorithms for Encryption/Decryption of digital data
 
 - [ ] ECC (Elliptic Curve Cryptosystem)
-- [ ] RSA (Ron Rivest, Adi Shamir, Leonard Adleman)
+- [ ] RSA (Ron Rivest, Adi Shamir, Leonard Adleman) -- [`RSA_Generic`](https://docs.rs/cryptocol/latest/cryptocol/asymmetric/struct.RSA_Generic.html#struct.RSA_Generic).
 <!--
 - [ ] Rabin
     ===> Moved to Roadmap for ver. 2.0

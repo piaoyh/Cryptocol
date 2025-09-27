@@ -6,21 +6,29 @@
 // This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![allow(missing_docs)]
 #![allow(unused_must_use)]
 #![allow(dead_code)]
 #![allow(unused_variables)]
+#![allow(non_camel_case_types)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
-use std::ptr::{ copy_nonoverlapping, copy };
+use std::ptr::{copy, copy_nonoverlapping};
 
-use crate::number::{ BigUInt, SmallUInt, IntUnion, LongUnion, LongerUnion, BigUInt_Prime, BigUInt_Modular };
+use std::convert::From;
+use std::str::FromStr;
+use std::fmt::{ Display, Debug };
+use std::cmp::{ PartialEq, PartialOrd, Ordering };
+use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
+                BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
+                Shl, ShlAssign, Shr, ShrAssign, RangeBounds };
+
+use crate::define_utypes_with;
+use crate::number::{ BigUInt, BigUInt_Modular, BigUInt_Prime, 
+                    IntUnion, LongUnion, LongerUnion, SmallUInt };
 use crate::random::Random;
-use cryptocol::define_utypes_with;
 
-
-struct RSA_Generic<const N: usize = 32, T = u32, const MR: usize = 5>
+pub struct RSA_Generic<const N: usize = 32, T = u32, const MR: usize = 5>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
@@ -30,13 +38,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
         + PartialEq + PartialOrd
 {
-    number:         BigUInt<T, N>,
-    key_public:     BigUInt<T, N>,
-    key_private:    BigUInt<T, N>,
-    block:          [T; N],
+    number: BigUInt<T, N>,
+    key_public: BigUInt<T, N>,
+    key_private: BigUInt<T, N>,
+    block: [T; N],
 }
 
-impl<const N: usize, T, const MR: usize> RSA_Generic<N, T>
+impl<const N: usize, T, const MR: usize> RSA_Generic<N, T, MR>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
@@ -46,18 +54,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
         + PartialEq + PartialOrd
 {
-    type Prime = BigUInt<T, {N / 2}>;
-    type Number = BigUInt<T, N>;
-
     #[inline]
     pub fn new() -> Self
     {
         Self
         {
-            number:         Number::new(),
-            key_public:     Number::new(),
-            key_private:    Number::new(),
-            block:          [T; N],
+            number: BigUInt::<T, N>::new(),
+            key_public: BigUInt::<T, N>::new(),
+            key_private: BigUInt::<T, N>::new(),
+            block: [T::zero(); N],
         }
     }
 
@@ -65,10 +70,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         let mut rsa = Self
         {
-            number:         Number::new(),
-            key_public:     Number::new(),
-            key_private:    Number::new(),
-            block:          [T; N],
+            number: BigUInt::<T, N>::new(),
+            key_public: BigUInt::<T, N>::new(),
+            key_private: BigUInt::<T, N>::new(),
+            block: [T::zero(); N],
         };
         rsa.find_keys();
         rsa
@@ -82,46 +87,52 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             number,
             key_public,
             key_private,
-            block: [T; N],
+            block: [T::zero(); N],
         }
     }
 
-    pub fn new_with_primes(&mut self, prime_1: BigUInt<T, {N / 2}>, prime_2: BigUInt<T, {N / 2}>) -> Self
+    /// # Caution
+    /// M should be N/2. Otherwise, the performance of this module may not
+    /// guaranteed .
+    pub fn new_with_primes<const M: usize>(&mut self, prime_1: BigUInt<T, M>, prime_2: BigUInt<T, M>) -> Self
     {
         let mut rsa = Self
         {
-            number:         Number::new(),
-            key_public:     Number::new(),
-            key_private:    Number::new(),
-            block:          [T; N],
+            number: BigUInt::<T, N>::new(),
+            key_public: BigUInt::<T, N>::new(),
+            key_private: BigUInt::<T, N>::new(),
+            block: [T::zero(); N],
         };
         rsa.calculate_keys(prime_1, prime_2);
         rsa
     }
 
     #[inline]
-    pub fn set_public_key(key_public: BigUInt<T, N>)
+    pub fn set_public_key(&mut self, key_public: BigUInt<T, N>)
     {
         self.key_public = key_public;
     }
 
     #[inline]
-    pub fn set_private_key(key_private: BigUInt<T, N>)
+    pub fn set_private_key(&mut self, key_private: BigUInt<T, N>)
     {
         self.key_private = key_private;
     }
 
     #[inline]
-    pub fn set_number(number: BigUInt<T, N>)
+    pub fn set_number(&mut self, number: BigUInt<T, N>)
     {
         self.number = number;
     }
-    
-    fn choose_prime_numbers() -> (Prime, Prime)
+
+    /// # Caution
+    /// M should be N/2. Otherwise, the performance of this module may not
+    /// guaranteed .
+    fn choose_prime_numbers<const M: usize>() -> (BigUInt<T, M>, BigUInt<T, M>)
     {
-        let rand = Random::new();
-        let prime_1: Prime = rand.random_prime_with_msb_set_using_miller_rabin_biguint(MR);
-        let prime_2: Prime = rand.random_prime_with_msb_set_using_miller_rabin_biguint(MR);
+        let mut rand = Random::new();
+        let prime_1: BigUInt<T, M> = rand.random_prime_with_msb_set_using_miller_rabin_biguint(MR);
+        let prime_2: BigUInt<T, M> = rand.random_prime_with_msb_set_using_miller_rabin_biguint(MR);
         (prime_1, prime_2)
     }
 
@@ -131,20 +142,24 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         self.calculate_keys(prime_1, prime_2);
     }
 
-    pub fn calculate_keys(&mut self, prime_1: BigUInt<T, {N / 2}>, prime_2: BigUInt<T, {N / 2}>)
+    /// # Caution
+    /// M should be N/2. Otherwise, the performance of this module may not
+    /// guaranteed .
+    pub fn calculate_keys(&mut self, prime_1: BigUInt<T, M>, prime_2: BigUInt<T, M>)
     {
         self.number = prime_1.expanding_mul(&prime_2);
         let phi = prime_1.wrapping_sub_uint(1).expanding_mul(&prime_2.wrapping_sub_uint(1));
-        self.key_public = Number::from_uint(2);
-        let mut one: Number;
+        self.key_public = BigUInt<T, N>::from_uint(2);
+        let mut one: BigUInt<T, N>;
         (one, self.key_private, _) = self.key_public.extended_gcd(phi);
+
         while !one.is_one()
         {
             self.key_public.wrapping_add_uint(1);
             (one, self.key_private, _) = self.key_public.extended_gcd(phi);
         }
         if self.key_private.is_underflow()
-            { self.key_private = self.number.wrapping_sub(Number::zero().wrapping_sub(&self.key_private)) }
+            { self.key_private = self.number.wrapping_sub(BigUInt::<T, N>::zero().wrapping_sub(&self.key_private)); }
         else
             { self.key_private.wrapping_rem_assign(&self.number); }
     }
@@ -161,7 +176,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     #[inline]
     pub fn encrypt_biguint(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
     {
-        message.modular_pow(&self.key_public, &number)
+        message.modular_pow(&self.key_public, &self.number)
     }
 
     // pub fn decrypt_biguint(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
@@ -176,7 +191,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     #[inline]
     pub fn decrypt_biguint(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
     {
-        cipher.modular_pow(&self.key_private, &number)
+        cipher.modular_pow(&self.key_private, &self.number)
     }
 
     // pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
@@ -188,7 +203,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///
     /// # Output
     /// This method returns the encrypted data as the array of `BigUInt<T, N>`.
-    /// 
+    ///
     /// # Caution
     /// This method is very impractical. Normally, RSA is extremely slow
     /// in encryption/decryption compared to AES. So, almost nobody would use
@@ -196,9 +211,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// method unless you really have to use this method.
     pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
     {
-        let mut cipher = [BigUInt::<T, N>::new(); M];
+        let mut cipher: [BigUInt::<T, N>; M];
         for i in 0..M
-            { cipher[i] = self.encrypt_unit(message[i]); }
+            { cipher[i] = self.encrypt_biguint(&message[i]); }
         cipher
     }
 
@@ -211,17 +226,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///
     /// # Output
     /// This method returns the decrypted data as the array of `BigUInt<T, N>`.
-    /// 
+    ///
     /// # Caution
     /// This method is very impractical. Normally, RSA is extremely slow
     /// in encryption/decryption compared to AES. So, almost nobody would use
     /// RSA in the same way of AES. You are not encourged to use this
     /// method unless you really have to use this method.
-    pub fn decrypt_array_biguint(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
+    pub fn decrypt_array_biguint<const M: usize>(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
     {
-        let mut message = [BigUInt::<T, N>::new(); M];
+        let mut message: [BigUInt::<T, N>; M];
         for i in 0..M
-            { message[i] = self.decrypt_unit(cipher[i]); }
+            { message[i] = self.decrypt_biguint(&cipher[i]); }
         message
     }
 
@@ -271,7 +286,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///
     /// # Output
     /// This method returns the encrypted data in the array of `[T; N]`.
-    /// 
+    ///
     /// # Caution
     /// This method is very impractical. Normally, RSA is extremely slow
     /// in encryption/decryption compared to AES. So, almost nobody would use
@@ -281,7 +296,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         let mut cipher = [[T::zero(); N]; M];
         for i in 0..M
-            { cipher[i] = self.encrypt_unit(message[i]); }
+            { cipher[i] = self.encrypt_unit(&message[i]); }
         cipher
     }
 
@@ -294,23 +309,23 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     ///
     /// # Output
     /// This method returns the decrypted data in the array of `[T; N]`.
-    /// 
+    ///
     /// # Caution
     /// This method is very impractical. Normally, RSA is extremely slow
     /// in encryption/decryption compared to AES. So, almost nobody would use
     /// RSA in the same way of AES. You are not encourged to use this
     /// method unless you really have to use this method.
     #[inline]
-    pub fn decrypt_array_unit(&self, cipher: &[[T; N]; M]) -> [[T; N]; M]
+    pub fn decrypt_array_unit<const M: usize>(&self, cipher: &[[T; N]; M]) -> [[T; N]; M]
     {
-        let mut message = [BigUInt::<T, N>::new(); M];
+        let mut message = [[T::zero(); N]; M];
         for i in 0..M
-            { message[i] = self.decrypt_unit(cipher[i]); }
+            { message[i] = self.decrypt_unit(&cipher[i]); }
         message
     }
 
     // // pub fn sign_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
-    // /// 
+    // ///
     // #[inline]
     // pub fn sign_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
     // {

@@ -7,11 +7,11 @@
 // except according to those terms.
 
 // ! various asymmetric-key algorithms for the encryption/decryption of digital data
-// ! 
+// !
 // ! # Introduction
 // ! The module that contains a few sub-modules to define symmetric-key
 // ! algorithms for the encryption/decryption of digital data
-// ! 
+// !
 // ! # Background: Symmetric encryption/decryption algorithms
 // ! There are two caregories in encryption/decryption algorithms:
 // ! Symmetric-Key cryptographic algorithms and Asymmetric-Key cryptographic
@@ -19,11 +19,11 @@
 // ! to encrypt and to decrypt, and are way faster than the Symmetric-Key
 // ! cryptographic algorithms. This module implements a few Symmetric-Key
 // ! cryptographic algorithms in Rust codes.
-// ! 
+// !
 // ! Read [this article](https://en.wikipedia.org/wiki/Symmetric-key_algorithm)
 // ! and/or Watch [this lecture](https://www.youtube.com/watch?v=sx1jUqdNxQc)
 // ! to learn symmetric encryption/decryption algorithms more in detail.
-// ! 
+// !
 // ! # The symmetric-key algorithms for the encryption/decryption of digital data
 // !   This module provides several kinds of symmetric-key algorithms for the
 // !   encryption/decryption of digital data:
@@ -139,90 +139,23 @@
 // !   [`CFB`](trait@CFB),
 // !   [`OFB`](trait@OFB), and
 // !   [`CTR`](trait@CTR).
-// ! 
-// ! 
+// !
+// !
 // ! # QUICK START
 // ! - For `AES` or `Rijndael`, read [here](struct@Rijndael_Generic#quick-start).
 // ! - For `DES`, read [here](struct@DES_Generic#quick-start).
 // ! - For `BigCryptor128`, read [here](struct@BigCryptor128#quick-start).
 // ! - For `BigCryptor64`, read [here](struct@BigCryptor64#quick-start).
 
-
-
 mod rsa;
+mod trait_pkcs115;
+mod trait_pkcs115_impl_for_rsa;
+
 
 // mod operation_mode_macros;
-// mod trait_ecb_with_padding_pkcs7;
-// mod trait_ecb_with_padding_iso;
-// mod trait_cbc_with_padding_pkcs7;
-// mod trait_cbc_with_padding_iso;
-// mod trait_pcbc_with_padding_pkcs7;
-// mod trait_pcbc_with_padding_iso;
-// mod trait_cfb;
-// mod trait_ofb;
-// mod trait_ctr;
-// mod trait_small_cryptor;
-
-// mod trait_ecb_with_padding_pkcs7_impl_for_des;
-// mod trait_ecb_with_padding_pkcs7_impl_for_rijndael;
-// mod trait_ecb_with_padding_pkcs7_impl_for_big_cryptor64;
-// mod trait_ecb_with_padding_pkcs7_impl_for_big_cryptor128;
-// mod trait_ecb_with_padding_iso_impl_for_des;
-// mod trait_ecb_with_padding_iso_impl_for_rijndael;
-// mod trait_ecb_with_padding_iso_impl_for_big_cryptor64;
-// mod trait_ecb_with_padding_iso_impl_for_big_cryptor128;
-// mod trait_cbc_with_padding_pkcs7_impl_for_des;
-// mod trait_cbc_with_padding_pkcs7_impl_for_rijndael;
-// mod trait_cbc_with_padding_pkcs7_impl_for_big_cryptor64;
-// mod trait_cbc_with_padding_pkcs7_impl_for_big_cryptor128;
-// mod trait_cbc_with_padding_iso_impl_for_des;
-// mod trait_cbc_with_padding_iso_impl_for_rijndael;
-// mod trait_cbc_with_padding_iso_impl_for_big_cryptor64;
-// mod trait_cbc_with_padding_iso_impl_for_big_cryptor128;
-// mod trait_pcbc_with_padding_pkcs7_impl_for_des;
-// mod trait_pcbc_with_padding_pkcs7_impl_for_rijndael;
-// mod trait_pcbc_with_padding_pkcs7_impl_for_big_cryptor64;
-// mod trait_pcbc_with_padding_pkcs7_impl_for_big_cryptor128;
-// mod trait_pcbc_with_padding_iso_impl_for_des;
-// mod trait_pcbc_with_padding_iso_impl_for_rijndael;
-// mod trait_pcbc_with_padding_iso_impl_for_big_cryptor64;
-// mod trait_pcbc_with_padding_iso_impl_for_big_cryptor128;
-// mod trait_cfb_impl_for_des;
-// mod trait_cfb_impl_for_rijndael;
-// mod trait_cfb_impl_for_big_cryptor64;
-// mod trait_cfb_impl_for_big_cryptor128;
-// mod trait_ofb_impl_for_des;
-// mod trait_ofb_impl_for_rijndael;
-// mod trait_ofb_impl_for_big_cryptor64;
-// mod trait_ofb_impl_for_big_cryptor128;
-// mod trait_ctr_impl_for_des;
-// mod trait_ctr_impl_for_rijndael;
-// mod trait_ctr_impl_for_big_cryptor64;
-// mod trait_ctr_impl_for_big_cryptor128;
-// mod trait_small_cryptor64_impl_for_des;
-// mod trait_small_cryptor64_impl_for_rijndael;
-// mod trait_small_cryptor64_impl_for_big_cryptor64;
-// mod trait_small_cryptor128_impl_for_rijndael;
-// mod trait_small_cryptor128_impl_for_big_cryptor128;
-// mod trait_for_big_cryptor_impl;
 
 pub use rsa::*;
-// pub use rijndael::*;
-// pub use big_cryptor64::*;
-// pub use big_cryptor128::*;
-// use operation_mode_macros::*;
-
-// pub use trait_ecb_with_padding_pkcs7::ECB_PKCS7;
-// pub use trait_ecb_with_padding_iso::ECB_ISO;
-// pub use trait_cbc_with_padding_pkcs7::CBC_PKCS7;
-// pub use trait_cbc_with_padding_iso::CBC_ISO;
-// pub use trait_pcbc_with_padding_pkcs7::PCBC_PKCS7;
-// pub use trait_pcbc_with_padding_iso::PCBC_ISO;
-// pub use trait_cfb::CFB;
-// pub use trait_ofb::OFB;
-// pub use trait_ctr::CTR;
-// pub use trait_small_cryptor::SmallCryptor;
-
+pub use trait_pkcs115::*;
 
 // /// many *.rs was too big because of documentation and plenty of examples
 // /// So, in order to provide documentation without `docs.rs`'s failing

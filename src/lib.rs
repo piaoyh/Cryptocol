@@ -257,7 +257,7 @@
 //! 
 //! ## Asymmetric-Key Algorithms for Encryption/Decryption of digital data
 //! - [ ] ECC (Elliptic Curve Cryptosystem)
-//! - [ ] RSA (Ron Rivest, Adi Shamir, Leonard Adleman)
+//! - [ ] RSA (Ron Rivest, Adi Shamir, Leonard Adleman) -- [`RSA_Generic`](asymmetric/struct.RSA_Generic.html#struct.RSA_Generic).
 // ! - [ ] Rabin --> Moved to Roadmap for ver. 2.0
 // ! - [ ] ElGamal --> Moved to Roadmap for ver. 2.0
 // ! - [ ] Diffie-Hellman --> Thinking about postponing to Roadmap for ver. 2.0
@@ -281,3 +281,4 @@ pub mod number;
 pub mod hash;
 pub mod symmetric;
 pub mod random;
+pub mod asymmetric;
