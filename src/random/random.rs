@@ -2654,4 +2654,119 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             { res = self.random_odd_with_msb_set_biguint::<T, N>(); }
         res
     }
+
+    // pub fn random_prime_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
+    /// Constucts a new `BigUInt<T, N>`-type object which represents a random
+    /// prime number of half-size of BigUInt<T, N/2>.
+    /// 
+    /// # Output
+    /// The random prime number that this method random_prime_Miller_Rabin()
+    /// returns is a random prime number whose range is from
+    /// BigUInt::halfmax() / 2 up to BigUInt::halfmax() inclusively.
+    /// 
+    /// # Argument
+    /// The argument `repetition` defines how many times it tests whether the
+    /// generated random number is prime. Usually, `repetition` is given to be
+    /// 5 to have 99.9% accuracy.
+    /// 
+    /// # Features
+    /// - This method generates a random number of half length, and then simply
+    ///   sets all the bytes from `N * T::size_in_bytes() / 2`-th byte to 
+    ///   `N * T::size_in_bytes()`-th byte to be `zero`, and then checks whether
+    ///   or not the generated random number is prime number, and then it
+    ///   repeats until it will generate a prime number.
+    /// - It uses [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
+    /// - If this test results in composite number, the tested number is surely
+    /// a composite number. If this test results in prime number, the
+    /// probability that the tested number is not a prime number is 1/4. So,
+    /// if the test results in prime number twice, the probability that the
+    /// tested number is not a prime number is 1/16 (= 1/4 * 1/4). Therefore,
+    /// if you test any number 5 times and they all result in a prime number,
+    /// it is 99.9% that the number is a prime number.
+    /// - The random prime numbers that may or may not be cryptographically
+    /// secure depending on what pseudo-random number generator is used.
+    /// 
+    /// # Panic
+    /// If `N` is either `0` or `1`, this method may panic or the behaviour of
+    /// this method is undefined even if this method won't panic.
+    /// 
+    /// # Cryptographical Security
+    /// - If you use `Random`, it is considered to be cryptographically secure.
+    /// - If you use `Any`, it is considered that it may be cryptographically
+    /// insecure.
+    /// - However, if you really want to use cryptographically secure
+    /// random number with high quality, you may want to use
+    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to use a normal random number, you are highly recommended
+    /// to use the method
+    /// [random_biguint()](struct@Random_Generic#method.random_biguint)
+    /// rather than this method.
+    /// - If you want to use a random number less than a certain value, you are
+    /// highly recommended to use the method
+    /// [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
+    /// rather than this method.
+    /// - If you want to use a random odd number, you are highly recommended to
+    /// use the method
+    /// [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
+    /// rather than this method.
+    /// - If you want to use a random odd number less than a certain value,
+    /// you are highly recommended to use the method
+    /// [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
+    /// rather than this method.
+    /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random
+    /// number, you are highly recommended to use the method
+    /// [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
+    /// rather than this method.
+    /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random odd
+    /// number, you are highly recommended to
+    /// use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
+    /// rather than this method.
+    /// - If you want to use a normal random prime number, you are highly recommended to
+    /// use the method [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
+    /// rather than this method.
+    /// 
+    /// # Big-endian issue
+    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
+    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
+    /// for Big-endian CPUs with your own full responsibility.
+    /// 
+    /// # Example
+    /// ```
+    /// use cryptocol::define_utypes_with;
+    /// use cryptocol::random::Any_SHA1;
+    /// 
+    /// define_utypes_with!(u16);
+    /// let mut rand = Any_SHA1::new();
+    /// let num:U512 = rand.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("512-bit Random Prime Number = {}", num);
+    /// assert!(num.is_odd());
+    /// ```
+    /* /// 
+    /// # For more examples,
+    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_biguint) */
+    pub fn random_prime_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
+    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+            + Rem<Output=T> + RemAssign
+            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+            + PartialEq + PartialOrd
+    {
+        let mut res = self.random_odd_with_msb_set_biguint::<T, N>();
+        for i in N/2..N
+            { res.set_num_(i,  T::zero()); }
+        res.set_num_(N/2-1, res.get_num_(N/2-1) | !(T::MAX >> T::one()));
+        while !res.is_prime_using_miller_rabin(repetition)
+        {
+            res = self.random_odd_with_msb_set_biguint::<T, N>();
+            for i in N/2..N
+                { res.set_num_(i,  T::zero()); }
+            res.set_num_(N/2-1, res.get_num_(N/2-1) | !(T::MAX >> T::one()));
+        }
+        res
+    }
 }

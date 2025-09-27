@@ -15,12 +15,17 @@
 
 use std::ptr::{ copy_nonoverlapping, copy };
 
-use crate::number::{ BigUInt, SmallUInt, IntUnion, LongUnion, LongerUnion, BigUInt_Prime, BigUInt_Modular };
+use crate::number::{ BigUInt, SmallUInt, BigUInt_Prime, BigUInt_Modular,
+                     IntUnion, LongUnion, LongerUnion };
 use crate::random::Random;
 use crate::define_utypes_with;
 
 pub trait PKCS115
 {
-    fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> bool;
-    fn decrypt(&mut self, cipher: *const u8, cipher: *mut u8) -> bool;
+    const BT: u8 = 2;
+    // const BT: u8 = 1;
+    // const PS: u8 = 0xFF_u8;
+
+    fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
+    fn decrypt(&mut self, cipher: *const u8, cipher: *mut u8) -> u64;
 }

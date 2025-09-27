@@ -94,7 +94,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Caution
     /// M should be N/2. Otherwise, the performance of this module may not
     /// guaranteed .
-    pub fn new_with_primes<const M: usize>(&mut self, prime_1: BigUInt<T, M>, prime_2: BigUInt<T, M>) -> Self
+    pub fn new_with_primes(&mut self, prime_1: BigUInt<T, N>, prime_2: BigUInt<T, N>) -> Self
     {
         let mut rsa = Self
         {
@@ -128,11 +128,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Caution
     /// M should be N/2. Otherwise, the performance of this module may not
     /// guaranteed .
-    fn choose_prime_numbers<const M: usize>() -> (BigUInt<T, M>, BigUInt<T, M>)
+    fn choose_prime_numbers() -> (BigUInt<T, N>, BigUInt<T, N>)
     {
         let mut rand = Random::new();
-        let prime_1: BigUInt<T, M> = rand.random_prime_with_msb_set_using_miller_rabin_biguint(MR);
-        let prime_2: BigUInt<T, M> = rand.random_prime_with_msb_set_using_miller_rabin_biguint(MR);
+        let prime_1 = rand.random_prime_with_half_length_using_miller_rabin_biguint(MR);
+        let prime_2 = rand.random_prime_with_half_length_using_miller_rabin_biguint(MR);
         (prime_1, prime_2)
     }
 
@@ -145,21 +145,21 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Caution
     /// M should be N/2. Otherwise, the performance of this module may not
     /// guaranteed .
-    pub fn calculate_keys(&mut self, prime_1: BigUInt<T, M>, prime_2: BigUInt<T, M>)
+    pub fn calculate_keys(&mut self, prime_1: BigUInt<T, N>, prime_2: BigUInt<T, N>)
     {
-        self.number = prime_1.expanding_mul(&prime_2);
-        let phi = prime_1.wrapping_sub_uint(1).expanding_mul(&prime_2.wrapping_sub_uint(1));
-        self.key_public = BigUInt<T, N>::from_uint(2);
+        self.number = prime_1.wrapping_mul(&prime_2);
+        let phi = prime_1.wrapping_sub_uint(1_u8).wrapping_mul(&prime_2.wrapping_sub_uint(1_u8));
+        self.key_public = BigUInt::<T, N>::from_uint(2_u8);
         let mut one: BigUInt<T, N>;
-        (one, self.key_private, _) = self.key_public.extended_gcd(phi);
+        (one, self.key_private, _) = self.key_public.extended_gcd(&phi);
 
         while !one.is_one()
         {
-            self.key_public.wrapping_add_uint(1);
-            (one, self.key_private, _) = self.key_public.extended_gcd(phi);
+            self.key_public.wrapping_add_uint(1_u8);
+            (one, self.key_private, _) = self.key_public.extended_gcd(&phi);
         }
         if self.key_private.is_underflow()
-            { self.key_private = self.number.wrapping_sub(BigUInt::<T, N>::zero().wrapping_sub(&self.key_private)); }
+            { self.key_private = self.number.wrapping_sub(&BigUInt::<T, N>::zero().wrapping_sub(&self.key_private)); }
         else
             { self.key_private.wrapping_rem_assign(&self.number); }
     }
@@ -194,51 +194,52 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         cipher.modular_pow(&self.key_private, &self.number)
     }
 
+    // // pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
+    // /// Encrypts data in the array of `BigUInt<T, N>`.
+    // ///
+    // /// # Arguments
+    // /// `message` is of the type `&[BigUInt<T, N>; M]`
+    // /// and the plaintext to be encrypted.
+    // ///
+    // /// # Output
+    // /// This method returns the encrypted data as the array of `BigUInt<T, N>`.
+    // ///
+    // /// # Caution
+    // /// This method is very impractical. Normally, RSA is extremely slow
+    // /// in encryption/decryption compared to AES. So, almost nobody would use
+    // /// RSA in the same way of AES. You are not encourged to use this
+    // /// method unless you really have to use this method.
     // pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
-    /// Encrypts data in the array of `BigUInt<T, N>`.
-    ///
-    /// # Arguments
-    /// `message` is of the type `&[BigUInt<T, N>; M]`
-    /// and the plaintext to be encrypted.
-    ///
-    /// # Output
-    /// This method returns the encrypted data as the array of `BigUInt<T, N>`.
-    ///
-    /// # Caution
-    /// This method is very impractical. Normally, RSA is extremely slow
-    /// in encryption/decryption compared to AES. So, almost nobody would use
-    /// RSA in the same way of AES. You are not encourged to use this
-    /// method unless you really have to use this method.
-    pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
-    {
-        let mut cipher: [BigUInt::<T, N>; M];
-        for i in 0..M
-            { cipher[i] = self.encrypt_biguint(&message[i]); }
-        cipher
-    }
+    // {
+    //     let mut c = Vec::<BigUInt<T, N>>::with_capacity(M);
+    //     let mut cipher: [BigUInt<T, N>; M] = [BigUInt<T, N>; M].self.clone_from(source);
+    //     for i in 0..M
+    //         { c[i] = self.encrypt_biguint(&message[i]); }
+    //     cipher = c.()
+    // }
 
-    // pub fn decrypt_array_biguint(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
-    /// Decrypts data in the array of `BigUInt<T, N>`.
-    ///
-    /// # Arguments
-    /// `cipher` is of the type `&[BigUInt<T, N>; M]`
-    /// and the ciphertext to be decrypted.
-    ///
-    /// # Output
-    /// This method returns the decrypted data as the array of `BigUInt<T, N>`.
-    ///
-    /// # Caution
-    /// This method is very impractical. Normally, RSA is extremely slow
-    /// in encryption/decryption compared to AES. So, almost nobody would use
-    /// RSA in the same way of AES. You are not encourged to use this
-    /// method unless you really have to use this method.
-    pub fn decrypt_array_biguint<const M: usize>(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
-    {
-        let mut message: [BigUInt::<T, N>; M];
-        for i in 0..M
-            { message[i] = self.decrypt_biguint(&cipher[i]); }
-        message
-    }
+    // // pub fn decrypt_array_biguint(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
+    // /// Decrypts data in the array of `BigUInt<T, N>`.
+    // ///
+    // /// # Arguments
+    // /// `cipher` is of the type `&[BigUInt<T, N>; M]`
+    // /// and the ciphertext to be decrypted.
+    // ///
+    // /// # Output
+    // /// This method returns the decrypted data as the array of `BigUInt<T, N>`.
+    // ///
+    // /// # Caution
+    // /// This method is very impractical. Normally, RSA is extremely slow
+    // /// in encryption/decryption compared to AES. So, almost nobody would use
+    // /// RSA in the same way of AES. You are not encourged to use this
+    // /// method unless you really have to use this method.
+    // pub fn decrypt_array_biguint<const M: usize>(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
+    // {
+    //     let mut message: [BigUInt::<T, N>; M];
+    //     for i in 0..M
+    //         { message[i] = self.decrypt_biguint(&cipher[i]); }
+    //     message
+    // }
 
     // pub fn encrypt_unit(&self, message: &[T; N]) -> [T; N]
     /// Encrypts data in the array of `T`.
