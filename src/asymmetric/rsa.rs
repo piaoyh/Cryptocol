@@ -22,6 +22,11 @@ use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, 
 use crate::number::{ BigUInt, BigUInt_Modular, BigUInt_Prime, SmallUInt };
 use crate::random::Random;
 
+
+pub type RSA_4096 = RSA_Generic<128>;
+pub type RSA_2048 = RSA_Generic<64>;
+pub type RSA_1024 = RSA_Generic;
+
 pub struct RSA_Generic<const N: usize = 32, T = u32, const MR: usize = 5>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -102,6 +107,24 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     #[inline]
+    pub fn get_public_key(&self) -> BigUInt<T, N>
+    {
+        self.key_public.clone()
+    }
+
+    #[inline]
+    pub fn get_private_key(&self) -> BigUInt<T, N>
+    {
+        self.key_private.clone()
+    }
+
+    #[inline]
+    pub fn get_number(&self) -> BigUInt<T, N>
+    {
+        self.number.clone()
+    }
+
+    #[inline]
     pub fn set_public_key(&mut self, key_public: BigUInt<T, N>)
     {
         self.key_public = key_public;
@@ -133,6 +156,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     pub fn find_keys(&mut self)
     {
         let (prime_1, prime_2) = Self::choose_prime_numbers();
+        println!("prime_1 = {:#x}", prime_1);
+        println!("prime_2 = {:#x}", prime_2);
         self.calculate_keys(prime_1, prime_2);
     }
 

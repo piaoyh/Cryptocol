@@ -57,6 +57,8 @@ The checked items have already been implemented including documentation __at lea
 
 ### Hash Algorithms
 
+#### Official SHA-series
+
 - [X] SHA-3 and Keccak hash algorithms based on 8/16/32/64 bits --- 
       Includes SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE 128, SHAKE 256, and their expanded versions.
       [`Keccak_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/keccak/struct.Keccak_Generic.html#struct.Keccak_Generic)
@@ -69,6 +71,9 @@ The checked items have already been implemented including documentation __at lea
 - [X] SHA-2 hash algorithms based on 256 bits --- 
       Includes SHA-256, SHA-224, and their expanded versions.
       [`SHA2_256_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/sha2_256/struct.SHA2_256_Generic.html#struct.SHA2_256_Generic)
+
+#### Insecure Hash algorithms ONLY for educational purposes
+
 - [X] SHA-1 hash algorithms based on 160 bits --- 
       Includes SHA-1, SHA-0, and their expanded versions.
       [`SHA1_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/sha1/struct.SHA1_Generic.html#struct.SHA1_Generic)
@@ -148,8 +153,9 @@ The checked items have already been implemented including documentation __at lea
 - [ ] RC5 symmetric-key encryption/decryption algorithm
       --- Includes RC5 and its expanded versions. `RC5_Generic`
       ===> Moved to Roadmap for ver. 2.0
-
-#### Insecure Block Encryption/Decryption algorithms
+-->
+#### Insecure Block Encryption/Decryption algorithms ONLY for educational purposes
+<!--
 - [ ] RC2 symmetric-key encryption/decryption algorithm
       --- Includes RC2 and its expanded versions. `RC2_Generic`
       ===> Moved to Roadmap for ver. 2.0
@@ -171,8 +177,7 @@ The checked items have already been implemented including documentation __at lea
       --- Includes Lucifer and its expanded versions. `Lucifer_Generic`
       ===> Moved to Roadmap for ver. 2.0
 -->
-
-<!-- #### Containers for combining encryption/decryption algorithms -->
+#### Containers for combining encryption/decryption algorithms
 - [X] BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor128
       --- Includes 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
       [BigCryptor128](https://docs.rs/cryptocol/latest/cryptocol/symmetric/big_cryptor/struct.BigCryptor128.html#struct.BigCryptor128),

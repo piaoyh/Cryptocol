@@ -2736,16 +2736,20 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             + BitXor<Output=T> + BitXorAssign + Not<Output=T>
             + PartialEq + PartialOrd
     {
-        let mut res = self.random_odd_with_msb_set_biguint::<T, N>();
+        let mut res = self.random_odd_biguint::<T, N>();
         for i in N/2..N
             { res.set_num_(i,  T::zero()); }
-        res.set_num_(N/2-1, res.get_num_(N/2-1) | !(T::MAX >> T::one()));
+        let mut half = res.get_num_(N/2-1);
+        half.set_msb();
+        res.set_num_(N/2-1, half);
         while !res.is_prime_using_miller_rabin(repetition)
         {
-            res = self.random_odd_with_msb_set_biguint::<T, N>();
+            res = self.random_odd_biguint::<T, N>();
             for i in N/2..N
                 { res.set_num_(i,  T::zero()); }
-            res.set_num_(N/2-1, res.get_num_(N/2-1) | !(T::MAX >> T::one()));
+            half = res.get_num_(N/2-1);
+            half.set_msb();
+            res.set_num_(N/2-1, half);
         }
         res
     }

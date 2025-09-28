@@ -22,6 +22,7 @@ use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, 
 
 
 use crate::number::SmallUInt;
+use crate::random::Any_Num_C as Rand;
 use crate::asymmetric::{ PKCS1V15, RSA_Generic };
 
 impl<const N: usize, T, const MR: usize> PKCS1V15 for RSA_Generic<N, T, MR>
@@ -45,8 +46,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         let ptr = unsafe { (m.as_mut_ptr() as *mut u8).add(count) };
         unsafe {
             *((m.as_mut_ptr() as *mut u8).add(1)) = Self::BT;
+            let mut any = Rand::new();
             for i in 2..count-2
-                { *((m.as_mut_ptr() as *mut u8).add(i)) = if i as u8 == 0 {1} else {i as u8}; }
+            {
+                let mut r = any.random_u8();
+                while r == 0
+                    { r = any.random_u8(); }
+                *((m.as_mut_ptr() as *mut u8).add(i)) = r;
+            }
             copy_nonoverlapping(message, ptr, length_in_bytes as usize);
         }
         let c = self.encrypt_unit(&m);
