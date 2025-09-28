@@ -13,19 +13,13 @@
 #![allow(non_camel_case_types)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
-use std::ptr::{copy, copy_nonoverlapping};
-
-use std::convert::From;
-use std::str::FromStr;
 use std::fmt::{ Display, Debug };
-use std::cmp::{ PartialEq, PartialOrd, Ordering };
+use std::cmp::{ PartialEq, PartialOrd };
 use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
-                Shl, ShlAssign, Shr, ShrAssign, RangeBounds };
+                Shl, ShlAssign, Shr, ShrAssign };
 
-use crate::define_utypes_with;
-use crate::number::{ BigUInt, BigUInt_Modular, BigUInt_Prime, 
-                    IntUnion, LongUnion, LongerUnion, SmallUInt };
+use crate::number::{ BigUInt, BigUInt_Modular, BigUInt_Prime, SmallUInt };
 use crate::random::Random;
 
 pub struct RSA_Generic<const N: usize = 32, T = u32, const MR: usize = 5>
@@ -194,52 +188,51 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         cipher.modular_pow(&self.key_private, &self.number)
     }
 
-    // // pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
-    // /// Encrypts data in the array of `BigUInt<T, N>`.
-    // ///
-    // /// # Arguments
-    // /// `message` is of the type `&[BigUInt<T, N>; M]`
-    // /// and the plaintext to be encrypted.
-    // ///
-    // /// # Output
-    // /// This method returns the encrypted data as the array of `BigUInt<T, N>`.
-    // ///
-    // /// # Caution
-    // /// This method is very impractical. Normally, RSA is extremely slow
-    // /// in encryption/decryption compared to AES. So, almost nobody would use
-    // /// RSA in the same way of AES. You are not encourged to use this
-    // /// method unless you really have to use this method.
     // pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
-    // {
-    //     let mut c = Vec::<BigUInt<T, N>>::with_capacity(M);
-    //     let mut cipher: [BigUInt<T, N>; M] = [BigUInt<T, N>; M].self.clone_from(source);
-    //     for i in 0..M
-    //         { c[i] = self.encrypt_biguint(&message[i]); }
-    //     cipher = c.()
-    // }
+    /// Encrypts data in the array of `BigUInt<T, N>`.
+    ///
+    /// # Arguments
+    /// `message` is of the type `&[BigUInt<T, N>; M]`
+    /// and the plaintext to be encrypted.
+    ///
+    /// # Output
+    /// This method returns the encrypted data as the array of `BigUInt<T, N>`.
+    ///
+    /// # Caution
+    /// This method is very impractical. Normally, RSA is extremely slow
+    /// in encryption/decryption compared to AES. So, almost nobody would use
+    /// RSA in the same way of AES. You are not encourged to use this
+    /// method unless you really have to use this method.
+    pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
+    {
+        let mut cipher = message.clone();
+        for i in 0..M
+            { cipher[i] = self.encrypt_biguint(&message[i]); }
+        cipher
+    }
 
-    // // pub fn decrypt_array_biguint(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
-    // /// Decrypts data in the array of `BigUInt<T, N>`.
-    // ///
-    // /// # Arguments
-    // /// `cipher` is of the type `&[BigUInt<T, N>; M]`
-    // /// and the ciphertext to be decrypted.
-    // ///
-    // /// # Output
-    // /// This method returns the decrypted data as the array of `BigUInt<T, N>`.
-    // ///
-    // /// # Caution
-    // /// This method is very impractical. Normally, RSA is extremely slow
-    // /// in encryption/decryption compared to AES. So, almost nobody would use
-    // /// RSA in the same way of AES. You are not encourged to use this
-    // /// method unless you really have to use this method.
-    // pub fn decrypt_array_biguint<const M: usize>(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
-    // {
-    //     let mut message: [BigUInt::<T, N>; M];
-    //     for i in 0..M
-    //         { message[i] = self.decrypt_biguint(&cipher[i]); }
-    //     message
-    // }
+    // pub fn decrypt_array_biguint(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
+    /// Decrypts data in the array of `BigUInt<T, N>`.
+    ///
+    /// # Arguments
+    /// `cipher` is of the type `&[BigUInt<T, N>; M]`
+    /// and the ciphertext to be decrypted.
+    ///
+    /// # Output
+    /// This method returns the decrypted data as the array of `BigUInt<T, N>`.
+    ///
+    /// # Caution
+    /// This method is very impractical. Normally, RSA is extremely slow
+    /// in encryption/decryption compared to AES. So, almost nobody would use
+    /// RSA in the same way of AES. You are not encourged to use this
+    /// method unless you really have to use this method.
+    pub fn decrypt_array_biguint<const M: usize>(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
+    {
+        let mut message = cipher.clone();
+        for i in 0..M
+            { message[i] = self.decrypt_biguint(&cipher[i]); }
+        message
+    }
 
     // pub fn encrypt_unit(&self, message: &[T; N]) -> [T; N]
     /// Encrypts data in the array of `T`.

@@ -147,15 +147,22 @@
 // ! - For `BigCryptor128`, read [here](struct@BigCryptor128#quick-start).
 // ! - For `BigCryptor64`, read [here](struct@BigCryptor64#quick-start).
 
+
 mod rsa;
-mod trait_pkcs115;
-mod trait_pkcs115_impl_for_rsa;
+
+/// This trait PKCS1V15 is based on PKCS #1 ver. 1.5. It is considered not
+/// to be cryptographically secure enough. So, you are not encouraged to use
+/// this trait. Intead, you are encouraged to use the trait OAEP.
+mod trait_pkcs1v15;
+
+
+mod trait_pkcs1v15_impl_for_rsa;
 
 
 // mod operation_mode_macros;
 
 pub use rsa::*;
-pub use trait_pkcs115::*;
+pub use trait_pkcs1v15::*;
 
 // /// many *.rs was too big because of documentation and plenty of examples
 // /// So, in order to provide documentation without `docs.rs`'s failing

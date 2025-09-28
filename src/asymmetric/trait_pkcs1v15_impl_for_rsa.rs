@@ -13,22 +13,18 @@
 #![allow(unused_variables)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
-use std::ptr::{ copy_nonoverlapping, copy };
-use std::convert::From;
-use std::str::FromStr;
+use std::ptr::copy_nonoverlapping;
 use std::fmt::{ Display, Debug };
-use std::cmp::{ PartialEq, PartialOrd, Ordering };
+use std::cmp::{ PartialEq, PartialOrd };
 use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
-                Shl, ShlAssign, Shr, ShrAssign, RangeBounds };
+                Shl, ShlAssign, Shr, ShrAssign };
 
 
-use crate::number::{ BigUInt, BigUInt_Modular, BigUInt_Prime,
-                     IntUnion, LongUnion, LongerUnion, SharedArrays, SmallUInt };
-use crate::asymmetric::{ PKCS115, RSA_Generic };
-use crate::define_utypes_with;
+use crate::number::SmallUInt;
+use crate::asymmetric::{ PKCS1V15, RSA_Generic };
 
-impl<const N: usize, T, const MR: usize> PKCS115 for RSA_Generic<N, T, MR>
+impl<const N: usize, T, const MR: usize> PKCS1V15 for RSA_Generic<N, T, MR>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign

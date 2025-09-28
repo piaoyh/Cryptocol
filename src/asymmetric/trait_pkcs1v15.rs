@@ -13,14 +13,12 @@
 #![allow(unused_variables)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
-use std::ptr::{ copy_nonoverlapping, copy };
 
-use crate::number::{ BigUInt, SmallUInt, BigUInt_Prime, BigUInt_Modular,
-                     IntUnion, LongUnion, LongerUnion };
-use crate::random::Random;
-use crate::define_utypes_with;
 
-pub trait PKCS115
+/// This trait PKCS1V15 is based on PKCS #1 ver. 1.5. It is considered not
+/// to be cryptographically secure enough. So, you are not encouraged to use
+/// this trait. Intead, you are encouraged to use the trait OAEP.
+pub trait PKCS1V15
 {
     const BT: u8 = 2;
     // const BT: u8 = 1;
