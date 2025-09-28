@@ -1529,21 +1529,128 @@ fn random_should_panic_random_uint_()
 fn random_random_minmax_uint()
 {
     println!("random_random_minmax_uint");
-    use cryptocol::random::Any_MD4;
-    let mut rand = Any_MD4::new();
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
     if let Some(num) = rand.random_minmax_uint(12_u8, 21)
         { println!("Random number u8 = {}", num); }
-    if let Some(num) = rand.random_minmax_uint(1234_u16, 6321)
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    if let Some(num) = any.random_minmax_uint(1234_u16, 6321)
         { println!("Random number u16 = {}", num); }
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
     if let Some(num) = rand.random_minmax_uint(12345678_u32, 87654321)
         { println!("Random number u32 = {}", num); }
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
     if let Some(num) = rand.random_minmax_uint(1234567890123456_u64, 6543210987654321)
         { println!("Random number u64 = {}", num); }
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
     if let Some(num) = rand.random_minmax_uint(12345678901234567890_u128, 19876543210987654321)
         { println!("Random number u128 = {}", num); }
-    if let Some(num) = rand.random_minmax_uint(123456789_usize, 987654321)
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    if let Some(num) = any.random_minmax_uint(123456789_usize, 987654321)
         { println!("Random number usize = {}", num); }
-    if let Some(num) = rand.random_minmax_uint(10, 8_usize)
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    if let Some(num) = any.random_minmax_uint(10, 8_usize)
+        { println!("Random number usize = {}", num); }
+    else
+        { println!("No random unsigned number number greater than or equal to 10 and less than 8!"); }
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    if let Some(num) = any.random_minmax_uint(12_u8, 21)
+        { println!("Random number u8 = {}", num); }
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    if let Some(num) = any.random_minmax_uint(1234_u16, 6321)
+        { println!("Random number u16 = {}", num); }
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    if let Some(num) = any.random_minmax_uint(12345678_u32, 87654321)
+        { println!("Random number u32 = {}", num); }
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    if let Some(num) = any.random_minmax_uint(1234567890123456_u64, 6543210987654321)
+        { println!("Random number u64 = {}", num); }
+
+    // Example for Any_SHA1
+    use cryptocol::random::Any_SHA1;
+    let mut any = Any_SHA1::new();
+    if let Some(num) = any.random_minmax_uint(12345678901234567890_u128, 19876543210987654321)
+        { println!("Random number u128 = {}", num); }
+
+    // Example for Any_SHA0
+    use cryptocol::random::Any_SHA0;
+    let mut any = Any_SHA0::new();
+    if let Some(num) = any.random_minmax_uint(123456789_usize, 987654321)
+        { println!("Random number usize = {}", num); }
+
+    // Example for Any_MD5
+    use cryptocol::random::Any_MD5;
+    let mut any = Any_MD5::new();
+    if let Some(num) = any.random_minmax_uint(10, 8_usize)
+        { println!("Random number usize = {}", num); }
+    else
+        { println!("No random unsigned number number greater than or equal to 10 and less than 8!"); }
+
+    // Example for Any_MD4
+    use cryptocol::random::Any_MD4;
+    let mut any = Any_MD4::new();
+    if let Some(num) = any.random_minmax_uint(12_u8, 21)
+        { println!("Random number u8 = {}", num); }
+        
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    if let Some(num) = rand.random_minmax_uint(1234_u16, 6321)
+        { println!("Random number u16 = {}", num); }
+        
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    if let Some(num) = any.random_minmax_uint(12345678_u32, 87654321)
+        { println!("Random number u32 = {}", num); }
+        
+    // Example for Any_DES
+    use cryptocol::random::Any_DES;
+    let mut any = Any_DES::new();
+    if let Some(num) = any.random_minmax_uint(1234567890123456_u64, 6543210987654321)
+        { println!("Random number u64 = {}", num); }
+
+    // Example for Any_Num_C
+    use cryptocol::random::Any_Num_C;
+    let mut any = Any_Num_C::new();
+    if let Some(num) = any.random_minmax_uint(12345678901234567890_u128, 19876543210987654321)
+        { println!("Random number u128 = {}", num); }
+        
+    // Example for Any_Num
+    use cryptocol::random::Any_Num;
+    let mut any = Any_Num::new();
+    if let Some(num) = any.random_minmax_uint(10, 8_usize)
         { println!("Random number usize = {}", num); }
     else
         { println!("No random unsigned number number greater than or equal to 10 and less than 8!"); }

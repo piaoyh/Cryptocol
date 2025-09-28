@@ -1136,7 +1136,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     {
         self.random_uint::<T>() % ceiling
     }
-//////////////////////
+
     // pub fn random_minmax_uint<T>(&mut self, from: T, ceiling: T) -> Option<T>
     /// Generates random numbers of type `T` less than `ceiling` exclusively
     /// and greater than or equal to `from` inclusively.
@@ -1150,31 +1150,14 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Cryptographical Security
     /// - If you use `Random`, it is considered to be cryptographically secure.
     /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
+    ///   insecure.
     /// 
-    /// # Example
+    /// # Example 1
     /// ```
-    /// use cryptocol::random::Any_MD4;
-    /// let mut rand = Any_MD4::new();
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
     /// if let Some(num) = rand.random_minmax_uint(12_u8, 21)
     ///     { println!("Random number u8 = {}", num); }
-    /// if let Some(num) = rand.random_minmax_uint(1234_u16, 6321)
-    ///     { println!("Random number u16 = {}", num); }
-    /// if let Some(num) = rand.random_minmax_uint(12345678_u32, 87654321)
-    ///     { println!("Random number u32 = {}", num); }
-    /// if let Some(num) = rand.random_minmax_uint(1234567890123456_u64, 6543210987654321)
-    ///     { println!("Random number u64 = {}", num); }
-    /// if let Some(num) = rand.random_minmax_uint(12345678901234567890_u128, 19876543210987654321)
-    ///     { println!("Random number u128 = {}", num); }
-    /// if let Some(num) = rand.random_minmax_uint(123456789_usize, 987654321)
-    ///     { println!("Random number usize = {}", num); }
-    /// if let Some(num) = rand.random_minmax_uint(10, 8_usize)
-    ///     { println!("Random number usize = {}", num); }
-    /// else
-    ///     { println!("No random unsigned number number greater than or equal to 10 and less than 8!"); }
     /// ```
     /// 
     /// # For more examples,
@@ -1192,7 +1175,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     {
         if ceiling > from { Some(self.random_minmax_uint_(from, ceiling)) } else { None }
     }
-
+//////////////////////
     // pub fn random_minmax_uint_<T>(&mut self, from: T, ceiling: T) -> T
     /// Generates random numbers of type `T` less than `ceiling` exclusively
     /// and greater than or equal to `from` inclusively.
@@ -1212,10 +1195,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Cryptographical Security
     /// - If you use `Random`, it is considered to be cryptographically secure.
     /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
+    ///   insecure.
     /// 
     /// # Example
     /// ```
