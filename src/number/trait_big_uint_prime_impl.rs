@@ -101,6 +101,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     for _ in 0..s-1
     {
         x.modular_pow_assign_uint(2_u8, me);
+        if x.is_one()
+            { return false; }
         if x == self_minus_one
             { return true; }
     }

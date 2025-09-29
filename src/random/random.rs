@@ -228,8 +228,13 @@ impl<const COUNT: u128> Random_Generic<COUNT>
 
         let original_seed = Self::collect_seed();
         let original_aux = Self::collect_seed();
-        let main_state = original_seed.clone();
-        let aux_state = original_aux.clone();
+        let mut state = original_aux.clone();
+        for i in 0..4
+            { state[i << 1] = original_seed[i]; }
+        let main_state = state.clone();
+        for i in 0..8
+            { state[i] = !state[7-i]; }
+        let aux_state = state;
         main_generator.sow_array(&main_state, &original_seed);
         aux_generator.sow_array(&aux_state, &original_aux);
         Self
@@ -303,7 +308,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         main_state[3] = aux;
         for i in 4..8
             { main_state[i] = main_state[i-1].wrapping_add(main_state[i-2]); }
-        let original_seed = [seed, 0, 0, 0, 0, 0, 0, 0];
+        let original_seed = [seed, aux, aux.wrapping_add(0xfedcba0987654321), seed.wrapping_add(0xfedcba0987654321), aux.wrapping_sub(0xfedcba0987654321), seed.wrapping_sub(0xfedcba0987654321), seed.wrapping_add(0x1234567890abcdef), aux.wrapping_add(0x1234567890abcdef)];
         main_generator.sow_array(&main_state, &original_seed);
 
         let mut aux_state = [0_u64; 8];
@@ -311,8 +316,8 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         aux_state[2] = aux;
         aux_state[3] = seed;
         for i in 4..8
-            { aux_state[i] = !aux_state[i]; }
-        let original_aux = [aux, 0, 0, 0, 0, 0, 0, 0];
+            { aux_state[i] = !aux_state[i-4]; }
+        let original_aux = [aux, !seed, !seed.wrapping_sub(0xfedcba0987654321), !aux.wrapping_sub(0xfedcba0987654321), !seed.wrapping_add(0xfedcba0987654321), !aux.wrapping_add(0xfedcba0987654321), !aux.wrapping_sub(0x1234567890abcdef), !seed.wrapping_sub(0x1234567890abcdef)];
         aux_generator.sow_array(&aux_state, &original_aux);
         Self
         {
@@ -452,8 +457,13 @@ impl<const COUNT: u128> Random_Generic<COUNT>
 
         let original_seed = seed_collector();
         let original_aux = seed_collector();
-        let main_state = original_seed.clone();
-        let aux_state = original_aux.clone();
+        let mut state = original_aux.clone();
+        for i in 0..4
+            { state[i << 1] = original_seed[i]; }
+        let main_state = state.clone();
+        for i in 0..8
+            { state[i] = !state[7-i]; }
+        let aux_state = state;
         main_generator.sow_array(&main_state, &original_seed);
         aux_generator.sow_array(&aux_state, &original_aux);
         Self
@@ -537,7 +547,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         main_state[3] = aux;
         for i in 4..8
             { main_state[i] = main_state[i-1].wrapping_add(main_state[i-2]); }
-        let original_seed = [seed, 0, 0, 0, 0, 0, 0, 0];
+        let original_seed = [seed, aux, aux.wrapping_add(0xfedcba0987654321), seed.wrapping_add(0xfedcba0987654321), aux.wrapping_sub(0xfedcba0987654321), seed.wrapping_sub(0xfedcba0987654321), seed.wrapping_add(0x1234567890abcdef), aux.wrapping_add(0x1234567890abcdef)];
         main_generator.sow_array(&main_state, &original_seed);
 
         let mut aux_state = [0_u64; 8];
@@ -545,8 +555,8 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         aux_state[2] = aux;
         aux_state[3] = seed;
         for i in 4..8
-            { aux_state[i] = !aux_state[i]; }
-        let original_aux = [aux, 0, 0, 0, 0, 0, 0, 0];
+            { aux_state[i] = !aux_state[i-4]; }
+        let original_aux = [aux, !seed, !seed.wrapping_sub(0xfedcba0987654321), !aux.wrapping_sub(0xfedcba0987654321), !seed.wrapping_add(0xfedcba0987654321), !aux.wrapping_add(0xfedcba0987654321), !aux.wrapping_sub(0x1234567890abcdef), !seed.wrapping_sub(0x1234567890abcdef)];
         aux_generator.sow_array(&aux_state, &original_aux);
         Self
         {
@@ -716,9 +726,6 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     // fn produce_main_state(&mut self) -> [u64; 8]
     /// Runs the registered pseudo-random number generator to prepare for
     /// generating a random number for main_state.
-    /// 
-    /// # Output
-    /// It returns a random number array `[u64; 8]`.
     fn produce_main_state(&mut self)
     {
         self.change_count();
@@ -732,9 +739,6 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     // fn produce_aux_state(&mut self) -> [u64; 8]
     /// Runs the registered pseudo-random number generator to prepare for
     /// generating a random number for aux_state.
-    /// 
-    /// # Output
-    /// It returns a random number array `[u64; 8]`.
     fn produce_aux_state(&mut self)
     {
         self.change_count();
@@ -1745,16 +1749,18 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         self.produce_aux_state();
         self.produce_main_state();
         let mut tsize = T::size_in_bytes() as usize * N;
-        let asize = u64::size_in_bytes() as usize * 8;
+        const ASIZE: usize = 8 * 8; // = U64::size_in_bytes() as usize * 8;
+        let mut j = 0_usize;
+        let mut array = self.aux_state.clone();
         while tsize > 0
         {
-            let mut array = self.aux_state.clone();
             for i in 0..8
                 { array[i] ^= self.main_state[i]; }
-            let count = if tsize < asize { tsize } else { asize };
-            unsafe { copy_nonoverlapping(array.as_ptr() as *const u8, out.as_mut_ptr() as *mut u8, count); }
+            let count = if tsize < ASIZE { tsize } else { ASIZE };
+            unsafe { copy_nonoverlapping(array.as_ptr() as *const u8, (out.as_mut_ptr() as *mut u8).add(ASIZE * j), count); }
             self.produce_main_state();
             tsize -= count;
+            j += 1;
         }
     }
 
@@ -2736,20 +2742,15 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             + BitXor<Output=T> + BitXorAssign + Not<Output=T>
             + PartialEq + PartialOrd
     {
-        let mut res = self.random_odd_biguint::<T, N>();
-        for i in N/2..N
-            { res.set_num_(i,  T::zero()); }
-        let mut half = res.get_num_(N/2-1);
-        half.set_msb();
-        res.set_num_(N/2-1, half);
+        let half = (T::BITS * N as u32) >> 1;
+        let mut res: BigUInt<T, N> = self.random_with_msb_set_biguint();
+        res.shift_right_assign(half);
+        res.set_lsb();  println!("res = {}", res);
         while !res.is_prime_using_miller_rabin(repetition)
         {
-            res = self.random_odd_biguint::<T, N>();
-            for i in N/2..N
-                { res.set_num_(i,  T::zero()); }
-            half = res.get_num_(N/2-1);
-            half.set_msb();
-            res.set_num_(N/2-1, half);
+            res = self.random_with_msb_set_biguint();
+            res.shift_right_assign(half);
+            res.set_lsb();  println!("res = {}", res);
         }
         res
     }

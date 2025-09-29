@@ -7,10 +7,10 @@
 // except according to those terms.
 
 
-#![allow(missing_docs)]
-#![allow(unused_must_use)]
-#![allow(dead_code)]
-#![allow(unused_variables)]
+// #![allow(missing_docs)]
+// #![allow(unused_must_use)]
+// #![allow(dead_code)]
+// #![allow(unused_variables)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 

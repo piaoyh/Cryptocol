@@ -6,6 +6,8 @@
 // This file may not be copied, modified, or distributed
 // except according to those terms.
 
+#![allow(missing_docs)]
+
 // ! various asymmetric-key algorithms for the encryption/decryption of digital data
 // !
 // ! # Introduction

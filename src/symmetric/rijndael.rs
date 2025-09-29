@@ -7,10 +7,10 @@
 // except according to those terms.
 
 
-#![allow(missing_docs)]
-#![allow(unused_must_use)]
-#![allow(dead_code)]
-#![allow(unused_variables)]
+// #![allow(missing_docs)]
+// #![allow(unused_must_use)]
+// #![allow(dead_code)]
+// #![allow(unused_variables)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 use std::ptr::{ copy_nonoverlapping, copy };
@@ -63,7 +63,7 @@ macro_rules! GF_is_candidate {
             let a_8 = GF_mul!(a_4, a_4);
             let a_16 = GF_mul!(a_8, a_8);
             let a_32 = GF_mul!(a_16, a_16);
-            let a_64 = GF_mul!(a_32, a_32);
+            // let a_64 = GF_mul!(a_32, a_32);
 
             let a_3 = GF_mul!(a_1, a_2);
             let mut ret = GF_mul!(a_3, a_4);
@@ -3188,13 +3188,11 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
 
     fn set_block(&mut self, block: &[IntUnion; NB])
     {
-        let mut idx = 0;
         for j in 0..NB
         {
             for i in 0..4
             {
                 self.block[i][j] = block[j].get_ubyte_(i);
-                idx += 1;
             }
         }
     }
