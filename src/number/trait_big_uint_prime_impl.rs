@@ -258,7 +258,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
         let a_list = [2_u8, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71];
         let len = a_list.len();
-        let common = if len < repetition { len } else { repetition };
+        let common = if len < repetition {len} else {repetition};
         let mut i = 0;
         while i < common
         {

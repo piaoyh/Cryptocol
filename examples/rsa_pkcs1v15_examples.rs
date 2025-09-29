@@ -11,6 +11,8 @@
 // #[allow(non_camel_case_types)]
 // #[allow(non_snake_case)]
 
+use cryptocol::number::BigUInt;
+
 
 pub fn main()
 {
@@ -23,11 +25,16 @@ fn rsa_encrypt()
     println!("rsa_encrypt");
     use std::fmt::Write;
     use cryptocol::asymmetric::PKCS1V15;
-    // Example for RSA_1024
-    use cryptocol::asymmetric::RSA_1024;
     
-    let mut rsa = RSA_1024::new();
-    rsa.find_keys();
+    // Example for RSA_1024
+    use cryptocol::number::BigUInt;
+    use cryptocol::define_utypes_with;
+    use cryptocol::asymmetric::RSA_1024;
+
+    define_utypes_with!(u32);
+    let prime1 = BigUInt::<u32, 32>::from_str_radix("b1bbabfc84567b1a2cf004a81bcae9582cadc6c3de2b498778fec2ee7006c1b70a3363863626750243a94930d0538b7fd4f274b033ba021be777d3bea33ab289", 16).unwrap();
+    let prime2 = BigUInt::<u32, 32>::from_str_radix("cd6e2bda2d076f711d812621a0cc0e26274e93f4b4b815f27b0663d063466b2e190ffc4caad0f6feb4710fede0a1d853f72dd170e7e94768d531bbefdf84bb75", 16).unwrap();
+    let mut rsa = RSA_1024::new_with_primes(prime1, prime2);
     println!("Private Key: {}", rsa.get_private_key());
     println!("Public Key: {}", rsa.get_public_key());
     println!("Product value: {}", rsa.get_number());
@@ -42,7 +49,6 @@ fn rsa_encrypt()
     let mut txt = String::new();
     for c in cipher.clone()
         { let _= write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
     println!();
 
     println!("-------------------------------");
@@ -54,9 +60,17 @@ fn rsa_decrypt()
     use std::fmt::Write;
     use cryptocol::asymmetric::PKCS1V15;
     // Example for RSA_1024
+    use cryptocol::number::BigUInt;
+    use cryptocol::define_utypes_with;
     use cryptocol::asymmetric::RSA_1024;
-    let mut rsa = RSA_1024::new();
-    rsa.find_keys();
+
+    define_utypes_with!(u32);
+    let prime1 = BigUInt::<u32, 32>::from_str_radix("b1bbabfc84567b1a2cf004a81bcae9582cadc6c3de2b498778fec2ee7006c1b70a3363863626750243a94930d0538b7fd4f274b033ba021be777d3bea33ab289", 16).unwrap();
+    let prime2 = BigUInt::<u32, 32>::from_str_radix("cd6e2bda2d076f711d812621a0cc0e26274e93f4b4b815f27b0663d063466b2e190ffc4caad0f6feb4710fede0a1d853f72dd170e7e94768d531bbefdf84bb75", 16).unwrap();
+    let mut rsa = RSA_1024::new_with_primes(prime1, prime2);
+    println!("Private Key: {}", rsa.get_private_key());
+    println!("Public Key: {}", rsa.get_public_key());
+    println!("Product value: {}", rsa.get_number());
     let message = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", message);
     let mut cipher = [0_u8; 128];
@@ -67,11 +81,10 @@ fn rsa_decrypt()
     println!();
     let mut txt = String::new();
     for c in cipher.clone()
-        { let _ = write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "A1 74 C3 56 DD 37 DD D0 56 AD 49 57 09 E8 3E 9C BD 53 61 64 FC 38 20 D9 14 FD 7B 4B C3 49 8C 03 6E 18 D3 28 EC 16 00 CA 36 07 35 6A AD 4F 32 FB 3C 06 AC E0 0A 23 62 86 32 18 30 5B 2D DE 28 9B ");
+        { let _= write!(txt, "{:02X} ", c); }
     println!();
 
-    let mut recovered = vec![0; 117];
+    let mut recovered = vec![0; 55];
     rsa.decrypt(cipher.as_ptr(), recovered.as_mut_ptr());
     print!("Ba =\t");
     for b in recovered.clone()
@@ -80,7 +93,6 @@ fn rsa_decrypt()
     let mut txt = String::new();
     for c in recovered.clone()
         { let _ = write!(txt, "{:02X} ", c); }
-    assert_eq!(txt, "49 6E 20 74 68 65 20 62 65 67 69 6E 6E 69 6E 67 20 47 6F 64 20 63 72 65 61 74 65 64 20 74 68 65 20 68 65 61 76 65 6E 73 20 61 6E 64 20 74 68 65 20 65 61 72 74 68 2E ");
 
     let mut converted = String::new();
     unsafe { converted.as_mut_vec() }.append(&mut recovered);

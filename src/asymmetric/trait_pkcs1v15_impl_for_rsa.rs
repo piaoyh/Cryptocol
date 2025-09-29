@@ -22,7 +22,7 @@ use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, 
 
 
 use crate::number::SmallUInt;
-use crate::random::Any_Num_C as Rand;
+use crate::random::Any_Num as Random;
 use crate::asymmetric::{ PKCS1V15, RSA_Generic };
 
 impl<const N: usize, T, const MR: usize> PKCS1V15 for RSA_Generic<N, T, MR>
@@ -43,17 +43,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
         let mut m = [T::zero(); N];
         let count = size - length_in_bytes as usize;
-        let ptr = unsafe { (m.as_mut_ptr() as *mut u8).add(count) };
         unsafe {
             *((m.as_mut_ptr() as *mut u8).add(1)) = Self::BT;
-            let mut any = Rand::new();
-            for i in 2..count-2
+            let mut any = Random::new();
+            for i in 2..count-1
             {
                 let mut r = any.random_u8();
                 while r == 0
                     { r = any.random_u8(); }
                 *((m.as_mut_ptr() as *mut u8).add(i)) = r;
             }
+            let ptr = (m.as_mut_ptr() as *mut u8).add(count);
             copy_nonoverlapping(message, ptr, length_in_bytes as usize);
         }
         let c = self.encrypt_unit(&m);
@@ -66,12 +66,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         let size = T::size_in_bytes() as usize * N;
         let mut c = [T::zero(); N];
         unsafe { copy_nonoverlapping(cipher, c.as_mut_ptr() as *mut u8, size); }
-        let m = self.decrypt_unit(&c);
+        let m = self.decrypt_unit(&c);println!("m = {:x?}", m);
         let ptr = m.as_ptr() as *const u8;
         let mut len = 0_usize;
         unsafe {
             if (*ptr != 0) || (*(ptr.add(1)) != Self::BT)
-                { return 0; }
+                { println!("Error"); return 0; }
             for i in 2..size
             {
                 if *ptr.add(i) == 0

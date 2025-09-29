@@ -2745,12 +2745,12 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         let half = (T::BITS * N as u32) >> 1;
         let mut res: BigUInt<T, N> = self.random_with_msb_set_biguint();
         res.shift_right_assign(half);
-        res.set_lsb();  println!("res = {}", res);
+        res.set_lsb();
         while !res.is_prime_using_miller_rabin(repetition)
         {
             res = self.random_with_msb_set_biguint();
             res.shift_right_assign(half);
-            res.set_lsb();  println!("res = {}", res);
+            res.set_lsb();
         }
         res
     }

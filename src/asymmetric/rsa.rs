@@ -93,7 +93,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # Caution
     /// M should be N/2. Otherwise, the performance of this module may not
     /// guaranteed .
-    pub fn new_with_primes(&mut self, prime_1: BigUInt<T, N>, prime_2: BigUInt<T, N>) -> Self
+    pub fn new_with_primes(prime_1: BigUInt<T, N>, prime_2: BigUInt<T, N>) -> Self
     {
         let mut rsa = Self
         {
@@ -156,8 +156,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     pub fn find_keys(&mut self)
     {
         let (prime_1, prime_2) = Self::choose_prime_numbers();
-        println!("prime_1 = {:#x}", prime_1);
-        println!("prime_2 = {:#x}", prime_2);
         self.calculate_keys(prime_1, prime_2);
     }
 
@@ -174,7 +172,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
         while !one.is_one()
         {
-            self.key_public.wrapping_add_uint(1_u8);
+            self.key_public.wrapping_add_assign_uint(1_u8);
             (one, self.key_private, _) = self.key_public.extended_gcd(&phi);
         }
         if self.key_private.is_underflow()
