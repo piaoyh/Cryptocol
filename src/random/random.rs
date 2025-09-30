@@ -1179,7 +1179,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     {
         if ceiling > from { Some(self.random_minmax_uint_(from, ceiling)) } else { None }
     }
-//////////////////////
+
     // pub fn random_minmax_uint_<T>(&mut self, from: T, ceiling: T) -> T
     /// Generates random numbers of type `T` less than `ceiling` exclusively
     /// and greater than or equal to `from` inclusively.
@@ -1201,32 +1201,12 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// - If you use `Any`, it is considered that it may be cryptographically
     ///   insecure.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Any_MD5;
-    /// let mut rand = Any_MD5::new();
-    /// 
-    /// let num = rand.random_minmax_uint_(12_u8, 21);
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
+    /// let num = rand.;random_minmax_uint_(12_u8, 21)
     /// println!("Random number u8 = {}", num);
-    /// 
-    /// let num = rand.random_minmax_uint_(1234_u16, 6321);
-    /// println!("Random number u16 = {}", num);
-    /// 
-    /// let num = rand.random_minmax_uint_(12345678_u32, 87654321);
-    /// println!("Random number u32 = {}", num);
-    /// 
-    /// let num = rand.random_minmax_uint_(1234567890123456_u64, 6543210987654321);
-    /// println!("Random number u64 = {}", num);
-    /// 
-    /// let num = rand.random_minmax_uint_(12345678901234567890_u128, 19876543210987654321);
-    /// println!("Random number u128 = {}", num);
-    /// 
-    /// let num = rand.random_minmax_uint_(123456789_usize, 987654321);
-    /// println!("Random number usize = {}", num);
-    /// 
-    /// // It will panic!
-    /// // let num = rand.random_minmax_uint_(10, 8_usize);
-    /// // println!("Random number usize = {}", num);
     /// ```
     /// 
     /// # For more examples,
@@ -1244,7 +1224,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     {
         self.random_under_uint_(ceiling - from) + from
     }
-
+//////////////////////
     // pub fn random_odd_uint<T>(&mut self) -> T
     /// Generates random odd numbers of type `T`.
     /// 

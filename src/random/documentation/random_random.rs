@@ -2691,37 +2691,289 @@ impl Random_Generic
     /// # Cryptographical Security
     /// - If you use `Random`, it is considered to be cryptographically secure.
     /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
+    ///   insecure.
     /// 
-    /// # Example
+    /// # Example 1 for Random
+    /// ```
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
+    /// let num = rand.;random_minmax_uint_(12_u8, 21)
+    /// println!("Random number u8 = {}", num);
+    /// ```
+    /// 
+    /// # Example 2 for Any
+    /// ```
+    /// use cryptocol::random::Any;
+    /// let mut any = Any::new();
+    /// let num = any.;random_minmax_uint_(1234_u16, 6321)
+    /// println!("Random number u16 = {}", num);
+    /// ```
+    /// 
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let num = rand.;random_minmax_uint_(12345678_u32, 87654321)
+    /// println!("Random number u32 = {}", num);
+    /// ```
+    /// 
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// let mut rand = Random_SHA3_512::new();
+    /// let num = rand.;random_minmax_uint_(1234567890123456_u64, 6543210987654321)
+    /// println!("Random number u64 = {}", num);
+    /// ```
+    /// 
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// let mut rand = Random_SHA2_512::new();
+    /// let num = rand.;random_minmax_uint_(12345678901234567890_u128, 19876543210987654321)
+    /// println!("Random number u128 = {}", num);
+    /// ```
+    /// 
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// let mut any = Any_SHAKE_256::new();
+    /// let num = any.;random_minmax_uint_(123456789_usize, 987654321)
+    /// println!("Random number usize = {}", num);
+    /// ```
+    /// 
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// let mut any = Any_SHAKE_128::new();
+    /// let num = any.;random_minmax_uint_(12_u8, 21)
+    /// println!("Random number u8 = {}", num);
+    /// ```
+    /// 
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// let mut any = Any_SHA3_512::new();
+    /// let num = any.;random_minmax_uint_(1234_u16, 6321)
+    /// println!("Random number u16 = {}", num);
+    /// ```
+    /// 
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// let mut any = Any_SHA3_256::new();
+    /// let num = any.;random_minmax_uint_(12345678_u32, 87654321)
+    /// println!("Random number u32 = {}", num);
+    /// ```
+    /// 
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// let mut any = Any_SHA2_512::new();
+    /// let num = any.;random_minmax_uint_(1234567890123456_u64, 6543210987654321)
+    /// println!("Random number u64 = {}", num);
+    /// ```
+    /// 
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// let mut any = Any_SHA2_256::new();
+    /// let num = any.;random_minmax_uint_(12345678901234567890_u128, 19876543210987654321)
+    /// println!("Random number u128 = {}", num);
+    /// ```
+    /// 
+    /// # Example 12 for Any_SHA1
+    /// ```
+    /// use cryptocol::random::Any_SHA1;
+    /// let mut any = Any_SHA1::new();
+    /// let num = any.;random_minmax_uint_(123456789_usize, 987654321)
+    /// println!("Random number usize = {}", num);
+    /// ```
+    /// 
+    /// # Example 13 for Any_SHA0
+    /// ```
+    /// use cryptocol::random::Any_SHA0;
+    /// let mut any = Any_SHA0::new();
+    /// let num = any.;random_minmax_uint_(12_u8, 21)
+    /// println!("Random number u8 = {}", num);
+    /// ```
+    /// 
+    /// # Example 14 for Any_MD5
     /// ```
     /// use cryptocol::random::Any_MD5;
-    /// let mut rand = Any_MD5::new();
-    /// 
-    /// let num = rand.random_minmax_uint_(12_u8, 21);
-    /// println!("Random number u8 = {}", num);
-    /// 
-    /// let num = rand.random_minmax_uint_(1234_u16, 6321);
+    /// let mut any = Any_MD5::new();
+    /// let num = any.;random_minmax_uint_(1234_u16, 6321)
     /// println!("Random number u16 = {}", num);
+    /// ```
     /// 
-    /// let num = rand.random_minmax_uint_(12345678_u32, 87654321);
+    /// # Example 15 for Any_MD4
+    /// ```
+    /// use cryptocol::random::Any_MD4;
+    /// let mut any = Any_MD4::new();
+    /// let num = any.;random_minmax_uint_(12345678_u32, 87654321)
     /// println!("Random number u32 = {}", num);
+    /// ```
     /// 
-    /// let num = rand.random_minmax_uint_(1234567890123456_u64, 6543210987654321);
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// let mut rand = Random_Rijndael::new();
+    /// let num = rand.;random_minmax_uint_(1234567890123456_u64, 6543210987654321)
     /// println!("Random number u64 = {}", num);
+    /// ```
     /// 
-    /// let num = rand.random_minmax_uint_(12345678901234567890_u128, 19876543210987654321);
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// let mut any = Any_Rijndael::new();
+    /// let num = any.;random_minmax_uint_(12345678901234567890_u128, 19876543210987654321)
     /// println!("Random number u128 = {}", num);
+    /// ```
     /// 
-    /// let num = rand.random_minmax_uint_(123456789_usize, 987654321);
+    /// # Example 18 for Any_DES
+    /// ```
+    /// use cryptocol::random::Any_DES;
+    /// let mut any = Any_DES::new();
+    /// let num = any.;random_minmax_uint_(123456789_usize, 987654321)
+    /// println!("Random number usize = {}", num);
+    /// ```
+    /// 
+    /// # Example 19 for Any_Num_C
+    /// ```
+    /// use cryptocol::random::Any_Num_C;
+    /// let mut any = Any_Num_C::new();
+    /// let num = any.;random_minmax_uint_(12_u8, 21)
+    /// println!("Random number u8 = {}", num);
+    /// ```
+    /// 
+    /// # Example 20 for Any_Num
+    /// ```
+    /// use cryptocol::random::Any_Num;
+    /// let mut any = Any_Num::new();
+    /// let num = any.;random_minmax_uint_(1234_u16, 6321)
+    /// println!("Random number u16 = {}", num);
+    /// ```
+    /// 
+    /// # Panic Examples
+    /// ```should_panic
+    /// // Example for Random
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
+    /// let _num = rand.random_minmax_uint_(121_u8, 21);
+    /// println!("Random number u8 = {}", _num);
+    /// 
+    /// // Example for Any
+    /// use cryptocol::random::Any;
+    /// let mut any = Any::new();
+    /// let _num = any.random_minmax_uint_(12345_u16, 6321);
+    /// println!("Random number u16 = {}", _num);
+    /// 
+    /// // Example for Random_BIG_KECCAK_1024
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let _num = rand.random_minmax_uint_(123456789_u32, 87654321);
+    /// println!("Random number u32 = {}", _num);
+    /// 
+    /// // Example for Random_SHA3_512
+    /// use cryptocol::random::Random_SHA3_512;
+    /// let mut rand = Random_SHA3_512::new();
+    /// let _num = rand.random_minmax_uint_(12345678901234567_u64, 6543210987654321);
+    /// println!("Random number u64 = {}", _num);
+    /// 
+    /// // Example for Random_SHA2_512
+    /// use cryptocol::random::Random_SHA2_512;
+    /// let mut rand = Random_SHA2_512::new();
+    /// let _num = rand.random_minmax_uint_(123456789012345678901_u128, 19876543210987654321);
+    /// println!("Random number u128 = {}", _num);
+    /// 
+    /// // Example for Any_SHAKE_256
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// let mut any = Any_SHAKE_256::new();
+    /// let num = any.;random_minmax_uint_(1234567890_usize, 987654321)
     /// println!("Random number usize = {}", num);
     /// 
-    /// // It will panic!
-    /// // let num = rand.random_minmax_uint_(10, 8_usize);
-    /// // println!("Random number usize = {}", num);
+    /// // Example for Any_SHAKE_128
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// let mut any = Any_SHAKE_128::new();
+    /// let num = any.;random_minmax_uint_(123_u8, 21)
+    /// println!("Random number u8 = {}", num);
+    /// 
+    /// // Example for Any_SHA3_512
+    /// use cryptocol::random::Any_SHA3_512;
+    /// let mut any = Any_SHA3_512::new();
+    /// let num = any.;random_minmax_uint_(12345_u16, 6321)
+    /// println!("Random number u16 = {}", num);
+    /// 
+    /// // Example for Any_SHA3_256
+    /// use cryptocol::random::Any_SHA3_256;
+    /// let mut any = Any_SHA3_256::new();
+    /// let num = any.;random_minmax_uint_(123456789_u32, 87654321)
+    /// println!("Random number u32 = {}", num);
+    /// 
+    /// // Example for Any_SHA2_512
+    /// use cryptocol::random::Any_SHA2_512;
+    /// let mut any = Any_SHA2_512::new();
+    /// let num = any.;random_minmax_uint_(12345678901234567_u64, 6543210987654321)
+    /// println!("Random number u64 = {}", num);
+    /// 
+    /// // Example for Any_SHA2_256
+    /// use cryptocol::random::Any_SHA2_256;
+    /// let mut any = Any_SHA2_256::new();
+    /// let num = any.;random_minmax_uint_(123456789012345678901_u128, 19876543210987654321)
+    /// println!("Random number u128 = {}", num);
+    /// 
+    /// // Example for Any_SHA1
+    /// use cryptocol::random::Any_SHA1;
+    /// let mut any = Any_SHA1::new();
+    /// let num = any.;random_minmax_uint_(1234567890_usize, 987654321)
+    /// println!("Random number usize = {}", num);
+    /// 
+    /// // Example for Any_SHA0
+    /// use cryptocol::random::Any_SHA0;
+    /// let mut any = Any_SHA0::new();
+    /// let num = any.;random_minmax_uint_(123_u8, 21)
+    /// println!("Random number u8 = {}", num);
+    /// 
+    /// // Example for Any_MD5
+    /// use cryptocol::random::Any_MD5;
+    /// let mut any = Any_MD5::new();
+    /// let num = any.;random_minmax_uint_(12345_u16, 6321)
+    /// println!("Random number u16 = {}", num);
+    /// 
+    /// // Example for Any_MD4
+    /// use cryptocol::random::Any_MD4;
+    /// let mut any = Any_MD4::new();
+    /// let num = any.;random_minmax_uint_(123456789_u32, 87654321)
+    /// println!("Random number u32 = {}", num);
+    /// 
+    /// // Example for Random_Rijndael
+    /// use cryptocol::random::Random_Rijndael;
+    /// let mut rand = Random_Rijndael::new();
+    /// let num = rand.;random_minmax_uint_(12345678901234567_u64, 6543210987654321)
+    /// println!("Random number u64 = {}", num);
+    /// 
+    /// // Example for Any_Rijndael
+    /// use cryptocol::random::Any_Rijndael;
+    /// let mut any = Any_Rijndael::new();
+    /// let num = any.;random_minmax_uint_(123456789012345678901_u128, 19876543210987654321)
+    /// println!("Random number u128 = {}", num);
+    /// 
+    /// // Example for Any_DES
+    /// use cryptocol::random::Any_DES;
+    /// let mut any = Any_DES::new();
+    /// let num = any.;random_minmax_uint_(1234567890_usize, 987654321)
+    /// println!("Random number usize = {}", num);
+    /// 
+    /// // Example for Any_Num_C
+    /// use cryptocol::random::Any_Num_C;
+    /// let mut any = Any_Num_C::new();
+    /// let num = any.;random_minmax_uint_(123_u8, 21)
+    /// println!("Random number u8 = {}", num);
+    /// 
+    /// // Example for Any_Num
+    /// use cryptocol::random::Any_Num;
+    /// let mut any = Any_Num::new();
+    /// let num = any.;random_minmax_uint_(12345_u16, 6321)
+    /// println!("Random number u16 = {}", num);
     /// ```
     #[inline]
     pub fn random_minmax_uint_<T>(&mut self, from: T, ceiling: T) -> T
