@@ -176,9 +176,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             (one, self.key_private, _) = self.key_public.extended_gcd(&phi);
         }
         if self.key_private.is_underflow()
-            { self.key_private = self.number.wrapping_sub(&BigUInt::<T, N>::zero().wrapping_sub(&self.key_private)); }
+            { self.key_private = phi.wrapping_sub(&BigUInt::<T, N>::zero().wrapping_sub(&self.key_private)); }
         else
-            { self.key_private.wrapping_rem_assign(&self.number); }
+            { self.key_private.wrapping_rem_assign(&phi); }
     }
 
     // pub fn encrypt_biguint(&self, message: &BigUInt<[T, N>) -> BigUInt<T, N>

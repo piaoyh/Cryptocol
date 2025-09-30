@@ -408,10 +408,21 @@ macro_rules! biguint_calc_to_calc_assign
         let res = $func($me, $rhs);
         $me.set_number(res.get_number());
         $me.set_all_flags(res.get_all_flags());
-    }
+    };
     // biguint_calc_to_calc_assign!(self, Self::wrapping_div_uint, rhs);
     //
     // let res = self.wrapping_div_uint(rhs);
+    // self.set_number(res.get_number());
+    // self.set_all_flags(res.get_all_flags());
+
+    ($me:expr, $func:expr, $rhs:expr, $modulo:expr) => {
+        let res = $func($me, $rhs, $modulo);
+        $me.set_number(res.get_number());
+        $me.set_all_flags(res.get_all_flags());
+    };
+    // biguint_calc_to_calc_assign!(self, Self::modular_gcd, rhs, modulo);
+    //
+    // let res = self.modular_gcd(&rhs, &modulo);
     // self.set_number(res.get_number());
     // self.set_all_flags(res.get_all_flags());
 }

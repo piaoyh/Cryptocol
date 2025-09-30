@@ -20,7 +20,6 @@ use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, 
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
                 Shl, ShlAssign, Shr, ShrAssign };
 
-
 use crate::number::SmallUInt;
 use crate::random::Any_Num as Random;
 use crate::asymmetric::{ PKCS1V15, RSA_Generic };
@@ -66,12 +65,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         let size = T::size_in_bytes() as usize * N;
         let mut c = [T::zero(); N];
         unsafe { copy_nonoverlapping(cipher, c.as_mut_ptr() as *mut u8, size); }
-        let m = self.decrypt_unit(&c);println!("m = {:x?}", m);
+        let m = self.decrypt_unit(&c);
         let ptr = m.as_ptr() as *const u8;
         let mut len = 0_usize;
         unsafe {
             if (*ptr != 0) || (*(ptr.add(1)) != Self::BT)
-                { println!("Error"); return 0; }
+                { return 0; }
             for i in 2..size
             {
                 if *ptr.add(i) == 0

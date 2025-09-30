@@ -8,7 +8,7 @@ keywords = ["aes", "sha2", "sha3", "sha512", "des"]
 license = "MIT OR Apache-2.0"
 name = "cryptocol"
 readme = "README.md"
-version = "0.17.2"
+version = "0.17.3"
 # repository = "https://github.com/piaoyh/cryptocol".
 
 
@@ -258,6 +258,11 @@ doc-scrape-examples = false
 
 [[example]]
 name = "random_specific_examples"
+doc-scrape-examples = false
+false
+
+[[example]]
+name = "rsa_pkcs1v15_examples"
 doc-scrape-examples = false
 
 [[example]]

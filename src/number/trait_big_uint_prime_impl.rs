@@ -76,6 +76,28 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     x
 }
 
+// pub(super) fn modular_common_gcd<T, const N: usize>(me: &BigUInt<T, N>, other: &BigUInt<T, N>, modulo: &BigUInt<T, N>) -> BigUInt<T, N>
+// where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+//         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+//         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+//         + Rem<Output=T> + RemAssign
+//         + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+//         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+//         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+//         + PartialEq + PartialOrd
+// {
+//     let mut x = me.wrapping_rem(modulo);
+//     let mut y = other.wrapping_rem(modulo);
+//     let mut t: BigUInt<T, N>;
+//     while !y.is_zero()
+//     {
+//         t = y;
+//         y = x.modular_rem(&t, modulo);
+//         x = t;
+//     }
+//     x
+// }
+
 /// Performs Millar Rabin method with a number less than `self`.
 pub(super) fn test_miller_rabin<T, const N: usize>(me: &BigUInt<T, N>, a: &BigUInt<T, N>) -> bool
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -189,6 +211,20 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         biguint_calc_to_calc_assign!(self, Self::gcd, other);
     }
 
+    // fn modular_gcd(&self, other: &Self, modulo: &Self) -> Self
+    // {
+    //     let me = self.wrapping_rem(modulo);
+    //     let it = other.wrapping_rem(modulo);
+    //     if me.is_zero() || it.is_zero()
+    //         { panic!(); }
+    //     common_gcd(&me, &it)
+    // }
+
+    // fn modular_gcd_assign(&mut self, other: &Self, modulo: &Self)
+    // {
+    //     biguint_calc_to_calc_assign!(self, Self::modular_gcd, other, modulo);
+    // }
+
     fn extended_gcd(&self, other: &Self) -> (Self, Self, Self)
     {
         if self.is_zero() || other.is_zero()
@@ -226,6 +262,44 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         y0.set_all_flags(y0_flags);
         (a, x0, y0)
     }
+
+    // fn modular_extended_gcd(&self, other: &Self, modulo:  &Self) -> (Self, Self, Self)
+    // {
+    //     let mut a = self.wrapping_rem(modulo);
+    //     let mut b = other.wrapping_rem(modulo);
+    //     if a.is_zero() || b.is_zero()
+    //         { panic!(); }
+
+    //     let mut x0 = BigUInt::<T, N>::one();
+    //     let mut y0 = BigUInt::<T, N>::zero();
+    //     let mut x1 = BigUInt::<T, N>::zero();
+    //     let mut y1 = BigUInt::<T, N>::one();
+    //     let mut t: BigUInt<T, N>;
+    //     let mut q: BigUInt<T, N>;
+    //     let mut x0_flags = 0_u8;
+    //     let mut y0_flags = 0_u8;
+    //     while !b.is_zero()
+    //     {
+    //         q = a.modular_div(&b, modulo);
+
+    //         t = x1.clone();
+    //         x1 = x0.modular_sub(&q.modular_mul(&x1, modulo), modulo);
+    //         x0 = t;
+    //         x0_flags |= x0.get_all_flags();
+
+    //         t = y1.clone();
+    //         y1 = y0.modular_sub(&q.modular_mul(&y1, modulo), modulo);
+    //         y0 = t;
+    //         y0_flags |= y0.get_all_flags();
+            
+    //         t = b;
+    //         b = a.modular_rem(&t, modulo);
+    //         a = t;
+    //     }
+    //     x0.set_all_flags(x0_flags);
+    //     y0.set_all_flags(y0_flags);
+    //     (a, x0, y0)
+    // }
     
     fn lcm(&self, other: &Self) -> Self
     {

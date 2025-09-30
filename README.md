@@ -7,7 +7,7 @@ are far more popular than Big-endian CPUs. For the information about
 Endianness (including Little-endian and Big-endian)
 [Read more](https://en.wikipedia.org/wiki/Endianness).
 
-## Big-endian issue
+### Big-endian issue
 
 This crate is just experimental for Big-endian CPUs. So, you are not
 encouraged to use this crate for Big-endian CPUs for serious purpose.
@@ -18,7 +18,7 @@ Only use this crate for Big-endian CPUs with your own full responsibility.
 This crate Cryptocol is planned to provide the following functionalities.
 The checked items have already been implemented including documentation __at least 95%__. The unchecked items have been implemented including documentation __less than 95%__ or have __not__ yet even been started to implement.
 
-### Small Numbers: meaningful as itself, and also the foundations mainly for Big Numbers as well as for other modules
+### 1. Small Numbers: meaningful as itself, and also the foundations mainly for Big Numbers as well as for other modules
 
 - [X] Unions for primitive data types and their implementation, and the implementation
       of trait SmallUInt for the Unions --- 
@@ -37,7 +37,7 @@ The checked items have already been implemented including documentation __at lea
       ===> Moved to Roadmap for ver. 2.0
 -->
 
-### Big Numbers: meaningful as itself and also the foundation for Asymmetric-Key Algorithms
+### 2. Big Numbers: meaningful as itself and also the foundation for Asymmetric-Key Algorithms
 
 - [X] Fixed Sized Big Unsigned Integer Operation --- 
       You can find most of the methods you need for big integer calculation at
@@ -55,9 +55,9 @@ The checked items have already been implemented including documentation __at lea
       ===> Moved to Roadmap for ver. 2.0 or higher
 -->
 
-### Hash Algorithms
+### 3. Hash Algorithms
 
-#### Official SHA-series
+#### 3-1. Official SHA-series
 
 - [X] SHA-3 and Keccak hash algorithms based on 8/16/32/64 bits --- 
       Includes SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE 128, SHAKE 256, and their expanded versions.
@@ -72,7 +72,7 @@ The checked items have already been implemented including documentation __at lea
       Includes SHA-256, SHA-224, and their expanded versions.
       [`SHA2_256_Generic`](https://docs.rs/cryptocol/latest/cryptocol/hash/sha2_256/struct.SHA2_256_Generic.html#struct.SHA2_256_Generic)
 
-#### Insecure Hash algorithms ONLY for educational purposes
+#### 3-2. Insecure Hash algorithms ONLY for educational purposes
 
 - [X] SHA-1 hash algorithms based on 160 bits --- 
       Includes SHA-1, SHA-0, and their expanded versions.
@@ -101,8 +101,8 @@ The checked items have already been implemented including documentation __at lea
       ===> Moved to Roadmap for ver. 2.0
 -->
 
-### Symmetric-key Algorithms for Block Encryption/Decryption of digital data
-<!-- #### AES Finalists -->
+### 4. Symmetric-key Algorithms for Block Encryption/Decryption of digital data
+#### 4-1. AES Finalists
 - [X] AES and Rijndael symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for Rijndael_Generic
       --- Includes AES, Rijndael and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
       [`Rijndael_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/rijndael/struct.Rijndael_Generic.html#struct.Rijndael_Generic),
@@ -154,7 +154,7 @@ The checked items have already been implemented including documentation __at lea
       --- Includes RC5 and its expanded versions. `RC5_Generic`
       ===> Moved to Roadmap for ver. 2.0
 -->
-#### Insecure Block Encryption/Decryption algorithms ONLY for educational purposes
+#### 4-2. Insecure Block Encryption/Decryption algorithms ONLY for educational purposes
 <!--
 - [ ] RC2 symmetric-key encryption/decryption algorithm
       --- Includes RC2 and its expanded versions. `RC2_Generic`
@@ -177,7 +177,7 @@ The checked items have already been implemented including documentation __at lea
       --- Includes Lucifer and its expanded versions. `Lucifer_Generic`
       ===> Moved to Roadmap for ver. 2.0
 -->
-#### Containers for combining encryption/decryption algorithms
+#### 4-3. Containers for combining encryption/decryption algorithms
 - [X] BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor128
       --- Includes 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
       [BigCryptor128](https://docs.rs/cryptocol/latest/cryptocol/symmetric/big_cryptor/struct.BigCryptor128.html#struct.BigCryptor128),
@@ -218,7 +218,7 @@ The checked items have already been implemented including documentation __at lea
       --- Includes RC4 and its expanded versions. `RC4_Generic`
       ===> Moved to Roadmap for ver. 2.0
 -->
-### Pseudo-Random Number Generator Algorithms
+### 5. Pseudo-Random Number Generator Algorithms
 
 - [ ] Pseudo-random number generator ---
       struct [`Random_Generic`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_Generic.html#struct.Random_Generic) and
@@ -244,7 +244,7 @@ The checked items have already been implemented including documentation __at lea
 - [X] Pseudo-random number generator engines using simple randomization algorithm ---
       [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_Num_C.html#struct.Any_Num_C).
 
-### Asymmetric-key Algorithms for Encryption/Decryption of digital data
+### 6. Asymmetric-key Algorithms for Encryption/Decryption of digital data
 
 - [ ] ECC (Elliptic Curve Cryptosystem)
 - [ ] RSA (Ron Rivest, Adi Shamir, Leonard Adleman) -- [`RSA_Generic`](https://docs.rs/cryptocol/latest/cryptocol/asymmetric/struct.RSA_Generic.html#struct.RSA_Generic).

@@ -27,7 +27,7 @@
 //! at least 95%. The unchecked items have been implemented including
 //! documentation less than 95% or have not yet even been started to implement.
 //! 
-//! ## Small Numbers: meaningful as itself, and also foundations mainly for Big Numbers as well as for other modules
+//! ## 1. Small Numbers: meaningful as itself, and also foundations mainly for Big Numbers as well as for other modules
 //! - [X] Unions for primitive data types and their implementation, and the
 //!       implementation of trait SmallUInt for the Unions ---
 //!     [`ShortUnion`](number/short_union/union.ShortUnion.html#union.ShortUnion),
@@ -45,7 +45,7 @@
 // !    [`SmallSInt`](number/small_sint/trait.SmallSInt.html#trait.SmallSInt)
 // !     _--> Thinking about postponing to Roadmap for ver. 2.0_
 //! 
-//! ## Big Numbers: meaningful as itself and also the foundation for Asymmetric-Key Algorithms
+//! ## 2. Big Numbers: meaningful as itself and also the foundation for Asymmetric-Key Algorithms
 //! - [X] Fixed Sized Big Unsigned Integer Operation --- You can find most of
 //!       the methods you need for big integer calculation at
 //!       [`BigUInt`](number/big_uint/struct.BigUInt.html#struct.BigUInt).
@@ -71,8 +71,8 @@
 // ! - [ ] Variable Sized Big Signed Integer Operation --- LargeInt
 // !    _--> Thinking about postponing to Roadmap for ver. 2.0 or higher_
 //! 
-//! ## Hash Algorithms
-//! ### Official SHA-series
+//! ## 3. Hash Algorithms
+//! ### 3-1. Official SHA-series
 //! - [X] SHA-3 and Keccak hash algorithms based on 8/16/32/64 bits
 //!       --- Includes SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE 128, SHAKE 256, cSHAKE-128, cSHAKE-256, Keccak family and their expanded versions.
 //!       [`Keccak_Generic`](hash/keccak/struct.Keccak_Generic.html#struct.Keccak_Generic)
@@ -86,7 +86,7 @@
 //!       --- Includes SHA-256, SHA-224, and their expanded versions.
 //!       [`SHA2_256_Generic`](hash/sha2_256/struct.SHA2_256_Generic.html#struct.SHA2_256_Generic)
 //! 
-//! ### Insecure Hash algorithms ONLY for educational purposes
+//! ### 3-2. Insecure Hash algorithms ONLY for educational purposes
 //! - [X] SHA-1 hash algorithms based on 160 bits
 //!       --- Includes SHA-1, SHA-0, and their expanded versions.
 //!       [`SHA1_Generic`](hash/sha1/struct.SHA1_Generic.html#struct.SHA1_Generic)
@@ -112,8 +112,8 @@
 // !       --- Includes MD4 and its expanded versions.
 // !       ===> Moved to Roadmap for ver. 2.0
 //! 
-//! ## Symmetric-key Algorithms for Block Encryption/Decryption of digital data
-// ! ### AES Finalists
+//! ## 4. Symmetric-key Algorithms for Block Encryption/Decryption of digital data
+//! ### 4-1. AES Finalists
 //! - [X] AES and Rijndael symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for AES_Generic
 //!       --- Includes AES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits
 //!       according to PKCS#7 and ISO 7816-4.
@@ -166,7 +166,7 @@
 // !       --- Includes RC5 and its expanded versions. `RC5_Generic`
 // !       ===> Moved to Roadmap for ver. 2.0
 // !
-//! ### Insecure Block Encryption/Decryption algorithms
+//! ### 4-2. Insecure Block Encryption/Decryption algorithms
 // ! - [ ] RC4 symmetric-key encryption/decryption algorithm
 // !       --- Includes RC4 and its expanded versions. `RC4_Generic`
 // !       ===> Moved to Roadmap for ver. 2.0
@@ -190,7 +190,7 @@
 // !       --- Includes Lucifer and its expanded versions. `Lucifer_Generic`
 // !       ===> Moved to Roadmap for ver. 2.0
 // !
-//! ### Containers for combining encryption/decryption algorithms
+//! ### 4-3. Containers for combining encryption/decryption algorithms
 //! - [X] BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor128
 //!       --- Includes 2AES, 3AES, 4AES, etc., and their expanded versions, and
 //!       ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
@@ -232,7 +232,7 @@
 // !      --- Includes RC4 and its expanded versions. `RC4_Generic`
 // !      ===> Moved to Roadmap for ver. 2.0
 // !
-//! ## Pseudo-Random Number Generator Algorithms
+//! ## 5. Pseudo-Random Number Generator Algorithms
 //! - [ ] Pseudo-random number generator --- struct
 //!       [`Random_Generic`](random/struct.Random_Generic.html#struct.Random_Generic)
 //!       and trait
@@ -258,7 +258,7 @@
 //! - [X] Pseudo-random number generator engines using simple randomization algorithm
 //!       --- [`Any_Num_C`](random/struct.Any_Num.html#struct.Any_Num_C).
 //! 
-//! ## Asymmetric-Key Algorithms for Encryption/Decryption of digital data
+//! ## 6. Asymmetric-Key Algorithms for Encryption/Decryption of digital data
 //! - [ ] ECC (Elliptic Curve Cryptosystem)
 //! - [ ] RSA (Ron Rivest, Adi Shamir, Leonard Adleman) -- [`RSA_Generic`](asymmetric/struct.RSA_Generic.html#struct.RSA_Generic).
 // ! - [ ] Rabin --> Moved to Roadmap for ver. 2.0

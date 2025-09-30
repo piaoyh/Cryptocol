@@ -456,6 +456,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.gcd_assign)
     fn gcd_assign(&mut self, other: &Self);
 
+//     fn modular_gcd(&self, other: &Self, modulo: &Self) -> Self;
+
+//     fn modular_gcd_assign(&mut self, other: &Self, modulo: &Self);
+
     // fn extended_gcd(&self, other: &Self) -> (Self, Self, Self);
     /// Calculates the greatest common divisor of `self` and `other`,
     /// and returns the result, `x`, and `y` that satisfy
@@ -511,6 +515,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.gcd) */
     fn extended_gcd(&self, other: &Self) -> (Self, Self, Self);
+
+//     fn modular_extended_gcd(&self, other: &Self, module:  &Self) -> (Self, Self, Self);
 
     // fn lcm(&self, other: &Self) -> Self
     /// Calculates the least common multiple of `self` and `other`,
