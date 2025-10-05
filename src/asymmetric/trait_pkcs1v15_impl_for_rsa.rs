@@ -13,6 +13,117 @@
 #![allow(unused_variables)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
+
+macro_rules! pre_encrypt_into_array {
+    ($to:expr, $length_in_bytes:expr, $type:ty) => {
+        let mut len = if <$type>::size_in_bytes() == 16 {16_usize} else {8};
+        len = ($length_in_bytes + 1).next_multiple_of(len as u64) as usize / <$type>::size_in_bytes() as usize;
+        for i in len - 1..$to.len()
+            { $to[i] = <$type>::zero(); }
+    };
+}
+
+macro_rules! pre_encrypt_into_vec {
+    ($to:expr, $type:ty) => {{
+        let len = (T::size_in_bytes() as usize * N) / <$type>::size_in_bytes() as usize + 1;
+        $to.truncate(len);
+        $to.resize(len, <$type>::zero());
+    }};
+}
+
+macro_rules! pre_decrypt_into_array {
+    ($to:expr, $type:ty) => {
+        for i in 0..$to.len()
+            { $to[i] = <$type>::zero(); }
+    };
+}
+
+macro_rules! pre_decrypt_into_vec {
+    ($to:expr, $type:ty) => {
+        let len = (T::size_in_bytes() as usize * N - 11) / <$type>::size_in_bytes() as usize + 1;
+        $to.truncate(len);
+        $to.resize(len, <$type>::zero());
+    };
+}
+
+macro_rules! encrypt_into_array {
+    ($me:expr, $message:expr, $length_in_bytes:expr, $cipher:expr, $U:ty, $M:expr) => {{
+        if ($length_in_bytes > (T::size_in_bytes() as u64 * N as u64 - 11)) || ((<$U>::size_in_bytes() as u64 * M as u64) < (T::size_in_bytes() as u64 * N as u64))
+            { return 0; }
+        pre_encrypt_into_array!($cipher, $length_in_bytes, $U);
+        $me.encrypt($message, $length_in_bytes, $cipher.as_mut_ptr() as *mut u8)
+    }};
+}
+
+macro_rules! encrypt_into_vec {
+    ($me:expr, $iv:expr, $message:expr, $length_in_bytes:expr, $cipher:expr, $U:ty) => {{
+        pre_encrypt_into_vec!($cipher, $length_in_bytes, $U);
+        let len = $me.encrypt($iv, $message, $length_in_bytes, $cipher.as_mut_ptr() as *mut u8);
+        $cipher.truncate(len as usize);
+        len
+    }};
+    // pre_encrypt_into_vec!(cipher, length_in_bytes, U);
+    // let len = self.encrypt(iv, message, length_in_bytes, cipher.as_mut_ptr() as *mut u8);
+    // cipher.truncate(len as usize);
+    // len
+
+    ($me:expr, $message:expr, $length_in_bytes:expr, $cipher:expr, $U:ty) => {{
+        pre_encrypt_into_vec!($cipher, $U);
+        let len = $me.encrypt($message, $length_in_bytes, $cipher.as_mut_ptr() as *mut u8);
+        $cipher.truncate(len as usize);
+        len
+    }};
+}
+
+macro_rules! decrypt_into_array {
+    ($me:expr, $cipher:expr, $message:expr, $U:ty) => {{
+        pre_decrypt_into_array!($message, $U);
+        $me.decrypt($cipher, $message.as_mut_ptr() as *mut u8)
+    }};
+}
+
+macro_rules! crypt_into_something_with_padding {
+    () => {
+        fn encrypt_into_array<U, const M: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; M]) -> u64
+        where U: SmallUInt + Copy + Clone
+        {
+            encrypt_into_array!(self, message, length_in_bytes, cipher, U, M)
+        }
+
+        fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
+        where U: SmallUInt + Copy + Clone
+        {
+            encrypt_into_vec!(self, message, length_in_bytes, cipher, U)
+        }
+
+        fn decrypt_into_array<U, const M: usize>(&mut self, cipher: *const u8, message: &mut [U; M]) -> u64
+        where U: SmallUInt + Copy + Clone
+        {
+            decrypt_into_array!(self, cipher, message, U)
+        }
+
+        fn decrypt_into_vec<U>(&mut self, cipher: *const u8, message: &mut Vec<U>) -> u64
+        where U: SmallUInt + Copy + Clone
+        {
+            pre_decrypt_into_vec!(message, U);
+            let len = self.decrypt(cipher, message.as_mut_ptr() as *mut u8);
+            let size = len as usize / U::size_in_bytes() as usize
+                        + if len as usize % U::size_in_bytes() as usize == 0 {0} else {1};
+            message.truncate(size);
+            len
+        }
+
+        fn decrypt_vec_into_vec<U, V>(&mut self, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
+        where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+        {
+            pre_decrypt_into_vec!(message, V);
+            self.decrypt_into_vec(cipher.as_ptr() as *const u8, message)
+        }
+    };
+}
+
+
+
 use std::ptr::copy_nonoverlapping;
 use std::fmt::{ Display, Debug };
 use std::cmp::{ PartialEq, PartialOrd };
@@ -82,4 +193,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
         (size - len) as u64
     }
+
+    crypt_into_something_with_padding!{}
 }

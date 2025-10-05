@@ -672,9 +672,6 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
             /// to learn deterministic decision with Millar-Rabin algorithm.
             fn is_prime_using_miller_rabin(self, repetition: usize) -> bool
             {
-                if self == 2 ||  self == 3
-                    { return true; }
-
                 if self.is_zero_or_one() || self.is_even()
                     { return false; }
 
@@ -705,12 +702,23 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
                     { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23]; }
                 // else if self.into_u128() <= u64::MAX as u128
                 //     { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]; }
-                else if self.into_u128() <= 3186_6585_7834_0311_5116_7461_u128   // < u128::MAX
-                    { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]; }
-                else if self.into_u128() <=  3_3170_4406_4679_8873_8596_1981_u128   // < u128::MAX
-                    { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41]; }
-                else    // if self <= u128::MAX as Self
-                    { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71]; }
+                else
+                {
+                    let b_list = [3_u8, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71];
+                    for a in b_list
+                    {
+                        if self.wrapping_rem(a as Self).is_zero()
+                        {
+                            return false;
+                        }
+                    }
+                    if self.into_u128() <= 3186_6585_7834_0311_5116_7461_u128   // < u128::MAX
+                        { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]; }
+                    else if self.into_u128() <=  3_3170_4406_4679_8873_8596_1981_u128   // < u128::MAX
+                        { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41]; }
+                    else    // if self <= u128::MAX as Self
+                        { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71]; }
+                }
 
                 let len = a_list.len();
                 let common = if len < repetition { len } else { repetition };
@@ -740,9 +748,6 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
             /// in detail.
             fn is_prime(self) -> bool
             {
-                if self == 2 ||  self == 3
-                    { return true; }
-
                 if self.is_zero_or_one() || self.is_even()
                     { return false; }
                 

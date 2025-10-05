@@ -1663,121 +1663,121 @@ fn random_random_minmax_uint_()
     // Example for Random
     use cryptocol::random::Random;
     let mut rand = Random::new();
-    let num = rand.;random_minmax_uint_(12_u8, 21)
+    let num = rand.random_minmax_uint_(12_u8, 21);
     println!("Random number u8 = {}", num);
 
     // Example for Any
     use cryptocol::random::Any;
     let mut any = Any::new();
-    let num = any.;random_minmax_uint_(1234_u16, 6321)
+    let num = any.random_minmax_uint_(1234_u16, 6321);
     println!("Random number u16 = {}", num);
     
     // Example for Random_BIG_KECCAK_1024
     use cryptocol::random::Random_BIG_KECCAK_1024;
     let mut rand = Random_BIG_KECCAK_1024::new();
-    let num = rand.;random_minmax_uint_(12345678_u32, 87654321)
+    let num = rand.random_minmax_uint_(12345678_u32, 87654321);
     println!("Random number u32 = {}", num);
     
     // Example for Random_SHA3_512
     use cryptocol::random::Random_SHA3_512;
     let mut rand = Random_SHA3_512::new();
-    let num = rand.;random_minmax_uint_(1234567890123456_u64, 6543210987654321)
+    let num = rand.random_minmax_uint_(1234567890123456_u64, 6543210987654321);
     println!("Random number u64 = {}", num);
     
     // Example for Random_SHA2_512
     use cryptocol::random::Random_SHA2_512;
     let mut rand = Random_SHA2_512::new();
-    let num = rand.;random_minmax_uint_(12345678901234567890_u128, 19876543210987654321)
+    let num = rand.random_minmax_uint_(12345678901234567890_u128, 19876543210987654321);
     println!("Random number u128 = {}", num);
 
     // Example for Any_SHAKE_256
     use cryptocol::random::Any_SHAKE_256;
     let mut any = Any_SHAKE_256::new();
-    let num = any.;random_minmax_uint_(123456789_usize, 987654321)
+    let num = any.random_minmax_uint_(123456789_usize, 987654321);
     println!("Random number usize = {}", num);
 
     // Example for Any_SHAKE_128
     use cryptocol::random::Any_SHAKE_128;
     let mut any = Any_SHAKE_128::new();
-    let num = any.;random_minmax_uint_(12_u8, 21)
+    let num = any.random_minmax_uint_(12_u8, 21);
     println!("Random number u8 = {}", num);
 
     // Example for Any_SHA3_512
     use cryptocol::random::Any_SHA3_512;
     let mut any = Any_SHA3_512::new();
-    let num = any.;random_minmax_uint_(1234_u16, 6321)
+    let num = any.random_minmax_uint_(1234_u16, 6321);
     println!("Random number u16 = {}", num);
 
     // Example for Any_SHA3_256
     use cryptocol::random::Any_SHA3_256;
     let mut any = Any_SHA3_256::new();
-    let num = any.;random_minmax_uint_(12345678_u32, 87654321)
+    let num = any.random_minmax_uint_(12345678_u32, 87654321);
     println!("Random number u32 = {}", num);
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
     let mut any = Any_SHA2_512::new();
-    let num = any.;random_minmax_uint_(1234567890123456_u64, 6543210987654321)
+    let num = any.random_minmax_uint_(1234567890123456_u64, 6543210987654321);
     println!("Random number u64 = {}", num);
 
     // Example for Any_SHA2_256
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
-    let num = any.;random_minmax_uint_(12345678901234567890_u128, 19876543210987654321)
+    let num = any.random_minmax_uint_(12345678901234567890_u128, 19876543210987654321);
     println!("Random number u128 = {}", num);
 
     // Example for Any_SHA1
     use cryptocol::random::Any_SHA1;
     let mut any = Any_SHA1::new();
-    let num = any.;random_minmax_uint_(123456789_usize, 987654321)
+    let num = any.random_minmax_uint_(123456789_usize, 987654321);
     println!("Random number usize = {}", num);
 
     // Example for Any_SHA0
     use cryptocol::random::Any_SHA0;
     let mut any = Any_SHA0::new();
-    let num = any.;random_minmax_uint_(12_u8, 21)
+    let num = any.random_minmax_uint_(12_u8, 21);
     println!("Random number u8 = {}", num);
 
     // Example for Any_MD5
     use cryptocol::random::Any_MD5;
     let mut any = Any_MD5::new();
-    let num = any.;random_minmax_uint_(1234_u16, 6321)
+    let num = any.random_minmax_uint_(1234_u16, 6321);
     println!("Random number u16 = {}", num);
 
     // Example for Any_MD4
     use cryptocol::random::Any_MD4;
     let mut any = Any_MD4::new();
-    let num = any.;random_minmax_uint_(12345678_u32, 87654321)
+    let num = any.random_minmax_uint_(12345678_u32, 87654321);
     println!("Random number u32 = {}", num);
 
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
     let mut rand = Random_Rijndael::new();
-    let num = rand.;random_minmax_uint_(1234567890123456_u64, 6543210987654321)
+    let num = rand.random_minmax_uint_(1234567890123456_u64, 6543210987654321);
     println!("Random number u64 = {}", num);
 
     // Example for Any_Rijndael
     use cryptocol::random::Any_Rijndael;
     let mut any = Any_Rijndael::new();
-    let num = any.;random_minmax_uint_(12345678901234567890_u128, 19876543210987654321)
+    let num = any.random_minmax_uint_(12345678901234567890_u128, 19876543210987654321);
     println!("Random number u128 = {}", num);
 
     // Example for Any_DES
     use cryptocol::random::Any_DES;
     let mut any = Any_DES::new();
-    let num = any.;random_minmax_uint_(123456789_usize, 987654321)
+    let num = any.random_minmax_uint_(123456789_usize, 987654321);
     println!("Random number usize = {}", num);
 
     // Example for Any_Num_C
     use cryptocol::random::Any_Num_C;
     let mut any = Any_Num_C::new();
-    let num = any.;random_minmax_uint_(12_u8, 21)
+    let num = any.random_minmax_uint_(12_u8, 21);
     println!("Random number u8 = {}", num);
 
     // Example for Any_Num
     use cryptocol::random::Any_Num;
     let mut any = Any_Num::new();
-    let num = any.;random_minmax_uint_(1234_u16, 6321)
+    let num = any.random_minmax_uint_(1234_u16, 6321);
     println!("Random number u16 = {}", num);
 
     #[cfg(test)] // It will panic.
@@ -1822,91 +1822,91 @@ fn random_should_panic_random_minmax_uint_()
     // Example for Any_SHAKE_256
     use cryptocol::random::Any_SHAKE_256;
     let mut any = Any_SHAKE_256::new();
-    let num = any.;random_minmax_uint_(1234567890_usize, 987654321)
+    let num = any.random_minmax_uint_(1234567890_usize, 987654321);
     println!("Random number usize = {}", num);
 
     // Example for Any_SHAKE_128
     use cryptocol::random::Any_SHAKE_128;
     let mut any = Any_SHAKE_128::new();
-    let num = any.;random_minmax_uint_(123_u8, 21)
+    let num = any.random_minmax_uint_(123_u8, 21);
     println!("Random number u8 = {}", num);
 
     // Example for Any_SHA3_512
     use cryptocol::random::Any_SHA3_512;
     let mut any = Any_SHA3_512::new();
-    let num = any.;random_minmax_uint_(12345_u16, 6321)
+    let num = any.random_minmax_uint_(12345_u16, 6321);
     println!("Random number u16 = {}", num);
 
     // Example for Any_SHA3_256
     use cryptocol::random::Any_SHA3_256;
     let mut any = Any_SHA3_256::new();
-    let num = any.;random_minmax_uint_(123456789_u32, 87654321)
+    let num = any.random_minmax_uint_(123456789_u32, 87654321);
     println!("Random number u32 = {}", num);
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
     let mut any = Any_SHA2_512::new();
-    let num = any.;random_minmax_uint_(12345678901234567_u64, 6543210987654321)
+    let num = any.random_minmax_uint_(12345678901234567_u64, 6543210987654321);
     println!("Random number u64 = {}", num);
 
     // Example for Any_SHA2_256
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
-    let num = any.;random_minmax_uint_(123456789012345678901_u128, 19876543210987654321)
+    let num = any.random_minmax_uint_(123456789012345678901_u128, 19876543210987654321);
     println!("Random number u128 = {}", num);
 
     // Example for Any_SHA1
     use cryptocol::random::Any_SHA1;
     let mut any = Any_SHA1::new();
-    let num = any.;random_minmax_uint_(1234567890_usize, 987654321)
+    let num = any.random_minmax_uint_(1234567890_usize, 987654321);
     println!("Random number usize = {}", num);
 
     // Example for Any_SHA0
     use cryptocol::random::Any_SHA0;
     let mut any = Any_SHA0::new();
-    let num = any.;random_minmax_uint_(123_u8, 21)
+    let num = any.random_minmax_uint_(123_u8, 21);
     println!("Random number u8 = {}", num);
 
     // Example for Any_MD5
     use cryptocol::random::Any_MD5;
     let mut any = Any_MD5::new();
-    let num = any.;random_minmax_uint_(12345_u16, 6321)
+    let num = any.random_minmax_uint_(12345_u16, 6321);
     println!("Random number u16 = {}", num);
 
     // Example for Any_MD4
     use cryptocol::random::Any_MD4;
     let mut any = Any_MD4::new();
-    let num = any.;random_minmax_uint_(123456789_u32, 87654321)
+    let num = any.random_minmax_uint_(123456789_u32, 87654321);
     println!("Random number u32 = {}", num);
 
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
     let mut rand = Random_Rijndael::new();
-    let num = rand.;random_minmax_uint_(12345678901234567_u64, 6543210987654321)
+    let num = rand.random_minmax_uint_(12345678901234567_u64, 6543210987654321);
     println!("Random number u64 = {}", num);
 
     // Example for Any_Rijndael
     use cryptocol::random::Any_Rijndael;
     let mut any = Any_Rijndael::new();
-    let num = any.;random_minmax_uint_(123456789012345678901_u128, 19876543210987654321)
+    let num = any.random_minmax_uint_(123456789012345678901_u128, 19876543210987654321);
     println!("Random number u128 = {}", num);
 
     // Example for Any_DES
     use cryptocol::random::Any_DES;
     let mut any = Any_DES::new();
-    let num = any.;random_minmax_uint_(1234567890_usize, 987654321)
+    let num = any.random_minmax_uint_(1234567890_usize, 987654321);
     println!("Random number usize = {}", num);
 
     // Example for Any_Num_C
     use cryptocol::random::Any_Num_C;
     let mut any = Any_Num_C::new();
-    let num = any.;random_minmax_uint_(123_u8, 21)
+    let num = any.random_minmax_uint_(123_u8, 21);
     println!("Random number u8 = {}", num);
 
     // Example for Any_Num
     use cryptocol::random::Any_Num;
     let mut any = Any_Num::new();
-    let num = any.;random_minmax_uint_(12345_u16, 6321)
+    let num = any.random_minmax_uint_(12345_u16, 6321);
     println!("Random number u16 = {}", num);
 }
 

@@ -30,10 +30,16 @@ fn rsa_encrypt()
     use cryptocol::define_utypes_with;
     use cryptocol::asymmetric::RSA_1024;
 
-    define_utypes_with!(u32);
-    let prime1 = BigUInt::<u32, 32>::from_str_radix("b1bbabfc84567b1a2cf004a81bcae9582cadc6c3de2b498778fec2ee7006c1b70a3363863626750243a94930d0538b7fd4f274b033ba021be777d3bea33ab289", 16).unwrap();
-    let prime2 = BigUInt::<u32, 32>::from_str_radix("cd6e2bda2d076f711d812621a0cc0e26274e93f4b4b815f27b0663d063466b2e190ffc4caad0f6feb4710fede0a1d853f72dd170e7e94768d531bbefdf84bb75", 16).unwrap();
-    let mut rsa = RSA_1024::new_with_primes(prime1, prime2);
+    use cryptocol::random::Any;
+    define_utypes_with!(u16);
+    let mut rand = Any::new();
+
+    // define_utypes_with!(u16);
+    let _prime1 = BigUInt::<u32, 32>::from_str_radix("b1bbabfc84567b1a2cf004a81bcae9582cadc6c3de2b498778fec2ee7006c1b70a3363863626750243a94930d0538b7fd4f274b033ba021be777d3bea33ab289", 16).unwrap();
+    let _prime2 = BigUInt::<u32, 32>::from_str_radix("cd6e2bda2d076f711d812621a0cc0e26274e93f4b4b815f27b0663d063466b2e190ffc4caad0f6feb4710fede0a1d853f72dd170e7e94768d531bbefdf84bb75", 16).unwrap();
+    // let mut rsa = RSA_1024::new_with_primes(prime1, prime2);
+    // let mut rsa = RSA_1024::new_with(prime1, prime2);
+    let mut rsa = RSA_1024::new_with_prepared_keys();
     println!("Private Key: {}", rsa.get_private_key());
     println!("Public Key: {}", rsa.get_public_key());
     println!("Product value: {}", rsa.get_number());

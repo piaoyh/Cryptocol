@@ -106,6 +106,20 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         rsa
     }
 
+    /// # Caution
+    /// M should be N/2. Otherwise, the performance of this module may not
+    /// guaranteed .
+    pub fn new_with_prepared_keys() -> Self
+    {
+        let length = T::size_in_bytes() as usize * N;
+        let mut rand = Random::new();
+        let prime_1 = rand.random_prime_with_half_length_using_prepared();
+        let mut prime_2 = rand.random_prime_with_half_length_using_prepared();
+        while prime_1 == prime_2
+            { prime_2 = rand.random_prime_with_half_length_using_prepared(); }
+        Self::new_with_primes(prime_1, prime_2)
+    }
+
     #[inline]
     pub fn get_public_key(&self) -> BigUInt<T, N>
     {
@@ -149,7 +163,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         let mut rand = Random::new();
         let prime_1 = rand.random_prime_with_half_length_using_miller_rabin_biguint(MR);
-        let prime_2 = rand.random_prime_with_half_length_using_miller_rabin_biguint(MR);
+        let mut prime_2 = rand.random_prime_with_half_length_using_miller_rabin_biguint(MR);
+        while prime_1 == prime_2
+            { prime_2 = rand.random_prime_with_half_length_using_miller_rabin_biguint(MR); }
         (prime_1, prime_2)
     }
 
