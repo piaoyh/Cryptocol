@@ -2998,21 +2998,246 @@ impl Random_Generic
     /// # Cryptographical Security
     /// - If you use `Random`, it is considered to be cryptographically secure.
     /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
+    ///   insecure.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Any_SHA0;
-    /// let mut rand = Any_SHA0::new();
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
     /// println!("Random odd number u8 = {}", rand.random_odd_uint::<u8>());
     /// println!("Random odd number u16 = {}", rand.random_odd_uint::<u16>());
     /// println!("Random odd number u32 = {}", rand.random_odd_uint::<u32>());
     /// println!("Random odd number u64 = {}", rand.random_odd_uint::<u64>());
     /// println!("Random odd number u128 = {}", rand.random_odd_uint::<u128>());
     /// println!("Random odd number usize = {}", rand.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 2 for Any
+    /// ```
+    /// use cryptocol::random::Any;
+    /// let mut any = Any::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// println!("Random odd number u8 = {}", rand.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", rand.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", rand.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", rand.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", rand.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", rand.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// let mut rand = Random_SHA3_512::new();
+    /// println!("Random odd number u8 = {}", rand.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", rand.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", rand.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", rand.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", rand.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", rand.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// let mut rand = Random_SHA2_512::new();
+    /// println!("Random odd number u8 = {}", rand.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", rand.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", rand.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", rand.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", rand.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", rand.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// let mut any = Any_SHAKE_256::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// let mut any = Any_SHAKE_128::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// let mut any = Any_SHA3_512::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// let mut any = Any_SHA3_256::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// let mut any = Any_SHA2_512::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// let mut any = Any_SHA2_256::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 12 for Any_SHA1
+    /// ```
+    /// use cryptocol::random::Any_SHA1;
+    /// let mut any = Any_SHA1::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 13 for Any_SHA0
+    /// ```
+    /// use cryptocol::random::Any_SHA0;
+    /// let mut any = Any_SHA0::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 14 for Any_MD5
+    /// ```
+    /// use cryptocol::random::Any_MD5;
+    /// let mut any = Any_MD5::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 15 for Any_MD4
+    /// ```
+    /// use cryptocol::random::Any_MD4;
+    /// let mut any = Any_MD4::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// let mut rand = Random_Rijndael::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// let mut any = Any_Rijndael::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 18 for Any_DES
+    /// ```
+    /// use cryptocol::random::Any_DES;
+    /// let mut any = Any_DES::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 19 for Any_Num_C
+    /// ```
+    /// use cryptocol::random::Any_Num_C;
+    /// let mut any = Any_Num_C::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    /// ```
+    /// 
+    /// # Example 20 for Any_Num
+    /// ```
+    /// use cryptocol::random::Any_Num;
+    /// let mut any = Any_Num::new();
+    /// println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
+    /// println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
+    /// println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
+    /// println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
+    /// println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
+    /// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
     /// ```
     pub fn random_odd_uint<T>(&mut self) -> T
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString

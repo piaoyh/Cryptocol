@@ -619,6 +619,176 @@ impl Random_SHA3_512
 
 
 /*---------------------------- */
+
+/// The type `Random_SHA2_512` which is a pseudo-random number generator using
+/// a hash algorithm SHA-2-512.
+/// It is a specific version of the generic struct
+/// [`Random_Generic`](struct@Random_Generic).
+#[allow(non_camel_case_types)] 
+pub struct Random_SHA2_512 {}
+impl Random_SHA2_512
+{
+    pub fn new() -> Random_Generic<SECURE_COUNT>
+    {
+        Random_Generic::<SECURE_COUNT>::new_with(SHA2_512::new(), SHA2_512::new())
+    }
+
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    {
+        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(SHA2_512::new(), SHA2_512::new(), seed, aux)
+    }
+
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
+    /// 
+    /// # Arguments
+    /// - `seed` is the seed array and is of `[u64; 8]`.
+    /// - `aux` is the seed array and is of `[u64; 8]`.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Cryptographical Security
+    /// You are highly recommended to use this method rather than the method
+    /// new_with_seed_collector_seeds for security reason. It is because the
+    /// default seed collector function collects 1024 bits as a seed. If you
+    /// use this method, it results that you give full '1024' bits (= '64'
+    /// bits X '8' X '2') as a seed and it is equivalent to use a seed
+    /// collector function.
+    /// 
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut rand = Random_SHA2_512::new_with_seed_arrays(seed, aux);
+    /// let num: U256 = rand.random_biguint();
+    /// ```
+    #[inline]
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    {
+        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed, aux)
+    }
+    
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    /// Constructs a new `Random_Generic` object with a seed collector function.
+    /// 
+    /// # Arguments
+    /// `seed_collector` is a seed collector function to collect seeds, and
+    /// is of the type `fn() -> [u64; 8]`.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Features
+    /// - The default seed collector function is provided in this module,
+    ///   but it is optimized for Unix/Linux though it works under Windows too.
+    /// - If you use this crate under Windows and/or you have a better one,
+    ///   you can use your own seed collector function by replacing the default
+    ///   seed collector function with your own one. 
+/*  /// 
+    /// # Example 1 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_Rijndael::new();
+    /// let num: U512 = rand.random_with_msb_set_biguint();
+    /// println!("Random number = {}", num);
+    /// ``` */
+    #[inline]
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    {
+        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector(SHA2_512::new(), SHA2_512::new(), seed_collector)
+    }
+
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    /// Constructs a new struct Random_Generic with a seed collector function
+    /// and two seeds of type `u64`.
+    /// 
+    /// # Arguments
+    /// - `seed_collector` is a seed collector function to collect seeds, and
+    ///   is of the type `fn() -> [u64; 8]`.
+    /// - `seed` is the seed number of the type `u64`.
+    /// - `aux` is the seed number of the type `u64`.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Features
+    /// - The default seed collector function is provided in this module,
+    ///   but it is optimized for Unix/Linux though it works under Windows too.
+    /// - If you use this crate under Windows and/or you have a better one,
+    ///   you can use your own seed collector function by replacing the default
+    ///   seed collector function with your own one.
+    /// 
+    /// # Cryptographical Security
+    /// You are highly recommended to use the method `new_with_seed_arrays()`
+    /// rather than this method for security reason. It is because the default
+    /// seed collector function collects 1024 bits as a seed. If you use this
+    /// method, it results that you give only '128' bits (= '64' bits + '64'
+    /// bits) as a seed and the other '896' bits will be made out of the '128'
+    /// bits that you provided.
+/*  /// 
+    /// # Example 1 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// 
+    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
+    /// println!("Any number = {}", rand.random_u32());
+    /// ``` */
+    #[inline]
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    {
+        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector_seeds(SHA2_512::new(), SHA2_512::new(), seed_collector, seed, aux)
+    }
+
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    /// Constructs a new struct Random_Generic with a seed collector function
+    /// and two seed arrays of type `u64`.
+    /// 
+    /// # Arguments
+    /// - `seed_collector` is a seed collector function to collect seeds, and
+    ///   is of the type `fn() -> [u64; 8]`.
+    /// - `seed` is the seed array and is of `[u64; 8]`.
+    /// - `aux` is the seed array and is of `[u64; 8]`.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Features
+    /// - The default seed collector function is provided in this module,
+    ///   but it is optimized for Unix/Linux though it works under Windows too.
+    /// - If you use this crate under Windows and/or you have a better one,
+    ///   you can use your own seed collector function by replacing the default
+    ///   seed collector function with your own one.
+    /// 
+    /// # Cryptographical Security
+    /// You are highly recommended to use this method rather than the method
+    /// new_with_seed_collector_seeds for security reason. It is because the
+    /// default seed collector function collects 1024 bits as a seed. If you
+    /// use this method, it results that you give full '1024' bits (= '64'
+    /// bits X '8' X '2') as a seed and it is equivalent to use a seed
+    /// collector function.
+/*  /// 
+    /// # Example 1 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// 
+    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
+    /// println!("Any number = {}", rand.random_u32());
+    /// ``` */
+    #[inline]
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    {
+        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed_collector, seed, aux)
+    }
+}
+
 /// The struct `Random_Rijndael` that constructs the
 /// [`Random_Generic`](struct@Random_Generic) 
 /// object for implementing a pseudo-random number generator both for primitive
@@ -2825,175 +2995,6 @@ impl Any_SHA2_512
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
     {
         Random_Generic::new_with_generators_seed_collector_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed_collector, seed, aux)
-    }
-}
-
-/// The type `Random_SHA2_512` which is a pseudo-random number generator using
-/// a hash algorithm SHA-2-512.
-/// It is a specific version of the generic struct
-/// [`Random_Generic`](struct@Random_Generic).
-#[allow(non_camel_case_types)] 
-pub struct Random_SHA2_512 {}
-impl Random_SHA2_512
-{
-    pub fn new() -> Random_Generic<SECURE_COUNT>
-    {
-        Random_Generic::<SECURE_COUNT>::new_with(SHA2_512::new(), SHA2_512::new())
-    }
-
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
-    {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(SHA2_512::new(), SHA2_512::new(), seed, aux)
-    }
-
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT>
-    /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
-    /// 
-    /// # Arguments
-    /// - `seed` is the seed array and is of `[u64; 8]`.
-    /// - `aux` is the seed array and is of `[u64; 8]`.
-    /// 
-    /// # Output
-    /// It returns a new object of `Random_Generic`.
-    /// 
-    /// # Cryptographical Security
-    /// You are highly recommended to use this method rather than the method
-    /// new_with_seed_collector_seeds for security reason. It is because the
-    /// default seed collector function collects 1024 bits as a seed. If you
-    /// use this method, it results that you give full '1024' bits (= '64'
-    /// bits X '8' X '2') as a seed and it is equivalent to use a seed
-    /// collector function.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use cryptocol::random::Random_SHA2_512;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
-    /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
-    /// let mut rand = Random_SHA2_512::new_with_seed_arrays(seed, aux);
-    /// let num: U256 = rand.random_biguint();
-    /// ```
-    #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT>
-    {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed, aux)
-    }
-    
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<SECURE_COUNT>
-    /// Constructs a new `Random_Generic` object with a seed collector function.
-    /// 
-    /// # Arguments
-    /// `seed_collector` is a seed collector function to collect seeds, and
-    /// is of the type `fn() -> [u64; 8]`.
-    /// 
-    /// # Output
-    /// It returns a new object of `Random_Generic`.
-    /// 
-    /// # Features
-    /// - The default seed collector function is provided in this module,
-    ///   but it is optimized for Unix/Linux though it works under Windows too.
-    /// - If you use this crate under Windows and/or you have a better one,
-    ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ``` */
-    #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<SECURE_COUNT>
-    {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector(SHA2_512::new(), SHA2_512::new(), seed_collector)
-    }
-
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
-    /// Constructs a new struct Random_Generic with a seed collector function
-    /// and two seeds of type `u64`.
-    /// 
-    /// # Arguments
-    /// - `seed_collector` is a seed collector function to collect seeds, and
-    ///   is of the type `fn() -> [u64; 8]`.
-    /// - `seed` is the seed number of the type `u64`.
-    /// - `aux` is the seed number of the type `u64`.
-    /// 
-    /// # Output
-    /// It returns a new object of `Random_Generic`.
-    /// 
-    /// # Features
-    /// - The default seed collector function is provided in this module,
-    ///   but it is optimized for Unix/Linux though it works under Windows too.
-    /// - If you use this crate under Windows and/or you have a better one,
-    ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one.
-    /// 
-    /// # Cryptographical Security
-    /// You are highly recommended to use the method `new_with_seed_arrays()`
-    /// rather than this method for security reason. It is because the default
-    /// seed collector function collects 1024 bits as a seed. If you use this
-    /// method, it results that you give only '128' bits (= '64' bits + '64'
-    /// bits) as a seed and the other '896' bits will be made out of the '128'
-    /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
-    /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
-    #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
-    {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector_seeds(SHA2_512::new(), SHA2_512::new(), seed_collector, seed, aux)
-    }
-
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT>
-    /// Constructs a new struct Random_Generic with a seed collector function
-    /// and two seed arrays of type `u64`.
-    /// 
-    /// # Arguments
-    /// - `seed_collector` is a seed collector function to collect seeds, and
-    ///   is of the type `fn() -> [u64; 8]`.
-    /// - `seed` is the seed array and is of `[u64; 8]`.
-    /// - `aux` is the seed array and is of `[u64; 8]`.
-    /// 
-    /// # Output
-    /// It returns a new object of `Random_Generic`.
-    /// 
-    /// # Features
-    /// - The default seed collector function is provided in this module,
-    ///   but it is optimized for Unix/Linux though it works under Windows too.
-    /// - If you use this crate under Windows and/or you have a better one,
-    ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one.
-    /// 
-    /// # Cryptographical Security
-    /// You are highly recommended to use this method rather than the method
-    /// new_with_seed_collector_seeds for security reason. It is because the
-    /// default seed collector function collects 1024 bits as a seed. If you
-    /// use this method, it results that you give full '1024' bits (= '64'
-    /// bits X '8' X '2') as a seed and it is equivalent to use a seed
-    /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
-    /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
-    #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT>
-    {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed_collector, seed, aux)
     }
 }
 

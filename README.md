@@ -103,9 +103,9 @@ The checked items have already been implemented including documentation __at lea
 
 ### 4. Symmetric-key Algorithms for Block Encryption/Decryption of digital data
 #### 4-1. AES Finalists
-- [X] AES and Rijndael symmetric-key encryption/decryption algorithm and the trait implementations of Operation modes and padding bits for Rijndael_Generic
+- [X] AES (Advanced Encryption Standard) and Rijndael symmetric-key encryption/decryption algorithm, and the trait implementations of Operation modes and Padding bits for Rijndael_Generic
       --- Includes AES, Rijndael and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
-      [`Rijndael_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/rijndael/struct.Rijndael_Generic.html#struct.Rijndael_Generic),
+      [`Rijndael_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/struct.Rijndael_Generic.html#struct.Rijndael_Generic),
       [`ECB_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
       [`ECB_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
       [`CBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_PKCS7.html#trait.CBC_PKCS7),
@@ -160,9 +160,9 @@ The checked items have already been implemented including documentation __at lea
       --- Includes RC2 and its expanded versions. `RC2_Generic`
       ===> Moved to Roadmap for ver. 2.0
 -->
-- [X] DES symmetric-key encryption/decryption algorithm and the traits and its implementations of Operation modes and padding bits for DES_Generic
+- [X] DES (Data Encryption Standard) symmetric-key encryption/decryption algorithm, and the traits and its implementations of Operation modes and Padding bits for DES_Generic
       --- Includes DES and its expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
-      [`DES_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/des/struct.DES_Generic.html#struct.DES_Generic),
+      [`DES_Generic`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/struct.DES_Generic.html#struct.DES_Generic),
       [`ECB_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
       [`ECB_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
       [`CBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_PKCS7.html#trait.CBC_PKCS7),
@@ -178,9 +178,9 @@ The checked items have already been implemented including documentation __at lea
       ===> Moved to Roadmap for ver. 2.0
 -->
 #### 4-3. Containers for combining encryption/decryption algorithms
-- [X] BigCryptor128 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor128
+- [X] BigCryptor128 combinations of symmetric-key encryption/decryption algorithms, and the trait implementations of Operation modes and Padding bits for BigCryptor128
       --- Includes 2AES, 3AES, 4AES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
-      [BigCryptor128](https://docs.rs/cryptocol/latest/cryptocol/symmetric/big_cryptor/struct.BigCryptor128.html#struct.BigCryptor128),
+      [BigCryptor128](https://docs.rs/cryptocol/latest/cryptocol/symmetric/struct.BigCryptor128.html#struct.BigCryptor128),
       [`ECB_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
       [`ECB_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
       [`CBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_PKCS7.html#trait.CBC_PKCS7),
@@ -191,9 +191,9 @@ The checked items have already been implemented including documentation __at lea
       [`OFB`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.OFB.html#trait.OFB), and
       [`CTR`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CTR.html#trait.CTR).
       However, it is considered that 2AES, 3AES, 4AES, etc. are not very meaningful because AES-256, Rijndael_128_384, Rijndael_128_512, etc. are considered to be better than 2AES, 3AES, 4AES, etc.
-- [X] BigCryptor64 combinations of symmetric-key encryption/decryption algorithms and the trait implementations of Operation modes and padding bits for BigCryptor64
+- [X] BigCryptor64 combinations of symmetric-key encryption/decryption algorithms, and the trait implementations of Operation modes and Padding bits for BigCryptor64
       --- Includes 2DES, 3DES, 4DES, etc., and their expanded versions, and ECB, CBC, PCBC, CFB, OFB, and CTR modes, and padding bits according to PKCS#7 and ISO 7816-4.
-      [BigCryptor64](https://docs.rs/cryptocol/latest/cryptocol/symmetric/big_cryptor/struct.BigCryptor64.html#struct.BigCryptor64),
+      [BigCryptor64](https://docs.rs/cryptocol/latest/cryptocol/symmetric/struct.BigCryptor64.html#struct.BigCryptor64),
       [`ECB_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
       [`ECB_ISO`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_ISO.html#trait.ECB_ISO),
       [`CBC_PKCS7`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.CBC_PKCS7.html#trait.CBC_PKCS7),
@@ -246,8 +246,13 @@ The checked items have already been implemented including documentation __at lea
 
 ### 6. Asymmetric-key Algorithms for Encryption/Decryption of digital data
 
-- [ ] ECC (Elliptic Curve Cryptosystem)
-- [ ] RSA (Ron Rivest, Adi Shamir, Leonard Adleman) -- [`RSA_Generic`](https://docs.rs/cryptocol/latest/cryptocol/asymmetric/struct.RSA_Generic.html#struct.RSA_Generic).
+- [ ] ECC (Elliptic Curve Cryptosystem) asymmetric-key encryption/decryption algorithm, and the traits and its implementations of Padding bits for ECC_Generic
+      --- Includes ECC and its expanded versions.
+- [ ] RSA (Ron Rivest, Adi Shamir, Leonard Adleman) asymmetric-key encryption/decryption algorithm, and the traits and its implementations of Padding bits for RSA_Generic
+      --- Includes RSA and its expanded versions, and Padding bits according to PKCS #1 ver. 1.5 and OAEP (Optimal Asymmetric Encryption Padding) according to PKCS #1 ver. 2.0 and RFC 2437.
+      [`RSA_Generic`](https://docs.rs/cryptocol/latest/cryptocol/asymmetric/struct.RSA_Generic.html#struct.RSA_Generic),
+      [`PKCS1V15`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PKCS1V15.html#trait.PKCS1V15), and
+      OAEP.
 <!--
 - [ ] Rabin
     ===> Moved to Roadmap for ver. 2.0

@@ -9203,76 +9203,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint_low.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2 for Maximum case
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let mut a_biguint_low = U256::from_str_radix("FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF", 16).unwrap();
-    /// let mut a_biguint_high = U256::from_str_radix("FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF", 16).unwrap();
-    /// let b_biguint = U256::from_str_radix("FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF", 16).unwrap();
-    /// println!("Originally, a_biguint_low = {}\na_biguint_high = {}", a_biguint_low, a_biguint_high);
-    /// assert_eq!(a_biguint_low.is_overflow(), false);
-    /// assert_eq!(a_biguint_low.is_underflow(), false);
-    /// assert_eq!(a_biguint_low.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint_low.is_infinity(), false);
-    /// assert_eq!(a_biguint_low.is_undefined(), false);
-    /// assert_eq!(a_biguint_low.is_left_carry(), false);
-    /// assert_eq!(a_biguint_low.is_right_carry(), false);
-    /// 
-    /// assert_eq!(a_biguint_high.is_overflow(), false);
-    /// assert_eq!(a_biguint_high.is_underflow(), false);
-    /// assert_eq!(a_biguint_high.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint_high.is_infinity(), false);
-    /// assert_eq!(a_biguint_high.is_undefined(), false);
-    /// assert_eq!(a_biguint_high.is_left_carry(), false);
-    /// assert_eq!(a_biguint_high.is_right_carry(), false);
-    /// 
-    /// let res_biguint_high = a_biguint_low.carrying_mul_assign(&b_biguint, UU32::zero());
-    /// assert_eq!(res_biguint_high.is_overflow(), false);
-    /// assert_eq!(res_biguint_high.is_underflow(), false);
-    /// assert_eq!(res_biguint_high.is_divided_by_zero(), false);
-    /// assert_eq!(res_biguint_high.is_infinity(), false);
-    /// assert_eq!(res_biguint_high.is_undefined(), false);
-    /// assert_eq!(res_biguint_high.is_left_carry(), false);
-    /// assert_eq!(res_biguint_high.is_right_carry(), false);
-    /// 
-    /// let res_biguint_higher = a_biguint_high.carrying_mul_assign(&b_biguint, res_biguint_high);
-    /// println!("After a_biguint_low.carrying_mul_assign(&b_biguint, UU32::zero()),\na_biguint_low = {}", a_biguint_low);
-    /// println!("After a_biguint_high.carrying_mul_assign(&b_biguint, res_biguint_high),\na_biguint_high = {}", a_biguint_high);
-    /// println!("res_biguint_higher = {}", res_biguint_higher);
-    /// assert_eq!(res_biguint_higher.to_string_with_radix_and_stride(16, 8).unwrap(), "FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFE");
-    /// assert_eq!(res_biguint_higher.is_overflow(), false);
-    /// assert_eq!(res_biguint_higher.is_underflow(), false);
-    /// assert_eq!(res_biguint_higher.is_divided_by_zero(), false);
-    /// assert_eq!(res_biguint_higher.is_infinity(), false);
-    /// assert_eq!(res_biguint_higher.is_undefined(), false);
-    /// assert_eq!(res_biguint_higher.is_left_carry(), false);
-    /// assert_eq!(res_biguint_higher.is_right_carry(), false);
-    /// 
-    /// assert_eq!(a_biguint_high.to_string_with_radix_and_stride(16, 8).unwrap(), "FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF_FFFFFFFF");
-    /// assert_eq!(a_biguint_high.is_overflow(), true);
-    /// assert_eq!(a_biguint_high.is_underflow(), false);
-    /// assert_eq!(a_biguint_high.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint_high.is_infinity(), false);
-    /// assert_eq!(a_biguint_high.is_undefined(), false);
-    /// assert_eq!(a_biguint_high.is_left_carry(), false);
-    /// assert_eq!(a_biguint_high.is_right_carry(), false);
-    /// 
-    /// assert_eq!(a_biguint_low.to_string(), "1");
-    /// assert_eq!(a_biguint_low.is_overflow(), true);
-    /// assert_eq!(a_biguint_low.is_underflow(), false);
-    /// assert_eq!(a_biguint_low.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint_low.is_infinity(), false);
-    /// assert_eq!(a_biguint_low.is_undefined(), false);
-    /// assert_eq!(a_biguint_low.is_left_carry(), false);
-    /// assert_eq!(a_biguint_low.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
+    /// # For more examples,
+    /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.carrying_mul_assign)
     pub fn carrying_mul_assign(&mut self, rhs: &Self, carry: Self) -> Self
     {
         let mut high = self.widening_mul_assign(rhs);
@@ -12785,49 +12717,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U256::max();
-    /// println!("Originally, a_biguint = {}", a_biguint.to_string_with_radix_and_stride(2, 8).unwrap());
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// 
-    /// a_biguint.flip_assign();
-    /// assert_eq!(a_biguint.to_string(), "0");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// ```
-    /// 
-    /// # Example 3
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let mut a_biguint = U256::zero();
-    /// println!("Originally, a_biguint = {}", a_biguint.to_string_with_radix_and_stride(2, 8).unwrap());
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// 
-    /// a_biguint.flip_assign();
-    /// assert_eq!(a_biguint.to_string_with_radix_and_stride(2, 8).unwrap(), "11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// ```
+    /// # For more examples,
+    /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.flip_assign)
     pub fn flip_assign(&mut self)
     {
         for idx in 0..N
