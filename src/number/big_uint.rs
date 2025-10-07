@@ -3213,9 +3213,45 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     pub fn set_msb(&mut self)
     {
-        let highest = self.get_num_(N-1);
-        let msb = !(T::max() >> T::one());
-        self.set_num_(N-1, highest | msb);
+        let mut highest = self.get_num_(N-1);
+        highest.set_msb();
+        self.set_num_(N-1, highest);
+    }
+
+    // pub fn reset_msb(&mut self)
+    /// Sets the MSB (Most Significant Bit) of `BigUInt`-type number with `0`.
+    /// 
+    /// # Examples
+    /// ```
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut a_biguint = U256::new();
+    /// println!("a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
+    /// a_biguint.reset_msb();
+    /// println!("a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.to_string_with_radix_and_stride(2, 8).unwrap(), "00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000");
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// ```
+    pub fn reset_msb(&mut self)
+    {
+        let mut highest = self.get_num_(N-1);
+        highest.reset_msb();
+        self.set_num_(N-1, highest);
     }
 
     // pub fn set_lsb(&mut self)
@@ -3249,9 +3285,45 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// ```
     pub fn set_lsb(&mut self)
     {
-        let lowest = self.get_num_(0);
-        let lsb = T::one();
-        self.set_num_(0, lowest | lsb);
+        let mut lowest = self.get_num_(0);
+        lowest.set_lsb();
+        self.set_num_(0, lowest);
+    }
+
+    // pub fn reset_lsb(&mut self)
+    /// Sets the LSB (Least Significant Bit) of `BigUInt`-type number with `1`.
+    /// 
+    /// # Examples
+    /// ```
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut a_biguint = U256::new();
+    /// println!("a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
+    /// a_biguint.set_lsb();
+    /// println!("a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.to_string_with_radix_and_stride(2, 8).unwrap(), "1");
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// ```
+    pub fn reset_lsb(&mut self)
+    {
+        let mut lowest = self.get_num_(0);
+        lowest.reset_lsb();
+        self.set_num_(0, lowest);
     }
 
     // pub fn set_uint<U>(&mut self, val: U)

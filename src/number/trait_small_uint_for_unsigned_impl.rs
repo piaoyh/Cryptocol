@@ -999,10 +999,20 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
             /// [Read more](trait@SmallUInt#tymethod.set_msb) in detail.
             #[inline] fn set_msb(&mut self)     { *self |= !(Self::MAX >> 1); }
 
+            /// Sets the MSB (Most Significant Bit) of `SmallUInt`-type
+            /// number with `0`.
+            /// [Read more](trait@SmallUInt#tymethod.set_msb) in detail.
+            #[inline] fn reset_msb(&mut self)     { *self &= (Self::MAX >> 1); }
+
             /// Sets the LSB (Least Significant Bit) of `SmallUInt`-type
             /// number with `1`.
             /// [Read more](trait@SmallUInt#tymethod.set_lsb) in detail.
             #[inline] fn set_lsb(&mut self)     { *self |= 1; }
+
+            /// Sets the LSB (Least Significant Bit) of `SmallUInt`-type
+            /// number with `0`.
+            /// [Read more](trait@SmallUInt#tymethod.set_lsb) in detail.
+            #[inline] fn reset_lsb(&mut self)     { *self &= !1; }
 
             /// Constucts a new `SmallUInt` which has the value zero and sets
             /// only the bit specified by the argument bit_pos to be 1.

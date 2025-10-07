@@ -238,7 +238,7 @@ The checked items have already been implemented including documentation __at lea
       [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_MD5.html#struct.Any_MD5), and
       [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_MD4.html#struct.Any_MD4).
 - [X] Pseudo-random number generator engines using symmetric-key block encryption algorithms ---
-      [`Random_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/struct.Random_Rijndael.html#struct.Random_Rijndael),
+      [`Random_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_Rijndael.html#struct.Random_Rijndael),
       [`Any_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_Rijndael.html#struct.Any_Rijndael), and
       [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_DES.html#struct.Any_DES).
 - [X] Pseudo-random number generator engines using simple randomization algorithm ---
@@ -251,7 +251,7 @@ The checked items have already been implemented including documentation __at lea
 - [ ] RSA (Ron Rivest, Adi Shamir, Leonard Adleman) asymmetric-key encryption/decryption algorithm, and the traits and its implementations of Padding bits for RSA_Generic
       --- Includes RSA and its expanded versions, and Padding bits according to PKCS #1 ver. 1.5 and OAEP (Optimal Asymmetric Encryption Padding) according to PKCS #1 ver. 2.0 and RFC 2437.
       [`RSA_Generic`](https://docs.rs/cryptocol/latest/cryptocol/asymmetric/struct.RSA_Generic.html#struct.RSA_Generic),
-      [`PKCS1V15`](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.PKCS1V15.html#trait.PKCS1V15), and
+      [`PKCS1V15`](https://docs.rs/cryptocol/latest/cryptocol/asymmetric/trait.PKCS1V15.html#trait.PKCS1V15), and
       OAEP.
 <!--
 - [ ] Rabin

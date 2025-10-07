@@ -28045,7 +28045,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// {
     ///     let mut a_u64 = 0b0000001111111000000011111111101100111000111100001111100000111111_u64;
     ///     println!("Originally, a_u64 = {:064b}", a_u64);
-    ///     func(&mut a_u64);
+    ///     a_u64.set_msb();
     ///     println!("After a_u64.set_msb(), a_u64 = {:064b}.", a_u64);
     ///     assert_eq!(a_u64, 0b1000001111111000000011111111101100111000111100001111100000111111_u64);
     /// 
@@ -28605,6 +28605,685 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// }
     /// ```
     fn set_msb(&mut self);
+
+    // fn reset_msb(&mut self)
+    /// Sets the MSB (Most Significant Bit) of `Self`-type number with `0`.
+    /// 
+    /// # Example 1 for u8
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_u8 = 0b00110011_u8;
+    ///     println!("Originally, a_u8 = {:08b}", a_u8);
+    ///     a_u8.reset_msb();
+    ///     println!("After a_u8.reset_msb(), a_u8 = {:08b}.", a_u8);
+    ///     assert_eq!(a_u8, 0b00110011_u8);
+    /// 
+    ///     let mut b_u8 = 0b10110011_u8;
+    ///     println!("Originally, b_u8 = {:08b}", b_u8);
+    ///     b_u8.reset_msb();
+    ///     println!("After b_u8.reset_msb(), b_u8 = {:08b}.", b_u8);
+    ///     assert_eq!(b_u8, 0b00110011_u8);
+    /// 
+    ///     let mut c_u8 = 0b00110011_u8;
+    ///     println!("Originally, c_u8 = {:08b}", c_u8);
+    ///     func(&mut c_u8);
+    ///     println!("After c_u8.reset_msb(), c_u8 = {:08b}.", c_u8);
+    ///     assert_eq!(c_u8, 0b00110011_u8);
+    /// 
+    ///     let mut d_u8 = 0b10110011_u8;
+    ///     println!("Originally, d_u8 = {:08b}", d_u8);
+    ///     func(&mut d_u8);
+    ///     println!("After d_u8.reset_msb(), d_u8 = {:08b}.", d_u8);
+    ///     assert_eq!(d_u8, 0b00110011_u8);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_msb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 2 for u16
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_u16 = 0b0001111101100111_u16;
+    ///     println!("Originally, a_u16 = {:016b}", a_u16);
+    ///     a_u16.reset_msb();
+    ///     println!("After a_u16.reset_msb(), a_u16 = {:016b}.", a_u16);
+    ///     assert_eq!(a_u16, 0b0001111101100111_u16);
+    /// 
+    ///     let mut b_u16 = 0b1001111101100111_u16;
+    ///     println!("Originally, b_u16 = {:016b}", b_u16);
+    ///     b_u16.reset_msb();
+    ///     println!("After b_u16.reset_msb(), b_u16 = {:016b}.", b_u16);
+    ///     assert_eq!(b_u16, 0b0001111101100111_u16);
+    /// 
+    ///     let mut c_u16 = 0b0001111101100111_u16;
+    ///     println!("Originally, c_u16 = {:016b}", c_u16);
+    ///     func(&mut c_u16);
+    ///     println!("After c_u16.reset_msb(), c_u16 = {:016b}.", c_u16);
+    ///     assert_eq!(c_u16, 0b0001111101100111_u16);
+    /// 
+    ///     let mut d_u16 = 0b1001111101100111_u16;
+    ///     println!("Originally, d_u16 = {:016b}", d_u16);
+    ///     func(&mut d_u16);
+    ///     println!("After d_u16.reset_msb(), d_u16 = {:016b}.", d_u16);
+    ///     assert_eq!(d_u16, 0b0001111101100111_u16);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_msb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 3 for u32
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_u32 = 0b00111000111100001111100000111011_u32;
+    ///     println!("Originally, a_u32 = {:032b}", a_u32);
+    ///     a_u32.reset_msb();
+    ///     println!("After a_u32.reset_msb(), a_u32 = {:032b}.", a_u32);
+    ///     assert_eq!(a_u32, 0b00111000111100001111100000111011_u32);
+    /// 
+    ///     let mut b_u32 = 0b10111000111100001111100000111011_u32;
+    ///     println!("Originally, b_u32 = {:032b}", b_u32);
+    ///     b_u32.reset_msb();
+    ///     println!("After b_u32.reset_msb(), b_u32 = {:032b}.", b_u32);
+    ///     assert_eq!(b_u32, 0b00111000111100001111100000111011_u32);
+    /// 
+    ///     let mut c_u32 = 0b00111000111100001111100000111011_u32;
+    ///     println!("Originally, c_u32 = {:032b}", c_u32);
+    ///     func(&mut c_u32);
+    ///     println!("After c_u32.reset_msb(), c_u32 = {:032b}.", c_u32);
+    ///     assert_eq!(c_u32, 0b00111000111100001111100000111011_u32);
+    /// 
+    ///     let mut d_u32 = 0b10111000111100001111100000111011_u32;
+    ///     println!("Originally, d_u32 = {:032b}", d_u32);
+    ///     func(&mut d_u32);
+    ///     println!("After d_u32.reset_msb(), d_u32 = {:032b}.", d_u32);
+    ///     assert_eq!(d_u32, 0b00111000111100001111100000111011_u32);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_msb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 4 for u64
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_u64 = 0b0000001111111000000011111111101100111000111100001111100000111111_u64;
+    ///     println!("Originally, a_u64 = {:064b}", a_u64);
+    ///     a_u64.reset_msb();
+    ///     println!("After a_u64.reset_msb(), a_u64 = {:064b}.", a_u64);
+    ///     assert_eq!(a_u64, 0b0000001111111000000011111111101100111000111100001111100000111111_u64);
+    /// 
+    ///     let mut b_u64 = 0b1000001111111000000011111111101100111000111100001111100000111111_u64;
+    ///     println!("Originally, b_u64 = {:064b}", b_u64);
+    ///     b_u64.reset_msb();
+    ///     println!("After b_u64.reset_msb(), b_u64 = {:064b}.", b_u64);
+    ///     assert_eq!(a_u64, 0b0000001111111000000011111111101100111000111100001111100000111111_u64);
+    /// 
+    ///     let mut c_u64 = 0b0000001111111000000011111111101100111000111100001111100000111111_u64;
+    ///     println!("Originally, c_u64 = {:064b}", c_u64);
+    ///     func(&mut c_u64);
+    ///     println!("After c_u64.reset_msb(), c_u64 = {:064b}.", c_u64);
+    ///     assert_eq!(c_u64, 0b0000001111111000000011111111101100111000111100001111100000111111_u64);
+    /// 
+    ///     let mut d_u64 = 0b1000001111111000000011111111101100111000111100001111100000111111_u64;
+    ///     println!("Originally, d_u64 = {:064b}", d_u64);
+    ///     func(&mut d_u64);
+    ///     println!("After d_u64.reset_msb(), d_u64 = {:064b}.", d_u64);
+    ///     assert_eq!(c_u64, 0b0000001111111000000011111111101100111000111100001111100000111111_u64);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_msb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 5 for u128
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_u128 = 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128;
+    ///     println!("Originally, a_u128 = {:0128b}", a_u128);
+    ///     a_u128.reset_msb();
+    ///     println!("After a_u128.reset_msb(), a_u128 = {:0128b}.", a_u128);
+    ///     assert_eq!(a_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128);
+    /// 
+    ///     let mut b_u128 = 0b10000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128;
+    ///     println!("Originally, b_u128 = {:0128b}", b_u128);
+    ///     b_u128.reset_msb();
+    ///     println!("After b_u128.reset_msb(), b_u128 = {:0128b}.", b_u128);
+    ///     assert_eq!(a_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128);
+    /// 
+    ///     let mut c_u128 = 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128;
+    ///     println!("Originally, c_u128 = {:0128b}", c_u128);
+    ///     func(&mut c_u128);
+    ///     println!("After c_u128.reset_msb(), c_u128 = {:0128b}.", c_u128);
+    ///     assert_eq!(c_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128);
+    /// 
+    ///     let mut d_u128 = 0b10000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128;
+    ///     println!("Originally, d_u128 = {:0128b}", d_u128);
+    ///     func(&mut d_u128);
+    ///     println!("After d_u128.reset_msb(), d_u128 = {:0128b}.", d_u128);
+    ///     assert_eq!(c_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_msb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 6 for usize
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_usize = 0b0000111110000011111100000011111110000000111111111011001110001111_usize;
+    ///     println!("Originally, a_usize = {:064b}", a_usize);
+    ///     a_usize.reset_msb();
+    ///     println!("After a_usize.reset_msb(), a_usize = {:064b}.", a_usize);
+    ///     assert_eq!(a_usize, 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// 
+    ///     let mut b_usize = 0b1000111110000011111100000011111110000000111111111011001110001111_usize;
+    ///     println!("Originally, b_usize = {:064b}", b_usize);
+    ///     b_usize.reset_msb();
+    ///     println!("After b_usize.reset_msb(), b_usize = {:064b}.", b_usize);
+    ///     assert_eq!(b_usize, 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// 
+    ///     let mut c_usize = 0b0000111110000011111100000011111110000000111111111011001110001111_usize;
+    ///     println!("Originally, c_usize = {:064b}", c_usize);
+    ///     func(&mut c_usize);
+    ///     println!("After c_usize.reset_msb(), c_usize = {:064b}.", c_usize);
+    ///     assert_eq!(c_usize, 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// 
+    ///     let mut d_usize = 0b1000111110000011111100000011111110000000111111111011001110001111_usize;
+    ///     println!("Originally, d_usize = {:064b}", d_usize);
+    ///     func(&mut d_usize);
+    ///     println!("After d_usize.reset_msb(), d_usize = {:064b}.", d_usize);
+    ///     assert_eq!(d_usize, 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_msb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 7 for ShortUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_shortunion = 0b0011100011111011_u16.into_shortunion();
+    ///     println!("Originally, a_shortunion = {:016b}", a_shortunion.get());
+    ///     a_shortunion.reset_msb();
+    ///     println!("After a_shortunion.reset_msb(), a_shortunion = {:016b}.", a_shortunion.get());
+    ///     assert_eq!(a_shortunion.get(), 0b0011100011111011_u16);
+    /// 
+    ///     let mut b_shortunion = 0b1011100011111011_u16.into_shortunion();
+    ///     println!("Originally, b_shortunion = {:016b}", b_shortunion.get());
+    ///     b_shortunion.reset_msb();
+    ///     println!("After b_shortunion.reset_msb(), b_shortunion = {:016b}.", b_shortunion.get());
+    ///     assert_eq!(a_shortunion.get(), 0b0011100011111011_u16);
+    /// 
+    ///     let mut c_shortunion = 0b0011100011111011_u16.into_shortunion();
+    ///     println!("Originally, c_shortunion = {:016b}", c_shortunion.get());
+    ///     func(&mut c_shortunion);
+    ///     println!("After c_shortunion.reset_msb(), c_shortunion = {:016b}.", c_shortunion.get());
+    ///     assert_eq!(c_shortunion.get(), 0b0011100011111011_u16);
+    /// 
+    ///     let mut d_shortunion = 0b1011100011111011_u16.into_shortunion();
+    ///     println!("Originally, d_shortunion = {:016b}", d_shortunion.get());
+    ///     func(&mut d_shortunion);
+    ///     println!("After d_shortunion.reset_msb(), d_shortunion = {:016b}.", d_shortunion.get());
+    ///     assert_eq!(c_shortunion.get(), 0b0011100011111011_u16);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_msb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 8 for IntUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_intunion = 0b01100111000111100001111100000111_u32.into_intunion();
+    ///     println!("Originally, a_intunion = {:032b}", a_intunion.get());
+    ///     a_intunion.reset_msb();
+    ///     println!("After a_intunion.reset_msb(), a_intunion = {:032b}.", a_intunion.get());
+    ///     assert_eq!(a_intunion.get(), 0b01100111000111100001111100000111_u32);
+    /// 
+    ///     let mut b_intunion = 0b11100111000111100001111100000111_u32.into_intunion();
+    ///     println!("Originally, b_intunion = {:032b}", b_intunion.get());
+    ///     b_intunion.reset_msb();
+    ///     println!("After b_intunion.reset_msb(), b_intunion = {:032b}.", b_intunion.get());
+    ///     assert_eq!(b_intunion.get(), 0b01100111000111100001111100000111_u32);
+    /// 
+    ///     let mut c_intunion = 0b01100111000111100001111100000111_u32.into_intunion();
+    ///     println!("Originally, c_intunion = {:032b}", c_intunion.get());
+    ///     func(&mut c_intunion);
+    ///     println!("After c_intunion.reset_msb(), c_intunion = {:032b}.", c_intunion.get());
+    ///     assert_eq!(c_intunion.get(), 0b01100111000111100001111100000111_u32);
+    /// 
+    ///     let mut d_intunion = 0b11100111000111100001111100000111_u32.into_intunion();
+    ///     println!("Originally, d_intunion = {:032b}", d_intunion.get());
+    ///     func(&mut d_intunion);
+    ///     println!("After d_intunion.reset_msb(), d_intunion = {:032b}.", d_intunion.get());
+    ///     assert_eq!(d_intunion.get(), 0b01100111000111100001111100000111_u32);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_msb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 9 for LongUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_longunion = 0b0000011111100000011111110000000111111111011001110001111000011111_u64.into_longunion();
+    ///     println!("Originally, a_longunion = {:064b}", a_longunion.get());
+    ///     a_longunion.reset_msb();
+    ///     println!("After a_longunion.reset_msb(), a_longunion = {:064b}.", a_longunion.get());
+    ///     assert_eq!(a_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011111_u64);
+    /// 
+    ///     let mut b_longunion = 0b1000011111100000011111110000000111111111011001110001111000011111_u64.into_longunion();
+    ///     println!("Originally, b_longunion = {:064b}", b_longunion.get());
+    ///     b_longunion.reset_msb();
+    ///     println!("After b_longunion.reset_msb(), b_longunion = {:064b}.", b_longunion.get());
+    ///     assert_eq!(b_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011111_u64);
+    /// 
+    ///     let mut c_longunion = 0b0000011111100000011111110000000111111111011001110001111000011111_u64.into_longunion();
+    ///     println!("Originally, c_longunion = {:064b}", c_longunion.get());
+    ///     func(&mut c_longunion);
+    ///     println!("After c_longunion.reset_msb(), c_longunion = {:064b}.", c_longunion.get());
+    ///     assert_eq!(c_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011111_u64);
+    /// 
+    ///     let mut d_longunion = 0b1000011111100000011111110000000111111111011001110001111000011111_u64.into_longunion();
+    ///     println!("Originally, d_longunion = {:064b}", d_longunion.get());
+    ///     func(&mut d_longunion);
+    ///     println!("After d_longunion.reset_msb(), d_longunion = {:064b}.", d_longunion.get());
+    ///     assert_eq!(d_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011111_u64);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_msb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 10 for LongerUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_longerunion = 0b00000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128.into_longerunion();
+    ///     println!("Originally, a_longerunion = {:0128b}", a_longerunion.get());
+    ///     a_longerunion.reset_msb();
+    ///     println!("After a_longerunion.reset_msb(), a_longerunion = {:0128b}.", a_longerunion.get());
+    ///     assert_eq!(a_longerunion.get(), 0b00000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128);
+    /// 
+    ///     let mut b_longerunion = 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128.into_longerunion();
+    ///     println!("Originally, b_longerunion = {:0128b}", b_longerunion.get());
+    ///     b_longerunion.reset_msb();
+    ///     println!("After b_longerunion.reset_msb(), b_longerunion = {:0128b}.", b_longerunion.get());
+    ///     assert_eq!(b_longerunion.get(), 0b00000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128);
+    /// 
+    ///     let mut c_longerunion = 0b00000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128.into_longerunion();
+    ///     println!("Originally, c_longerunion = {:0128b}", c_longerunion.get());
+    ///     func(&mut c_longerunion);
+    ///     println!("After c_longerunion.reset_msb(), c_longerunion = {:0128b}.", c_longerunion.get());
+    ///     assert_eq!(c_longerunion.get(), 0b00000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128);
+    /// 
+    ///     let mut d_longerunion = 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128.into_longerunion();
+    ///     println!("Originally, d_longerunion = {:0128b}", d_longerunion.get());
+    ///     func(&mut d_longerunion);
+    ///     println!("After d_longerunion.reset_msb(), d_longerunion = {:0128b}.", d_longerunion.get());
+    ///     assert_eq!(d_longerunion.get(), 0b00000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_msb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 11 for SizeUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_sizeunion = 0b0000111110000011111100000011111110000000111111111011001110001111_usize.into_sizeunion();
+    ///     println!("Originally, a_sizeunion = {:064b}", a_sizeunion.get());
+    ///     a_sizeunion.reset_msb();
+    ///     println!("After a_sizeunion.reset_msb(), a_sizeunion = {:064b}.", a_sizeunion.get());
+    ///     assert_eq!(a_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// 
+    ///     let mut b_sizeunion = 0b1000111110000011111100000011111110000000111111111011001110001111_usize.into_sizeunion();
+    ///     println!("Originally, b_sizeunion = {:064b}", b_sizeunion.get());
+    ///     b_sizeunion.reset_msb();
+    ///     println!("After b_sizeunion.reset_msb(), b_sizeunion = {:064b}.", b_sizeunion.get());
+    ///     assert_eq!(b_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// 
+    ///     let mut c_sizeunion = 0b0000111110000011111100000011111110000000111111111011001110001111_usize.into_sizeunion();
+    ///     println!("Originally, c_sizeunion = {:064b}", c_sizeunion.get());
+    ///     func(&mut c_sizeunion);
+    ///     println!("After c_sizeunion.reset_msb(), c_sizeunion = {:064b}.", c_sizeunion.get());
+    ///     assert_eq!(c_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// 
+    ///     let mut d_sizeunion = 0b1000111110000011111100000011111110000000111111111011001110001111_usize.into_sizeunion();
+    ///     println!("Originally, d_sizeunion = {:064b}", d_sizeunion.get());
+    ///     func(&mut d_sizeunion);
+    ///     println!("After d_sizeunion.reset_msb(), d_sizeunion = {:064b}.", d_sizeunion.get());
+    ///     assert_eq!(d_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_msb()
+    /// }
+    /// ```
+    /// You can use the above generic function `func<>()` for all
+    /// SmallUInt-supported data types in a same scope.
+    /// Look into the following example.
+    /// 
+    /// # Collective Example
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_u8 = 0b00110011_u8;
+    ///     println!("Originally, a_u8 = {:08b}", a_u8);
+    ///     a_u8.reset_msb();
+    ///     println!("After a_u8.reset_msb(), a_u8 = {:08b}.", a_u8);
+    ///     assert_eq!(a_u8, 0b00110011_u8);
+    /// 
+    ///     let mut b_u8 = 0b10110011_u8;
+    ///     println!("Originally, b_u8 = {:08b}", b_u8);
+    ///     b_u8.reset_msb();
+    ///     println!("After b_u8.reset_msb(), b_u8 = {:08b}.", b_u8);
+    ///     assert_eq!(b_u8, 0b00110011_u8);
+    /// 
+    ///     let mut c_u8 = 0b00110011_u8;
+    ///     println!("Originally, c_u8 = {:08b}", c_u8);
+    ///     func(&mut c_u8);
+    ///     println!("After c_u8.reset_msb(), c_u8 = {:08b}.", c_u8);
+    ///     assert_eq!(c_u8, 0b00110011_u8);
+    /// 
+    ///     let mut d_u8 = 0b10110011_u8;
+    ///     println!("Originally, d_u8 = {:08b}", d_u8);
+    ///     func(&mut d_u8);
+    ///     println!("After d_u8.reset_msb(), d_u8 = {:08b}.", d_u8);
+    ///     assert_eq!(d_u8, 0b00110011_u8);
+    /// 
+    ///     let mut a_u16 = 0b0001111101100111_u16;
+    ///     println!("Originally, a_u16 = {:016b}", a_u16);
+    ///     a_u16.reset_msb();
+    ///     println!("After a_u16.reset_msb(), a_u16 = {:016b}.", a_u16);
+    ///     assert_eq!(a_u16, 0b0001111101100111_u16);
+    /// 
+    ///     let mut b_u16 = 0b1001111101100111_u16;
+    ///     println!("Originally, b_u16 = {:016b}", b_u16);
+    ///     b_u16.reset_msb();
+    ///     println!("After b_u16.reset_msb(), b_u16 = {:016b}.", b_u16);
+    ///     assert_eq!(b_u16, 0b0001111101100111_u16);
+    /// 
+    ///     let mut c_u16 = 0b0001111101100111_u16;
+    ///     println!("Originally, c_u16 = {:016b}", c_u16);
+    ///     func(&mut c_u16);
+    ///     println!("After c_u16.reset_msb(), c_u16 = {:016b}.", c_u16);
+    ///     assert_eq!(c_u16, 0b0001111101100111_u16);
+    /// 
+    ///     let mut d_u16 = 0b1001111101100111_u16;
+    ///     println!("Originally, d_u16 = {:016b}", d_u16);
+    ///     func(&mut d_u16);
+    ///     println!("After d_u16.reset_msb(), d_u16 = {:016b}.", d_u16);
+    ///     assert_eq!(d_u16, 0b0001111101100111_u16);
+    /// 
+    ///     let mut a_u32 = 0b00111000111100001111100000111011_u32;
+    ///     println!("Originally, a_u32 = {:032b}", a_u32);
+    ///     a_u32.reset_msb();
+    ///     println!("After a_u32.reset_msb(), a_u32 = {:032b}.", a_u32);
+    ///     assert_eq!(a_u32, 0b00111000111100001111100000111011_u32);
+    /// 
+    ///     let mut b_u32 = 0b10111000111100001111100000111011_u32;
+    ///     println!("Originally, b_u32 = {:032b}", b_u32);
+    ///     b_u32.reset_msb();
+    ///     println!("After b_u32.reset_msb(), b_u32 = {:032b}.", b_u32);
+    ///     assert_eq!(b_u32, 0b00111000111100001111100000111011_u32);
+    /// 
+    ///     let mut c_u32 = 0b00111000111100001111100000111011_u32;
+    ///     println!("Originally, c_u32 = {:032b}", c_u32);
+    ///     func(&mut c_u32);
+    ///     println!("After c_u32.reset_msb(), c_u32 = {:032b}.", c_u32);
+    ///     assert_eq!(c_u32, 0b00111000111100001111100000111011_u32);
+    /// 
+    ///     let mut d_u32 = 0b10111000111100001111100000111011_u32;
+    ///     println!("Originally, d_u32 = {:032b}", d_u32);
+    ///     func(&mut d_u32);
+    ///     println!("After d_u32.reset_msb(), d_u32 = {:032b}.", d_u32);
+    ///     assert_eq!(d_u32, 0b00111000111100001111100000111011_u32);
+    /// 
+    ///     let mut a_u64 = 0b0000001111111000000011111111101100111000111100001111100000111111_u64;
+    ///     println!("Originally, a_u64 = {:064b}", a_u64);
+    ///     a_u64.reset_msb();
+    ///     println!("After a_u64.reset_msb(), a_u64 = {:064b}.", a_u64);
+    ///     assert_eq!(a_u64, 0b0000001111111000000011111111101100111000111100001111100000111111_u64);
+    /// 
+    ///     let mut b_u64 = 0b1000001111111000000011111111101100111000111100001111100000111111_u64;
+    ///     println!("Originally, b_u64 = {:064b}", b_u64);
+    ///     b_u64.reset_msb();
+    ///     println!("After b_u64.reset_msb(), b_u64 = {:064b}.", b_u64);
+    ///     assert_eq!(a_u64, 0b0000001111111000000011111111101100111000111100001111100000111111_u64);
+    /// 
+    ///     let mut c_u64 = 0b0000001111111000000011111111101100111000111100001111100000111111_u64;
+    ///     println!("Originally, c_u64 = {:064b}", c_u64);
+    ///     func(&mut c_u64);
+    ///     println!("After c_u64.reset_msb(), c_u64 = {:064b}.", c_u64);
+    ///     assert_eq!(c_u64, 0b0000001111111000000011111111101100111000111100001111100000111111_u64);
+    /// 
+    ///     let mut d_u64 = 0b1000001111111000000011111111101100111000111100001111100000111111_u64;
+    ///     println!("Originally, d_u64 = {:064b}", d_u64);
+    ///     func(&mut d_u64);
+    ///     println!("After d_u64.reset_msb(), d_u64 = {:064b}.", d_u64);
+    ///     assert_eq!(c_u64, 0b0000001111111000000011111111101100111000111100001111100000111111_u64);
+    /// 
+    ///     let mut a_u128 = 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128;
+    ///     println!("Originally, a_u128 = {:0128b}", a_u128);
+    ///     a_u128.reset_msb();
+    ///     println!("After a_u128.reset_msb(), a_u128 = {:0128b}.", a_u128);
+    ///     assert_eq!(a_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128);
+    /// 
+    ///     let mut b_u128 = 0b10000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128;
+    ///     println!("Originally, b_u128 = {:0128b}", b_u128);
+    ///     b_u128.reset_msb();
+    ///     println!("After b_u128.reset_msb(), b_u128 = {:0128b}.", b_u128);
+    ///     assert_eq!(a_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128);
+    /// 
+    ///     let mut c_u128 = 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128;
+    ///     println!("Originally, c_u128 = {:0128b}", c_u128);
+    ///     func(&mut c_u128);
+    ///     println!("After c_u128.reset_msb(), c_u128 = {:0128b}.", c_u128);
+    ///     assert_eq!(c_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128);
+    /// 
+    ///     let mut d_u128 = 0b10000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128;
+    ///     println!("Originally, d_u128 = {:0128b}", d_u128);
+    ///     func(&mut d_u128);
+    ///     println!("After d_u128.reset_msb(), d_u128 = {:0128b}.", d_u128);
+    ///     assert_eq!(c_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128);
+    /// 
+    ///     let mut a_usize = 0b0000111110000011111100000011111110000000111111111011001110001111_usize;
+    ///     println!("Originally, a_usize = {:064b}", a_usize);
+    ///     a_usize.reset_msb();
+    ///     println!("After a_usize.reset_msb(), a_usize = {:064b}.", a_usize);
+    ///     assert_eq!(a_usize, 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// 
+    ///     let mut b_usize = 0b1000111110000011111100000011111110000000111111111011001110001111_usize;
+    ///     println!("Originally, b_usize = {:064b}", b_usize);
+    ///     b_usize.reset_msb();
+    ///     println!("After b_usize.reset_msb(), b_usize = {:064b}.", b_usize);
+    ///     assert_eq!(b_usize, 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// 
+    ///     let mut c_usize = 0b0000111110000011111100000011111110000000111111111011001110001111_usize;
+    ///     println!("Originally, c_usize = {:064b}", c_usize);
+    ///     func(&mut c_usize);
+    ///     println!("After c_usize.reset_msb(), c_usize = {:064b}.", c_usize);
+    ///     assert_eq!(c_usize, 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// 
+    ///     let mut d_usize = 0b1000111110000011111100000011111110000000111111111011001110001111_usize;
+    ///     println!("Originally, d_usize = {:064b}", d_usize);
+    ///     func(&mut d_usize);
+    ///     println!("After d_usize.reset_msb(), d_usize = {:064b}.", d_usize);
+    ///     assert_eq!(d_usize, 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// 
+    ///     let mut a_shortunion = 0b0011100011111011_u16.into_shortunion();
+    ///     println!("Originally, a_shortunion = {:016b}", a_shortunion.get());
+    ///     a_shortunion.reset_msb();
+    ///     println!("After a_shortunion.reset_msb(), a_shortunion = {:016b}.", a_shortunion.get());
+    ///     assert_eq!(a_shortunion.get(), 0b0011100011111011_u16);
+    /// 
+    ///     let mut b_shortunion = 0b1011100011111011_u16.into_shortunion();
+    ///     println!("Originally, b_shortunion = {:016b}", b_shortunion.get());
+    ///     b_shortunion.reset_msb();
+    ///     println!("After b_shortunion.reset_msb(), b_shortunion = {:016b}.", b_shortunion.get());
+    ///     assert_eq!(a_shortunion.get(), 0b0011100011111011_u16);
+    /// 
+    ///     let mut c_shortunion = 0b0011100011111011_u16.into_shortunion();
+    ///     println!("Originally, c_shortunion = {:016b}", c_shortunion.get());
+    ///     func(&mut c_shortunion);
+    ///     println!("After c_shortunion.reset_msb(), c_shortunion = {:016b}.", c_shortunion.get());
+    ///     assert_eq!(c_shortunion.get(), 0b0011100011111011_u16);
+    /// 
+    ///     let mut d_shortunion = 0b1011100011111011_u16.into_shortunion();
+    ///     println!("Originally, d_shortunion = {:016b}", d_shortunion.get());
+    ///     func(&mut d_shortunion);
+    ///     println!("After d_shortunion.reset_msb(), d_shortunion = {:016b}.", d_shortunion.get());
+    ///     assert_eq!(c_shortunion.get(), 0b0011100011111011_u16);
+    /// 
+    ///     let mut a_intunion = 0b01100111000111100001111100000111_u32.into_intunion();
+    ///     println!("Originally, a_intunion = {:032b}", a_intunion.get());
+    ///     a_intunion.set_msb();
+    ///     println!("After a_intunion.reset_msb(), a_intunion = {:032b}.", a_intunion.get());
+    ///     assert_eq!(a_intunion.get(), 0b01100111000111100001111100000111_u32);
+    /// 
+    ///     let mut b_intunion = 0b11100111000111100001111100000111_u32.into_intunion();
+    ///     println!("Originally, b_intunion = {:032b}", b_intunion.get());
+    ///     b_intunion.set_msb();
+    ///     println!("After b_intunion.reset_msb(), b_intunion = {:032b}.", b_intunion.get());
+    ///     assert_eq!(b_intunion.get(), 0b01100111000111100001111100000111_u32);
+    /// 
+    ///     let mut c_intunion = 0b01100111000111100001111100000111_u32.into_intunion();
+    ///     println!("Originally, c_intunion = {:032b}", c_intunion.get());
+    ///     func(&mut c_intunion);
+    ///     println!("After c_intunion.reset_msb(), c_intunion = {:032b}.", c_intunion.get());
+    ///     assert_eq!(c_intunion.get(), 0b01100111000111100001111100000111_u32);
+    /// 
+    ///     let mut d_intunion = 0b11100111000111100001111100000111_u32.into_intunion();
+    ///     println!("Originally, d_intunion = {:032b}", d_intunion.get());
+    ///     func(&mut d_intunion);
+    ///     println!("After d_intunion.reset_msb(), d_intunion = {:032b}.", d_intunion.get());
+    ///     assert_eq!(d_intunion.get(), 0b01100111000111100001111100000111_u32);
+    /// 
+    ///     let mut a_longunion = 0b0000011111100000011111110000000111111111011001110001111000011111_u64.into_longunion();
+    ///     println!("Originally, a_longunion = {:064b}", a_longunion.get());
+    ///     a_longunion.reset_msb();
+    ///     println!("After a_longunion.reset_msb(), a_longunion = {:064b}.", a_longunion.get());
+    ///     assert_eq!(a_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011111_u64);
+    /// 
+    ///     let mut b_longunion = 0b1000011111100000011111110000000111111111011001110001111000011111_u64.into_longunion();
+    ///     println!("Originally, b_longunion = {:064b}", b_longunion.get());
+    ///     b_longunion.reset_msb();
+    ///     println!("After b_longunion.reset_msb(), b_longunion = {:064b}.", b_longunion.get());
+    ///     assert_eq!(b_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011111_u64);
+    /// 
+    ///     let mut c_longunion = 0b0000011111100000011111110000000111111111011001110001111000011111_u64.into_longunion();
+    ///     println!("Originally, c_longunion = {:064b}", c_longunion.get());
+    ///     func(&mut c_longunion);
+    ///     println!("After c_longunion.reset_msb(), c_longunion = {:064b}.", c_longunion.get());
+    ///     assert_eq!(c_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011111_u64);
+    /// 
+    ///     let mut d_longunion = 0b1000011111100000011111110000000111111111011001110001111000011111_u64.into_longunion();
+    ///     println!("Originally, d_longunion = {:064b}", d_longunion.get());
+    ///     func(&mut d_longunion);
+    ///     println!("After d_longunion.reset_msb(), d_longunion = {:064b}.", d_longunion.get());
+    ///     assert_eq!(d_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011111_u64);
+    /// 
+    ///     let mut a_longerunion = 0b00000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128.into_longerunion();
+    ///     println!("Originally, a_longerunion = {:0128b}", a_longerunion.get());
+    ///     a_longerunion.reset_msb();
+    ///     println!("After a_longerunion.reset_msb(), a_longerunion = {:0128b}.", a_longerunion.get());
+    ///     assert_eq!(a_longerunion.get(), 0b00000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128);
+    /// 
+    ///     let mut b_longerunion = 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128.into_longerunion();
+    ///     println!("Originally, b_longerunion = {:0128b}", b_longerunion.get());
+    ///     b_longerunion.reset_msb();
+    ///     println!("After b_longerunion.reset_msb(), b_longerunion = {:0128b}.", b_longerunion.get());
+    ///     assert_eq!(b_longerunion.get(), 0b00000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128);
+    /// 
+    ///     let mut c_longerunion = 0b00000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128.into_longerunion();
+    ///     println!("Originally, c_longerunion = {:0128b}", c_longerunion.get());
+    ///     func(&mut c_longerunion);
+    ///     println!("After c_longerunion.reset_msb(), c_longerunion = {:0128b}.", c_longerunion.get());
+    ///     assert_eq!(c_longerunion.get(), 0b00000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128);
+    /// 
+    ///     let mut d_longerunion = 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128.into_longerunion();
+    ///     println!("Originally, d_longerunion = {:0128b}", d_longerunion.get());
+    ///     func(&mut d_longerunion);
+    ///     println!("After d_longerunion.reset_msb(), d_longerunion = {:0128b}.", d_longerunion.get());
+    ///     assert_eq!(d_longerunion.get(), 0b00000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128);
+    /// 
+    ///     let mut a_sizeunion = 0b0000111110000011111100000011111110000000111111111011001110001111_usize.into_sizeunion();
+    ///     println!("Originally, a_sizeunion = {:064b}", a_sizeunion.get());
+    ///     a_sizeunion.reset_msb();
+    ///     println!("After a_sizeunion.reset_msb(), a_sizeunion = {:064b}.", a_sizeunion.get());
+    ///     assert_eq!(a_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// 
+    ///     let mut b_sizeunion = 0b1000111110000011111100000011111110000000111111111011001110001111_usize.into_sizeunion();
+    ///     println!("Originally, b_sizeunion = {:064b}", b_sizeunion.get());
+    ///     b_sizeunion.reset_msb();
+    ///     println!("After b_sizeunion.reset_msb(), b_sizeunion = {:064b}.", b_sizeunion.get());
+    ///     assert_eq!(b_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// 
+    ///     let mut c_sizeunion = 0b0000111110000011111100000011111110000000111111111011001110001111_usize.into_sizeunion();
+    ///     println!("Originally, c_sizeunion = {:064b}", c_sizeunion.get());
+    ///     func(&mut c_sizeunion);
+    ///     println!("After c_sizeunion.reset_msb(), c_sizeunion = {:064b}.", c_sizeunion.get());
+    ///     assert_eq!(c_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// 
+    ///     let mut d_sizeunion = 0b01000111110000011111100000011111110000000111111111011001110001111_usize.into_sizeunion();
+    ///     println!("Originally, d_sizeunion = {:064b}", d_sizeunion.get());
+    ///     func(&mut d_sizeunion);
+    ///     println!("After d_sizeunion.reset_msb(), d_sizeunion = {:064b}.", d_sizeunion.get());
+    ///     assert_eq!(d_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001111_usize);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_msb()
+    /// }
+    /// ```
+    fn reset_msb(&mut self);
 
     // fn set_lsb(&mut self)
     /// Sets the LSB (Least Significant Bit) of `Self`-type number with `1`.
@@ -29286,6 +29965,687 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// }
     /// ```
     fn set_lsb(&mut self);
+
+    // fn reset_lsb(&mut self)
+    /// Sets the LSB (Least Significant Bit) of `Self`-type number with `0`.
+    /// 
+    /// # Example 1 for u8
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    /// 
+    ///     // Examples for u8
+    ///     let mut a_u8 = 0b10110010_u8;
+    ///     println!("Originally, a_u8 = {:08b}", a_u8);
+    ///     a_u8.reset_lsb();
+    ///     println!("After a_u8.reset_lsb(), a_u8 = {:08b}.", a_u8);
+    ///     assert_eq!(a_u8, 0b10110010_u8);
+    /// 
+    ///     let mut b_u8 = 0b10110011_u8;
+    ///     println!("Originally, b_u8 = {:08b}", b_u8);
+    ///     b_u8.reset_lsb();
+    ///     println!("After b_u8.reset_lsb(), b_u8 = {:08b}.", b_u8);
+    ///     assert_eq!(b_u8, 0b10110010_u8);
+    /// 
+    ///     let mut c_u8 = 0b10110010_u8;
+    ///     println!("Originally, c_u8 = {:08b}", c_u8);
+    ///     func(&mut c_u8);
+    ///     println!("After c_u8.reset_lsb(), c_u8 = {:08b}.", c_u8);
+    ///     assert_eq!(c_u8, 0b10110010_u8);
+    /// 
+    ///     let mut d_u8 = 0b10110011_u8;
+    ///     println!("Originally, d_u8 = {:08b}", d_u8);
+    ///     func(&mut d_u8);
+    ///     println!("After d_u8.reset_lsb(), d_u8 = {:08b}.", d_u8);
+    ///     assert_eq!(d_u8, 0b10110010_u8);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_lsb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 2 for u16
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_u16 = 0b0001111101100110_u16;
+    ///     println!("Originally, a_u16 = {:016b}", a_u16);
+    ///     a_u16.reset_lsb();
+    ///     println!("After a_u16.reset_lsb(), a_u16 = {:016b}.", a_u16);
+    ///     assert_eq!(a_u16, 0b0001111101100110_u16);
+    /// 
+    ///     let mut b_u16 = 0b0001111101100111_u16;
+    ///     println!("Originally, b_u16 = {:016b}", b_u16);
+    ///     b_u16.reset_lsb();
+    ///     println!("After b_u16.reset_lsb(), b_u16 = {:016b}.", b_u16);
+    ///     assert_eq!(b_u16, 0b0001111101100110_u16);
+    /// 
+    ///     let mut c_u16 = 0b0001111101100110_u16;
+    ///     println!("Originally, c_u16 = {:016b}", c_u16);
+    ///     func(&mut c_u16);
+    ///     println!("After c_u16.reset_lsb(), c_u16 = {:016b}.", c_u16);
+    ///     assert_eq!(c_u16, 0b0001111101100110_u16);
+    /// 
+    ///     let mut d_u16 = 0b0001111101100110_u16;
+    ///     println!("Originally, d_u16 = {:016b}", d_u16);
+    ///     func(&mut d_u16);
+    ///     println!("After d_u16.reset_lsb(), d_u16 = {:016b}.", d_u16);
+    ///     assert_eq!(d_u16, 0b0001111101100111_u16);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_lsb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 3 for u32
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_u32 = 0b00111000111100001111100000111010_u32;
+    ///     println!("Originally, a_u32 = {:032b}", a_u32);
+    ///     a_u32.reset_lsb();
+    ///     println!("After a_u32.reset_lsb(), a_u32 = {:032b}.", a_u32);
+    ///     assert_eq!(a_u32, 0b00111000111100001111100000111010_u32);
+    /// 
+    ///     let mut b_u32 = 0b00111000111100001111100000111011_u32;
+    ///     println!("Originally, b_u32 = {:032b}", b_u32);
+    ///     b_u32.reset_lsb();
+    ///     println!("After b_u32.reset_lsb(), b_u32 = {:032b}.", b_u32);
+    ///     assert_eq!(b_u32, 0b00111000111100001111100000111010_u32);
+    /// 
+    ///     let mut c_u32 = 0b00111000111100001111100000111010_u32;
+    ///     println!("Originally, c_u32 = {:032b}", c_u32);
+    ///     func(&mut c_u32);
+    ///     println!("After c_u32.reset_lsb(), c_u32 = {:032b}.", c_u32);
+    ///     assert_eq!(c_u32, 0b00111000111100001111100000111010_u32);
+    /// 
+    ///     let mut d_u32 = 0b00111000111100001111100000111011_u32;
+    ///     println!("Originally, d_u32 = {:032b}", d_u32);
+    ///     func(&mut d_u32);
+    ///     println!("After d_u32.reset_lsb(), d_u32 = {:032b}.", d_u32);
+    ///     assert_eq!(d_u32, 0b00111000111100001111100000111010_u32);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_lsb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 4 for u64
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_u64 = 0b0000001111111000000011111111101100111000111100001111100000111110_u64;
+    ///     println!("Originally, a_u64 = {:064b}", a_u64);
+    ///     a_u64.reset_lsb();
+    ///     println!("After a_u64.reset_lsb(), a_u64 = {:064b}.", a_u64);
+    ///     assert_eq!(a_u64, 0b0000001111111000000011111111101100111000111100001111100000111110_u64);
+    /// 
+    ///     let mut b_u64 = 0b0000001111111000000011111111101100111000111100001111100000111111_u64;
+    ///     println!("Originally, b_u64 = {:064b}", b_u64);
+    ///     b_u64.reset_lsb();
+    ///     println!("After b_u64.reset_lsb(), b_u64 = {:064b}.", b_u64);
+    ///     assert_eq!(b_u64, 0b0000001111111000000011111111101100111000111100001111100000111110_u64);
+    /// 
+    ///     let mut c_u64 = 0b0000001111111000000011111111101100111000111100001111100000111110_u64;
+    ///     println!("Originally, c_u64 = {:064b}", c_u64);
+    ///     func(&mut c_u64);
+    ///     println!("After c_u64.reset_lsb(), c_u64 = {:064b}.", c_u64);
+    ///     assert_eq!(c_u64, 0b0000001111111000000011111111101100111000111100001111100000111110_u64);
+    /// 
+    ///     let mut d_u64 = 0b0000001111111000000011111111101100111000111100001111100000111111_u64;
+    ///     println!("Originally, d_u64 = {:064b}", d_u64);
+    ///     func(&mut d_u64);
+    ///     println!("After d_u64.reset_lsb(), d_u64 = {:064b}.", d_u64);
+    ///     assert_eq!(d_u64, 0b0000001111111000000011111111101100111000111100001111100000111110_u64);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_lsb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 5 for u128
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_u128 = 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111110_u128;
+    ///     println!("Originally, a_u128 = {:0128b}", a_u128);
+    ///     a_u128.reset_lsb();
+    ///     println!("After a_u128.reset_lsb(), a_u128 = {:0128b}.", a_u128);
+    ///     assert_eq!(a_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111110_u128);
+    /// 
+    ///     let mut b_u128 = 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128;
+    ///     println!("Originally, b_u128 = {:0128b}", b_u128);
+    ///     b_u128.reset_lsb();
+    ///     println!("After b_u128.reset_lsb(), b_u128 = {:0128b}.", b_u128);
+    ///     assert_eq!(b_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111110_u128);
+    /// 
+    ///     let mut c_u128 = 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111110_u128;
+    ///     println!("Originally, c_u128 = {:0128b}", c_u128);
+    ///     func(&mut c_u128);
+    ///     println!("After c_u128.reset_lsb(), c_u128 = {:0128b}.", c_u128);
+    ///     assert_eq!(c_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111110_u128);
+    /// 
+    ///     let mut d_u128 = 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128;
+    ///     println!("Originally, d_u128 = {:0128b}", d_u128);
+    ///     func(&mut d_u128);
+    ///     println!("After d_u128.reset_lsb(), d_u128 = {:0128b}.", d_u128);
+    ///     assert_eq!(d_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111110_u128);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_lsb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 6 for usize
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_usize = 0b0000111110000011111100000011111110000000111111111011001110001110_usize;
+    ///     println!("Originally, a_usize = {:064b}", a_usize);
+    ///     a_usize.reset_lsb();
+    ///     println!("After a_usize.reset_lsb(), a_usize = {:064b}.", a_usize);
+    ///     assert_eq!(a_usize, 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// 
+    ///     let mut b_usize = 0b0000111110000011111100000011111110000000111111111011001110001111_usize;
+    ///     println!("Originally, b_usize = {:064b}", b_usize);
+    ///     b_usize.reset_lsb();
+    ///     println!("After b_usize.reset_lsb(), b_usize = {:064b}.", b_usize);
+    ///     assert_eq!(b_usize, 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// 
+    ///     let mut c_usize = 0b0000111110000011111100000011111110000000111111111011001110001110_usize;
+    ///     println!("Originally, c_usize = {:064b}", c_usize);
+    ///     func(&mut c_usize);
+    ///     println!("After c_usize.reset_lsb(), c_usize = {:064b}.", c_usize);
+    ///     assert_eq!(c_usize, 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// 
+    ///     let mut d_usize = 0b0000111110000011111100000011111110000000111111111011001110001111_usize;
+    ///     println!("Originally, d_usize = {:064b}", d_usize);
+    ///     func(&mut d_usize);
+    ///     println!("After d_usize.reset_lsb(), d_usize = {:064b}.", d_usize);
+    ///     assert_eq!(d_usize, 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_lsb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 7 for ShortUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_shortunion = 0b1011100011111010_u16.into_shortunion();
+    ///     println!("Originally, a_shortunion = {:016b}", a_shortunion.get());
+    ///     a_shortunion.reset_lsb();
+    ///     println!("After a_shortunion.reset_lsb(), a_shortunion = {:016b}.", a_shortunion.get());
+    ///     assert_eq!(a_shortunion.get(), 0b1011100011111010_u16);
+    /// 
+    ///     let mut b_shortunion = 0b1011100011111011_u16.into_shortunion();
+    ///     println!("Originally, a_shortunion = {:016b}", b_shortunion.get());
+    ///     b_shortunion.reset_lsb();
+    ///     println!("After b_shortunion.reset_lsb(), b_shortunion = {:016b}.", b_shortunion.get());
+    ///     assert_eq!(b_shortunion.get(), 0b1011100011111010_u16);
+    /// 
+    ///     let mut c_shortunion = 0b1011100011111010_u16.into_shortunion();
+    ///     println!("Originally, c_shortunion = {:016b}", c_shortunion.get());
+    ///     func(&mut c_shortunion);
+    ///     println!("After c_shortunion.reset_lsb(), c_shortunion = {:016b}.", c_shortunion.get());
+    ///     assert_eq!(c_shortunion.get(), 0b1011100011111010_u16);
+    /// 
+    ///     let mut d_shortunion = 0b1011100011111011_u16.into_shortunion();
+    ///     println!("Originally, c_shortunion = {:016b}", d_shortunion.get());
+    ///     func(&mut d_shortunion);
+    ///     println!("After d_shortunion.reset_lsb(), d_shortunion = {:016b}.", d_shortunion.get());
+    ///     assert_eq!(d_shortunion.get(), 0b1011100011111010_u16);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_lsb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 8 for IntUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_intunion = 0b01100111000111100001111100000110_u32.into_intunion();
+    ///     println!("Originally, a_intunion = {:032b}", a_intunion.get());
+    ///     a_intunion.reset_lsb();
+    ///     println!("After a_intunion.reset_lsb(), a_intunion = {:032b}.", a_intunion.get());
+    ///     assert_eq!(a_intunion.get(), 0b01100111000111100001111100000110_u32);
+    /// 
+    ///     let mut b_intunion = 0b01100111000111100001111100000111_u32.into_intunion();
+    ///     println!("Originally, b_intunion = {:032b}", b_intunion.get());
+    ///     b_intunion.reset_lsb();
+    ///     println!("After b_intunion.reset_lsb(), b_intunion = {:032b}.", b_intunion.get());
+    ///     assert_eq!(b_intunion.get(), 0b01100111000111100001111100000110_u32);
+    /// 
+    ///     let mut c_intunion = 0b01100111000111100001111100000110_u32.into_intunion();
+    ///     println!("Originally, c_intunion = {:032b}", c_intunion.get());
+    ///     func(&mut c_intunion);
+    ///     println!("After c_intunion.reset_lsb(), c_intunion = {:032b}.", c_intunion.get());
+    ///     assert_eq!(c_intunion.get(), 0b01100111000111100001111100000110_u32);
+    /// 
+    ///     let mut d_intunion = 0b01100111000111100001111100000111_u32.into_intunion();
+    ///     println!("Originally, d_intunion = {:032b}", d_intunion.get());
+    ///     func(&mut d_intunion);
+    ///     println!("After d_intunion.reset_lsb(), d_intunion = {:032b}.", d_intunion.get());
+    ///     assert_eq!(d_intunion.get(), 0b01100111000111100001111100000110_u32);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_lsb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 9 for LongUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_longunion = 0b0000011111100000011111110000000111111111011001110001111000011110_u64.into_longunion();
+    ///     println!("Originally, a_longunion = {:064b}", a_longunion.get());
+    ///     a_longunion.reset_lsb();
+    ///     println!("After a_longunion.reset_lsb(), a_longunion = {:064b}.", a_longunion.get());
+    ///     assert_eq!(a_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011110_u64);
+    /// 
+    ///     let mut b_longunion = 0b0000011111100000011111110000000111111111011001110001111000011111_u64.into_longunion();
+    ///     println!("Originally, b_longunion = {:064b}", b_longunion.get());
+    ///     b_longunion.reset_lsb();
+    ///     println!("After b_longunion.reset_lsb(), b_longunion = {:064b}.", b_longunion.get());
+    ///     assert_eq!(b_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011110_u64);
+    /// 
+    ///     let mut c_longunion = 0b0000011111100000011111110000000111111111011001110001111000011110_u64.into_longunion();
+    ///     println!("Originally, c_longunion = {:064b}", c_longunion.get());
+    ///     func(&mut c_longunion);
+    ///     println!("After c_longunion.reset_lsb(), c_longunion = {:064b}.", c_longunion.get());
+    ///     assert_eq!(c_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011110_u64);
+    /// 
+    ///     let mut d_longunion = 0b0000011111100000011111110000000111111111011001110001111000011111_u64.into_longunion();
+    ///     println!("Originally, d_longunion = {:064b}", d_longunion.get());
+    ///     func(&mut d_longunion);
+    ///     println!("After d_longunion.reset_lsb(), d_longunion = {:064b}.", d_longunion.get());
+    ///     assert_eq!(d_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011110_u64);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_lsb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 10 for LongerUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_longerunion = 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111110_u128.into_longerunion();
+    ///     println!("Originally, a_longerunion = {:0128b}", a_longerunion.get());
+    ///     a_longerunion.reset_lsb();
+    ///     println!("After a_longerunion.reset_lsb(), a_longerunion = {:0128b}.", a_longerunion.get());
+    ///     assert_eq!(a_longerunion.get(), 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111110_u128);
+    /// 
+    ///     let mut b_longerunion = 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128.into_longerunion();
+    ///     println!("Originally, b_longerunion = {:0128b}", b_longerunion.get());
+    ///     b_longerunion.reset_lsb();
+    ///     println!("After b_longerunion.reset_lsb(), b_longerunion = {:0128b}.", b_longerunion.get());
+    ///     assert_eq!(b_longerunion.get(), 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111110_u128);
+    /// 
+    ///     let mut c_longerunion = 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111110_u128.into_longerunion();
+    ///     println!("Originally, c_longerunion = {:0128b}", c_longerunion.get());
+    ///     func(&mut c_longerunion);
+    ///     println!("After c_longerunion.reset_lsb(), c_longerunion = {:0128b}.", c_longerunion.get());
+    ///     assert_eq!(c_longerunion.get(), 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111110_u128);
+    /// 
+    ///     let mut d_longerunion = 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128.into_longerunion();
+    ///     println!("Originally, d_longerunion = {:0128b}", d_longerunion.get());
+    ///     func(&mut d_longerunion);
+    ///     println!("After d_longerunion.reset_lsb(), d_longerunion = {:0128b}.", d_longerunion.get());
+    ///     assert_eq!(d_longerunion.get(), 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111110_u128);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_lsb()
+    /// }
+    /// ```
+    /// 
+    /// # Example 11 for SizeUnion
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_sizeunion = 0b0000111110000011111100000011111110000000111111111011001110001110_usize.into_sizeunion();
+    ///     println!("Originally, a_sizeunion = {:064b}", a_sizeunion.get());
+    ///     a_sizeunion.reset_lsb();
+    ///     println!("After a_sizeunion.reset_lsb(), a_sizeunion = {:064b}.", a_sizeunion.get());
+    ///     assert_eq!(a_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// 
+    ///     let mut b_sizeunion = 0b0000111110000011111100000011111110000000111111111011001110001111_usize.into_sizeunion();
+    ///     println!("Originally, b_sizeunion = {:064b}", b_sizeunion.get());
+    ///     b_sizeunion.reset_lsb();
+    ///     println!("After b_sizeunion.reset_lsb(), b_sizeunion = {:064b}.", b_sizeunion.get());
+    ///     assert_eq!(b_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// 
+    ///     let mut c_sizeunion = 0b0000111110000011111100000011111110000000111111111011001110001110_usize.into_sizeunion();
+    ///     println!("Originally, c_sizeunion = {:064b}", c_sizeunion.get());
+    ///     func(&mut c_sizeunion);
+    ///     println!("After c_sizeunion.reset_lsb(), c_sizeunion = {:064b}.", c_sizeunion.get());
+    ///     assert_eq!(c_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// 
+    ///     let mut d_sizeunion = 0b0000111110000011111100000011111110000000111111111011001110001111_usize.into_sizeunion();
+    ///     println!("Originally, d_sizeunion = {:064b}", d_sizeunion.get());
+    ///     func(&mut d_sizeunion);
+    ///     println!("After d_sizeunion.reset_lsb(), d_sizeunion = {:064b}.", d_sizeunion.get());
+    ///     assert_eq!(d_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_lsb()
+    /// }
+    /// ```
+    /// You can use the above generic function `func<>()` for all
+    /// SmallUInt-supported data types in a same scope.
+    /// Look into the following example.
+    /// 
+    /// # Collective Example
+    /// ```
+    /// use cryptocol::number::SmallUInt;
+    /// fn main()
+    /// {
+    ///     let mut a_u8 = 0b10110010_u8;
+    ///     println!("Originally, a_u8 = {:08b}", a_u8);
+    ///     a_u8.reset_lsb();
+    ///     println!("After a_u8.reset_lsb(), a_u8 = {:08b}.", a_u8);
+    ///     assert_eq!(a_u8, 0b10110010_u8);
+    /// 
+    ///     let mut b_u8 = 0b10110011_u8;
+    ///     println!("Originally, b_u8 = {:08b}", b_u8);
+    ///     b_u8.reset_lsb();
+    ///     println!("After b_u8.reset_lsb(), b_u8 = {:08b}.", b_u8);
+    ///     assert_eq!(b_u8, 0b10110010_u8);
+    /// 
+    ///     let mut c_u8 = 0b10110010_u8;
+    ///     println!("Originally, c_u8 = {:08b}", c_u8);
+    ///     func(&mut c_u8);
+    ///     println!("After c_u8.reset_lsb(), c_u8 = {:08b}.", c_u8);
+    ///     assert_eq!(c_u8, 0b10110010_u8);
+    /// 
+    ///     let mut d_u8 = 0b10110011_u8;
+    ///     println!("Originally, d_u8 = {:08b}", d_u8);
+    ///     func(&mut d_u8);
+    ///     println!("After d_u8.reset_lsb(), d_u8 = {:08b}.", d_u8);
+    ///     assert_eq!(d_u8, 0b10110010_u8);
+    /// 
+    ///     let mut a_u16 = 0b0001111101100110_u16;
+    ///     println!("Originally, a_u16 = {:016b}", a_u16);
+    ///     a_u16.reset_lsb();
+    ///     println!("After a_u16.reset_lsb(), a_u16 = {:016b}.", a_u16);
+    ///     assert_eq!(a_u16, 0b0001111101100110_u16);
+    /// 
+    ///     let mut b_u16 = 0b0001111101100111_u16;
+    ///     println!("Originally, b_u16 = {:016b}", b_u16);
+    ///     b_u16.reset_lsb();
+    ///     println!("After b_u16.reset_lsb(), b_u16 = {:016b}.", b_u16);
+    ///     assert_eq!(b_u16, 0b0001111101100110_u16);
+    /// 
+    ///     let mut c_u16 = 0b0001111101100110_u16;
+    ///     println!("Originally, c_u16 = {:016b}", c_u16);
+    ///     func(&mut c_u16);
+    ///     println!("After c_u16.reset_lsb(), c_u16 = {:016b}.", c_u16);
+    ///     assert_eq!(c_u16, 0b0001111101100110_u16);
+    /// 
+    ///     let mut d_u16 = 0b0001111101100111_u16;
+    ///     println!("Originally, d_u16 = {:016b}", d_u16);
+    ///     func(&mut d_u16);
+    ///     println!("After d_u16.reset_lsb(), d_u16 = {:016b}.", d_u16);
+    ///     assert_eq!(d_u16, 0b0001111101100110_u16);
+    /// 
+    ///     let mut a_u32 = 0b00111000111100001111100000111010_u32;
+    ///     println!("Originally, a_u32 = {:032b}", a_u32);
+    ///     a_u32.reset_lsb();
+    ///     println!("After a_u32.reset_lsb(), a_u32 = {:032b}.", a_u32);
+    ///     assert_eq!(a_u32, 0b00111000111100001111100000111010_u32);
+    /// 
+    ///     let mut b_u32 = 0b00111000111100001111100000111011_u32;
+    ///     println!("Originally, b_u32 = {:032b}", b_u32);
+    ///     b_u32.reset_lsb();
+    ///     println!("After b_u32.reset_lsb(), b_u32 = {:032b}.", b_u32);
+    ///     assert_eq!(b_u32, 0b00111000111100001111100000111010_u32);
+    /// 
+    ///     let mut c_u32 = 0b00111000111100001111100000111010_u32;
+    ///     println!("Originally, c_u32 = {:032b}", c_u32);
+    ///     func(&mut c_u32);
+    ///     println!("After c_u32.reset_lsb(), c_u32 = {:032b}.", c_u32);
+    ///     assert_eq!(c_u32, 0b00111000111100001111100000111010_u32);
+    /// 
+    ///     let mut d_u32 = 0b00111000111100001111100000111011_u32;
+    ///     println!("Originally, d_u32 = {:032b}", d_u32);
+    ///     func(&mut d_u32);
+    ///     println!("After d_u32.reset_lsb(), d_u32 = {:032b}.", d_u32);
+    ///     assert_eq!(d_u32, 0b00111000111100001111100000111010_u32);
+    /// 
+    ///     let mut a_u64 = 0b0000001111111000000011111111101100111000111100001111100000111110_u64;
+    ///     println!("Originally, a_u64 = {:064b}", a_u64);
+    ///     a_u64.reset_lsb();
+    ///     println!("After a_u64.reset_lsb(), a_u64 = {:064b}.", a_u64);
+    ///     assert_eq!(a_u64, 0b0000001111111000000011111111101100111000111100001111100000111110_u64);
+    /// 
+    ///     let mut b_u64 = 0b0000001111111000000011111111101100111000111100001111100000111111_u64;
+    ///     println!("Originally, b_u64 = {:064b}", b_u64);
+    ///     b_u64.reset_lsb();
+    ///     println!("After b_u64.reset_lsb(), b_u64 = {:064b}.", b_u64);
+    ///     assert_eq!(b_u64, 0b0000001111111000000011111111101100111000111100001111100000111110_u64);
+    /// 
+    ///     let mut c_u64 = 0b0000001111111000000011111111101100111000111100001111100000111110_u64;
+    ///     println!("Originally, c_u64 = {:064b}", c_u64);
+    ///     func(&mut c_u64);
+    ///     println!("After c_u64.reset_lsb(), c_u64 = {:064b}.", c_u64);
+    ///     assert_eq!(c_u64, 0b0000001111111000000011111111101100111000111100001111100000111110_u64);
+    /// 
+    ///     let mut d_u64 = 0b0000001111111000000011111111101100111000111100001111100000111111_u64;
+    ///     println!("Originally, d_u64 = {:064b}", d_u64);
+    ///     func(&mut d_u64);
+    ///     println!("After d_u64.reset_lsb(), d_u64 = {:064b}.", d_u64);
+    ///     assert_eq!(d_u64, 0b0000001111111000000011111111101100111000111100001111100000111110_u64);
+    /// 
+    ///     let mut a_u128 = 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111110_u128;
+    ///     println!("Originally, a_u128 = {:0128b}", a_u128);
+    ///     a_u128.reset_lsb();
+    ///     println!("After a_u128.reset_lsb(), a_u128 = {:0128b}.", a_u128);
+    ///     assert_eq!(a_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111110_u128);
+    /// 
+    ///     let mut b_u128 = 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128;
+    ///     println!("Originally, b_u128 = {:0128b}", b_u128);
+    ///     b_u128.reset_lsb();
+    ///     println!("After b_u128.reset_lsb(), b_u128 = {:0128b}.", b_u128);
+    ///     assert_eq!(b_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111110_u128);
+    /// 
+    ///     let mut c_u128 = 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111110_u128;
+    ///     println!("Originally, c_u128 = {:0128b}", c_u128);
+    ///     func(&mut c_u128);
+    ///     println!("After c_u128.reset_lsb(), c_u128 = {:0128b}.", c_u128);
+    ///     assert_eq!(c_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111110_u128);
+    /// 
+    ///     let mut d_u128 = 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111111_u128;
+    ///     println!("Originally, d_u128 = {:0128b}", d_u128);
+    ///     func(&mut d_u128);
+    ///     println!("After d_u128.reset_lsb(), d_u128 = {:0128b}.", d_u128);
+    ///     assert_eq!(d_u128, 0b00000000001111111111100000001011001110001111000011111000001111110000001111111000000011111111000000001111111110000000001111111110_u128);
+    /// 
+    ///     let mut a_usize = 0b0000111110000011111100000011111110000000111111111011001110001110_usize;
+    ///     println!("Originally, a_usize = {:064b}", a_usize);
+    ///     a_usize.reset_lsb();
+    ///     println!("After a_usize.reset_lsb(), a_usize = {:064b}.", a_usize);
+    ///     assert_eq!(a_usize, 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// 
+    ///     let mut b_usize = 0b0000111110000011111100000011111110000000111111111011001110001111_usize;
+    ///     println!("Originally, b_usize = {:064b}", b_usize);
+    ///     b_usize.reset_lsb();
+    ///     println!("After b_usize.reset_lsb(), b_usize = {:064b}.", b_usize);
+    ///     assert_eq!(b_usize, 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// 
+    ///     let mut c_usize = 0b0000111110000011111100000011111110000000111111111011001110001110_usize;
+    ///     println!("Originally, c_usize = {:064b}", c_usize);
+    ///     func(&mut c_usize);
+    ///     println!("After c_usize.reset_lsb(), c_usize = {:064b}.", c_usize);
+    ///     assert_eq!(c_usize, 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// 
+    ///     let mut d_usize = 0b0000111110000011111100000011111110000000111111111011001110001111_usize;
+    ///     println!("Originally, d_usize = {:064b}", d_usize);
+    ///     func(&mut d_usize);
+    ///     println!("After d_usize.reset_lsb(), d_usize = {:064b}.", d_usize);
+    ///     assert_eq!(d_usize, 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// 
+    ///     let mut a_shortunion = 0b1011100011111010_u16.into_shortunion();
+    ///     println!("Originally, a_shortunion = {:016b}", a_shortunion.get());
+    ///     func(&mut a_shortunion);
+    ///     println!("After a_shortunion.reset_lsb(), a_shortunion = {:016b}.", a_shortunion.get());
+    ///     assert_eq!(a_shortunion.get(), 0b1011100011111010_u16);
+    /// 
+    ///     let mut b_shortunion = 0b1011100011111011_u16.into_shortunion();
+    ///     println!("Originally, a_shortunion = {:016b}", b_shortunion.get());
+    ///     b_shortunion.reset_lsb();
+    ///     println!("After b_shortunion.reset_lsb(), b_shortunion = {:016b}.", b_shortunion.get());
+    ///     assert_eq!(b_shortunion.get(), 0b1011100011111010_u16);
+    /// 
+    ///     let mut c_shortunion = 0b1011100011111010_u16.into_shortunion();
+    ///     println!("Originally, c_shortunion = {:016b}", c_shortunion.get());
+    ///     c_shortunion.reset_lsb();
+    ///     println!("After c_shortunion.reset_lsb(), c_shortunion = {:016b}.", c_shortunion.get());
+    ///     assert_eq!(c_shortunion.get(), 0b1011100011111010_u16);
+    /// 
+    ///     let mut d_shortunion = 0b1011100011111011_u16.into_shortunion();
+    ///     println!("Originally, c_shortunion = {:016b}", d_shortunion.get());
+    ///     func(&mut d_shortunion);
+    ///     println!("After d_shortunion.reset_lsb(), d_shortunion = {:016b}.", d_shortunion.get());
+    ///     assert_eq!(d_shortunion.get(), 0b1011100011111010_u16);
+    /// 
+    ///     let mut a_intunion = 0b01100111000111100001111100000110_u32.into_intunion();
+    ///     println!("Originally, a_intunion = {:032b}", a_intunion.get());
+    ///     a_intunion.reset_lsb();
+    ///     println!("After a_intunion.reset_lsb(), a_intunion = {:032b}.", a_intunion.get());
+    ///     assert_eq!(a_intunion.get(), 0b01100111000111100001111100000110_u32);
+    /// 
+    ///     let mut b_intunion = 0b01100111000111100001111100000111_u32.into_intunion();
+    ///     println!("Originally, b_intunion = {:032b}", b_intunion.get());
+    ///     b_intunion.reset_lsb();
+    ///     println!("After b_intunion.reset_lsb(), b_intunion = {:032b}.", b_intunion.get());
+    ///     assert_eq!(b_intunion.get(), 0b01100111000111100001111100000110_u32);
+    /// 
+    ///     let mut c_intunion = 0b01100111000111100001111100000110_u32.into_intunion();
+    ///     println!("Originally, c_intunion = {:032b}", c_intunion.get());
+    ///     func(&mut c_intunion);
+    ///     println!("After c_intunion.reset_lsb(), c_intunion = {:032b}.", c_intunion.get());
+    ///     assert_eq!(c_intunion.get(), 0b01100111000111100001111100000110_u32);
+    /// 
+    ///     let mut d_intunion = 0b01100111000111100001111100000111_u32.into_intunion();
+    ///     println!("Originally, d_intunion = {:032b}", d_intunion.get());
+    ///     func(&mut d_intunion);
+    ///     println!("After d_intunion.reset_lsb(), d_intunion = {:032b}.", d_intunion.get());
+    ///     assert_eq!(d_intunion.get(), 0b01100111000111100001111100000110_u32);
+    /// 
+    ///     let mut a_longunion = 0b0000011111100000011111110000000111111111011001110001111000011110_u64.into_longunion();
+    ///     println!("Originally, a_longunion = {:064b}", a_longunion.get());
+    ///     a_longunion.reset_lsb();
+    ///     println!("After a_longunion.reset_lsb(), a_longunion = {:064b}.", a_longunion.get());
+    ///     assert_eq!(a_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011110_u64);
+    /// 
+    ///     let mut b_longunion = 0b0000011111100000011111110000000111111111011001110001111000011111_u64.into_longunion();
+    ///     println!("Originally, b_longunion = {:064b}", b_longunion.get());
+    ///     b_longunion.reset_lsb();
+    ///     println!("After b_longunion.reset_lsb(), b_longunion = {:064b}.", b_longunion.get());
+    ///     assert_eq!(b_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011110_u64);
+    /// 
+    ///     let mut c_longunion = 0b0000011111100000011111110000000111111111011001110001111000011110_u64.into_longunion();
+    ///     println!("Originally, c_longunion = {:064b}", c_longunion.get());
+    ///     func(&mut c_longunion);
+    ///     println!("After c_longunion.reset_lsb(), c_longunion = {:064b}.", c_longunion.get());
+    ///     assert_eq!(c_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011110_u64);
+    /// 
+    ///     let mut d_longunion = 0b0000011111100000011111110000000111111111011001110001111000011111_u64.into_longunion();
+    ///     println!("Originally, d_longunion = {:064b}", d_longunion.get());
+    ///     func(&mut d_longunion);
+    ///     println!("After d_longunion.reset_lsb(), d_longunion = {:064b}.", d_longunion.get());
+    ///     assert_eq!(d_longunion.get(), 0b0000011111100000011111110000000111111111011001110001111000011110_u64);
+    /// 
+    ///     let mut a_longerunion = 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111110_u128.into_longerunion();
+    ///     println!("Originally, a_longerunion = {:0128b}", a_longerunion.get());
+    ///     a_longerunion.reset_lsb();
+    ///     println!("After a_longerunion.reset_lsb(), a_longerunion = {:0128b}.", a_longerunion.get());
+    ///     assert_eq!(a_longerunion.get(), 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111110_u128);
+    /// 
+    ///     let mut b_longerunion = 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128.into_longerunion();
+    ///     println!("Originally, b_longerunion = {:0128b}", b_longerunion.get());
+    ///     b_longerunion.reset_lsb();
+    ///     println!("After b_longerunion.reset_lsb(), b_longerunion = {:0128b}.", b_longerunion.get());
+    ///     assert_eq!(b_longerunion.get(), 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111110_u128);
+    /// 
+    ///     let mut c_longerunion = 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111110_u128.into_longerunion();
+    ///     println!("Originally, c_longerunion = {:0128b}", c_longerunion.get());
+    ///     func(&mut c_longerunion);
+    ///     println!("After c_longerunion.reset_lsb(), c_longerunion = {:0128b}.", c_longerunion.get());
+    ///     assert_eq!(c_longerunion.get(), 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111110_u128);
+    /// 
+    ///     let mut d_longerunion = 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111111_u128.into_longerunion();
+    ///     println!("Originally, d_longerunion = {:0128b}", d_longerunion.get());
+    ///     func(&mut d_longerunion);
+    ///     println!("After d_longerunion.reset_lsb(), d_longerunion = {:0128b}.", d_longerunion.get());
+    ///     assert_eq!(d_longerunion.get(), 0b10000001111111100000000111111111000000000111111111100000000001111111111100000001011001110001111000011111000001111110000001111110_u128);
+    /// 
+    ///     let mut a_sizeunion = 0b0000111110000011111100000011111110000000111111111011001110001110_usize.into_sizeunion();
+    ///     println!("Originally, a_sizeunion = {:064b}", a_sizeunion.get());
+    ///     a_sizeunion.reset_lsb();
+    ///     println!("After a_sizeunion.reset_lsb(), a_sizeunion = {:064b}.", a_sizeunion.get());
+    ///     assert_eq!(a_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// 
+    ///     let mut b_sizeunion = 0b0000111110000011111100000011111110000000111111111011001110001111_usize.into_sizeunion();
+    ///     println!("Originally, b_sizeunion = {:064b}", b_sizeunion.get());
+    ///     b_sizeunion.reset_lsb();
+    ///     println!("After b_sizeunion.reset_lsb(), b_sizeunion = {:064b}.", b_sizeunion.get());
+    ///     assert_eq!(b_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// 
+    ///     let mut c_sizeunion = 0b0000111110000011111100000011111110000000111111111011001110001110_usize.into_sizeunion();
+    ///     println!("Originally, c_sizeunion = {:064b}", c_sizeunion.get());
+    ///     func(&mut c_sizeunion);
+    ///     println!("After c_sizeunion.reset_lsb(), c_sizeunion = {:064b}.", c_sizeunion.get());
+    ///     assert_eq!(c_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// 
+    ///     let mut d_sizeunion = 0b0000111110000011111100000011111110000000111111111011001110001111_usize.into_sizeunion();
+    ///     println!("Originally, d_sizeunion = {:064b}", d_sizeunion.get());
+    ///     func(&mut d_sizeunion);
+    ///     println!("After d_sizeunion.reset_lsb(), d_sizeunion = {:064b}.", d_sizeunion.get());
+    ///     assert_eq!(d_sizeunion.get(), 0b0000111110000011111100000011111110000000111111111011001110001110_usize);
+    /// }
+    /// 
+    /// fn func<T: SmallUInt>(num: &mut T)
+    /// {
+    ///     num.reset_lsb()
+    /// }
+    /// ```
+    fn reset_lsb(&mut self);
 
     // fn generate_check_bits(bit_pos: u32) -> Option<Self>
     /// Returns a `Self`-typed value which has the bit specified by the argument

@@ -1317,7 +1317,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             + BitXor<Output=T> + BitXorAssign + Not<Output=T>
             + PartialEq + PartialOrd
     {
-        if ceiling <= T::one() { None } else { Some(self.random_odd_under_uint_(ceiling)) }
+        if ceiling.is_zero_or_one() { None } else { Some(self.random_odd_under_uint_(ceiling)) }
     }
 
     // pub fn random_odd_under_uint_<T>(&mut self, ceiling: T) -> T
@@ -1327,20 +1327,17 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// It returns a random odd numbers of type `T` less than `ceiling`.
     /// 
     /// # Panics
-    /// If `ceiling` is `0`, it will panic.
+    /// If `ceiling` is less than `2`, it will panic.
     /// 
     /// # Caution
-    /// Use only when `ceiling` is not `0`.
+    /// Use this method only when `ceiling` is greater than `1`.
     /// 
     /// # Cryptographical Security
     /// - If you use `Random`, it is considered to be cryptographically secure.
     /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
+    ///   insecure.
     /// 
-    /// # Example
+    /// # Example 1
     /// ```
     /// use cryptocol::random::Any_SHA2_256;
     /// let mut rand = Any_SHA2_256::new();
@@ -1370,7 +1367,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # For more examples,
     /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_odd_under_uint_)
-    pub fn random_odd_under_uint_<T>(&mut self, ceiling: T) -> T
+    pub fn random_odd_under_uint_<T>(&mut self, mut ceiling: T) -> T
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
             + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
@@ -1380,13 +1377,11 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             + BitXor<Output=T> + BitXorAssign + Not<Output=T>
             + PartialEq + PartialOrd
     {
+        if ceiling.is_zero_or_one()
+            { panic!(); }
+        ceiling.reset_lsb();
         let mut res = self.random_under_uint_(ceiling);
         res.set_lsb();
-        while res >= ceiling
-        {
-            res = self.random_under_uint_(ceiling);
-            res.set_lsb();
-        }
         res
     }
 
@@ -2147,7 +2142,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             + BitXor<Output=T> + BitXorAssign + Not<Output=T>
             + PartialEq + PartialOrd
     {
-        if ceiling.le_uint(1_u8) {None} else {Some(self.random_odd_under_biguint_(ceiling))}
+        if ceiling.is_zero_or_one() { None } else { Some(self.random_odd_under_biguint_(ceiling)) }
     }
 
     // pub fn random_odd_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
@@ -2234,13 +2229,12 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             + BitXor<Output=T> + BitXorAssign + Not<Output=T>
             + PartialEq + PartialOrd
     {
-        let mut res = self.random_under_biguint_::<T, N>(ceiling);
+        if ceiling.is_zero_or_one()
+            { panic!(); }
+        let mut ceiling = ceiling.clone();
+        ceiling.reset_lsb();
+        let mut res = self.random_under_biguint_(&ceiling);
         res.set_lsb();
-        while res >= *ceiling   // when res is equal to ceiling by one.
-        {
-            res = self.random_under_biguint_::<T, N>(ceiling);
-            res.set_lsb();
-        }
         res
     }
 
