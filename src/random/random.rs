@@ -49,6 +49,16 @@ pub type SlapdashGen = Random_Generic<{u64::MAX as u128}, 1>;
 /// Depending on the engine object, it uses hash algorithms or symmetric-key
 /// cryptographic algorithm to generate pseudo random numbers.
 /// 
+/// # Generic Parameters
+/// - COUNT: The length of the period of pseudo-random number sequence.
+///   If `COUNT` is `1000`, a new seed will be used every `1000` pseudo-random
+///   numbers, for example. The default value of `COUNT` is `u128::MAX`.
+/// - NTR: How many bytes of the true random numbers to be used as a seed.
+///   If `NTR` is `32`, thirty-two bytes of the true random number will be
+///   used as a seed. The default value of `NTR` is `64`.
+///   `NTR` cannot exceed `64`. Even if `NTR` is `100`, only sixty-four bytes
+///   of the true random numbers will be used, for example.
+/// 
 /// # Feature
 /// - The generic parameter `COUNT` should be `1` ~ `u128::MAX` inclusively.
 /// - The default value of `COUNT` is `340282366920938463463374607431768211455`
