@@ -15,7 +15,8 @@
 use crate::hash::{ MD4, MD5, SHA0, SHA1, SHA2_256, SHA2_512,
                     SHA3_256, SHA3_512, SHAKE_128, SHAKE_256, BIG_KECCAK_1024 };
 use crate::symmetric::{ Rijndael_64_64, AES_128, DES };
-use crate::random::{ Random_Generic, AnyNumber_Engine_C, SECURE_COUNT };
+use crate::random::{ Random_Generic, RandGen, AnyGen, SlapdashGen,
+                        AnyNumber_Engine_C };
 
 
 /// The type `Random` which is a random number generator and is a synonym of
@@ -148,7 +149,7 @@ pub type Slapdash = Slapdash_Num_C;
 pub struct Random_BIG_KECCAK_1024 {}
 impl Random_BIG_KECCAK_1024
 {
-    // pub fn new() -> Random_Generic<SECURE_COUNT>
+    // pub fn new() -> RandGen
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -165,12 +166,12 @@ impl Random_BIG_KECCAK_1024
     /// println!("Random number = {}", num);
     /// ```
     #[inline]
-    pub fn new() -> Random_Generic<SECURE_COUNT>
+    pub fn new() -> RandGen
     {
-        Random_Generic::<SECURE_COUNT>::new_with(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new())
+        RandGen::new_with(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -199,12 +200,12 @@ impl Random_BIG_KECCAK_1024
     /// println!("Random number = {}", num);
     /// ```
     #[inline]
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed, aux)
+        RandGen::new_with_generators_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT> 
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> RandGen 
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -234,12 +235,12 @@ impl Random_BIG_KECCAK_1024
     /// let num: U1024 = rand.random_with_msb_set_biguint();
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT> 
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> RandGen 
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_arrays(AES_128::new(), AES_128::new(), seed, aux)
+        RandGen::new_with_generators_seed_arrays(AES_128::new(), AES_128::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -260,12 +261,12 @@ impl Random_BIG_KECCAK_1024
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector(AES_128::new(), AES_128::new(), seed_collector)
+        RandGen::new_with_generators_seed_collector(AES_128::new(), AES_128::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT> 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen 
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -294,12 +295,12 @@ impl Random_BIG_KECCAK_1024
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT> 
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen 
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector_seeds(AES_128::new(), AES_128::new(), seed_collector, seed, aux)
+        RandGen::new_with_generators_seed_collector_seeds(AES_128::new(), AES_128::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT> 
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen 
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -328,9 +329,9 @@ impl Random_BIG_KECCAK_1024
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT> 
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen 
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector_seed_arrays(AES_128::new(), AES_128::new(), seed_collector, seed, aux)
+        RandGen::new_with_generators_seed_collector_seed_arrays(AES_128::new(), AES_128::new(), seed_collector, seed, aux)
     }
 }
 
@@ -428,7 +429,7 @@ impl Random_BIG_KECCAK_1024
 pub struct Random_SHA3_512 {}
 impl Random_SHA3_512
 {
-    // pub fn new() -> Random_Generic<SECURE_COUNT>
+    // pub fn new() -> RandGen
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -445,12 +446,12 @@ impl Random_SHA3_512
     /// println!("Random number = {}", num);
     /// ```
     #[inline]
-    pub fn new() -> Random_Generic<SECURE_COUNT>
+    pub fn new() -> RandGen
     {
-        Random_Generic::<SECURE_COUNT>::new_with(SHA3_512::new(), SHA3_512::new())
+        RandGen::new_with(SHA3_512::new(), SHA3_512::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -479,12 +480,12 @@ impl Random_SHA3_512
     /// println!("Any number = {}", num);
     /// ```
     #[inline]
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), seed, aux)
+        RandGen::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT> 
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> RandGen 
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -515,12 +516,12 @@ impl Random_SHA3_512
     /// println!("Any number = {}", num);
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT> 
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> RandGen 
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_arrays(AES_128::new(), AES_128::new(), seed, aux)
+        RandGen::new_with_generators_seed_arrays(AES_128::new(), AES_128::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -541,12 +542,12 @@ impl Random_SHA3_512
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector(AES_128::new(), AES_128::new(), seed_collector)
+        RandGen::new_with_generators_seed_collector(AES_128::new(), AES_128::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT> 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen 
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -575,12 +576,12 @@ impl Random_SHA3_512
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT> 
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen 
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector_seeds(AES_128::new(), AES_128::new(), seed_collector, seed, aux)
+        RandGen::new_with_generators_seed_collector_seeds(AES_128::new(), AES_128::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT> 
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen 
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -609,9 +610,9 @@ impl Random_SHA3_512
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT> 
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen 
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector_seed_arrays(AES_128::new(), AES_128::new(), seed_collector, seed, aux)
+        RandGen::new_with_generators_seed_collector_seed_arrays(AES_128::new(), AES_128::new(), seed_collector, seed, aux)
     }
 }
 
@@ -711,7 +712,7 @@ pub struct Random_SHA2_512 {}
 impl Random_SHA2_512
 {
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -739,12 +740,12 @@ impl Random_SHA2_512
     /// let num: U512 = rand.random_biguint();
     /// println!("Random number = {}", num);
     /// ```
-    pub fn new() -> Random_Generic<SECURE_COUNT>
+    pub fn new() -> RandGen
     {
-        Random_Generic::<SECURE_COUNT>::new_with(SHA2_512::new(), SHA2_512::new())
+        RandGen::new_with(SHA2_512::new(), SHA2_512::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -772,12 +773,12 @@ impl Random_SHA2_512
     /// let num: U256 = rand.random_biguint();
     /// println!("Random number = {}", num);
     /// ```
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(SHA2_512::new(), SHA2_512::new(), seed, aux)
+        RandGen::new_with_generators_seeds(SHA2_512::new(), SHA2_512::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> RandGen
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -807,12 +808,12 @@ impl Random_SHA2_512
     /// let num: U256 = rand.random_biguint();
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> RandGen
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed, aux)
+        RandGen::new_with_generators_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -840,12 +841,12 @@ impl Random_SHA2_512
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector(SHA2_512::new(), SHA2_512::new(), seed_collector)
+        RandGen::new_with_generators_seed_collector(SHA2_512::new(), SHA2_512::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -881,12 +882,12 @@ impl Random_SHA2_512
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector_seeds(SHA2_512::new(), SHA2_512::new(), seed_collector, seed, aux)
+        RandGen::new_with_generators_seed_collector_seeds(SHA2_512::new(), SHA2_512::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -922,19 +923,14 @@ impl Random_SHA2_512
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed_collector, seed, aux)
+        RandGen::new_with_generators_seed_collector_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed_collector, seed, aux)
     }
 }
 
 
 
-/// The type `Any_SHAKE_256` which is a pseudo-random number generator using
-/// a hash algorithm SHAKE-256. It is a specific version of the generic
-/// struct
-
-/// 
 /// The struct `Any_SHAKE_256` that constructs the
 /// [`Random_Generic`](struct@Random_Generic) 
 /// object for implementing a pseudo-random number generator both for primitive
@@ -955,79 +951,79 @@ impl Random_SHA2_512
 /// define_utypes_with!(u64);
 /// 
 /// let mut any = Any_SHAKE_256::new();
-/// println!("Random number = {}", any.random_u128());
-/// println!("Random number = {}", any.random_u64());
-/// println!("Random number = {}", any.random_u32());
-/// println!("Random number = {}", any.random_u16());
-/// println!("Random number = {}", any.random_u8());
+/// println!("Any number = {}", any.random_u128());
+/// println!("Any number = {}", any.random_u64());
+/// println!("Any number = {}", any.random_u32());
+/// println!("Any number = {}", any.random_u16());
+/// println!("Any number = {}", any.random_u8());
 /// 
 /// if let Some(num) = any.random_under_uint(1234567890123456_u64)
-///     { println!("Random number u64 = {}", num); }
+///     { println!("Any number u64 = {}", num); }
 /// 
 /// if let Some(num) = any.random_minmax_uint(1234_u16, 6321)
-///     { println!("Random number u16 = {}", num); }
+///     { println!("Any number u16 = {}", num); }
 /// 
-/// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+/// println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
 /// if let Some(num) = any.random_odd_under_uint(1234_u16)
-///     { println!("Random odd number u16 = {}", num); }
+///     { println!("Any odd number u16 = {}", num); }
 /// 
-/// println!("Random 128-bit number u128 = {}", any.random_with_msb_set_uint::<u128>());
-/// println!("Random 16-bit odd number u16 = {}", any.random_with_msb_set_uint::<u16>());
-/// println!("Random prime number u64 = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
-/// println!("Random usize-sized prime number usize = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+/// println!("Any 128-bit number u128 = {}", any.random_with_msb_set_uint::<u128>());
+/// println!("Any 16-bit odd number u16 = {}", any.random_with_msb_set_uint::<u16>());
+/// println!("Any prime number u64 = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+/// println!("Any usize-sized prime number usize = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
 /// 
 /// let num: [u128; 20] = any.random_array();
 /// for i in 0..20
-///     { println!("Random number {} => {}", i, num[i]); }
+///     { println!("Any number {} => {}", i, num[i]); }
 /// 
 /// let mut num = [0_u64; 32];
 /// any.put_random_in_array(&mut num);
 /// for i in 0..32
-///     { println!("Random number {} => {}", i, num[i]); }
+///     { println!("Any number {} => {}", i, num[i]); }
 /// 
 /// let mut biguint: U512 = any.random_biguint();
-/// println!("Random Number: {}", biguint);
+/// println!("Any Number: {}", biguint);
 /// 
 /// let mut ceiling = U1024::max().wrapping_div_uint(3_u8);
 /// if let Some(r) = any.random_under_biguint(&ceiling)
 /// {
-///     println!("Random Number less than {} is\n{}", ceiling, r);
+///     println!("Any Number less than {} is\n{}", ceiling, r);
 ///     assert!(r < ceiling);
 /// }
 /// 
 /// ceiling = U1024::max().wrapping_div_uint(5_u8);
 /// let r = any.random_under_biguint_(&ceiling);
-/// println!("Random Number less than {} is\n{}", ceiling, r);
+/// println!("Any Number less than {} is\n{}", ceiling, r);
 /// assert!(r < ceiling);
 /// 
 /// ceiling = U1024::max().wrapping_div_uint(4_u8);
 /// if let Some(r) = any.random_odd_under_biguint(&ceiling)
 /// {
-///     println!("Random odd Number less than {} is\n{}", ceiling, r);
+///     println!("Any odd Number less than {} is\n{}", ceiling, r);
 ///     assert!(r < ceiling);
 /// }
 /// 
 /// biguint = any.random_with_msb_set_biguint();
-/// println!("Random Number: {}", biguint);
+/// println!("Any Number: {}", biguint);
 /// 
 /// biguint = any.random_odd_with_msb_set_biguint();
-/// println!("512-bit Random Odd Number = {}", biguint);
+/// println!("512-bit Any Odd Number = {}", biguint);
 /// assert!(biguint > U512::halfmax());
 /// assert!(biguint.is_odd());
 /// 
 /// biguint = any.random_prime_using_miller_rabin_biguint(5);
-/// println!("Random Prime Number = {}", biguint);
+/// println!("Any Prime Number = {}", biguint);
 /// assert!(biguint.is_odd());
 /// 
 /// biguint = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
-/// println!("512-bit Random Prime Number = {}", biguint);
+/// println!("512-bit Any Prime Number = {}", biguint);
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)] 
 pub struct Any_SHAKE_256 {}
 impl Any_SHAKE_256
 {
-    // pub fn new() -> Random_Generic<SECURE_COUNT>
+    // pub fn new() -> RandGen
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -1042,14 +1038,14 @@ impl Any_SHAKE_256
     /// use cryptocol::random::Any_SHAKE_256;
     /// let mut any = Any_SHAKE_256::new_with_seeds(123456789, 987654321);
     /// let num: U512 = any.random_biguint();
-    /// println!("Random number = {}", num);
+    /// println!("Any number = {}", num);
     /// ```
-    pub fn new() -> Random_Generic
+    pub fn new() -> AnyGen
     {
-        Random_Generic::new_with(SHAKE_256::new(), SHAKE_256::new())
+        AnyGen::new_with(SHAKE_256::new(), SHAKE_256::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> AnyGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -1076,11 +1072,11 @@ impl Any_SHAKE_256
     /// use cryptocol::random::Any_SHAKE_256;
     /// let mut any = Any_SHAKE_256::new_with_seeds(123456789, 987654321);
     /// let num: U512 = any.random_biguint();
-    /// println!("Random number = {}", num);
+    /// println!("Any number = {}", num);
     /// ```
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
+    pub fn new_with_seeds(seed: u64, aux: u64) -> AnyGen
     {
-        Random_Generic::new_with_generators_seeds(SHAKE_256::new(), SHAKE_256::new(), seed, aux)
+        AnyGen::new_with_generators_seeds(SHAKE_256::new(), SHAKE_256::new(), seed, aux)
     }
 
     // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
@@ -1109,15 +1105,15 @@ impl Any_SHAKE_256
     /// 
     /// let mut any = Any_SHAKE_256::new_with_seeds(123456789, 987654321);
     /// let num: U512 = any.random_biguint();
-    /// println!("Random number = {}", num);
+    /// println!("Any number = {}", num);
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_arrays(SHAKE_256::new(), SHAKE_256::new(), seed, aux)
+        AnyGen::new_with_generators_seed_arrays(SHAKE_256::new(), SHAKE_256::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -1142,15 +1138,15 @@ impl Any_SHAKE_256
     /// 
     /// let mut rand = Random_Rijndael::new();
     /// let num: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
+    /// println!("Any number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector(SHAKE_256::new(), SHAKE_256::new(), seed_collector)
+        AnyGen::new_with_generators_seed_collector(SHAKE_256::new(), SHAKE_256::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -1186,12 +1182,12 @@ impl Any_SHAKE_256
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector_seeds(SHAKE_256::new(), SHAKE_256::new(), seed_collector, seed, aux)
+        AnyGen::new_with_generators_seed_collector_seeds(SHAKE_256::new(), SHAKE_256::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -1227,17 +1223,14 @@ impl Any_SHAKE_256
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector_seed_arrays(SHAKE_256::new(), SHAKE_256::new(), seed_collector, seed, aux)
+        AnyGen::new_with_generators_seed_collector_seed_arrays(SHAKE_256::new(), SHAKE_256::new(), seed_collector, seed, aux)
     }
 }
 
-/// The type `Any_SHAKE_128` which is a pseudo-random number generator using
-/// a hash algorithm SHAKE-128. It is a specific version of the generic struct
-/// 
 
-/// 
+
 /// The struct `Any_SHAKE_128` that constructs the
 /// [`Random_Generic`](struct@Random_Generic) 
 /// object for implementing a pseudo-random number generator both for primitive
@@ -1258,79 +1251,79 @@ impl Any_SHAKE_256
 /// define_utypes_with!(u64);
 /// 
 /// let mut any = Any_SHAKE_128::new();
-/// println!("Random number = {}", any.random_u128());
-/// println!("Random number = {}", any.random_u64());
-/// println!("Random number = {}", any.random_u32());
-/// println!("Random number = {}", any.random_u16());
-/// println!("Random number = {}", any.random_u8());
+/// println!("Any number = {}", any.random_u128());
+/// println!("Any number = {}", any.random_u64());
+/// println!("Any number = {}", any.random_u32());
+/// println!("Any number = {}", any.random_u16());
+/// println!("Any number = {}", any.random_u8());
 /// 
 /// if let Some(num) = any.random_under_uint(1234567890123456_u64)
-///     { println!("Random number u64 = {}", num); }
+///     { println!("Any number u64 = {}", num); }
 /// 
 /// if let Some(num) = any.random_minmax_uint(1234_u16, 6321)
-///     { println!("Random number u16 = {}", num); }
+///     { println!("Any number u16 = {}", num); }
 /// 
-/// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+/// println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
 /// if let Some(num) = any.random_odd_under_uint(1234_u16)
-///     { println!("Random odd number u16 = {}", num); }
+///     { println!("Any odd number u16 = {}", num); }
 /// 
-/// println!("Random 128-bit number u128 = {}", any.random_with_msb_set_uint::<u128>());
-/// println!("Random 16-bit odd number u16 = {}", any.random_with_msb_set_uint::<u16>());
-/// println!("Random prime number u64 = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
-/// println!("Random usize-sized prime number usize = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+/// println!("Any 128-bit number u128 = {}", any.random_with_msb_set_uint::<u128>());
+/// println!("Any 16-bit odd number u16 = {}", any.random_with_msb_set_uint::<u16>());
+/// println!("Any prime number u64 = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+/// println!("Any usize-sized prime number usize = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
 /// 
 /// let num: [u128; 20] = any.random_array();
 /// for i in 0..20
-///     { println!("Random number {} => {}", i, num[i]); }
+///     { println!("Any number {} => {}", i, num[i]); }
 /// 
 /// let mut num = [0_u64; 32];
 /// any.put_random_in_array(&mut num);
 /// for i in 0..32
-///     { println!("Random number {} => {}", i, num[i]); }
+///     { println!("Any number {} => {}", i, num[i]); }
 /// 
 /// let mut biguint: U512 = any.random_biguint();
-/// println!("Random Number: {}", biguint);
+/// println!("Any Number: {}", biguint);
 /// 
 /// let mut ceiling = U1024::max().wrapping_div_uint(3_u8);
 /// if let Some(r) = any.random_under_biguint(&ceiling)
 /// {
-///     println!("Random Number less than {} is\n{}", ceiling, r);
+///     println!("Any Number less than {} is\n{}", ceiling, r);
 ///     assert!(r < ceiling);
 /// }
 /// 
 /// ceiling = U1024::max().wrapping_div_uint(5_u8);
 /// let r = any.random_under_biguint_(&ceiling);
-/// println!("Random Number less than {} is\n{}", ceiling, r);
+/// println!("Any Number less than {} is\n{}", ceiling, r);
 /// assert!(r < ceiling);
 /// 
 /// ceiling = U1024::max().wrapping_div_uint(4_u8);
 /// if let Some(r) = any.random_odd_under_biguint(&ceiling)
 /// {
-///     println!("Random odd Number less than {} is\n{}", ceiling, r);
+///     println!("Any odd Number less than {} is\n{}", ceiling, r);
 ///     assert!(r < ceiling);
 /// }
 /// 
 /// biguint = any.random_with_msb_set_biguint();
-/// println!("Random Number: {}", biguint);
+/// println!("Any Number: {}", biguint);
 /// 
 /// biguint = any.random_odd_with_msb_set_biguint();
-/// println!("512-bit Random Odd Number = {}", biguint);
+/// println!("512-bit Any Odd Number = {}", biguint);
 /// assert!(biguint > U512::halfmax());
 /// assert!(biguint.is_odd());
 /// 
 /// biguint = any.random_prime_using_miller_rabin_biguint(5);
-/// println!("Random Prime Number = {}", biguint);
+/// println!("Any Prime Number = {}", biguint);
 /// assert!(biguint.is_odd());
 /// 
 /// biguint = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
-/// println!("512-bit Random Prime Number = {}", biguint);
+/// println!("512-bit Any Prime Number = {}", biguint);
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)] 
 pub struct Any_SHAKE_128 {}
 impl Any_SHAKE_128
 {
-    // pub fn new() -> Random_Generic<SECURE_COUNT>
+    // pub fn new() -> AnyGen
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -1346,12 +1339,12 @@ impl Any_SHAKE_128
     /// let mut any = Any_SHAKE_128::new();
     /// println!("Any number = {}", any.random_u128());
     /// ```
-    pub fn new() -> Random_Generic
+    pub fn new() -> AnyGen
     {
-        Random_Generic::new_with(SHAKE_128::new(), SHAKE_128::new())
+        AnyGen::new_with(SHAKE_128::new(), SHAKE_128::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT>
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> AnyGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -1380,12 +1373,12 @@ impl Any_SHAKE_128
     /// let num: U384 = any.random_biguint();
     /// println!("Any number = {}", num);
     /// ```
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
+    pub fn new_with_seeds(seed: u64, aux: u64) -> AnyGen
     {
-        Random_Generic::new_with_generators_seeds(SHAKE_128::new(), SHAKE_128::new(), seed, aux)
+        AnyGen::new_with_generators_seeds(SHAKE_128::new(), SHAKE_128::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -1414,12 +1407,12 @@ impl Any_SHAKE_128
     /// println!("Any number = {}", num);
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_arrays(SHAKE_128::new(), SHAKE_128::new(), seed, aux)
+        AnyGen::new_with_generators_seed_arrays(SHAKE_128::new(), SHAKE_128::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -1447,12 +1440,12 @@ impl Any_SHAKE_128
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector(SHAKE_128::new(), SHAKE_128::new(), seed_collector)
+        AnyGen::new_with_generators_seed_collector(SHAKE_128::new(), SHAKE_128::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -1488,12 +1481,12 @@ impl Any_SHAKE_128
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector_seeds(SHAKE_128::new(), SHAKE_128::new(), seed_collector, seed, aux)
+        AnyGen::new_with_generators_seed_collector_seeds(SHAKE_128::new(), SHAKE_128::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -1529,9 +1522,9 @@ impl Any_SHAKE_128
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector_seed_arrays(SHAKE_128::new(), SHAKE_128::new(), seed_collector, seed, aux)
+        AnyGen::new_with_generators_seed_collector_seed_arrays(SHAKE_128::new(), SHAKE_128::new(), seed_collector, seed, aux)
     }
 }
 
@@ -1557,79 +1550,79 @@ impl Any_SHAKE_128
 /// define_utypes_with!(u64);
 /// 
 /// let mut any = Any_SHA3_512::new();
-/// println!("Random number = {}", any.random_u128());
-/// println!("Random number = {}", any.random_u64());
-/// println!("Random number = {}", any.random_u32());
-/// println!("Random number = {}", any.random_u16());
-/// println!("Random number = {}", any.random_u8());
+/// println!("Any number = {}", any.random_u128());
+/// println!("Any number = {}", any.random_u64());
+/// println!("Any number = {}", any.random_u32());
+/// println!("Any number = {}", any.random_u16());
+/// println!("Any number = {}", any.random_u8());
 /// 
 /// if let Some(num) = any.random_under_uint(1234567890123456_u64)
-///     { println!("Random number u64 = {}", num); }
+///     { println!("Any number u64 = {}", num); }
 /// 
 /// if let Some(num) = any.random_minmax_uint(1234_u16, 6321)
-///     { println!("Random number u16 = {}", num); }
+///     { println!("Any number u16 = {}", num); }
 /// 
-/// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+/// println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
 /// if let Some(num) = any.random_odd_under_uint(1234_u16)
-///     { println!("Random odd number u16 = {}", num); }
+///     { println!("Any odd number u16 = {}", num); }
 /// 
-/// println!("Random 128-bit number u128 = {}", any.random_with_msb_set_uint::<u128>());
-/// println!("Random 16-bit odd number u16 = {}", any.random_with_msb_set_uint::<u16>());
-/// println!("Random prime number u64 = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
-/// println!("Random usize-sized prime number usize = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+/// println!("Any 128-bit number u128 = {}", any.random_with_msb_set_uint::<u128>());
+/// println!("Any 16-bit odd number u16 = {}", any.random_with_msb_set_uint::<u16>());
+/// println!("Any prime number u64 = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+/// println!("Any usize-sized prime number usize = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
 /// 
 /// let num: [u128; 20] = any.random_array();
 /// for i in 0..20
-///     { println!("Random number {} => {}", i, num[i]); }
+///     { println!("Any number {} => {}", i, num[i]); }
 /// 
 /// let mut num = [0_u64; 32];
 /// any.put_random_in_array(&mut num);
 /// for i in 0..32
-///     { println!("Random number {} => {}", i, num[i]); }
+///     { println!("Any number {} => {}", i, num[i]); }
 /// 
 /// let mut biguint: U512 = any.random_biguint();
-/// println!("Random Number: {}", biguint);
+/// println!("Any Number: {}", biguint);
 /// 
 /// let mut ceiling = U1024::max().wrapping_div_uint(3_u8);
 /// if let Some(r) = any.random_under_biguint(&ceiling)
 /// {
-///     println!("Random Number less than {} is\n{}", ceiling, r);
+///     println!("Any Number less than {} is\n{}", ceiling, r);
 ///     assert!(r < ceiling);
 /// }
 /// 
 /// ceiling = U1024::max().wrapping_div_uint(5_u8);
 /// let r = any.random_under_biguint_(&ceiling);
-/// println!("Random Number less than {} is\n{}", ceiling, r);
+/// println!("Any Number less than {} is\n{}", ceiling, r);
 /// assert!(r < ceiling);
 /// 
 /// ceiling = U1024::max().wrapping_div_uint(4_u8);
 /// if let Some(r) = any.random_odd_under_biguint(&ceiling)
 /// {
-///     println!("Random odd Number less than {} is\n{}", ceiling, r);
+///     println!("Any odd Number less than {} is\n{}", ceiling, r);
 ///     assert!(r < ceiling);
 /// }
 /// 
 /// biguint = any.random_with_msb_set_biguint();
-/// println!("Random Number: {}", biguint);
+/// println!("Any Number: {}", biguint);
 /// 
 /// biguint = any.random_odd_with_msb_set_biguint();
-/// println!("512-bit Random Odd Number = {}", biguint);
+/// println!("512-bit Any Odd Number = {}", biguint);
 /// assert!(biguint > U512::halfmax());
 /// assert!(biguint.is_odd());
 /// 
 /// biguint = any.random_prime_using_miller_rabin_biguint(5);
-/// println!("Random Prime Number = {}", biguint);
+/// println!("Any Prime Number = {}", biguint);
 /// assert!(biguint.is_odd());
 /// 
 /// biguint = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
-/// println!("512-bit Random Prime Number = {}", biguint);
+/// println!("512-bit Any Prime Number = {}", biguint);
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)] 
 pub struct Any_SHA3_512 {}
 impl Any_SHA3_512
 {
-    // pub fn new() -> Random_Generic
+    // pub fn new() -> AnyGen
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -1641,12 +1634,12 @@ impl Any_SHA3_512
     /// let mut any = Any_SHA3_512::new();
     /// println!("Any number = {}", any.random_u64());
     /// ```
-    pub fn new() -> Random_Generic
+    pub fn new() -> AnyGen
     {
-        Random_Generic::new_with(SHA3_512::new(), SHA3_512::new())
+        AnyGen::new_with(SHA3_512::new(), SHA3_512::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> AnyGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -1676,10 +1669,10 @@ impl Any_SHA3_512
     /// ```
     pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
     {
-        Random_Generic::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), seed, aux)
+        AnyGen::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -1708,12 +1701,12 @@ impl Any_SHA3_512
     /// println!("Any number = {}", num);
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_arrays(SHA3_512::new(), SHA3_512::new(), seed, aux)
+        AnyGen::new_with_generators_seed_arrays(SHA3_512::new(), SHA3_512::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -1741,12 +1734,12 @@ impl Any_SHA3_512
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector(SHA3_512::new(), SHA3_512::new(), seed_collector)
+        AnyGen::new_with_generators_seed_collector(SHA3_512::new(), SHA3_512::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -1782,12 +1775,12 @@ impl Any_SHA3_512
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector_seeds(SHA3_512::new(), SHA3_512::new(), seed_collector, seed, aux)
+        AnyGen::new_with_generators_seed_collector_seeds(SHA3_512::new(), SHA3_512::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -1823,15 +1816,14 @@ impl Any_SHA3_512
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector_seed_arrays(SHA3_512::new(), SHA3_512::new(), seed_collector, seed, aux)
+        AnyGen::new_with_generators_seed_collector_seed_arrays(SHA3_512::new(), SHA3_512::new(), seed_collector, seed, aux)
     }
 }
 
 
 
-/// 
 /// The struct `Any_SHA3_256` that constructs the
 /// [`Random_Generic`](struct@Random_Generic) 
 /// object for implementing a pseudo-random number generator both for primitive
@@ -1852,72 +1844,72 @@ impl Any_SHA3_512
 /// define_utypes_with!(u64);
 /// 
 /// let mut any = Any_SHA3_256::new();
-/// println!("Random number = {}", any.random_u128());
-/// println!("Random number = {}", any.random_u64());
-/// println!("Random number = {}", any.random_u32());
-/// println!("Random number = {}", any.random_u16());
-/// println!("Random number = {}", any.random_u8());
+/// println!("Any number = {}", any.random_u128());
+/// println!("Any number = {}", any.random_u64());
+/// println!("Any number = {}", any.random_u32());
+/// println!("Any number = {}", any.random_u16());
+/// println!("Any number = {}", any.random_u8());
 /// 
 /// if let Some(num) = any.random_under_uint(1234567890123456_u64)
-///     { println!("Random number u64 = {}", num); }
+///     { println!("Any number u64 = {}", num); }
 /// 
 /// if let Some(num) = any.random_minmax_uint(1234_u16, 6321)
-///     { println!("Random number u16 = {}", num); }
+///     { println!("Any number u16 = {}", num); }
 /// 
-/// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+/// println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
 /// if let Some(num) = any.random_odd_under_uint(1234_u16)
-///     { println!("Random odd number u16 = {}", num); }
+///     { println!("Any odd number u16 = {}", num); }
 /// 
-/// println!("Random 128-bit number u128 = {}", any.random_with_msb_set_uint::<u128>());
-/// println!("Random 16-bit odd number u16 = {}", any.random_with_msb_set_uint::<u16>());
-/// println!("Random prime number u64 = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
-/// println!("Random usize-sized prime number usize = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+/// println!("Any 128-bit number u128 = {}", any.random_with_msb_set_uint::<u128>());
+/// println!("Any 16-bit odd number u16 = {}", any.random_with_msb_set_uint::<u16>());
+/// println!("Any prime number u64 = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+/// println!("Any usize-sized prime number usize = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
 /// 
 /// let num: [u128; 20] = any.random_array();
 /// for i in 0..20
-///     { println!("Random number {} => {}", i, num[i]); }
+///     { println!("Any number {} => {}", i, num[i]); }
 /// 
 /// let mut num = [0_u64; 32];
 /// any.put_random_in_array(&mut num);
 /// for i in 0..32
-///     { println!("Random number {} => {}", i, num[i]); }
+///     { println!("Any number {} => {}", i, num[i]); }
 /// 
 /// let mut biguint: U512 = any.random_biguint();
-/// println!("Random Number: {}", biguint);
+/// println!("Any Number: {}", biguint);
 /// 
 /// let mut ceiling = U1024::max().wrapping_div_uint(3_u8);
 /// if let Some(r) = any.random_under_biguint(&ceiling)
 /// {
-///     println!("Random Number less than {} is\n{}", ceiling, r);
+///     println!("Any Number less than {} is\n{}", ceiling, r);
 ///     assert!(r < ceiling);
 /// }
 /// 
 /// ceiling = U1024::max().wrapping_div_uint(5_u8);
 /// let r = any.random_under_biguint_(&ceiling);
-/// println!("Random Number less than {} is\n{}", ceiling, r);
+/// println!("Any Number less than {} is\n{}", ceiling, r);
 /// assert!(r < ceiling);
 /// 
 /// ceiling = U1024::max().wrapping_div_uint(4_u8);
 /// if let Some(r) = any.random_odd_under_biguint(&ceiling)
 /// {
-///     println!("Random odd Number less than {} is\n{}", ceiling, r);
+///     println!("Any odd Number less than {} is\n{}", ceiling, r);
 ///     assert!(r < ceiling);
 /// }
 /// 
 /// biguint = any.random_with_msb_set_biguint();
-/// println!("Random Number: {}", biguint);
+/// println!("Any Number: {}", biguint);
 /// 
 /// biguint = any.random_odd_with_msb_set_biguint();
-/// println!("512-bit Random Odd Number = {}", biguint);
+/// println!("512-bit Any Odd Number = {}", biguint);
 /// assert!(biguint > U512::halfmax());
 /// assert!(biguint.is_odd());
 /// 
 /// biguint = any.random_prime_using_miller_rabin_biguint(5);
-/// println!("Random Prime Number = {}", biguint);
+/// println!("Any Prime Number = {}", biguint);
 /// assert!(biguint.is_odd());
 /// 
 /// biguint = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
-/// println!("512-bit Random Prime Number = {}", biguint);
+/// println!("512-bit Any Prime Number = {}", biguint);
 /// assert!(biguint.is_odd());
 /// ```
 /// [`Random_Generic`](struct@Random_Generic).
@@ -1925,7 +1917,7 @@ impl Any_SHA3_512
 pub struct Any_SHA3_256 {}
 impl Any_SHA3_256
 {
-    // pub fn new() -> Random_Generic
+    // pub fn new() -> AnyGen
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -1937,12 +1929,12 @@ impl Any_SHA3_256
     /// let mut any = Any_SHA3_256::new();
     /// println!("Any number = {}", any.random_u32());
     /// ```
-    pub fn new() -> Random_Generic
+    pub fn new() -> AnyGen
     {
-        Random_Generic::new_with(SHA3_256::new(), SHA3_256::new())
+        AnyGen::new_with(SHA3_256::new(), SHA3_256::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> AnyGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -1970,12 +1962,12 @@ impl Any_SHA3_256
     /// let num: U768 = any.random_odd_with_msb_set_biguint();
     /// println!("Any number = {}", num);
     /// ```
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
+    pub fn new_with_seeds(seed: u64, aux: u64) -> AnyGen
     {
-        Random_Generic::new_with_generators_seeds(SHA3_256::new(), SHA3_256::new(), seed, aux)
+        AnyGen::new_with_generators_seeds(SHA3_256::new(), SHA3_256::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -2006,12 +1998,12 @@ impl Any_SHA3_256
     /// println!("Any number = {}", num);
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_arrays(SHA3_256::new(), SHA3_256::new(), seed, aux)
+        AnyGen::new_with_generators_seed_arrays(SHA3_256::new(), SHA3_256::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -2039,12 +2031,12 @@ impl Any_SHA3_256
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector(SHA3_256::new(), SHA3_256::new(), seed_collector)
+        AnyGen::new_with_generators_seed_collector(SHA3_256::new(), SHA3_256::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -2080,12 +2072,12 @@ impl Any_SHA3_256
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector_seeds(SHA3_256::new(), SHA3_256::new(), seed_collector, seed, aux)
+        AnyGen::new_with_generators_seed_collector_seeds(SHA3_256::new(), SHA3_256::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -2121,9 +2113,9 @@ impl Any_SHA3_256
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector_seed_arrays(SHA3_256::new(), SHA3_256::new(), seed_collector, seed, aux)
+        AnyGen::new_with_generators_seed_collector_seed_arrays(SHA3_256::new(), SHA3_256::new(), seed_collector, seed, aux)
     }
 }
 
@@ -2149,79 +2141,79 @@ impl Any_SHA3_256
 /// define_utypes_with!(u64);
 /// 
 /// let mut any = Any_SHA2_512::new();
-/// println!("Random number = {}", any.random_u128());
-/// println!("Random number = {}", any.random_u64());
-/// println!("Random number = {}", any.random_u32());
-/// println!("Random number = {}", any.random_u16());
-/// println!("Random number = {}", any.random_u8());
+/// println!("Any number = {}", any.random_u128());
+/// println!("Any number = {}", any.random_u64());
+/// println!("Any number = {}", any.random_u32());
+/// println!("Any number = {}", any.random_u16());
+/// println!("Any number = {}", any.random_u8());
 /// 
 /// if let Some(num) = any.random_under_uint(1234567890123456_u64)
-///     { println!("Random number u64 = {}", num); }
+///     { println!("Any number u64 = {}", num); }
 /// 
 /// if let Some(num) = any.random_minmax_uint(1234_u16, 6321)
-///     { println!("Random number u16 = {}", num); }
+///     { println!("Any number u16 = {}", num); }
 /// 
-/// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+/// println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
 /// if let Some(num) = any.random_odd_under_uint(1234_u16)
-///     { println!("Random odd number u16 = {}", num); }
+///     { println!("Any odd number u16 = {}", num); }
 /// 
-/// println!("Random 128-bit number u128 = {}", any.random_with_msb_set_uint::<u128>());
-/// println!("Random 16-bit odd number u16 = {}", any.random_with_msb_set_uint::<u16>());
-/// println!("Random prime number u64 = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
-/// println!("Random usize-sized prime number usize = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+/// println!("Any 128-bit number u128 = {}", any.random_with_msb_set_uint::<u128>());
+/// println!("Any 16-bit odd number u16 = {}", any.random_with_msb_set_uint::<u16>());
+/// println!("Any prime number u64 = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+/// println!("Any usize-sized prime number usize = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
 /// 
 /// let num: [u128; 20] = any.random_array();
 /// for i in 0..20
-///     { println!("Random number {} => {}", i, num[i]); }
+///     { println!("Any number {} => {}", i, num[i]); }
 /// 
 /// let mut num = [0_u64; 32];
 /// any.put_random_in_array(&mut num);
 /// for i in 0..32
-///     { println!("Random number {} => {}", i, num[i]); }
+///     { println!("Any number {} => {}", i, num[i]); }
 /// 
 /// let mut biguint: U512 = any.random_biguint();
-/// println!("Random Number: {}", biguint);
+/// println!("Any Number: {}", biguint);
 /// 
 /// let mut ceiling = U1024::max().wrapping_div_uint(3_u8);
 /// if let Some(r) = any.random_under_biguint(&ceiling)
 /// {
-///     println!("Random Number less than {} is\n{}", ceiling, r);
+///     println!("Any Number less than {} is\n{}", ceiling, r);
 ///     assert!(r < ceiling);
 /// }
 /// 
 /// ceiling = U1024::max().wrapping_div_uint(5_u8);
 /// let r = any.random_under_biguint_(&ceiling);
-/// println!("Random Number less than {} is\n{}", ceiling, r);
+/// println!("Any Number less than {} is\n{}", ceiling, r);
 /// assert!(r < ceiling);
 /// 
 /// ceiling = U1024::max().wrapping_div_uint(4_u8);
 /// if let Some(r) = any.random_odd_under_biguint(&ceiling)
 /// {
-///     println!("Random odd Number less than {} is\n{}", ceiling, r);
+///     println!("Any odd Number less than {} is\n{}", ceiling, r);
 ///     assert!(r < ceiling);
 /// }
 /// 
 /// biguint = any.random_with_msb_set_biguint();
-/// println!("Random Number: {}", biguint);
+/// println!("Any Number: {}", biguint);
 /// 
 /// biguint = any.random_odd_with_msb_set_biguint();
-/// println!("512-bit Random Odd Number = {}", biguint);
+/// println!("512-bit Any Odd Number = {}", biguint);
 /// assert!(biguint > U512::halfmax());
 /// assert!(biguint.is_odd());
 /// 
 /// biguint = any.random_prime_using_miller_rabin_biguint(5);
-/// println!("Random Prime Number = {}", biguint);
+/// println!("Any Prime Number = {}", biguint);
 /// assert!(biguint.is_odd());
 /// 
 /// biguint = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
-/// println!("512-bit Random Prime Number = {}", biguint);
+/// println!("512-bit Any Prime Number = {}", biguint);
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)] 
 pub struct Any_SHA2_512 {}
 impl Any_SHA2_512
 {
-    // pub fn new() -> Random_Generic
+    // pub fn new() -> AnyGen
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -2233,12 +2225,12 @@ impl Any_SHA2_512
     /// let mut any = Any_SHA2_512::new();
     /// println!("Any number = {}", any.random_u16());
     /// ```
-    pub fn new() -> Random_Generic
+    pub fn new() -> AnyGen
     {
-        Random_Generic::new_with(SHA2_512::new(), SHA2_512::new())
+        AnyGen::new_with(SHA2_512::new(), SHA2_512::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> AnyGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -2263,12 +2255,12 @@ impl Any_SHA2_512
     /// if let Some(num) = any.random_minmax_uint(12345678_u32, 87654321)
     ///     { println!("Any number = {}", num); }
     /// ```
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
+    pub fn new_with_seeds(seed: u64, aux: u64) -> AnyGen
     {
-        Random_Generic::new_with_generators_seeds(SHA2_512::new(), SHA2_512::new(), seed, aux)
+        AnyGen::new_with_generators_seeds(SHA2_512::new(), SHA2_512::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -2297,12 +2289,12 @@ impl Any_SHA2_512
     ///     { println!("Any number = {}", num); }
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed, aux)
+        AnyGen::new_with_generators_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -2330,12 +2322,12 @@ impl Any_SHA2_512
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector(SHA2_512::new(), SHA2_512::new(), seed_collector)
+        AnyGen::new_with_generators_seed_collector(SHA2_512::new(), SHA2_512::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -2371,12 +2363,12 @@ impl Any_SHA2_512
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector_seeds(SHA2_512::new(), SHA2_512::new(), seed_collector, seed, aux)
+        AnyGen::new_with_generators_seed_collector_seeds(SHA2_512::new(), SHA2_512::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -2412,9 +2404,9 @@ impl Any_SHA2_512
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed_collector, seed, aux)
+        AnyGen::new_with_generators_seed_collector_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed_collector, seed, aux)
     }
 }
 
@@ -2440,79 +2432,79 @@ impl Any_SHA2_512
 /// define_utypes_with!(u64);
 /// 
 /// let mut any = Any_SHA2_256::new();
-/// println!("Random number = {}", any.random_u128());
-/// println!("Random number = {}", any.random_u64());
-/// println!("Random number = {}", any.random_u32());
-/// println!("Random number = {}", any.random_u16());
-/// println!("Random number = {}", any.random_u8());
+/// println!("Any number = {}", any.random_u128());
+/// println!("Any number = {}", any.random_u64());
+/// println!("Any number = {}", any.random_u32());
+/// println!("Any number = {}", any.random_u16());
+/// println!("Any number = {}", any.random_u8());
 /// 
 /// if let Some(num) = any.random_under_uint(1234567890123456_u64)
-///     { println!("Random number u64 = {}", num); }
+///     { println!("Any number u64 = {}", num); }
 /// 
 /// if let Some(num) = any.random_minmax_uint(1234_u16, 6321)
-///     { println!("Random number u16 = {}", num); }
+///     { println!("Any number u16 = {}", num); }
 /// 
-/// println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+/// println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
 /// if let Some(num) = any.random_odd_under_uint(1234_u16)
-///     { println!("Random odd number u16 = {}", num); }
+///     { println!("Any odd number u16 = {}", num); }
 /// 
-/// println!("Random 128-bit number u128 = {}", any.random_with_msb_set_uint::<u128>());
-/// println!("Random 16-bit odd number u16 = {}", any.random_with_msb_set_uint::<u16>());
-/// println!("Random prime number u64 = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
-/// println!("Random usize-sized prime number usize = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+/// println!("Any 128-bit number u128 = {}", any.random_with_msb_set_uint::<u128>());
+/// println!("Any 16-bit odd number u16 = {}", any.random_with_msb_set_uint::<u16>());
+/// println!("Any prime number u64 = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+/// println!("Any usize-sized prime number usize = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
 /// 
 /// let num: [u128; 20] = any.random_array();
 /// for i in 0..20
-///     { println!("Random number {} => {}", i, num[i]); }
+///     { println!("Any number {} => {}", i, num[i]); }
 /// 
 /// let mut num = [0_u64; 32];
 /// any.put_random_in_array(&mut num);
 /// for i in 0..32
-///     { println!("Random number {} => {}", i, num[i]); }
+///     { println!("Any number {} => {}", i, num[i]); }
 /// 
 /// let mut biguint: U512 = any.random_biguint();
-/// println!("Random Number: {}", biguint);
+/// println!("Any Number: {}", biguint);
 /// 
 /// let mut ceiling = U1024::max().wrapping_div_uint(3_u8);
 /// if let Some(r) = any.random_under_biguint(&ceiling)
 /// {
-///     println!("Random Number less than {} is\n{}", ceiling, r);
+///     println!("Any Number less than {} is\n{}", ceiling, r);
 ///     assert!(r < ceiling);
 /// }
 /// 
 /// ceiling = U1024::max().wrapping_div_uint(5_u8);
 /// let r = any.random_under_biguint_(&ceiling);
-/// println!("Random Number less than {} is\n{}", ceiling, r);
+/// println!("Any Number less than {} is\n{}", ceiling, r);
 /// assert!(r < ceiling);
 /// 
 /// ceiling = U1024::max().wrapping_div_uint(4_u8);
 /// if let Some(r) = any.random_odd_under_biguint(&ceiling)
 /// {
-///     println!("Random odd Number less than {} is\n{}", ceiling, r);
+///     println!("Any odd Number less than {} is\n{}", ceiling, r);
 ///     assert!(r < ceiling);
 /// }
 /// 
 /// biguint = any.random_with_msb_set_biguint();
-/// println!("Random Number: {}", biguint);
+/// println!("Any Number: {}", biguint);
 /// 
 /// biguint = any.random_odd_with_msb_set_biguint();
-/// println!("512-bit Random Odd Number = {}", biguint);
+/// println!("512-bit Any Odd Number = {}", biguint);
 /// assert!(biguint > U512::halfmax());
 /// assert!(biguint.is_odd());
 /// 
 /// biguint = any.random_prime_using_miller_rabin_biguint(5);
-/// println!("Random Prime Number = {}", biguint);
+/// println!("Any Prime Number = {}", biguint);
 /// assert!(biguint.is_odd());
 /// 
 /// biguint = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
-/// println!("512-bit Random Prime Number = {}", biguint);
+/// println!("512-bit Any Prime Number = {}", biguint);
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)] 
 pub struct Any_SHA2_256 {}
 impl Any_SHA2_256
 {
-    // pub fn new() -> Random_Generic
+    // pub fn new() -> AnyGen
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -2524,12 +2516,12 @@ impl Any_SHA2_256
     /// let mut any = Any_SHA2_256::new();
     /// println!("Any number = {}", any.random_u8());
     /// ```
-    pub fn new() -> Random_Generic
+    pub fn new() -> AnyGen
     {
-        Random_Generic::new_with(SHA2_256::new(), SHA2_256::new())
+        AnyGen::new_with(SHA2_256::new(), SHA2_256::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> AnyGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -2554,12 +2546,12 @@ impl Any_SHA2_256
     /// if let Some(num) = any.random_under_uint(1234_u16)
     ///     { println!("Any number = {}", num); }
     /// ```
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
+    pub fn new_with_seeds(seed: u64, aux: u64) -> AnyGen
     {
-        Random_Generic::new_with_generators_seeds(SHA2_256::new(), SHA2_256::new(), seed, aux)
+        AnyGen::new_with_generators_seeds(SHA2_256::new(), SHA2_256::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -2588,12 +2580,12 @@ impl Any_SHA2_256
     ///     { println!("Any number = {}", num); }
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_arrays(SHA2_256::new(), SHA2_256::new(), seed, aux)
+        AnyGen::new_with_generators_seed_arrays(SHA2_256::new(), SHA2_256::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -2621,12 +2613,12 @@ impl Any_SHA2_256
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector(SHA2_256::new(), SHA2_256::new(), seed_collector)
+        AnyGen::new_with_generators_seed_collector(SHA2_256::new(), SHA2_256::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -2662,12 +2654,12 @@ impl Any_SHA2_256
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector_seeds(SHA2_256::new(), SHA2_256::new(), seed_collector, seed, aux)
+        AnyGen::new_with_generators_seed_collector_seeds(SHA2_256::new(), SHA2_256::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -2703,9 +2695,9 @@ impl Any_SHA2_256
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector_seed_arrays(SHA2_256::new(), SHA2_256::new(), seed_collector, seed, aux)
+        AnyGen::new_with_generators_seed_collector_seed_arrays(SHA2_256::new(), SHA2_256::new(), seed_collector, seed, aux)
     }
 }
 
@@ -2813,14 +2805,14 @@ impl Slapdash_SHA1
     /// ```
     /// use cryptocol::random::Slapdash_SHA1;
     /// let mut slapdash = Slapdash_SHA1::new();
-    /// println!("Any number = {}", slapdash.random_usize());
+    /// println!("Slapdash number = {}", slapdash.random_usize());
     /// ```
-    pub fn new() -> Random_Generic<{u64::MAX as u128}>
+    pub fn new() -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with(SHA1::new(), SHA1::new())
+        SlapdashGen::new_with(SHA1::new(), SHA1::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}>
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -2842,14 +2834,14 @@ impl Slapdash_SHA1
     /// ```
     /// use cryptocol::random::Slapdash_SHA1;
     /// let mut slapdash = Slapdash_SHA1::new_with_seeds(18782, 50558);
-    /// println!("Any number = {}", slapdash.random_uint::<u8>());
+    /// println!("Slapdash number = {}", slapdash.random_uint::<u8>());
     /// ```
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}>
+    pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seeds(SHA1::new(), SHA1::new(), seed, aux)
+        SlapdashGen::new_with_generators_seeds(SHA1::new(), SHA1::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -2874,15 +2866,15 @@ impl Slapdash_SHA1
     /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
     /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
     /// let mut slapdash = Slapdash_SHA1::new_with_seed_arrays(seed, aux);
-    /// println!("Any number = {}", slapdash.random_uint::<u8>());
+    /// println!("Slapdash number = {}", slapdash.random_uint::<u8>());
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_arrays(SHA1::new(), SHA1::new(), seed, aux)
+        SlapdashGen::new_with_generators_seed_arrays(SHA1::new(), SHA1::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u32::MAX as u128}>
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -2910,12 +2902,12 @@ impl Slapdash_SHA1
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u64::MAX as u128}>
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_collector(SHA1::new(), SHA1::new(), seed_collector)
+        SlapdashGen::new_with_generators_seed_collector(SHA1::new(), SHA1::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -2951,12 +2943,12 @@ impl Slapdash_SHA1
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}> 
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_collector_seeds(SHA1::new(), SHA1::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector_seeds(SHA1::new(), SHA1::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -2992,9 +2984,9 @@ impl Slapdash_SHA1
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_collector_seed_arrays(SHA1::new(), SHA1::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector_seed_arrays(SHA1::new(), SHA1::new(), seed_collector, seed, aux)
     }
 }
 
@@ -3092,7 +3084,7 @@ impl Slapdash_SHA1
 pub struct Slapdash_SHA0 {}
 impl Slapdash_SHA0
 {
-    // pub fn new() -> Random_Generic<{u64::MAX as u128}>
+    // pub fn new() -> SlapdashGen
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -3102,14 +3094,14 @@ impl Slapdash_SHA0
     /// ```
     /// use cryptocol::random::Slapdash_SHA0;
     /// let mut slapdash = Slapdash_SHA0::new();
-    /// println!("Any number = {}", slapdash.random_u64());
+    /// println!("Slapdash number = {}", slapdash.random_u64());
     /// ```
-    pub fn new() -> Random_Generic<{u64::MAX as u128}>
+    pub fn new() -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with(SHA0::new(), SHA0::new())
+        SlapdashGen::new_with(SHA0::new(), SHA0::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}>
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -3131,11 +3123,11 @@ impl Slapdash_SHA0
     /// ```
     /// use cryptocol::random::Slapdash_SHA0;
     /// let mut slapdash = Slapdash_SHA0::new_with_seeds(0, 125);
-    /// println!("Any prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u128>(5));
     /// ```
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}>
+    pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seeds(SHA0::new(), SHA0::new(), seed, aux)
+        SlapdashGen::new_with_generators_seeds(SHA0::new(), SHA0::new(), seed, aux)
     }
 
     // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
@@ -3163,15 +3155,15 @@ impl Slapdash_SHA0
     /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
     /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
     /// let mut slapdash = Slapdash_SHA0::new_with_seed_arrays(seed, aux);
-    /// println!("Any prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u128>(5));
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_arrays(SHA0::new(), SHA0::new(), seed, aux)
+        SlapdashGen::new_with_generators_seed_arrays(SHA0::new(), SHA0::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u32::MAX as u128}>
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -3199,12 +3191,12 @@ impl Slapdash_SHA0
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u64::MAX as u128}>
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_collector(SHA0::new(), SHA0::new(), seed_collector)
+        SlapdashGen::new_with_generators_seed_collector(SHA0::new(), SHA0::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -3240,12 +3232,12 @@ impl Slapdash_SHA0
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}> 
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_collector_seeds(SHA0::new(), SHA0::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector_seeds(SHA0::new(), SHA0::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -3281,9 +3273,9 @@ impl Slapdash_SHA0
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_collector_seed_arrays(SHA0::new(), SHA0::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector_seed_arrays(SHA0::new(), SHA0::new(), seed_collector, seed, aux)
     }
 }
 
@@ -3381,7 +3373,7 @@ impl Slapdash_SHA0
 pub struct Slapdash_MD5 {}
 impl Slapdash_MD5
 {
-    // pub fn new() -> Random_Generic<{u64::MAX as u128}>
+    // pub fn new() -> SlapdashGen
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -3391,14 +3383,14 @@ impl Slapdash_MD5
     /// ```
     /// use cryptocol::random::Slapdash_MD5;
     /// let mut slapdash = Slapdash_MD5::new();
-    /// println!("Any number = {}", slapdash.random_u32());
+    /// println!("Slapdash number = {}", slapdash.random_u32());
     /// ```
-    pub fn new() -> Random_Generic<{u64::MAX as u128}>
+    pub fn new() -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with(MD5::new(), MD5::new())
+        SlapdashGen::new_with(MD5::new(), MD5::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}>
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -3420,14 +3412,14 @@ impl Slapdash_MD5
     /// ```
     /// use cryptocol::random::Slapdash_MD5;
     /// let mut slapdash = Slapdash_MD5::new_with_seeds(58, 161);
-    /// println!("Any number = {}", slapdash.random_u128());
+    /// println!("Slapdash number = {}", slapdash.random_u128());
     /// ```
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}>
+    pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seeds(MD5::new(), MD5::new(), seed, aux)
+        SlapdashGen::new_with_generators_seeds(MD5::new(), MD5::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -3452,15 +3444,15 @@ impl Slapdash_MD5
     /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
     /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
     /// let mut slapdash = Slapdash_MD5::new_with_seed_arrays(seed, aux);
-    /// println!("Any number = {}", slapdash.random_u128());
+    /// println!("Slapdash number = {}", slapdash.random_u128());
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_arrays(MD5::new(), MD5::new(), seed, aux)
+       SlapdashGen::new_with_generators_seed_arrays(MD5::new(), MD5::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u32::MAX as u128}>
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -3488,12 +3480,12 @@ impl Slapdash_MD5
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u64::MAX as u128}>
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_collector(MD5::new(), MD5::new(), seed_collector)
+        SlapdashGen::new_with_generators_seed_collector(MD5::new(), MD5::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -3529,12 +3521,12 @@ impl Slapdash_MD5
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}> 
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_collector_seeds(MD5::new(), MD5::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector_seeds(MD5::new(), MD5::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -3570,9 +3562,9 @@ impl Slapdash_MD5
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_collector_seed_arrays(MD5::new(), MD5::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector_seed_arrays(MD5::new(), MD5::new(), seed_collector, seed, aux)
     }
 }
 
@@ -3670,7 +3662,7 @@ impl Slapdash_MD5
 pub struct Slapdash_MD4 {}
 impl Slapdash_MD4
 {
-    // pub fn new() -> Random_Generic<{u64::MAX as u128}>
+    // pub fn new() -> SlapdashGen
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -3682,14 +3674,14 @@ impl Slapdash_MD4
     /// use cryptocol::define_utypes_with;
     /// 
     /// let mut slapdash = Slapdash_MD4::new();
-    /// println!("Any number = {}", slapdash.random_u16());
+    /// println!("Slapdash number = {}", slapdash.random_u16());
     /// ```
-    pub fn new() -> Random_Generic<{u64::MAX as u128}>
+    pub fn new() -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with(MD4::new(), MD4::new())
+        SlapdashGen::new_with(MD4::new(), MD4::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}>
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -3711,14 +3703,14 @@ impl Slapdash_MD4
     /// ```
     /// use cryptocol::random::Slapdash_MD4;
     /// let mut slapdash = Slapdash_MD4::new_with_seeds(106842379157284697, 18446744073709551615);
-    /// println!("Any number = {}", slapdash.random_u64());
+    /// println!("Slapdash number = {}", slapdash.random_u64());
     /// ```
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}>
+    pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seeds(MD4::new(), MD4::new(), seed, aux)
+        SlapdashGen::new_with_generators_seeds(MD4::new(), MD4::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -3743,15 +3735,15 @@ impl Slapdash_MD4
     /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
     /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
     /// let mut slapdash = Slapdash_MD4::new_with_seed_arrays(seed, aux);
-    /// println!("Any number = {}", slapdash.random_u64());
+    /// println!("Slapdash number = {}", slapdash.random_u64());
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_arrays(MD4::new(), MD4::new(), seed, aux)
+        SlapdashGen::new_with_generators_seed_arrays(MD4::new(), MD4::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u32::MAX as u128}>
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -3779,12 +3771,12 @@ impl Slapdash_MD4
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u64::MAX as u128}>
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_collector(MD4::new(), MD4::new(), seed_collector)
+        SlapdashGen::new_with_generators_seed_collector(MD4::new(), MD4::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -3820,12 +3812,12 @@ impl Slapdash_MD4
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u64::MAX as u128}> 
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_collector_seeds(MD4::new(), MD4::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector_seeds(MD4::new(), MD4::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -3861,9 +3853,9 @@ impl Slapdash_MD4
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u64::MAX as u128}> 
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     {
-        Random_Generic::<{u64::MAX as u128}>::new_with_generators_seed_collector_seed_arrays(MD4::new(), MD4::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector_seed_arrays(MD4::new(), MD4::new(), seed_collector, seed, aux)
     }
 }
 
@@ -3961,7 +3953,7 @@ impl Slapdash_MD4
 pub struct Random_Rijndael {}
 impl Random_Rijndael
 {
-    // pub fn new() -> Random_Generic<SECURE_COUNT>
+    // pub fn new() -> RandGen
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -3978,12 +3970,12 @@ impl Random_Rijndael
     /// println!("Random number = {}", num);
     /// ```
     #[inline]
-    pub fn new() -> Random_Generic<SECURE_COUNT>
+    pub fn new() -> RandGen
     {
-        Random_Generic::<SECURE_COUNT>::new_with(AES_128::new(), AES_128::new())
+        RandGen::new_with(AES_128::new(), AES_128::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT> 
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen 
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -4009,12 +4001,12 @@ impl Random_Rijndael
     /// println!("Any number = {}", rand.random_u32());
     /// ```
     #[inline]
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT> 
+    pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen 
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seeds(AES_128::new(), AES_128::new(), seed, aux)
+        RandGen::new_with_generators_seeds(AES_128::new(), AES_128::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT> 
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> RandGen 
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -4042,12 +4034,12 @@ impl Random_Rijndael
     /// println!("Any number = {}", rand.random_u32());
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT> 
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> RandGen 
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_arrays(AES_128::new(), AES_128::new(), seed, aux)
+        RandGen::new_with_generators_seed_arrays(AES_128::new(), AES_128::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -4075,12 +4067,12 @@ impl Random_Rijndael
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<SECURE_COUNT>
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector(AES_128::new(), AES_128::new(), seed_collector)
+        RandGen::new_with_generators_seed_collector(AES_128::new(), AES_128::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT> 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen 
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -4116,12 +4108,12 @@ impl Random_Rijndael
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<SECURE_COUNT> 
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen 
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector_seeds(AES_128::new(), AES_128::new(), seed_collector, seed, aux)
+        RandGen::new_with_generators_seed_collector_seeds(AES_128::new(), AES_128::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT> 
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen 
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -4157,9 +4149,9 @@ impl Random_Rijndael
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<SECURE_COUNT> 
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen 
     {
-        Random_Generic::<SECURE_COUNT>::new_with_generators_seed_collector_seed_arrays(AES_128::new(), AES_128::new(), seed_collector, seed, aux)
+        RandGen::new_with_generators_seed_collector_seed_arrays(AES_128::new(), AES_128::new(), seed_collector, seed, aux)
     }
 }
 
@@ -4273,12 +4265,12 @@ impl Any_Rijndael
     /// println!("Any number = {}", num);
     /// ```
     #[inline]
-    pub fn new() -> Random_Generic
+    pub fn new() -> AnyGen
     {
-        Random_Generic::new_with(Rijndael_64_64::new(), Rijndael_64_64::new())
+        AnyGen::new_with(Rijndael_64_64::new(), Rijndael_64_64::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> AnyGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -4304,12 +4296,12 @@ impl Any_Rijndael
     /// println!("Any number = {}", any.random_u16());
     /// ```
     #[inline]
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
+    pub fn new_with_seeds(seed: u64, aux: u64) -> AnyGen
     {
-        Random_Generic::new_with_generators_seeds(Rijndael_64_64::new(), Rijndael_64_64::new(), seed, aux)
+        AnyGen::new_with_generators_seeds(Rijndael_64_64::new(), Rijndael_64_64::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -4337,12 +4329,12 @@ impl Any_Rijndael
     /// println!("Any number = {}", any.random_u16());
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_arrays(Rijndael_64_64::new(), Rijndael_64_64::new(), seed, aux)
+        AnyGen::new_with_generators_seed_arrays(Rijndael_64_64::new(), Rijndael_64_64::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -4370,12 +4362,12 @@ impl Any_Rijndael
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector(Rijndael_64_64::new(), Rijndael_64_64::new(), seed_collector)
+        AnyGen::new_with_generators_seed_collector(Rijndael_64_64::new(), Rijndael_64_64::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -4411,12 +4403,12 @@ impl Any_Rijndael
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector_seeds(Rijndael_64_64::new(), Rijndael_64_64::new(), seed_collector, seed, aux)
+        AnyGen::new_with_generators_seed_collector_seeds(Rijndael_64_64::new(), Rijndael_64_64::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -4452,9 +4444,9 @@ impl Any_Rijndael
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
-        Random_Generic::new_with_generators_seed_collector_seed_arrays(Rijndael_64_64::new(), Rijndael_64_64::new(), seed_collector, seed, aux)
+        AnyGen::new_with_generators_seed_collector_seed_arrays(Rijndael_64_64::new(), Rijndael_64_64::new(), seed_collector, seed, aux)
     }
 }
 
@@ -4551,7 +4543,7 @@ impl Any_Rijndael
 pub struct Slapdash_DES {}
 impl Slapdash_DES
 {
-    // pub fn new() -> Random_Generic
+    // pub fn new() -> SlapdashGen
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -4564,15 +4556,15 @@ impl Slapdash_DES
     /// define_utypes_with!(u64);
     /// 
     /// let mut slapdash = Slapdash_DES::new();
-    /// println!("Any number = {}", slapdash.random_odd_biguint());
+    /// println!("Slapdash number = {}", slapdash.random_odd_biguint());
     /// ```
     #[inline]
-    pub fn new() -> Random_Generic
+    pub fn new() -> SlapdashGen
     {
-        Random_Generic::new_with(DES::new(), DES::new())
+        SlapdashGen::new_with(DES::new(), DES::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -4595,15 +4587,15 @@ impl Slapdash_DES
     /// use cryptocol::random::Slapdash_DES;
     /// 
     /// let mut slapdash = Slapdash_DES::new_with_seeds(u8::MAX as u64, u8::MAX as u64);
-    /// println!("Any number = {}", slapdash.random_u8());
+    /// println!("Slapdash number = {}", slapdash.random_u8());
     /// ```
     #[inline]
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic
+    pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
     {
-        Random_Generic::new_with_generators_seeds(DES::new(), DES::new(), seed, aux)
+        SlapdashGen::new_with_generators_seeds(DES::new(), DES::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic 
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen 
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -4628,15 +4620,15 @@ impl Slapdash_DES
     /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
     /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
     /// let mut slapdash = Slapdash_DES::new_with_seed_arrays(seed, aux);
-    /// println!("Any number = {}", slapdash.random_u8());
+    /// println!("Slapdash number = {}", slapdash.random_u8());
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic 
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen 
     {
-        Random_Generic::new_with_generators_seed_arrays(DES::new(), DES::new(), seed, aux)
+        SlapdashGen::new_with_generators_seed_arrays(DES::new(), DES::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -4664,12 +4656,12 @@ impl Slapdash_DES
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        Random_Generic::new_with_generators_seed_collector(DES::new(), DES::new(), seed_collector)
+        SlapdashGen::new_with_generators_seed_collector(DES::new(), DES::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -4705,12 +4697,12 @@ impl Slapdash_DES
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic 
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     {
-        Random_Generic::new_with_generators_seed_collector_seeds(DES::new(), DES::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector_seeds(DES::new(), DES::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic 
+    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -4746,9 +4738,9 @@ impl Slapdash_DES
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic 
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     {
-        Random_Generic::new_with_generators_seed_collector_seed_arrays(DES::new(), DES::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector_seed_arrays(DES::new(), DES::new(), seed_collector, seed, aux)
     }
 }
 
@@ -4851,7 +4843,7 @@ impl Slapdash_DES
 pub struct Slapdash_Num_C {}
 impl Slapdash_Num_C
 {
-    // pub fn new() -> Random_Generic<{u32::MAX as u128}>
+    // pub fn new() -> SlapdashGen<
     /// Constructs a new `Random_Generic` object.
     /// 
     /// # Output
@@ -4864,7 +4856,7 @@ impl Slapdash_Num_C
     /// define_utypes_with!(u64);
     /// 
     /// let mut slapdash = Slapdash_Num_C::new();
-    /// println!("Any number = {}", slapdash.random_usize());
+    /// println!("Slapdash number = {}", slapdash.random_usize());
     /// ```
     /// 
     /// # Example 2 for Slapdash
@@ -4874,15 +4866,15 @@ impl Slapdash_Num_C
     /// define_utypes_with!(u64);
     /// 
     /// let mut slapdash = Slapdash::new();
-    /// println!("Any number = {}", slapdash.random_u8());
+    /// println!("Slapdash number = {}", slapdash.random_u8());
     /// ```
     #[inline]
-    pub fn new() -> Random_Generic<{u32::MAX as u128}>
+    pub fn new() -> Random_Generic<{u32::MAX as u128}, 1>
     {
-        Random_Generic::<{u32::MAX as u128}>::new_with(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new())
+        Random_Generic::<{u32::MAX as u128}, 1>::new_with(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new())
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}, 1>
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -4904,22 +4896,22 @@ impl Slapdash_Num_C
     /// ```
     /// use cryptocol::random::Slapdash_Num_C;
     /// let mut slapdash = Slapdash_Num_C::new_with_seeds(458861005, 793621585);
-    /// println!("Any number = {}", slapdash.random_u64());
+    /// println!("Slapdash number = {}", slapdash.random_u64());
     /// ```
     /// 
     /// # Example 2 for Slapdash
     /// ```
     /// use cryptocol::random::Slapdash;
     /// let mut slapdash = Slapdash::new_with_seeds(50558, 18782);
-    /// println!("Any number = {}", slapdash.random_u32());
+    /// println!("Slapdash number = {}", slapdash.random_u32());
     /// ```
     #[inline]
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>   // COUNT = u32::MAX
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}, 1>   // COUNT = u32::MAX
     {
-        Random_Generic::<{u32::MAX as u128}>::new_with_generators_seeds(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed, aux)
+        Random_Generic::<{u32::MAX as u128}, 1>::new_with_generators_seeds(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}> 
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}, 1>
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -4944,15 +4936,15 @@ impl Slapdash_Num_C
     /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
     /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
     /// let mut slapdash = Slapdash_Num_C::new_with_seed_arrays(seed, aux);
-    /// println!("Any number = {}", slapdash.random_u64());
+    /// println!("Slapdash number = {}", slapdash.random_u64());
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}> 
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}, 1>
     {
-        Random_Generic::<{u32::MAX as u128}>::new_with_generators_seed_arrays(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed, aux)
+        Random_Generic::<{u32::MAX as u128}, 1>::new_with_generators_seed_arrays(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u32::MAX as u128}>
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u32::MAX as u128}, 1>
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -4980,12 +4972,12 @@ impl Slapdash_Num_C
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u32::MAX as u128}>
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u32::MAX as u128}, 1>
     {
-        Random_Generic::<{u32::MAX as u128}>::new_with_generators_seed_collector(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector)
+        Random_Generic::<{u32::MAX as u128}, 1>::new_with_generators_seed_collector(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}> 
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}, 1>
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -5021,12 +5013,12 @@ impl Slapdash_Num_C
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}> 
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}, 1>
     {
-        Random_Generic::<{u32::MAX as u128}>::new_with_generators_seed_collector_seeds(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector, seed, aux)
+        Random_Generic::<{u32::MAX as u128}, 1>::new_with_generators_seed_collector_seeds(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}> 
+    // pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}, 1>
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -5062,8 +5054,8 @@ impl Slapdash_Num_C
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}> 
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}, 1>
     {
-        Random_Generic::<{u32::MAX as u128}>::new_with_generators_seed_collector_seed_arrays(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector, seed, aux)
+        Random_Generic::<{u32::MAX as u128}, 1>::new_with_generators_seed_collector_seed_arrays(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector, seed, aux)
     }
 }

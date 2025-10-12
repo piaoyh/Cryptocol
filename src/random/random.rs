@@ -32,11 +32,14 @@ use crate::random::Random_Engine;
 
 pub(super) const SECURE_COUNT: u128 = u16::MAX as u128;
 
+/// RandGen is the Random_Generic with the generic parameter u16::MAX which is 65535.
+pub type RandGen = Random_Generic<SECURE_COUNT>;
+
 /// AnyGen is the Random_Generic with the default generic parameter.
 pub type AnyGen = Random_Generic;
 
-/// RandGen is the Random_Generic with the generic parameter u16::MAX which is 65535.
-pub type RandGen = Random_Generic<SECURE_COUNT>;
+/// SlapdashGen is the Random_Generic with the default generic parameter.
+pub type SlapdashGen = Random_Generic<{u64::MAX as u128}, 1>;
 
 
 
@@ -200,7 +203,7 @@ pub type RandGen = Random_Generic<SECURE_COUNT>;
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)]
-pub struct Random_Generic<const COUNT: u128 = {u128::MAX}>
+pub struct Random_Generic<const COUNT: u128 = {u128::MAX}, const NTR: usize = 64>
 {
     original_seed: [u64; 8],
     original_aux: [u64; 8],
@@ -212,7 +215,7 @@ pub struct Random_Generic<const COUNT: u128 = {u128::MAX}>
     aux_generator: Box<dyn Random_Engine>,
 }
 
-impl<const COUNT: u128> Random_Generic<COUNT>
+impl<const COUNT: u128, const NTR: usize> Random_Generic<COUNT, NTR>
 {
     // pub fn new_with<SG, AG>(mut main_generator: SG, mut aux_generator: AG) -> Self
     /// Constructs a new `Random_Generic` object
@@ -695,9 +698,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         {
             if let Ok(mut file) = File::open("/dev/random")
             {
-                let mut buffer = [0u8; 64];
+                let mut buffer = [0u8; NTR];
                 if let Ok(n) = file.read(&mut buffer)
                 {
+                    let n = if n >= 64 {64} else {n};
                     unsafe { copy_nonoverlapping(buffer.as_ptr(), seed_buffer.as_mut_ptr() as *mut u8, n); }
                     read_long = n >> 3;
                     if (n & 0b111) != 0
