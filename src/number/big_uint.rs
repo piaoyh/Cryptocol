@@ -3298,7 +3298,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut a_biguint = U256::new();
+    /// let mut a_biguint = U256::one();
     /// println!("a_biguint = {}", a_biguint);
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -3310,7 +3310,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// 
     /// a_biguint.set_lsb();
     /// println!("a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.to_string_with_radix_and_stride(2, 8).unwrap(), "1");
+    /// assert_eq!(a_biguint.to_string_with_radix_and_stride(2, 8).unwrap(), "0");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
     /// assert_eq!(a_biguint.is_infinity(), false);

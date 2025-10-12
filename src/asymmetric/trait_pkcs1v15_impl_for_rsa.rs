@@ -132,7 +132,7 @@ use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, 
                 Shl, ShlAssign, Shr, ShrAssign };
 
 use crate::number::SmallUInt;
-use crate::random::Any_Num as Random;
+use crate::random::Slapdash as Random;
 use crate::asymmetric::{ PKCS1V15, RSA_Generic };
 
 impl<const N: usize, T, const MR: usize> PKCS1V15 for RSA_Generic<N, T, MR>

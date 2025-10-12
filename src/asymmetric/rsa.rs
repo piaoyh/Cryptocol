@@ -23,11 +23,61 @@ use crate::number::{ BigUInt, BigUInt_Modular, BigUInt_Prime, SmallUInt };
 use crate::random::Random;
 
 
-pub type RSA_4096 = RSA_Generic<128>;
-pub type RSA_2048 = RSA_Generic<64>;
-pub type RSA_1024 = RSA_Generic;
+pub type RSA_4096 = RSA_Generic<128, u32>;
+pub type RSA_2048 = RSA_Generic<64, u32>;
+pub type RSA_1024 = RSA_Generic<32, u32>;
 
-pub struct RSA_Generic<const N: usize = 32, T = u32, const MR: usize = 5>
+/// RSA (Ron Rivest, Adi Shamir, Leonard Adleman) is asymmetric-key
+/// encryption/decryption algorithm for the encryption of digital data
+/// 
+/// # Note
+/// __This descryption about RSA is according to little endianness.__
+/// MSB (Most Significant Bit) is the highest-order bit and LSB (Least
+/// Significant Bit) is the lowest-order bit in this descryption unless
+/// otherwise mentioned.
+/// 
+/// # Introduction
+/// RSA is an asymmetric-key encryption/decryption algorithm which was invented
+/// by three brilliant cryptographers: Ron Rivest, Adi Shamir, and Leonard
+/// Adleman.
+/// 
+/// # Why RSA?
+/// 
+/// 
+/// # Short History of birth of RSA
+/// 
+/// 
+/// # Use of RSA and its variants
+/// 
+/// 
+/// # Generic Parameters
+/// `N`: 
+/// 
+/// `T`: 
+/// 
+/// `MR`: 
+/// 
+/// # Reference
+/// [Read more](https://en.wikipedia.org/wiki/RSA_cryptosystem)
+/// about RSA in brief.
+/// Watch [this video](https://www.youtube.com/watch?v=fq6SXByItUI) and then
+/// [this video](https://www.youtube.com/watch?v=QSlWzKNbKrU) in series
+/// for more (or deeper or full) understanding of RSA.
+/// 
+/// # Quick Start
+/// You have to import (use) one of the modules: `RSA_4096`, `RSA_2048`, and
+/// `RSA_1024` in order to use official RSA as shown in Example 1.
+/// 
+/// # Example 1
+/// ```
+/// use cryptocol::asymmetric::RSA_4096;
+/// use cryptocol::asymmetric::RSA_2048;
+/// use cryptocol::asymmetric::RSA_1024;
+/// ```
+/// 
+/// # Notice for Practical Use
+/// 
+pub struct RSA_Generic<const N: usize, T, const MR: usize = 5>
 where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
@@ -37,7 +87,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
         + PartialEq + PartialOrd
 {
-    number: BigUInt<T, N>,
+    modulo: BigUInt<T, N>,
     key_public: BigUInt<T, N>,
     key_private: BigUInt<T, N>,
     block: [T; N],
@@ -58,7 +108,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         Self
         {
-            number: BigUInt::<T, N>::new(),
+            modulo: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
             block: [T::zero(); N],
@@ -69,7 +119,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         let mut rsa = Self
         {
-            number: BigUInt::<T, N>::new(),
+            modulo: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
             block: [T::zero(); N],
@@ -79,11 +129,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     #[inline]
-    pub fn new_with_keys(key_public: BigUInt<T, N>, key_private: BigUInt<T, N>, number: BigUInt<T, N>) -> Self
+    pub fn new_with_keys(key_public: BigUInt<T, N>, key_private: BigUInt<T, N>, modulo: BigUInt<T, N>) -> Self
     {
         Self
         {
-            number,
+            modulo,
             key_public,
             key_private,
             block: [T::zero(); N],
@@ -97,7 +147,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         let mut rsa = Self
         {
-            number: BigUInt::<T, N>::new(),
+            modulo: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
             block: [T::zero(); N],
@@ -133,9 +183,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     #[inline]
-    pub fn get_number(&self) -> BigUInt<T, N>
+    pub fn get_modulo(&self) -> BigUInt<T, N>
     {
-        self.number.clone()
+        self.modulo.clone()
     }
 
     #[inline]
@@ -151,9 +201,9 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     #[inline]
-    pub fn set_number(&mut self, number: BigUInt<T, N>)
+    pub fn set_modulo(&mut self, modulo: BigUInt<T, N>)
     {
-        self.number = number;
+        self.modulo = modulo;
     }
 
     /// # Caution
@@ -180,7 +230,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// guaranteed .
     pub fn calculate_keys(&mut self, prime_1: BigUInt<T, N>, prime_2: BigUInt<T, N>)
     {
-        self.number = prime_1.wrapping_mul(&prime_2);
+        self.modulo = prime_1.wrapping_mul(&prime_2);
         let phi = prime_1.wrapping_sub_uint(1_u8).wrapping_mul(&prime_2.wrapping_sub_uint(1_u8));
         self.key_public = BigUInt::<T, N>::from_uint(2_u8);
         let mut one: BigUInt<T, N>;
@@ -209,7 +259,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     #[inline]
     pub fn encrypt_biguint(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
     {
-        message.modular_pow(&self.key_public, &self.number)
+        message.modular_pow(&self.key_public, &self.modulo)
     }
 
     // pub fn decrypt_biguint(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
@@ -224,7 +274,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     #[inline]
     pub fn decrypt_biguint(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
     {
-        cipher.modular_pow(&self.key_private, &self.number)
+        cipher.modular_pow(&self.key_private, &self.modulo)
     }
 
     // pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
@@ -362,7 +412,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     // #[inline]
     // pub fn sign_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
     // {
-    //     message.to_be().modular_pow(&self.key_private, &number).to_be()
+    //     message.to_be().modular_pow(&self.key_private, &modulo).to_be()
     // }
 
     // // pub fn unsign_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
@@ -370,11 +420,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     // #[inline]
     // pub fn unsign_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
     // {
-    //     cipher.to_be().modular_pow(&self.key_public, &number).to_be()
+    //     cipher.to_be().modular_pow(&self.key_public, &modulo).to_be()
     // }
 
     // pub fn verify_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
     // {
-    //     cipher.to_be().modular_pow(&self.key_public, &number).to_be()
+    //     cipher.to_be().modular_pow(&self.key_public, &modulo).to_be()
     // }
 }

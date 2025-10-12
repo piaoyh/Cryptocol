@@ -187,13 +187,13 @@ fn random_new_with()
 
     // Example for AES_128
     use cryptocol::symmetric::AES_128;
-    let mut any = RandGen::new_with(AES_128::new(), AES_128::new());
-    println!("Random number = {}", any.random_u16());
+    let mut rand = RandGen::new_with(AES_128::new(), AES_128::new());
+    println!("Random number = {}", rand.random_u16());
 
     // Example for DES
     use cryptocol::symmetric::DES;
-    let mut any = AnyGen::new_with(DES::new(), DES::new());
-    println!("Any number = {}", any.random_u8());
+    let mut slapdash = AnyGen::new_with(DES::new(), DES::new());
+    println!("Slapdash number = {}", slapdash.random_u8());
     println!("-------------------------------");
 }
 
@@ -247,23 +247,23 @@ fn random_new_with_generators_seeds()
 
     // Example for SHA1 and SHA0
     use cryptocol::hash::{ SHA1, SHA0 };
-    let mut any = AnyGen::new_with_generators_seeds(SHA1::new(), SHA0::new(), 2879054410500759758, 15887876257513809619);
-    println!("Any number = {}", any.random_u64());
+    let mut slapdash = AnyGen::new_with_generators_seeds(SHA1::new(), SHA0::new(), 2879054410500759758, 15887876257513809619);
+    println!("Slapdash number = {}", slapdash.random_u64());
 
     // Example for MD5 and MD4
     use cryptocol::hash::{ MD5, MD4 };
-    let mut any = AnyGen::new_with_generators_seeds(MD5::new(), MD4::new(), 610458805, 215793685);
-    println!("Any number = {}", any.random_u32());
+    let mut slapdash = AnyGen::new_with_generators_seeds(MD5::new(), MD4::new(), 610458805, 215793685);
+    println!("Slapdash number = {}", slapdash.random_u32());
 
     // Example for AES_128
     use cryptocol::symmetric::AES_128;
-    let mut any = RandGen::new_with_generators_seeds(AES_128::new(), AES_128::new(), 18782, 50558);
-    println!("Random number = {}", any.random_u16());
+    let mut rand = RandGen::new_with_generators_seeds(AES_128::new(), AES_128::new(), 18782, 50558);
+    println!("Random number = {}", rand.random_u16());
 
     // Example for DES
     use cryptocol::symmetric::DES;
-    let mut any = AnyGen::new_with_generators_seeds(DES::new(), DES::new(), 0, 125);
-    println!("Any number = {}", any.random_u8());
+    let mut slapdash = AnyGen::new_with_generators_seeds(DES::new(), DES::new(), 0, 125);
+    println!("Slapdash number = {}", slapdash.random_u8());
     println!("-------------------------------");
 }
 
@@ -336,35 +336,35 @@ fn random_random_u8()
     for i in 0..10
         { println!("{} Random number (Random_SHA2_512) = {}", i, any.random_u8()); }
 
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any = Any_SHA1::new();
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA1) = {}", i, any.random_u8()); }
+        { println!("{} Slapdash number (Slapdash_SHA1) = {}", i, slapdash.random_u8()); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any = Any_SHA0::new();
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA0) = {}", i, any.random_u8()); }
+        { println!("{} Slapdash number (Slapdash_SHA0) = {}", i, slapdash.random_u8()); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any = Any_MD5::new();
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD5) = {}", i, any.random_u8()); }
+        { println!("{} Slapdash number (Slapdash_MD5) = {}", i, slapdash.random_u8()); }
         
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any = Any_MD4::new();
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD4) = {}", i, any.random_u8()); }
+        { println!("{} Slapdash number (Slapdash_MD4) = {}", i, slapdash.random_u8()); }
         
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
     let mut rand = Random_Rijndael::new();
     for i in 0..10
-        { println!("{} Any number (Random_Rijndael) = {}", i, rand.random_u8()); }
+        { println!("{} Random number (Random_Rijndael) = {}", i, rand.random_u8()); }
         
     // Example for Any_Rijndael
     use cryptocol::random::Any_Rijndael;
@@ -372,23 +372,23 @@ fn random_random_u8()
     for i in 0..10
         { println!("{} Any number (Any_Rijndael) = {}", i, any.random_u8()); }
         
-    // Example for Any_DES
-    use cryptocol::random::Any_DES;
-    let mut any = Any_DES::new();
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
     for i in 0..10
-        { println!("{} Any number (Any_DES) = {}", i, any.random_u8()); }
+        { println!("{} Slapdash number (Slapdash_DES) = {}", i, slapdash.random_u8()); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any_num_c = Any_Num_C::new();
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num_C) = {}", i, any_num_c.random_u8()); }
+        { println!("{} Slapdash number (Slapdash_Num_C) = {}", i, slapdash.random_u8()); }
         
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any = Any_Num::new();
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num) = {}", i, any.random_u8()); }
+        { println!("{} Slapdash number (Slapdash) = {}", i, slapdash.random_u8()); }
     println!("-------------------------------");
 }
 
@@ -459,37 +459,37 @@ fn random_random_u16()
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
     for i in 0..10
-        { println!("{} Random number (Random_SHA2_512) = {}", i, any.random_u16()); }
+        { println!("{} Any number (Any_SHA2_256) = {}", i, any.random_u16()); }
 
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any = Any_SHA1::new();
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA1) = {}", i, any.random_u16()); }
+        { println!("{} Slapdash number (Slapdash_SHA1) = {}", i, slapdash.random_u16()); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any = Any_SHA0::new();
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA0) = {}", i, any.random_u16()); }
+        { println!("{} Slapdash number (Slapdash_SHA0) = {}", i, slapdash.random_u16()); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any = Any_MD5::new();
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD5) = {}", i, any.random_u16()); }
+        { println!("{} Slapdash number (Slapdash_MD5) = {}", i, slapdash.random_u16()); }
         
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any = Any_MD4::new();
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD4) = {}", i, any.random_u16()); }
+        { println!("{} Slapdash number (Slapdash_MD4) = {}", i, slapdash.random_u16()); }
         
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
     let mut rand = Random_Rijndael::new();
     for i in 0..10
-        { println!("{} Any number (Random_Rijndael) = {}", i, rand.random_u16()); }
+        { println!("{} Random number (Random_Rijndael) = {}", i, rand.random_u16()); }
         
     // Example for Any_Rijndael
     use cryptocol::random::Any_Rijndael;
@@ -497,23 +497,23 @@ fn random_random_u16()
     for i in 0..10
         { println!("{} Any number (Any_Rijndael) = {}", i, any.random_u16()); }
         
-    // Example for Any_DES
-    use cryptocol::random::Any_DES;
-    let mut any = Any_DES::new();
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
     for i in 0..10
-        { println!("{} Any number (Any_DES) = {}", i, any.random_u16()); }
+        { println!("{} Slapdash number (Slapdash_DES) = {}", i, slapdash.random_u16()); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any = Any_Num_C::new();
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num_C) = {}", i, any.random_u16()); }
+        { println!("{} Slapdash number (Slapdash_Num_C) = {}", i, slapdash.random_u16()); }
         
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any = Any_Num::new();
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num) = {}", i, any.random_u16()); }
+        { println!("{} Slapdash number (Slapdash) = {}", i, slapdash.random_u16()); }
     println!("-------------------------------");
 }
 
@@ -586,35 +586,35 @@ fn random_random_u32()
     for i in 0..10
         { println!("{} Random number (Random_SHA2_512) = {}", i, any.random_u32()); }
 
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any = Any_SHA1::new();
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA1) = {}", i, any.random_u32()); }
+        { println!("{} Slapdash number (Slapdash_SHA1) = {}", i, slapdash.random_u32()); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any = Any_SHA0::new();
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA0) = {}", i, any.random_u32()); }
+        { println!("{} Slapdash number (Slapdash_SHA0) = {}", i, slapdash.random_u32()); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any = Any_MD5::new();
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD5) = {}", i, any.random_u32()); }
+        { println!("{} Slapdash number (Slapdash_MD5) = {}", i, slapdash.random_u32()); }
         
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any = Any_MD4::new();
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD4) = {}", i, any.random_u32()); }
+        { println!("{} Slapdash number (Slapdash_MD4) = {}", i, slapdash.random_u32()); }
         
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
     let mut rand = Random_Rijndael::new();
     for i in 0..10
-        { println!("{} Any number (Random_Rijndael) = {}", i, rand.random_u32()); }
+        { println!("{} Random number (Random_Rijndael) = {}", i, rand.random_u32()); }
         
     // Example for Any_Rijndael
     use cryptocol::random::Any_Rijndael;
@@ -622,23 +622,23 @@ fn random_random_u32()
     for i in 0..10
         { println!("{} Any number (Any_Rijndael) = {}", i, any.random_u32()); }
         
-    // Example for Any_DES
-    use cryptocol::random::Any_DES;
-    let mut any = Any_DES::new();
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
     for i in 0..10
-        { println!("{} Any number (Any_DES) = {}", i, any.random_u32()); }
+        { println!("{} Slapdash number (Slapdash_DES) = {}", i, slapdash.random_u32()); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any = Any_Num_C::new();
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num_C) = {}", i, any.random_u32()); }
+        { println!("{} Slapdash number (Slapdash_Num_C) = {}", i, slapdash.random_u32()); }
         
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any = Any_Num::new();
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num) = {}", i, any.random_u32()); }
+        { println!("{} Slapdash number (Slapdash) = {}", i, slapdash.random_u32()); }
     println!("-------------------------------");
 }
 
@@ -697,7 +697,7 @@ fn random_random_u64()
     use cryptocol::random::Any_SHA3_256;
     let mut any = Any_SHA3_256::new();
     for i in 0..10
-        { println!("{} Random number (Any_SHA3_256) = {}", i, any.random_u64()); }
+        { println!("{} Any number (Any_SHA3_256) = {}", i, any.random_u64()); }
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
@@ -709,31 +709,31 @@ fn random_random_u64()
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
     for i in 0..10
-        { println!("{} Random number (Random_SHA2_512) = {}", i, any.random_u64()); }
+        { println!("{} Any number (Any_SHA2_256) = {}", i, any.random_u64()); }
 
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any = Any_SHA1::new();
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA1) = {}", i, any.random_u64()); }
+        { println!("{} Slapdash number (Slapdash_SHA1) = {}", i, slapdash.random_u64()); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any = Any_SHA0::new();
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA0) = {}", i, any.random_u64()); }
+        { println!("{} Slapdash number (Slapdash_SHA0) = {}", i, slapdash.random_u64()); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any = Any_MD5::new();
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD5) = {}", i, any.random_u64()); }
+        { println!("{} Slapdash number (Slapdash_MD5) = {}", i, slapdash.random_u64()); }
         
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any = Any_MD4::new();
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD4) = {}", i, any.random_u64()); }
+        { println!("{} Slapdash number (Slapdash_MD4) = {}", i, slapdash.random_u64()); }
         
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
@@ -747,23 +747,23 @@ fn random_random_u64()
     for i in 0..10
         { println!("{} Any number (Any_Rijndael) = {}", i, any.random_u64()); }
         
-    // Example for Any_DES
-    use cryptocol::random::Any_DES;
-    let mut any = Any_DES::new();
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
     for i in 0..10
-        { println!("{} Any number (Any_DES) = {}", i, any.random_u64()); }
+        { println!("{} Slapdash number (Slapdash_DES) = {}", i, slapdash.random_u64()); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any = Any_Num_C::new();
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num_C) = {}", i, any.random_u64()); }
+        { println!("{} Slapdash number (Slapdash_Num_C) = {}", i, slapdash.random_u64()); }
         
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any = Any_Num::new();
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num) = {}", i, any.random_u64()); }
+        { println!("{} Slapdash number (Slapdash) = {}", i, slapdash.random_u64()); }
     println!("-------------------------------");
 }
 
@@ -822,7 +822,7 @@ fn random_random_u128()
     use cryptocol::random::Any_SHA3_256;
     let mut any = Any_SHA3_256::new();
     for i in 0..10
-        { println!("{} Random number (Any_SHA3_256) = {}", i, any.random_u128()); }
+        { println!("{} Any number (Any_SHA3_256) = {}", i, any.random_u128()); }
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
@@ -834,37 +834,37 @@ fn random_random_u128()
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
     for i in 0..10
-        { println!("{} Random number (Random_SHA2_512) = {}", i, any.random_u128()); }
+        { println!("{} Any number (Any_SHA2_256) = {}", i, any.random_u128()); }
 
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any = Any_SHA1::new();
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA1) = {}", i, any.random_u128()); }
+        { println!("{} Slapdash number (Slapdash_SHA1) = {}", i, slapdash.random_u128()); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any = Any_SHA0::new();
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA0) = {}", i, any.random_u128()); }
+        { println!("{} Slapdash number (Slapdash_SHA0) = {}", i, slapdash.random_u128()); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any = Any_MD5::new();
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD5) = {}", i, any.random_u128()); }
+        { println!("{} Slapdash number (Slapdash_MD5) = {}", i, slapdash.random_u128()); }
         
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any = Any_MD4::new();
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD4) = {}", i, any.random_u128()); }
+        { println!("{} Slapdash number (Slapdash_MD4) = {}", i, slapdash.random_u128()); }
         
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
     let mut rand = Random_Rijndael::new();
     for i in 0..10
-        { println!("{} Any number (Random_Rijndael) = {}", i, rand.random_u128()); }
+        { println!("{} Random number (Random_Rijndael) = {}", i, rand.random_u128()); }
         
     // Example for Any_Rijndael
     use cryptocol::random::Any_Rijndael;
@@ -872,23 +872,23 @@ fn random_random_u128()
     for i in 0..10
         { println!("{} Any number (Any_Rijndael) = {}", i, any.random_u128()); }
         
-    // Example for Any_DES
-    use cryptocol::random::Any_DES;
-    let mut any = Any_DES::new();
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
     for i in 0..10
-        { println!("{} Any number (Any_DES) = {}", i, any.random_u128()); }
+        { println!("{} Slapdash number (Slapdash_DES) = {}", i, slapdash.random_u128()); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any = Any_Num_C::new();
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num_C) = {}", i, any.random_u128()); }
+        { println!("{} Slapdash number (Slapdash_Num_C) = {}", i, slapdash.random_u128()); }
         
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any = Any_Num::new();
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num) = {}", i, any.random_u128()); }
+        { println!("{} Slapdash number (Slapdash) = {}", i, slapdash.random_u128()); }
     println!("-------------------------------");
 }
 
@@ -947,7 +947,7 @@ fn random_random_usize()
     use cryptocol::random::Any_SHA3_256;
     let mut any = Any_SHA3_256::new();
     for i in 0..10
-        { println!("{} Random number (Any_SHA3_256) = {}", i, any.random_usize()); }
+        { println!("{} Any number (Any_SHA3_256) = {}", i, any.random_usize()); }
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
@@ -959,37 +959,37 @@ fn random_random_usize()
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
     for i in 0..10
-        { println!("{} Random number (Random_SHA2_512) = {}", i, any.random_usize()); }
+        { println!("{} Any number (Any_SHA2_256) = {}", i, any.random_usize()); }
 
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any = Any_SHA1::new();
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA1) = {}", i, any.random_usize()); }
+        { println!("{} Slapdash number (Slapdash_SHA1) = {}", i, slapdash.random_usize()); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any = Any_SHA0::new();
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA0) = {}", i, any.random_usize()); }
+        { println!("{} Slapdash number (Slapdash_SHA0) = {}", i, slapdash.random_usize()); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any = Any_MD5::new();
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD5) = {}", i, any.random_usize()); }
+        { println!("{} Slapdash number (Slapdash_MD5) = {}", i, slapdash.random_usize()); }
         
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any = Any_MD4::new();
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD4) = {}", i, any.random_usize()); }
+        { println!("{} Slapdash number (Slapdash_MD4) = {}", i, slapdash.random_usize()); }
         
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
     let mut rand = Random_Rijndael::new();
     for i in 0..10
-        { println!("{} Any number (Random_Rijndael) = {}", i, rand.random_usize()); }
+        { println!("{} Random number (Random_Rijndael) = {}", i, rand.random_usize()); }
         
     // Example for Any_Rijndael
     use cryptocol::random::Any_Rijndael;
@@ -997,23 +997,23 @@ fn random_random_usize()
     for i in 0..10
         { println!("{} Any number (Any_Rijndael) = {}", i, any.random_usize()); }
         
-    // Example for Any_DES
-    use cryptocol::random::Any_DES;
-    let mut any = Any_DES::new();
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
     for i in 0..10
-        { println!("{} Any number (Any_DES) = {}", i, any.random_usize()); }
+        { println!("{} Slapdash number (Slapdash_DES) = {}", i, slapdash.random_usize()); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any = Any_Num_C::new();
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num_C) = {}", i, any.random_usize()); }
+        { println!("{} Slapdash number (Slapdash_Num_C) = {}", i, slapdash.random_usize()); }
         
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any = Any_Num::new();
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num) = {}", i, any.random_usize()); }
+        { println!("{} Slapdash number (Slapdash) = {}", i, slapdash.random_usize()); }
     println!("-------------------------------");
 }
 
@@ -1084,37 +1084,37 @@ fn random_random_uint()
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
     for i in 0..10
-        { println!("{} Random number (Random_SHA2_512) = {}", i, any.random_uint::<u8>()); }
+        { println!("{} Any number (Any_SHA2_256) = {}", i, any.random_uint::<u8>()); }
 
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any = Any_SHA1::new();
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA1) = {}", i, any.random_uint::<usize>()); }
+        { println!("{} Slapdash number (Slapdash_SHA1) = {}", i, slapdash.random_uint::<usize>()); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any = Any_SHA0::new();
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
     for i in 0..10
-        { println!("{} Any number (Any_SHA0) = {}", i, any.random_uint::<u32>()); }
+        { println!("{} Slapdash number (Slapdash_SHA0) = {}", i, slapdash.random_uint::<u32>()); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any = Any_MD5::new();
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD5) = {}", i, any.random_uint::<u64>()); }
+        { println!("{} Slapdash number (Slapdash_MD5) = {}", i, slapdash.random_uint::<u64>()); }
         
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any = Any_MD4::new();
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
     for i in 0..10
-        { println!("{} Any number (Any_MD4) = {}", i, any.random_uint::<u128>()); }
+        { println!("{} Slapdash number (Slapdash_MD4) = {}", i, slapdash.random_uint::<u128>()); }
         
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
     let mut rand = Random_Rijndael::new();
     for i in 0..10
-        { println!("{} Any number (Random_Rijndael) = {}", i, rand.random_uint::<u8>()); }
+        { println!("{} Random number (Random_Rijndael) = {}", i, rand.random_uint::<u8>()); }
         
     // Example for Any_Rijndael
     use cryptocol::random::Any_Rijndael;
@@ -1122,23 +1122,23 @@ fn random_random_uint()
     for i in 0..10
         { println!("{} Any number (Any_Rijndael) = {}", i, any.random_uint::<u16>()); }
         
-    // Example for Any_DES
-    use cryptocol::random::Any_DES;
-    let mut any = Any_DES::new();
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
     for i in 0..10
-        { println!("{} Any number (Any_DES) = {}", i, any.random_uint::<usize>()); }
+        { println!("{} Slapdash number (Slapdash_DES) = {}", i, slapdash.random_uint::<usize>()); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any = Any_Num_C::new();
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num_C) = {}", i, any.random_uint::<u64>()); }
+        { println!("{} Slapdash number (Slapdash_Num_C) = {}", i, slapdash.random_uint::<u64>()); }
         
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any = Any_Num::new();
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
     for i in 0..10
-        { println!("{} Any number (Any_Num) = {}", i, any.random_uint::<u128>()); }
+        { println!("{} Slapdash number (Slapdash) = {}", i, slapdash.random_uint::<u128>()); }
     println!("-------------------------------");
 }
 
@@ -1155,7 +1155,7 @@ fn random_random_under_uint()
     use cryptocol::random::Any;
     let mut any = Any::new();
     if let Some(num) = any.random_under_uint(1234_u16)
-        { println!("Random number u16 = {}", num); }
+        { println!("Any number u16 = {}", num); }
     
     // Example for Random_BIG_KECCAK_1024
     use cryptocol::random::Random_BIG_KECCAK_1024;
@@ -1179,65 +1179,65 @@ fn random_random_under_uint()
     use cryptocol::random::Any_SHAKE_256;
     let mut any = Any_SHAKE_256::new();
     if let Some(num) = any.random_under_uint(1234_usize)
-        { println!("Random number usize = {}", num); }
+        { println!("Any number usize = {}", num); }
 
     // Example for Any_SHAKE_128
     use cryptocol::random::Any_SHAKE_128;
     let mut any = Any_SHAKE_128::new();
     if let Some(num) = any.random_under_uint(0_usize)
-        { println!("Random number usize = {}", num); }
+        { println!("Any number usize = {}", num); }
     else
-        { println!("No random unsigned number under 0!"); }
+        { println!("No any unsigned number under 0!"); }
 
     // Example for Any_SHA3_512
     use cryptocol::random::Any_SHA3_512;
     let mut any = Any_SHA3_512::new();
     if let Some(num) = any.random_under_uint(12_u8)
-        { println!("Random number u8 = {}", num); }
+        { println!("Any number u8 = {}", num); }
 
     // Example for Any_SHA3_256
     use cryptocol::random::Any_SHA3_256;
     let mut any = Any_SHA3_256::new();
     if let Some(num) = any.random_under_uint(1234_u16)
-        { println!("Random number u16 = {}", num); }
+        { println!("Any number u16 = {}", num); }
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
     let mut any = Any_SHA2_512::new();
     if let Some(num) = any.random_under_uint(12345678_u32)
-        { println!("Random number u32 = {}", num); }
+        { println!("Any number u32 = {}", num); }
 
     // Example for Any_SHA2_256
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
     if let Some(num) = any.random_under_uint(1234567890123456_u64)
-        { println!("Random number u64 = {}", num); }
+        { println!("Any number u64 = {}", num); }
 
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any = Any_SHA1::new();
-    if let Some(num) = any.random_under_uint(12345678901234567890_u128)
-        { println!("Random number u128 = {}", num); }
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    if let Some(num) = slapdash.random_under_uint(12345678901234567890_u128)
+        { println!("Slapdash number u128 = {}", num); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any = Any_SHA0::new();
-    if let Some(num) = any.random_under_uint(1234_usize)
-        { println!("Random number usize = {}", num); }
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    if let Some(num) = slapdash.random_under_uint(1234_usize)
+        { println!("Slapdash number usize = {}", num); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any = Any_MD5::new();
-    if let Some(num) = any.random_under_uint(0_u64)
-        { println!("Random number usize = {}", num); }
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    if let Some(num) = slapdash.random_under_uint(0_u64)
+        { println!("Slapdash number usize = {}", num); }
     else
-        { println!("No random unsigned number under 0!"); }
+        { println!("No slapdash unsigned number under 0!"); }
         
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any = Any_MD4::new();
-    if let Some(num) = any.random_under_uint(12_u8)
-        { println!("Random number u8 = {}", num); }
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    if let Some(num) = slapdash.random_under_uint(12_u8)
+        { println!("Slapdash number u8 = {}", num); }
         
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
@@ -1249,27 +1249,27 @@ fn random_random_under_uint()
     use cryptocol::random::Any_Rijndael;
     let mut any = Any_Rijndael::new();
     if let Some(num) = any.random_under_uint(12345678_u32)
-        { println!("Random number u32 = {}", num); }
+        { println!("Any number u32 = {}", num); }
         
-    // Example for Any_DES
-    use cryptocol::random::Any_DES;
-    let mut any = Any_DES::new();
-    if let Some(num) = any.random_under_uint(1234567890123456_u64)
-        { println!("Random number u64 = {}", num); }
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    if let Some(num) = slapdash.random_under_uint(1234567890123456_u64)
+        { println!("Slapdash number u64 = {}", num); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any = Any_Num_C::new();
-    if let Some(num) = any.random_under_uint(12345678901234567890_u128)
-        { println!("Random number u128 = {}", num); }
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    if let Some(num) = slapdash.random_under_uint(12345678901234567890_u128)
+        { println!("Slapdash number u128 = {}", num); }
         
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any = Any_Num::new();
-    if let Some(num) = any.random_under_uint(0_u32)
-        { println!("Random number usize = {}", num); }
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    if let Some(num) = slapdash.random_under_uint(0_u32)
+        { println!("Slapdash number usize = {}", num); }
     else
-        { println!("No random unsigned number under 0!"); }
+        { println!("No slapdash unsigned number under 0!"); }
     println!("-------------------------------");
 }
 
@@ -1286,7 +1286,7 @@ fn random_random_under_uint_()
     use cryptocol::random::Any;
     let mut any = Any::new();
     let num = any.random_under_uint_(1234_u16);
-    println!("Random number u16 = {}", num);
+    println!("Any number u16 = {}", num);
 
     // Example for Random_BIG_KECCAK_1024
     use cryptocol::random::Random_BIG_KECCAK_1024;
@@ -1310,61 +1310,61 @@ fn random_random_under_uint_()
     use cryptocol::random::Any_SHAKE_256;
     let mut any = Any_SHAKE_256::new();
     let num = any.random_under_uint_(1234_usize);
-    println!("Random number usize = {}", num);
+    println!("Any number usize = {}", num);
 
     // Example for Any_SHAKE_128
     use cryptocol::random::Any_SHAKE_128;
     let mut any = Any_SHAKE_128::new();
     let num = any.random_under_uint_(12_u8);
-    println!("Random number u8 = {}", num);
+    println!("Any number u8 = {}", num);
 
     // Example for Any_SHA3_512
     use cryptocol::random::Any_SHA3_512;
     let mut any = Any_SHA3_512::new();
     let num = any.random_under_uint_(1234_u16);
-    println!("Random number u16 = {}", num);
+    println!("Any number u16 = {}", num);
 
     // Example for Any_SHA3_256
     use cryptocol::random::Any_SHA3_256;
     let mut any = Any_SHA3_256::new();
     let num = any.random_under_uint_(12345678_u32);
-    println!("Random number u32 = {}", num);
+    println!("Any number u32 = {}", num);
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
     let mut any = Any_SHA2_512::new();
     let num = any.random_under_uint_(1234567890123456_u64);
-    println!("Random number u64 = {}", num);
+    println!("Any number u64 = {}", num);
 
     // Example for Any_SHA2_256
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
     let num = any.random_under_uint_(12345678901234567890_u128);
-    println!("Random number u128 = {}", num);
+    println!("Any number u128 = {}", num);
 
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any = Any_SHA1::new();
-    let num = any.random_under_uint_(1234_usize);
-    println!("Random number usize = {}", num);
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let num = slapdash.random_under_uint_(1234_usize);
+    println!("Slapdash number usize = {}", num);
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any = Any_SHA0::new();
-    let num = any.random_under_uint_(12_u8);
-    println!("Random number u8 = {}", num);
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let num = slapdash.random_under_uint_(12_u8);
+    println!("Slapdash number u8 = {}", num);
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any = Any_MD5::new();
-    let num = any.random_under_uint_(1234_u16);
-    println!("Random number u16 = {}", num);
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let num = slapdash.random_under_uint_(1234_u16);
+    println!("Slapdash number u16 = {}", num);
         
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any = Any_MD4::new();
-    let num = any.random_under_uint_(12345678_u32);
-    println!("Random number u32 = {}", num);
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let num = slapdash.random_under_uint_(12345678_u32);
+    println!("Slapdash number u32 = {}", num);
         
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
@@ -1376,25 +1376,25 @@ fn random_random_under_uint_()
     use cryptocol::random::Any_Rijndael;
     let mut any = Any_Rijndael::new();
     let num = any.random_under_uint_(12345678901234567890_u128);
-    println!("Random number u128 = {}", num);
+    println!("Any number u128 = {}", num);
         
-    // Example for Any_DES
-    use cryptocol::random::Any_DES;
-    let mut any = Any_DES::new();
-    let num = any.random_under_uint_(1234_usize);
-    println!("Random number usize = {}", num);
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let num = slapdash.random_under_uint_(1234_usize);
+    println!("Slapdash number usize = {}", num);
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any = Any_Num_C::new();
-    let num = any.random_under_uint_(12_u8);
-    println!("Random number u8 = {}", num);
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let num = slapdash.random_under_uint_(12_u8);
+    println!("Slapdash number u8 = {}", num);
         
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any = Any_Num::new();
-    let num = any.random_under_uint_(1234_u16);
-    println!("Random number u16 = {}", num);
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let num = slapdash.random_under_uint_(1234_u16);
+    println!("Slapdash number u16 = {}", num);
 
     #[cfg(test)] // It will panic.
     random_should_panic_random_uint_();
@@ -1415,7 +1415,7 @@ fn random_should_panic_random_uint_()
     use cryptocol::random::Any;
     let mut any = Any::new();
     let _num = any.random_under_uint_(0_u16);
-    println!("Random number u16 = {}", _num);
+    println!("Any number u16 = {}", _num);
 
     // Example for Random_BIG_KECCAK_1024
     use cryptocol::random::Random_BIG_KECCAK_1024;
@@ -1439,61 +1439,61 @@ fn random_should_panic_random_uint_()
     use cryptocol::random::Any_SHAKE_256;
     let mut any = Any_SHAKE_256::new();
     let _num = any.random_under_uint_(0_usize);
-    println!("Random number usize = {}", _num);
+    println!("Any number usize = {}", _num);
 
     // Example for Any_SHAKE_128
     use cryptocol::random::Any_SHAKE_128;
     let mut any = Any_SHAKE_128::new();
     let _num = any.random_under_uint_(0_u8);
-    println!("Random number u8 = {}", _num);
+    println!("Any number u8 = {}", _num);
 
     // Example for Any_SHA3_512
     use cryptocol::random::Any_SHA3_512;
     let mut any = Any_SHA3_512::new();
     let _num = any.random_under_uint_(0_u16);
-    println!("Random number u16 = {}", _num);
+    println!("Any number u16 = {}", _num);
 
     // Example for Any_SHA3_256
     use cryptocol::random::Any_SHA3_256;
     let mut any = Any_SHA3_256::new();
     let _num = any.random_under_uint_(0_u32);
-    println!("Random number u32 = {}", _num);
+    println!("Any number u32 = {}", _num);
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
     let mut any = Any_SHA2_512::new();
     let _num = any.random_under_uint_(0_u64);
-    println!("Random number u64 = {}", _num);
+    println!("Any number u64 = {}", _num);
 
     // Example for Any_SHA2_256
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
     let _num = any.random_under_uint_(0_u128);
-    println!("Random number u128 = {}", _num);
+    println!("Any number u128 = {}", _num);
 
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any = Any_SHA1::new();
-    let _num = any.random_under_uint_(0_usize);
-    println!("Random number usize = {}", _num);
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let _num = slapdash.random_under_uint_(0_usize);
+    println!("Slapdash number usize = {}", _num);
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any = Any_SHA0::new();
-    let _num = any.random_under_uint_(0_u8);
-    println!("Random number u8 = {}", _num);
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let _num = slapdash.random_under_uint_(0_u8);
+    println!("Slapdash number u8 = {}", _num);
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any = Any_MD5::new();
-    let _num = any.random_under_uint_(0_u16);
-    println!("Random number u16 = {}", _num);
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let _num = slapdash.random_under_uint_(0_u16);
+    println!("Slapdash number u16 = {}", _num);
 
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any = Any_MD4::new();
-    let _num = any.random_under_uint_(0_u32);
-    println!("Random number u32 = {}", _num);
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let _num = slapdash.random_under_uint_(0_u32);
+    println!("Slapdash number u32 = {}", _num);
 
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
@@ -1505,25 +1505,25 @@ fn random_should_panic_random_uint_()
     use cryptocol::random::Any_Rijndael;
     let mut any = Any_Rijndael::new();
     let _num = any.random_under_uint_(0_u128);
-    println!("Random number u128 = {}", _num);
+    println!("Any number u128 = {}", _num);
 
-    // Example for Any_DES
-    use cryptocol::random::Any_DES;
-    let mut any = Any_DES::new();
-    let _num = any.random_under_uint_(0_usize);
-    println!("Random number usize = {}", _num);
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let _num = slapdash.random_under_uint_(0_usize);
+    println!("Slapdash number usize = {}", _num);
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any = Any_Num_C::new();
-    let _num = any.random_under_uint_(0_u8);
-    println!("Random number u8 = {}", _num);
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let _num = slapdash.random_under_uint_(0_u8);
+    println!("Slapdash number u8 = {}", _num);
 
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any = Any_Num::new();
-    let _num = any.random_under_uint_(0_u16);
-    println!("Random number u16 = {}", _num);
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let _num = slapdash.random_under_uint_(0_u16);
+    println!("Slapdash number u16 = {}", _num);
 }
 
 fn random_random_minmax_uint()
@@ -1539,7 +1539,7 @@ fn random_random_minmax_uint()
     use cryptocol::random::Any;
     let mut any = Any::new();
     if let Some(num) = any.random_minmax_uint(1234_u16, 6321)
-        { println!("Random number u16 = {}", num); }
+        { println!("Any number u16 = {}", num); }
     
     // Example for Random_BIG_KECCAK_1024
     use cryptocol::random::Random_BIG_KECCAK_1024;
@@ -1563,65 +1563,65 @@ fn random_random_minmax_uint()
     use cryptocol::random::Any_SHAKE_256;
     let mut any = Any_SHAKE_256::new();
     if let Some(num) = any.random_minmax_uint(123456789_usize, 987654321)
-        { println!("Random number usize = {}", num); }
+        { println!("Any number usize = {}", num); }
 
     // Example for Any_SHAKE_128
     use cryptocol::random::Any_SHAKE_128;
     let mut any = Any_SHAKE_128::new();
     if let Some(num) = any.random_minmax_uint(10, 8_usize)
-        { println!("Random number usize = {}", num); }
+        { println!("Any number usize = {}", num); }
     else
-        { println!("No random unsigned number number greater than or equal to 10 and less than 8!"); }
+        { println!("No any unsigned number number greater than or equal to 10 and less than 8!"); }
 
     // Example for Any_SHA3_512
     use cryptocol::random::Any_SHA3_512;
     let mut any = Any_SHA3_512::new();
     if let Some(num) = any.random_minmax_uint(12_u8, 21)
-        { println!("Random number u8 = {}", num); }
+        { println!("Any number u8 = {}", num); }
 
     // Example for Any_SHA3_256
     use cryptocol::random::Any_SHA3_256;
     let mut any = Any_SHA3_256::new();
     if let Some(num) = any.random_minmax_uint(1234_u16, 6321)
-        { println!("Random number u16 = {}", num); }
+        { println!("Any number u16 = {}", num); }
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
     let mut any = Any_SHA2_512::new();
     if let Some(num) = any.random_minmax_uint(12345678_u32, 87654321)
-        { println!("Random number u32 = {}", num); }
+        { println!("Any number u32 = {}", num); }
 
     // Example for Any_SHA2_256
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
     if let Some(num) = any.random_minmax_uint(1234567890123456_u64, 6543210987654321)
-        { println!("Random number u64 = {}", num); }
+        { println!("Any number u64 = {}", num); }
 
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any = Any_SHA1::new();
-    if let Some(num) = any.random_minmax_uint(12345678901234567890_u128, 19876543210987654321)
-        { println!("Random number u128 = {}", num); }
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    if let Some(num) = slapdash.random_minmax_uint(12345678901234567890_u128, 19876543210987654321)
+        { println!("Slapdash number u128 = {}", num); }
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any = Any_SHA0::new();
-    if let Some(num) = any.random_minmax_uint(123456789_usize, 987654321)
-        { println!("Random number usize = {}", num); }
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    if let Some(num) = slapdash.random_minmax_uint(123456789_usize, 987654321)
+        { println!("Slapdash number usize = {}", num); }
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any = Any_MD5::new();
-    if let Some(num) = any.random_minmax_uint(10, 8_usize)
-        { println!("Random number usize = {}", num); }
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    if let Some(num) = slapdash.random_minmax_uint(10, 8_usize)
+        { println!("Slapdash number usize = {}", num); }
     else
-        { println!("No random unsigned number number greater than or equal to 10 and less than 8!"); }
+        { println!("No slapdash unsigned number number greater than or equal to 10 and less than 8!"); }
 
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any = Any_MD4::new();
-    if let Some(num) = any.random_minmax_uint(12_u8, 21)
-        { println!("Random number u8 = {}", num); }
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    if let Some(num) = slapdash.random_minmax_uint(12_u8, 21)
+        { println!("Slapdash number u8 = {}", num); }
 
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
@@ -1633,27 +1633,27 @@ fn random_random_minmax_uint()
     use cryptocol::random::Any_Rijndael;
     let mut any = Any_Rijndael::new();
     if let Some(num) = any.random_minmax_uint(12345678_u32, 87654321)
-        { println!("Random number u32 = {}", num); }
+        { println!("Any number u32 = {}", num); }
 
-    // Example for Any_DES
-    use cryptocol::random::Any_DES;
-    let mut any = Any_DES::new();
-    if let Some(num) = any.random_minmax_uint(1234567890123456_u64, 6543210987654321)
-        { println!("Random number u64 = {}", num); }
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    if let Some(num) = slapdash.random_minmax_uint(1234567890123456_u64, 6543210987654321)
+        { println!("Slapdash number u64 = {}", num); }
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any = Any_Num_C::new();
-    if let Some(num) = any.random_minmax_uint(12345678901234567890_u128, 19876543210987654321)
-        { println!("Random number u128 = {}", num); }
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    if let Some(num) = slapdash.random_minmax_uint(12345678901234567890_u128, 19876543210987654321)
+        { println!("Slapdash number u128 = {}", num); }
 
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any = Any_Num::new();
-    if let Some(num) = any.random_minmax_uint(10, 8_usize)
-        { println!("Random number usize = {}", num); }
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    if let Some(num) = slapdash.random_minmax_uint(10, 8_usize)
+        { println!("Slapdash number usize = {}", num); }
     else
-        { println!("No random unsigned number number greater than or equal to 10 and less than 8!"); }
+        { println!("No slapdash unsigned number number greater than or equal to 10 and less than 8!"); }
     println!("-------------------------------");
 }
 
@@ -1676,7 +1676,7 @@ fn random_random_minmax_uint_()
     use cryptocol::random::Random_BIG_KECCAK_1024;
     let mut rand = Random_BIG_KECCAK_1024::new();
     let num = rand.random_minmax_uint_(12345678_u32, 87654321);
-    println!("Random number u32 = {}", num);
+    println!("Any number u32 = {}", num);
     
     // Example for Random_SHA3_512
     use cryptocol::random::Random_SHA3_512;
@@ -1694,61 +1694,61 @@ fn random_random_minmax_uint_()
     use cryptocol::random::Any_SHAKE_256;
     let mut any = Any_SHAKE_256::new();
     let num = any.random_minmax_uint_(123456789_usize, 987654321);
-    println!("Random number usize = {}", num);
+    println!("Any number usize = {}", num);
 
     // Example for Any_SHAKE_128
     use cryptocol::random::Any_SHAKE_128;
     let mut any = Any_SHAKE_128::new();
     let num = any.random_minmax_uint_(12_u8, 21);
-    println!("Random number u8 = {}", num);
+    println!("Any number u8 = {}", num);
 
     // Example for Any_SHA3_512
     use cryptocol::random::Any_SHA3_512;
     let mut any = Any_SHA3_512::new();
     let num = any.random_minmax_uint_(1234_u16, 6321);
-    println!("Random number u16 = {}", num);
+    println!("Any number u16 = {}", num);
 
     // Example for Any_SHA3_256
     use cryptocol::random::Any_SHA3_256;
     let mut any = Any_SHA3_256::new();
     let num = any.random_minmax_uint_(12345678_u32, 87654321);
-    println!("Random number u32 = {}", num);
+    println!("Any number u32 = {}", num);
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
     let mut any = Any_SHA2_512::new();
     let num = any.random_minmax_uint_(1234567890123456_u64, 6543210987654321);
-    println!("Random number u64 = {}", num);
+    println!("Any number u64 = {}", num);
 
     // Example for Any_SHA2_256
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
     let num = any.random_minmax_uint_(12345678901234567890_u128, 19876543210987654321);
-    println!("Random number u128 = {}", num);
+    println!("Any number u128 = {}", num);
 
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any = Any_SHA1::new();
-    let num = any.random_minmax_uint_(123456789_usize, 987654321);
-    println!("Random number usize = {}", num);
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let num = slapdash.random_minmax_uint_(123456789_usize, 987654321);
+    println!("Slapdash number usize = {}", num);
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any = Any_SHA0::new();
-    let num = any.random_minmax_uint_(12_u8, 21);
-    println!("Random number u8 = {}", num);
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let num = slapdash.random_minmax_uint_(12_u8, 21);
+    println!("Slapdash number u8 = {}", num);
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any = Any_MD5::new();
-    let num = any.random_minmax_uint_(1234_u16, 6321);
-    println!("Random number u16 = {}", num);
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let num = slapdash.random_minmax_uint_(1234_u16, 6321);
+    println!("Slapdash number u16 = {}", num);
 
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any = Any_MD4::new();
-    let num = any.random_minmax_uint_(12345678_u32, 87654321);
-    println!("Random number u32 = {}", num);
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let num = slapdash.random_minmax_uint_(12345678_u32, 87654321);
+    println!("Slapdash number u32 = {}", num);
 
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
@@ -1760,25 +1760,25 @@ fn random_random_minmax_uint_()
     use cryptocol::random::Any_Rijndael;
     let mut any = Any_Rijndael::new();
     let num = any.random_minmax_uint_(12345678901234567890_u128, 19876543210987654321);
-    println!("Random number u128 = {}", num);
+    println!("Any number u128 = {}", num);
 
-    // Example for Any_DES
-    use cryptocol::random::Any_DES;
-    let mut any = Any_DES::new();
-    let num = any.random_minmax_uint_(123456789_usize, 987654321);
-    println!("Random number usize = {}", num);
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let num = slapdash.random_minmax_uint_(123456789_usize, 987654321);
+    println!("Slapdash number usize = {}", num);
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any = Any_Num_C::new();
-    let num = any.random_minmax_uint_(12_u8, 21);
-    println!("Random number u8 = {}", num);
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let num = slapdash.random_minmax_uint_(12_u8, 21);
+    println!("Slapdash number u8 = {}", num);
 
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any = Any_Num::new();
-    let num = any.random_minmax_uint_(1234_u16, 6321);
-    println!("Random number u16 = {}", num);
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let num = slapdash.random_minmax_uint_(1234_u16, 6321);
+    println!("Slapdash number u16 = {}", num);
 
     #[cfg(test)] // It will panic.
     random_should_panic_random_minmax_uint_();
@@ -1799,7 +1799,7 @@ fn random_should_panic_random_minmax_uint_()
     use cryptocol::random::Any;
     let mut any = Any::new();
     let _num = any.random_minmax_uint_(12345_u16, 6321);
-    println!("Random number u16 = {}", _num);
+    println!("Any number u16 = {}", _num);
 
     // Example for Random_BIG_KECCAK_1024
     use cryptocol::random::Random_BIG_KECCAK_1024;
@@ -1823,61 +1823,61 @@ fn random_should_panic_random_minmax_uint_()
     use cryptocol::random::Any_SHAKE_256;
     let mut any = Any_SHAKE_256::new();
     let num = any.random_minmax_uint_(1234567890_usize, 987654321);
-    println!("Random number usize = {}", num);
+    println!("Any number usize = {}", num);
 
     // Example for Any_SHAKE_128
     use cryptocol::random::Any_SHAKE_128;
     let mut any = Any_SHAKE_128::new();
     let num = any.random_minmax_uint_(123_u8, 21);
-    println!("Random number u8 = {}", num);
+    println!("Any number u8 = {}", num);
 
     // Example for Any_SHA3_512
     use cryptocol::random::Any_SHA3_512;
     let mut any = Any_SHA3_512::new();
     let num = any.random_minmax_uint_(12345_u16, 6321);
-    println!("Random number u16 = {}", num);
+    println!("Any number u16 = {}", num);
 
     // Example for Any_SHA3_256
     use cryptocol::random::Any_SHA3_256;
     let mut any = Any_SHA3_256::new();
     let num = any.random_minmax_uint_(123456789_u32, 87654321);
-    println!("Random number u32 = {}", num);
+    println!("Any number u32 = {}", num);
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
     let mut any = Any_SHA2_512::new();
     let num = any.random_minmax_uint_(12345678901234567_u64, 6543210987654321);
-    println!("Random number u64 = {}", num);
+    println!("Any number u64 = {}", num);
 
     // Example for Any_SHA2_256
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
     let num = any.random_minmax_uint_(123456789012345678901_u128, 19876543210987654321);
-    println!("Random number u128 = {}", num);
+    println!("Any number u128 = {}", num);
 
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any = Any_SHA1::new();
-    let num = any.random_minmax_uint_(1234567890_usize, 987654321);
-    println!("Random number usize = {}", num);
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let num = slapdash.random_minmax_uint_(1234567890_usize, 987654321);
+    println!("Slapdash number usize = {}", num);
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any = Any_SHA0::new();
-    let num = any.random_minmax_uint_(123_u8, 21);
-    println!("Random number u8 = {}", num);
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let num = slapdash.random_minmax_uint_(123_u8, 21);
+    println!("Slapdash number u8 = {}", num);
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any = Any_MD5::new();
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
     let num = any.random_minmax_uint_(12345_u16, 6321);
-    println!("Random number u16 = {}", num);
+    println!("Slapdash number u16 = {}", num);
 
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any = Any_MD4::new();
-    let num = any.random_minmax_uint_(123456789_u32, 87654321);
-    println!("Random number u32 = {}", num);
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let num = slapdash.random_minmax_uint_(123456789_u32, 87654321);
+    println!("Slapdash number u32 = {}", num);
 
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
@@ -1889,25 +1889,25 @@ fn random_should_panic_random_minmax_uint_()
     use cryptocol::random::Any_Rijndael;
     let mut any = Any_Rijndael::new();
     let num = any.random_minmax_uint_(123456789012345678901_u128, 19876543210987654321);
-    println!("Random number u128 = {}", num);
+    println!("Any number u128 = {}", num);
 
-    // Example for Any_DES
-    use cryptocol::random::Any_DES;
-    let mut any = Any_DES::new();
-    let num = any.random_minmax_uint_(1234567890_usize, 987654321);
-    println!("Random number usize = {}", num);
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let num = slapdash.random_minmax_uint_(1234567890_usize, 987654321);
+    println!("Slapdash number usize = {}", num);
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any = Any_Num_C::new();
-    let num = any.random_minmax_uint_(123_u8, 21);
-    println!("Random number u8 = {}", num);
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let num = slapdash.random_minmax_uint_(123_u8, 21);
+    println!("Slapdash number u8 = {}", num);
 
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any = Any_Num::new();
-    let num = any.random_minmax_uint_(12345_u16, 6321);
-    println!("Random number u16 = {}", num);
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let num = slapdash.random_minmax_uint_(12345_u16, 6321);
+    println!("Slapdash number u16 = {}", num);
 }
 
 fn random_random_odd_uint()
@@ -1926,12 +1926,12 @@ fn random_random_odd_uint()
     // Example for Any
     use cryptocol::random::Any;
     let mut any = Any::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    println!("Any odd number u8 = {}", any.random_odd_uint::<u8>());
+    println!("Any odd number u16 = {}", any.random_odd_uint::<u16>());
+    println!("Any odd number u32 = {}", any.random_odd_uint::<u32>());
+    println!("Any odd number u64 = {}", any.random_odd_uint::<u64>());
+    println!("Any odd number u128 = {}", any.random_odd_uint::<u128>());
+    println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
     
     // Example for Random_BIG_KECCAK_1024
     use cryptocol::random::Random_BIG_KECCAK_1024;
@@ -1966,160 +1966,160 @@ fn random_random_odd_uint()
     // Example for Any_SHAKE_256
     use cryptocol::random::Any_SHAKE_256;
     let mut any = Any_SHAKE_256::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    println!("Any odd number u8 = {}", any.random_odd_uint::<u8>());
+    println!("Any odd number u16 = {}", any.random_odd_uint::<u16>());
+    println!("Any odd number u32 = {}", any.random_odd_uint::<u32>());
+    println!("Any odd number u64 = {}", any.random_odd_uint::<u64>());
+    println!("Any odd number u128 = {}", any.random_odd_uint::<u128>());
+    println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
 
     // Example for Any_SHAKE_128
     use cryptocol::random::Any_SHAKE_128;
     let mut any = Any_SHAKE_128::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    println!("Any odd number u8 = {}", any.random_odd_uint::<u8>());
+    println!("Any odd number u16 = {}", any.random_odd_uint::<u16>());
+    println!("Any odd number u32 = {}", any.random_odd_uint::<u32>());
+    println!("Any odd number u64 = {}", any.random_odd_uint::<u64>());
+    println!("Any odd number u128 = {}", any.random_odd_uint::<u128>());
+    println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
 
     // Example for Any_SHA3_512
     use cryptocol::random::Any_SHA3_512;
     let mut any = Any_SHA3_512::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    println!("Any odd number u8 = {}", any.random_odd_uint::<u8>());
+    println!("Any odd number u16 = {}", any.random_odd_uint::<u16>());
+    println!("Any odd number u32 = {}", any.random_odd_uint::<u32>());
+    println!("Any odd number u64 = {}", any.random_odd_uint::<u64>());
+    println!("Any odd number u128 = {}", any.random_odd_uint::<u128>());
+    println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
 
     // Example for Any_SHA3_256
     use cryptocol::random::Any_SHA3_256;
     let mut any = Any_SHA3_256::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    println!("Any odd number u8 = {}", any.random_odd_uint::<u8>());
+    println!("Any odd number u16 = {}", any.random_odd_uint::<u16>());
+    println!("Any odd number u32 = {}", any.random_odd_uint::<u32>());
+    println!("Any odd number u64 = {}", any.random_odd_uint::<u64>());
+    println!("Any odd number u128 = {}", any.random_odd_uint::<u128>());
+    println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
     let mut any = Any_SHA2_512::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    println!("Any odd number u8 = {}", any.random_odd_uint::<u8>());
+    println!("Any odd number u16 = {}", any.random_odd_uint::<u16>());
+    println!("Any odd number u32 = {}", any.random_odd_uint::<u32>());
+    println!("Any odd number u64 = {}", any.random_odd_uint::<u64>());
+    println!("Any odd number u128 = {}", any.random_odd_uint::<u128>());
+    println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
 
     // Example for Any_SHA2_256
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    println!("Any odd number u8 = {}", any.random_odd_uint::<u8>());
+    println!("Any odd number u16 = {}", any.random_odd_uint::<u16>());
+    println!("Any odd number u32 = {}", any.random_odd_uint::<u32>());
+    println!("Any odd number u64 = {}", any.random_odd_uint::<u64>());
+    println!("Any odd number u128 = {}", any.random_odd_uint::<u128>());
+    println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
 
-    // Example for Any_SHA1
-    use cryptocol::random::Any_SHA1;
-    let mut any = Any_SHA1::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    println!("Slapdash odd number u8 = {}", slapdash.random_odd_uint::<u8>());
+    println!("Slapdash odd number u16 = {}", slapdash.random_odd_uint::<u16>());
+    println!("Slapdash odd number u32 = {}", slapdash.random_odd_uint::<u32>());
+    println!("Slapdash odd number u64 = {}", slapdash.random_odd_uint::<u64>());
+    println!("Slapdash odd number u128 = {}", slapdash.random_odd_uint::<u128>());
+    println!("Slapdash odd number usize = {}", slapdash.random_odd_uint::<usize>());
 
-    // Example for Any_SHA0
-    use cryptocol::random::Any_SHA0;
-    let mut any = Any_SHA0::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    println!("Slapdash odd number u8 = {}", slapdash.random_odd_uint::<u8>());
+    println!("Slapdash odd number u16 = {}", slapdash.random_odd_uint::<u16>());
+    println!("Slapdash odd number u32 = {}", slapdash.random_odd_uint::<u32>());
+    println!("Slapdash odd number u64 = {}", slapdash.random_odd_uint::<u64>());
+    println!("Slapdash odd number u128 = {}", slapdash.random_odd_uint::<u128>());
+    println!("Slapdash odd number usize = {}", slapdash.random_odd_uint::<usize>());
 
-    // Example for Any_MD5
-    use cryptocol::random::Any_MD5;
-    let mut any = Any_MD5::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    println!("Slapdash odd number u8 = {}", slapdash.random_odd_uint::<u8>());
+    println!("Slapdash odd number u16 = {}", slapdash.random_odd_uint::<u16>());
+    println!("Slapdash odd number u32 = {}", slapdash.random_odd_uint::<u32>());
+    println!("Slapdash odd number u64 = {}", slapdash.random_odd_uint::<u64>());
+    println!("Slapdash odd number u128 = {}", slapdash.random_odd_uint::<u128>());
+    println!("Slapdash odd number usize = {}", slapdash.random_odd_uint::<usize>());
         
-    // Example for Any_MD4
-    use cryptocol::random::Any_MD4;
-    let mut any = Any_MD4::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    println!("Slapdash odd number u8 = {}", slapdash.random_odd_uint::<u8>());
+    println!("Slapdash odd number u16 = {}", slapdash.random_odd_uint::<u16>());
+    println!("Slapdash odd number u32 = {}", slapdash.random_odd_uint::<u32>());
+    println!("Slapdash odd number u64 = {}", slapdash.random_odd_uint::<u64>());
+    println!("Slapdash odd number u128 = {}", slapdash.random_odd_uint::<u128>());
+    println!("Slapdash odd number usize = {}", slapdash.random_odd_uint::<usize>());
         
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
     let mut rand = Random_Rijndael::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    println!("Random odd number u8 = {}", rand.random_odd_uint::<u8>());
+    println!("Random odd number u16 = {}", rand.random_odd_uint::<u16>());
+    println!("Random odd number u32 = {}", rand.random_odd_uint::<u32>());
+    println!("Random odd number u64 = {}", rand.random_odd_uint::<u64>());
+    println!("Random odd number u128 = {}", rand.random_odd_uint::<u128>());
+    println!("Random odd number usize = {}", rand.random_odd_uint::<usize>());
         
     // Example for Any_Rijndael
     use cryptocol::random::Any_Rijndael;
     let mut any = Any_Rijndael::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    println!("Any odd number u8 = {}", any.random_odd_uint::<u8>());
+    println!("Any odd number u16 = {}", any.random_odd_uint::<u16>());
+    println!("Any odd number u32 = {}", any.random_odd_uint::<u32>());
+    println!("Any odd number u64 = {}", any.random_odd_uint::<u64>());
+    println!("Any odd number u128 = {}", any.random_odd_uint::<u128>());
+    println!("Any odd number usize = {}", any.random_odd_uint::<usize>());
         
-    // Example for Any_DES
-    use cryptocol::random::Any_DES;
-    let mut any = Any_DES::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    println!("Slapdash odd number u8 = {}", slapdash.random_odd_uint::<u8>());
+    println!("Slapdash odd number u16 = {}", slapdash.random_odd_uint::<u16>());
+    println!("Slapdash odd number u32 = {}", slapdash.random_odd_uint::<u32>());
+    println!("Slapdash odd number u64 = {}", slapdash.random_odd_uint::<u64>());
+    println!("Slapdash odd number u128 = {}", slapdash.random_odd_uint::<u128>());
+    println!("Slapdash odd number usize = {}", slapdash.random_odd_uint::<usize>());
 
-    // Example for Any_Num_C
-    use cryptocol::random::Any_Num_C;
-    let mut any = Any_Num_C::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    println!("Slapdash odd number u8 = {}", slapdash.random_odd_uint::<u8>());
+    println!("Slapdash odd number u16 = {}", slapdash.random_odd_uint::<u16>());
+    println!("Slapdash odd number u32 = {}", slapdash.random_odd_uint::<u32>());
+    println!("Slapdash odd number u64 = {}", slapdash.random_odd_uint::<u64>());
+    println!("Slapdash odd number u128 = {}", slapdash.random_odd_uint::<u128>());
+    println!("Slapdash odd number usize = {}", slapdash.random_odd_uint::<usize>());
         
-    // Example for Any_Num
-    use cryptocol::random::Any_Num;
-    let mut any = Any_Num::new();
-    println!("Random odd number u8 = {}", any.random_odd_uint::<u8>());
-    println!("Random odd number u16 = {}", any.random_odd_uint::<u16>());
-    println!("Random odd number u32 = {}", any.random_odd_uint::<u32>());
-    println!("Random odd number u64 = {}", any.random_odd_uint::<u64>());
-    println!("Random odd number u128 = {}", any.random_odd_uint::<u128>());
-    println!("Random odd number usize = {}", any.random_odd_uint::<usize>());
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    println!("Slapdash odd number u8 = {}", slapdash.random_odd_uint::<u8>());
+    println!("Slapdash odd number u16 = {}", slapdash.random_odd_uint::<u16>());
+    println!("Slapdash odd number u32 = {}", slapdash.random_odd_uint::<u32>());
+    println!("Slapdash odd number u64 = {}", slapdash.random_odd_uint::<u64>());
+    println!("Slapdash odd number u128 = {}", slapdash.random_odd_uint::<u128>());
+    println!("Slapdash odd number usize = {}", slapdash.random_odd_uint::<usize>());
     println!("-------------------------------");
 }
 
 fn random_random_odd_under_uint()
 {
     println!("random_random_odd_under_uint");
-    use cryptocol::random::Any_SHA1;
-    let mut rand = Any_SHA1::new();
+    use cryptocol::random::Slapdash_SHA1;
+    let mut rand = Slapdash_SHA1::new();
     if let Some(num) = rand.random_odd_under_uint(12_u8)
         { println!("Random odd number u8 = {}", num); }
     if let Some(num) = rand.random_odd_under_uint(1234_u16)
@@ -2239,8 +2239,8 @@ fn random_random_array()
 fn random_put_random_array()
 {
     println!("random_random_array");
-    use cryptocol::random::Any_MD4;
-    let mut rand = Any_MD4::new();
+    use cryptocol::random::Slapdash_MD4;
+    let mut rand = Slapdash_MD4::new();
     let mut num = [0_u64; 32];
     rand.put_random_in_array(&mut num);
     for i in 0..32
@@ -2252,10 +2252,10 @@ fn random_random_biguint()
 {
     println!("random_random_biguint");
     use cryptocol::define_utypes_with;
-    use cryptocol::random::Any_MD5;
+    use cryptocol::random::Slapdash_MD5;
 
     define_utypes_with!(u128);
-    let mut rand = Any_MD5::new();
+    let mut rand = Slapdash_MD5::new();
     let biguint: U512 = rand.random_biguint();
     println!("Random Number: {}", biguint);
     println!("-------------------------------");
@@ -2265,10 +2265,10 @@ fn random_random_under_biguint()
 {
     println!("random_random_under_biguint");
     use cryptocol::define_utypes_with;
-    use cryptocol::random::Any_SHA0;
+    use cryptocol::random::Slapdash_SHA0;
 
     define_utypes_with!(u64);
-    let mut rand = Any_SHA0::new();
+    let mut rand = Slapdash_SHA0::new();
     let ceiling = U1024::max().wrapping_div_uint(3_u8);
     if let Some(r) = rand.random_under_biguint(&ceiling)
     {
@@ -2282,10 +2282,10 @@ fn random_random_under_biguint_()
 {
     println!("random_random_under_biguint_");
     use cryptocol::define_utypes_with;
-    use cryptocol::random::Any_SHA1;
+    use cryptocol::random::Slapdash_SHA1;
 
     define_utypes_with!(u32);
-    let mut rand = Any_SHA1::new();
+    let mut rand = Slapdash_SHA1::new();
     let ceiling = U1024::max().wrapping_div_uint(3_u8);
     let r = rand.random_under_biguint_(&ceiling);
     println!("Random Number less than {} is\n{}", ceiling, r);
@@ -2312,10 +2312,10 @@ fn random_random_odd_under_biguint()
 {
     println!("random_random_odd_under_biguint");
     use cryptocol::define_utypes_with;
-    use cryptocol::random::Any_MD4;
+    use cryptocol::random::Slapdash_MD4;
 
     define_utypes_with!(u128);
-    let mut rand = Any_MD4::new();
+    let mut rand = Slapdash_MD4::new();
     let ceiling = U1024::max().wrapping_div_uint(4_u8);
     if let Some(r) = rand.random_odd_under_biguint(&ceiling)
     {
@@ -2344,10 +2344,10 @@ fn random_random_with_msb_set_biguint()
 {
     println!("random_random_with_msb_set_biguint");
     use cryptocol::define_utypes_with;
-    use cryptocol::random::Any_MD5;
+    use cryptocol::random::Slapdash_MD5;
 
     define_utypes_with!(u64);
-    let mut rand = Any_MD5::new();
+    let mut rand = Slapdash_MD5::new();
     let biguint: U512 = rand.random_with_msb_set_biguint();
     println!("Random Number: {}", biguint);
     println!("-------------------------------");
@@ -2386,10 +2386,10 @@ fn random_random_prime_with_msb_set_using_miller_rabin_biguint()
 {
     println!("random_random_prime_with_msb_set_using_miller_rabin_biguint");
     use cryptocol::define_utypes_with;
-    use cryptocol::random::Any_SHA1;
+    use cryptocol::random::Slapdash_SHA1;
 
     define_utypes_with!(u16);
-    let mut rand = Any_SHA1::new();
+    let mut rand = Slapdash_SHA1::new();
     let num:U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
     println!("512-bit Random Prime Number = {}", num);
     assert!(num.is_odd());

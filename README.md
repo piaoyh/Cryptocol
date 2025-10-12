@@ -223,7 +223,7 @@ The checked items have already been implemented including documentation __at lea
 - [ ] Pseudo-random number generator ---
       struct [`Random_Generic`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_Generic.html#struct.Random_Generic) and
       trait [`Random_Engine`](https://docs.rs/cryptocol/latest/cryptocol/random/trait_random_engine/trait.Random_Engine.html#trait.Random_Engine)
-- [ ] Pseudo-random number generator engines using hash algorithms ---
+- [X] Pseudo-random number generator engines using hash algorithms ---
       [`Random_BIG_KECCAK_1024`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024),
       [`Random_SHA3_512`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512),
       [`Random_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512),
@@ -233,16 +233,16 @@ The checked items have already been implemented including documentation __at lea
       [`Any_SHA3_256`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA3_256.html#struct.Any_SHA3_256),
       [`Any_SHA2_512`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA2_512.html#struct.Any_SHA2_512),
       [`Any_SHA2_256`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA2_256.html#struct.Any_SHA2_256),
-      [`Any_SHA1`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA1.html#struct.Any_SHA1),
-      [`Any_SHA0`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA0.html#struct.Any_SHA0),
-      [`Any_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_MD5.html#struct.Any_MD5), and
-      [`Any_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_MD4.html#struct.Any_MD4).
+      [`Slapdash_SHA1`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_SHA1.html#struct.Slapdash_SHA1),
+      [`Slapdash_SHA0`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_SHA0.html#struct.Slapdash_SHA0),
+      [`Slapdash_MD5`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_MD5.html#struct.Slapdash_MD5), and
+      [`Slapdash_MD4`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_MD4.html#struct.Slapdash_MD4).
 - [X] Pseudo-random number generator engines using symmetric-key block encryption algorithms ---
       [`Random_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_Rijndael.html#struct.Random_Rijndael),
       [`Any_Rijndael`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_Rijndael.html#struct.Any_Rijndael), and
-      [`Any_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_DES.html#struct.Any_DES).
+      [`Slapdash_DES`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_DES.html#struct.Slapdash_DES).
 - [X] Pseudo-random number generator engines using simple randomization algorithm ---
-      [`Any_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_Num_C.html#struct.Any_Num_C).
+      [`Slapdash_Num_C`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_Num_C.html#struct.Slapdash_Num_C).
 
 ### 6. Asymmetric-key Algorithms for Encryption/Decryption of digital data
 

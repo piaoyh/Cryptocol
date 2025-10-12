@@ -19,7 +19,7 @@ use crate::number::SmallUInt;
 
 /// This trait PKCS1V15 is based on PKCS #1 ver. 1.5. It is considered not
 /// to be cryptographically secure enough. So, you are not encouraged to use
-/// this trait. Intead, you are encouraged to use the trait OAEP.
+/// this trait. Instead, you are encouraged to use the trait OAEP.
 pub trait PKCS1V15
 {
     const BT: u8 = 2;
@@ -44,7 +44,7 @@ pub trait PKCS1V15
     /// - If this method succeeds in encryption, the output will be
     ///   `size_of::<T>() * N`.
     /// - If this method failed in encryption, this method returns `zero`.
-/*  /// 
+    /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
     ///   Instead, use other safer methods such as `encrypt_*_into_*()`.
@@ -52,18 +52,21 @@ pub trait PKCS1V15
     /// - If `length_in_bytes` is `0`, it means the message is null string.
     ///   So, only padding bytes will be encrypted,
     ///   and stored in the memory area that starts from `cipher`.
+    /// - If `length_in_bytes` is greater than `T::size_in_bytes() * N - 11`,
+    ///   this method will not encrypt the message but return `0`.
     /// - The size of the memory area which starts at `cipher` is assumed to be
     ///   enough to store the ciphertext.
     /// - The size of the area for ciphertext should be prepared to be
-    ///   (`length_in_bytes` + `1`).next_multiple_of(`size_of::<T>()`) at least.
+    ///   `size_of::<T>() * N` at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
-    /// 
-    /// # For Rijndael or AES, and its variants
-    /// ## Example 1 for AES-128
+    /// - The padding bits are composed of the bytes: 0x00_u8, 0x02_u8,
+    ///   `T::size_in_bytes() * N - length_in_bytes - 11` random numbers of
+    ///   type `u8`, and x00_u8 according to RFC 2313
+    ///   defined in PKCS #1 ver. 1.5.
+    /// - For more information about the padding bits according to PKCS #1 ver. 1.5,
+    ///   Read [here](https://datatracker.ietf.org/doc/html/rfc2313).
+/*    /// 
+    /// # Example 1 for Normal message
     /// ```
     /// 
     /// ```
@@ -90,24 +93,28 @@ pub trait PKCS1V15
     /// - If this method succeeds in encryption, the output will be
     ///   `size_of::<T>() * N`.
     /// - If this method failed in encryption, this method returns `zero`.
-/*  /// 
+    /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
     ///   Instead, use other safer methods such as encrypt_*_into_vec().
     /// - This method is useful to use in hybrid programming with C/C++.
     /// - If `length_in_bytes` is `0`, it means the message is a null string.
     ///   So, only padding bytes will be encrypted,
+    /// - If `length_in_bytes` is greater than `T::size_in_bytes() * N - 11`,
+    ///   this method will not encrypt the message but return `0`.
     ///   and stored in the `Vec<U>` object which is referred to as `cipher`.
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
+    /// - The padding bits are composed of the bytes: 0x00_u8, 0x02_u8,
+    ///   `T::size_in_bytes() * N - length_in_bytes - 11` random numbers of
+    ///   type `u8`, and x00_u8 according to RFC 2313
+    ///   defined in PKCS #1 ver. 1.5.
+    /// - For more information about the padding bits according to PKCS #1
+    ///   ver. 1.5, Read [here](https://datatracker.ietf.org/doc/html/rfc2313).
     /// - You don't have to worry about whether or not the size of the memory
     ///   area where the ciphertext will be stored is enough.
-    /// 
-    /// # For Rijndael or AES, and its variants
-    /// ## Example 1 for AES-128
+/*    /// 
+    /// # Example 1 for Normal message
     /// ```
+    /// 
     /// ```
     /// 
     /// ## For more examples,
@@ -115,16 +122,16 @@ pub trait PKCS1V15
     fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
     where U: SmallUInt + Copy + Clone;
 
-    // fn encrypt_into_array<U, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
+    // fn encrypt_into_array<U, const M: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; M]) -> u64
     /// Encrypts the data with the padding defined according to 
-    /// PKCS #1 ver. 1.5, and stores the encrypted data in array `[U; N]`.
+    /// PKCS #1 ver. 1.5, and stores the encrypted data in array `[U; M]`.
     /// 
     /// # Arguments
     /// - `message` is an immutable pointer to `u8` which is `*const u8`,
     ///   and is the place where the plaintext to be encrypted is stored.
     /// - `length_in_bytes` is of `u64`-type,
     ///   and is the length of the plaintext `message` in bytes.
-    /// - `cipher` is a mutable reference to an array `[U; N]` object, and
+    /// - `cipher` is a mutable reference to an array `[U; M]` object, and
     ///   is the place where the encrypted data will be stored.
     /// 
     /// # Output
@@ -133,36 +140,37 @@ pub trait PKCS1V15
     /// - If this method succeeds in encryption, the output will be
     ///   `size_of::<T>() * N`.
     /// - If this method failed in encryption, this method returns `zero`.
-/*  /// 
+    /// 
     /// # Features
     /// - You are not encouraged to use this method in pure Rust programming.
     ///   Instead, use other safer methods such as encrypt_*_into_array().
     /// - This method is useful to use in hybrid programming with C/C++.
-    /// - If `length_in_bytes` is `0`, it means the message is null data.
+    /// - If `length_in_bytes` is `0`, it means that the message is null data.
     ///   So, only padding bytes will be encrypted,
-    ///   and stored in the array `[U; N]` object `cipher`.
-    /// - If `U::size_in_bytes()` * `N` is less than `length_in_bytes`'s next
-    ///   multiple of `size_of::<T>()`, this method does not perform
-    ///   encryption but returns `zero`.
-    /// - If `U::size_in_bytes()` * `N` is equal to `length_in_bytes`'s next
-    ///   multiple of `size_of::<T>()`, this method performs encryption,
-    ///   fills the array `cipher` with the encrypted data, and returns
-    ///   the size of the ciphertext including padding bits in bytes.
-    /// - If `U::size_in_bytes()` * `N` is greater than `length_in_bytes`'s next
-    ///   multiple of `size_of::<T>()`, this method performs encryption, fills
+    ///   and stored in the array `[U; M]` object `cipher`.
+    /// - If `length_in_bytes` is greater than `T::size_in_bytes() * N - 11`,
+    ///   this method will not encrypt the message but return `0`.
+    /// - If `U::size_in_bytes()` * `M` is less than `T::size_in_bytes()` * `N`,
+    ///   this method does not perform encryption but returns `zero`.
+    /// - If `U::size_in_bytes()` * `M` is equal to `T::size_in_bytes()` * `N`,
+    ///   this method performs encryption, fills the array `cipher` with the
+    ///   encrypted data, and returns `T::size_in_bytes()` * `N`.
+    /// - If `U::size_in_bytes()` * `M` is greater than
+    ///   `T::size_in_bytes()` * `N`, this method performs encryption, fills
     ///   the array `cipher` with the encrypted data, and then fills the
     ///   rest of the elements of the array `cipher` with zeros, and returns
-    ///   the size of the ciphertext including padding bits in bytes.
+    ///   `T::size_in_bytes()` * `N`.
     /// - The size of the area for ciphertext should be prepared to be
-    ///   (`length_in_bytes` + `1`).next_multiple_of(`size_of::<T>()`) at least.
+    ///   `T::size_in_bytes()` * `N` at least.
     ///   So, it is responsible for you to prepare the `cipher` area big enough!
-    /// - The padding bits are composed of the bytes that indicate the length of
-    ///   the padding bits in bytes according to PKCS #7 defined in RFC 5652.
-    /// - For more information about the padding bits according to PKCS #7,
-    ///   Read [here](https://node-security.com/posts/cryptography-pkcs-7-padding/).
-    /// 
-    /// # For Rijndael or AES, and its variants
-    /// ## Example 1 for AES-128
+    /// - The padding bits are composed of the bytes: 0x00_u8, 0x02_u8,
+    ///   `T::size_in_bytes() * N - length_in_bytes - 11` random numbers of
+    ///   type `u8`, and x00_u8 according to RFC 2313
+    ///   defined in PKCS #1 ver. 1.5.
+    /// - For more information about the padding bits according to PKCS #1
+    ///   ver. 1.5, Read [here](https://datatracker.ietf.org/doc/html/rfc2313).
+/*    /// 
+    /// # Example 1 for Normal message
     /// ```
     /// ```
     /// 

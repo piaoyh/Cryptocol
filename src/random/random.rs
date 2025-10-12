@@ -28,6 +28,8 @@ use std::hash::{ BuildHasher, Hasher };
 use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime };
 use crate::random::Random_Engine;
 
+
+
 pub(super) const SECURE_COUNT: u128 = u16::MAX as u128;
 
 /// AnyGen is the Random_Generic with the default generic parameter.
@@ -54,42 +56,71 @@ pub type RandGen = Random_Generic<SECURE_COUNT>;
 ///   seed from a system automatically and generates next pseudo-random numbers
 ///   with a new seed. In other words, it uses new seeds every `COUNT` times of
 ///   generation of pseudo-random numbers.
-/// - You can also use
-///   [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
 /// 
 /// # Panics
 /// If `COUNT` is `0`, the constructor methods
 /// such as `new()` and `new_with_seeds()` will panic!
 /// 
 /// # Predetermined Provided Specific `struct`s
-/// - Random_BIG_KECCAK_1024: uses a hash algorithm BIG_KECCAK_1024, and is cryptographically secure.
-/// - Random_SHA3_512: uses a hash algorithm SHA3_512, and is cryptographically secure.
-/// - Random_SHA2_512: uses a hash algorithm SHA2_512, and is cryptographically secure.
-/// - Any_SHAKE_256: uses a hash algorithm SHAKE_256, and may not be cryptographically secure.
-/// - Any_SHAKE_128: uses a hash algorithm SHAKE_128, and may not be cryptographically secure.
-/// - Any_SHA3_512: uses a hash algorithm SHA3_512, and may not be cryptographically secure.
-/// - Any_SHA3_256: uses a hash algorithm SHA3_256, and may not be cryptographically secure.
-/// - Any_SHA2_512: uses a hash algorithm SHA2_512, and may not be cryptographically secure.
-/// - Any_SHA2_256: uses a hash algorithm SHA2_256, and may not be cryptographically secure.
-/// - Any_SHA1: uses a hash algorithm SHA1, and may not be cryptographically secure.
-/// - Any_SHA0: uses a hash algorithm SHA0, and may not be cryptographically secure.
-/// - Any_Num_C: uses a pseudo-random number generator algorithm of the function
-///   rand() of C standard library, and may not be cryptographically secure.
-/// - Any_MD5: uses a hash algorithm MD5, and may not be cryptographically secure.
-/// - Any_MD4: uses a hash algorithm MD4, and may not be cryptographically secure.
-/// - Random_Rijndael: uses a symmetric-key encryption algorithm Rijndael.
-/// - Any_Rijndael: uses a symmetric-key encryption algorithm Rijndael.
-/// - Any_DES: uses a symmetric-key encryption algorithm DES, and may not be cryptographically secure.
+/// - Random_BIG_KECCAK_1024: uses a hash algorithm BIG_KECCAK_1024,
+///   and is cryptographically secure.
+/// - Random_SHA3_512: uses a hash algorithm SHA3_512, and is cryptographically
+///   secure and uses true random numbers far more frequently than
+///   `Any_SHA3_512` does.
+/// - Random_SHA2_512: uses a hash algorithm SHA2_512, and is cryptographically
+///   secure and uses true random numbers far more frequently than
+///   `Any_SHA2_512` does.
+/// - Any_SHAKE_256: uses a hash algorithm SHAKE_256,
+///   and is cryptographically secure.
+/// - Any_SHAKE_128: uses a hash algorithm SHAKE_128,
+///   and is cryptographically secure.
+/// - Any_SHA3_512: uses a hash algorithm SHA3_512, and is cryptographically
+///   secure and uses true random numbers far less often than `Random_SHA3_512`
+///   does.
+/// - Any_SHA3_256: uses a hash algorithm SHA3_256, and is cryptographically
+///   secure and uses true random numbers far less often than `Random_SHA3_256`
+///   does.
+/// - Any_SHA2_512: uses a hash algorithm SHA2_512, and is cryptographically
+///   secure and uses true random numbers far less often than `Random_SHA2_512`
+///   does.
+/// - Any_SHA2_256: uses a hash algorithm SHA2_256,
+///   and is cryptographically secure.
+/// - Slapdash_SHA1: uses a hash algorithm SHA1,
+///   and is NOT cryptographically secure.
+/// - Slapdash_SHA0: uses a hash algorithm SHA0,
+///   and is NOT cryptographically secure.
+/// - Slapdash_Num_C: uses a pseudo-random number generator algorithm of the
+///   function rand() of C standard library,
+///   and is NOT cryptographically secure.
+/// - Slapdash_MD5: uses a hash algorithm MD5,
+///   and is NOT cryptographically secure.
+/// - Slapdash_MD4: uses a hash algorithm MD4,
+///   and is NOT cryptographically secure.
+/// - Random_Rijndael: uses a symmetric-key encryption algorithm Rijndael,
+///   and is cryptographically secure and uses true random numbers far more
+///   frequently than `Any_Rijndael` does..
+/// - Any_Rijndael: uses a symmetric-key encryption algorithm Rijndael,
+///   and is cryptographically secure and uses true random numbers far less
+///   often than `Random_Rijndael` does.
+/// - Slapdash_DES: uses a symmetric-key encryption algorithm DES,
+///   and is NOT cryptographically secure.
 /// 
-/// - Any: a synonym of Any_SHAKE_128 at the moment, and may not be cryptographically secure.
-/// - Random: a synonym of Random_BIG_KECCAK_1024 at the moment, and is cryptographically secure.
+/// - Random: a synonym of `Random_BIG_KECCAK_1024` at the moment, and is
+///   cryptographically secure and uses true random numbers far more frequently
+///   than `Any` does.
+/// - Any: a synonym of `Any_SHA2_512` at the moment, and is cryptographically
+///   secure and uses true random numbers far less often than `Random` does.
+/// - Slapdash: a synonym of `Slapdash_Num_C` at the moment,
+///   and is NOT cryptographically secure.
+/// - Random_* are cryptographically secure and uses true random numbers far
+///   more frequently than `Any_*` do.
+/// - Any_* are cryptographically secure and uses true random numbers far
+///   less often than `Random_*` do.
 /// 
 /// # QUICK START
-/// You can use either struct `Any` or `Random` depending on your purpose.
-/// `Any` is for normal non-cryptographical purpose while `Random` is for
-/// cryptographical purpose if you are fine to use hash algorithm for
-/// pseudo-random number generator for cryptographical purpose. Look into
-/// the following examples.
+/// You can use either struct `Random` or `Any` or `Slapdash` depending on your
+/// purpose. `Random` and `Any` are for cryptographical purpose while Slapdash`
+/// is for non-cryptographical purpose. Look into the following examples.
 /// 
 /// ## Example
 /// ```
@@ -1284,8 +1315,8 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # Example
     /// ```
-    /// use cryptocol::random::Any_SHA1;
-    /// let mut rand = Any_SHA1::new();
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// let mut rand = Slapdash_SHA1::new();
     /// if let Some(num) = rand.random_odd_under_uint(12_u8)
     ///     { println!("Random odd number u8 = {}", num); }
     /// if let Some(num) = rand.random_odd_under_uint(1234_u16)
@@ -1696,8 +1727,8 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # Example
     /// ```
-    /// use cryptocol::random::Any_MD4;
-    /// let mut rand = Any_MD4::new();
+    /// use cryptocol::random::Slapdash_MD4;
+    /// let mut rand = Slapdash_MD4::new();
     /// let mut num = [0_u64; 32];
     /// rand.put_random_in_array(&mut num);
     /// for i in 0..32
@@ -1785,10 +1816,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Example
     /// ```
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Any_MD5;
+    /// use cryptocol::random::Slapdash_MD5;
     /// 
     /// define_utypes_with!(u128);
-    /// let mut rand = Any_MD5::new();
+    /// let mut rand = Slapdash_MD5::new();
     /// let biguint: U512 = rand.random_biguint();
     /// println!("Random Number: {}", biguint);
     /// ```
@@ -1864,10 +1895,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Example
     /// ```
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Any_SHA0;
+    /// use cryptocol::random::Slapdash_SHA0;
     /// 
     /// define_utypes_with!(u64);
-    /// let mut rand = Any_SHA0::new();
+    /// let mut rand = Slapdash_SHA0::new();
     /// let ceiling = U1024::max().wrapping_div_uint(3_u8);
     /// if let Some(r) = rand.random_under_biguint(&ceiling)
     /// {
@@ -1952,10 +1983,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Example
     /// ```
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Any_SHA1;
+    /// use cryptocol::random::Slapdash_SHA1;
     /// 
     /// define_utypes_with!(u32);
-    /// let mut rand = Any_SHA1::new();
+    /// let mut rand = Slapdash_SHA1::new();
     /// let ceiling = U1024::max().wrapping_div_uint(3_u8);
     /// let r = rand.random_under_biguint_(&ceiling);
     /// println!("Random Number less than {} is\n{}", ceiling, r);
@@ -2117,10 +2148,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Example
     /// ```
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Any_MD4;
+    /// use cryptocol::random::Slapdash_MD4;
     /// 
     /// define_utypes_with!(u128);
-    /// let mut rand = Any_MD4::new();
+    /// let mut rand = Slapdash_MD4::new();
     /// let ceiling = U1024::max().wrapping_div_uint(4_u8);
     /// if let Some(r) = rand.random_odd_under_biguint(&ceiling)
     /// {
@@ -2296,10 +2327,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Example
     /// ```
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Any_MD5;
+    /// use cryptocol::random::Slapdash_MD5;
     /// 
     /// define_utypes_with!(u64);
-    /// let mut rand = Any_MD5::new();
+    /// let mut rand = Slapdash_MD5::new();
     /// let biguint: U512 = rand.random_with_msb_set_biguint();
     /// println!("Random Number: {}", biguint);
     /// ```
@@ -2583,10 +2614,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Example
     /// ```
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Any_SHA1;
+    /// use cryptocol::random::Slapdash_SHA1;
     /// 
     /// define_utypes_with!(u16);
-    /// let mut rand = Any_SHA1::new();
+    /// let mut rand = Slapdash_SHA1::new();
     /// let num:U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
     /// println!("512-bit Random Prime Number = {}", num);
     /// assert!(num.is_odd());
@@ -2690,10 +2721,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Example
     /// ```
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Any_SHA1;
+    /// use cryptocol::random::Slapdash_SHA1;
     /// 
     /// define_utypes_with!(u16);
-    /// let mut rand = Any_SHA1::new();
+    /// let mut rand = Slapdash_SHA1::new();
     /// let num:U512 = rand.random_prime_with_half_length_using_miller_rabin_biguint(5);
     /// println!("512-bit Random Prime Number = {}", num);
     /// assert!(num.is_odd());
@@ -2799,10 +2830,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Example
     /// ```
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Any_SHA1;
+    /// use cryptocol::random::Slapdash_SHA1;
     /// 
     /// define_utypes_with!(u16);
-    /// let mut rand = Any_SHA1::new();
+    /// let mut rand = Slapdash_SHA1::new();
     /// let num:U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
     /// println!("512-bit Random Prime Number = {}", num);
     /// assert!(num.is_odd());
@@ -2904,10 +2935,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Example
     /// ```
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Any_SHA1;
+    /// use cryptocol::random::Slapdash_SHA1;
     /// 
     /// define_utypes_with!(u16);
-    /// let mut rand = Any_SHA1::new();
+    /// let mut rand = Slapdash_SHA1::new();
     /// let num:U512 = rand.random_prime_with_half_length_using_miller_rabin_biguint(5);
     /// println!("512-bit Random Prime Number = {}", num);
     /// assert!(num.is_odd());

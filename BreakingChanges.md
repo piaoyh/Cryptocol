@@ -1,5 +1,19 @@
 # Breaking Changes
 
+## Breaking changes from ver. 0.17.3 to ver. 0.18.0
+
+| Ver. 0.17.3 | Ver. 0.18.0    |
+|-------------|----------------|
+| Any_Num     | Slapdash       |
+| Any_Num_C   | Slapdash_Num_C |
+| Any_DES     | Slapdash_DES   |
+| Any_MD4     | Slapdash_MD4   |
+| Any_MD5     | Slapdash_MD5   |
+| Any_SHA0    | Slapdash_SHA0  |
+| Any_SHA1    | Slapdash_SHA1  |
+
+- The names of the above types of Random_Generic has been changed.
+
 ## Breaking changes from ver. 0.17.1 to ver. 0.17.2
 
 | Ver. 0.17.1                                                                            | Ver. 0.17.2                                                                                             |

@@ -451,7 +451,7 @@ pub type AES_128 = Rijndael_Generic;
 /// for the encryption of digital data
 /// 
 /// # Note
-/// ** This descryption about Rijndael is according to little endianness. **
+/// __This descryption about Rijndael is according to little endianness.__
 /// MSB (Most Significant Bit) is the 64th bit and LSB (Least Significant Bit)
 /// is the first bit in this descryption unless otherwise mentioned.
 /// 
