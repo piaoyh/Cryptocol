@@ -93,7 +93,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - If both `self` and `other` is zero, it will panic.
     /// 
     /// # Output
-    /// It returns The greatest common diviser of `self` and `other`.
+    /// It returns the greatest common diviser of `self` and `other`.
     /// 
     /// # Features
     /// Both `self` and `other` should natural numbers. So, if either `self`
@@ -223,7 +223,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - If both `self` and `other` is zero, it will panic.
     /// 
     /// # Output
-    /// It returns The least common multiple of `self` and `other`.
+    /// It returns the least common multiple of `self` and `other`.
     /// 
     /// # Features
     /// Both `self` and `other` should natural numbers. So, if either `self`
@@ -355,7 +355,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - If both `self` and `other` is zero, it will panic.
     /// 
     /// # Output
-    /// It returns The greatest common diviser of `self` and `other`.
+    /// It returns the greatest common diviser of `self` and `other`.
     /// 
     /// # Features
     /// Both `self` and `other` should natural numbers. So, if either `self`
@@ -478,7 +478,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - If both `self` and `other` is zero, it will panic.
     /// 
     /// # Output
-    /// It returns The greatest common diviser of `self` and `other`,
+    /// It returns the greatest common diviser of `self` and `other`,
     /// `x`, and `y` that satisfy
     /// `self` * `x` + `other` * `y` = self.gcd(other).
     /// 
@@ -535,7 +535,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// - If both `self` and `other` is zero, it will panic.
     /// 
     /// # Output
-    /// It returns The least common multiple of `self` and `other`.
+    /// It returns the least common multiple of `self` and `other`.
     /// 
     /// # Features
     /// Both `self` and `other` should natural numbers. So, if either `self`

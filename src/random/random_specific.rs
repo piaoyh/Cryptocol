@@ -2809,7 +2809,9 @@ impl Slapdash_SHA1
     /// ```
     pub fn new() -> SlapdashGen
     {
-        SlapdashGen::new_with(SHA1::new(), SHA1::new())
+        let seed = SlapdashGen::collect_seed_u64();
+        let aux = SlapdashGen::collect_seed_u64();
+        SlapdashGen::new_with_generators_seeds(SHA1::new(), SHA1::new(), seed, aux)
     }
 
     // pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
@@ -2904,7 +2906,9 @@ impl Slapdash_SHA1
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        SlapdashGen::new_with_generators_seed_collector(SHA1::new(), SHA1::new(), seed_collector)
+        let seed = SlapdashGen::collect_seed_u64();
+        let aux = SlapdashGen::collect_seed_u64();
+        SlapdashGen::new_with_generators_seed_collector_seeds(SHA1::new(), SHA1::new(), seed_collector, seed, aux)
     }
 
     // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
@@ -3098,7 +3102,9 @@ impl Slapdash_SHA0
     /// ```
     pub fn new() -> SlapdashGen
     {
-        SlapdashGen::new_with(SHA0::new(), SHA0::new())
+        let seed = SlapdashGen::collect_seed_u64();
+        let aux = SlapdashGen::collect_seed_u64();
+        SlapdashGen::new_with_generators_seeds(SHA0::new(), SHA0::new(), seed, aux)
     }
 
     // pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
@@ -3193,7 +3199,9 @@ impl Slapdash_SHA0
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        SlapdashGen::new_with_generators_seed_collector(SHA0::new(), SHA0::new(), seed_collector)
+        let seed = SlapdashGen::collect_seed_u64();
+        let aux = SlapdashGen::collect_seed_u64();
+        SlapdashGen::new_with_generators_seed_collector_seeds(SHA0::new(), SHA0::new(), seed_collector, seed, aux)
     }
 
     // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
@@ -3387,7 +3395,9 @@ impl Slapdash_MD5
     /// ```
     pub fn new() -> SlapdashGen
     {
-        SlapdashGen::new_with(MD5::new(), MD5::new())
+        let seed = SlapdashGen::collect_seed_u64();
+        let aux = SlapdashGen::collect_seed_u64();
+        SlapdashGen::new_with_generators_seeds(MD5::new(), MD5::new(), seed, aux)
     }
 
     // pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
@@ -3482,7 +3492,9 @@ impl Slapdash_MD5
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        SlapdashGen::new_with_generators_seed_collector(MD5::new(), MD5::new(), seed_collector)
+        let seed = SlapdashGen::collect_seed_u64();
+        let aux = SlapdashGen::collect_seed_u64();
+        SlapdashGen::new_with_generators_seed_collector_seeds(MD5::new(), MD5::new(), seed_collector, seed, aux)
     }
 
     // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
@@ -3678,7 +3690,9 @@ impl Slapdash_MD4
     /// ```
     pub fn new() -> SlapdashGen
     {
-        SlapdashGen::new_with(MD4::new(), MD4::new())
+        let seed = SlapdashGen::collect_seed_u64();
+        let aux = SlapdashGen::collect_seed_u64();
+        SlapdashGen::new_with_generators_seeds(MD4::new(), MD4::new(), seed, aux)
     }
 
     // pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
@@ -3773,7 +3787,9 @@ impl Slapdash_MD4
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        SlapdashGen::new_with_generators_seed_collector(MD4::new(), MD4::new(), seed_collector)
+        let seed = SlapdashGen::collect_seed_u64();
+        let aux = SlapdashGen::collect_seed_u64();
+        SlapdashGen::new_with_generators_seed_collector_seeds(MD4::new(), MD4::new(), seed_collector, seed, aux)
     }
 
     // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
@@ -4561,7 +4577,9 @@ impl Slapdash_DES
     #[inline]
     pub fn new() -> SlapdashGen
     {
-        SlapdashGen::new_with(DES::new(), DES::new())
+        let seed = SlapdashGen::collect_seed_u64();
+        let aux = SlapdashGen::collect_seed_u64();
+        SlapdashGen::new_with_generators_seeds(DES::new(), DES::new(), seed, aux)
     }
 
     // pub fn new_with_seeds(seed: u64, aux: u64) -> SlapdashGen
@@ -4658,7 +4676,9 @@ impl Slapdash_DES
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        SlapdashGen::new_with_generators_seed_collector(DES::new(), DES::new(), seed_collector)
+        let seed = SlapdashGen::collect_seed_u64();
+        let aux = SlapdashGen::collect_seed_u64();
+        SlapdashGen::new_with_generators_seed_collector_seeds(DES::new(), DES::new(), seed_collector, seed, aux)
     }
 
     // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
@@ -4869,12 +4889,14 @@ impl Slapdash_Num_C
     /// println!("Slapdash number = {}", slapdash.random_u8());
     /// ```
     #[inline]
-    pub fn new() -> Random_Generic<{u32::MAX as u128}, 1>
+    pub fn new() -> Random_Generic<{u32::MAX as u128}>
     {
-        Random_Generic::<{u32::MAX as u128}, 1>::new_with(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new())
+        let seed = Random_Generic::<{u32::MAX as u128}>::collect_seed_u64();
+        let aux = Random_Generic::<{u32::MAX as u128}>::collect_seed_u64();
+        Random_Generic::<{u32::MAX as u128}>::new_with_generators_seeds(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed, aux)
     }
 
-    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}, 1>
+    // pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
     /// # Arguments
@@ -4906,12 +4928,12 @@ impl Slapdash_Num_C
     /// println!("Slapdash number = {}", slapdash.random_u32());
     /// ```
     #[inline]
-    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}, 1>   // COUNT = u32::MAX
+    pub fn new_with_seeds(seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>   // COUNT = u32::MAX
     {
-        Random_Generic::<{u32::MAX as u128}, 1>::new_with_generators_seeds(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed, aux)
+        Random_Generic::<{u32::MAX as u128}>::new_with_generators_seeds(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}, 1>
+    // pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}>
     /// Constructs a new struct Random_Generic with two seed arrays of type `u64`.
     /// 
     /// # Arguments
@@ -4939,12 +4961,12 @@ impl Slapdash_Num_C
     /// println!("Slapdash number = {}", slapdash.random_u64());
     /// ```
     #[inline]
-    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}, 1>
+    pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}>
     {
-        Random_Generic::<{u32::MAX as u128}, 1>::new_with_generators_seed_arrays(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed, aux)
+        Random_Generic::<{u32::MAX as u128}>::new_with_generators_seed_arrays(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed, aux)
     }
     
-    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u32::MAX as u128}, 1>
+    // pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u32::MAX as u128}>
     /// Constructs a new `Random_Generic` object with a seed collector function.
     /// 
     /// # Arguments
@@ -4972,12 +4994,14 @@ impl Slapdash_Num_C
     /// println!("Random number = {}", num);
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u32::MAX as u128}, 1>
+    pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u32::MAX as u128}>
     {
-        Random_Generic::<{u32::MAX as u128}, 1>::new_with_generators_seed_collector(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector)
+        let seed = Random_Generic::<{u32::MAX as u128}>::collect_seed_u64();
+        let aux = Random_Generic::<{u32::MAX as u128}>::collect_seed_u64();
+        Random_Generic::<{u32::MAX as u128}>::new_with_generators_seed_collector_seeds(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}, 1>
+    // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seeds of type `u64`.
     /// 
@@ -5013,12 +5037,12 @@ impl Slapdash_Num_C
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}, 1>
+    pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>
     {
-        Random_Generic::<{u32::MAX as u128}, 1>::new_with_generators_seed_collector_seeds(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector, seed, aux)
+        Random_Generic::<{u32::MAX as u128}>::new_with_generators_seed_collector_seeds(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}, 1>
+    // pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}>
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -5054,8 +5078,8 @@ impl Slapdash_Num_C
     /// println!("Any number = {}", rand.random_u32());
     /// ``` */
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}, 1>
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}>
     {
-        Random_Generic::<{u32::MAX as u128}, 1>::new_with_generators_seed_collector_seed_arrays(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector, seed, aux)
+        Random_Generic::<{u32::MAX as u128}>::new_with_generators_seed_collector_seed_arrays(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector, seed, aux)
     }
 }

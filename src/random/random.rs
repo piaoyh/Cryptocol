@@ -39,7 +39,7 @@ pub type RandGen = Random_Generic<SECURE_COUNT>;
 pub type AnyGen = Random_Generic;
 
 /// SlapdashGen is the Random_Generic with the default generic parameter.
-pub type SlapdashGen = Random_Generic<{u64::MAX as u128}, 1>;
+pub type SlapdashGen = Random_Generic<{u64::MAX as u128}>;
 
 
 
@@ -213,7 +213,7 @@ pub type SlapdashGen = Random_Generic<{u64::MAX as u128}, 1>;
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)]
-pub struct Random_Generic<const COUNT: u128 = {u128::MAX}, const NTR: usize = 64>
+pub struct Random_Generic<const COUNT: u128 = {u128::MAX}>
 {
     original_seed: [u64; 8],
     original_aux: [u64; 8],
@@ -225,7 +225,7 @@ pub struct Random_Generic<const COUNT: u128 = {u128::MAX}, const NTR: usize = 64
     aux_generator: Box<dyn Random_Engine>,
 }
 
-impl<const COUNT: u128, const NTR: usize> Random_Generic<COUNT, NTR>
+impl<const COUNT: u128> Random_Generic<COUNT>
 {
     // pub fn new_with<SG, AG>(mut main_generator: SG, mut aux_generator: AG) -> Self
     /// Constructs a new `Random_Generic` object
@@ -699,7 +699,7 @@ impl<const COUNT: u128, const NTR: usize> Random_Generic<COUNT, NTR>
     /// Collects seed from a system.
     /// 
     /// # Output
-    /// It returns a random number array `[u64; 8]` made by seeds.
+    /// It returns a random number array `[u64; 8]` as seeds.
     fn collect_seed() -> [u64; 8]
     {
         let mut seed_buffer = [0_u64; 8];
@@ -708,7 +708,7 @@ impl<const COUNT: u128, const NTR: usize> Random_Generic<COUNT, NTR>
         {
             if let Ok(mut file) = File::open("/dev/random")
             {
-                let mut buffer = [0u8; NTR];
+                let mut buffer = [0u8; 64];
                 if let Ok(n) = file.read(&mut buffer)
                 {
                     let n = if n >= 64 {64} else {n};
@@ -738,37 +738,38 @@ impl<const COUNT: u128, const NTR: usize> Random_Generic<COUNT, NTR>
         seed_buffer
     }
 
-/*
-    // fn collect_seed_u8() -> u8
-    /// Collects seed from a system.
+    // fn collect_seed_u64() -> u64
+    /// Collects eight-byte seed from a system.
     /// 
     /// # Output
-    /// It returns a random number array `[u64; 8]` made by seeds.
-    fn collect_seed_u8() -> u8
+    /// It returns a true random number `u64` made as a seed.
+    pub(super) fn collect_seed_u64() -> u64
     {
         #[cfg(not(target_family = "windows"))]
         {
             if let Ok(mut file) = File::open("/dev/random")
             {
-                let mut buffer = [0u8; 1];
+                let mut buffer = [0u8; 8];
                 if let Ok(_) = file.read(&mut buffer)
                 {
-                    return buffer[0];
+                    let seed = LongUnion::new_with_ubytes(buffer);
+                    return seed.get();
                 }
             }
         }
         if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
         {
             let common = LongerUnion::new_with(nanos.as_nanos());
-            common.get_ubyte_(0)
+            let idx = (common.get_ulong_(0) & 1) as usize;
+            common.get_ulong_(idx)
         }
         else
         {
             let common = LongUnion::new_with(RandomState::new().build_hasher().finish());
-            common.get_ubyte_(0)
+            common.get()
         }
     }
-*/
+
     // fn produce_main_state(&mut self) -> [u64; 8]
     /// Runs the registered pseudo-random number generator to prepare for
     /// generating a random number for main_state.
