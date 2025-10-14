@@ -39,10 +39,37 @@ pub type RSA_1024 = RSA_Generic<32, u32>;
 /// # Introduction
 /// RSA is an asymmetric-key encryption/decryption algorithm which was invented
 /// by three brilliant cryptographers: Ron Rivest, Adi Shamir, and Leonard
-/// Adleman.
+/// Adleman. Unlike symmetric key encryption/decryption algorithm,
+/// asymmetric-key encryption/decryption algorithm has two keys: encryption key
+/// and decryption key. RSA is one of the asymmetric-key encryption/decryption
+/// algorithms. The encryption key is also known as public key because the
+/// encryption key is normally publicized and the decryption key shpuld be kept
+/// secrete. Nobody except its owner should have the private key or the
+/// decryption key. So, everybody can encrypt a message with a public key which
+/// is publicized for encrytion but only the owner of a private key can decrypt
+/// the ciphertext which the message was encrypted into with the public key. 
+/// 
 /// 
 /// # Why RSA?
-/// 
+/// The symmetric key encryption/decryption algorithm has two critical issues:
+/// key distribution and key management. Suppose that you use AES to communicate
+/// with your friends for example. How will you share the key with your friends?
+/// You will have to distribute the key physically. You can't send it to your
+/// friends online. If you send it to your friends online, you have to assume
+/// that your enemy will eavesdrop your communication and get the key too.
+/// If `N` people communicate with one another in security, each one has to
+/// manage `N - 1` keys and they should not lose them. Once even one of them is
+/// lost, two people of them should meet again to share a new key.
+/// RSA, actually not only RSA but also all asymmetric key
+/// encryption/decryption algorithms, will be the good solution for that 
+/// problems of key distribution and key management! How? All you have to do
+/// is encrypt the symmetric key with the public key of your recipient and send
+/// it to your recipient. Then, your recipient will decrypt it and get the
+/// symmetric key. Now, you succeeded in sharing the symmetric key safely.
+/// Whenever you communicate with your friend, you create a new symmetic key
+/// and send it to your friend with RSA encryption. Then, you don't have to
+/// manage all the symmetric keys without any worry about losing the symmetric
+/// keys.
 /// 
 /// # Short History of birth of RSA
 /// 
@@ -51,11 +78,11 @@ pub type RSA_1024 = RSA_Generic<32, u32>;
 /// 
 /// 
 /// # Generic Parameters
-/// `N`: 
+/// `N`: the length of the array
 /// 
-/// `T`: 
+/// `T`: the type of each element of the array
 /// 
-/// `MR`: 
+/// `MR`: the repetition of Millar-Rabin algorithm to find a prime number 
 /// 
 /// # Reference
 /// [Read more](https://en.wikipedia.org/wiki/RSA_cryptosystem)
@@ -90,7 +117,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     modulo: BigUInt<T, N>,
     key_public: BigUInt<T, N>,
     key_private: BigUInt<T, N>,
-    block: [T; N],
+    // block: [T; N],
 }
 
 impl<const N: usize, T, const MR: usize> RSA_Generic<N, T, MR>
@@ -111,7 +138,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             modulo: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
-            block: [T::zero(); N],
+            // block: [T::zero(); N],
         }
     }
 
@@ -122,7 +149,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             modulo: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
-            block: [T::zero(); N],
+            // block: [T::zero(); N],
         };
         rsa.find_keys();
         rsa
@@ -136,7 +163,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             modulo,
             key_public,
             key_private,
-            block: [T::zero(); N],
+            // block: [T::zero(); N],
         }
     }
 
@@ -150,7 +177,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             modulo: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
-            block: [T::zero(); N],
+            // block: [T::zero(); N],
         };
         rsa.calculate_keys(prime_1, prime_2);
         rsa
