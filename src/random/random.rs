@@ -247,9 +247,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// If `COUNT` is `0`, this method will panic!
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
     /// # Example 1 for BIG_KECCAK_1024
     /// ```
@@ -317,9 +318,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// If `COUNT` is `0`, this method will panic!
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - You are highly recommended to use the method
     ///   `new_with_generators_seed_arrays()` rather than this method
     ///   for security reason. It is because the default seed collector function
@@ -399,9 +401,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// If `COUNT` is `0`, this method will panic!
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - You are highly recommended to use this method rather than the method
     ///   new_with_generators_seeds for security reason. It is because the
     ///   default seed collector function collects 1024 bits as a seed. If you
@@ -476,9 +479,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// If `COUNT` is `0`, this method will panic!
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
 /*  /// 
     /// # Example 1 for BIG_KECCAK_1024
     /// ```
@@ -556,9 +560,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// If `COUNT` is `0`, this method will panic!
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - You are highly recommended to use the method
     ///   `new_with_generators_seed_collector_seeds()` rather than this method
     ///   for security reason. It is because the default seed collector function
@@ -653,9 +658,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// If `COUNT` is `0`, this method will panic!
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
 /*  /// 
     /// # Example 1 for BIG_KECCAK_1024
     /// ```
@@ -881,9 +887,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// It returns a random number of type `u8`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
     /// # Example 1 for Random
     /// ```
@@ -913,9 +920,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// It returns a random number of type `u16`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
     /// # Example 1 for Random
     /// ```
@@ -945,9 +953,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// It returns a random number of type `u32`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
     /// # Example 1 for Random
     /// ```
@@ -977,9 +986,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// It returns a random number of type `u64`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
     /// # Example 1 for Random
     /// ```
@@ -1007,9 +1017,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// It returns a random number of type `u128`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
     /// # Example 1 for Random
     /// ```
@@ -1042,9 +1053,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// It returns a random number of type `usize`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
     /// # Example 1 for Random
     /// ```
@@ -1073,9 +1085,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// It returns a random number of type `T`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
     /// # Example 1 for Random
     /// ```
@@ -1119,9 +1132,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// random number of type `T` wrapped by enum `Some` of `Option`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
     /// # Example 1 for Random
     /// ```
@@ -1160,9 +1174,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// Use only when `ceiling` is not `0`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
     /// # Example 1 for Random
     /// ```
@@ -1199,9 +1214,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// enum `Some` of `Option`. Otherwise, it returns enum `None` of `Option`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
     /// # Example 1
     /// ```
@@ -1244,9 +1260,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// and `from` is less than `ceiling`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
     /// # Example 1 for Random
     /// ```
@@ -1279,9 +1296,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// It returns a random odd number of type `T`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
     /// # Example 1 for Random
     /// ```
@@ -1311,7 +1329,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         res.set_lsb();
         res
     }
-//////////////////////
+
     // pub fn random_odd_under_uint<T>(&mut self, ceiling: T) -> Option<T>
     /// Generates random odd numbers of type `T` less than `ceiling`.
     /// 
@@ -1320,18 +1338,19 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// wrapped by enum `Some` of `Option`.
     /// 
     /// # Features
-    /// If `ceiling` is `0`, it returns `None`. Otherwise, it returns a
-    /// random odd numbers of type `T` wrapped by enum `Some` of `Option`.
+    /// If `ceiling` is less than `2`, it returns `None`. Otherwise, it returns
+    /// a random odd numbers of type `T` wrapped by enum `Some` of `Option`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Slapdash_SHA1;
-    /// let mut rand = Slapdash_SHA1::new();
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
     /// if let Some(num) = rand.random_odd_under_uint(12_u8)
     ///     { println!("Random odd number u8 = {}", num); }
     /// if let Some(num) = rand.random_odd_under_uint(1234_u16)
@@ -1347,7 +1366,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// if let Some(num) = rand.random_odd_under_uint(0_usize)
     ///     { println!("Random odd number usize = {}", num); }
     /// else
-    ///     { println!("No random unsigned number number under 0!"); }
+    ///     { println!("No random unsigned odd number under 0!"); }
     /// ```
     /// 
     /// # For more examples,
@@ -1379,14 +1398,15 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// Use this method only when `ceiling` is greater than `1`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    ///   insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
-    /// # Example 1
+    /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Any_SHA2_256;
-    /// let mut rand = Any_SHA2_256::new();
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
     /// 
     /// let num = rand.random_odd_under_uint_(12_u8);
     /// println!("Random odd number u8 = {}", num);
@@ -1403,12 +1423,8 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// let num = rand.random_odd_under_uint_(12345678901234567890_u128);
     /// println!("Random odd number u128 = {}", num);
     /// 
-    /// let num = rand.random_odd_under_uint_::<usize>(123456789_usize);
+    /// let num = rand.random_odd_under_uint_(123456789_usize);
     /// println!("Random odd number usize = {}", num);
-    /// 
-    /// // It will panic.
-    /// // let num = rand.random_odd_under_uint_::<usize>(0_usize);
-    /// // println!("Random odd number usize = {}", num);
     /// ```
     /// 
     /// # For more examples,
@@ -1438,23 +1454,21 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// It returns random numbers of type `T` and of maximum size of `T`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random_SHA2_512;
-    /// let mut rand = Random_SHA2_512::new();
-    /// println!("Random 8-bit number u8 = {}", rand.random_with_msb_set_uint::<u8>());
-    /// println!("Random 16-bit number u16 = {}", rand.random_with_msb_set_uint::<u16>());
-    /// println!("Random 32-bit number u32 = {}", rand.random_with_msb_set_uint::<u32>());
-    /// println!("Random 64-bit number u64 = {}", rand.random_with_msb_set_uint::<u64>());
-    /// println!("Random 128-bit number u128 = {}", rand.random_with_msb_set_uint::<u128>());
-    /// println!("Random usize-sized number usize = {}", rand.random_with_msb_set_uint::<usize>());
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
+    /// println!("Random 8-bit number = {}", rand.random_with_msb_set_uint::<u8>());
+    /// println!("Random 16-bit number = {}", rand.random_with_msb_set_uint::<u16>());
+    /// println!("Random 32-bit number = {}", rand.random_with_msb_set_uint::<u32>());
+    /// println!("Random 64-bit number = {}", rand.random_with_msb_set_uint::<u64>());
+    /// println!("Random 128-bit number = {}", rand.random_with_msb_set_uint::<u128>());
+    /// println!("Random usize-sized number = {}", rand.random_with_msb_set_uint::<usize>());
     /// ```
     /// 
     /// # For more examples,
@@ -1481,23 +1495,21 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// It returns random odd numbers of type `T` and of maximum size of `T`.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
     /// use cryptocol::random::Random;
     /// let mut rand = Random::new();
-    /// println!("Random 8-bit odd number u8 = {}", rand.random_with_msb_set_uint::<u8>());
-    /// println!("Random 16-bit odd number u16 = {}", rand.random_with_msb_set_uint::<u16>());
-    /// println!("Random 32-bit odd number u32 = {}", rand.random_with_msb_set_uint::<u32>());
-    /// println!("Random 64-bit odd number u64 = {}", rand.random_with_msb_set_uint::<u64>());
-    /// println!("Random 128-bit odd number u128 = {}", rand.random_with_msb_set_uint::<u128>());
-    /// println!("Random usize-sized odd number usize = {}", rand.random_with_msb_set_uint::<usize>());
+    /// println!("Random 8-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u8>());
+    /// println!("Random 16-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u16>());
+    /// println!("Random 32-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u32>());
+    /// println!("Random 64-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u64>());
+    /// println!("Random 128-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u128>());
+    /// println!("Random usize-sized odd number = {}", rand.random_odd_with_msb_set_uint::<usize>());
     /// ```
     /// 
     /// # For more examples,
@@ -1516,7 +1528,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         res.set_msb();
         res
     }
-
+//////////////////////
     // pub fn random_prime_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
     /// Returns a random prime number.
     /// 
@@ -1525,18 +1537,18 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # Features
     /// - It uses
-    /// [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
+    ///   [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
     /// - If this test results in composite number, the tested number is surely
-    /// a composite number. If this test results in notprime number, the
-    /// probability that the tested number is not a prime number is 1/4 (= 25%).
-    /// So, if the test results in prime number twice, the probability that the
-    /// tested number is not a prime number is 1/16 (= 1/4 * 1/4 = 6.25%).
-    /// Therefore, if you test any number 5 times and they all result in a prime
-    /// number, the probability that the tested number is not a prime number is
-    /// 1/1024 = (= 1/4 * 1/4 * 1/4 * 1/4 * 1/4 = 0.09765625%). In other words,
-    /// it is about 99.9% that the number is a prime number.
+    ///   a composite number. If this test results in notprime number, the
+    ///   probability that the tested number is not a prime number is 1/4 (= 25%).
+    ///   So, if the test results in prime number twice, the probability that the
+    ///   tested number is not a prime number is 1/16 (= 1/4 * 1/4 = 6.25%).
+    ///   Therefore, if you test any number 5 times and they all result in a prime
+    ///   number, the probability that the tested number is not a prime number is
+    ///   1/1024 = (= 1/4 * 1/4 * 1/4 * 1/4 * 1/4 = 0.09765625%). In other words,
+    ///   it is about 99.9% that the number is a prime number.
     /// - The random prime numbers that may or may not be cryptographically
-    /// secure depending on what pseudo-random number generator is used.
+    ///   secure depending on what pseudo-random number generator is used.
     /// 
     /// # Argument
     /// The argument `repetition` defines how many times it tests whether or not
@@ -1544,17 +1556,14 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// be 5 to have 99.9% hit rate.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// 
     /// # Counterpart Methods
-    /// - If you want to use a `(sizeof::<T>() * 8)`-bit long random prime
-    /// number, you are highly recommended to
-    /// use the method
+    /// If you want to use a `(sizeof::<T>() * 8)`-bit long random prime
+    /// number, you are highly recommended to use the method
     /// [random_prime_with_msb_set_using_miller_rabin_uint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_uint)
     /// rather than this method.
     /// 
@@ -1621,9 +1630,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// be 5 to have 99.9% hit rate.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -1676,9 +1686,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// depending on what pseudo-random number generator is used.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -1727,9 +1738,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// depending on what pseudo-random number generator is used.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -1792,9 +1804,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// depending on what pseudo-random number generator is used.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -1871,9 +1884,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// secure depending on what pseudo-random number generator is used.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -1959,9 +1973,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// Use this method only when you are sure that `ceiling` is not zero.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -2040,9 +2055,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// secure depending on what pseudo-random number generator is used.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -2124,9 +2140,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// secure depending on what pseudo-random number generator is used.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -2213,9 +2230,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// Use this method only when you are sure that `ceiling` is not zero.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -2299,9 +2317,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// secure depending on what pseudo-random number generator is used.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -2384,9 +2403,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// secure depending on what pseudo-random number generator is used.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -2481,9 +2501,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 5 to have 99.9% accuracy. 
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -2585,9 +2606,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 5 to have 99.9% accuracy. 
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -2692,9 +2714,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// this method is undefined even if this method won't panic.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -2801,9 +2824,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 5 to have 99.9% accuracy. 
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
@@ -2906,9 +2930,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// this method is undefined even if this method won't panic.
     /// 
     /// # Cryptographical Security
-    /// - If you use `Random`, it is considered to be cryptographically secure.
-    /// - If you use `Any`, it is considered that it may be cryptographically
-    /// insecure.
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
     /// - However, if you really want to use cryptographically secure
     /// random number with high quality, you may want to use
     /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).

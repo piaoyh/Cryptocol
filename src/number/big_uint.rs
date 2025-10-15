@@ -661,18 +661,18 @@ macro_rules! calc_rotate_assign
 /// # Generic Big Unsigned Integer with Fixed Size
 /// The struct `BigUInt<T, const N: usize>` is a generic struct for which you
 /// can decide the type of elements and its number.
+/// 
+/// # Generic Parameters
+/// - `T`: is supposed to be a _primitive unsigned integer_ type such as `u8`,
+///   `u16`, `u32`, `u64`, `u128` and `usize`. So, you are supposed to choose
+///   one of `u8`, `u16`, `u32`, `u64`, `u128` and `usize`.
+/// - `N`: is related with the length of the BigUInt. The total length of
+///   BigUInt is `size_of::<T>() * N`.
+/// 
+/// # Features
 /// It is Little-endian.
 /// - It consists of an array of type `T` with `N` elements and flags of type
 ///   `u8`.
-/// - The generic data type `T` is supposed to be a _primitive unsigned integer_
-///   type such as `u8`, `u16`, `u32`, `u64`, `u128` and `usize`. So, you are
-///   supposed to choose one of `u8`, `u16`, `u32`, `u64`, `u128` and `usize`.
-///   You cannot give a _signed integer_ such as `i8`, `i16`, `i32`, `i64`,
-///   `i128` and `isize`. If you give a signed integer for generic type `T`, you
-///   will get errors when you compile it. Of course, you can give the data type
-///   other than `u8`, `u16`, `u32`, `u64`, `u128` and `usize` if the data type
-///   that you give has the `UInt` trait. Then, you have to define all the
-///   behaviors.
 /// - The same sized `BigUInt` can be made in several ways.
 ///   For example, a 1024-bit unsigned integer can be implemented with
 ///   either `BigUInt<u128, 8>`, `BigUInt<u64, 16>`, `BigUInt<u32, 32>`,

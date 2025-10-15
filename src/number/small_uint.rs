@@ -25189,6 +25189,143 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// for Big-endian CPUs with your own full responsibility.
     fn is_prime(self) -> bool;
 
+    // fn gcd(&self, other: Self) -> Self
+    /// Calculates the greatest common divisor of `self` and `other`,
+    /// and returns the result.
+    /// If you would like to know greatest common divisor more in detail,
+    /// read [here](https://en.wikipedia.org/wiki/Greatest_common_divisor).
+    /// 
+    /// # Argument
+    /// The greatest common diviser of `self` and `other` is calculated.
+    /// `other` is of `Self` type.
+    ///
+    /// # Panics
+    /// - If either `self` or `other` is zero, it will panic.
+    /// - If both `self` and `other` is zero, it will panic.
+    /// 
+    /// # Output
+    /// It returns the greatest common diviser of `self` and `other`.
+    /// 
+    /// # Features
+    /// Both `self` and `other` should natural numbers. So, if either `self`
+    /// or `other` is zero, getting greatest common diviser is meaningless.
+    /// In this case, this method will panic.
+    /// 
+    /// # Example 1 for normal case
+    /// ```
+    /// 
+    /// ```
+    fn gcd(&self, other: Self) -> Self;
+
+    // fn gcd_assign(&mut self, other: Self)
+    /// Calculates the greatest common divisor of `self` and `other`,
+    /// and assigns the result back to `self`.
+    /// If you would like to know greatest common divisor more in detail,
+    /// read [here](https://en.wikipedia.org/wiki/Greatest_common_divisor).
+    /// 
+    /// # Argument
+    /// The greatest common diviser of `self` and `other` is calculated.
+    /// `other` is of `Self` type.
+    ///
+    /// # Panics
+    /// - If either `self` or `other` is zero, it will panic.
+    /// - If both `self` and `other` is zero, it will panic.
+    /// 
+    /// # Features
+    /// Both `self` and `other` should natural numbers. So, if either `self`
+    /// or `other` is zero, getting greatest common diviser is meaningless.
+    /// In this case, this method will panic.
+    /// 
+    /// # Example 1 for normal case
+    /// ```
+    /// 
+    /// ```
+    fn gcd_assign(&mut self, other: Self);
+
+    // fn extended_gcd(&self, other: Self) -> (Self, Self, Self);
+    /// Calculates the greatest common divisor of `self` and `other`,
+    /// and returns the result, `x`, and `y` that satisfy
+    /// `self` * `x` + `other` * `y` = self.gcd(other).
+    /// If you would like to know greatest common divisor more in detail,
+    /// read [here](https://en.wikipedia.org/wiki/Greatest_common_divisor).
+    /// 
+    /// # Argument
+    /// The greatest common diviser of `self` and `other` is calculated.
+    /// `other` is of `Self` type.
+    ///
+    /// # Panics
+    /// - If either `self` or `other` is zero, it will panic.
+    /// - If both `self` and `other` is zero, it will panic.
+    /// 
+    /// # Output
+    /// It returns the greatest common diviser of `self` and `other`,
+    /// `x`, and `y` that satisfy
+    /// `self` * `x` + `other` * `y` = self.gcd(other).
+    /// 
+    /// # Features
+    /// Both `self` and `other` should natural numbers. So, if either `self`
+    /// or `other` is zero, getting greatest common diviser is meaningless.
+    /// In this case, this method will panic.
+/*  /// 
+    /// # Example 1 for normal case
+    /// ```
+    /// 
+    /// ``` */
+    fn extended_gcd(&self, other: Self) -> (Self, Self, Self);
+
+    // fn lcm(&self, other: Self) -> Self
+    /// Calculates the least common multiple of `self` and `other`,
+    /// and returns the result.
+    /// If you would like to know greatest common divisor more in detail,
+    /// read [here](https://en.wikipedia.org/wiki/Least_common_multiple).
+    /// 
+    /// # Argument
+    /// The least common multiple of `self` and `other` is calculated.
+    /// `other` is of `Self` type.
+    ///
+    /// # Panics
+    /// - If either `self` or `other` is zero, it will panic.
+    /// - If both `self` and `other` is zero, it will panic.
+    /// 
+    /// # Output
+    /// It returns the least common multiple of `self` and `other`.
+    /// 
+    /// # Features
+    /// Both `self` and `other` should natural numbers. So, if either `self`
+    /// or `other` is zero, getting least common multiple is meaningless.
+    /// In this case, this method will panic.
+    /// 
+    /// # Example 1 for normal case
+    /// ```
+    /// 
+    /// ```
+    fn lcm(&self, other: Self) -> Self;
+
+    // fn lcm_assign(&mut self, other: Self)
+    /// Calculates the greatest common divisor of `self` and `other`,
+    /// and assigns the result back to `self`.
+    /// If you would like to know greatest common divisor more in detail,
+    /// read [here](https://en.wikipedia.org/wiki/Least_common_multiple).
+    /// 
+    /// # Argument
+    /// The greatest common diviser of `self` and `other` is calculated.
+    /// `other` is of `Self` type.
+    ///
+    /// # Panics
+    /// - If either `self` or `other` is zero, it will panic.
+    /// - If both `self` and `other` is zero, it will panic.
+    /// 
+    /// # Features
+    /// Both `self` and `other` should natural numbers. So, if either `self`
+    /// or `other` is zero, getting greatest common diviser is meaningless.
+    /// In this case, this method will panic.
+    /// 
+    /// # Example 1 for normal case
+    /// ```
+    /// 
+    /// ```
+    fn lcm_assign(&mut self, other: Self);
+
     // fn reverse_bits(self) -> Self;
     /// Reverses the order of bits in the integer.
     /// 

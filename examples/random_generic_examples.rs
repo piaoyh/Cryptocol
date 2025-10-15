@@ -2118,8 +2118,9 @@ fn random_random_odd_uint()
 fn random_random_odd_under_uint()
 {
     println!("random_random_odd_under_uint");
-    use cryptocol::random::Slapdash_SHA1;
-    let mut rand = Slapdash_SHA1::new();
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
     if let Some(num) = rand.random_odd_under_uint(12_u8)
         { println!("Random odd number u8 = {}", num); }
     if let Some(num) = rand.random_odd_under_uint(1234_u16)
@@ -2136,14 +2137,395 @@ fn random_random_odd_under_uint()
         { println!("Random odd number usize = {}", num); }
     else
         { println!("No random unsigned number number under 0!"); }
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    if let Some(num) = any.random_odd_under_uint(12_u8)
+        { println!("Any odd number u8 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234_u16)
+        { println!("Any odd number u16 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678_u32)
+        { println!("Any odd number u32 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234567890123456_u64)
+        { println!("Any odd number u64 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Any odd number u128 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(123456789_usize)
+        { println!("Any odd number usize = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1_usize)
+        { println!("Any odd number usize = {}", num); }
+    else
+        { println!("No any unsigned odd number under 1!"); }
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    if let Some(num) = rand.random_odd_under_uint(12_u8)
+        { println!("Random odd number u8 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(1234_u16)
+        { println!("Random odd number u16 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(12345678_u32)
+        { println!("Random odd number u32 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(1234567890123456_u64)
+        { println!("Random odd number u64 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Random odd number u128 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(123456789_usize)
+        { println!("Random odd number usize = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(0_usize)
+        { println!("Random odd number usize = {}", num); }
+    else
+        { println!("No random unsigned odd number under 0!"); }
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    if let Some(num) = rand.random_odd_under_uint(12_u8)
+        { println!("Random odd number u8 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(1234_u16)
+        { println!("Random odd number u16 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(12345678_u32)
+        { println!("Random odd number u32 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(1234567890123456_u64)
+        { println!("Random odd number u64 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Random odd number u128 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(123456789_usize)
+        { println!("Random odd number usize = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(1_usize)
+        { println!("Random odd number usize = {}", num); }
+    else
+        { println!("No random unsigned odd number under 1!"); }
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    if let Some(num) = rand.random_odd_under_uint(12_u8)
+        { println!("Random odd number u8 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(1234_u16)
+        { println!("Random odd number u16 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(12345678_u32)
+        { println!("Random odd number u32 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(1234567890123456_u64)
+        { println!("Random odd number u64 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Random odd number u128 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(123456789_usize)
+        { println!("Random odd number usize = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(0_usize)
+        { println!("Random odd number usize = {}", num); }
+    else
+        { println!("No random unsigned odd number under 0!"); }
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    if let Some(num) = any.random_odd_under_uint(12_u8)
+        { println!("Any odd number u8 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234_u16)
+        { println!("Any odd number u16 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678_u32)
+        { println!("Any odd number u32 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234567890123456_u64)
+        { println!("Any odd number u64 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Any odd number u128 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(123456789_usize)
+        { println!("Any odd number usize = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1_usize)
+        { println!("Any odd number usize = {}", num); }
+    else
+        { println!("No any unsigned odd number under 1!"); }
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    if let Some(num) = any.random_odd_under_uint(12_u8)
+        { println!("Any odd number u8 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234_u16)
+        { println!("Any odd number u16 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678_u32)
+        { println!("Any odd number u32 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234567890123456_u64)
+        { println!("Any odd number u64 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Any odd number u128 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(123456789_usize)
+        { println!("Any odd number usize = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(0_usize)
+        { println!("Any odd number usize = {}", num); }
+    else
+        { println!("No any unsigned odd number under 0!"); }
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    if let Some(num) = any.random_odd_under_uint(12_u8)
+        { println!("Any odd number u8 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234_u16)
+        { println!("Any odd number u16 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678_u32)
+        { println!("Any odd number u32 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234567890123456_u64)
+        { println!("Any odd number u64 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Any odd number u128 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(123456789_usize)
+        { println!("Any odd number usize = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1_usize)
+        { println!("Any odd number usize = {}", num); }
+    else
+        { println!("No any unsigned odd number under 0!"); }
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    if let Some(num) = any.random_odd_under_uint(12_u8)
+        { println!("Any odd number u8 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234_u16)
+        { println!("Any odd number u16 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678_u32)
+        { println!("Any odd number u32 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234567890123456_u64)
+        { println!("Any odd number u64 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Any odd number u128 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(123456789_usize)
+        { println!("Any odd number usize = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(0_usize)
+        { println!("Any odd number usize = {}", num); }
+    else
+        { println!("No any unsigned odd number under 0!"); }
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    if let Some(num) = any.random_odd_under_uint(12_u8)
+        { println!("Any odd number u8 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234_u16)
+        { println!("Any odd number u16 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678_u32)
+        { println!("Any odd number u32 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234567890123456_u64)
+        { println!("Any odd number u64 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Any odd number u128 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(123456789_usize)
+        { println!("Any odd number usize = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1_usize)
+        { println!("Any odd number usize = {}", num); }
+    else
+        { println!("No any unsigned odd number under 0!"); }
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    if let Some(num) = any.random_odd_under_uint(12_u8)
+        { println!("Any odd number u8 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234_u16)
+        { println!("Any odd number u16 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678_u32)
+        { println!("Any odd number u32 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234567890123456_u64)
+        { println!("Any odd number u64 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Any odd number u128 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(123456789_usize)
+        { println!("Any odd number usize = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(0_usize)
+        { println!("Any odd number usize = {}", num); }
+    else
+        { println!("No any unsigned odd number under 0!"); }
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    if let Some(num) = slapdash.random_odd_under_uint(12_u8)
+        { println!("Slapdash odd number u8 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1234_u16)
+        { println!("Slapdash odd number u16 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(12345678_u32)
+        { println!("Slapdash odd number u32 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1234567890123456_u64)
+        { println!("Slapdash odd number u64 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Slapdash odd number u128 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(123456789_usize)
+        { println!("Slapdash odd number usize = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1_usize)
+        { println!("Slapdash odd number usize = {}", num); }
+    else
+        { println!("No slapdash unsigned odd number under 0!"); }
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    if let Some(num) = slapdash.random_odd_under_uint(12_u8)
+        { println!("Slapdash odd number u8 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1234_u16)
+        { println!("Slapdash odd number u16 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(12345678_u32)
+        { println!("Slapdash odd number u32 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1234567890123456_u64)
+        { println!("Slapdash odd number u64 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Slapdash odd number u128 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(123456789_usize)
+        { println!("Slapdash odd number usize = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(0_usize)
+        { println!("Slapdash odd number usize = {}", num); }
+    else
+        { println!("No slapdash unsigned odd number under 0!"); }
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    if let Some(num) = slapdash.random_odd_under_uint(12_u8)
+        { println!("Slapdash odd number u8 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1234_u16)
+        { println!("Slapdash odd number u16 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(12345678_u32)
+        { println!("Slapdash odd number u32 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1234567890123456_u64)
+        { println!("Slapdash odd number u64 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Slapdash odd number u128 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(123456789_usize)
+        { println!("Slapdash odd number usize = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1_usize)
+        { println!("Slapdash odd number usize = {}", num); }
+    else
+        { println!("No slapdash unsigned odd number under 1!"); }
+        
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    if let Some(num) = slapdash.random_odd_under_uint(12_u8)
+        { println!("Slapdash odd number u8 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1234_u16)
+        { println!("Slapdash odd number u16 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(12345678_u32)
+        { println!("Slapdash odd number u32 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1234567890123456_u64)
+        { println!("Slapdash odd number u64 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Slapdash odd number u128 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(123456789_usize)
+        { println!("Slapdash odd number usize = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(0_usize)
+        { println!("Slapdash odd number usize = {}", num); }
+    else
+        { println!("No slapdash unsigned odd number under 0!"); }
+        
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    if let Some(num) = rand.random_odd_under_uint(12_u8)
+        { println!("Random odd number u8 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(1234_u16)
+        { println!("Random odd number u16 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(12345678_u32)
+        { println!("Random odd number u32 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(1234567890123456_u64)
+        { println!("Random odd number u64 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Random odd number u128 = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(123456789_usize)
+        { println!("Random odd number usize = {}", num); }
+    if let Some(num) = rand.random_odd_under_uint(1_usize)
+        { println!("Random odd number usize = {}", num); }
+    else
+        { println!("No random unsigned odd number under 1!"); }
+        
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    if let Some(num) = any.random_odd_under_uint(12_u8)
+        { println!("Any odd number u8 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234_u16)
+        { println!("Any odd number u16 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678_u32)
+        { println!("Any odd number u32 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(1234567890123456_u64)
+        { println!("Any odd number u64 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Any odd number u128 = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(123456789_usize)
+        { println!("Any odd number usize = {}", num); }
+    if let Some(num) = any.random_odd_under_uint(0_usize)
+        { println!("Any odd number usize = {}", num); }
+    else
+        { println!("No any unsigned odd number under 0!"); }
+        
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    if let Some(num) = slapdash.random_odd_under_uint(12_u8)
+        { println!("Slapdash odd number u8 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1234_u16)
+        { println!("Slapdash odd number u16 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(12345678_u32)
+        { println!("Slapdash odd number u32 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1234567890123456_u64)
+        { println!("Slapdash odd number u64 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Slapdash odd number u128 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(123456789_usize)
+        { println!("Slapdash odd number usize = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1_usize)
+        { println!("Slapdash odd number usize = {}", num); }
+    else
+        { println!("No slapdash unsigned odd number under 1!"); }
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    if let Some(num) = slapdash.random_odd_under_uint(12_u8)
+        { println!("Slapdash odd number u8 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1234_u16)
+        { println!("Slapdash odd number u16 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(12345678_u32)
+        { println!("Slapdash odd number u32 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1234567890123456_u64)
+        { println!("Slapdash odd number u64 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Slapdash odd number u128 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(123456789_usize)
+        { println!("Slapdash odd number usize = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(0_usize)
+        { println!("Slapdash odd number usize = {}", num); }
+    else
+        { println!("No slapdash unsigned odd number under 0!"); }
+        
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    if let Some(num) = slapdash.random_odd_under_uint(12_u8)
+        { println!("Slapdash odd number u8 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1234_u16)
+        { println!("Slapdash odd number u16 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(12345678_u32)
+        { println!("Slapdash odd number u32 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1234567890123456_u64)
+        { println!("Slapdash odd number u64 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(12345678901234567890_u128)
+        { println!("Slapdash odd number u128 = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(123456789_usize)
+        { println!("Slapdash odd number usize = {}", num); }
+    if let Some(num) = slapdash.random_odd_under_uint(1_usize)
+        { println!("Slapdash odd number usize = {}", num); }
+    else
+        { println!("No slapdash unsigned odd number under 1!"); }
     println!("-------------------------------");
 }
 
 fn random_random_odd_under_uint_()
 {
     println!("random_random_odd_under_uint_");
-    use cryptocol::random::Any_SHA2_256;
-    let mut rand = Any_SHA2_256::new();
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
 
     let num = rand.random_odd_under_uint_(12_u8);
     println!("Random odd number u8 = {}", num);
@@ -2160,40 +2542,964 @@ fn random_random_odd_under_uint_()
     let num = rand.random_odd_under_uint_(12345678901234567890_u128);
     println!("Random odd number u128 = {}", num);
 
-    let num = rand.random_odd_under_uint_::<usize>(123456789_usize);
+    let num = rand.random_odd_under_uint_(123456789_usize);
     println!("Random odd number usize = {}", num);
 
-    // It will panic.
-    // let num = rand.random_odd_under_uint_::<usize>(0_usize);
-    // println!("Random odd number usize = {}", num);
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+
+    let num = any.random_odd_under_uint_(12_u8);
+    println!("Any odd number u8 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234_u16);
+    println!("Any odd number u16 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678_u32);
+    println!("Any odd number u32 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234567890123456_u64);
+    println!("Any odd number u64 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Any odd number u128 = {}", num);
+
+    let num = any.random_odd_under_uint_(123456789_usize);
+    println!("Any odd number usize = {}", num);
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+
+    let num = rand.random_odd_under_uint_(12_u8);
+    println!("Random odd number u8 = {}", num);
+
+    let num = rand.random_odd_under_uint_(1234_u16);
+    println!("Random odd number u16 = {}", num);
+
+    let num = rand.random_odd_under_uint_(12345678_u32);
+    println!("Random odd number u32 = {}", num);
+
+    let num = rand.random_odd_under_uint_(1234567890123456_u64);
+    println!("Random odd number u64 = {}", num);
+
+    let num = rand.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Random odd number u128 = {}", num);
+
+    let num = rand.random_odd_under_uint_(123456789_usize);
+    println!("Random odd number usize = {}", num);
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+
+    let num = rand.random_odd_under_uint_(12_u8);
+    println!("Random odd number u8 = {}", num);
+
+    let num = rand.random_odd_under_uint_(1234_u16);
+    println!("Random odd number u16 = {}", num);
+
+    let num = rand.random_odd_under_uint_(12345678_u32);
+    println!("Random odd number u32 = {}", num);
+
+    let num = rand.random_odd_under_uint_(1234567890123456_u64);
+    println!("Random odd number u64 = {}", num);
+
+    let num = rand.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Random odd number u128 = {}", num);
+
+    let num = rand.random_odd_under_uint_(123456789_usize);
+    println!("Random odd number usize = {}", num);
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+
+    let num = rand.random_odd_under_uint_(12_u8);
+    println!("Random odd number u8 = {}", num);
+
+    let num = rand.random_odd_under_uint_(1234_u16);
+    println!("Random odd number u16 = {}", num);
+
+    let num = rand.random_odd_under_uint_(12345678_u32);
+    println!("Random odd number u32 = {}", num);
+
+    let num = rand.random_odd_under_uint_(1234567890123456_u64);
+    println!("Random odd number u64 = {}", num);
+
+    let num = rand.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Random odd number u128 = {}", num);
+
+    let num = rand.random_odd_under_uint_(123456789_usize);
+    println!("Random odd number usize = {}", num);
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+
+    let num = any.random_odd_under_uint_(12_u8);
+    println!("Any odd number u8 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234_u16);
+    println!("Any odd number u16 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678_u32);
+    println!("Any odd number u32 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234567890123456_u64);
+    println!("Any odd number u64 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Any odd number u128 = {}", num);
+
+    let num = any.random_odd_under_uint_(123456789_usize);
+    println!("Any odd number usize = {}", num);
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+
+    let num = any.random_odd_under_uint_(12_u8);
+    println!("Any odd number u8 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234_u16);
+    println!("Any odd number u16 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678_u32);
+    println!("Any odd number u32 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234567890123456_u64);
+    println!("Any odd number u64 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Any odd number u128 = {}", num);
+
+    let num = any.random_odd_under_uint_(123456789_usize);
+    println!("Any odd number usize = {}", num);
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+
+    let num = any.random_odd_under_uint_(12_u8);
+    println!("Any odd number u8 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234_u16);
+    println!("Any odd number u16 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678_u32);
+    println!("Any odd number u32 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234567890123456_u64);
+    println!("Any odd number u64 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Any odd number u128 = {}", num);
+
+    let num = any.random_odd_under_uint_(123456789_usize);
+    println!("Any odd number usize = {}", num);
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+
+    let num = any.random_odd_under_uint_(12_u8);
+    println!("Any odd number u8 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234_u16);
+    println!("Any odd number u16 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678_u32);
+    println!("Any odd number u32 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234567890123456_u64);
+    println!("Any odd number u64 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Any odd number u128 = {}", num);
+
+    let num = any.random_odd_under_uint_(123456789_usize);
+    println!("Any odd number usize = {}", num);
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+
+    let num = any.random_odd_under_uint_(12_u8);
+    println!("Any odd number u8 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234_u16);
+    println!("Any odd number u16 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678_u32);
+    println!("Any odd number u32 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234567890123456_u64);
+    println!("Any odd number u64 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Any odd number u128 = {}", num);
+
+    let num = any.random_odd_under_uint_(123456789_usize);
+    println!("Any odd number usize = {}", num);
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+
+    let num = any.random_odd_under_uint_(12_u8);
+    println!("Any odd number u8 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234_u16);
+    println!("Any odd number u16 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678_u32);
+    println!("Any odd number u32 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234567890123456_u64);
+    println!("Any odd number u64 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Any odd number u128 = {}", num);
+
+    let num = any.random_odd_under_uint_(123456789_usize);
+    println!("Any odd number usize = {}", num);
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+
+    let num = slapdash.random_odd_under_uint_(12_u8);
+    println!("Slapdash odd number u8 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(1234_u16);
+    println!("Slapdash odd number u16 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(12345678_u32);
+    println!("Slapdash odd number u32 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(1234567890123456_u64);
+    println!("Slapdash odd number u64 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Slapdash odd number u128 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(123456789_usize);
+    println!("Slapdash odd number usize = {}", num);
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+
+    let num = slapdash.random_odd_under_uint_(12_u8);
+    println!("Slapdash odd number u8 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(1234_u16);
+    println!("Slapdash odd number u16 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(12345678_u32);
+    println!("Slapdash odd number u32 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(1234567890123456_u64);
+    println!("Slapdash odd number u64 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Slapdash odd number u128 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(123456789_usize);
+    println!("Slapdash odd number usize = {}", num);
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+
+    let num = slapdash.random_odd_under_uint_(12_u8);
+    println!("Slapdash odd number u8 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(1234_u16);
+    println!("Slapdash odd number u16 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(12345678_u32);
+    println!("Slapdash odd number u32 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(1234567890123456_u64);
+    println!("Slapdash odd number u64 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Slapdash odd number u128 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(123456789_usize);
+    println!("Slapdash odd number usize = {}", num);
+        
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+
+    let num = slapdash.random_odd_under_uint_(12_u8);
+    println!("Slapdash odd number u8 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(1234_u16);
+    println!("Slapdash odd number u16 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(12345678_u32);
+    println!("Slapdash odd number u32 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(1234567890123456_u64);
+    println!("Slapdash odd number u64 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Slapdash odd number u128 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(123456789_usize);
+    println!("Slapdash odd number usize = {}", num);
+        
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+
+    let num = rand.random_odd_under_uint_(12_u8);
+    println!("Random odd number u8 = {}", num);
+
+    let num = rand.random_odd_under_uint_(1234_u16);
+    println!("Random odd number u16 = {}", num);
+
+    let num = rand.random_odd_under_uint_(12345678_u32);
+    println!("Random odd number u32 = {}", num);
+
+    let num = rand.random_odd_under_uint_(1234567890123456_u64);
+    println!("Random odd number u64 = {}", num);
+
+    let num = rand.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Random odd number u128 = {}", num);
+
+    let num = rand.random_odd_under_uint_(123456789_usize);
+    println!("Random odd number usize = {}", num);
+        
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+
+    let num = any.random_odd_under_uint_(12_u8);
+    println!("Any odd number u8 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234_u16);
+    println!("Any odd number u16 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678_u32);
+    println!("Any odd number u32 = {}", num);
+
+    let num = any.random_odd_under_uint_(1234567890123456_u64);
+    println!("Any odd number u64 = {}", num);
+
+    let num = any.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Any odd number u128 = {}", num);
+
+    let num = any.random_odd_under_uint_(123456789_usize);
+    println!("Any odd number usize = {}", num);
+        
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+
+    let num = slapdash.random_odd_under_uint_(12_u8);
+    println!("Slapdash odd number u8 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(1234_u16);
+    println!("Slapdash odd number u16 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(12345678_u32);
+    println!("Slapdash odd number u32 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(1234567890123456_u64);
+    println!("Slapdash odd number u64 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Slapdash odd number u128 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(123456789_usize);
+    println!("Slapdash odd number usize = {}", num);
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+
+    let num = slapdash.random_odd_under_uint_(12_u8);
+    println!("Slapdash odd number u8 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(1234_u16);
+    println!("Slapdash odd number u16 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(12345678_u32);
+    println!("Slapdash odd number u32 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(1234567890123456_u64);
+    println!("Slapdash odd number u64 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Slapdash odd number u128 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(123456789_usize);
+    println!("Slapdash odd number usize = {}", num);
+        
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+
+    let num = slapdash.random_odd_under_uint_(12_u8);
+    println!("Slapdash odd number u8 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(1234_u16);
+    println!("Slapdash odd number u16 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(12345678_u32);
+    println!("Slapdash odd number u32 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(1234567890123456_u64);
+    println!("Slapdash odd number u64 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(12345678901234567890_u128);
+    println!("Slapdash odd number u128 = {}", num);
+
+    let num = slapdash.random_odd_under_uint_(123456789_usize);
+    println!("Slapdash odd number usize = {}", num);
+
+    #[cfg(test)] // It will panic.
+    random_should_panic_random_odd_under_uint_();
     println!("-------------------------------");
+}
+
+#[test]
+#[should_panic]
+fn random_should_panic_random_odd_under_uint_()
+{
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
+    let _num = rand.random_odd_under_uint_(0_u8);
+    println!("Random number u8 = {}", _num);
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    let _num = any.random_odd_under_uint_(1_u16);
+    println!("Any number u16 = {}", _num);
+
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    let _num = rand.random_odd_under_uint_(0_u32);
+    println!("Random number u32 = {}", _num);
+
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    let _num = rand.random_odd_under_uint_(1_u64);
+    println!("Random number u64 = {}", _num);
+
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    let _num = rand.random_odd_under_uint_(0_u128);
+    println!("Random number u128 = {}", _num);
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    let num = any.random_odd_under_uint_(1_usize);
+    println!("Any number usize = {}", num);
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    let num = any.random_odd_under_uint_(0_u8);
+    println!("Any number u8 = {}", num);
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    let num = any.random_odd_under_uint_(1_u16);
+    println!("Any number u16 = {}", num);
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    let num = any.random_odd_under_uint_(0_u32);
+    println!("Any number u32 = {}", num);
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    let num = any.random_odd_under_uint_(1_u64);
+    println!("Any number u64 = {}", num);
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    let num = any.random_odd_under_uint_(0_u128);
+    println!("Any number u128 = {}", num);
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let num = slapdash.random_odd_under_uint_(1_usize);
+    println!("Slapdash number usize = {}", num);
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let num = slapdash.random_odd_under_uint_(0_u8);
+    println!("Slapdash number u8 = {}", num);
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let num = any.random_odd_under_uint_(1_u16);
+    println!("Slapdash number u16 = {}", num);
+
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let num = slapdash.random_odd_under_uint_(0_u32);
+    println!("Slapdash number u32 = {}", num);
+
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    let num = rand.random_odd_under_uint_(1_u64);
+    println!("Random number u64 = {}", num);
+
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    let num = any.random_odd_under_uint_(0_u128);
+    println!("Any number u128 = {}", num);
+
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let num = slapdash.random_odd_under_uint_(1_usize);
+    println!("Slapdash number usize = {}", num);
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let num = slapdash.random_odd_under_uint_(0_u8);
+    println!("Slapdash number u8 = {}", num);
+
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let num = slapdash.random_odd_under_uint_(1_u16);
+    println!("Slapdash number u16 = {}", num);
 }
 
 fn random_random_with_msb_set_uint()
 {
     println!("random_random_with_msb_set_uint");
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
+    println!("Random 8-bit number = {}", rand.random_with_msb_set_uint::<u8>());
+    println!("Random 16-bit number = {}", rand.random_with_msb_set_uint::<u16>());
+    println!("Random 32-bit number = {}", rand.random_with_msb_set_uint::<u32>());
+    println!("Random 64-bit number = {}", rand.random_with_msb_set_uint::<u64>());
+    println!("Random 128-bit number = {}", rand.random_with_msb_set_uint::<u128>());
+    println!("Random usize-sized number = {}", rand.random_with_msb_set_uint::<usize>());
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    println!("Any 8-bit number = {}", any.random_with_msb_set_uint::<u8>());
+    println!("Any 16-bit number = {}", any.random_with_msb_set_uint::<u16>());
+    println!("Any 32-bit number = {}", any.random_with_msb_set_uint::<u32>());
+    println!("Any 64-bit number = {}", any.random_with_msb_set_uint::<u64>());
+    println!("Any 128-bit number = {}", any.random_with_msb_set_uint::<u128>());
+    println!("Any usize-sized number = {}", any.random_with_msb_set_uint::<usize>());
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    println!("Random 8-bit number = {}", rand.random_with_msb_set_uint::<u8>());
+    println!("Random 16-bit number = {}", rand.random_with_msb_set_uint::<u16>());
+    println!("Random 32-bit number = {}", rand.random_with_msb_set_uint::<u32>());
+    println!("Random 64-bit number = {}", rand.random_with_msb_set_uint::<u64>());
+    println!("Random 128-bit number = {}", rand.random_with_msb_set_uint::<u128>());
+    println!("Random usize-sized number = {}", rand.random_with_msb_set_uint::<usize>());
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    println!("Random 8-bit number = {}", rand.random_with_msb_set_uint::<u8>());
+    println!("Random 16-bit number = {}", rand.random_with_msb_set_uint::<u16>());
+    println!("Random 32-bit number = {}", rand.random_with_msb_set_uint::<u32>());
+    println!("Random 64-bit number = {}", rand.random_with_msb_set_uint::<u64>());
+    println!("Random 128-bit number = {}", rand.random_with_msb_set_uint::<u128>());
+    println!("Random usize-sized number = {}", rand.random_with_msb_set_uint::<usize>());
+    
+    // Example for Random_SHA2_512
     use cryptocol::random::Random_SHA2_512;
     let mut rand = Random_SHA2_512::new();
-    println!("Random 8-bit number u8 = {}", rand.random_with_msb_set_uint::<u8>());
-    println!("Random 16-bit number u16 = {}", rand.random_with_msb_set_uint::<u16>());
-    println!("Random 32-bit number u32 = {}", rand.random_with_msb_set_uint::<u32>());
-    println!("Random 64-bit number u64 = {}", rand.random_with_msb_set_uint::<u64>());
-    println!("Random 128-bit number u128 = {}", rand.random_with_msb_set_uint::<u128>());
-    println!("Random usize-sized number usize = {}", rand.random_with_msb_set_uint::<usize>());
+    println!("Random 8-bit number = {}", rand.random_with_msb_set_uint::<u8>());
+    println!("Random 16-bit number = {}", rand.random_with_msb_set_uint::<u16>());
+    println!("Random 32-bit number = {}", rand.random_with_msb_set_uint::<u32>());
+    println!("Random 64-bit number = {}", rand.random_with_msb_set_uint::<u64>());
+    println!("Random 128-bit number = {}", rand.random_with_msb_set_uint::<u128>());
+    println!("Random usize-sized number = {}", rand.random_with_msb_set_uint::<usize>());
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    println!("Any 8-bit number = {}", any.random_with_msb_set_uint::<u8>());
+    println!("Any 16-bit number = {}", any.random_with_msb_set_uint::<u16>());
+    println!("Any 32-bit number = {}", any.random_with_msb_set_uint::<u32>());
+    println!("Any 64-bit number = {}", any.random_with_msb_set_uint::<u64>());
+    println!("Any 128-bit number = {}", any.random_with_msb_set_uint::<u128>());
+    println!("Any usize-sized number = {}", any.random_with_msb_set_uint::<usize>());
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    println!("Any 8-bit number = {}", any.random_with_msb_set_uint::<u8>());
+    println!("Any 16-bit number = {}", any.random_with_msb_set_uint::<u16>());
+    println!("Any 32-bit number = {}", any.random_with_msb_set_uint::<u32>());
+    println!("Any 64-bit number = {}", any.random_with_msb_set_uint::<u64>());
+    println!("Any 128-bit number = {}", any.random_with_msb_set_uint::<u128>());
+    println!("Any usize-sized number = {}", any.random_with_msb_set_uint::<usize>());
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    println!("Any 8-bit number = {}", any.random_with_msb_set_uint::<u8>());
+    println!("Any 16-bit number = {}", any.random_with_msb_set_uint::<u16>());
+    println!("Any 32-bit number = {}", any.random_with_msb_set_uint::<u32>());
+    println!("Any 64-bit number = {}", any.random_with_msb_set_uint::<u64>());
+    println!("Any 128-bit number = {}", any.random_with_msb_set_uint::<u128>());
+    println!("Any usize-sized number = {}", any.random_with_msb_set_uint::<usize>());
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    println!("Any 8-bit number = {}", any.random_with_msb_set_uint::<u8>());
+    println!("Any 16-bit number = {}", any.random_with_msb_set_uint::<u16>());
+    println!("Any 32-bit number = {}", any.random_with_msb_set_uint::<u32>());
+    println!("Any 64-bit number = {}", any.random_with_msb_set_uint::<u64>());
+    println!("Any 128-bit number = {}", any.random_with_msb_set_uint::<u128>());
+    println!("Any usize-sized number = {}", any.random_with_msb_set_uint::<usize>());
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    println!("Any 8-bit number = {}", any.random_with_msb_set_uint::<u8>());
+    println!("Any 16-bit number = {}", any.random_with_msb_set_uint::<u16>());
+    println!("Any 32-bit number = {}", any.random_with_msb_set_uint::<u32>());
+    println!("Any 64-bit number = {}", any.random_with_msb_set_uint::<u64>());
+    println!("Any 128-bit number = {}", any.random_with_msb_set_uint::<u128>());
+    println!("Any usize-sized number = {}", any.random_with_msb_set_uint::<usize>());
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    println!("Any 8-bit number = {}", any.random_with_msb_set_uint::<u8>());
+    println!("Any 16-bit number = {}", any.random_with_msb_set_uint::<u16>());
+    println!("Any 32-bit number = {}", any.random_with_msb_set_uint::<u32>());
+    println!("Any 64-bit number = {}", any.random_with_msb_set_uint::<u64>());
+    println!("Any 128-bit number = {}", any.random_with_msb_set_uint::<u128>());
+    println!("Any usize-sized number = {}", any.random_with_msb_set_uint::<usize>());
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    println!("Slapdash 8-bit number = {}", slapdash.random_with_msb_set_uint::<u8>());
+    println!("Slapdash 16-bit number = {}", slapdash.random_with_msb_set_uint::<u16>());
+    println!("Slapdash 32-bit number = {}", slapdash.random_with_msb_set_uint::<u32>());
+    println!("Slapdash 64-bit number = {}", slapdash.random_with_msb_set_uint::<u64>());
+    println!("Slapdash 128-bit number = {}", slapdash.random_with_msb_set_uint::<u128>());
+    println!("Slapdash usize-sized number = {}", slapdash.random_with_msb_set_uint::<usize>());
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    println!("Slapdash 8-bit number = {}", slapdash.random_with_msb_set_uint::<u8>());
+    println!("Slapdash 16-bit number = {}", slapdash.random_with_msb_set_uint::<u16>());
+    println!("Slapdash 32-bit number = {}", slapdash.random_with_msb_set_uint::<u32>());
+    println!("Slapdash 64-bit number = {}", slapdash.random_with_msb_set_uint::<u64>());
+    println!("Slapdash 128-bit number = {}", slapdash.random_with_msb_set_uint::<u128>());
+    println!("Slapdash usize-sized number = {}", slapdash.random_with_msb_set_uint::<usize>());
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    println!("Slapdash 8-bit number = {}", slapdash.random_with_msb_set_uint::<u8>());
+    println!("Slapdash 16-bit number = {}", slapdash.random_with_msb_set_uint::<u16>());
+    println!("Slapdash 32-bit number = {}", slapdash.random_with_msb_set_uint::<u32>());
+    println!("Slapdash 64-bit number = {}", slapdash.random_with_msb_set_uint::<u64>());
+    println!("Slapdash 128-bit number = {}", slapdash.random_with_msb_set_uint::<u128>());
+    println!("Slapdash usize-sized number = {}", slapdash.random_with_msb_set_uint::<usize>());
+        
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    println!("Slapdash 8-bit number = {}", slapdash.random_with_msb_set_uint::<u8>());
+    println!("Slapdash 16-bit number = {}", slapdash.random_with_msb_set_uint::<u16>());
+    println!("Slapdash 32-bit number = {}", slapdash.random_with_msb_set_uint::<u32>());
+    println!("Slapdash 64-bit number = {}", slapdash.random_with_msb_set_uint::<u64>());
+    println!("Slapdash 128-bit number = {}", slapdash.random_with_msb_set_uint::<u128>());
+    println!("Slapdash usize-sized number = {}", slapdash.random_with_msb_set_uint::<usize>());
+        
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    println!("Random 8-bit number = {}", rand.random_with_msb_set_uint::<u8>());
+    println!("Random 16-bit number = {}", rand.random_with_msb_set_uint::<u16>());
+    println!("Random 32-bit number = {}", rand.random_with_msb_set_uint::<u32>());
+    println!("Random 64-bit number = {}", rand.random_with_msb_set_uint::<u64>());
+    println!("Random 128-bit number = {}", rand.random_with_msb_set_uint::<u128>());
+    println!("Random usize-sized number = {}", rand.random_with_msb_set_uint::<usize>());
+        
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    println!("Any 8-bit number = {}", any.random_with_msb_set_uint::<u8>());
+    println!("Any 16-bit number = {}", any.random_with_msb_set_uint::<u16>());
+    println!("Any 32-bit number = {}", any.random_with_msb_set_uint::<u32>());
+    println!("Any 64-bit number = {}", any.random_with_msb_set_uint::<u64>());
+    println!("Any 128-bit number = {}", any.random_with_msb_set_uint::<u128>());
+    println!("Any usize-sized number = {}", any.random_with_msb_set_uint::<usize>());
+        
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    println!("Slapdash 8-bit number = {}", slapdash.random_with_msb_set_uint::<u8>());
+    println!("Slapdash 16-bit number = {}", slapdash.random_with_msb_set_uint::<u16>());
+    println!("Slapdash 32-bit number = {}", slapdash.random_with_msb_set_uint::<u32>());
+    println!("Slapdash 64-bit number = {}", slapdash.random_with_msb_set_uint::<u64>());
+    println!("Slapdash 128-bit number = {}", slapdash.random_with_msb_set_uint::<u128>());
+    println!("Slapdash usize-sized number = {}", slapdash.random_with_msb_set_uint::<usize>());
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    println!("Slapdash 8-bit number = {}", slapdash.random_with_msb_set_uint::<u8>());
+    println!("Slapdash 16-bit number = {}", slapdash.random_with_msb_set_uint::<u16>());
+    println!("Slapdash 32-bit number = {}", slapdash.random_with_msb_set_uint::<u32>());
+    println!("Slapdash 64-bit number = {}", slapdash.random_with_msb_set_uint::<u64>());
+    println!("Slapdash 128-bit number = {}", slapdash.random_with_msb_set_uint::<u128>());
+    println!("Slapdash usize-sized number = {}", slapdash.random_with_msb_set_uint::<usize>());
+        
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    println!("Slapdash 8-bit number = {}", slapdash.random_with_msb_set_uint::<u8>());
+    println!("Slapdash 16-bit number = {}", slapdash.random_with_msb_set_uint::<u16>());
+    println!("Slapdash 32-bit number = {}", slapdash.random_with_msb_set_uint::<u32>());
+    println!("Slapdash 64-bit number = {}", slapdash.random_with_msb_set_uint::<u64>());
+    println!("Slapdash 128-bit number = {}", slapdash.random_with_msb_set_uint::<u128>());
+    println!("Slapdash usize-sized number = {}", slapdash.random_with_msb_set_uint::<usize>());
     println!("-------------------------------");
 }
 
 fn random_random_odd_with_msb_set_uint()
 {
     println!("random_random_odd_with_msb_set_uint");
+    // Example for Random
     use cryptocol::random::Random;
     let mut rand = Random::new();
-    println!("Random 8-bit odd number u8 = {}", rand.random_with_msb_set_uint::<u8>());
-    println!("Random 16-bit odd number u16 = {}", rand.random_with_msb_set_uint::<u16>());
-    println!("Random 32-bit odd number u32 = {}", rand.random_with_msb_set_uint::<u32>());
-    println!("Random 64-bit odd number u64 = {}", rand.random_with_msb_set_uint::<u64>());
-    println!("Random 128-bit odd number u128 = {}", rand.random_with_msb_set_uint::<u128>());
-    println!("Random usize-sized odd number usize = {}", rand.random_with_msb_set_uint::<usize>());
+    println!("Random 8-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u8>());
+    println!("Random 16-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u16>());
+    println!("Random 32-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u32>());
+    println!("Random 64-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u64>());
+    println!("Random 128-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u128>());
+    println!("Random usize-sized odd number = {}", rand.random_odd_with_msb_set_uint::<usize>());
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    println!("Any 8-bit odd number = {}", any.random_odd_with_msb_set_uint::<u8>());
+    println!("Any 16-bit odd number = {}", any.random_odd_with_msb_set_uint::<u16>());
+    println!("Any 32-bit odd number = {}", any.random_odd_with_msb_set_uint::<u32>());
+    println!("Any 64-bit odd number = {}", any.random_odd_with_msb_set_uint::<u64>());
+    println!("Any 128-bit odd number = {}", any.random_odd_with_msb_set_uint::<u128>());
+    println!("Any usize-sized odd number = {}", any.random_odd_with_msb_set_uint::<usize>());
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    println!("Random 8-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u8>());
+    println!("Random 16-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u16>());
+    println!("Random 32-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u32>());
+    println!("Random 64-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u64>());
+    println!("Random 128-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u128>());
+    println!("Random usize-sized odd number = {}", rand.random_odd_with_msb_set_uint::<usize>());
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    println!("Random 8-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u8>());
+    println!("Random 16-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u16>());
+    println!("Random 32-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u32>());
+    println!("Random 64-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u64>());
+    println!("Random 128-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u128>());
+    println!("Random usize-sized odd number = {}", rand.random_odd_with_msb_set_uint::<usize>());
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    println!("Random 8-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u8>());
+    println!("Random 16-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u16>());
+    println!("Random 32-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u32>());
+    println!("Random 64-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u64>());
+    println!("Random 128-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u128>());
+    println!("Random usize-sized odd number = {}", rand.random_odd_with_msb_set_uint::<usize>());
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    println!("Any 8-bit odd number = {}", any.random_odd_with_msb_set_uint::<u8>());
+    println!("Any 16-bit odd number = {}", any.random_odd_with_msb_set_uint::<u16>());
+    println!("Any 32-bit odd number = {}", any.random_odd_with_msb_set_uint::<u32>());
+    println!("Any 64-bit odd number = {}", any.random_odd_with_msb_set_uint::<u64>());
+    println!("Any 128-bit odd number = {}", any.random_odd_with_msb_set_uint::<u128>());
+    println!("Any usize-sized odd number = {}", any.random_odd_with_msb_set_uint::<usize>());
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    println!("Any 8-bit odd number = {}", any.random_odd_with_msb_set_uint::<u8>());
+    println!("Any 16-bit odd number = {}", any.random_odd_with_msb_set_uint::<u16>());
+    println!("Any 32-bit odd number = {}", any.random_odd_with_msb_set_uint::<u32>());
+    println!("Any 64-bit odd number = {}", any.random_odd_with_msb_set_uint::<u64>());
+    println!("Any 128-bit odd number = {}", any.random_odd_with_msb_set_uint::<u128>());
+    println!("Any usize-sized odd number = {}", any.random_odd_with_msb_set_uint::<usize>());
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    println!("Any 8-bit odd number = {}", any.random_odd_with_msb_set_uint::<u8>());
+    println!("Any 16-bit odd number = {}", any.random_odd_with_msb_set_uint::<u16>());
+    println!("Any 32-bit odd number = {}", any.random_odd_with_msb_set_uint::<u32>());
+    println!("Any 64-bit odd number = {}", any.random_odd_with_msb_set_uint::<u64>());
+    println!("Any 128-bit odd number = {}", any.random_odd_with_msb_set_uint::<u128>());
+    println!("Any usize-sized odd number = {}", any.random_odd_with_msb_set_uint::<usize>());
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    println!("Any 8-bit odd number = {}", any.random_odd_with_msb_set_uint::<u8>());
+    println!("Any 16-bit odd number = {}", any.random_odd_with_msb_set_uint::<u16>());
+    println!("Any 32-bit odd number = {}", any.random_odd_with_msb_set_uint::<u32>());
+    println!("Any 64-bit odd number = {}", any.random_odd_with_msb_set_uint::<u64>());
+    println!("Any 128-bit odd number = {}", any.random_odd_with_msb_set_uint::<u128>());
+    println!("Any usize-sized odd number = {}", any.random_odd_with_msb_set_uint::<usize>());
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    println!("Any 8-bit odd number = {}", any.random_odd_with_msb_set_uint::<u8>());
+    println!("Any 16-bit odd number = {}", any.random_odd_with_msb_set_uint::<u16>());
+    println!("Any 32-bit odd number = {}", any.random_odd_with_msb_set_uint::<u32>());
+    println!("Any 64-bit odd number = {}", any.random_odd_with_msb_set_uint::<u64>());
+    println!("Any 128-bit odd number = {}", any.random_odd_with_msb_set_uint::<u128>());
+    println!("Any usize-sized odd number = {}", any.random_odd_with_msb_set_uint::<usize>());
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    println!("Any 8-bit odd number = {}", any.random_odd_with_msb_set_uint::<u8>());
+    println!("Any 16-bit odd number = {}", any.random_odd_with_msb_set_uint::<u16>());
+    println!("Any 32-bit odd number = {}", any.random_odd_with_msb_set_uint::<u32>());
+    println!("Any 64-bit odd number = {}", any.random_odd_with_msb_set_uint::<u64>());
+    println!("Any 128-bit odd number = {}", any.random_odd_with_msb_set_uint::<u128>());
+    println!("Any usize-sized odd number = {}", any.random_odd_with_msb_set_uint::<usize>());
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    println!("Slapdash 8-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u8>());
+    println!("Slapdash 16-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u16>());
+    println!("Slapdash 32-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u32>());
+    println!("Slapdash 64-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u64>());
+    println!("Slapdash 128-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u128>());
+    println!("Slapdash usize-sized odd number = {}", slapdash.random_odd_with_msb_set_uint::<usize>());
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    println!("Slapdash 8-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u8>());
+    println!("Slapdash 16-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u16>());
+    println!("Slapdash 32-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u32>());
+    println!("Slapdash 64-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u64>());
+    println!("Slapdash 128-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u128>());
+    println!("Slapdash usize-sized odd number = {}", slapdash.random_odd_with_msb_set_uint::<usize>());
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    println!("Slapdash 8-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u8>());
+    println!("Slapdash 16-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u16>());
+    println!("Slapdash 32-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u32>());
+    println!("Slapdash 64-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u64>());
+    println!("Slapdash 128-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u128>());
+    println!("Slapdash usize-sized odd number = {}", slapdash.random_odd_with_msb_set_uint::<usize>());
+        
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    println!("Slapdash 8-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u8>());
+    println!("Slapdash 16-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u16>());
+    println!("Slapdash 32-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u32>());
+    println!("Slapdash 64-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u64>());
+    println!("Slapdash 128-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u128>());
+    println!("Slapdash usize-sized odd number = {}", slapdash.random_odd_with_msb_set_uint::<usize>());
+        
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    println!("Random 8-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u8>());
+    println!("Random 16-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u16>());
+    println!("Random 32-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u32>());
+    println!("Random 64-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u64>());
+    println!("Random 128-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u128>());
+    println!("Random usize-sized odd number = {}", rand.random_odd_with_msb_set_uint::<usize>());
+        
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    println!("Any 8-bit odd number = {}", any.random_odd_with_msb_set_uint::<u8>());
+    println!("Any 16-bit odd number = {}", any.random_odd_with_msb_set_uint::<u16>());
+    println!("Any 32-bit odd number = {}", any.random_odd_with_msb_set_uint::<u32>());
+    println!("Any 64-bit odd number = {}", any.random_odd_with_msb_set_uint::<u64>());
+    println!("Any 128-bit odd number = {}", any.random_odd_with_msb_set_uint::<u128>());
+    println!("Any usize-sized odd number = {}", any.random_odd_with_msb_set_uint::<usize>());
+        
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    println!("Slapdash 8-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u8>());
+    println!("Slapdash 16-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u16>());
+    println!("Slapdash 32-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u32>());
+    println!("Slapdash 64-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u64>());
+    println!("Slapdash 128-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u128>());
+    println!("Slapdash usize-sized odd number = {}", slapdash.random_odd_with_msb_set_uint::<usize>());
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    println!("Slapdash 8-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u8>());
+    println!("Slapdash 16-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u16>());
+    println!("Slapdash 32-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u32>());
+    println!("Slapdash 64-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u64>());
+    println!("Slapdash 128-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u128>());
+    println!("Slapdash usize-sized odd number = {}", slapdash.random_odd_with_msb_set_uint::<usize>());
+        
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    println!("Slapdash 8-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u8>());
+    println!("Slapdash 16-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u16>());
+    println!("Slapdash 32-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u32>());
+    println!("Slapdash 64-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u64>());
+    println!("Slapdash 128-bit odd number = {}", slapdash.random_odd_with_msb_set_uint::<u128>());
+    println!("Slapdash usize-sized odd number = {}", slapdash.random_odd_with_msb_set_uint::<usize>());
     println!("-------------------------------");
 }
 

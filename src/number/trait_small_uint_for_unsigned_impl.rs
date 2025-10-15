@@ -664,6 +664,32 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
                 }
             }
 
+            /// Tests a `SmallUInt`-type object to find whether or not `self`
+            /// is a prime number.
+            /// [Read more](trait@SmallUInt#tymethod.test_miller_rabin)
+            /// in detail.
+            fn test_miller_rabin(self, a: Self) -> bool
+            {
+                let self_minus_one = self.wrapping_sub(Self::one());
+                let mut d = self_minus_one;
+                let mut s = 0_u64;
+                while d.is_even()
+                {
+                    d >>= 1;
+                    s += 1;
+                }
+                let mut x = a.modular_pow(d, self);
+                if x == self_minus_one || x.is_one()
+                    { return true; }
+                for _ in 0..s-1
+                {
+                    x = x.modular_pow(Self::u8_as_smalluint(2), self);
+                    if x == self_minus_one
+                        { return true; }
+                }
+                false
+            }
+
             /// Tests a `SmallUInt`-type object to find whether or not it is a
             /// primne number.
             /// [Read more](trait@SmallUInt#tymethod.is_prime_using_miller_rabin)
@@ -754,30 +780,90 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
                 self.is_prime_using_miller_rabin(20)
             }
 
-            /// Tests a `SmallUInt`-type object to find whether or not `self`
-            /// is a prime number.
-            /// [Read more](trait@SmallUInt#tymethod.test_miller_rabin)
+            /// Calculates the greatest common divisor of `self` and `other`,
+            /// and returns the result.
+            /// [Read more](trait@SmallUInt#tymethod.gcd_assign)
             /// in detail.
-            fn test_miller_rabin(self, a: Self) -> bool
+            fn gcd(&self, other: Self) -> Self
             {
-                let self_minus_one = self.wrapping_sub(Self::one());
-                let mut d = self_minus_one;
-                let mut s = 0_u64;
-                while d.is_even()
+                if self.is_zero() || other.is_zero()
+                    { panic!(); }
+
+                let mut x = *self;
+                let mut y = other;
+                let mut t: Self;
+                while !y.is_zero()
                 {
-                    d >>= 1;
-                    s += 1;
+                    t = y;
+                    y = x.wrapping_rem(t);
+                    x = t;
                 }
-                let mut x = a.modular_pow(d, self);
-                if x == self_minus_one || x.is_one()
-                    { return true; }
-                for _ in 0..s-1
+                x
+            }
+
+            /// Calculates the greatest common divisor of `self` and `other`,
+            /// and assigns the result back to `self`.
+            /// [Read more](trait@SmallUInt#tymethod.gcd_assign)
+            /// in detail.
+            #[inline] fn gcd_assign(&mut self, other: Self)
+            {
+                *self = self.gcd(other);
+            }
+
+            // fn extended_gcd(&self, other: &Self) -> (Self, Self, Self);
+            /// Calculates the greatest common divisor of `self` and `other`,
+            /// [Read more](trait@SmallUInt#tymethod.extended_gcd)
+            /// in detail.
+            fn extended_gcd(&self, other: Self) -> (Self, Self, Self)
+            {
+                if self.is_zero() || other.is_zero()
+                    { panic!(); }
+
+                let mut a = *self;
+                let mut b = other;
+                let mut x0 = Self::one();
+                let mut y0 = Self::zero();
+                let mut x1 = Self::zero();
+                let mut y1 = Self::one();
+                let mut t: Self;
+                let mut q: Self;
+                while !b.is_zero()
                 {
-                    x = x.modular_pow(Self::u8_as_smalluint(2), self);
-                    if x == self_minus_one
-                        { return true; }
+                    q = a.wrapping_div(b);
+
+                    t = x1;
+                    x1 = x0.wrapping_sub(q.wrapping_mul(x1));
+                    x0 = t;
+
+                    t = y1;
+                    y1 = y0.wrapping_sub(q.wrapping_mul(y1));
+                    y0 = t;
+                    
+                    t = b;
+                    b = a.wrapping_rem(t);
+                    a = t;
                 }
-                false
+                (a, x0, y0)
+            }
+
+            /// Calculates the least common multiple of `self` and `other`,
+            /// and returns the result.
+            /// [Read more](trait@SmallUInt#tymethod.lcm)
+            /// in detail.
+            fn lcm(&self, other: Self) -> Self
+            {
+                if self.is_zero() || other.is_zero()
+                    { panic!(); }
+                self.wrapping_div(self.gcd(other)).wrapping_mul(other)
+            }
+
+            /// Calculates the greatest common divisor of `self` and `other`,
+            /// and assigns the result back to `self`.
+            /// [Read more](trait@SmallUInt#tymethod.lcm_assign)
+            /// in detail.
+            fn lcm_assign(&mut self, other: Self)
+            {
+                *self = self.lcm(other);
             }
 
             /// Reverses the order of bits in the integer.
