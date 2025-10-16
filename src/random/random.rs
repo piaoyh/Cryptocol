@@ -328,10 +328,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   collects 1024 bits as a seed. If you use this method, it results that
     ///   you give only '128' bits (= '64' bits + '64' bits) as a seed and the
     ///   other '896' bits will be made out of the '128' bits that you provided.
-    /// 
+ /* /// 
     /// # Example 1 for BIG_KECCAK_1024
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::random::RandGen;
     /// use cryptocol::hash::BIG_KECCAK_1024;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
@@ -342,7 +342,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seeds)
+    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seeds) */
     pub fn new_with_generators_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: u64, aux: u64) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
@@ -411,21 +411,23 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   use this method, it results that you give full '1024' bits (= '64'
     ///   bits X '8' X '2') as a seed and it is equivalent to use a seed
     ///   collector function.
-/*  /// 
+    /// 
     /// # Example 1 for BIG_KECCAK_1024
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
-    /// use cryptocol::hash::BIG_KECCAK_1024;
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = RandGen::new_with_generators_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), 10500872879054459758_u64, 15887751380961987625_u64);
+    /// use cryptocol::hash::BIG_KECCAK_1024;
+    /// let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
+    /// let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    /// let mut rand = RandGen::new_with_generators_seed_arrays(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed, aux);
     /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
     /// println!("Random number = {}", num);
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seeds) */
+    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seed_arrays)
     pub fn new_with_generators_seed_arrays<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: [u64; 8], aux: [u64; 8]) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
@@ -483,21 +485,44 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-/*  /// 
+    /// 
     /// # Example 1 for BIG_KECCAK_1024
     /// ```
-    /// use cryptocol::random::RandGen;
     /// use cryptocol::hash::BIG_KECCAK_1024;
+    /// use cryptocol::random::RandGen;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = RandGen::new_with(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new());
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = RandGen::new_with_generators_seed_collector(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed_collector);
     /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
     /// println!("Random number = {}", num);
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seed_collector) */
+    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seed_collector)
     pub fn new_with_generators_seed_collector<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8]) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
@@ -528,7 +553,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         }
     }
 
-    // pub fn new_with_generators_seed_collector_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: u64, aux: u64) -> Self
+    // pub fn new_with_generators_seed_collector_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Self
     /// Constructs a new `Random_Generic` object with two random number
     /// generator engines, a seed collector function, and two seeds
     /// of type `u64` given.
@@ -570,10 +595,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   collects 1024 bits as a seed. If you use this method, it results that
     ///   you give only '128' bits (= '64' bits + '64' bits) as a seed and the
     ///   other '896' bits will be made out of the '128' bits that you provided.
-    /// 
+/*  /// 
     /// # Example 1 for BIG_KECCAK_1024
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
     /// use cryptocol::hash::BIG_KECCAK_1024;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
@@ -584,7 +609,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seeds)
+    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seeds) */
     pub fn new_with_generators_seed_collector_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
@@ -665,7 +690,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
 /*  /// 
     /// # Example 1 for BIG_KECCAK_1024
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
     /// use cryptocol::hash::BIG_KECCAK_1024;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
@@ -1528,7 +1553,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         res.set_msb();
         res
     }
-//////////////////////
+
     // pub fn random_prime_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
     /// Returns a random prime number.
     /// 
@@ -1567,16 +1592,16 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// [random_prime_with_msb_set_using_miller_rabin_uint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_uint)
     /// rather than this method.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Any;
-    /// let mut rand = Any::new();
-    /// println!("Random prime number u8 = {}", rand.random_prime_using_miller_rabin_uint::<u8>(5));
-    /// println!("Random prime number u16 = {}", rand.random_prime_using_miller_rabin_uint::<u16>(5));
-    /// println!("Random prime number u32 = {}", rand.random_prime_using_miller_rabin_uint::<u32>(5));
-    /// println!("Random prime number u64 = {}", rand.random_prime_using_miller_rabin_uint::<u64>(5));
-    /// println!("Random prime number u128 = {}", rand.random_prime_using_miller_rabin_uint::<u128>(5));
-    /// println!("Random prime number usize = {}", rand.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
+    /// println!("Random 8-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Random 16-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Random 32-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Random 64-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Random 128-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Random usize-sized prime number = {}", rand.random_prime_using_miller_rabin_uint::<usize>(5));
     /// ```
     /// 
     /// # For more examples,
@@ -1634,9 +1659,6 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
     /// - If you want to use a normal random prime number, you are highly
@@ -1644,16 +1666,16 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// [random_prime_using_miller_rabin_uint()](struct@Random_Generic#method.random_prime_using_miller_rabin_uint)
     /// rather than this method.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Any;
-    /// let mut rand = Any::new();
-    /// println!("Random 8-bit prime number u8 = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
-    /// println!("Random 16-bit prime number u16 = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
-    /// println!("Random 32-bit prime number u32 = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
-    /// println!("Random 64-bit prime number u64 = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
-    /// println!("Random 128-bit prime number u128 = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
-    /// println!("Random usize-sized prime number usize = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
+    /// println!("Random 8-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Random 16-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Random 32-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Random 64-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Random 128-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Random usize-sized prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
     /// ```
     /// 
     /// # For more examples,
@@ -1690,22 +1712,19 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
-    /// - If you want random BigUInt, you are highly recommended
+    /// If you want random BigUInt, you are highly recommended
     /// to use the method
     /// [random_biguint()](struct@Random_Generic#method.random_biguint)
     /// rather than this method.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Any;
-    /// let mut rand = Any::new();
-    /// let num: [u128; 20] = rand.random_array();
-    /// for i in 0..20
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
+    /// let num: [u128; 5] = rand.random_array();
+    /// for i in 0..5
     ///     { println!("Random number {} => {}", i, num[i]); }
     /// ```
     /// 
@@ -1742,23 +1761,20 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
-    /// - If you want random BigUInt, you are highly recommended
+    /// If you want random BigUInt, you are highly recommended
     /// to use the method
     /// [random_biguint()](struct@Random_Generic#method.random_biguint)
     /// rather than this method.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Slapdash_MD4;
-    /// let mut rand = Slapdash_MD4::new();
-    /// let mut num = [0_u64; 32];
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
+    /// let mut num = [0_u128; 5];
     /// rand.put_random_in_array(&mut num);
-    /// for i in 0..32
+    /// for i in 0..5
     ///     { println!("Random number {} => {}", i, num[i]); }
     /// ```
     /// 
@@ -1791,7 +1807,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             j += 1;
         }
     }
-
+//////////////////////
     // pub fn random_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
     /// Constucts a new `BigUInt<T, N>`-type object which has the random value.
     /// 
@@ -1808,38 +1824,35 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
     /// - If you want to use a random number less than a certain value, you are
-    /// highly recommended to use the method
-    /// [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
-    /// rather than this method.
+    ///   highly recommended to use the method
+    ///   [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number, you are highly recommended to
-    /// use the method
-    /// [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
-    /// rather than this method.
+    ///   use the method
+    ///   [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number less than a certain value,
-    /// you are highly recommended to use the method
-    /// [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random
-    /// number, you are highly recommended to use the method
-    /// [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random odd
-    /// number, you are highly recommended to
-    /// use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to
+    ///   use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
+    ///   rather than this method.
     /// - If you want to use a normal random prime number, you are highly recommended to
-    /// use the method [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   use the method [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random prime
-    /// number, you are highly recommended to
-    /// use the method [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to
+    ///   use the method [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// 
     /// # Example
     /// ```

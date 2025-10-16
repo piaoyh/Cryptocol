@@ -186,7 +186,7 @@ impl Random_Generic
     /// define_utypes_with!(u64);
     /// 
     /// let mut slapdash = Slapdash_SHA1::new();
-    /// println!("Any number = {}", slapdash.random_usize());
+    /// println!("Slapdash number = {}", slapdash.random_usize());
     /// ```
     /// 
     /// # Example 13 for Slapdash_SHA0
@@ -196,7 +196,7 @@ impl Random_Generic
     /// define_utypes_with!(u64);
     /// 
     /// let mut slapdash = Slapdash_SHA0::new();
-    /// println!("Any number = {}", slapdash.random_u64());
+    /// println!("Slapdash number = {}", slapdash.random_u64());
     /// ```
     /// 
     /// # Example 14 for Slapdash_MD5
@@ -206,7 +206,7 @@ impl Random_Generic
     /// define_utypes_with!(u64);
     /// 
     /// let mut slapdash = Slapdash_MD5::new();
-    /// println!("Any number = {}", slapdash.random_u32());
+    /// println!("Slapdash number = {}", slapdash.random_u32());
     /// ```
     /// 
     /// # Example 15 for Slapdash_MD4
@@ -216,7 +216,7 @@ impl Random_Generic
     /// define_utypes_with!(u64);
     /// 
     /// let mut slapdash = Slapdash_MD4::new();
-    /// println!("Any number = {}", slapdash.random_u16());
+    /// println!("Slapdash number = {}", slapdash.random_u16());
     /// ```
     /// 
     /// # Example 16 for Random_Rijndael
@@ -248,7 +248,7 @@ impl Random_Generic
     /// define_utypes_with!(u64);
     /// 
     /// let mut slapdash = Slapdash_DES::new();
-    /// println!("Any number = {}", slapdash.random_odd_biguint());
+    /// println!("Slapdash number = {}", slapdash.random_odd_biguint());
     /// ```
     pub fn new() -> Self
     {
@@ -352,7 +352,7 @@ impl Random_Generic
     /// println!("Any number = {}", num);
     /// ```
     /// 
-    /// # Example 6 for SHA2_256
+    /// # Example 7 for SHA2_256
     /// ```
     /// use cryptocol::random::AnyGen;
     /// use cryptocol::hash::SHA2_256;
@@ -361,25 +361,25 @@ impl Random_Generic
     /// println!("Any number = {}", any.random_u128());
     /// ```
     /// 
-    /// # Example 7 for SHA1 and SHA0
+    /// # Example 8 for SHA1 and SHA0
     /// ```
-    /// use cryptocol::random::AnyGen;
+    /// use cryptocol::random::SlapdashGen;
     /// use cryptocol::hash::{ SHA1, SHA0 };
     /// 
-    /// let mut any = AnyGen::new_with(SHA1::new(), SHA0::new());
-    /// println!("Any number = {}", any.random_u64());
+    /// let mut slapdashGen = SlapdashGen::new_with(SHA1::new(), SHA0::new());
+    /// println!("Any number = {}", slapdashGen.random_u64());
     /// ```
     /// 
-    /// # Example 8 for MD5 and MD4
+    /// # Example 9 for MD5 and MD4
     /// ```
-    /// use cryptocol::random::AnyGen;
+    /// use cryptocol::random::SlapdashGen;
     /// use cryptocol::hash::{ MD5, MD4 };
     /// 
-    /// let mut any = AnyGen::new_with(MD5::new(), MD4::new());
-    /// println!("Any number = {}", any.random_u32());
+    /// let mut slapdashGen = SlapdashGen::new_with(MD5::new(), MD4::new());
+    /// println!("Any number = {}", slapdashGen.random_u32());
     /// ```
     /// 
-    /// # Example 9 for AES_128
+    /// # Example 10 for AES_128
     /// ```
     /// use cryptocol::random::RandGen;
     /// use cryptocol::symmetric::AES_128;
@@ -388,13 +388,13 @@ impl Random_Generic
     /// println!("Random number = {}", rand.random_u16());
     /// ```
     /// 
-    /// # Example 9 for DES
+    /// # Example 11 for DES
     /// ```
-    /// use cryptocol::random::AnyGen;
+    /// use cryptocol::random::SlapdashGen;
     /// use cryptocol::symmetric::DES;
     /// 
-    /// let mut any = AnyGen::new_with(DES::new(), DES::new());
-    /// println!("Any number = {}", any.random_u8());
+    /// let mut slapdashGen = SlapdashGen::new_with(DES::new(), DES::new());
+    /// println!("Any number = {}", slapdashGen.random_u8());
     /// ```
     pub fn new_with<SG, AG>(mut main_generator: SG, mut aux_generator: AG) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
@@ -620,7 +620,7 @@ impl Random_Generic
     /// 
     /// # Example 1 for BIG_KECCAK_1024
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::random::RandGen;
     /// use cryptocol::hash::BIG_KECCAK_1024;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
@@ -632,7 +632,7 @@ impl Random_Generic
     /// 
     /// # Example 2 for SHA3_512
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::random::AnyGen;
     /// use cryptocol::hash::SHA3_512;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
@@ -644,7 +644,7 @@ impl Random_Generic
     /// 
     /// # Example 3 for SHA2_512
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::random::AnyGen;
     /// use cryptocol::hash::SHA2_512;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
@@ -656,7 +656,7 @@ impl Random_Generic
     /// 
     /// # Example 4 for SHAKE_256
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::random::RandGen;
     /// use cryptocol::hash::SHAKE_256;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
@@ -668,7 +668,7 @@ impl Random_Generic
     /// 
     /// # Example 5 for SHAKE_128
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::random::AnyGen;
     /// use cryptocol::hash::SHAKE_128;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
@@ -680,7 +680,7 @@ impl Random_Generic
     /// 
     /// # Example 6 for SHA3_256
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::random::AnyGen;
     /// use cryptocol::hash::SHA3_256;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
@@ -692,7 +692,7 @@ impl Random_Generic
     /// 
     /// # Example 7 for SHA2_256
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::random::AnyGen;
     /// use cryptocol::hash::SHA2_256;
     /// 
     /// let mut any = AnyGen::new_with_generators_seeds(SHA2_256::new(), SHA2_256::new(), 15698731215687456325, 10684237915728469725);
@@ -701,42 +701,770 @@ impl Random_Generic
     /// 
     /// # Example 8 for SHA1 and SHA0
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::random::SlapdashGen;
     /// use cryptocol::hash::{ SHA1, SHA0 };
     /// 
-    /// let mut any = AnyGen::new_with_generators_seeds(SHA1::new(), SHA0::new(), 2879054410500759758, 15887876257513809619);
-    /// println!("Any number = {}", any.random_u64());
+    /// let mut slapdashGen = SlapdashGen::new_with_generators_seeds(SHA1::new(), SHA0::new(), 2879054410500759758, 15887876257513809619);
+    /// println!("SlapdashGen number = {}", slapdashGen.random_u64());
     /// ```
     /// 
     /// # Example 9 for MD5 and MD4
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::random::SlapdashGen;
     /// use cryptocol::hash::{ MD5, MD4 };
     /// 
-    /// let mut any = AnyGen::new_with_generators_seeds(MD5::new(), MD4::new(), 610458805, 215793685);
-    /// println!("Any number = {}", any.random_u32());
+    /// let mut slapdashGen = AnyGen::new_with_generators_seeds(MD5::new(), MD4::new(), 610458805, 215793685);
+    /// println!("SlapdashGen number = {}", slapdashGen.random_u32());
     /// ```
     /// 
     /// # Example 10 for AES_128
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::random::RandGen;
     /// use cryptocol::symmetric::AES_128;
     /// 
-    /// let mut any = RandGen::new_with_generators_seeds(AES_128::new(), AES_128::new(), 18782, 50558);
-    /// println!("Random number = {}", any.random_u16());
+    /// let mut rand = RandGen::new_with_generators_seeds(AES_128::new(), AES_128::new(), 18782, 50558);
+    /// println!("Random number = {}", rand.random_u16());
     /// ```
     /// 
     /// # Example 11 for DES
     /// ```
-    /// use cryptocol::random::{ AnyGen, RandGen };
+    /// use cryptocol::random::SlapdashGen;
     /// use cryptocol::symmetric::AES_128;
     /// 
     /// use cryptocol::symmetric::DES;
-    /// let mut any = AnyGen::new_with_generators_seeds(DES::new(), DES::new(), 0, 125);
-    /// println!("Any number = {}", any.random_u8());
+    /// let mut slapdashGen = SlapdashGen::new_with_generators_seeds(DES::new(), DES::new(), 0, 125);
+    /// println!("SlapdashGen number = {}", slapdashGen.random_u8());
     /// ```
     pub fn new_with_generators_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: u64, aux: u64) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn new_with_generators_seed_arrays<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: [u64; 8], aux: [u64; 8]) -> Self
+    /// Constructs a new `Random_Generic` object with two random
+    /// number generator engines and two seed arrays of type `u64` given.
+    /// 
+    /// # Arguments
+    /// - `main_generator` is a main random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating main pseudo-random numbers.
+    /// - `aux_generator` is an auxiliary random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating auxiliary pseudo-random numbers to use in
+    ///   generating the main pseudo-random numbers.
+    /// - `seed` is the seed array and is of `[u64; 8]`.
+    /// - `aux` is the seed array and is of `[u64; 8]`.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Panics
+    /// If `COUNT` is `0`, this method will panic!
+    /// 
+    /// # Cryptographical Security
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
+    /// - You are highly recommended to use this method rather than the method
+    ///   new_with_generators_seeds for security reason. It is because the
+    ///   default seed collector function collects 1024 bits as a seed. If you
+    ///   use this method, it results that you give full '1024' bits (= '64'
+    ///   bits X '8' X '2') as a seed and it is equivalent to use a seed
+    ///   collector function.
+    /// 
+    /// # Example 1 for BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// use cryptocol::hash::BIG_KECCAK_1024;
+    /// let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
+    /// let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    /// let mut rand = RandGen::new_with_generators_seed_arrays(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed, aux);
+    /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random number = {}", num);
+    /// ```
+    /// 
+    /// # Example 2 for SHA3_512
+    /// ```
+    /// use cryptocol::hash::SHA3_512;
+    /// let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
+    /// let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    /// let mut any = AnyGen::new_with_generators_seed_arrays(SHA3_512::new(), SHA3_512::new(), seed, aux);
+    /// let num: U256 = any.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 3 for SHA2_512
+    /// ```
+    /// use cryptocol::hash::SHA2_512;
+    /// let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
+    /// let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    /// let mut any = AnyGen::new_with_generators_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed, aux);
+    /// let num: U1024 = any.random_with_msb_set_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 4 for SHAKE_256
+    /// ```
+    /// use cryptocol::hash::SHAKE_256;
+    /// let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
+    /// let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    /// let mut rand = RandGen::new_with_generators_seed_arrays(SHAKE_256::new(), SHAKE_256::new(), seed, aux);
+    /// let num: U768 = rand.random_odd_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
+    /// 
+    /// # Example 5 for SHAKE_128
+    /// ```
+    /// use cryptocol::hash::SHAKE_128;
+    /// let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
+    /// let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    /// let mut any = AnyGen::new_with_generators_seed_arrays(SHAKE_128::new(), SHAKE_128::new(), seed, aux);
+    /// let num: U512 = any.random_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 6 for SHA3_256
+    /// ```
+    /// use cryptocol::hash::SHA3_256;
+    /// let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
+    /// let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    /// let mut any = AnyGen::new_with_generators_seed_arrays(SHA3_256::new(), SHA3_256::new(), seed, aux);
+    /// let num: U384 = any.random_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 7 for SHA2_256
+    /// ```
+    /// use cryptocol::hash::SHA2_256;
+    /// let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
+    /// let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    /// let mut any = AnyGen::new_with_generators_seed_arrays(SHA2_256::new(), SHA2_256::new(), seed, aux);
+    /// println!("Any number = {}", any.random_u128());
+    /// ```
+    /// 
+    /// # Example 8 for SHA1 and SHA0
+    /// ```
+    /// use cryptocol::hash::{ SHA1, SHA0 };
+    /// let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
+    /// let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    /// let mut slapdash = SlapdashGen::new_with_generators_seed_arrays(SHA1::new(), SHA0::new(), seed, aux);
+    /// println!("Slapdash number = {}", slapdash.random_u64());
+    /// ```
+    /// 
+    /// # Example 9 for MD5 and MD4
+    /// ```
+    /// use cryptocol::hash::{ MD5, MD4 };
+    /// let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
+    /// let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    /// let mut slapdash = SlapdashGen::new_with_generators_seed_arrays(MD5::new(), MD4::new(), seed, aux);
+    /// println!("Slapdash number = {}", slapdash.random_u32());
+    /// ```
+    /// 
+    /// # Example 10 for AES_128
+    /// ```
+    /// use cryptocol::symmetric::AES_128;
+    /// let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
+    /// let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    /// let mut rand = RandGen::new_with_generators_seed_arrays(AES_128::new(), AES_128::new(), seed, aux);
+    /// println!("Random number = {}", rand.random_u16());
+    /// ```
+    /// 
+    /// # Example 11 for DES
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
+    /// let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    /// let mut slapdash = SlapdashGen::new_with_generators_seed_arrays(DES::new(), DES::new(), seed, aux);
+    /// println!("Slapdash number = {}", slapdash.random_u8());
+    /// ```
+    pub fn new_with_generators_seed_arrays<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: [u64; 8], aux: [u64; 8]) -> Self
+    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn new_with_generators_seed_collector<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8]) -> Self
+    /// Constructs a new `Random_Generic` object
+    /// with two random number generator engines and a seed collector method.
+    /// 
+    /// # Arguments
+    /// - `main_generator` is a main random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating main pseudo-random numbers.
+    /// - `aux_generator` is an auxiliary random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating auxiliary pseudo-random numbers to use in
+    ///   generating the main pseudo-random numbers.
+    /// - `seed_collector` is a seed collector function to collect seeds, and
+    ///   is of the type `fn() -> [u64; 8]`.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Features
+    /// - The default seed collector function is provided in this module,
+    ///   but it is optimized for Unix/Linux though it works under Windows too.
+    /// - If you use this crate under Windows and/or you have a better one,
+    ///   you can use your own seed collector function by replacing the default
+    ///   seed collector function with your own one. 
+    /// 
+    /// # Panics
+    /// If `COUNT` is `0`, this method will panic!
+    /// 
+    /// # Cryptographical Security
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
+    /// 
+    /// # Example 1 for BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::hash::BIG_KECCAK_1024;
+    /// use cryptocol::random::RandGen;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = RandGen::new_with_generators_seed_collector(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed_collector);
+    /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random number = {}", num);
+    /// ```
+    /// 
+    /// # Example 2 for SHA3_512
+    /// ```
+    /// use cryptocol::hash::SHA3_512;
+    /// use cryptocol::random::AnyGen;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seed_collector(SHA3_512::new(), SHA3_512::new(), seed_collector);
+    /// let num: U256 = any.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 3 for SHA2_512
+    /// ```
+    /// use cryptocol::hash::SHA2_512;
+    /// use cryptocol::random::AnyGen;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seed_collector(SHA2_512::new(), SHA2_512::new(),seed_collector);
+    /// let num: U1024 = any.random_with_msb_set_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 4 for SHAKE_256
+    /// ```
+    /// use cryptocol::hash::SHAKE_256;
+    /// use cryptocol::random::RandGen;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = RandGen::new_with_generators_seed_collector(SHAKE_256::new(), SHAKE_256::new(), seed_collector);
+    /// let num: U768 = rand.random_odd_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
+    /// 
+    /// # Example 5 for SHAKE_128
+    /// ```
+    /// use cryptocol::hash::SHAKE_128;
+    /// use cryptocol::random::AnyGen;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seed_collector(SHAKE_128::new(), SHAKE_128::new(), seed_collector);
+    /// let num: U512 = any.random_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 6 for SHA3_256
+    /// ```
+    /// use cryptocol::hash::SHA3_256;
+    /// use cryptocol::random::AnyGen;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seed_collector(SHA3_256::new(), SHA3_256::new(), seed_collector);
+    /// let num: U384 = any.random_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 7 for SHA2_256
+    /// ```
+    /// use cryptocol::hash::SHA2_256;
+    /// use cryptocol::random::AnyGen;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seed_collector(SHA2_256::new(), SHA2_256::new(), seed_collector);
+    /// println!("Any number = {}", any.random_u128());
+    /// ```
+    /// 
+    /// # Example 8 for SHA1 and SHA0
+    /// ```
+    /// use cryptocol::hash::{ SHA1, SHA0 };
+    /// use cryptocol::random::SlapdashGen;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = SlapdashGen::new_with_generators_seed_collector(SHA1::new(), SHA0::new(), seed_collector);
+    /// println!("Slapdash number = {}", slapdash.random_u64());
+    /// ```
+    /// 
+    /// # Example 9 for MD5 and MD4
+    /// ```
+    /// use cryptocol::hash::{ MD5, MD4 };
+    /// use cryptocol::random::SlapdashGen;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = SlapdashGen::new_with_generators_seed_collector(MD5::new(), MD4::new(), seed_collector);
+    /// println!("Slapdash number = {}", slapdash.random_u32());
+    /// ```
+    /// 
+    /// # Example 10 for AES_128
+    /// ```
+    /// use cryptocol::symmetric::AES_128;
+    /// use cryptocol::random::RandGen;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = RandGen::new_with_generators_seed_collector(AES_128::new(), AES_128::new(), seed_collector);
+    /// println!("Random number = {}", rand.random_u16());
+    /// ```
+    /// 
+    /// # Example 11 for DES
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// use cryptocol::random::SlapdashGen;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = SlapdashGen::new_with_generators_seed_collector(DES::new(), DES::new(), seed_collector);
+    /// println!("Slapdash number = {}", slapdash.random_u8());
+    /// ```
+    pub fn new_with_generators_seed_collector<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8]) -> Self
+    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn new_with_generators_seed_collector_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Self
+    /// Constructs a new `Random_Generic` object with two random number
+    /// generator engines, a seed collector function, and two seeds
+    /// of type `u64` given.
+    /// 
+    /// # Arguments
+    /// - `main_generator` is a main random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating main pseudo-random numbers.
+    /// - `aux_generator` is an auxiliary random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating auxiliary pseudo-random numbers to use in
+    ///   generating the main pseudo-random numbers.
+    /// - `seed_collector` is a seed collector function to collect seeds, and
+    ///   is of the type `fn() -> [u64; 8]`.
+    /// - `seed` is the seed number of `u64`.
+    /// - `aux` is the seed number of `u64`.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Features
+    /// - The default seed collector function is provided in this module,
+    ///   but it is optimized for Unix/Linux though it works under Windows too.
+    /// - If you use this crate under Windows and/or you have a better one,
+    ///   you can use your own seed collector function by replacing the default
+    ///   seed collector function with your own one.
+    /// 
+    /// # Panics
+    /// If `COUNT` is `0`, this method will panic!
+    /// 
+    /// # Cryptographical Security
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
+    /// - You are highly recommended to use the method
+    ///   `new_with_generators_seed_collector_seeds()` rather than this method
+    ///   for security reason. It is because the default seed collector function
+    ///   collects 1024 bits as a seed. If you use this method, it results that
+    ///   you give only '128' bits (= '64' bits + '64' bits) as a seed and the
+    ///   other '896' bits will be made out of the '128' bits that you provided.
+/*  /// 
+    /// # Example 1 for BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::hash::BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = RandGen::new_with_generators_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), 10500872879054459758_u64, 15887751380961987625_u64);
+    /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random number = {}", num);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seeds) */
+    pub fn new_with_generators_seed_collector_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Self
+    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn new_with_generators_seed_collector_seed_arrays<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Self
+    /// Constructs a new `Random_Generic` object with two random
+    /// number generator engines and two seed arrays of type `u64`.
+    /// 
+    /// # Arguments
+    /// - `main_generator` is a main random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating main pseudo-random numbers.
+    /// - `aux_generator` is an auxiliary random number generator engine
+    ///   which is of `Random_Engine`-type and
+    ///   for generating auxiliary pseudo-random numbers to use in
+    ///   generating the main pseudo-random numbers.
+    /// - `seed_collector` is a seed collector function to collect seeds, and
+    ///   is of the type `fn() -> [u64; 8]`.
+    /// - `seed` is the seed array and is of `[u64; 8]`.
+    /// - `aux` is the seed array and is of `[u64; 8]`.
+    /// 
+    /// # Output
+    /// It returns a new object of `Random_Generic`.
+    /// 
+    /// # Features
+    /// - The default seed collector function is provided in this module,
+    ///   but it is optimized for Unix/Linux though it works under Windows too.
+    /// - If you use this crate under Windows and/or you have a better one,
+    ///   you can use your own seed collector function by replacing the default
+    ///   seed collector function with your own one.
+    /// - You are highly recommended to use this method rather than the method
+    ///   new_with_generators_seed_collector_seeds for security reason. It is
+    ///   because the default seed collector function collects 1024 bits as a
+    ///   seed. If you use this method, it results that you give full '1024'
+    ///   bits (= '64' bits X '8' X '2') as a seed and it is equivalent to use
+    ///   a seed collector function
+    /// 
+    /// # Panics
+    /// If `COUNT` is `0`, this method will panic!
+    /// 
+    /// # Cryptographical Security
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
+/*  /// 
+    /// # Example 1 for BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::hash::BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = RandGen::new_with_generators_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), 10500872879054459758_u64, 15887751380961987625_u64);
+    /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random number = {}", num);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seed_collectors_seed_arrays) */
+    pub fn new_with_generators_seed_collector_seed_arrays<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Self
+    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn get_seed_collector(&self) -> fn() -> [u64; 8]
+    /// Returns the function pointer to the current seed collector function.
+    /// 
+    /// # Output
+    /// It returns the function pointer to the current seed collector function,
+    /// and is of the type `fn() -> [u64; 8]`.
+/*  /// 
+    /// # Example 1
+    /// ```
+    /// ``` */
+    pub fn get_seed_collector(&self) -> fn() -> [u64; 8]
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn set_seed_collector(&mut self, collect_seed: fn() -> [u64; 8])
+    /// Replaces the default seed collector function
+    /// with new seed collector function.
+    /// 
+    /// # Arguments
+    /// `collect_seed` is a new seed collector function to replace the default
+    /// seed collector function, and is of the type `fn() -> [u64; 8]`.
+/*  /// 
+    /// # Example 1
+    /// ```
+    /// ``` */
+    pub fn set_seed_collector(&mut self, seed_collector: fn() -> [u64; 8])
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn reset_seed_collector(&mut self)
+    /// Replace the current seed collector function
+    /// with the default seed collector function.
+    /// 
+    /// # Features
+    /// After this method is performed, the previous seed collector function
+    /// will be lost.
+/*  /// 
+    /// # Example 1
+    /// ```
+    /// ``` */
+    pub fn reset_seed_collector(&mut self)
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4937,16 +5665,244 @@ impl Random_Generic
     /// [random_prime_with_msb_set_using_miller_rabin_uint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_uint)
     /// rather than this method.
     /// 
-    /// # Example
+    /// # Example 1 for Random
+    /// ```
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
+    /// println!("Random 8-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Random 16-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Random 32-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Random 64-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Random 128-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Random usize-sized prime number = {}", rand.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 2 for Any
     /// ```
     /// use cryptocol::random::Any;
-    /// let mut rand = Any::new();
-    /// println!("Random prime number u8 = {}", rand.random_prime_using_miller_rabin_uint::<u8>(5));
-    /// println!("Random prime number u16 = {}", rand.random_prime_using_miller_rabin_uint::<u16>(5));
-    /// println!("Random prime number u32 = {}", rand.random_prime_using_miller_rabin_uint::<u32>(5));
-    /// println!("Random prime number u64 = {}", rand.random_prime_using_miller_rabin_uint::<u64>(5));
-    /// println!("Random prime number u128 = {}", rand.random_prime_using_miller_rabin_uint::<u128>(5));
-    /// println!("Random prime number usize = {}", rand.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// let mut any = Any::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// println!("Random 8-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Random 16-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Random 32-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Random 64-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Random 128-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Random usize-sized prime number = {}", rand.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// let mut rand = Random_SHA3_512::new();
+    /// println!("Random 8-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Random 16-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Random 32-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Random 64-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Random 128-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Random usize-sized prime number = {}", rand.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// let mut rand = Random_SHA2_512::new();
+    /// println!("Random 8-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Random 16-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Random 32-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Random 64-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Random 128-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Random usize-sized prime number = {}", rand.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// let mut any = Any_SHAKE_256::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// let mut any = Any_SHAKE_128::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// let mut any = Any_SHA3_512::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// let mut any = Any_SHA3_256::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// let mut any = Any_SHA2_512::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// let mut any = Any_SHA2_256::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 12 for Slapdash_SHA1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// let mut slapdash = Slapdash_SHA1::new();
+    /// println!("Slapdash 8-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Slapdash 16-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Slapdash 32-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Slapdash 64-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Slapdash 128-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 13 for Slapdash_SHA0
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// let mut slapdash = Slapdash_SHA0::new();
+    /// println!("Slapdash 8-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Slapdash 16-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Slapdash 32-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Slapdash 64-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Slapdash 128-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 14 for Slapdash_MD5
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// let mut slapdash = Slapdash_MD5::new();
+    /// println!("Slapdash 8-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Slapdash 16-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Slapdash 32-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Slapdash 64-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Slapdash 128-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 15 for Slapdash_MD4
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// let mut slapdash = Slapdash_MD4::new();
+    /// println!("Slapdash 8-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Slapdash 16-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Slapdash 32-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Slapdash 64-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Slapdash 128-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// let mut rand = Random_Rijndael::new();
+    /// println!("Random 8-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Random 16-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Random 32-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Random 64-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Random 128-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Random usize-sized prime number = {}", any.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// let mut any = Any_Rijndael::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 18 for Slapdash_DES
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// let mut slapdash = Slapdash_DES::new();
+    /// println!("Slapdash 8-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Slapdash 16-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Slapdash 32-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Slapdash 64-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Slapdash 128-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 19 for Slapdash_Num_C
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// let mut slapdash = Slapdash_Num_C::new();
+    /// println!("Slapdash 8-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Slapdash 16-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Slapdash 32-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Slapdash 64-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Slapdash 128-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 20 for Slapdash
+    /// ```
+    /// use cryptocol::random::Slapdash;
+    /// let mut slapdash = Slapdash::new();
+    /// println!("Slapdash 8-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u8>(5));
+    /// println!("Slapdash 16-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u16>(5));
+    /// println!("Slapdash 32-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u32>(5));
+    /// println!("Slapdash 64-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u64>(5));
+    /// println!("Slapdash 128-bit prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<usize>(5));
     /// ```
     pub fn random_prime_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -4998,26 +5954,251 @@ impl Random_Generic
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
-    /// - If you want to use a normal random prime number, you are highly
+    /// If you want to use a normal random prime number, you are highly
     /// recommended to use the method
     /// [random_prime_using_miller_rabin_uint()](struct@Random_Generic#method.random_prime_using_miller_rabin_uint)
     /// rather than this method.
     /// 
-    /// # Example
+    /// # Example 1 for Random
+    /// ```
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
+    /// println!("Random 8-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Random 16-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Random 32-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Random 64-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Random 128-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Random usize-sized prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 2 for Any
     /// ```
     /// use cryptocol::random::Any;
-    /// let mut rand = Any::new();
-    /// println!("Random 8-bit prime number u8 = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
-    /// println!("Random 16-bit prime number u16 = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
-    /// println!("Random 32-bit prime number u32 = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
-    /// println!("Random 64-bit prime number u64 = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
-    /// println!("Random 128-bit prime number u128 = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
-    /// println!("Random usize-sized prime number usize = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// let mut any = Any::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// println!("Random 8-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Random 16-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Random 32-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Random 64-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Random 128-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Random usize-sized prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// let mut rand = Random_SHA3_512::new();
+    /// println!("Random 8-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Random 16-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Random 32-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Random 64-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Random 128-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Random usize-sized prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// let mut rand = Random_SHA2_512::new();
+    /// println!("Random 8-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Random 16-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Random 32-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Random 64-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Random 128-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Random usize-sized prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// let mut any = Any_SHAKE_256::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// let mut any = Any_SHAKE_128::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// let mut any = Any_SHA3_512::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// let mut any = Any_SHA3_256::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// let mut any = Any_SHA2_512::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// let mut any = Any_SHA2_256::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 12 for Slapdash_SHA1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// let mut slapdash = Slapdash_SHA1::new();
+    /// println!("Slapdash 8-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Slapdash 16-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Slapdash 32-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Slapdash 64-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Slapdash 128-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 13 for Slapdash_SHA0
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// let mut slapdash = Slapdash_SHA0::new();
+    /// println!("Slapdash 8-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Slapdash 16-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Slapdash 32-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Slapdash 64-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Slapdash 128-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 14 for Slapdash_MD5
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// let mut slapdash = Slapdash_MD5::new();
+    /// println!("Slapdash 8-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Slapdash 16-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Slapdash 32-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Slapdash 64-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Slapdash 128-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 15 for Slapdash_MD4
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// let mut slapdash = Slapdash_MD4::new();
+    /// println!("Slapdash 8-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Slapdash 16-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Slapdash 32-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Slapdash 64-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Slapdash 128-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// let mut rand = Random_Rijndael::new();
+    /// println!("Random 8-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Random 16-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Random 32-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Random 64-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Random 128-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Random usize-sized prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// let mut any = Any_Rijndael::new();
+    /// println!("Any 8-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Any 16-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Any 32-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Any 64-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Any 128-bit prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Any usize-sized prime number = {}", any.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 18 for Slapdash_DES
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// let mut slapdash = Slapdash_DES::new();
+    /// println!("Slapdash 8-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Slapdash 16-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Slapdash 32-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Slapdash 64-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Slapdash 128-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 19 for Slapdash_Num_C
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// let mut slapdash = Slapdash_Num_C::new();
+    /// println!("Slapdash 8-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Slapdash 16-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Slapdash 32-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Slapdash 64-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Slapdash 128-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+    /// ```
+    /// 
+    /// # Example 20 for Slapdash
+    /// ```
+    /// use cryptocol::random::Slapdash;
+    /// let mut slapdash = Slapdash::new();
+    /// println!("Slapdash 8-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
+    /// println!("Slapdash 16-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
+    /// println!("Slapdash 32-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
+    /// println!("Slapdash 64-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u64>(5));
+    /// println!("Slapdash 128-bit prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<u128>(5));
+    /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
     /// ```
     pub fn random_prime_with_msb_set_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -5048,23 +6229,191 @@ impl Random_Generic
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
-    /// - If you want random BigUInt, you are highly recommended
+    /// If you want random BigUInt, you are highly recommended
     /// to use the method
     /// [random_biguint()](struct@Random_Generic#method.random_biguint)
     /// rather than this method.
     /// 
-    /// # Example
+    /// # Example 1 for Random
+    /// ```
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
+    /// let num: [u128; 5] = rand.random_array();
+    /// for i in 0..5
+    ///     { println!("Random number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 2 for Any
     /// ```
     /// use cryptocol::random::Any;
-    /// let mut rand = Any::new();
-    /// let num: [u128; 20] = rand.random_array();
+    /// let mut any = Any::new();
+    /// let num: [u64; 10] = any.random_array();
+    /// for i in 0..10
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let num: [u32; 16] = rand.random_array();
+    /// for i in 0..16
+    ///     { println!("Random number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// let mut rand = Random_SHA3_512::new();
+    /// let num: [u16; 20] = rand.random_array();
     /// for i in 0..20
     ///     { println!("Random number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// let mut rand = Random_SHA2_512::new();
+    /// let num: [u8; 32] = rand.random_array();
+    /// for i in 0..32
+    ///     { println!("Random number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// let mut any = Any_SHAKE_256::new();
+    /// let num: [usize; 10] = any.random_array();
+    /// for i in 0..10
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// let mut any = Any_SHAKE_128::new();
+    /// let num: [u128; 4] = any.random_array();
+    /// for i in 0..4
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// let mut any = Any_SHA3_512::new();
+    /// let num: [u64; 10] = any.random_array();
+    /// for i in 0..10
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// let mut any = Any_SHA3_256::new();
+    /// let num: [u32; 16] = any.random_array();
+    /// for i in 0..16
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// let mut any = Any_SHA2_512::new();
+    /// let num: [u16; 10] = any.random_array();
+    /// for i in 0..10
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// let mut any = Any_SHA2_256::new();
+    /// let num: [u8; 8] = any.random_array();
+    /// for i in 0..8
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 12 for Slapdash_SHA1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// let mut slapdash = Slapdash_SHA1::new();
+    /// let num: [usize; 16] = slapdash.random_array();
+    /// for i in 0..16
+    ///     { println!("Slapdash number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 13 for Slapdash_SHA0
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// let mut slapdash = Slapdash_SHA0::new();
+    /// let num: [u128; 16] = slapdash.random_array();
+    /// for i in 0..16
+    ///     { println!("slapdash number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 14 for Slapdash_MD5
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// let mut slapdash = Slapdash_MD5::new();
+    /// let num: [u64; 8] = slapdash.random_array();
+    /// for i in 0..8
+    ///     { println!("Slapdash number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 15 for Slapdash_MD4
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// let mut slapdash = Slapdash_MD4::new();
+    /// let num: [u32; 4] = slapdash.random_array();
+    /// for i in 0..4
+    ///     { println!("Slapdash number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// let mut rand = Random_Rijndael::new();
+    /// let num: [u16; 5] = rand.random_array();
+    /// for i in 0..5
+    ///     { println!("Random number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// let mut any = Any_Rijndael::new();
+    /// let num: [u8; 10] = any.random_array();
+    /// for i in 0..10
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 18 for Slapdash_DES
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// let mut slapdash = Slapdash_DES::new();
+    /// let num: [u128; 4] = slapdash.random_array();
+    /// for i in 0..4
+    ///     { println!("Slapdash number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 19 for Slapdash_Num_C
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// let mut slapdash = Slapdash_Num_C::new();
+    /// let num: [u64; 16] = slapdash.random_array();
+    /// for i in 0..16
+    ///     { println!("Slapdash number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 20 for Slapdash
+    /// ```
+    /// use cryptocol::random::Slapdash;
+    /// let mut slapdash = Slapdash::new();
+    /// let num: [u32; 8] = slapdash.random_array();
+    /// for i in 0..8
+    ///     { println!("Slapdash number {} => {}", i, num[i]); }
     /// ```
     pub fn random_array<T, const N: usize>(&mut self) -> [T; N]
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -5095,24 +6444,211 @@ impl Random_Generic
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
-    /// - If you want random BigUInt, you are highly recommended
+    /// If you want random BigUInt, you are highly recommended
     /// to use the method
     /// [random_biguint()](struct@Random_Generic#method.random_biguint)
     /// rather than this method.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Slapdash_MD4;
-    /// let mut rand = Slapdash_MD4::new();
-    /// let mut num = [0_u64; 32];
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
+    /// let mut num = [0_u128; 5];
     /// rand.put_random_in_array(&mut num);
+    /// for i in 0..5
+    ///     { println!("Random number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 2 for Any
+    /// ```
+    /// use cryptocol::random::Any;
+    /// let mut any = Any::new();
+    /// let mut num = [0_u64; 10];
+    /// any.put_random_in_array(&mut num);();
+    /// for i in 0..10
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let mut num = [0_u32; 16];
+    /// rand.put_random_in_array(&mut num);();
+    /// for i in 0..16
+    ///     { println!("Random number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// let mut rand = Random_SHA3_512::new();
+    /// let mut num = [0_u16; 20];
+    /// rand.put_random_in_array(&mut num);();
+    /// for i in 0..20
+    ///     { println!("Random number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// let mut rand = Random_SHA2_512::new();
+    /// let mut num = [0_u8; 32];
+    /// rand.put_random_in_array(&mut num);();
     /// for i in 0..32
     ///     { println!("Random number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// let mut any = Any_SHAKE_256::new();
+    /// let mut num = [0_usize; 10];
+    /// any.put_random_in_array(&mut num);();
+    /// for i in 0..10
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// let mut any = Any_SHAKE_128::new();
+    /// let mut num = [0_u128; 4];
+    /// any.put_random_in_array(&mut num);();
+    /// for i in 0..4
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// let mut any = Any_SHA3_512::new();
+    /// let mut num = [0_u64; 10];
+    /// any.put_random_in_array(&mut num);();
+    /// for i in 0..10
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// let mut any = Any_SHA3_256::new();
+    /// let mut num = [0_u32; 16];
+    /// any.put_random_in_array(&mut num);();
+    /// for i in 0..16
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// let mut any = Any_SHA2_512::new();
+    /// let mut num = [0_u16; 10];
+    /// any.put_random_in_array(&mut num);();
+    /// for i in 0..10
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// let mut any = Any_SHA2_256::new();
+    /// let mut num = [0_u8; 8];
+    /// any.put_random_in_array(&mut num);();
+    /// for i in 0..8
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 12 for Slapdash_SHA1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// let mut slapdash = Slapdash_SHA1::new();
+    /// let mut num = [0_usize; 16];
+    /// slapdash.put_random_in_array(&mut num);();
+    /// for i in 0..16
+    ///     { println!("Slapdash number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 13 for Slapdash_SHA0
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// let mut slapdash = Slapdash_SHA0::new();
+    /// let mut num = [0_u128; 16];
+    /// slapdash.put_random_in_array(&mut num);();
+    /// for i in 0..16
+    ///     { println!("slapdash number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 14 for Slapdash_MD5
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// let mut slapdash = Slapdash_MD5::new();
+    /// let mut num = [0_u64; 8];
+    /// slapdash.put_random_in_array(&mut num);();
+    /// for i in 0..8
+    ///     { println!("Slapdash number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 15 for Slapdash_MD4
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// let mut slapdash = Slapdash_MD4::new();
+    /// let mut num = [0_u32; 4];
+    /// slapdash.put_random_in_array(&mut num);();
+    /// for i in 0..4
+    ///     { println!("Slapdash number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// let mut rand = Random_Rijndael::new();
+    /// let mut num = [0_u16; 5];
+    /// rand.put_random_in_array(&mut num);();
+    /// for i in 0..5
+    ///     { println!("Random number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// let mut any = Any_Rijndael::new();
+    /// let mut num = [0_u8; 10];
+    /// any.put_random_in_array(&mut num);();
+    /// for i in 0..10
+    ///     { println!("Any number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 18 for Slapdash_DES
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// let mut slapdash = Slapdash_DES::new();
+    /// let mut num = [0_u128; 4];
+    /// slapdash.put_random_in_array(&mut num);();
+    /// for i in 0..4
+    ///     { println!("Slapdash number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 19 for Slapdash_Num_C
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// let mut slapdash = Slapdash_Num_C::new();
+    /// let mut num = [0_u64; 16];
+    /// slapdash.put_random_in_array(&mut num);();
+    /// for i in 0..16
+    ///     { println!("Slapdash number {} => {}", i, num[i]); }
+    /// ```
+    ///     
+    /// # Example 20 for Slapdash
+    /// ```
+    /// use cryptocol::random::Slapdash;
+    /// let mut slapdash = Slapdash::new();
+    /// let mut num = [0_u32; 8];
+    /// slapdash.put_random_in_array(&mut num);();
+    /// for i in 0..8
+    ///     { println!("Slapdash number {} => {}", i, num[i]); }
     /// ```
     pub fn put_random_in_array<T, const N: usize>(&mut self, out: &mut [T; N])
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -5143,38 +6679,35 @@ impl Random_Generic
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
     /// - If you want to use a random number less than a certain value, you are
-    /// highly recommended to use the method
-    /// [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
-    /// rather than this method.
+    ///   highly recommended to use the method
+    ///   [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number, you are highly recommended to
-    /// use the method
-    /// [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
-    /// rather than this method.
+    ///   use the method
+    ///   [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number less than a certain value,
-    /// you are highly recommended to use the method
-    /// [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random
-    /// number, you are highly recommended to use the method
-    /// [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random odd
-    /// number, you are highly recommended to
-    /// use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to
+    ///   use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
+    ///   rather than this method.
     /// - If you want to use a normal random prime number, you are highly recommended to
-    /// use the method [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   use the method [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random prime
-    /// number, you are highly recommended to
-    /// use the method [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to
+    ///   use the method [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// 
     /// # Example
     /// ```
@@ -5748,17 +7281,384 @@ impl Random_Generic
     /// use the method [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
     /// rather than this method.
     /// 
-    /// # Example
+    /// # Example 1 for BIG_KECCAK_1024
     /// ```
+    /// use cryptocol::hash::BIG_KECCAK_1024;
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Any;
+    /// define_utypes_with!(u64);
     /// 
-    /// define_utypes_with!(u32);
-    /// let mut rand = Any::new();
-    /// let num:U512 = rand.random_odd_with_msb_set_biguint();
-    /// println!("512-bit Random Odd Number = {}", num);
-    /// assert!(num > U512::halfmax());
-    /// assert!(num.is_odd());
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = RandGen::new_with_generators_seed_collector(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed_collector);
+    /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random number = {}", num);
+    /// ```
+    /// 
+    /// # Example 2 for SHA3_512
+    /// ```
+    /// use cryptocol::hash::SHA3_512;
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seed_collector(SHA3_512::new(), SHA3_512::new(), seed_collector);
+    /// let num: U256 = any.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 3 for SHA2_512
+    /// ```
+    /// use cryptocol::hash::SHA2_512;
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seed_collector(SHA2_512::new(), SHA2_512::new(),seed_collector);
+    /// let num: U1024 = any.random_with_msb_set_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 4 for SHAKE_256
+    /// ```
+    /// use cryptocol::hash::SHAKE_256;
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = RandGen::new_with_generators_seed_collector(SHAKE_256::new(), SHAKE_256::new(), seed_collector);
+    /// let num: U768 = rand.random_odd_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
+    /// 
+    /// # Example 5 for SHAKE_128
+    /// ```
+    /// use cryptocol::hash::SHAKE_128;
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seed_collector(SHAKE_128::new(), SHAKE_128::new(), seed_collector);
+    /// let num: U512 = any.random_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 6 for SHA3_256
+    /// ```
+    /// use cryptocol::hash::SHA3_256;
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seed_collector(SHA3_256::new(), SHA3_256::new(), seed_collector);
+    /// let num: U384 = any.random_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
+    /// 
+    /// # Example 7 for SHA2_256
+    /// ```
+    /// use cryptocol::hash::SHA2_256;
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = AnyGen::new_with_generators_seed_collector(SHA2_256::new(), SHA2_256::new(), seed_collector);
+    /// println!("Any number = {}", any.random_u128());
+    /// ```
+    /// 
+    /// # Example 8 for SHA1 and SHA0
+    /// ```
+    /// use cryptocol::hash::{ SHA1, SHA0 };
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = AnyGen::new_with_generators_seed_collector(SHA1::new(), SHA0::new(), seed_collector);
+    /// println!("Slapdash number = {}", slapdash.random_u64());
+    /// ```
+    /// 
+    /// # Example 9 for MD5 and MD4
+    /// ```
+    /// use cryptocol::hash::{ MD5, MD4 };
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = AnyGen::new_with_generators_seed_collector(MD5::new(), MD4::new(), seed_collector);
+    /// println!("Slapdash number = {}", slapdash.random_u32());
+    /// ```
+    /// 
+    /// # Example 10 for AES_128
+    /// ```
+    /// use cryptocol::symmetric::AES_128;
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = RandGen::new_with_generators_seed_collector(AES_128::new(), AES_128::new(), seed_collector);
+    /// println!("Random number = {}", rand.random_u16());
+    /// ```
+    /// 
+    /// # Example 11 for DES
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = AnyGen::new_with_generators_seed_collector(DES::new(), DES::new(), seed_collector);
+    /// println!("Slapdash number = {}", slapdash.random_u8());
     /// ```
     pub fn random_odd_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
