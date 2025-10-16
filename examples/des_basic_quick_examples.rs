@@ -19,6 +19,7 @@
 // #[allow(dead_code)]
 
 
+
 pub fn main()
 {
     des_quick_start_main();
@@ -32,6 +33,8 @@ fn des_quick_start_main()
     des_quick_start_instantiation_without_key();
     des_quick_start_encryption_decryption_16_rounds();
     des_quick_start_encryption_decryption_256_rounds();
+    des_quick_start_weak_keys();
+    des_quick_start_semi_weak_keys();
 }
 
 fn des_quick_start_instantiation_with_key()
@@ -121,6 +124,58 @@ fn des_quick_start_encryption_decryption_256_rounds()
     println!("B =\t{}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
+    println!("-------------------------------");
+}
+
+fn des_quick_start_weak_keys()
+{
+    println!("des_quick_start_weak_keys()");
+    use cryptocol::symmetric::DES;
+    let message = 0x1234567890ABCDEF_u64;
+    let mut cipher: u64;
+    let weak_key = [0x0000000000000000_u64, 0x0101010101010101, 0xFFFFFFFFFFFFFFFF, 0xFEFEFEFEFEFEFEFE, 0xF1F1F1F1E0E0E0E0, 0xF0F0F0F0E1E1E1E1, 0x0E0E0E0E1F1F1F1F, 0x0F0F0F0F1E1E1E1E];
+    let mut des = DES::new();
+    for key in weak_key
+    {
+        println!("Weak Key:\t{:#018X}", key);
+        des.set_key_u64(key);
+        cipher = des.encrypt_u64(message);
+        cipher = des.encrypt_u64(cipher);
+        
+        println!("Message =\t{:#018X}", message);
+        println!("Cipher =\t{:#018X}", cipher);
+        assert_eq!(message, cipher);
+        println!();
+    }
+    println!("-------------------------------");
+}
+
+fn des_quick_start_semi_weak_keys()
+{
+    println!("des_quick_start_weak_keys()");
+    use cryptocol::symmetric::DES;
+    let message = 0x1234567890ABCDEF_u64;
+    let mut cipher: u64;
+    let semi_weak_key: [(u64, u64); 6] = [  (0x0E010E011F011F01, 0x010E010E011F011F),
+                                            (0xF101F101E001E001, 0x01F101F101E001E0),
+                                            (0xFE01FE01FE01FE01, 0x01FE01FE01FE01FE),
+                                            (0xF10EF10EE01FE01F, 0x0EF10EF11FE01FE0),
+                                            (0xFE0EFE0EFE1FFE1F, 0x0EFE0EFE1FFE1FFE),
+                                            (0xFEF1FEF1FEE0FEE0, 0xF1FEF1FEE0FEE0FE)];
+    let mut des = DES::new();
+    for key in semi_weak_key
+    {
+        println!("Semi-weak Key pair: {:#018X}, {:#018X}", key.0, key.1);
+        des.set_key_u64(key.0);
+        cipher = des.encrypt_u64(message);
+        des.set_key_u64(key.1);
+        cipher = des.encrypt_u64(cipher);
+
+        println!("Message =\t{:#018X}", message);
+        println!("Cipher =\t{:#018X}", cipher);
+        assert_eq!(message, cipher);
+        println!();
+    }
     println!("-------------------------------");
 }
 

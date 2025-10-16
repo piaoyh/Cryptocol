@@ -625,8 +625,8 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 ///   Crack and distributed.net broke a DES key together within 22 hours and
 ///   15 minutes.
 /// - Weak keys: 0x0000000000000000, 0x0101010101010101, 0xFFFFFFFFFFFFFFFF,
-///   0xFEFEFEFEFEFEFEFE, 0xE0E0E0E0F1F1F1F1, 0xE1E1E1E1F0F0F0F0,
-///   0x1F1F1F1F0E0E0E0E, 0x1E1E1E1E0F0F0F0F in big-endianness.
+///   0xFEFEFEFEFEFEFEFE, 0xF1F1F1F1E0E0E0E0, 0xF0F0F0F0E1E1E1E1,
+///   0x0E0E0E0E1F1F1F1F, 0x0F0F0F0F1E1E1E1E in little-endianness.
 ///   Actually, if the parity bits in keys are ignored,
 ///   the keys 0x0000000000000000 and 0x0101010101010101 are the same key.
 ///   In fact, not only 0x0101010101010101 is the same key as
@@ -637,23 +637,71 @@ pub type DES = DES_Generic;    // equivalent to `pub type DES = DES_Expanded;`
 ///   keys that have only different parity bits and all other bits same are the
 ///   same key.
 ///   And, the keys 0xFFFFFFFFFFFFFFFF and 0xFEFEFEFEFEFEFEFE are also the same key.
-///   And, The keys 0xE0E0E0E0F1F1F1F1 and 0xE1E1E1E1F0F0F0F0 are also the same key.
-///   And, the keys 0x1F1F1F1F0E0E0E0E and 0x1E1E1E1E0F0F0F0F are the same key, too.
+///   And, The keys 0xF1F1F1F1E0E0E0E0 and 0xF0F0F0F0E1E1E1E1 are also the same key.
+///   And, the keys 0x0E0E0E0E1F1F1F1F and 0x0F0F0F0F1E1E1E1E are the same key, too.
 ///   For instance, if you encrypt your data with the key 0x0000000000000000 and
 ///   encrypt the output ciphertext again with the same key 0x0000000000000000,
 ///   you will get the original plaintext! So, the ciphertext is only
-///   secure-looking.
-/// - Semi-week keys: The pairs 0x011F011F010E010E and 0x1F011F010E010E01,
-///   0x01E001E001F101F1 and 0xE001E001F101F101,
-///   0x01FE01FE01FE01FE and 0xFE01FE01FE01FE01,
-///   0x1FE01FE00EF10EF1 and 0xE01FE01FF10EF10E,
-///   0x1FFE1FFE0EFE0EFE and 0xFE1FFE1FFE0EFE0E, and
-///   0xE0FEE0FEF1FEF1FE and 0xFEE0FEE0FEF1FEF1 in big-endianness are considered
-///   to be week.
-///   For example, if you encrypt your data with the key 0x011F011F010E010E and
+///   secure-looking. 
+/// - Semi-week keys: The pairs (0x0E010E011F011F01, 0x010E010E011F011F),
+///   (0xF101F101E001E001, 0x01F101F101E001E0),
+///   (0xFE01FE01FE01FE01, 0x01FE01FE01FE01FE),
+///   (0xF10EF10EE01FE01F, 0x0EF10EF11FE01FE0),
+///   (0xFE0EFE0EFE1FFE1F, 0x0EFE0EFE1FFE1FFE), and 
+///   (0xFEF1FEF1FEE0FEE0, 0xF1FEF1FEE0FEE0FE) in little-endianness are
+///   considered to be week.
+///   For example, if you encrypt your data with the key 0x0E010E011F011F01 and
 ///   encrypt the output ciphertext again with its counterpart key
-///   0xE001E001F101F101, you will get the original plaintext!
+///   0x010E010E011F011F, you will get the original plaintext!
 ///   So, the ciphertext is only secure-looking.
+/// 
+/// # Examples for Weak keys
+/// ```
+/// use cryptocol::symmetric::DES;
+/// let message = 0x1234567890ABCDEF_u64;
+/// let mut cipher: u64;
+/// let weak_key = [ 0x0000000000000000_u64, 0x0101010101010101, 0xFFFFFFFFFFFFFFFF, 0xFEFEFEFEFEFEFEFE, 0xF1F1F1F1E0E0E0E0, 0xF0F0F0F0E1E1E1E1, 0x0E0E0E0E1F1F1F1F, 0x0F0F0F0F1E1E1E1E];
+/// let mut des = DES::new();
+/// for key in weak_key
+/// {
+///     println!("Weak Key:\t{:#018X}", key);
+///     des.set_key_u64(key);
+///     cipher = des.encrypt_u64(message);
+///     cipher = des.encrypt_u64(cipher);
+/// 
+///     println!("Message =\t{:#018X}", message);
+///     println!("Cipher =\t{:#018X}", cipher);
+///     assert_eq!(message, cipher);
+///     println!();
+/// }
+/// ```
+/// 
+/// # Examples for Semi-Weak keys
+/// ```
+/// use cryptocol::symmetric::DES;
+/// let message = 0x1234567890ABCDEF_u64;
+/// let mut cipher: u64;
+/// let semi_weak_key: [(u64, u64); 6] = [  (0x0E010E011F011F01, 0x010E010E011F011F),
+///                                         (0xF101F101E001E001, 0x01F101F101E001E0),
+///                                         (0xFE01FE01FE01FE01, 0x01FE01FE01FE01FE),
+///                                         (0xF10EF10EE01FE01F, 0x0EF10EF11FE01FE0),
+///                                         (0xFE0EFE0EFE1FFE1F, 0x0EFE0EFE1FFE1FFE),
+///                                         (0xFEF1FEF1FEE0FEE0, 0xF1FEF1FEE0FEE0FE)];
+/// let mut des = DES::new();
+/// for key in semi_weak_key
+/// {
+///     println!("Semi-weak Key pair: {:#018X}, {:#018X}", key.0, key.1);
+///     des.set_key_u64(key.0);
+///     cipher = des.encrypt_u64(message);
+///     des.set_key_u64(key.1);
+///     cipher = des.encrypt_u64(cipher);
+/// 
+///     println!("Message =\t{:#018X}", message);
+///     println!("Cipher =\t{:#018X}", cipher);
+///     assert_eq!(message, cipher);
+///     println!();
+/// }
+/// ```
 /// 
 /// # Use of DES and its variants
 /// This algorithm is implemented generic way. Most of the constants are
