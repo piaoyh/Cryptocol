@@ -18,10 +18,13 @@ pub fn main()
     random_new();
     random_new_with();
     random_new_with_generators_seeds();
-    random_new_with_generators_seed_array();
+    random_new_with_generators_seed_arrays();
     random_new_with_generators_seed_collector();
     random_new_with_generators_seed_collector_seeds();
     random_new_with_generators_seed_collector_seed_arrays();
+    random_get_seed_collector();
+    random_set_seed_collector();
+    random_reset_seed_collector();
     random_random_u8();
     random_random_u16();
     random_random_u32();
@@ -152,6 +155,7 @@ fn random_new()
     
     // Example for Random_BIG_KECCAK_1024
     use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
     let num: U1024 = rand.random_with_msb_set_biguint();
     println!("Random number = {}", num);
     
@@ -233,7 +237,8 @@ fn random_new()
     // Example for Slapdash_DES
     use cryptocol::random::Slapdash_DES;
     let mut slapdash = Slapdash_DES::new();
-    println!("Slapdash number = {}", slapdash.random_odd_biguint());
+    let num: U256 = slapdash.random_odd_biguint();
+    println!("Slapdash number = {}", num);
 }
 
 fn random_new_with()
@@ -375,93 +380,93 @@ fn random_new_with_generators_seeds()
     println!("Slapdash number = {}", slapdash.random_u8());
     println!("-------------------------------");
 }
-fn random_new_with_generators_seed_array()
+fn random_new_with_generators_seed_arrays()
 {
-    println!("random_new_with_generators_seed_array");
+    println!("random_new_with_generators_seed_arrays");
     use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
     // Example for BIG_KECCAK_1024
     use cryptocol::hash::BIG_KECCAK_1024;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
     let mut rand = RandGen::new_with_generators_seed_arrays(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed, aux);
     let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
     println!("Random number = {}", num);
 
     // Example for SHA3_512
     use cryptocol::hash::SHA3_512;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
     let mut any = AnyGen::new_with_generators_seed_arrays(SHA3_512::new(), SHA3_512::new(), seed, aux);
     let num: U256 = any.random_prime_using_miller_rabin_biguint(5);
     println!("Any number = {}", num);
 
     // Example for SHA2_512
     use cryptocol::hash::SHA2_512;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
     let mut any = AnyGen::new_with_generators_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed, aux);
     let num: U1024 = any.random_with_msb_set_biguint();
     println!("Any number = {}", num);
 
     // Example for SHAKE_256
     use cryptocol::hash::SHAKE_256;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
     let mut rand = RandGen::new_with_generators_seed_arrays(SHAKE_256::new(), SHAKE_256::new(), seed, aux);
     let num: U768 = rand.random_odd_biguint();
     println!("Random number = {}", num);
 
     // Example for SHAKE_128
     use cryptocol::hash::SHAKE_128;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
     let mut any = AnyGen::new_with_generators_seed_arrays(SHAKE_128::new(), SHAKE_128::new(), seed, aux);
     let num: U512 = any.random_biguint();
     println!("Any number = {}", num);
 
     // Example for SHA3_256
     use cryptocol::hash::SHA3_256;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
     let mut any = AnyGen::new_with_generators_seed_arrays(SHA3_256::new(), SHA3_256::new(), seed, aux);
     let num: U384 = any.random_biguint();
     println!("Any number = {}", num);
 
     // Example for SHA2_256
     use cryptocol::hash::SHA2_256;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
     let mut any = AnyGen::new_with_generators_seed_arrays(SHA2_256::new(), SHA2_256::new(), seed, aux);
     println!("Any number = {}", any.random_u128());
 
     // Example for SHA1 and SHA0
     use cryptocol::hash::{ SHA1, SHA0 };
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
     let mut slapdash = SlapdashGen::new_with_generators_seed_arrays(SHA1::new(), SHA0::new(), seed, aux);
     println!("Slapdash number = {}", slapdash.random_u64());
 
     // Example for MD5 and MD4
     use cryptocol::hash::{ MD5, MD4 };
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
     let mut slapdash = SlapdashGen::new_with_generators_seed_arrays(MD5::new(), MD4::new(), seed, aux);
     println!("Slapdash number = {}", slapdash.random_u32());
 
     // Example for AES_128
     use cryptocol::symmetric::AES_128;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
     let mut rand = RandGen::new_with_generators_seed_arrays(AES_128::new(), AES_128::new(), seed, aux);
     println!("Random number = {}", rand.random_u16());
 
     // Example for DES
     use cryptocol::symmetric::DES;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
     let mut slapdash = SlapdashGen::new_with_generators_seed_arrays(DES::new(), DES::new(), seed, aux);
     println!("Slapdash number = {}", slapdash.random_u8());
     println!("-------------------------------");
@@ -567,65 +572,88 @@ fn random_new_with_generators_seed_collector_seeds()
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
+    fn seed_collector() -> [u64; 8]
+    {
+        use std::time::{ SystemTime, UNIX_EPOCH };
+        use cryptocol::number::LongerUnion;
+
+        let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+        let mut seed_buffer = [ptr; 8];
+        for i in 0..8
+            { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+
+        if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+        {
+            let common = LongerUnion::new_with(nanos.as_nanos());
+            for i in 0..4
+            {
+                let j = i << 1;
+                seed_buffer[j] = common.get_ulong_(0);
+                seed_buffer[j + 1] = common.get_ulong_(1);
+            }
+        }
+        seed_buffer
+    }
+
     // Example for BIG_KECCAK_1024
     use cryptocol::hash::BIG_KECCAK_1024;
-    let mut rand = RandGen::new_with_generators_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), 10500872879054459758_u64, 15887751380961987625_u64);
+    let mut rand = RandGen::new_with_generators_seed_collector_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed_collector, 10500872879054459758_u64, 15887751380961987625_u64);
     let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
     println!("Random number = {}", num);
 
     // Example for SHA3_512
     use cryptocol::hash::SHA3_512;
-    let mut any = AnyGen::new_with_generators_seeds(SHA3_512::new(), SHA3_512::new(), 100, 25);
+    let mut any = AnyGen::new_with_generators_seed_collector_seeds(SHA3_512::new(), SHA3_512::new(), seed_collector, 100, 25);
     let num: U256 = any.random_prime_using_miller_rabin_biguint(5);
     println!("Any number = {}", num);
 
     // Example for SHA2_512
     use cryptocol::hash::SHA2_512;
-    let mut any = AnyGen::new_with_generators_seeds(SHA2_512::new(), SHA2_512::new(), 0, 0);
+    let mut any = AnyGen::new_with_generators_seed_collector_seeds(SHA2_512::new(), SHA2_512::new(), seed_collector, 0, 0);
     let num: U1024 = any.random_with_msb_set_biguint();
     println!("Any number = {}", num);
 
     // Example for SHAKE_256
     use cryptocol::hash::SHAKE_256;
-    let mut rand = RandGen::new_with_generators_seeds(SHAKE_256::new(), SHAKE_256::new(), u64::MAX, u64::MAX);
+    let mut rand = RandGen::new_with_generators_seed_collector_seeds(SHAKE_256::new(), SHAKE_256::new(), seed_collector, u64::MAX, u64::MAX);
     let num: U768 = rand.random_odd_biguint();
     println!("Random number = {}", num);
 
     // Example for SHAKE_128
     use cryptocol::hash::SHAKE_128;
-    let mut any = AnyGen::new_with_generators_seeds(SHAKE_128::new(), SHAKE_128::new(), 123456789, 987654321);
+    let mut any = AnyGen::new_with_generators_seed_collector_seeds(SHAKE_128::new(), SHAKE_128::new(), seed_collector, 123456789, 987654321);
     let num: U512 = any.random_biguint();
     println!("Any number = {}", num);
 
     // Example for SHA3_256
     use cryptocol::hash::SHA3_256;
-    let mut any = AnyGen::new_with_generators_seeds(SHA3_256::new(), SHA3_256::new(), u32::MAX as u64, u32::MAX as u64);
+    let mut any = AnyGen::new_with_generators_seed_collector_seeds(SHA3_256::new(), SHA3_256::new(), seed_collector, u32::MAX as u64, u32::MAX as u64);
     let num: U384 = any.random_biguint();
     println!("Any number = {}", num);
 
     // Example for SHA2_256
     use cryptocol::hash::SHA2_256;
-    let mut any = AnyGen::new_with_generators_seeds(SHA2_256::new(), SHA2_256::new(), 15698731215687456325, 10684237915728469725);
+    let mut any = AnyGen::new_with_generators_seed_collector_seeds(SHA2_256::new(), SHA2_256::new(), seed_collector, 15698731215687456325, 10684237915728469725);
     println!("Any number = {}", any.random_u128());
 
     // Example for SHA1 and SHA0
     use cryptocol::hash::{ SHA1, SHA0 };
-    let mut slapdash = SlapdashGen::new_with_generators_seeds(SHA1::new(), SHA0::new(), 2879054410500759758, 15887876257513809619);
+    let mut slapdash = SlapdashGen::new_with_generators_seed_collector_seeds(SHA1::new(), SHA0::new(), seed_collector, 2879054410500759758, 15887876257513809619);
     println!("Slapdash number = {}", slapdash.random_u64());
 
     // Example for MD5 and MD4
     use cryptocol::hash::{ MD5, MD4 };
-    let mut slapdash = SlapdashGen::new_with_generators_seeds(MD5::new(), MD4::new(), 610458805, 215793685);
+    let mut slapdash = SlapdashGen::new_with_generators_seed_collector_seeds(MD5::new(), MD4::new(), seed_collector, 610458805, 215793685);
     println!("Slapdash number = {}", slapdash.random_u32());
 
     // Example for AES_128
     use cryptocol::symmetric::AES_128;
-    let mut rand = RandGen::new_with_generators_seeds(AES_128::new(), AES_128::new(), 18782, 50558);
+    let mut rand = RandGen::new_with_generators_seed_collector_seeds(AES_128::new(), AES_128::new(), seed_collector, 18782, 50558);
     println!("Random number = {}", rand.random_u16());
 
     // Example for DES
     use cryptocol::symmetric::DES;
-    let mut slapdash = SlapdashGen::new_with_generators_seeds(DES::new(), DES::new(), 0, 125);
+    let mut slapdash = SlapdashGen::new_with_generators_seed_collector_seeds(DES::new(), DES::new(), seed_collector, 0, 125);
     println!("Slapdash number = {}", slapdash.random_u8());
     println!("-------------------------------");
 }
@@ -637,88 +665,588 @@ fn random_new_with_generators_seed_collector_seed_arrays()
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
+    fn seed_collector() -> [u64; 8]
+    {
+        use std::time::{ SystemTime, UNIX_EPOCH };
+        use cryptocol::number::LongerUnion;
+
+        let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+        let mut seed_buffer = [ptr; 8];
+        for i in 0..8
+            { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+
+        if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+        {
+            let common = LongerUnion::new_with(nanos.as_nanos());
+            for i in 0..4
+            {
+                let j = i << 1;
+                seed_buffer[j] = common.get_ulong_(0);
+                seed_buffer[j + 1] = common.get_ulong_(1);
+            }
+        }
+        seed_buffer
+    }
+
     // Example for BIG_KECCAK_1024
     use cryptocol::hash::BIG_KECCAK_1024;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
-    let mut rand = RandGen::new_with_generators_seed_arrays(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed, aux);
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
+    let mut rand = RandGen::new_with_generators_seed_collector_seed_arrays(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed_collector, seed, aux);
     let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
     println!("Random number = {}", num);
 
     // Example for SHA3_512
     use cryptocol::hash::SHA3_512;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
-    let mut any = AnyGen::new_with_generators_seed_arrays(SHA3_512::new(), SHA3_512::new(), seed, aux);
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
+    let mut any = AnyGen::new_with_generators_seed_collector_seed_arrays(SHA3_512::new(), SHA3_512::new(), seed_collector, seed, aux);
     let num: U256 = any.random_prime_using_miller_rabin_biguint(5);
     println!("Any number = {}", num);
 
     // Example for SHA2_512
     use cryptocol::hash::SHA2_512;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
-    let mut any = AnyGen::new_with_generators_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed, aux);
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
+    let mut any = AnyGen::new_with_generators_seed_collector_seed_arrays(SHA2_512::new(), SHA2_512::new(), seed_collector, seed, aux);
     let num: U1024 = any.random_with_msb_set_biguint();
     println!("Any number = {}", num);
 
     // Example for SHAKE_256
     use cryptocol::hash::SHAKE_256;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
-    let mut rand = RandGen::new_with_generators_seed_arrays(SHAKE_256::new(), SHAKE_256::new(), seed, aux);
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
+    let mut rand = RandGen::new_with_generators_seed_collector_seed_arrays(SHAKE_256::new(), SHAKE_256::new(), seed_collector, seed, aux);
     let num: U768 = rand.random_odd_biguint();
     println!("Random number = {}", num);
 
     // Example for SHAKE_128
     use cryptocol::hash::SHAKE_128;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
-    let mut any = AnyGen::new_with_generators_seed_arrays(SHAKE_128::new(), SHAKE_128::new(), seed, aux);
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
+    let mut any = AnyGen::new_with_generators_seed_collector_seed_arrays(SHAKE_128::new(), SHAKE_128::new(), seed_collector, seed, aux);
     let num: U512 = any.random_biguint();
     println!("Any number = {}", num);
 
     // Example for SHA3_256
     use cryptocol::hash::SHA3_256;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
-    let mut any = AnyGen::new_with_generators_seed_arrays(SHA3_256::new(), SHA3_256::new(), seed, aux);
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
+    let mut any = AnyGen::new_with_generators_seed_collector_seed_arrays(SHA3_256::new(), SHA3_256::new(), seed_collector, seed, aux);
     let num: U384 = any.random_biguint();
     println!("Any number = {}", num);
 
     // Example for SHA2_256
     use cryptocol::hash::SHA2_256;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
-    let mut any = AnyGen::new_with_generators_seed_arrays(SHA2_256::new(), SHA2_256::new(), seed, aux);
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
+    let mut any = AnyGen::new_with_generators_seed_collector_seed_arrays(SHA2_256::new(), SHA2_256::new(), seed_collector, seed, aux);
     println!("Any number = {}", any.random_u128());
 
     // Example for SHA1 and SHA0
     use cryptocol::hash::{ SHA1, SHA0 };
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
-    let mut slapdash = SlapdashGen::new_with_generators_seed_arrays(SHA1::new(), SHA0::new(), seed, aux);
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
+    let mut slapdash = SlapdashGen::new_with_generators_seed_collector_seed_arrays(SHA1::new(), SHA0::new(), seed_collector, seed, aux);
     println!("Slapdash number = {}", slapdash.random_u64());
 
     // Example for MD5 and MD4
     use cryptocol::hash::{ MD5, MD4 };
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
-    let mut slapdash = SlapdashGen::new_with_generators_seed_arrays(MD5::new(), MD4::new(), seed, aux);
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
+    let mut slapdash = SlapdashGen::new_with_generators_seed_collector_seed_arrays(MD5::new(), MD4::new(), seed_collector, seed, aux);
     println!("Slapdash number = {}", slapdash.random_u32());
 
     // Example for AES_128
     use cryptocol::symmetric::AES_128;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
-    let mut rand = RandGen::new_with_generators_seed_arrays(AES_128::new(), AES_128::new(), seed, aux);
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
+    let mut rand = RandGen::new_with_generators_seed_collector_seed_arrays(AES_128::new(), AES_128::new(), seed_collector, seed, aux);
     println!("Random number = {}", rand.random_u16());
 
     // Example for DES
     use cryptocol::symmetric::DES;
-    let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
-    let mut slapdash = SlapdashGen::new_with_generators_seed_arrays(DES::new(), DES::new(), seed, aux);
+    let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
+    let mut slapdash = SlapdashGen::new_with_generators_seed_collector_seed_arrays(DES::new(), DES::new(), seed_collector, seed, aux);
     println!("Slapdash number = {}", slapdash.random_u8());
+    println!("-------------------------------");
+}
+
+fn random_get_seed_collector()
+{
+    println!("random_get_seed_collector");
+    // Example for Random
+    use cryptocol::random::Random;
+    let rand = Random::new();
+    let seed = rand.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Any
+    use cryptocol::random::Any;
+    let any = Any::new();
+    let seed = any.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let rand = Random_BIG_KECCAK_1024::new();
+    let seed = rand.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let rand = Random_SHA3_512::new();
+    let seed = rand.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let rand = Random_SHA2_512::new();
+    let seed = rand.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let any = Any_SHAKE_256::new();
+    let seed = any.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let any = Any_SHAKE_128::new();
+    let seed = any.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let any = Any_SHA3_512::new();
+    let seed = any.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let any = Any_SHA3_256::new();
+    let seed = any.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let any = Any_SHA2_512::new();
+    let seed = any.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let any = Any_SHA2_256::new();
+    let seed = any.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let slapdash = Slapdash_SHA1::new();
+    let seed = slapdash.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let slapdash = Slapdash_SHA0::new();
+    let seed = slapdash.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let slapdash = Slapdash_MD5::new();
+    let seed = slapdash.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let slapdash = Slapdash_MD4::new();
+    let seed = slapdash.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let rand = Random_Rijndael::new();
+    let seed = rand.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let any = Any_Rijndael::new();
+    let seed = any.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let slapdash = Slapdash_DES::new();
+    let seed = slapdash.get_seed_collector()();
+    print!("seed = ");
+    for i in 0..8
+        { print!("{} ", seed[i]); }
+    println!("-------------------------------");
+}
+
+fn random_set_seed_collector()
+{
+    println!("random_set_seed_collector");
+    fn seed_collector() -> [u64; 8]
+    {
+        use std::time::{ SystemTime, UNIX_EPOCH };
+        use cryptocol::number::LongerUnion;
+
+        let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+        let mut seed_buffer = [ptr; 8];
+        for i in 0..8
+            { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+
+        if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+        {
+            let common = LongerUnion::new_with(nanos.as_nanos());
+            for i in 0..4
+            {
+                let j = i << 1;
+                seed_buffer[j] = common.get_ulong_(0);
+                seed_buffer[j + 1] = common.get_ulong_(1);
+            }
+        }
+        seed_buffer
+    }
+    type Func = *const fn() -> [u64; 8];
+
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
+    rand.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, rand.get_seed_collector() as Func);
+    println!("seed = {}", rand.random_u128());
+    
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    println!("seed = {}", any.random_u64());
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    rand.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, rand.get_seed_collector() as Func);
+    println!("seed = {}", rand.random_u32());
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    rand.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, rand.get_seed_collector() as Func);
+    println!("seed = {}", rand.random_u16());
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    rand.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, rand.get_seed_collector() as Func);
+    println!("seed = {}", rand.random_u8());
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    println!("seed = {}", any.random_u128());
+    
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    println!("seed = {}", any.random_u64());
+    
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    println!("seed = {}", any.random_u32());
+    
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    println!("seed = {}", any.random_u16());
+    
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    println!("seed = {}", any.random_u8());
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    println!("seed = {}", any.random_u128());
+    
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    slapdash.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, slapdash.get_seed_collector() as Func);
+    println!("seed = {}", slapdash.random_u64());
+    
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    slapdash.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, slapdash.get_seed_collector() as Func);
+    println!("seed = {}", slapdash.random_u32());
+    
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    slapdash.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, slapdash.get_seed_collector() as Func);
+    println!("seed = {}", slapdash.random_u16());
+    
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    slapdash.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, slapdash.get_seed_collector() as Func);
+    println!("seed = {}", slapdash.random_u8());
+    
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    rand.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, rand.get_seed_collector() as Func);
+    println!("seed = {}", rand.random_u128());
+    
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    println!("seed = {}", any.random_u64());
+    
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    slapdash.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, slapdash.get_seed_collector() as Func);
+    println!("seed = {}", slapdash.random_u32());
+    println!("-------------------------------");
+}
+
+fn random_reset_seed_collector()
+{
+    println!("random_reset_seed_collector");
+    fn seed_collector() -> [u64; 8]
+    {
+        [0_u64; 8]
+    }
+    type Func = *const fn() -> [u64; 8];
+
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
+    let collector = rand.get_seed_collector();
+    rand.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, rand.get_seed_collector() as Func);
+    rand.reset_seed_collector();
+    assert_eq!(collector as Func, rand.get_seed_collector() as Func);
+    
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    let collector = any.get_seed_collector();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    any.reset_seed_collector();
+    assert_eq!(collector as Func, any.get_seed_collector() as Func);
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    let collector = rand.get_seed_collector();
+    rand.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, rand.get_seed_collector() as Func);
+    rand.reset_seed_collector();
+    assert_eq!(collector as Func, rand.get_seed_collector() as Func);
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    let collector = rand.get_seed_collector();
+    rand.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, rand.get_seed_collector() as Func);
+    rand.reset_seed_collector();
+    assert_eq!(collector as Func, rand.get_seed_collector() as Func);
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    let collector = rand.get_seed_collector();
+    rand.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, rand.get_seed_collector() as Func);
+    rand.reset_seed_collector();
+    assert_eq!(collector as Func, rand.get_seed_collector() as Func);
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    let collector = any.get_seed_collector();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    any.reset_seed_collector();
+    assert_eq!(collector as Func, any.get_seed_collector() as Func);
+    
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    let collector = any.get_seed_collector();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    any.reset_seed_collector();
+    assert_eq!(collector as Func, any.get_seed_collector() as Func);
+    
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    let collector = any.get_seed_collector();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    any.reset_seed_collector();
+    assert_eq!(collector as Func, any.get_seed_collector() as Func);
+    
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    let collector = any.get_seed_collector();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    any.reset_seed_collector();
+    assert_eq!(collector as Func, any.get_seed_collector() as Func);
+    
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    let collector = any.get_seed_collector();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    any.reset_seed_collector();
+    assert_eq!(collector as Func, any.get_seed_collector() as Func);
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    let collector = any.get_seed_collector();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    any.reset_seed_collector();
+    assert_eq!(collector as Func, any.get_seed_collector() as Func);
+    
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let collector = slapdash.get_seed_collector();
+    slapdash.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, slapdash.get_seed_collector() as Func);
+    slapdash.reset_seed_collector();
+    assert_eq!(collector as Func, slapdash.get_seed_collector() as Func);
+    
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let collector = slapdash.get_seed_collector();
+    slapdash.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, slapdash.get_seed_collector() as Func);
+    slapdash.reset_seed_collector();
+    assert_eq!(collector as Func, slapdash.get_seed_collector() as Func);
+    
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let collector = slapdash.get_seed_collector();
+    slapdash.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, slapdash.get_seed_collector() as Func);
+    slapdash.reset_seed_collector();
+    assert_eq!(collector as Func, slapdash.get_seed_collector() as Func);
+    
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let collector = slapdash.get_seed_collector();
+    slapdash.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, slapdash.get_seed_collector() as Func);
+    slapdash.reset_seed_collector();
+    assert_eq!(collector as Func, slapdash.get_seed_collector() as Func);
+    
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    let collector = rand.get_seed_collector();
+    rand.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, rand.get_seed_collector() as Func);
+    rand.reset_seed_collector();
+    assert_eq!(collector as Func, rand.get_seed_collector() as Func);
+    
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    let collector = any.get_seed_collector();
+    any.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, any.get_seed_collector() as Func);
+    any.reset_seed_collector();
+    assert_eq!(collector as Func, any.get_seed_collector() as Func);
+    
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let collector = slapdash.get_seed_collector();
+    slapdash.set_seed_collector(seed_collector);
+    assert_eq!(seed_collector as Func, slapdash.get_seed_collector() as Func);
+    slapdash.reset_seed_collector();
+    assert_eq!(collector as Func, slapdash.get_seed_collector() as Func);
     println!("-------------------------------");
 }
 
@@ -4677,20 +5205,135 @@ fn random_put_random_in_array()
         { println!("Slapdash number {} => {}", i, num[i]); }
     println!("-------------------------------");
 }
-//////////////////
+
 fn random_random_biguint()
 {
     println!("random_random_biguint");
     use cryptocol::define_utypes_with;
-    use cryptocol::random::Slapdash_MD5;
-
     define_utypes_with!(u128);
-    let mut rand = Slapdash_MD5::new();
+
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
+    let biguint: U256 = rand.random_biguint();
+    println!("Random Number: {}", biguint);
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    let biguint: U384 = any.random_biguint();
+    println!("Any Number: {}", biguint);
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
     let biguint: U512 = rand.random_biguint();
     println!("Random Number: {}", biguint);
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    let biguint: U768 = rand.random_biguint();
+    println!("Random Number: {}", biguint);
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    let biguint: U1024 = rand.random_biguint();
+    println!("Random Number: {}", biguint);
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    let biguint: U2048 = any.random_biguint();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    let biguint: U3072 = any.random_biguint();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    let biguint: U4096 = any.random_biguint();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    let biguint: U5120 = any.random_biguint();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    let biguint: U6144 = any.random_biguint();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    let biguint: U7168 = any.random_biguint();
+    println!("Any Number: {}", biguint);
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let biguint: U8192 = slapdash.random_biguint();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let biguint: U16384 = slapdash.random_biguint();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let biguint: U256 = slapdash.random_biguint();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let biguint: U384 = slapdash.random_biguint();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    let biguint: U512 = rand.random_biguint();
+    println!("Random Number: {}", biguint);
+
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    let biguint: U768 = any.random_biguint();
+    println!("Any Number: {}", biguint);
+
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let biguint: U1024 = slapdash.random_biguint();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let biguint: U2048 = slapdash.random_biguint();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let biguint: U3072 = slapdash.random_biguint();
+    println!("Slapdash Number: {}", biguint);
     println!("-------------------------------");
 }
-
+/////////////
 fn random_random_under_biguint()
 {
     println!("random_random_under_biguint");

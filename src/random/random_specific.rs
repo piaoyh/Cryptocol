@@ -249,17 +249,40 @@ impl Random_BIG_KECCAK_1024
     /// 
     /// # Output
     /// It returns a new object of `Random_Generic`.
-/*  /// 
+    /// 
     /// # Example 1 for Random_Rijndael
     /// ```
-    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = Random_BIG_KECCAK_1024::new_with_seed_collector(seed_collector);
+    /// let num: U1024 = rand.random_with_msb_set_biguint();
     /// println!("Random number = {}", num);
-    /// ``` */
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen
     {
@@ -286,21 +309,47 @@ impl Random_BIG_KECCAK_1024
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
+    /// 
     /// # Example 1 for Random_Rijndael
     /// ```
-    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = Random_BIG_KECCAK_1024::new_with_seed_collector_seeds(seed_collector, 0, 0);
+    /// let num: U1024 = rand.random_with_msb_set_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen 
     {
         RandGen::new_with_generators_seed_collector_seeds(AES_128::new(), AES_128::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen 
+    // pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -320,16 +369,44 @@ impl Random_BIG_KECCAK_1024
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
+    /// 
     /// # Example 1 for Random_Rijndael
     /// ```
-    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [777777777777_u64, 10500872879054459758_u64, 12_u64, 555555555555_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 741258963_u64];
+    /// let aux = [789456123_u64, 15887751380961987625_u64, 789654123_u64, 5_u64, 9632587414_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut rand = Random_BIG_KECCAK_1024::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// let num: U1024 = rand.random_with_msb_set_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
     #[inline]
-    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen 
+    pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen
     {
         RandGen::new_with_generators_seed_collector_seed_arrays(AES_128::new(), AES_128::new(), seed_collector, seed, aux)
     }
@@ -530,17 +607,40 @@ impl Random_SHA3_512
     /// 
     /// # Output
     /// It returns a new object of `Random_Generic`.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
+    /// 
+    /// # Example 1 for Random_SHA3_512
     /// ```
-    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::random::Random_SHA3_512;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = Random_SHA3_512::new_with_seed_collector(seed_collector);
+    /// let num: U768 = rand.random_odd_biguint();
     /// println!("Random number = {}", num);
-    /// ``` */
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen
     {
@@ -567,14 +667,40 @@ impl Random_SHA3_512
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = Random_SHA3_512::new_with_seed_collector_seeds(seed_collector, u64::MAX, u64::MAX);
+    /// let num: U768 = rand.random_odd_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen 
     {
@@ -601,14 +727,42 @@ impl Random_SHA3_512
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [123456789_u64, 852648791354687_u64, 10500872879054459758_u64, 12_u64, 987654321_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [9632587414_u64, 15887751380961987625_u64, 789456123_u64,58976541235_u64, 9513574682_u64, 369258147_u64, 789654123_u64, 5_u64];
+    /// let mut rand = Random_SHA3_512::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// let num: U768 = rand.random_odd_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen 
     {
@@ -711,7 +865,6 @@ impl Random_SHA3_512
 pub struct Random_SHA2_512 {}
 impl Random_SHA2_512
 {
-
     // pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
     /// 
@@ -828,18 +981,41 @@ impl Random_SHA2_512
     ///   but it is optimized for Unix/Linux though it works under Windows too.
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
+    ///   seed collector function with your own one.
+    /// 
+    /// # Example 1
     /// ```
-    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::random::Random_SHA2_512;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = Random_SHA2_512::new_with_seed_collector(seed_collector);
+    /// let num: U256 = rand.random_biguint();
     /// println!("Random number = {}", num);
-    /// ``` */
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen
     {
@@ -873,14 +1049,40 @@ impl Random_SHA2_512
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = Random_SHA2_512::new_with_seed_collector_seeds(seed_collector, 15698731215687456325, 10684237915728469725);
+    /// let num: U256 = rand.random_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen
     {
@@ -914,14 +1116,42 @@ impl Random_SHA2_512
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut rand = Random_SHA2_512::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// let num: U256 = rand.random_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen
     {
@@ -1128,18 +1358,41 @@ impl Any_SHAKE_256
     ///   but it is optimized for Unix/Linux though it works under Windows too.
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
+    ///   seed collector function with your own one.
+    /// 
+    /// # Example 1
     /// ```
-    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::random::Any_SHAKE_256;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = Any_SHAKE_256::new_with_seed_collector(seed_collector);
+    /// let num: U512 = any.random_biguint();
     /// println!("Any number = {}", num);
-    /// ``` */
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     {
@@ -1173,14 +1426,40 @@ impl Any_SHAKE_256
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = Any_SHAKE_256::new_with_seed_collector_seeds(seed_collector, 123456789, 987654321);
+    /// let num: U512 = any.random_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     {
@@ -1214,14 +1493,42 @@ impl Any_SHAKE_256
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 555555555555_u64, 852648791354687_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [1789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 5887751380961987625_u64, 369258147_u64];
+    /// let mut any = Any_SHAKE_256::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// let num: U512 = any.random_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
@@ -1427,18 +1734,41 @@ impl Any_SHAKE_128
     ///   but it is optimized for Unix/Linux though it works under Windows too.
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
+    ///   seed collector function with your own one.
+    /// 
+    /// # Example 1
     /// ```
-    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::random::Any_SHAKE_128;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ``` */
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = Any_SHAKE_128::new_with_seed_collector(seed_collector);
+    /// let num: U384 = any.random_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     {
@@ -1472,14 +1802,40 @@ impl Any_SHAKE_128
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = Any_SHAKE_128::new_with_seed_collector_seeds(seed_collector, u32::MAX as u64, u32::MAX as u64);
+    /// let num: U384 = any.random_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     {
@@ -1513,14 +1869,42 @@ impl Any_SHAKE_128
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut any = Any_SHAKE_128::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// let num: U384 = any.random_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
@@ -1721,18 +2105,41 @@ impl Any_SHA3_512
     ///   but it is optimized for Unix/Linux though it works under Windows too.
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
+    ///   seed collector function with your own one.
+    /// 
+    /// # Example 1
     /// ```
-    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::random::Any_SHA3_512;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = Any_SHA3_512::new_with_seed_collector(seed_collector);
+    /// let num: U512 = any.random_odd_biguint();
     /// println!("Random number = {}", num);
-    /// ``` */
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     {
@@ -1766,14 +2173,40 @@ impl Any_SHA3_512
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = Any_SHA3_512::new_with_seed_collector_seeds(seed_collector, u64::MAX, u64::MAX);
+    /// let num: U768 = any.random_odd_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     {
@@ -1807,14 +2240,42 @@ impl Any_SHA3_512
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [12_u64, 123456789_u64, 852648791354687_u64, 10500872879054459758_u64, 987654321_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [9513574682_u64, 9632587414_u64, 15887751380961987625_u64, 789456123_u64,58976541235_u64, 9513574682_u64, 369258147_u64, 789654123_u64, 5_u64];
+    /// let mut any = Any_SHA3_512::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// let num: U512 = any.random_odd_biguint();
+    /// println!("Random number = {}", num);
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
@@ -2018,18 +2479,41 @@ impl Any_SHA3_256
     ///   but it is optimized for Unix/Linux though it works under Windows too.
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
+    ///   seed collector function with your own one.
+    /// 
+    /// # Example 1
     /// ```
-    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::random::Any_SHA3_256;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ``` */
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = Any_SHA3_256::new_with_seed_collector(seed_collector);
+    /// let num: U768 = any.random_odd_with_msb_set_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     {
@@ -2063,14 +2547,40 @@ impl Any_SHA3_256
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = Any_SHA3_256::new_with_seed_collector_seeds(seed_collector, u64::MAX, u64::MAX);
+    /// let num: U768 = any.random_odd_with_msb_set_biguint();
+    /// println!("Any number = {}", num);/// 
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     {
@@ -2104,14 +2614,42 @@ impl Any_SHA3_256
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 777777777777_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 741258963_u64];
+    /// let aux = [15887751380961987625_u64, 789654123_u64, 5_u64, 789456123_u64, 9632587414_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut any = Any_SHA3_256::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// let num: U768 = any.random_odd_with_msb_set_biguint();
+    /// println!("Any number = {}", num);
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
@@ -2309,18 +2847,39 @@ impl Any_SHA2_512
     ///   but it is optimized for Unix/Linux though it works under Windows too.
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    ///   seed collector function with your own one.
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = Any_SHA2_512::new_with_seed_collector(seed_collector);
+    /// if let Some(num) = any.random_minmax_uint(12345678_u32, 87654321)
+    ///     { println!("Any number = {}", num); }
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     {
@@ -2354,14 +2913,38 @@ impl Any_SHA2_512
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = Any_SHA2_512::new_with_seed_collector_seeds(seed_collector, 2879054410500759758, 15887876257513809619);
+    /// if let Some(num) = any.random_minmax_uint(12345678_u32, 87654321)
+    ///     { println!("Any number = {}", num); }
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     {
@@ -2395,14 +2978,40 @@ impl Any_SHA2_512
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut any = Any_SHA2_512::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// if let Some(num) = any.random_minmax_uint(12345678_u32, 87654321)
+    ///     { println!("Any number = {}", num); }
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
@@ -2600,18 +3209,41 @@ impl Any_SHA2_256
     ///   but it is optimized for Unix/Linux though it works under Windows too.
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
+    ///   seed collector function with your own one.
+    /// 
+    /// # Example 1
     /// ```
-    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::random::Any_SHA2_256;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ``` */
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = Any_SHA2_256::new_with_seed_collector(seed_collector);
+    /// if let Some(num) = any.random_under_uint(1234_u16)
+    ///     { println!("Any number = {}", num); }
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     {
@@ -2645,14 +3277,38 @@ impl Any_SHA2_256
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = Any_SHA2_256::new_with_seed_collector_seeds(seed_collector, 610458805, 215793685);
+    /// if let Some(num) = any.random_under_uint(1234_u16)
+    ///     { println!("Any number = {}", num); }
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     {
@@ -2686,14 +3342,40 @@ impl Any_SHA2_256
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut any = Any_SHA2_256::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// if let Some(num) = any.random_under_uint(1234_u16)
+    ///     { println!("Any number = {}", num); }
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
@@ -2891,24 +3573,42 @@ impl Slapdash_SHA1
     ///   but it is optimized for Unix/Linux though it works under Windows too.
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    ///   seed collector function with your own one.
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = Slapdash_SHA1::new_with_seed_collector(seed_collector);
+    /// println!("Slapdash number = {}", slapdash.random_uint::<u8>());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        let seed = SlapdashGen::collect_seed_u64();
-        let aux = SlapdashGen::collect_seed_u64();
-        SlapdashGen::new_with_generators_seed_collector_seeds(SHA1::new(), SHA1::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector(SHA1::new(), SHA1::new(), seed_collector)
     }
 
     // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
@@ -2938,14 +3638,37 @@ impl Slapdash_SHA1
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = Slapdash_SHA1::new_with_seed_collector_seeds(seed_collector, 18782, 50558);
+    /// println!("Slapdash number = {}", slapdash.random_uint::<u8>());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     {
@@ -2979,14 +3702,39 @@ impl Slapdash_SHA1
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut slapdash = Slapdash_SHA1::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// println!("Slapdash number = {}", slapdash.random_uint::<u8>());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     {
@@ -3184,24 +3932,42 @@ impl Slapdash_SHA0
     ///   but it is optimized for Unix/Linux though it works under Windows too.
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    ///   seed collector function with your own one.
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = Slapdash_SHA0::new_with_seed_collector(seed_collector);
+    /// println!("Slapdash prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        let seed = SlapdashGen::collect_seed_u64();
-        let aux = SlapdashGen::collect_seed_u64();
-        SlapdashGen::new_with_generators_seed_collector_seeds(SHA0::new(), SHA0::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector(SHA0::new(), SHA0::new(), seed_collector)
     }
 
     // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
@@ -3231,21 +3997,44 @@ impl Slapdash_SHA0
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = Slapdash_SHA0::new_with_seed_collector_seeds(seed_collector, 0, 125);
+    /// println!("Slapdash prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     {
         SlapdashGen::new_with_generators_seed_collector_seeds(SHA0::new(), SHA0::new(), seed_collector, seed, aux)
     }
 
-    // pub fn new_with_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
+    // pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     /// Constructs a new struct Random_Generic with a seed collector function
     /// and two seed arrays of type `u64`.
     /// 
@@ -3272,14 +4061,39 @@ impl Slapdash_SHA0
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut slapdash = Slapdash_SHA0::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// println!("Slapdash prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<u128>(5));
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     {
@@ -3477,24 +4291,42 @@ impl Slapdash_MD5
     ///   but it is optimized for Unix/Linux though it works under Windows too.
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
+    ///   seed collector function with your own one.
+    /// 
+    /// # Example 1
     /// ```
-    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::random::Slapdash_MD5;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ``` */
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        let seed = SlapdashGen::collect_seed_u64();
-        let aux = SlapdashGen::collect_seed_u64();
-        SlapdashGen::new_with_generators_seed_collector_seeds(MD5::new(), MD5::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector(MD5::new(), MD5::new(), seed_collector)
     }
 
     // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
@@ -3524,14 +4356,37 @@ impl Slapdash_MD5
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = Slapdash_MD5::new_with_seed_collector_seeds(seed_collector, 58, 161);
+    /// println!("Slapdash number = {}", slapdash.random_u128());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     {
@@ -3565,14 +4420,39 @@ impl Slapdash_MD5
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut slapdash = Slapdash_MD5::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// println!("Slapdash number = {}", slapdash.random_u128());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     {
@@ -3772,24 +4652,44 @@ impl Slapdash_MD4
     ///   but it is optimized for Unix/Linux though it works under Windows too.
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
+    ///   seed collector function with your own one.
+    /// 
+    /// # Example 1
     /// ```
-    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::random::Slapdash_MD4;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ``` */
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = Slapdash_MD4::new_with_seed_collector(seed_collector);
+    /// println!("Slapdash number = {}", slapdash.random_u64());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        let seed = SlapdashGen::collect_seed_u64();
-        let aux = SlapdashGen::collect_seed_u64();
-        SlapdashGen::new_with_generators_seed_collector_seeds(MD4::new(), MD4::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector(MD4::new(), MD4::new(), seed_collector)
     }
 
     // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
@@ -3819,14 +4719,37 @@ impl Slapdash_MD4
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = Slapdash_MD4::new_with_seed_collector_seeds(seed_collector, 106842379157284697, 18446744073709551615);
+    /// println!("Slapdash number = {}", slapdash.random_u64());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     {
@@ -3860,14 +4783,39 @@ impl Slapdash_MD4
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut slapdash = Slapdash_MD4::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// println!("Slapdash number = {}", slapdash.random_u64());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     {
@@ -4070,18 +5018,38 @@ impl Random_Rijndael
     ///   but it is optimized for Unix/Linux though it works under Windows too.
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
+    ///   seed collector function with your own one.
+    /// 
+    /// # Example 1
     /// ```
     /// use cryptocol::random::Random_Rijndael;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ``` */
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = Random_Rijndael::new_with_seed_collector(seed_collector);
+    /// println!("Any number = {}", rand.random_u32());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen
     {
@@ -4115,14 +5083,37 @@ impl Random_Rijndael
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
+    /// 
+    /// # Example 1
     /// ```
     /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = Random_Rijndael::new_with_seed_collector_seeds(seed_collector, 112233445566778899, 998877665544332211);
+    /// println!("Random number = {}", rand.random_u32());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen 
     {
@@ -4156,14 +5147,41 @@ impl Random_Rijndael
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
+    /// 
+    /// # Example 1
     /// ```
     /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut rand = Random_Rijndael::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
     /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen 
     {
@@ -4365,18 +5383,38 @@ impl Any_Rijndael
     ///   but it is optimized for Unix/Linux though it works under Windows too.
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    ///   seed collector function with your own one.
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = Any_Rijndael::new_with_seed_collector(seed_collector);
+    /// println!("Any number = {}", any.random_u16());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> AnyGen
     {
@@ -4410,14 +5448,37 @@ impl Any_Rijndael
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut any = Any_Rijndael::new_with_seed_collector_seeds(seed_collector, u16::MAX as u64, u16::MAX as u64);
+    /// println!("Any number = {}", any.random_u16());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> AnyGen
     {
@@ -4451,14 +5512,39 @@ impl Any_Rijndael
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut any = Any_Rijndael::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// println!("Any number = {}", any.random_u16());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> AnyGen
     {
@@ -4662,23 +5748,43 @@ impl Slapdash_DES
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
     ///   seed collector function with your own one.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
+    /// 
+    /// # Example 1
     /// ```
-    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::random::Slapdash_DES;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ``` */
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = Slapdash_DES::new_with_seed_collector(seed_collector);
+    /// println!("Slapdash number = {}", slapdash.random_u8());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> SlapdashGen
     {
-        let seed = SlapdashGen::collect_seed_u64();
-        let aux = SlapdashGen::collect_seed_u64();
-        SlapdashGen::new_with_generators_seed_collector_seeds(DES::new(), DES::new(), seed_collector, seed, aux)
+        SlapdashGen::new_with_generators_seed_collector(DES::new(), DES::new(), seed_collector)
     }
 
     // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
@@ -4708,14 +5814,39 @@ impl Slapdash_DES
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = Slapdash_DES::new_with_seed_collector_seeds(seed_collector, u8::MAX as u64, u8::MAX as u64);
+    /// println!("Slapdash number = {}", slapdash.random_u8());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> SlapdashGen
     {
@@ -4749,14 +5880,39 @@ impl Slapdash_DES
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut slapdash = Slapdash_DES::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// println!("Slapdash number = {}", slapdash.random_u8());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> SlapdashGen
     {
@@ -4981,24 +6137,42 @@ impl Slapdash_Num_C
     ///   but it is optimized for Unix/Linux though it works under Windows too.
     /// - If you use this crate under Windows and/or you have a better one,
     ///   you can use your own seed collector function by replacing the default
-    ///   seed collector function with your own one. 
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    ///   seed collector function with your own one.
     /// 
-    /// let mut rand = Random_Rijndael::new();
-    /// let num: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random number = {}", num);
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = Slapdash::new_with_seed_collector(seed_collector);
+    /// println!("Slapdash number = {}", slapdash.random_u32());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<{u32::MAX as u128}>
     {
-        let seed = Random_Generic::<{u32::MAX as u128}>::collect_seed_u64();
-        let aux = Random_Generic::<{u32::MAX as u128}>::collect_seed_u64();
-        Random_Generic::<{u32::MAX as u128}>::new_with_generators_seed_collector_seeds(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector, seed, aux)
+        Random_Generic::<{u32::MAX as u128}>::new_with_generators_seed_collector(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector)
     }
 
     // pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>
@@ -5028,14 +6202,37 @@ impl Slapdash_Num_C
     /// method, it results that you give only '128' bits (= '64' bits + '64'
     /// bits) as a seed and the other '896' bits will be made out of the '128'
     /// bits that you provided.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut slapdash = Slapdash::new_with_seed_collector_seeds(seed_collector, 50558, 18782);
+    /// println!("Slapdash number = {}", slapdash.random_u32());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<{u32::MAX as u128}>
     {
@@ -5069,14 +6266,39 @@ impl Slapdash_Num_C
     /// use this method, it results that you give full '1024' bits (= '64'
     /// bits X '8' X '2') as a seed and it is equivalent to use a seed
     /// collector function.
-/*  /// 
-    /// # Example 1 for Random_Rijndael
-    /// ```
-    /// use cryptocol::random::Random_Rijndael;
     /// 
-    /// let mut rand = Random_Rijndael::new_with_seeds(112233445566778899, 998877665544332211);
-    /// println!("Any number = {}", rand.random_u32());
-    /// ``` */
+    /// # Example 1
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// 
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 12_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 555555555555_u64, 777777777777_u64, 741258963_u64];
+    /// let aux = [15887751380961987625_u64, 789456123_u64, 9632587414_u64, 789654123_u64, 5_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+    /// let mut slapdash = Slapdash_Num_C::new_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+    /// println!("Slapdash number = {}", slapdash.random_u64());
+    /// ```
     #[inline]
     pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<{u32::MAX as u128}>
     {

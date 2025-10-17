@@ -13,7 +13,6 @@
 
 
 use std::fmt::{ Debug, Display };
-// use std::ops::*;
 use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
                 Shl, ShlAssign, Shr, ShrAssign };
@@ -265,7 +264,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with)
     pub fn new_with<SG, AG>(mut main_generator: SG, mut aux_generator: AG) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
@@ -328,7 +327,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   collects 1024 bits as a seed. If you use this method, it results that
     ///   you give only '128' bits (= '64' bits + '64' bits) as a seed and the
     ///   other '896' bits will be made out of the '128' bits that you provided.
- /* /// 
+    /// 
     /// # Example 1 for BIG_KECCAK_1024
     /// ```
     /// use cryptocol::random::RandGen;
@@ -342,7 +341,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seeds) */
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seeds)
     pub fn new_with_generators_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: u64, aux: u64) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
@@ -419,15 +418,15 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// define_utypes_with!(u64);
     /// 
     /// use cryptocol::hash::BIG_KECCAK_1024;
-    /// let seed = [10500872879054459758_u64, 54459758105008728790, 28790544591050087758, 87281050044597905758, 45900810579072854758, 10572800879059744558, 59758728710500905448, 79054105075808728459];
-    /// let aux = [10500054459758872879_u64, 75810500854459728790, 28790877585445910500, 50044597872810905758, 40579072855900814758, 74410572800879059558, 87105448597050095872, 58087279054105078459];
+    /// let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    /// let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
     /// let mut rand = RandGen::new_with_generators_seed_arrays(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed, aux);
     /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
     /// println!("Random number = {}", num);
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seed_arrays)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seed_arrays)
     pub fn new_with_generators_seed_arrays<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: [u64; 8], aux: [u64; 8]) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
@@ -522,7 +521,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seed_collector)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seed_collector)
     pub fn new_with_generators_seed_collector<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8]) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
@@ -590,26 +589,50 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
     /// - You are highly recommended to use the method
-    ///   `new_with_generators_seed_collector_seeds()` rather than this method
-    ///   for security reason. It is because the default seed collector function
-    ///   collects 1024 bits as a seed. If you use this method, it results that
-    ///   you give only '128' bits (= '64' bits + '64' bits) as a seed and the
-    ///   other '896' bits will be made out of the '128' bits that you provided.
-/*  /// 
+    ///   `new_with_generators_seed_collector_seed_arrays()` rather than this
+    ///   method for security reason. It is because the default seed collector
+    ///   function collects 1024 bits as a seed. If you use this method, it
+    ///   results that you give only '128' bits (= '64' bits + '64' bits) as a
+    ///   seed and the other '896' bits will be made out of the '128' bits that
+    ///   you provided.
+    /// 
     /// # Example 1 for BIG_KECCAK_1024
     /// ```
-    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
     /// use cryptocol::hash::BIG_KECCAK_1024;
+    /// use cryptocol::random::RandGen;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = RandGen::new_with_generators_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), 10500872879054459758_u64, 15887751380961987625_u64);
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let mut rand = RandGen::new_with_generators_seed_collector_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed_collector, 10500872879054459758_u64, 15887751380961987625_u64);
     /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
     /// println!("Random number = {}", num);
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seeds) */
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seed_collector_seeds)
     pub fn new_with_generators_seed_collector_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
@@ -687,21 +710,46 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-/*  /// 
+    /// 
     /// # Example 1 for BIG_KECCAK_1024
     /// ```
-    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
     /// use cryptocol::hash::BIG_KECCAK_1024;
+    /// use cryptocol::random::RandGen;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = RandGen::new_with_generators_seeds(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), 10500872879054459758_u64, 15887751380961987625_u64);
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// 
+    /// let seed = [10500872879054459758_u64, 14597581050087285790, 10790544591050087758, 17281050044597905758, 15900810579072854758, 10572800879059744558, 13758728710500905448, 15054105075808728459];
+    /// let aux = [10500054459758872879_u64, 15810500854459728790, 10790877585445910500, 10044597872810905758, 10579072855900814758, 14410572800879059558, 17105448597050095872, 18087279054105078459];
+    /// let mut rand = RandGen::new_with_generators_seed_collector_seed_arrays(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed_collector, seed, aux);
     /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
     /// println!("Random number = {}", num);
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.new_with_generators_seed_collectors_seed_arrays) */
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seed_collector_seed_arrays)
     pub fn new_with_generators_seed_collector_seed_arrays<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Self
     where SG: Random_Engine + 'static, AG: Random_Engine + 'static
     {
@@ -861,10 +909,19 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Output
     /// It returns the function pointer to the current seed collector function,
     /// and is of the type `fn() -> [u64; 8]`.
-/*  /// 
-    /// # Example 1
+    /// 
+    /// # Example 1 for Random
     /// ```
-    /// ``` */
+    /// use cryptocol::random::Random;
+    /// let rand = Random::new();
+    /// let seed = rand.get_seed_collector()();
+    /// print!("seed = ");
+    /// for i in 0..8
+    ///     { print!("{} ", seed[i]); }
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.get_seed_collector)
     #[inline]
     pub fn get_seed_collector(&self) -> fn() -> [u64; 8]
     {
@@ -878,10 +935,42 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Arguments
     /// `collect_seed` is a new seed collector function to replace the default
     /// seed collector function, and is of the type `fn() -> [u64; 8]`.
-/*  /// 
-    /// # Example 1
+    /// 
+    /// # Example 1 for Random
     /// ```
-    /// ``` */
+    /// use cryptocol::random::Random;
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     use std::time::{ SystemTime, UNIX_EPOCH };
+    ///     use cryptocol::number::LongerUnion;
+    /// 
+    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+    ///     let mut seed_buffer = [ptr; 8];
+    ///     for i in 0..8
+    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// 
+    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    ///     {
+    ///         let common = LongerUnion::new_with(nanos.as_nanos());
+    ///         for i in 0..4
+    ///         {
+    ///             let j = i << 1;
+    ///             seed_buffer[j] = common.get_ulong_(0);
+    ///             seed_buffer[j + 1] = common.get_ulong_(1);
+    ///         }
+    ///     }
+    ///     seed_buffer
+    /// }
+    /// type Func = *const fn() -> [u64; 8];
+    /// 
+    /// let mut rand = Random::new();
+    /// rand.set_seed_collector(seed_collector);
+    /// assert_eq!(seed_collector as Func, rand.get_seed_collector() as Func);
+    /// println!("seed = {}", rand.random_u128());
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.set_seed_collector)
     #[inline]
     pub fn set_seed_collector(&mut self, seed_collector: fn() -> [u64; 8])
     {
@@ -895,10 +984,26 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # Features
     /// After this method is performed, the previous seed collector function
     /// will be lost.
-/*  /// 
-    /// # Example 1
+    /// 
+    /// # Example 1 for Random
     /// ```
-    /// ``` */
+    /// fn seed_collector() -> [u64; 8]
+    /// {
+    ///     [0_u64; 8]
+    /// }
+    /// type Func = *const fn() -> [u64; 8];
+    /// 
+    /// use cryptocol::random::Random;
+    /// let mut rand = Random::new();
+    /// let collector = rand.get_seed_collector();
+    /// rand.set_seed_collector(seed_collector);
+    /// assert_eq!(seed_collector as Func, rand.get_seed_collector() as Func);
+    /// rand.reset_seed_collector();
+    /// assert_eq!(collector as Func, rand.get_seed_collector() as Func);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.reset_seed_collector)
     #[inline]
     pub fn reset_seed_collector(&mut self)
     {
@@ -926,7 +1031,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_u8)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_u8)
     pub fn random_u8(&mut self) -> u8
     {
         self.produce_aux_state();
@@ -959,7 +1064,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_u16)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_u16)
     pub fn random_u16(&mut self) -> u16
     {
         self.produce_aux_state();
@@ -992,7 +1097,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_u32)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_u32)
     pub fn random_u32(&mut self) -> u32
     {
         self.produce_aux_state();
@@ -1025,7 +1130,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_u64)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_u64)
     pub fn random_u64(&mut self) -> u64
     {
         self.produce_aux_state();
@@ -1056,7 +1161,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_u128)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_u128)
     pub fn random_u128(&mut self) -> u128
     {
         self.produce_aux_state();
@@ -1092,7 +1197,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_usize)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_usize)
     #[inline]
     pub fn random_usize(&mut self) -> usize
     {
@@ -1124,7 +1229,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_uint)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_uint)
     pub fn random_uint<T>(&mut self) -> T
     where T: SmallUInt + Copy + Clone
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -1171,7 +1276,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_under_uint)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_under_uint)
     #[inline]
     pub fn random_under_uint<T>(&mut self, ceiling: T) -> Option<T>
     where T: SmallUInt + Copy + Clone
@@ -1213,7 +1318,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_under_uint_)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_under_uint_)
     #[inline]
     pub fn random_under_uint_<T>(&mut self, ceiling: T) -> T
     where T: SmallUInt + Copy + Clone
@@ -1253,7 +1358,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_minmax_uint)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_minmax_uint)
     #[inline]
     pub fn random_minmax_uint<T>(&mut self, from: T, ceiling: T) -> Option<T>
     where T: SmallUInt + Copy + Clone
@@ -1299,7 +1404,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_minmax_uint_)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_minmax_uint_)
     #[inline]
     pub fn random_minmax_uint_<T>(&mut self, from: T, ceiling: T) -> T
     where T: SmallUInt + Copy + Clone
@@ -1339,7 +1444,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_odd_uint)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_odd_uint)
     pub fn random_odd_uint<T>(&mut self) -> T
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -1395,7 +1500,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_odd_under_uint)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_odd_under_uint)
     #[inline]
     pub fn random_odd_under_uint<T>(&mut self, ceiling: T) -> Option<T>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -1453,7 +1558,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_odd_under_uint_)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_odd_under_uint_)
     pub fn random_odd_under_uint_<T>(&mut self, mut ceiling: T) -> T
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -1497,7 +1602,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_with_msb_set_uint)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_with_msb_set_uint)
     pub fn random_with_msb_set_uint<T>(&mut self) -> T
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -1538,7 +1643,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_odd_with_msb_set_uint)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_odd_with_msb_set_uint)
     pub fn random_odd_with_msb_set_uint<T>(&mut self) -> T
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -1605,7 +1710,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_prime_using_miller_rabin_uint)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_prime_using_miller_rabin_uint)
     pub fn random_prime_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -1679,7 +1784,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_uint)
+    /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_uint)
     pub fn random_prime_with_msb_set_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -1729,7 +1834,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_array)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_array)
     pub fn random_array<T, const N: usize>(&mut self) -> [T; N]
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -1779,7 +1884,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.put_random_in_array)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.put_random_in_array)
     pub fn put_random_in_array<T, const N: usize>(&mut self, out: &mut [T; N])
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -1854,19 +1959,19 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   use the method [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
     ///   rather than this method.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
+    /// use cryptocol::random::Random;
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Slapdash_MD5;
-    /// 
     /// define_utypes_with!(u128);
-    /// let mut rand = Slapdash_MD5::new();
-    /// let biguint: U512 = rand.random_biguint();
+    /// 
+    /// let mut rand = Random::new();
+    /// let biguint: U256 = rand.random_biguint();
     /// println!("Random Number: {}", biguint);
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_biguint)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_biguint)
     #[inline]
     pub fn random_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -1892,47 +1997,45 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # Features
     /// - This method generates a random number, and then simply divides it by
-    /// the certain value to get its remainder.
+    ///   the certain value to get its remainder.
     /// - The random numbers that may or may not be cryptographically
-    /// secure depending on what pseudo-random number generator is used.
+    ///   secure depending on what pseudo-random number generator is used.
     /// 
     /// # Cryptographical Security
     /// - If you use either `Random_*` or `Any_*`, it is considered to be
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
     /// - If you want to use a normal random number, you are highly recommended
-    /// to use the method
-    /// [random_biguint()](struct@Random_Generic#method.random_biguint)
-    /// rather than this method.
+    ///   to use the method
+    ///   [random_biguint()](struct@Random_Generic#method.random_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number, you are highly recommended to
-    /// use the method
-    /// [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
-    /// rather than this method.
+    ///   use the method
+    ///   [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number less than a certain value,
-    /// you are highly recommended to use the method
-    /// [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random
-    /// number, you are highly recommended to use the method
-    /// [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random odd
-    /// number, you are highly recommended to
-    /// use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
-    /// rather than this method.
-    /// - If you want to use a normal random prime number, you are highly recommended to
-    /// use the method [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
+    ///   rather than this method.
+    /// - If you want to use a normal random prime number, you are highly
+    ///   recommended to use the method
+    ///   [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random prime
-    /// number, you are highly recommended to
-    /// use the method [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// 
     /// # Example
     /// ```
@@ -1950,7 +2053,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_under_biguint)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_under_biguint)
     #[inline]
     pub fn random_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -2037,7 +2140,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_under_biguint_)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_under_biguint_)
     #[inline]
     pub fn random_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -2120,7 +2223,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_odd_biguint)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_odd_biguint)
     pub fn random_odd_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -2206,7 +2309,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_odd_under_biguint)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_odd_under_biguint)
     #[inline]
     pub fn random_odd_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -2294,7 +2397,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_odd_under_biguint_)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_odd_under_biguint_)
     #[inline]
     pub fn random_odd_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -2383,7 +2486,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_with_msb_set_biguint)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_with_msb_set_biguint)
     #[inline]
     pub fn random_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -2471,7 +2574,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_odd_with_msb_set_biguint)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_odd_with_msb_set_biguint)
     pub fn random_odd_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -2571,7 +2674,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_prime_using_miller_rabin_biguint)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_prime_using_miller_rabin_biguint)
     pub fn random_prime_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -2674,7 +2777,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_biguint)
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_biguint)
     pub fn random_prime_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -2782,7 +2885,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /* /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_biguint) */
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_biguint) */
     pub fn random_prime_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -2892,7 +2995,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_prime_with_msb_set_using_prepared) */
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_prime_with_msb_set_using_prepared) */
     #[inline]
     pub fn random_prime_with_msb_set_using_prepared<T, const N: usize>(&mut self) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -2998,7 +3101,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// ```
     /// 
     /// # For more examples,
-    /// click [here](./documentation/random_random/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_biguint) */
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_biguint) */
     pub fn random_prime_with_half_length_using_prepared<T, const N: usize>(&mut self) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
