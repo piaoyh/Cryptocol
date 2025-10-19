@@ -15,46 +15,9 @@
 pub fn main()
 {
     random_quick_start();
-    random_new();
-    random_new_with();
-    random_new_with_generators_seeds();
-    random_new_with_generators_seed_arrays();
-    random_new_with_generators_seed_collector();
-    random_new_with_generators_seed_collector_seeds();
-    random_new_with_generators_seed_collector_seed_arrays();
-    random_get_seed_collector();
-    random_set_seed_collector();
-    random_reset_seed_collector();
-    random_random_u8();
-    random_random_u16();
-    random_random_u32();
-    random_random_u64();
-    random_random_u128();
-    random_random_usize();
-    random_random_uint();
-    random_random_under_uint();
-    random_random_under_uint_();
-    random_random_minmax_uint();
-    random_random_minmax_uint_();
-    random_random_odd_uint();
-    random_random_odd_under_uint();
-    random_random_odd_under_uint_();
-    random_random_with_msb_set_uint();
-    random_random_odd_with_msb_set_uint();
-    random_random_prime_using_miller_rabin_uint();
-    random_random_prime_with_msb_set_using_miller_rabin_uint();
-    random_random_array();
-    random_put_random_in_array();
-    random_random_biguint();
-    random_random_under_biguint();
-    random_random_under_biguint_();
-    random_random_odd_biguint();
-    random_random_odd_under_biguint();
-    random_random_odd_under_biguint_();
-    random_random_with_msb_set_biguint();
-    random_random_odd_with_msb_set_biguint();
-    random_random_prime_using_miller_rabin_biguint();
-    random_random_prime_with_msb_set_using_miller_rabin_biguint();
+    random_constructors();
+    random_smalluint();
+    random_biguint();
 }
 
 fn random_quick_start()
@@ -133,6 +96,20 @@ fn random_quick_start()
     println!("512-bit Random Prime Number = {}", biguint);
     assert!(biguint.is_odd());
     println!("-------------------------------");
+}
+
+fn random_constructors()
+{
+    random_new();
+    random_new_with();
+    random_new_with_generators_seeds();
+    random_new_with_generators_seed_arrays();
+    random_new_with_generators_seed_collector();
+    random_new_with_generators_seed_collector_seeds();
+    random_new_with_generators_seed_collector_seed_arrays();
+    random_get_seed_collector();
+    random_set_seed_collector();
+    random_reset_seed_collector();
 }
 
 fn random_new()
@@ -1248,6 +1225,28 @@ fn random_reset_seed_collector()
     slapdash.reset_seed_collector();
     assert_eq!(collector as Func, slapdash.get_seed_collector() as Func);
     println!("-------------------------------");
+}
+
+fn random_smalluint()
+{
+    random_random_u8();
+    random_random_u16();
+    random_random_u32();
+    random_random_u64();
+    random_random_u128();
+    random_random_usize();
+    random_random_uint();
+    random_random_under_uint();
+    random_random_under_uint_();
+    random_random_minmax_uint();
+    random_random_minmax_uint_();
+    random_random_odd_uint();
+    random_random_odd_under_uint();
+    random_random_odd_under_uint_();
+    random_random_with_msb_set_uint();
+    random_random_odd_with_msb_set_uint();
+    random_random_prime_using_miller_rabin_uint();
+    random_random_prime_with_msb_set_using_miller_rabin_uint();
 }
 
 fn random_random_u8()
@@ -4896,6 +4895,25 @@ fn random_random_prime_with_msb_set_using_miller_rabin_uint()
     println!("-------------------------------");
 }
 
+fn random_biguint()
+{
+    random_random_array();
+    random_put_random_in_array();
+    random_random_biguint();
+    random_random_under_biguint();
+    random_random_under_biguint_();
+    random_random_odd_biguint();
+    random_random_odd_under_biguint();
+    random_random_odd_under_biguint_();
+    random_random_with_msb_set_biguint();
+    random_random_odd_with_msb_set_biguint();
+    random_random_prime_using_miller_rabin_biguint();
+    random_random_prime_with_msb_set_using_miller_rabin_biguint();
+    random_random_prime_with_half_length_using_miller_rabin_biguint();
+    random_prepared_random_prime_with_msb_set();
+    random_prepared_random_prime_with_half_length();
+}
+
 fn random_random_array()
 {
     println!("random_random_array");
@@ -5721,136 +5739,367 @@ fn random_random_odd_biguint()
     let mut rand = Random::new();
     let r: U16384 = rand.random_odd_biguint();
     println!("Random odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Any
     use cryptocol::random::Any;
     let mut any = Any::new();
     let r: U8192 = any.random_odd_biguint();
     println!("Any odd number is {}.", r);
+    assert!(r.is_odd());
     
     // Example for Random_BIG_KECCAK_1024
     use cryptocol::random::Random_BIG_KECCAK_1024;
     let mut rand = Random_BIG_KECCAK_1024::new();
     let r: U7168 = rand.random_odd_biguint();
     println!("Random odd number is {}.", r);
+    assert!(r.is_odd());
     
     // Example for Random_SHA3_512
     use cryptocol::random::Random_SHA3_512;
     let mut rand = Random_SHA3_512::new();
     let r: U6144 = rand.random_odd_biguint();
     println!("Random odd number is {}.", r);
+    assert!(r.is_odd());
     
     // Example for Random_SHA2_512
     use cryptocol::random::Random_SHA2_512;
     let mut rand = Random_SHA2_512::new();
     let r: U5120 = rand.random_odd_biguint();
     println!("Random odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Any_SHAKE_256
     use cryptocol::random::Any_SHAKE_256;
     let mut any = Any_SHAKE_256::new();
     let r: U4096 = any.random_odd_biguint();
     println!("Any odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Any_SHAKE_128
     use cryptocol::random::Any_SHAKE_128;
     let mut any = Any_SHAKE_128::new();
     let r: U3072 = any.random_odd_biguint();
     println!("Any odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Any_SHA3_512
     use cryptocol::random::Any_SHA3_512;
     let mut any = Any_SHA3_512::new();
     let r: U2048 = any.random_odd_biguint();
     println!("Any odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Any_SHA3_256
     use cryptocol::random::Any_SHA3_256;
     let mut any = Any_SHA3_256::new();
     let r: U1024 = any.random_odd_biguint();
     println!("Any odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Any_SHA2_512
     use cryptocol::random::Any_SHA2_512;
     let mut any = Any_SHA2_512::new();
     let r: U768 = any.random_odd_biguint();
     println!("Any odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Any_SHA2_256
     use cryptocol::random::Any_SHA2_256;
     let mut any = Any_SHA2_256::new();
     let r: U512 = any.random_odd_biguint();
     println!("Any odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Slapdash_SHA1
     use cryptocol::random::Slapdash_SHA1;
     let mut slapdash = Slapdash_SHA1::new();
     let r: U384 = slapdash.random_odd_biguint();
     println!("Slapdash odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Slapdash_SHA0
     use cryptocol::random::Slapdash_SHA0;
     let mut slapdash = Slapdash_SHA0::new();
     let r: U256 = slapdash.random_odd_biguint();
     println!("Slapdash odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Slapdash_MD5
     use cryptocol::random::Slapdash_MD5;
     let mut slapdash = Slapdash_MD5::new();
     let r: U16384 = slapdash.random_odd_biguint();
     println!("Slapdash odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Slapdash_MD4
     use cryptocol::random::Slapdash_MD4;
     let mut slapdash = Slapdash_MD4::new();
     let r: U8192 = slapdash.random_odd_biguint();
     println!("Slapdash odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Random_Rijndael
     use cryptocol::random::Random_Rijndael;
     let mut rand = Random_Rijndael::new();
     let r: U7168 = rand.random_odd_biguint();
     println!("Random odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Any_Rijndael
     use cryptocol::random::Any_Rijndael;
     let mut any = Any_Rijndael::new();
     let r: U6144 = any.random_odd_biguint();
     println!("Any odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Slapdash_DES
     use cryptocol::random::Slapdash_DES;
     let mut slapdash = Slapdash_DES::new();
     let r: U5120 = slapdash.random_odd_biguint();
     println!("Slapdash odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Slapdash_Num_C
     use cryptocol::random::Slapdash_Num_C;
     let mut slapdash = Slapdash_Num_C::new();
     let r: U4096 = slapdash.random_odd_biguint();
     println!("Slapdash odd number is {}.", r);
+    assert!(r.is_odd());
 
     // Example for Slapdash
     use cryptocol::random::Slapdash;
     let mut slapdash = Slapdash::new();
     let r: U3072 = slapdash.random_odd_biguint();
     println!("Slapdash odd number is {}.", r);
+    assert!(r.is_odd());
     println!("-------------------------------");
 }
-//////////////////////
+
 fn random_random_odd_under_biguint()
 {
     println!("random_random_odd_under_biguint");
     use cryptocol::define_utypes_with;
-    use cryptocol::random::Slapdash_MD4;
-
-    define_utypes_with!(u128);
-    let mut rand = Slapdash_MD4::new();
-    let ceiling = U1024::max().wrapping_div_uint(4_u8);
+    define_utypes_with!(u8);
+    
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
+    let ceiling = U16384::max().wrapping_div_uint(3_u8);
     if let Some(r) = rand.random_odd_under_biguint(&ceiling)
     {
-        println!("Random odd Number less than {} is\n{}", ceiling, r);
+        println!("Random odd number less than {} is\n{}", ceiling, r);
         assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    let ceiling = U8192::max().wrapping_div_uint(4_u8);
+    if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    {
+        println!("Any odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    let ceiling = U7168::max().wrapping_div_uint(5_u8);
+    if let Some(r) = rand.random_odd_under_biguint(&ceiling)
+    {
+        println!("Random odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    let ceiling = U6144::max().wrapping_div_uint(6_u8);
+    if let Some(r) = rand.random_odd_under_biguint(&ceiling)
+    {
+        println!("Random odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    let ceiling = U5120::max().wrapping_div_uint(7_u8);
+    if let Some(r) = rand.random_odd_under_biguint(&ceiling)
+    {
+        println!("Random odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    let ceiling = U4096::max().wrapping_div_uint(8_u8);
+    if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    {
+        println!("Any odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    let ceiling = U3072::max().wrapping_div_uint(9_u8);
+    if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    {
+        println!("Any odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    let ceiling = U2048::max().wrapping_div_uint(10_u8);
+    if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    {
+        println!("Any odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    let ceiling = U1024::max().wrapping_div_uint(11_u8);
+    if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    {
+        println!("Any odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    let ceiling = U768::max().wrapping_div_uint(12_u8);
+    if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    {
+        println!("Any odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    let ceiling = U512::max().wrapping_div_uint(13_u8);
+    if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    {
+        println!("Any odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let ceiling = U384::max().wrapping_div_uint(14_u8);
+    if let Some(r) = slapdash.random_odd_under_biguint(&ceiling)
+    {
+        println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let ceiling = U256::max().wrapping_div_uint(15_u8);
+    if let Some(r) = slapdash.random_odd_under_biguint(&ceiling)
+    {
+        println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let ceiling = U16384::max().wrapping_div_uint(16_u8);
+    if let Some(r) = slapdash.random_odd_under_biguint(&ceiling)
+    {
+        println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let ceiling = U8192::max().wrapping_div_uint(17_u8);
+    if let Some(r) = slapdash.random_odd_under_biguint(&ceiling)
+    {
+        println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    let ceiling = U7168::max().wrapping_div_uint(18_u8);
+    if let Some(r) = rand.random_odd_under_biguint(&ceiling)
+    {
+        println!("Random odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    let ceiling = U6144::max().wrapping_div_uint(19_u8);
+    if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    {
+        println!("Any odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let ceiling = U5120::max().wrapping_div_uint(20_u8);
+    if let Some(r) = slapdash.random_odd_under_biguint(&ceiling)
+    {
+        println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let ceiling = U4096::max().wrapping_div_uint(21_u8);
+    if let Some(r) = slapdash.random_odd_under_biguint(&ceiling)
+    {
+        println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
+    }
+
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let ceiling = U2048::max().wrapping_div_uint(22_u8);
+    if let Some(r) = slapdash.random_odd_under_biguint(&ceiling)
+    {
+        println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        assert!(r.is_odd());
     }
     println!("-------------------------------");
 }
@@ -5859,14 +6108,187 @@ fn random_random_odd_under_biguint_()
 {
     println!("random_random_odd_under_biguint_");
     use cryptocol::define_utypes_with;
-    use cryptocol::random::Any_SHA2_512;
+    define_utypes_with!(u128);
 
-    define_utypes_with!(u8);
-    let mut rand = Any_SHA2_512::new();
-    let ceiling = U1024::max().wrapping_div_uint(3_u8);
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
+    let ceiling = U16384::max().wrapping_div_uint(3_u8);
     let r = rand.random_odd_under_biguint_(&ceiling);
-    println!("Random odd Number less than {} is\n{}", ceiling, r);
+    println!("Random odd number less than {} is\n{}", ceiling, r);
     assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    let ceiling = U8192::max().wrapping_div_uint(4_u8);
+    let r = any.random_odd_under_biguint_(&ceiling);
+    println!("Any odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    let ceiling = U7168::max().wrapping_div_uint(5_u8);
+    let r = rand.random_odd_under_biguint_(&ceiling);
+    println!("Random odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    let ceiling = U6144::max().wrapping_div_uint(6_u8);
+    let r = rand.random_odd_under_biguint_(&ceiling);
+    println!("Random odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    let ceiling = U5120::max().wrapping_div_uint(7_u8);
+    let r = rand.random_odd_under_biguint_(&ceiling);
+    println!("Random odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    let ceiling = U4096::max().wrapping_div_uint(8_u8);
+    let r = any.random_odd_under_biguint_(&ceiling);
+    println!("Any odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    let ceiling = U3072::max().wrapping_div_uint(9_u8);
+    let r = any.random_odd_under_biguint_(&ceiling);
+    println!("Any odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    let ceiling = U2048::max().wrapping_div_uint(10_u8);
+    let r = any.random_odd_under_biguint_(&ceiling);
+    println!("Any odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    let ceiling = U1024::max().wrapping_div_uint(11_u8);
+    let r = any.random_odd_under_biguint_(&ceiling);
+    println!("Any odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    let ceiling = U768::max().wrapping_div_uint(12_u8);
+    let r = any.random_odd_under_biguint_(&ceiling);
+    println!("Any odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    let ceiling = U512::max().wrapping_div_uint(13_u8);
+    let r = any.random_odd_under_biguint_(&ceiling);
+    println!("Any odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let ceiling = U384::max().wrapping_div_uint(14_u8);
+    let r = slapdash.random_odd_under_biguint_(&ceiling);
+    println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let ceiling = U256::max().wrapping_div_uint(15_u8);
+    let r = slapdash.random_odd_under_biguint_(&ceiling);
+    println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let ceiling = U16384::max().wrapping_div_uint(16_u8);
+    let r = slapdash.random_odd_under_biguint_(&ceiling);
+    println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let ceiling = U8192::max().wrapping_div_uint(17_u8);
+    let r = slapdash.random_odd_under_biguint_(&ceiling);
+    println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    let ceiling = U7168::max().wrapping_div_uint(18_u8);
+    let r = rand.random_odd_under_biguint_(&ceiling);
+    println!("Random odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    let ceiling = U6144::max().wrapping_div_uint(19_u8);
+    let r = any.random_odd_under_biguint_(&ceiling);
+    println!("Any odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let ceiling = U5120::max().wrapping_div_uint(20_u8);
+    let r = slapdash.random_odd_under_biguint_(&ceiling);
+    println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let ceiling = U4096::max().wrapping_div_uint(21_u8);
+    let r = slapdash.random_odd_under_biguint_(&ceiling);
+    println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
+
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let ceiling = U2048::max().wrapping_div_uint(22_u8);
+    let r = slapdash.random_odd_under_biguint_(&ceiling);
+    println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    assert!(r < ceiling);
+    assert!(r.is_odd());
     println!("-------------------------------");
 }
 
@@ -5874,12 +6296,147 @@ fn random_random_with_msb_set_biguint()
 {
     println!("random_random_with_msb_set_biguint");
     use cryptocol::define_utypes_with;
-    use cryptocol::random::Slapdash_MD5;
-
     define_utypes_with!(u64);
-    let mut rand = Slapdash_MD5::new();
-    let biguint: U512 = rand.random_with_msb_set_biguint();
-    println!("Random Number: {}", biguint);
+
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
+    let r: U16384 = rand.random_with_msb_set_biguint();
+    println!("Random number is {}.", r);
+    assert!(r > U16384::halfmax());
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    let r: U8192 = any.random_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U8192::halfmax());
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    let r: U7168 = rand.random_with_msb_set_biguint();
+    println!("Random number is {}.", r);
+    assert!(r > U7168::halfmax());
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    let r: U6144 = rand.random_with_msb_set_biguint();
+    println!("Random number is {}.", r);
+    assert!(r > U6144::halfmax());
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    let r: U5120 = rand.random_with_msb_set_biguint();
+    println!("Random number is {}.", r);
+    assert!(r > U5120::halfmax());
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    let r: U4096 = any.random_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U4096::halfmax());
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    let r: U3072 = any.random_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U3072::halfmax());
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    let r: U2048 = any.random_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U2048::halfmax());
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    let r: U1024 = any.random_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U1024::halfmax());
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    let r: U768 = any.random_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U768::halfmax());
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    let r: U512 = any.random_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U512::halfmax());
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let r: U384 = slapdash.random_with_msb_set_biguint();
+    println!("Slapdash number is {}.", r);
+    assert!(r > U384::halfmax());
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let r: U256 = slapdash.random_with_msb_set_biguint();
+    println!("Slapdash number is {}.", r);
+    assert!(r > U256::halfmax());
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let r: U16384 = slapdash.random_with_msb_set_biguint();
+    println!("Slapdash number is {}.", r);
+    assert!(r > U16384::halfmax());
+
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let r: U8192 = slapdash.random_with_msb_set_biguint();
+    println!("Slapdash number is {}.", r);
+    assert!(r > U8192::halfmax());
+
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    let r: U7168 = rand.random_with_msb_set_biguint();
+    println!("Random number is {}.", r);
+    assert!(r > U7168::halfmax());
+
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    let r: U6144 = any.random_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U6144::halfmax());
+
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let r: U5120 = slapdash.random_with_msb_set_biguint();
+    println!("Slapdash number is {}.", r);
+    assert!(r > U5120::halfmax());
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let r: U4096 = slapdash.random_with_msb_set_biguint();
+    println!("Slapdash number is {}.", r);
+    assert!(r > U4096::halfmax());
+
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let r: U3072 = slapdash.random_with_msb_set_biguint();
+    println!("Slapdash number is {}.", r);
+    assert!(r > U3072::halfmax());
     println!("-------------------------------");
 }
 
@@ -5887,28 +6444,295 @@ fn random_random_odd_with_msb_set_biguint()
 {
     println!("random_random_odd_with_msb_set_biguint");
     use cryptocol::define_utypes_with;
-    use cryptocol::random::Any;
-
     define_utypes_with!(u32);
-    let mut rand = Any::new();
-    let num:U512 = rand.random_odd_with_msb_set_biguint();
-    println!("512-bit Random Odd Number = {}", num);
-    assert!(num > U512::halfmax());
-    assert!(num.is_odd());
+
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
+    let r: U16384 = rand.random_odd_with_msb_set_biguint();
+    println!("Random number is {}.", r);
+    assert!(r > U16384::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    let r: U8192 = any.random_odd_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U8192::halfmax());
+    assert!(r.is_odd());
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    let r: U7168 = rand.random_odd_with_msb_set_biguint();
+    println!("Random number is {}.", r);
+    assert!(r > U7168::halfmax());
+    assert!(r.is_odd());
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    let r: U6144 = rand.random_odd_with_msb_set_biguint();
+    println!("Random number is {}.", r);
+    assert!(r > U6144::halfmax());
+    assert!(r.is_odd());
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    let r: U5120 = rand.random_odd_with_msb_set_biguint();
+    println!("Random number is {}.", r);
+    assert!(r > U5120::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    let r: U4096 = any.random_odd_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U4096::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    let r: U3072 = any.random_odd_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U3072::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    let r: U2048 = any.random_odd_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U2048::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    let r: U1024 = any.random_odd_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U1024::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    let r: U768 = any.random_odd_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U768::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    let r: U512 = any.random_odd_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U512::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let r: U384 = slapdash.random_odd_with_msb_set_biguint();
+    println!("Slapdash number is {}.", r);
+    assert!(r > U384::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let r: U256 = slapdash.random_odd_with_msb_set_biguint();
+    println!("Slapdash number is {}.", r);
+    assert!(r > U256::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let r: U16384 = slapdash.random_odd_with_msb_set_biguint();
+    println!("Slapdash number is {}.", r);
+    assert!(r > U16384::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let r: U8192 = slapdash.random_odd_with_msb_set_biguint();
+    println!("Slapdash number is {}.", r);
+    assert!(r > U8192::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    let r: U7168 = rand.random_odd_with_msb_set_biguint();
+    println!("Random number is {}.", r);
+    assert!(r > U7168::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    let r: U6144 = any.random_odd_with_msb_set_biguint();
+    println!("Any number is {}.", r);
+    assert!(r > U6144::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let r: U5120 = slapdash.random_odd_with_msb_set_biguint();
+    println!("Slapdash number is {}.", r);
+    assert!(r > U5120::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let r: U4096 = slapdash.random_odd_with_msb_set_biguint();
+    println!("Slapdash number is {}.", r);
+    assert!(r > U4096::halfmax());
+    assert!(r.is_odd());
+
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let r: U3072 = slapdash.random_odd_with_msb_set_biguint();
+    println!("Slapdash number is {}.", r);
+    assert!(r > U3072::halfmax());
+    assert!(r.is_odd());
     println!("-------------------------------");
 }
-
+//////////////////////
 fn random_random_prime_using_miller_rabin_biguint()
 {
     println!("random_random_prime_using_miller_rabin_biguint");
     use cryptocol::define_utypes_with;
-    use cryptocol::random::Random;
-
     define_utypes_with!(u16);
+
+    // Example for Random
+    use cryptocol::random::Random;
     let mut rand = Random::new();
-    let num:U512 = rand.random_prime_using_miller_rabin_biguint(5);
-    println!("Random Prime Number = {}", num);
-    assert!(num.is_odd());
+    let prime: U256 = rand.random_prime_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    let prime: U384 = any.random_prime_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    let prime: U512 = rand.random_prime_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    let prime: U768 = rand.random_prime_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    let prime: U1024 = rand.random_prime_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    let prime: U2048 = any.random_prime_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    let prime: U3072 = any.random_prime_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    let prime: U4096 = any.random_prime_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    let prime: U5120 = any.random_prime_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    let prime: U6144 = any.random_prime_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    let prime: U7168 = any.random_prime_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let prime: U8192 = slapdash.random_prime_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let prime: U16384 = slapdash.random_prime_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let prime: U256 = slapdash.random_prime_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let prime: U384 = slapdash.random_prime_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    let prime: U512 = rand.random_prime_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    let prime: U768 = any.random_prime_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let prime: U1024 = slapdash.random_prime_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let prime: U2048 = slapdash.random_prime_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let prime: U3072 = slapdash.random_prime_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
     println!("-------------------------------");
 }
 
@@ -5916,13 +6740,511 @@ fn random_random_prime_with_msb_set_using_miller_rabin_biguint()
 {
     println!("random_random_prime_with_msb_set_using_miller_rabin_biguint");
     use cryptocol::define_utypes_with;
-    use cryptocol::random::Slapdash_SHA1;
+    define_utypes_with!(u8);
 
-    define_utypes_with!(u16);
-    let mut rand = Slapdash_SHA1::new();
-    let num:U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
-    println!("512-bit Random Prime Number = {}", num);
-    assert!(num.is_odd());
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
+    let prime: U256 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    let prime: U384 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    let prime: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    let prime: U768 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    let prime: U1024 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    let prime: U2048 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    let prime: U3072 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    let prime: U4096 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    let prime: U5120 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    let prime: U6144 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    let prime: U7168 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let prime: U8192 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let prime: U16384 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let prime: U256 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let prime: U384 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    let prime: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    let prime: U768 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let prime: U1024 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let prime: U2048 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let prime: U3072 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+    println!("-------------------------------");
+}
+
+fn random_random_prime_with_half_length_using_miller_rabin_biguint()
+{
+    println!("random_random_prime_with_half_length_using_miller_rabin_biguint");
+    use cryptocol::define_utypes_with;
+    define_utypes_with!(u128);
+    
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
+    let prime: U256 = rand.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    let prime: U384 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    let prime: U512 = rand.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    let prime: U768 = rand.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    let prime: U1024 = rand.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    let prime: U2048 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    let prime: U3072 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    let prime: U4096 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    let prime: U5120 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    let prime: U6144 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    let prime: U7168 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let prime: U8192 = slapdash.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let prime: U16384 = slapdash.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let prime: U256 = slapdash.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let prime: U384 = slapdash.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    let prime: U512 = rand.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Random prime number: {}", prime);
+
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    let prime: U768 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Any prime number: {}", prime);
+
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let prime: U1024 = slapdash.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let prime: U2048 = slapdash.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let prime: U3072 = slapdash.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    println!("Slapdash prime number: {}", prime);
+    println!("-------------------------------");
+}
+
+fn random_prepared_random_prime_with_msb_set()
+{
+    println!("random_prepared_random_prime_with_msb_set");
+    use cryptocol::define_utypes_with;
+    define_utypes_with!(u64);
+
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
+    let biguint: U256 = rand.prepared_random_prime_with_msb_set();
+    println!("Random Number: {}", biguint);
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    let biguint: U384 = any.prepared_random_prime_with_msb_set();
+    println!("Any Number: {}", biguint);
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    let biguint: U512 = rand.prepared_random_prime_with_msb_set();
+    println!("Random Number: {}", biguint);
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    let biguint: U768 = rand.prepared_random_prime_with_msb_set();
+    println!("Random Number: {}", biguint);
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    let biguint: U1024 = rand.prepared_random_prime_with_msb_set();
+    println!("Random Number: {}", biguint);
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    let biguint: U2048 = any.prepared_random_prime_with_msb_set();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    let biguint: U3072 = any.prepared_random_prime_with_msb_set();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    let biguint: U4096 = any.prepared_random_prime_with_msb_set();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    let biguint: U5120 = any.prepared_random_prime_with_msb_set();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    let biguint: U6144 = any.prepared_random_prime_with_msb_set();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    let biguint: U7168 = any.prepared_random_prime_with_msb_set();
+    println!("Any Number: {}", biguint);
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let biguint: U8192 = slapdash.prepared_random_prime_with_msb_set();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let biguint: U16384 = slapdash.prepared_random_prime_with_msb_set();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let biguint: U256 = slapdash.prepared_random_prime_with_msb_set();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let biguint: U384 = slapdash.prepared_random_prime_with_msb_set();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    let biguint: U512 = rand.prepared_random_prime_with_msb_set();
+    println!("Random Number: {}", biguint);
+
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    let biguint: U768 = any.prepared_random_prime_with_msb_set();
+    println!("Any Number: {}", biguint);
+
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let biguint: U1024 = slapdash.prepared_random_prime_with_msb_set();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let biguint: U2048 = slapdash.prepared_random_prime_with_msb_set();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let biguint: U3072 = slapdash.prepared_random_prime_with_msb_set();
+    println!("Slapdash Number: {}", biguint);
+    println!("-------------------------------");
+}
+
+fn random_prepared_random_prime_with_half_length()
+{
+    println!("random_prepared_random_prime_with_half_length");
+    use cryptocol::define_utypes_with;
+    define_utypes_with!(u32);
+
+    // Example for Random
+    use cryptocol::random::Random;
+    let mut rand = Random::new();
+    let biguint: U256 = rand.prepared_random_prime_with_half_length();
+    println!("Random Number: {}", biguint);
+
+    // Example for Any
+    use cryptocol::random::Any;
+    let mut any = Any::new();
+    let biguint: U384 = any.prepared_random_prime_with_half_length();
+    println!("Any Number: {}", biguint);
+    
+    // Example for Random_BIG_KECCAK_1024
+    use cryptocol::random::Random_BIG_KECCAK_1024;
+    let mut rand = Random_BIG_KECCAK_1024::new();
+    let biguint: U512 = rand.prepared_random_prime_with_half_length();
+    println!("Random Number: {}", biguint);
+    
+    // Example for Random_SHA3_512
+    use cryptocol::random::Random_SHA3_512;
+    let mut rand = Random_SHA3_512::new();
+    let biguint: U768 = rand.prepared_random_prime_with_half_length();
+    println!("Random Number: {}", biguint);
+    
+    // Example for Random_SHA2_512
+    use cryptocol::random::Random_SHA2_512;
+    let mut rand = Random_SHA2_512::new();
+    let biguint: U1024 = rand.prepared_random_prime_with_half_length();
+    println!("Random Number: {}", biguint);
+
+    // Example for Any_SHAKE_256
+    use cryptocol::random::Any_SHAKE_256;
+    let mut any = Any_SHAKE_256::new();
+    let biguint: U2048 = any.prepared_random_prime_with_half_length();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHAKE_128
+    use cryptocol::random::Any_SHAKE_128;
+    let mut any = Any_SHAKE_128::new();
+    let biguint: U3072 = any.prepared_random_prime_with_half_length();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHA3_512
+    use cryptocol::random::Any_SHA3_512;
+    let mut any = Any_SHA3_512::new();
+    let biguint: U4096 = any.prepared_random_prime_with_half_length();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHA3_256
+    use cryptocol::random::Any_SHA3_256;
+    let mut any = Any_SHA3_256::new();
+    let biguint: U5120 = any.prepared_random_prime_with_half_length();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHA2_512
+    use cryptocol::random::Any_SHA2_512;
+    let mut any = Any_SHA2_512::new();
+    let biguint: U6144 = any.prepared_random_prime_with_half_length();
+    println!("Any Number: {}", biguint);
+
+    // Example for Any_SHA2_256
+    use cryptocol::random::Any_SHA2_256;
+    let mut any = Any_SHA2_256::new();
+    let biguint: U7168 = any.prepared_random_prime_with_half_length();
+    println!("Any Number: {}", biguint);
+
+    // Example for Slapdash_SHA1
+    use cryptocol::random::Slapdash_SHA1;
+    let mut slapdash = Slapdash_SHA1::new();
+    let biguint: U8192 = slapdash.prepared_random_prime_with_half_length();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash_SHA0
+    use cryptocol::random::Slapdash_SHA0;
+    let mut slapdash = Slapdash_SHA0::new();
+    let biguint: U16384 = slapdash.prepared_random_prime_with_half_length();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash_MD5
+    use cryptocol::random::Slapdash_MD5;
+    let mut slapdash = Slapdash_MD5::new();
+    let biguint: U256 = slapdash.prepared_random_prime_with_half_length();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash_MD4
+    use cryptocol::random::Slapdash_MD4;
+    let mut slapdash = Slapdash_MD4::new();
+    let biguint: U384 = slapdash.prepared_random_prime_with_half_length();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Random_Rijndael
+    use cryptocol::random::Random_Rijndael;
+    let mut rand = Random_Rijndael::new();
+    let biguint: U512 = rand.prepared_random_prime_with_half_length();
+    println!("Random Number: {}", biguint);
+
+    // Example for Any_Rijndael
+    use cryptocol::random::Any_Rijndael;
+    let mut any = Any_Rijndael::new();
+    let biguint: U768 = any.prepared_random_prime_with_half_length();
+    println!("Any Number: {}", biguint);
+
+    // Example for Slapdash_DES
+    use cryptocol::random::Slapdash_DES;
+    let mut slapdash = Slapdash_DES::new();
+    let biguint: U1024 = slapdash.prepared_random_prime_with_half_length();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash_Num_C
+    use cryptocol::random::Slapdash_Num_C;
+    let mut slapdash = Slapdash_Num_C::new();
+    let biguint: U2048 = slapdash.prepared_random_prime_with_half_length();
+    println!("Slapdash Number: {}", biguint);
+
+    // Example for Slapdash
+    use cryptocol::random::Slapdash;
+    let mut slapdash = Slapdash::new();
+    let biguint: U3072 = slapdash.prepared_random_prime_with_half_length();
+    println!("Slapdash Number: {}", biguint);
     println!("-------------------------------");
 }
 

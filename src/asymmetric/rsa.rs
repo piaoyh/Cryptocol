@@ -200,10 +200,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         let length = T::size_in_bytes() as usize * N;
         let mut rand = Random::new();
-        let prime_1 = rand.random_prime_with_half_length_using_prepared();
-        let mut prime_2 = rand.random_prime_with_half_length_using_prepared();
+        let prime_1 = rand.prepared_random_prime_with_half_length();
+        let mut prime_2 = rand.prepared_random_prime_with_half_length();
         while prime_1 == prime_2
-            { prime_2 = rand.random_prime_with_half_length_using_prepared(); }
+            { prime_2 = rand.prepared_random_prime_with_half_length(); }
         Self::new_with_primes(prime_1, prime_2)
     }
 

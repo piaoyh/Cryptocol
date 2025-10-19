@@ -233,7 +233,7 @@
 // !      ===> Moved to Roadmap for ver. 2.0
 // !
 //! ## 5. Pseudo-Random Number Generator Algorithms
-//! - [ ] Pseudo-random number generator --- struct
+//! - [X] Pseudo-random number generator --- struct
 //!       [`Random_Generic`](random/struct.Random_Generic.html#struct.Random_Generic)
 //!       and trait
 //!       [Random_Engine](random/trait_random_engine/trait.Random_Engine.html#trait.Random_Engine)

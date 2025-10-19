@@ -4775,6 +4775,7 @@ impl Random_Generic
     /// let mut rand = Random::new();
     /// let r: U16384 = rand.random_odd_biguint();
     /// println!("Random odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 2 for Any
@@ -4786,6 +4787,7 @@ impl Random_Generic
     /// let mut any = Any::new();
     /// let r: U8192 = any.random_odd_biguint();
     /// println!("Any odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 3 for Random_BIG_KECCAK_1024
@@ -4797,6 +4799,7 @@ impl Random_Generic
     /// let mut rand = Random_BIG_KECCAK_1024::new();
     /// let r: U7168 = rand.random_odd_biguint();
     /// println!("Random odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 4 for Random_SHA3_512
@@ -4808,6 +4811,7 @@ impl Random_Generic
     /// let mut rand = Random_SHA3_512::new();
     /// let r: U6144 = rand.random_odd_biguint();
     /// println!("Random odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 5 for Random_SHA2_512
@@ -4819,6 +4823,7 @@ impl Random_Generic
     /// let mut rand = Random_SHA2_512::new();
     /// let r: U5120 = rand.random_odd_biguint();
     /// println!("Random odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 6 for Any_SHAKE_256
@@ -4830,6 +4835,7 @@ impl Random_Generic
     /// let mut any = Any_SHAKE_256::new();
     /// let r: U4096 = any.random_odd_biguint();
     /// println!("Any odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 7 for Any_SHAKE_128
@@ -4841,6 +4847,7 @@ impl Random_Generic
     /// let mut any = Any_SHAKE_128::new();
     /// let r: U3072 = any.random_odd_biguint();
     /// println!("Any odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 8 for Any_SHA3_512
@@ -4852,6 +4859,7 @@ impl Random_Generic
     /// let mut any = Any_SHA3_512::new();
     /// let r: U2048 = any.random_odd_biguint();
     /// println!("Any odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 9 for Any_SHA3_256
@@ -4863,6 +4871,7 @@ impl Random_Generic
     /// let mut any = Any_SHA3_256::new();
     /// let r: U1024 = any.random_odd_biguint();
     /// println!("Any odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 10 for Any_SHA2_512
@@ -4874,6 +4883,7 @@ impl Random_Generic
     /// let mut any = Any_SHA2_512::new();
     /// let r: U768 = any.random_odd_biguint();
     /// println!("Any odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 11 for Any_SHA2_256
@@ -4885,6 +4895,7 @@ impl Random_Generic
     /// let mut any = Any_SHA2_256::new();
     /// let r: U512 = any.random_odd_biguint();
     /// println!("Any odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 12 for Slapdash_SHA1
@@ -4896,6 +4907,7 @@ impl Random_Generic
     /// let mut slapdash = Slapdash_SHA1::new();
     /// let r: U384 = slapdash.random_odd_biguint();
     /// println!("Slapdash odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 13 for Slapdash_SHA0
@@ -4907,6 +4919,7 @@ impl Random_Generic
     /// let mut slapdash = Slapdash_SHA0::new();
     /// let r: U256 = slapdash.random_odd_biguint();
     /// println!("Slapdash odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 14 for Slapdash_MD5
@@ -4918,6 +4931,7 @@ impl Random_Generic
     /// let mut slapdash = Slapdash_MD5::new();
     /// let r: U16384 = slapdash.random_odd_biguint();
     /// println!("Slapdash odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 15 for Slapdash_MD4
@@ -4929,6 +4943,7 @@ impl Random_Generic
     /// let mut slapdash = Slapdash_MD4::new();
     /// let r: U8192 = slapdash.random_odd_biguint();
     /// println!("Slapdash odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 16 for Random_Rijndael
@@ -4940,6 +4955,7 @@ impl Random_Generic
     /// let mut rand = Random_Rijndael::new();
     /// let r: U7168 = rand.random_odd_biguint();
     /// println!("Random odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 17 for Any_Rijndael
@@ -4951,6 +4967,7 @@ impl Random_Generic
     /// let mut any = Any_Rijndael::new();
     /// let r: U6144 = any.random_odd_biguint();
     /// println!("Any odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 18 for Slapdash_DES
@@ -4962,6 +4979,7 @@ impl Random_Generic
     /// let mut slapdash = Slapdash_DES::new();
     /// let r: U5120 = slapdash.random_odd_biguint();
     /// println!("Slapdash odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 19 for Slapdash_Num_C
@@ -4973,6 +4991,7 @@ impl Random_Generic
     /// let mut slapdash = Slapdash_Num_C::new();
     /// let r: U4096 = slapdash.random_odd_biguint();
     /// println!("Slapdash odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     /// 
     /// # Example 20 for Slapdash
@@ -4984,6 +5003,7 @@ impl Random_Generic
     /// let mut slapdash = Slapdash::new();
     /// let r: U3072 = slapdash.random_odd_biguint();
     /// println!("Slapdash odd number is {}.", r);
+    /// assert!(r.is_odd());
     /// ```
     pub fn random_odd_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -4997,7 +5017,7 @@ impl Random_Generic
     {
         unimplemented!(); // Dummy code for documentation
     }
-//////////////////////
+
     // pub fn random_odd_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
     /// Constucts a new `BigUInt<T, N>`-type object which has the random odd
     /// value less than a certain value, wrapped by enum `Some` of `Option`.
@@ -5009,61 +5029,364 @@ impl Random_Generic
     /// 
     /// # Features
     /// - This method generates a random number, and then simply divides it
-    /// by the certain value to get its remainder and then simply set the LSB
-    /// (Least Significant Bit).
+    ///   by the certain value to get its remainder and then simply set the LSB
+    ///   (Least Significant Bit).
     /// - The random numbers that may or may not be cryptographically
-    /// secure depending on what pseudo-random number generator is used.
+    ///   secure depending on what pseudo-random number generator is used.
     /// 
     /// # Cryptographical Security
     /// - If you use either `Random_*` or `Any_*`, it is considered to be
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
     /// - If you want to use a normal random number, you are highly recommended
-    /// to use the method
-    /// [random_biguint()](struct@Random_Generic#method.random_biguint)
-    /// rather than this method.
+    ///   to use the method
+    ///   [random_biguint()](struct@Random_Generic#method.random_biguint)
+    ///   rather than this method.
     /// - If you want to use a random number less than a certain value, you are
-    /// highly recommended to use the method
-    /// [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
-    /// rather than this method.
+    ///   highly recommended to use the method
+    ///   [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number, you are highly recommended to
-    /// use the method
-    /// [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
-    /// rather than this method.
+    ///   use the method
+    ///   [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random
-    /// number, you are highly recommended to use the method
-    /// [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random odd
-    /// number, you are highly recommended to
-    /// use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
-    /// rather than this method.
-    /// - If you want to use a normal random prime number, you are highly recommended to
-    /// use the method [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
+    ///   rather than this method.
+    /// - If you want to use a normal random prime number, you are highly
+    ///   recommended to use the method
+    ///   [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random prime
-    /// number, you are highly recommended to
-    /// use the method [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
+    /// use cryptocol::random::Random;
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Slapdash_MD4;
+    /// define_utypes_with!(u8);
     /// 
-    /// define_utypes_with!(u128);
-    /// let mut rand = Slapdash_MD4::new();
-    /// let ceiling = U1024::max().wrapping_div_uint(4_u8);
+    /// let mut rand = Random::new();
+    /// let ceiling = U16384::max().wrapping_div_uint(3_u8);
     /// if let Some(r) = rand.random_odd_under_biguint(&ceiling)
     /// {
-    ///     println!("Random odd Number less than {} is\n{}", ceiling, r);
+    ///     println!("Random odd number less than {} is\n{}", ceiling, r);
     ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 2 for Any
+    /// ```
+    /// use cryptocol::random::Any;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any::new();
+    /// let ceiling = U8192::max().wrapping_div_uint(4_u8);
+    /// if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Any odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let ceiling = U7168::max().wrapping_div_uint(5_u8);
+    /// if let Some(r) = rand.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Random odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut rand = Random_SHA3_512::new();
+    /// let ceiling = U6144::max().wrapping_div_uint(6_u8);
+    /// if let Some(r) = rand.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Random odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut rand = Random_SHA2_512::new();
+    /// let ceiling = U5120::max().wrapping_div_uint(7_u8);
+    /// if let Some(r) = rand.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Random odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHAKE_256::new();
+    /// let ceiling = U4096::max().wrapping_div_uint(8_u8);
+    /// if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Any odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHAKE_128::new();
+    /// let ceiling = U3072::max().wrapping_div_uint(9_u8);
+    /// if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Any odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHA3_512::new();
+    /// let ceiling = U2048::max().wrapping_div_uint(10_u8);
+    /// if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Any odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHA3_256::new();
+    /// let ceiling = U1024::max().wrapping_div_uint(11_u8);
+    /// if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Any odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHA2_512::new();
+    /// let ceiling = U768::max().wrapping_div_uint(12_u8);
+    /// if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Any odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHA2_256::new();
+    /// let ceiling = U512::max().wrapping_div_uint(13_u8);
+    /// if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Any odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 12 for Slapdash_SHA1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_SHA1::new();
+    /// let ceiling = U384::max().wrapping_div_uint(14_u8);
+    /// if let Some(r) = slapdash.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 13 for Slapdash_SHA0
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_SHA0::new();
+    /// let ceiling = U256::max().wrapping_div_uint(15_u8);
+    /// if let Some(r) = slapdash.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 14 for Slapdash_MD5
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_MD5::new();
+    /// let ceiling = U16384::max().wrapping_div_uint(16_u8);
+    /// if let Some(r) = slapdash.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 15 for Slapdash_MD4
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_MD4::new();
+    /// let ceiling = U8192::max().wrapping_div_uint(17_u8);
+    /// if let Some(r) = slapdash.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut rand = Random_Rijndael::new();
+    /// let ceiling = U7168::max().wrapping_div_uint(18_u8);
+    /// if let Some(r) = rand.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Random odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_Rijndael::new();
+    /// let ceiling = U6144::max().wrapping_div_uint(19_u8);
+    /// if let Some(r) = any.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Any odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 18 for Slapdash_DES
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_DES::new();
+    /// let ceiling = U5120::max().wrapping_div_uint(20_u8);
+    /// if let Some(r) = slapdash.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 19 for Slapdash_Num_C
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_Num_C::new();
+    /// let ceiling = U4096::max().wrapping_div_uint(21_u8);
+    /// if let Some(r) = slapdash.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
+    /// }
+    /// ```
+    /// 
+    /// # Example 20 for Slapdash
+    /// ```
+    /// use cryptocol::random::Slapdash;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash::new();
+    /// let ceiling = U2048::max().wrapping_div_uint(22_u8);
+    /// if let Some(r) = slapdash.random_odd_under_biguint(&ceiling)
+    /// {
+    ///     println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    ///     assert!(r < ceiling);
+    ///     assert!(r.is_odd());
     /// }
     /// ```
     #[inline]
@@ -5090,10 +5413,10 @@ impl Random_Generic
     /// 
     /// # Features
     /// - This method generates a random number, and then simply divides it
-    /// by the certain value to get its remainder and then simply set the LSB
-    /// (Least Significant Bit).
+    ///   by the certain value to get its remainder and then simply set the LSB
+    ///   (Least Significant Bit).
     /// - The random numbers that may or may not be cryptographically
-    /// secure depending on what pseudo-random number generator is used.
+    ///   secure depending on what pseudo-random number generator is used.
     /// 
     /// # Panics
     /// If `ceiling` is zero, this method will panic.
@@ -5106,50 +5429,315 @@ impl Random_Generic
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
     /// - If you want to use a normal random number, you are highly recommended
-    /// to use the method
-    /// [random_biguint()](struct@Random_Generic#method.random_biguint)
-    /// rather than this method.
+    ///   to use the method
+    ///   [random_biguint()](struct@Random_Generic#method.random_biguint)
+    ///   rather than this method.
     /// - If you want to use a random number less than a certain value, you are
-    /// highly recommended to use the method
-    /// [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
-    /// rather than this method.
+    ///   highly recommended to use the method
+    ///   [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number, you are highly recommended to
-    /// use the method
-    /// [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
-    /// rather than this method.
+    ///   use the method
+    ///   [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random
-    /// number, you are highly recommended to use the method
-    /// [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random odd
-    /// number, you are highly recommended to
-    /// use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
-    /// rather than this method.
-    /// - If you want to use a normal random prime number, you are highly recommended to
-    /// use the method [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to
+    ///   use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
+    ///   rather than this method.
+    /// - If you want to use a normal random prime number, you are highly
+    ///   recommended to use the method
+    ///   [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random prime
-    /// number, you are highly recommended to
-    /// use the method [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
+    /// use cryptocol::random::Random;
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Any_SHA2_512;
+    /// define_utypes_with!(u128);
     /// 
-    /// define_utypes_with!(u8);
-    /// let mut rand = Any_SHA2_512::new();
-    /// let ceiling = U1024::max().wrapping_div_uint(3_u8);
+    /// let mut rand = Random::new();
+    /// let ceiling = U16384::max().wrapping_div_uint(3_u8);
     /// let r = rand.random_odd_under_biguint_(&ceiling);
-    /// println!("Random odd Number less than {} is\n{}", ceiling, r);
+    /// println!("Random odd number less than {} is\n{}", ceiling, r);
     /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 2 for Any
+    /// ```
+    /// use cryptocol::random::Any;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any::new();
+    /// let ceiling = U8192::max().wrapping_div_uint(4_u8);
+    /// let r = any.random_odd_under_biguint_(&ceiling);
+    /// println!("Any odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let ceiling = U7168::max().wrapping_div_uint(5_u8);
+    /// let r = rand.random_odd_under_biguint_(&ceiling);
+    /// println!("Random odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut rand = Random_SHA3_512::new();
+    /// let ceiling = U6144::max().wrapping_div_uint(6_u8);
+    /// let r = rand.random_odd_under_biguint_(&ceiling);
+    /// println!("Random odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut rand = Random_SHA2_512::new();
+    /// let ceiling = U5120::max().wrapping_div_uint(7_u8);
+    /// let r = rand.random_odd_under_biguint_(&ceiling);
+    /// println!("Random odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any_SHAKE_256::new();
+    /// let ceiling = U4096::max().wrapping_div_uint(8_u8);
+    /// let r = any.random_odd_under_biguint_(&ceiling);
+    /// println!("Any odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any_SHAKE_128::new();
+    /// let ceiling = U3072::max().wrapping_div_uint(9_u8);
+    /// let r = any.random_odd_under_biguint_(&ceiling);
+    /// println!("Any odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any_SHA3_512::new();
+    /// let ceiling = U2048::max().wrapping_div_uint(10_u8);
+    /// let r = any.random_odd_under_biguint_(&ceiling);
+    /// println!("Any odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any_SHA3_256::new();
+    /// let ceiling = U1024::max().wrapping_div_uint(11_u8);
+    /// let r = any.random_odd_under_biguint_(&ceiling);
+    /// println!("Any odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any_SHA2_512::new();
+    /// let ceiling = U768::max().wrapping_div_uint(12_u8);
+    /// let r = any.random_odd_under_biguint_(&ceiling);
+    /// println!("Any odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any_SHA2_256::new();
+    /// let ceiling = U512::max().wrapping_div_uint(13_u8);
+    /// let r = any.random_odd_under_biguint_(&ceiling);
+    /// println!("Any odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 12for Slapdash_SHA1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut slapdash = Slapdash_SHA1::new();
+    /// let ceiling = U384::max().wrapping_div_uint(14_u8);
+    /// let r = slapdash.random_odd_under_biguint_(&ceiling);
+    /// println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 13 for Slapdash_SHA0
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut slapdash = Slapdash_SHA0::new();
+    /// let ceiling = U256::max().wrapping_div_uint(15_u8);
+    /// let r = slapdash.random_odd_under_biguint_(&ceiling);
+    /// println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 14 for Slapdash_MD5
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut slapdash = Slapdash_MD5::new();
+    /// let ceiling = U16384::max().wrapping_div_uint(16_u8);
+    /// let r = slapdash.random_odd_under_biguint_(&ceiling);
+    /// println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 15 for Slapdash_MD4
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut slapdash = Slapdash_MD4::new();
+    /// let ceiling = U8192::max().wrapping_div_uint(17_u8);
+    /// let r = slapdash.random_odd_under_biguint_(&ceiling);
+    /// println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut rand = Random_Rijndael::new();
+    /// let ceiling = U7168::max().wrapping_div_uint(18_u8);
+    /// let r = rand.random_odd_under_biguint_(&ceiling);
+    /// println!("Random odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any_Rijndael::new();
+    /// let ceiling = U6144::max().wrapping_div_uint(19_u8);
+    /// let r = any.random_odd_under_biguint_(&ceiling);
+    /// println!("Any odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 18 for Slapdash_DES
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut slapdash = Slapdash_DES::new();
+    /// let ceiling = U5120::max().wrapping_div_uint(20_u8);
+    /// let r = slapdash.random_odd_under_biguint_(&ceiling);
+    /// println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 19 for Slapdash_Num_C
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut slapdash = Slapdash_Num_C::new();
+    /// let ceiling = U4096::max().wrapping_div_uint(21_u8);
+    /// let r = slapdash.random_odd_under_biguint_(&ceiling);
+    /// println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 20 for Slapdash
+    /// ```
+    /// use cryptocol::random::Slapdash;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut slapdash = Slapdash::new();
+    /// let ceiling = U2048::max().wrapping_div_uint(22_u8);
+    /// let r = slapdash.random_odd_under_biguint_(&ceiling);
+    /// println!("Slapdash odd number less than {} is\n{}", ceiling, r);
+    /// assert!(r < ceiling);
+    /// assert!(r.is_odd());
     /// ```
     #[inline]
     pub fn random_odd_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
@@ -5175,61 +5763,288 @@ impl Random_Generic
     /// 
     /// # Features
     /// - This method generates a random number, and then simply set the MSB
-    /// (Most Significant Bit).
+    ///   (Most Significant Bit).
     /// - The random numbers that may or may not be cryptographically
-    /// secure depending on what pseudo-random number generator is used.
+    ///   secure depending on what pseudo-random number generator is used.
     /// 
     /// # Cryptographical Security
     /// - If you use either `Random_*` or `Any_*`, it is considered to be
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
     /// - If you want to use a normal random number, you are highly recommended
-    /// to use the method
-    /// [random_biguint()](struct@Random_Generic#method.random_biguint)
-    /// rather than this method.
+    ///   to use the method
+    ///   [random_biguint()](struct@Random_Generic#method.random_biguint)
+    ///   rather than this method.
     /// - If you want to use a random number less than a certain value, you are
-    /// highly recommended to use the method
-    /// [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
-    /// rather than this method.
+    ///   highly recommended to use the method
+    ///   [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number, you are highly recommended to
-    /// use the method
-    /// [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
-    /// rather than this method.
+    ///   use the method
+    ///   [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number less than a certain value,
-    /// you are highly recommended to use the method
-    /// [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random odd
-    /// number, you are highly recommended to
-    /// use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to
+    ///   use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random odd
-    /// number, you are highly recommended to
-    /// use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
-    /// rather than this method.
-    /// - If you want to use a normal random prime number, you are highly recommended to
-    /// use the method [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to
+    ///   use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
+    ///   rather than this method.
+    /// - If you want to use a normal random prime number, you are highly
+    ///   recommended to use the method
+    ///   [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random prime
-    /// number, you are highly recommended to
-    /// use the method [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
+    /// use cryptocol::random::Random;
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Slapdash_MD5;
-    /// 
     /// define_utypes_with!(u64);
-    /// let mut rand = Slapdash_MD5::new();
-    /// let biguint: U512 = rand.random_with_msb_set_biguint();
-    /// println!("Random Number: {}", biguint);
+    /// 
+    /// let mut rand = Random::new();
+    /// let r: u64384 = rand.random_with_msb_set_biguint();
+    /// println!("Random number is {}.", r);
+    /// assert!(r > u64384::halfmax());
+    /// ```
+    /// 
+    /// # Example 2 for Any
+    /// ```
+    /// use cryptocol::random::Any;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any::new();
+    /// let r: U8192 = any.random_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U8192::halfmax());
+    /// ```
+    /// 
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let r: U7168 = rand.random_with_msb_set_biguint();
+    /// println!("Random number is {}.", r);
+    /// assert!(r > U7168::halfmax());
+    /// ```
+    /// 
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_SHA3_512::new();
+    /// let r: U6144 = rand.random_with_msb_set_biguint();
+    /// println!("Random number is {}.", r);
+    /// assert!(r > U6144::halfmax());
+    /// ```
+    /// 
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_SHA2_512::new();
+    /// let r: U5120 = rand.random_with_msb_set_biguint();
+    /// println!("Random number is {}.", r);
+    /// assert!(r > U5120::halfmax());
+    /// ```
+    /// 
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHAKE_256::new();
+    /// let r: U4096 = any.random_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U4096::halfmax());
+    /// ```
+    /// 
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHAKE_128::new();
+    /// let r: U3072 = any.random_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U3072::halfmax());
+    /// ```
+    /// 
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHA3_512::new();
+    /// let r: U2048 = any.random_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U2048::halfmax());
+    /// ```
+    /// 
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHA3_256::new();
+    /// let r: U1024 = any.random_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U1024::halfmax());
+    /// ```
+    /// 
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHA2_512::new();
+    /// let r: U768 = any.random_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U768::halfmax());
+    /// ```
+    /// 
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHA2_256::new();
+    /// let r: U512 = any.random_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U512::halfmax());
+    /// ```
+    /// 
+    /// # Example 12 for Slapdash_SHA1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut slapdash = Slapdash_SHA1::new();
+    /// let r: U384 = slapdash.random_with_msb_set_biguint();
+    /// println!("Slapdash number is {}.", r);
+    /// assert!(r > U384::halfmax());
+    /// ```
+    /// 
+    /// # Example 13 for Slapdash_SHA0
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut slapdash = Slapdash_SHA0::new();
+    /// let r: U256 = slapdash.random_with_msb_set_biguint();
+    /// println!("Slapdash number is {}.", r);
+    /// assert!(r > U256::halfmax());
+    /// ```
+    /// 
+    /// # Example 14 for Slapdash_MD5
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut slapdash = Slapdash_MD5::new();
+    /// let r: u64384 = slapdash.random_with_msb_set_biguint();
+    /// println!("Slapdash number is {}.", r);
+    /// assert!(r > u64384::halfmax());
+    /// ```
+    /// 
+    /// # Example 15 for Slapdash_MD4
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut slapdash = Slapdash_MD4::new();
+    /// let r: U8192 = slapdash.random_with_msb_set_biguint();
+    /// println!("Slapdash number is {}.", r);
+    /// assert!(r > U8192::halfmax());
+    /// ```
+    /// 
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_Rijndael::new();
+    /// let r: U7168 = rand.random_with_msb_set_biguint();
+    /// println!("Random number is {}.", r);
+    /// assert!(r > U7168::halfmax());
+    /// ```
+    /// 
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_Rijndael::new();
+    /// let r: U6144 = any.random_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U6144::halfmax());
+    /// ```
+    /// 
+    /// # Example 18 for Slapdash_DES
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut slapdash = Slapdash_DES::new();
+    /// let r: U5120 = slapdash.random_with_msb_set_biguint();
+    /// println!("Slapdash number is {}.", r);
+    /// assert!(r > U5120::halfmax());
+    /// ```
+    /// 
+    /// # Example 19 for Slapdash_Num_C
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut slapdash = Slapdash_Num_C::new();
+    /// let r: U4096 = slapdash.random_with_msb_set_biguint();
+    /// println!("Slapdash number is {}.", r);
+    /// assert!(r > U4096::halfmax());
+    /// ```
+    /// 
+    /// # Example 20 for Slapdash
+    /// ```
+    /// use cryptocol::random::Slapdash;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut slapdash = Slapdash::new();
+    /// let r: U3072 = slapdash.random_with_msb_set_biguint();
+    /// println!("Slapdash number is {}.", r);
+    /// assert!(r > U3072::halfmax());
     /// ```
     #[inline]
     pub fn random_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
@@ -5256,430 +6071,308 @@ impl Random_Generic
     /// 
     /// # Features
     /// - This method generates a random number, and then simply set the MSB
-    /// (Most Significant Bit) and LSB (Least Significant Bit).
+    ///   (Most Significant Bit) and LSB (Least Significant Bit).
     /// - The random numbers that may or may not be cryptographically
-    /// secure depending on what pseudo-random number generator is used.
+    ///   secure depending on what pseudo-random number generator is used.
     /// 
     /// # Cryptographical Security
     /// - If you use either `Random_*` or `Any_*`, it is considered to be
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
     /// - If you want to use a normal random number, you are highly recommended
-    /// to use the method
-    /// [random_biguint()](struct@Random_Generic#method.random_biguint)
-    /// rather than this method.
+    ///   to use the method
+    ///   [random_biguint()](struct@Random_Generic#method.random_biguint)
+    ///   rather than this method.
     /// - If you want to use a random number less than a certain value, you are
-    /// highly recommended to use the method
-    /// [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
-    /// rather than this method.
+    ///   highly recommended to use the method
+    ///   [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number, you are highly recommended to
-    /// use the method
-    /// [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
-    /// rather than this method.
+    ///   use the method
+    ///   [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number less than a certain value,
-    /// you are highly recommended to use the method
-    /// [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random
-    /// number, you are highly recommended to use the method
-    /// [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random
-    /// number, you are highly recommended to use the method
-    /// [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
-    /// rather than this method.
-    /// - If you want to use a normal random prime number, you are highly recommended to
-    /// use the method [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
+    ///   rather than this method.
+    /// - If you want to use a normal random prime number, you are highly
+    ///   recommended to use the method
+    ///   [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random prime
-    /// number, you are highly recommended to
-    /// use the method [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// 
-    /// # Example 1 for BIG_KECCAK_1024
+    /// # Example 1 for Random
     /// ```
-    /// use cryptocol::hash::BIG_KECCAK_1024;
-    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::random::Random;
     /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    /// define_utypes_with!(u32);
     /// 
-    /// fn seed_collector() -> [u64; 8]
-    /// {
-    ///     use std::time::{ SystemTime, UNIX_EPOCH };
-    ///     use cryptocol::number::LongerUnion;
-    /// 
-    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
-    ///     let mut seed_buffer = [ptr; 8];
-    ///     for i in 0..8
-    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
-    /// 
-    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
-    ///     {
-    ///         let common = LongerUnion::new_with(nanos.as_nanos());
-    ///         for i in 0..4
-    ///         {
-    ///             let j = i << 1;
-    ///             seed_buffer[j] = common.get_ulong_(0);
-    ///             seed_buffer[j + 1] = common.get_ulong_(1);
-    ///         }
-    ///     }
-    ///     seed_buffer
-    /// }
-    /// 
-    /// let mut rand = RandGen::new_with_generators_seed_collector(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new(), seed_collector);
-    /// let num: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
-    /// println!("Random number = {}", num);
+    /// let mut rand = Random::new();
+    /// let r: U16384 = rand.random_odd_with_msb_set_biguint();
+    /// println!("Random number is {}.", r);
+    /// assert!(r > U16384::halfmax());
+    /// assert!(r.is_odd());
     /// ```
     /// 
-    /// # Example 2 for SHA3_512
+    /// # Example 2 for Any
     /// ```
-    /// use cryptocol::hash::SHA3_512;
-    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::random::Any;
     /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    /// define_utypes_with!(u32);
     /// 
-    /// fn seed_collector() -> [u64; 8]
-    /// {
-    ///     use std::time::{ SystemTime, UNIX_EPOCH };
-    ///     use cryptocol::number::LongerUnion;
-    /// 
-    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
-    ///     let mut seed_buffer = [ptr; 8];
-    ///     for i in 0..8
-    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
-    /// 
-    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
-    ///     {
-    ///         let common = LongerUnion::new_with(nanos.as_nanos());
-    ///         for i in 0..4
-    ///         {
-    ///             let j = i << 1;
-    ///             seed_buffer[j] = common.get_ulong_(0);
-    ///             seed_buffer[j + 1] = common.get_ulong_(1);
-    ///         }
-    ///     }
-    ///     seed_buffer
-    /// }
-    /// 
-    /// let mut any = AnyGen::new_with_generators_seed_collector(SHA3_512::new(), SHA3_512::new(), seed_collector);
-    /// let num: U256 = any.random_prime_using_miller_rabin_biguint(5);
-    /// println!("Any number = {}", num);
+    /// let mut any = Any::new();
+    /// let r: U8192 = any.random_odd_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U8192::halfmax());
+    /// assert!(r.is_odd());
     /// ```
     /// 
-    /// # Example 3 for SHA2_512
+    /// # Example 3 for Random_BIG_KECCAK_1024
     /// ```
-    /// use cryptocol::hash::SHA2_512;
-    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
     /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    /// define_utypes_with!(u32);
     /// 
-    /// fn seed_collector() -> [u64; 8]
-    /// {
-    ///     use std::time::{ SystemTime, UNIX_EPOCH };
-    ///     use cryptocol::number::LongerUnion;
-    /// 
-    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
-    ///     let mut seed_buffer = [ptr; 8];
-    ///     for i in 0..8
-    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
-    /// 
-    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
-    ///     {
-    ///         let common = LongerUnion::new_with(nanos.as_nanos());
-    ///         for i in 0..4
-    ///         {
-    ///             let j = i << 1;
-    ///             seed_buffer[j] = common.get_ulong_(0);
-    ///             seed_buffer[j + 1] = common.get_ulong_(1);
-    ///         }
-    ///     }
-    ///     seed_buffer
-    /// }
-    /// 
-    /// let mut any = AnyGen::new_with_generators_seed_collector(SHA2_512::new(), SHA2_512::new(),seed_collector);
-    /// let num: U1024 = any.random_with_msb_set_biguint();
-    /// println!("Any number = {}", num);
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let r: U7168 = rand.random_odd_with_msb_set_biguint();
+    /// println!("Random number is {}.", r);
+    /// assert!(r > U7168::halfmax());
+    /// assert!(r.is_odd());
     /// ```
     /// 
-    /// # Example 4 for SHAKE_256
+    /// # Example 4 for Random_SHA3_512
     /// ```
-    /// use cryptocol::hash::SHAKE_256;
-    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::random::Random_SHA3_512;
     /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    /// define_utypes_with!(u32);
     /// 
-    /// fn seed_collector() -> [u64; 8]
-    /// {
-    ///     use std::time::{ SystemTime, UNIX_EPOCH };
-    ///     use cryptocol::number::LongerUnion;
-    /// 
-    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
-    ///     let mut seed_buffer = [ptr; 8];
-    ///     for i in 0..8
-    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
-    /// 
-    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
-    ///     {
-    ///         let common = LongerUnion::new_with(nanos.as_nanos());
-    ///         for i in 0..4
-    ///         {
-    ///             let j = i << 1;
-    ///             seed_buffer[j] = common.get_ulong_(0);
-    ///             seed_buffer[j + 1] = common.get_ulong_(1);
-    ///         }
-    ///     }
-    ///     seed_buffer
-    /// }
-    /// 
-    /// let mut rand = RandGen::new_with_generators_seed_collector(SHAKE_256::new(), SHAKE_256::new(), seed_collector);
-    /// let num: U768 = rand.random_odd_biguint();
-    /// println!("Random number = {}", num);
+    /// let mut rand = Random_SHA3_512::new();
+    /// let r: U6144 = rand.random_odd_with_msb_set_biguint();
+    /// println!("Random number is {}.", r);
+    /// assert!(r > U6144::halfmax());
+    /// assert!(r.is_odd());
     /// ```
     /// 
-    /// # Example 5 for SHAKE_128
+    /// # Example 5 for RanRandom_SHA2_512dom
     /// ```
-    /// use cryptocol::hash::SHAKE_128;
-    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::random::Random_SHA2_512;
     /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    /// define_utypes_with!(u32);
     /// 
-    /// fn seed_collector() -> [u64; 8]
-    /// {
-    ///     use std::time::{ SystemTime, UNIX_EPOCH };
-    ///     use cryptocol::number::LongerUnion;
-    /// 
-    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
-    ///     let mut seed_buffer = [ptr; 8];
-    ///     for i in 0..8
-    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
-    /// 
-    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
-    ///     {
-    ///         let common = LongerUnion::new_with(nanos.as_nanos());
-    ///         for i in 0..4
-    ///         {
-    ///             let j = i << 1;
-    ///             seed_buffer[j] = common.get_ulong_(0);
-    ///             seed_buffer[j + 1] = common.get_ulong_(1);
-    ///         }
-    ///     }
-    ///     seed_buffer
-    /// }
-    /// 
-    /// let mut any = AnyGen::new_with_generators_seed_collector(SHAKE_128::new(), SHAKE_128::new(), seed_collector);
-    /// let num: U512 = any.random_biguint();
-    /// println!("Any number = {}", num);
+    /// let mut rand = Random_SHA2_512::new();
+    /// let r: U5120 = rand.random_odd_with_msb_set_biguint();
+    /// println!("Random number is {}.", r);
+    /// assert!(r > U5120::halfmax());
+    /// assert!(r.is_odd());
     /// ```
     /// 
-    /// # Example 6 for SHA3_256
+    /// # Example 6 for Any_SHAKE_256
     /// ```
-    /// use cryptocol::hash::SHA3_256;
-    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::random::Any_SHAKE_256;
     /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    /// define_utypes_with!(u32);
     /// 
-    /// fn seed_collector() -> [u64; 8]
-    /// {
-    ///     use std::time::{ SystemTime, UNIX_EPOCH };
-    ///     use cryptocol::number::LongerUnion;
-    /// 
-    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
-    ///     let mut seed_buffer = [ptr; 8];
-    ///     for i in 0..8
-    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
-    /// 
-    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
-    ///     {
-    ///         let common = LongerUnion::new_with(nanos.as_nanos());
-    ///         for i in 0..4
-    ///         {
-    ///             let j = i << 1;
-    ///             seed_buffer[j] = common.get_ulong_(0);
-    ///             seed_buffer[j + 1] = common.get_ulong_(1);
-    ///         }
-    ///     }
-    ///     seed_buffer
-    /// }
-    /// 
-    /// let mut any = AnyGen::new_with_generators_seed_collector(SHA3_256::new(), SHA3_256::new(), seed_collector);
-    /// let num: U384 = any.random_biguint();
-    /// println!("Any number = {}", num);
+    /// let mut any = Any_SHAKE_256::new();
+    /// let r: U4096 = any.random_odd_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U4096::halfmax());
+    /// assert!(r.is_odd());
     /// ```
     /// 
-    /// # Example 7 for SHA2_256
+    /// # Example 7 for Any_SHAKE_128
     /// ```
-    /// use cryptocol::hash::SHA2_256;
-    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::random::Any_SHAKE_128;
     /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    /// define_utypes_with!(u32);
     /// 
-    /// fn seed_collector() -> [u64; 8]
-    /// {
-    ///     use std::time::{ SystemTime, UNIX_EPOCH };
-    ///     use cryptocol::number::LongerUnion;
-    /// 
-    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
-    ///     let mut seed_buffer = [ptr; 8];
-    ///     for i in 0..8
-    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
-    /// 
-    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
-    ///     {
-    ///         let common = LongerUnion::new_with(nanos.as_nanos());
-    ///         for i in 0..4
-    ///         {
-    ///             let j = i << 1;
-    ///             seed_buffer[j] = common.get_ulong_(0);
-    ///             seed_buffer[j + 1] = common.get_ulong_(1);
-    ///         }
-    ///     }
-    ///     seed_buffer
-    /// }
-    /// 
-    /// let mut any = AnyGen::new_with_generators_seed_collector(SHA2_256::new(), SHA2_256::new(), seed_collector);
-    /// println!("Any number = {}", any.random_u128());
+    /// let mut any = Any_SHAKE_128::new();
+    /// let r: U3072 = any.random_odd_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U3072::halfmax());
+    /// assert!(r.is_odd());
     /// ```
     /// 
-    /// # Example 8 for SHA1 and SHA0
+    /// # Example 8 for Any_SHA3_512
     /// ```
-    /// use cryptocol::hash::{ SHA1, SHA0 };
-    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::random::Any_SHA3_512;
     /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    /// define_utypes_with!(u32);
     /// 
-    /// fn seed_collector() -> [u64; 8]
-    /// {
-    ///     use std::time::{ SystemTime, UNIX_EPOCH };
-    ///     use cryptocol::number::LongerUnion;
-    /// 
-    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
-    ///     let mut seed_buffer = [ptr; 8];
-    ///     for i in 0..8
-    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
-    /// 
-    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
-    ///     {
-    ///         let common = LongerUnion::new_with(nanos.as_nanos());
-    ///         for i in 0..4
-    ///         {
-    ///             let j = i << 1;
-    ///             seed_buffer[j] = common.get_ulong_(0);
-    ///             seed_buffer[j + 1] = common.get_ulong_(1);
-    ///         }
-    ///     }
-    ///     seed_buffer
-    /// }
-    /// 
-    /// let mut slapdash = AnyGen::new_with_generators_seed_collector(SHA1::new(), SHA0::new(), seed_collector);
-    /// println!("Slapdash number = {}", slapdash.random_u64());
+    /// let mut any = Any_SHA3_512::new();
+    /// let r: U2048 = any.random_odd_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U2048::halfmax());
+    /// assert!(r.is_odd());
     /// ```
     /// 
-    /// # Example 9 for MD5 and MD4
+    /// # Example 9 for Any_SHA3_256
     /// ```
-    /// use cryptocol::hash::{ MD5, MD4 };
-    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::random::Any_SHA3_256;
     /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    /// define_utypes_with!(u32);
     /// 
-    /// fn seed_collector() -> [u64; 8]
-    /// {
-    ///     use std::time::{ SystemTime, UNIX_EPOCH };
-    ///     use cryptocol::number::LongerUnion;
-    /// 
-    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
-    ///     let mut seed_buffer = [ptr; 8];
-    ///     for i in 0..8
-    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
-    /// 
-    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
-    ///     {
-    ///         let common = LongerUnion::new_with(nanos.as_nanos());
-    ///         for i in 0..4
-    ///         {
-    ///             let j = i << 1;
-    ///             seed_buffer[j] = common.get_ulong_(0);
-    ///             seed_buffer[j + 1] = common.get_ulong_(1);
-    ///         }
-    ///     }
-    ///     seed_buffer
-    /// }
-    /// 
-    /// let mut slapdash = AnyGen::new_with_generators_seed_collector(MD5::new(), MD4::new(), seed_collector);
-    /// println!("Slapdash number = {}", slapdash.random_u32());
+    /// let mut any = Any_SHA3_256::new();
+    /// let r: U1024 = any.random_odd_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U1024::halfmax());
+    /// assert!(r.is_odd());
     /// ```
     /// 
-    /// # Example 10 for AES_128
+    /// # Example 10 for Any_SHA2_512
     /// ```
-    /// use cryptocol::symmetric::AES_128;
-    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::random::Any_SHA2_512;
     /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    /// define_utypes_with!(u32);
     /// 
-    /// fn seed_collector() -> [u64; 8]
-    /// {
-    ///     use std::time::{ SystemTime, UNIX_EPOCH };
-    ///     use cryptocol::number::LongerUnion;
-    /// 
-    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
-    ///     let mut seed_buffer = [ptr; 8];
-    ///     for i in 0..8
-    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
-    /// 
-    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
-    ///     {
-    ///         let common = LongerUnion::new_with(nanos.as_nanos());
-    ///         for i in 0..4
-    ///         {
-    ///             let j = i << 1;
-    ///             seed_buffer[j] = common.get_ulong_(0);
-    ///             seed_buffer[j + 1] = common.get_ulong_(1);
-    ///         }
-    ///     }
-    ///     seed_buffer
-    /// }
-    /// 
-    /// let mut rand = RandGen::new_with_generators_seed_collector(AES_128::new(), AES_128::new(), seed_collector);
-    /// println!("Random number = {}", rand.random_u16());
+    /// let mut any = Any_SHA2_512::new();
+    /// let r: U768 = any.random_odd_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U768::halfmax());
+    /// assert!(r.is_odd());
     /// ```
     /// 
-    /// # Example 11 for DES
+    /// # Example 11 for Any_SHA2_256
     /// ```
-    /// use cryptocol::symmetric::DES;
-    /// use cryptocol::random::{ RandGen, AnyGen, SlapdashGen };
+    /// use cryptocol::random::Any_SHA2_256;
     /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
+    /// define_utypes_with!(u32);
     /// 
-    /// fn seed_collector() -> [u64; 8]
-    /// {
-    ///     use std::time::{ SystemTime, UNIX_EPOCH };
-    ///     use cryptocol::number::LongerUnion;
+    /// let mut any = Any_SHA2_256::new();
+    /// let r: U512 = any.random_odd_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U512::halfmax());
+    /// assert!(r.is_odd());
+    /// ```
     /// 
-    ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
-    ///     let mut seed_buffer = [ptr; 8];
-    ///     for i in 0..8
-    ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+    /// # Example 12 for Slapdash_SHA1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
     /// 
-    ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
-    ///     {
-    ///         let common = LongerUnion::new_with(nanos.as_nanos());
-    ///         for i in 0..4
-    ///         {
-    ///             let j = i << 1;
-    ///             seed_buffer[j] = common.get_ulong_(0);
-    ///             seed_buffer[j + 1] = common.get_ulong_(1);
-    ///         }
-    ///     }
-    ///     seed_buffer
-    /// }
+    /// let mut slapdash = Slapdash_SHA1::new();
+    /// let r: U384 = slapdash.random_odd_with_msb_set_biguint();
+    /// println!("Slapdash number is {}.", r);
+    /// assert!(r > U384::halfmax());
+    /// assert!(r.is_odd());
+    /// ```
     /// 
-    /// let mut slapdash = AnyGen::new_with_generators_seed_collector(DES::new(), DES::new(), seed_collector);
-    /// println!("Slapdash number = {}", slapdash.random_u8());
+    /// # Example 13 for Slapdash_SHA0
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut slapdash = Slapdash_SHA0::new();
+    /// let r: U256 = slapdash.random_odd_with_msb_set_biguint();
+    /// println!("Slapdash number is {}.", r);
+    /// assert!(r > U256::halfmax());
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 14 for Slapdash_MD5
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut slapdash = Slapdash_MD5::new();
+    /// let r: U16384 = slapdash.random_odd_with_msb_set_biguint();
+    /// println!("Slapdash number is {}.", r);
+    /// assert!(r > U16384::halfmax());
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 15 for Slapdash_MD4
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut slapdash = Slapdash_MD4::new();
+    /// let r: U8192 = slapdash.random_odd_with_msb_set_biguint();
+    /// println!("Slapdash number is {}.", r);
+    /// assert!(r > U8192::halfmax());
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut rand = Random_Rijndael::new();
+    /// let r: U7168 = rand.random_odd_with_msb_set_biguint();
+    /// println!("Random number is {}.", r);
+    /// assert!(r > U7168::halfmax());
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut any = Any_Rijndael::new();
+    /// let r: U6144 = any.random_odd_with_msb_set_biguint();
+    /// println!("Any number is {}.", r);
+    /// assert!(r > U6144::halfmax());
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 18 for Slapdash_DES
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut slapdash = Slapdash_DES::new();
+    /// let r: U5120 = slapdash.random_odd_with_msb_set_biguint();
+    /// println!("Slapdash number is {}.", r);
+    /// assert!(r > U5120::halfmax());
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 19 for Slapdash_Num_C
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut slapdash = Slapdash_Num_C::new();
+    /// let r: U4096 = slapdash.random_odd_with_msb_set_biguint();
+    /// println!("Slapdash number is {}.", r);
+    /// assert!(r > U4096::halfmax());
+    /// assert!(r.is_odd());
+    /// ```
+    /// 
+    /// # Example 20 for Slapdash
+    /// ```
+    /// use cryptocol::random::Slapdash;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut slapdash = Slapdash::new();
+    /// let r: U3072 = slapdash.random_odd_with_msb_set_biguint();
+    /// println!("Slapdash number is {}.", r);
+    /// assert!(r > U3072::halfmax());
+    /// assert!(r.is_odd());
     /// ```
     pub fn random_odd_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -5704,16 +6397,17 @@ impl Random_Generic
     /// 2 up to BigUInt::max() inclusively.
     /// 
     /// # Features
-    /// - It uses [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
+    /// - It uses
+    ///   [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
     /// - If this test results in composite number, the tested number is surely
-    /// a composite number. If this test results in prime number, the
-    /// probability that the tested number is not a prime number is 1/4. So,
-    /// if the test results in prime number twice, the probability that the
-    /// tested number is not a prime number is 1/16 (= 1/4 * 1/4). Therefore,
-    /// if you test any number 5 times and they all result in a prime number,
-    /// it is 99.9% that the number is a prime number.
+    ///   a composite number. If this test results in prime number, the
+    ///   probability that the tested number is not a prime number is 1/4. So,
+    ///   if the test results in prime number twice, the probability that the
+    ///   tested number is not a prime number is 1/16 (= 1/4 * 1/4). Therefore,
+    ///   if you test any number 5 times and they all result in a prime number,
+    ///   it is 99.9% that the number is a prime number.
     /// - The random prime numbers that may or may not be cryptographically
-    /// secure depending on what pseudo-random number generator is used.
+    ///   secure depending on what pseudo-random number generator is used.
     /// 
     /// # Argument
     /// The argument `repetition` defines how many times it tests whether the
@@ -5725,56 +6419,255 @@ impl Random_Generic
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
     /// - If you want to use a normal random number, you are highly recommended
-    /// to use the method
-    /// [random_biguint()](struct@Random_Generic#method.random_biguint)
-    /// rather than this method.
+    ///   to use the method
+    ///   [random_biguint()](struct@Random_Generic#method.random_biguint)
+    ///   rather than this method.
     /// - If you want to use a random number less than a certain value, you are
-    /// highly recommended to use the method
-    /// [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
-    /// rather than this method.
+    ///   highly recommended to use the method
+    ///   [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number, you are highly recommended to
-    /// use the method
-    /// [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
-    /// rather than this method.
+    ///   use the method
+    ///   [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number less than a certain value,
-    /// you are highly recommended to use the method
-    /// [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random
-    /// number, you are highly recommended to use the method
-    /// [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random odd
-    /// number, you are highly recommended to
-    /// use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random prime
-    /// number, you are highly recommended to
-    /// use the method [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_prime_with_msb_set_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_with_msb_set_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
-    /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
-    /// use cryptocol::number::BigUInt_Prime;
-    /// use cryptocol::define_utypes_with;
     /// use cryptocol::random::Random;
-    /// 
+    /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
+    /// 
     /// let mut rand = Random::new();
-    /// let num:U512 = rand.random_prime_using_miller_rabin_biguint(5);
-    /// println!("Random Prime Number = {}", num);
-    /// assert!(num.is_odd());
+    /// let prime: U256 = rand.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 2 for Any
+    /// ```
+    /// use cryptocol::random::Any;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut any = Any::new();
+    /// let prime: U384 = any.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let prime: U512 = rand.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut rand = Random_SHA3_512::new();
+    /// let prime: U768 = rand.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut rand = Random_SHA2_512::new();
+    /// let prime: U1024 = rand.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut any = Any_SHAKE_256::new();
+    /// let prime: U2048 = any.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut any = Any_SHAKE_128::new();
+    /// let prime: U3072 = any.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut any = Any_SHA3_512::new();
+    /// let prime: U4096 = any.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut any = Any_SHA3_256::new();
+    /// let prime: U5120 = any.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut any = Any_SHA2_512::new();
+    /// let prime: U6144 = any.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut any = Any_SHA2_256::new();
+    /// let prime: U7168 = any.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 12 for Slapdash_SHA1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut slapdash = Slapdash_SHA1::new();
+    /// let prime: U8192 = slapdash.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 13 for Slapdash_SHA0
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut slapdash = Slapdash_SHA0::new();
+    /// let prime: U16384 = slapdash.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 14 for Slapdash_MD5
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut slapdash = Slapdash_MD5::new();
+    /// let prime: U256 = slapdash.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 13 for Slapdash_MD4
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut slapdash = Slapdash_MD4::new();
+    /// let prime: U384 = slapdash.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 14 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut rand = Random_Rijndael::new();
+    /// let prime: U512 = rand.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 15 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut any = Any_Rijndael::new();
+    /// let prime: U768 = any.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 18 for Slapdash_DES
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut slapdash = Slapdash_DES::new();
+    /// let prime: U1024 = slapdash.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 19 for Slapdash_Num_C
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut slapdash = Slapdash_Num_C::new();
+    /// let prime: U2048 = slapdash.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 20 for Slapdash
+    /// ```
+    /// use cryptocol::random::Slapdash;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut slapdash = Slapdash::new();
+    /// let prime: U3072 = slapdash.random_prime_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
     /// ```
     pub fn random_prime_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
@@ -5800,19 +6693,19 @@ impl Random_Generic
     /// 
     /// # Features
     /// - This method generates a random number, and then simply sets its MSB
-    /// (Most Significant Bit) to be one, and then checks whether or not the
-    /// generated random number is prime number, and then it repeats until it
-    /// will generate a prime number.
+    ///   (Most Significant Bit) to be one, and then checks whether or not the
+    ///   generated random number is prime number, and then it repeats until it
+    ///   will generate a prime number.
     /// - It uses [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
     /// - If this test results in composite number, the tested number is surely
-    /// a composite number. If this test results in prime number, the
-    /// probability that the tested number is not a prime number is 1/4. So,
-    /// if the test results in prime number twice, the probability that the
-    /// tested number is not a prime number is 1/16 (= 1/4 * 1/4). Therefore,
-    /// if you test any number 5 times and they all result in a prime number,
-    /// it is 99.9% that the number is a prime number.
+    ///   a composite number. If this test results in prime number, the
+    ///   probability that the tested number is not a prime number is 1/4. So,
+    ///   if the test results in prime number twice, the probability that the
+    ///   tested number is not a prime number is 1/16 (= 1/4 * 1/4). Therefore,
+    ///   if you test any number 5 times and they all result in a prime number,
+    ///   it is 99.9% that the number is a prime number.
     /// - The random prime numbers that may or may not be cryptographically
-    /// secure depending on what pseudo-random number generator is used.
+    ///   secure depending on what pseudo-random number generator is used.
     /// 
     /// # Argument
     /// The argument `repetition` defines how many times it tests whether the
@@ -5824,56 +6717,1072 @@ impl Random_Generic
     ///   cryptographically secure.
     /// - If you use `Slapdash_*`, it is considered that it may be
     ///   cryptographically insecure.
-    /// - However, if you really want to use cryptographically secure
-    /// random number with high quality, you may want to use
-    /// [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)).
     /// 
     /// # Counterpart Methods
     /// - If you want to use a normal random number, you are highly recommended
-    /// to use the method
-    /// [random_biguint()](struct@Random_Generic#method.random_biguint)
-    /// rather than this method.
+    ///   to use the method
+    ///   [random_biguint()](struct@Random_Generic#method.random_biguint)
+    ///   rather than this method.
     /// - If you want to use a random number less than a certain value, you are
-    /// highly recommended to use the method
-    /// [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
-    /// rather than this method.
+    ///   highly recommended to use the method
+    ///   [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number, you are highly recommended to
-    /// use the method
-    /// [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
-    /// rather than this method.
+    ///   use the method
+    ///   [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
+    ///   rather than this method.
     /// - If you want to use a random odd number less than a certain value,
-    /// you are highly recommended to use the method
-    /// [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
-    /// rather than this method.
+    ///   you are highly recommended to use the method
+    ///   [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random
-    /// number, you are highly recommended to use the method
-    /// [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
+    ///   rather than this method.
     /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random odd
-    /// number, you are highly recommended to
-    /// use the method [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
-    /// rather than this method.
-    /// - If you want to use a normal random prime number, you are highly recommended to
-    /// use the method [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
-    /// rather than this method.
+    ///   number, you are highly recommended to use the method
+    ///   [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
+    ///   rather than this method.
+    /// - If you want to use a normal random prime number, you are highly
+    ///   recommended to use the method
+    ///   [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
+    ///   rather than this method.
     /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
-    /// 
-    /// # Example
+    /// # Example 1 for Random
     /// ```
+    /// use cryptocol::random::Random;
     /// use cryptocol::define_utypes_with;
-    /// use cryptocol::random::Slapdash_SHA1;
+    /// define_utypes_with!(u8);
     /// 
-    /// define_utypes_with!(u16);
-    /// let mut rand = Slapdash_SHA1::new();
-    /// let num:U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
-    /// println!("512-bit Random Prime Number = {}", num);
-    /// assert!(num.is_odd());
+    /// let mut rand = Random::new();
+    /// let prime: U256 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 2 for Any
+    /// ```
+    /// use cryptocol::random::Any;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any::new();
+    /// let prime: U384 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let prime: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut rand = Random_SHA3_512::new();
+    /// let prime: U768 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut rand = Random_SHA2_512::new();
+    /// let prime: U1024 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHAKE_256::new();
+    /// let prime: U2048 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHAKE_128::new();
+    /// let prime: U3072 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHA3_512::new();
+    /// let prime: U4096 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHA3_256::new();
+    /// let prime: U5120 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHA2_512::new();
+    /// let prime: U6144 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHA2_256::new();
+    /// let prime: U7168 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 12 for Slapdash_SHA1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_SHA1::new();
+    /// let prime: U8192 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 13 for Slapdash_SHA0
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_SHA0::new();
+    /// let prime: U16384 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 14 for Slapdash_MD5
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_MD5::new();
+    /// let prime: U256 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 15 for Slapdash_MD4
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_MD4::new();
+    /// let prime: U384 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut rand = Random_Rijndael::new();
+    /// let prime: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_Rijndael::new();
+    /// let prime: U768 = any.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 18 for Slapdash_DES
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_DES::new();
+    /// let prime: U1024 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 19 for Slapdash_Num_C
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_Num_C::new();
+    /// let prime: U2048 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 20 for Slapdash
+    /// ```
+    /// use cryptocol::random::Slapdash;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash::new();
+    /// let prime: U3072 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
     /// ```
     pub fn random_prime_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
+    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+            + Rem<Output=T> + RemAssign
+            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+            + PartialEq + PartialOrd
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn random_prime_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
+    /// Constucts a new `BigUInt<T, N>`-type object which represents a 
+    /// `N * T::size_in_bits() / 2`-bit random prime number.
+    /// 
+    /// # Output
+    /// This method returns a random prime number whose length is
+    /// `N * T::size_in_bits() / 2` bits.
+    /// 
+    /// # Argument
+    /// The argument `repetition` defines how many times it tests whether the
+    /// generated random number is prime. Usually, `repetition` is given to be
+    /// 5 to have 99.9% accuracy.
+    /// 
+    /// # Features
+    /// - This method generates a random number of half length, and then simply
+    ///   sets all the bytes from `N * T::size_in_bits() / 2`-th bit to 
+    ///   `N * T::size_in_bits() - 1`-th bit to be `zero`, and then checks
+    ///   whether or not the generated random number is prime number, and then
+    ///   it repeats until it will generate a prime number. Here, 0-th bit is
+    ///   LSB (Least Significant Bit) and `N * T::size_in_bits() - 1`-th bit
+    ///   is MSB (Most Significant Bit).
+    /// - It uses
+    ///   [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
+    /// - If this test results in composite number, the tested number is surely
+    ///   a composite number. If this test results in prime number, the
+    ///   probability that the tested number is not a prime number is 1/4. So,
+    ///   if the test results in prime number twice, the probability that the
+    ///   tested number is not a prime number is 1/16 (= 1/4 * 1/4). Therefore,
+    ///   if you test any number 5 times and they all result in a prime number,
+    ///   it is 99.9% that the number is a prime number.
+    /// - The random prime numbers that may or may not be cryptographically
+    ///   secure depending on what pseudo-random number generator is used.
+    /// 
+    /// # Cryptographical Security
+    /// - If you use either `Random_*` or `Any_*`, it is considered to be
+    ///   cryptographically secure.
+    /// - If you use `Slapdash_*`, it is considered that it may be
+    ///   cryptographically insecure.
+    /// 
+    /// # Counterpart Methods
+    /// - If you want to use a normal random number, you are highly recommended
+    ///   to use the method
+    ///   [random_biguint()](struct@Random_Generic#method.random_biguint)
+    ///   rather than this method.
+    /// - If you want to use a random number less than a certain value, you are
+    ///   highly recommended to use the method
+    ///   [random_under_biguint()](struct@Random_Generic#method.random_under_biguint)
+    ///   rather than this method.
+    /// - If you want to use a random odd number, you are highly recommended to
+    ///   use the method
+    ///   [random_odd_biguint()](struct@Random_Generic#method.random_odd_biguint)
+    ///   rather than this method.
+    /// - If you want to use a random odd number less than a certain value,
+    ///   you are highly recommended to use the method
+    ///   [ranodm_odd_under_biguint()](struct@Random_Generic#method.ranodm_odd_under_biguint)
+    ///   rather than this method.
+    /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random
+    ///   number, you are highly recommended to use the method
+    ///   [random_with_msb_set_biguint()](struct@Random_Generic#method.random_with_msb_set_biguint)
+    ///   rather than this method.
+    /// - If you want to use a `(N * sizeof::<T>() * 8)`-bit long random odd
+    ///   number, you are highly recommended to use the method
+    ///   [random_odd_with_msb_set_biguint()](struct@Random_Generic#method.random_odd_with_msb_set_biguint)
+    ///   rather than this method.
+    /// - If you want to use a normal random prime number, you are highly
+    ///   recommended to use the method
+    ///   [random_prime_using_miller_rabin_biguint()](struct@Random_Generic#method.random_prime_using_miller_rabin_biguint)
+    ///   rather than this method.
+    /// 
+    /// # Example 1 for Random
+    /// ```
+    /// use cryptocol::random::Random;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut rand = Random::new();
+    /// let prime: U256 = rand.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 2 for Any
+    /// ```
+    /// use cryptocol::random::Any;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any::new();
+    /// let prime: U384 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let prime: U512 = rand.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut rand = Random_SHA3_512::new();
+    /// let prime: U768 = rand.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut rand = Random_SHA2_512::new();
+    /// let prime: U1024 = rand.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any_SHAKE_256::new();
+    /// let prime: U2048 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any_SHAKE_128::new();
+    /// let prime: U3072 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any_SHA3_512::new();
+    /// let prime: U4096 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any_SHA3_256::new();
+    /// let prime: U5120 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any_SHA2_512::new();
+    /// let prime: U6144 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any_SHA2_256::new();
+    /// let prime: U7168 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 12 for Slapdash_SHA1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut slapdash = Slapdash_SHA1::new();
+    /// let prime: U8192 = slapdash.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 13 for Slapdash_SHA0
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut slapdash = Slapdash_SHA0::new();
+    /// let prime: U16384 = slapdash.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 14 for Slapdash_MD5
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut slapdash = Slapdash_MD5::new();
+    /// let prime: U256 = slapdash.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 15 for Slapdash_MD4
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut slapdash = Slapdash_MD4::new();
+    /// let prime: U384 = slapdash.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut rand = Random_Rijndael::new();
+    /// let prime: U512 = rand.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut any = Any_Rijndael::new();
+    /// let prime: U768 = any.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 18 for Slapdash_DES
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut slapdash = Slapdash_DES::new();
+    /// let prime: U1024 = slapdash.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 19 for Slapdash_Num_C
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut slapdash = Slapdash_Num_C::new();
+    /// let prime: U2048 = slapdash.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 20 for Slapdash
+    /// ```
+    /// use cryptocol::random::Slapdash;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut slapdash = Slapdash::new();
+    /// let prime: U3072 = slapdash.random_prime_with_half_length_using_miller_rabin_biguint(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    pub fn random_prime_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
+    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+            + Rem<Output=T> + RemAssign
+            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+            + PartialEq + PartialOrd
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn prepared_random_prime_with_msb_set<T, const N: usize>(&mut self) -> BigUInt<T, N>
+    /// Constucts a new `BigUInt<T, N>`-type object out of the prepared prime
+    /// number pool, which represents a prime number of full-size of
+    /// BigUInt<T, N>.
+    /// 
+    /// # Output
+    /// This method returns a prime number randomly chosen out of the prepared
+    /// prime number pool consisting of many prime numbers, whose range is from
+    /// BigUInt::halfmax() up to BigUInt::max() inclusively.
+    /// 
+    /// # Features
+    /// - This method chooses a prime number ramdomly out of the prepared prime
+    ///   number pool consisting of many prime numbers whose MSB (Most
+    ///   Significant Bit) is set to be one.
+    /// - It uses a prime number pool.
+    /// 
+    /// # Caution and Cryptographical Security
+    /// The source code of this method is openly publicised. It means that
+    /// anyone can have the full familiarity of the prime number pool which
+    /// this method uses. So, you are NOT encouraged to use this method for
+    /// serious cryptographical purposes. You can use this method temporarily
+    /// for testing or debugging purposes because of the slowness of the
+    /// Millar-Rabin algorithm for big numbers.
+    /// 
+    /// # Example 1 for Random
+    /// ```
+    /// use cryptocol::random::Random;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random::new();
+    /// let biguint: U256 = rand.prepared_random_prime_with_msb_set();
+    /// println!("Random Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 2 for Any
+    /// ```
+    /// use cryptocol::random::Any;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any::new();
+    /// let biguint: U384 = any.prepared_random_prime_with_msb_set();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let biguint: U512 = rand.prepared_random_prime_with_msb_set();
+    /// println!("Random Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_SHA3_512::new();
+    /// let biguint: U768 = rand.prepared_random_prime_with_msb_set();
+    /// println!("Random Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_SHA2_512::new();
+    /// let biguint: U1024 = rand.prepared_random_prime_with_msb_set();
+    /// println!("Random Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHAKE_256::new();
+    /// let biguint: U2048 = any.prepared_random_prime_with_msb_set();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHAKE_128::new();
+    /// let biguint: U3072 = any.prepared_random_prime_with_msb_set();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHA3_512::new();
+    /// let biguint: U4096 = any.prepared_random_prime_with_msb_set();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHA3_256::new();
+    /// let biguint: U5120 = any.prepared_random_prime_with_msb_set();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHA2_512::new();
+    /// let biguint: U6144 = any.prepared_random_prime_with_msb_set();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_SHA2_256::new();
+    /// let biguint: U7168 = any.prepared_random_prime_with_msb_set();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 12 for Slapdash_SHA1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut slapdash = Slapdash_SHA1::new();
+    /// let biguint: U8192 = slapdash.prepared_random_prime_with_msb_set();
+    /// println!("Slapdash Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 13 for Slapdash_SHA0
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut slapdash = Slapdash_SHA0::new();
+    /// let biguint: U16384 = slapdash.prepared_random_prime_with_msb_set();
+    /// println!("Slapdash Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 14 for Slapdash_MD5
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut slapdash = Slapdash_MD5::new();
+    /// let biguint: U256 = slapdash.prepared_random_prime_with_msb_set();
+    /// println!("Slapdash Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 15 for Slapdash_MD4
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut slapdash = Slapdash_MD4::new();
+    /// let biguint: U384 = slapdash.prepared_random_prime_with_msb_set();
+    /// println!("Slapdash Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut rand = Random_Rijndael::new();
+    /// let biguint: U512 = rand.prepared_random_prime_with_msb_set();
+    /// println!("Random Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut any = Any_Rijndael::new();
+    /// let biguint: U768 = any.prepared_random_prime_with_msb_set();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 18 for Slapdash_DES
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut slapdash = Slapdash_DES::new();
+    /// let biguint: U1024 = slapdash.prepared_random_prime_with_msb_set();
+    /// println!("Slapdash Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 19 for Slapdash_Num_C
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut slapdash = Slapdash_Num_C::new();
+    /// let biguint: U2048 = slapdash.prepared_random_prime_with_msb_set();
+    /// println!("Slapdash Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 20 for Slapdash
+    /// ```
+    /// use cryptocol::random::Slapdash;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut slapdash = Slapdash::new();
+    /// let biguint: U3072 = slapdash.prepared_random_prime_with_msb_set();
+    /// println!("Slapdash Number: {}", biguint);
+    /// ```
+    #[inline]
+    pub fn prepared_random_prime_with_msb_set<T, const N: usize>(&mut self) -> BigUInt<T, N>
+    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+            + Rem<Output=T> + RemAssign
+            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+            + PartialEq + PartialOrd
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn prepared_random_prime_with_half_length<T, const N: usize>(&mut self) -> BigUInt<T, N>
+    /// Constucts a new `BigUInt<T, N>`-type object out of the prepared prime
+    /// number pool, which represents a prime number of half-size of
+    /// BigUInt<T, N>.
+    /// 
+    /// # Output
+    /// This method returns a prime number randomly chosen out of the prepared
+    /// prime number pool consisting of many prime numbers, whose length is
+    /// `N * T::size_in_bits() / 2` bits.
+    /// 
+    /// # Features
+    /// 
+    /// - This method chooses a prime number ramdomly out of the prepared prime
+    ///   number pool consisting of many prime numbers whose length is
+    ///   `N * T::size_in_bits() / 2` bits.
+    /// - It uses a prime number pool.
+    /// 
+    /// # Caution and Cryptographical Security
+    /// The source code of this method is openly publicised. It means that
+    /// anyone can have the full familiarity of the prime number pool which
+    /// this method uses. So, you are NOT encouraged to use this method for
+    /// serious cryptographical purposes. You can use this method temporarily
+    /// for testing or debugging purposes because of the slowness of the
+    /// Millar-Rabin algorithm for big numbers.
+    /// 
+    /// # Example 1 for Random
+    /// ```
+    /// use cryptocol::random::Random;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut rand = Random::new();
+    /// let biguint: U256 = rand.prepared_random_prime_with_half_length();
+    /// println!("Random Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 2 for Any
+    /// ```
+    /// use cryptocol::random::Any;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut any = Any::new();
+    /// let biguint: U384 = any.prepared_random_prime_with_half_length();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let biguint: U512 = rand.prepared_random_prime_with_half_length();
+    /// println!("Random Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut rand = Random_SHA3_512::new();
+    /// let biguint: U768 = rand.prepared_random_prime_with_half_length();
+    /// println!("Random Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut rand = Random_SHA2_512::new();
+    /// let biguint: U1024 = rand.prepared_random_prime_with_half_length();
+    /// println!("Random Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut any = Any_SHAKE_256::new();
+    /// let biguint: U2048 = any.prepared_random_prime_with_half_length();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut any = Any_SHAKE_128::new();
+    /// let biguint: U3072 = any.prepared_random_prime_with_half_length();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut any = Any_SHA3_512::new();
+    /// let biguint: U4096 = any.prepared_random_prime_with_half_length();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut any = Any_SHA3_256::new();
+    /// let biguint: U5120 = any.prepared_random_prime_with_half_length();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut any = Any_SHA2_512::new();
+    /// let biguint: U6144 = any.prepared_random_prime_with_half_length();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut any = Any_SHA2_256::new();
+    /// let biguint: U7168 = any.prepared_random_prime_with_half_length();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 12 for Slapdash_SHA1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut slapdash = Slapdash_SHA1::new();
+    /// let biguint: U8192 = slapdash.prepared_random_prime_with_half_length();
+    /// println!("Slapdash Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 13 for Slapdash_SHA0
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut slapdash = Slapdash_SHA0::new();
+    /// let biguint: U16384 = slapdash.prepared_random_prime_with_half_length();
+    /// println!("Slapdash Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 14 for Slapdash_MD5
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut slapdash = Slapdash_MD5::new();
+    /// let biguint: U256 = slapdash.prepared_random_prime_with_half_length();
+    /// println!("Slapdash Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 15 for Slapdash_MD4
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut slapdash = Slapdash_MD4::new();
+    /// let biguint: U384 = slapdash.prepared_random_prime_with_half_length();
+    /// println!("Slapdash Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut rand = Random_Rijndael::new();
+    /// let biguint: U512 = rand.prepared_random_prime_with_half_length();
+    /// println!("Random Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut any = Any_Rijndael::new();
+    /// let biguint: U768 = any.prepared_random_prime_with_half_length();
+    /// println!("Any Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 18 for Slapdash_DES
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut slapdash = Slapdash_DES::new();
+    /// let biguint: U1024 = slapdash.prepared_random_prime_with_half_length();
+    /// println!("Slapdash Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 19 for Slapdash_Num_C
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut slapdash = Slapdash_Num_C::new();
+    /// let biguint: U2048 = slapdash.prepared_random_prime_with_half_length();
+    /// println!("Slapdash Number: {}", biguint);
+    /// ```
+    /// 
+    /// # Example 20 for Slapdash
+    /// ```
+    /// use cryptocol::random::Slapdash;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut slapdash = Slapdash::new();
+    /// let biguint: U3072 = slapdash.prepared_random_prime_with_half_length();
+    /// println!("Slapdash Number: {}", biguint);
+    /// ```
+    pub fn prepared_random_prime_with_half_length<T, const N: usize>(&mut self) -> BigUInt<T, N>
     where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
             + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign

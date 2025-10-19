@@ -220,7 +220,7 @@ The checked items have already been implemented including documentation __at lea
 -->
 ### 5. Pseudo-Random Number Generator Algorithms
 
-- [ ] Pseudo-random number generator ---
+- [X] Pseudo-random number generator ---
       struct [`Random_Generic`](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_Generic.html#struct.Random_Generic) and
       trait [`Random_Engine`](https://docs.rs/cryptocol/latest/cryptocol/random/trait_random_engine/trait.Random_Engine.html#trait.Random_Engine)
 - [X] Pseudo-random number generator engines using hash algorithms ---
