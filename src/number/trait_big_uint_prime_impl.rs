@@ -338,16 +338,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
 
         let common = if len < repetition {len} else {repetition};
-        let mut i = 0;
-        while i < common
+        for i in 0..common
         {
             if !test_miller_rabin(self, &Self::from_uint(a_list[i]))
                 { return false; }
-            i += 1;
         }
 
         let mut a = a_list[len-1] as u32 + 2;
-        for _ in i..repetition
+        for _ in common..repetition
         {
             if !test_miller_rabin(self, &Self::from_uint(a))
                 { return false; }
@@ -356,3 +354,138 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         true
     }
 }
+
+
+
+//     fn is_prime_using_miller_rabin(&self, repetition: usize) -> bool
+//     {
+//         use std::thread::available_parallelism;
+//         if self.is_zero_or_one() || self.is_even()
+//             { return false; }
+        
+//         if self.le_uint(u128::MAX)
+//         {
+//             let small_self = self.into_u128();
+//             return small_self.is_prime_using_miller_rabin(repetition);
+//         }
+
+//         let a_list = [2_u8, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71];
+//         let len = a_list.len();
+//         for i in 1..len
+//         {
+//             if self.wrapping_rem_uint(a_list[i]).is_zero()
+//                 { return false; }
+//         }
+
+//         let number_of_threads: usize = match available_parallelism()
+//         {
+//             Ok(non_zero) => non_zero.get() as usize,
+//             Err(_) => 1_usize,
+//         };
+        
+//         if number_of_threads == 1
+//         {
+//             is_prime_using_miller_rabin_mono_thread(self, repetition, a_list)
+//         }
+//         else
+//         {
+//             use std::sync::{Mutex, Arc};
+//             use std::sync::mpsc::channel;
+//             use std::thread::spawn;
+//             use crate::concurrency::do_simultaneously_unit;
+
+//             let mut b_list= Vec::new();
+//             let common = if len < repetition {len} else {repetition};
+//             for i in 0..common
+//                 { b_list.push(a_list[i] as u32); }
+//             let mut a = a_list[len-1] as u32 + 2;
+//             for _ in common..repetition
+//             {
+//                 b_list.push(a);
+//                 a += 2;
+//             }
+
+            
+//             let me = Arc::new(*self);
+//             let mut threads = Vec::new();
+//             for i in 0..repetition
+//             {
+//                 let me = Arc::clone(&me);
+//                 let a = b_list[i];
+//                 threads.push(spawn(move ||
+//                 {
+//                     test_miller_rabin(&me, &Self::from_uint(a))
+//                 }));
+//             }
+
+
+//             let mut threads = Vec::new();
+//             let (tx, rx) = channel::<(Arc<Mutex<bool>>, Self, Self)>();
+//             let receiver = Arc::new(Mutex::new(rx));
+//             for _ in 0..number_of_threads
+//             {
+//                 let rxx = receiver.clone();
+//                 threads.push(spawn(move ||
+//                 {
+//                     loop
+//                     {
+//                         let r = rxx.lock().unwrap();
+//                         match r.recv()
+//                         {
+//                             Ok((rr, me, b)) => {
+//                                 drop(r);
+//                                 *rr.lock().unwrap() &= test_miller_rabin(&me, &b);
+//                             },
+//                             _ => { return; },
+//                         }
+//                     }
+//                 }));
+//             }
+
+//             let res = true;
+//             let r = Arc::new(Mutex::new(res));
+//             for b in b_list
+//             {
+//                 let rr = r.clone();
+//                 let f = ||
+//                 {
+//                     *rr.lock().unwrap() &= test_miller_rabin(self, &Self::from_uint(b));
+//                     drop(rr);
+//                 };
+//                 tx.clone().send((r.clone(), self.clone(), Self::from_uint(b))).unwrap();
+//             }
+//             drop(tx);
+//             for thread in threads
+//                 { thread.join().unwrap(); }
+//             res
+//         }
+//     }
+// }
+
+// fn is_prime_using_miller_rabin_mono_thread<T, const N: usize>(me: &BigUInt<T, N>, repetition: usize, a_list: [u8; 20]) -> bool
+// where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+//         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+//         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+//         + Rem<Output=T> + RemAssign
+//         + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+//         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+//         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+//         + PartialEq + PartialOrd
+// {
+//     let len = a_list.len();
+//     let common = if len < repetition {len} else {repetition};
+//     for i in 0..common
+//     {
+//         if !test_miller_rabin(me, &BigUInt::<T, N>::from_uint(a_list[i]))
+//             { return false; }
+//     }
+
+//     let mut a = a_list[len-1] as u32 + 2;
+//     for _ in common..repetition
+//     {
+//         if !test_miller_rabin(me, &BigUInt::<T, N>::from_uint(a))
+//             { return false; }
+//         a += 2;
+//     }
+//     true
+// }
