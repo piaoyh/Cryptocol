@@ -16,17 +16,47 @@
 
 use std::mem::size_of;
 use std::ptr::copy_nonoverlapping;
-
-use std::convert::From;
-use std::str::FromStr;
 use std::fmt::{ Display, Debug };
 use std::cmp::{ PartialEq, PartialOrd, Ordering };
 use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
                 Shl, ShlAssign, Shr, ShrAssign, RangeBounds };
+// use std::marker::{ Send, Sync };
 
 use crate::number::{ SmallUInt, LongerUnion, SharedValues, SharedArrays, NumberErr };
 
+
+/// The trait `TraitsBigUInt<T>` is for the trait `T` of BigUInt<T, N>.
+/// Its contents can be implicitly changed in the future if necessary.
+pub trait TraitsBigUInt<T>: SmallUInt + Copy + Clone + Display + Debug + ToString
+                        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+                        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+                        + Rem<Output=T> + RemAssign
+                        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+                        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+                        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+                        + PartialEq + PartialOrd
+{}
+
+impl<T> TraitsBigUInt<T> for T
+where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+        + Rem<Output=T> + RemAssign
+        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+        + PartialEq + PartialOrd
+{}
+
+// pub trait TraitsBigUInt<T>: SmallUInt + Copy + Clone + Display + Debug + ToString
+//         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
+//         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
+//         + Rem<Output=T> + RemAssign
+//         + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
+//         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
+//         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
+//         + PartialEq + PartialOrd = {};
 
 /// 256-bit unsigned integer implemented by `BigUInt<u128, 2>` made with two `u128`s
 #[allow(non_camel_case_types)] pub type U256_with_u128 = BigUInt<u128, 2>;
@@ -1088,14 +1118,7 @@ macro_rules! calc_rotate_assign
 /// with your own full responsibility.
 #[derive(Debug, Clone)]
 pub struct BigUInt<T, const N: usize>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 {
     // method_widening_mul_assign_uint: fn(&mut Self, T) -> Self,
     // method_wrapping_mul_assign_uint: fn(&mut Self, T),
@@ -1106,37 +1129,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 }
 
 impl<T, const N: usize> BigUInt<T, N>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd,
-    Self: Sized + Clone + Display + Debug + ToString
-        + Add<Output = Self> + AddAssign
-        + Sub<Output = Self> + SubAssign
-        + Mul<Output = Self> + MulAssign
-        + Div<Output = Self> + DivAssign
-        + Rem<Output = Self> + RemAssign
-        + Shl<i32, Output = Self> + ShlAssign<i32>
-        + Shr<i32, Output = Self> + ShrAssign<i32>
-        + BitAnd<Self, Output = Self> + BitAndAssign
-        + BitOr<Self, Output = Self> + BitOrAssign
-        + BitXor<Self, Output = Self> + BitXorAssign
-        + Not<Output = Self>
-        + From<T> + FromStr + From<[T; N]> + From<u32>
-        // + 'a
-        // + Add<&'a Self, Output = Self> + AddAssign<&'a Self>
-        // + Sub<&'a Self, Output = Self> + SubAssign<&'a Self>
-        // + Mul<&'a Self, Output = Self> + MulAssign<&'a Self>
-        // + Div<&'a Self, Output = Self> + DivAssign<&'a Self>
-        // + Rem<&'a Self, Output = Self> + RemAssign<&'a Self>
-        // + BitAnd<&'a Self, Output = Self> + BitAndAssign<&'a Self>
-        // + BitOr<&'a Self, Output = Self> + BitOrAssign<&'a Self>
-        // + BitXor<&'a Self, Output = Self> + BitXorAssign<&'a Self>
-
+where T: TraitsBigUInt<T>
 {
     /***** CONSTANTS FOR FLAGS *****/
 
@@ -1504,14 +1497,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(f_from_usize.is_right_carry(), false);
     /// ```
     pub fn from_uint<U>(val: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         let size_t = T::size_in_bytes();
         let size_u = U::size_in_bytes();
@@ -1616,14 +1602,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.from_biguint)
     #[inline]
     pub fn from_biguint<U, const M: usize>(biguint: &BigUInt<U, M>) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         Self::from_array(unsafe {SharedArrays::<T, N, U, M>::from_src(biguint.get_number()).des})
     }
@@ -3365,14 +3344,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn set_uint<U>(&mut self, val: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         let size_t = T::size_in_bytes();
         let size_v = U::size_in_bytes();
@@ -3438,14 +3410,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(a_biguint.is_uint(50_u16), false);
     /// ```
     pub fn is_uint<U>(&self, val: U) -> bool
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         let size_t = T::size_in_bytes();
         let size_v = U::size_in_bytes();
@@ -3947,14 +3912,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.partial_cmp_uint)
     pub fn partial_cmp_uint<U>(&self, other: U) -> Option<Ordering>
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if U::size_in_bytes() > T::size_in_bytes()
         {
@@ -4021,14 +3979,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.lt_uint)
     #[inline]
     pub fn lt_uint<U>(&self, other: U) -> bool
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         self.partial_cmp_uint(other).unwrap().is_lt()
     }
@@ -4068,14 +4019,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.gt_uint)
     #[inline]
     pub fn gt_uint<U>(&self, other: U) -> bool
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         self.partial_cmp_uint(other).unwrap().is_gt()
     }
@@ -4115,14 +4059,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.le_uint)
     #[inline]
     pub fn le_uint<U>(&self, other: U) -> bool
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         self.partial_cmp_uint(other).unwrap().is_le()
     }
@@ -4162,14 +4099,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.ge_uint)
     #[inline]
     pub fn ge_uint<U>(&self, other: U) -> bool
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         self.partial_cmp_uint(other).unwrap().is_ge()
     }
@@ -4207,14 +4137,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.eq_uint)
     pub fn eq_uint<U>(&self, other: U) -> bool
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if U::size_in_bytes() > T::size_in_bytes()
             { self.eq(&Self::from_uint(other)) }
@@ -4548,14 +4471,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.carrying_add_uint)
     pub fn carrying_add_uint<U>(&self, rhs: U, carry: bool) -> (Self, bool)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         carrying_calc!(self, Self::carrying_add_assign_uint, rhs, carry);
     }
@@ -4633,14 +4549,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.carrying_add_assign_uint)
     pub fn carrying_add_assign_uint<U>(&mut self, rhs: U, carry: bool) -> bool
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if U::size_in_bytes() > T::size_in_bytes()
         {
@@ -4728,14 +4637,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_add_uint)
     pub fn wrapping_add_uint<U>(&self, rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if U::size_in_bytes() > T::size_in_bytes()
         {
@@ -4818,14 +4720,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_add_assign_uint)
     #[inline]
     pub fn wrapping_add_assign_uint<U>(&mut self, rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         self.carrying_add_assign_uint(rhs, false);
     }
@@ -4883,14 +4778,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_add_uint)
     pub fn overflowing_add_uint<U>(&self, rhs: U) -> (Self, bool)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_overflowing_calc!(self, Self::overflowing_add_assign_uint, rhs);
     }
@@ -4962,14 +4850,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_add_assign_uint)
     pub fn overflowing_add_assign_uint<U>(&mut self, rhs: U) -> bool
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_overflowing_calc_assign!(self, Self::wrapping_add_assign_uint, rhs);
     }
@@ -5042,14 +4923,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.borrowing_sub_uint)
     pub fn borrowing_sub_uint<U>(&self, rhs: U, borrow: bool) -> (Self, bool)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         carrying_calc!(self, Self::borrowing_sub_assign_uint, rhs, borrow);
     }
@@ -5129,14 +5003,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.borrowing_sub_assign_uint)
     pub fn borrowing_sub_assign_uint<U>(&mut self, rhs: U, borrow: bool) -> bool
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if U::size_in_bytes() > T::size_in_bytes()
         {
@@ -5223,14 +5090,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_sub_uint)
     pub fn wrapping_sub_uint<U>(&self, rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if U::size_in_bytes() > T::size_in_bytes()
         {
@@ -5312,14 +5172,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_sub_assign_uint)
     #[inline]
     pub fn wrapping_sub_assign_uint<U>(&mut self, rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         self.borrowing_sub_assign_uint(rhs, false);
     }
@@ -5378,14 +5231,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_sub_uint)
     pub fn overflowing_sub_uint<U>(&self, rhs: U) -> (Self, bool)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_overflowing_calc!(self, Self::overflowing_sub_assign_uint, rhs);
     }
@@ -5458,14 +5304,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_sub_assign_uint)
     pub fn overflowing_sub_assign_uint<U>(&mut self, rhs: U) -> bool
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         underflowing_calc_assign!(self, Self::wrapping_sub_assign_uint, rhs);
     }
@@ -5516,14 +5355,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.abs_diff_uint)
     pub fn abs_diff_uint<U>(&self, other: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if U::size_in_bytes() > T::size_in_bytes()
         {
@@ -5641,14 +5473,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.carrying_mul_uint)
     pub fn carrying_mul_uint<U>(&self, rhs: U, carry: Self) -> (Self, Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         let mut low = Self::from_array(self.get_number().clone());
         let high = low.carrying_mul_assign_uint(rhs, carry);
@@ -5769,14 +5594,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.carrying_mul_assign_uint)
     pub fn carrying_mul_assign_uint<U>(&mut self, rhs: U, carry: Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         let mut high = self.widening_mul_assign_uint(rhs);
         if self.overflowing_add_assign(&carry)
@@ -5854,14 +5672,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.widening_mul_uint)
     pub fn widening_mul_uint<U>(&self, rhs: U) -> (Self, Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         let mut low = Self::from_array(self.get_number().clone());
         let high = low.widening_mul_assign_uint(rhs);
@@ -5947,14 +5758,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.widening_mul_assign_uint)
     pub fn widening_mul_assign_uint<U>(&mut self, rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if U::size_in_bytes() > T::size_in_bytes()
             { self.widening_mul_assign(&Self::from_uint(rhs)) }
@@ -6090,14 +5894,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_mul_uint)
     pub fn wrapping_mul_uint<U>(&self, rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc!(self, Self::wrapping_mul_assign_uint, rhs);
     }
@@ -6173,14 +5970,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_mul_assign_uint)
     pub fn wrapping_mul_assign_uint<U>(&mut self, rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if U::size_in_bytes() > T::size_in_bytes()
             { self.wrapping_mul_assign(&Self::from_uint(rhs)) }
@@ -6299,14 +6089,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_mul_uint)
     pub fn overflowing_mul_uint<U>(&self, rhs: U) -> (Self, bool)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_overflowing_calc!(self, Self::overflowing_mul_assign_uint, rhs);
     }
@@ -6381,14 +6164,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_mul_assign_uint)
     pub fn overflowing_mul_assign_uint<U>(&mut self, rhs: U) -> bool
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_overflowing_calc_assign!(self, Self::wrapping_mul_assign_uint, rhs);
     }
@@ -6415,14 +6191,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /*** DIVISION ***/
 
     pub(super) fn common_divide_fully_uint<U>(&self, rhs: U) -> (Self, U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if self.is_zero()
         {
@@ -6520,14 +6289,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.divide_fully_uint)
     pub fn divide_fully_uint<U>(&self, rhs: U) -> (Self, U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if rhs.is_zero()
             { panic!(); }
@@ -6597,14 +6359,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_div_uint)
     pub fn wrapping_div_uint<U>(&self, rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc_div!(self, Self::divide_fully_uint, rhs);
     }
@@ -6679,14 +6434,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_div_assign_uint)
     pub fn wrapping_div_assign_uint<U>(&mut self, rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_to_calc_assign!(self, Self::wrapping_div_uint, rhs);
     }
@@ -6745,14 +6493,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_div_uint)
     pub fn overflowing_div_uint<U>(&self, rhs: U) -> (Self, bool)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_overflowing_calc_div!(self, Self::divide_fully_uint, rhs);
     }
@@ -6826,14 +6567,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_div_assign_uint)
     pub fn overflowing_div_assign_uint<U>(&mut self, rhs: U) -> bool
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_overflowing_calc_assign!(self, Self::wrapping_div_assign_uint, rhs);
     }
@@ -6894,14 +6628,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_rem_uint)
     pub fn wrapping_rem_uint<U>(&self, rhs: U) -> U
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc_rem!(self, Self::divide_fully_uint, rhs);
     }
@@ -6977,14 +6704,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.wrapping_rem_assign_uint)
     pub fn wrapping_rem_assign_uint<U>(&mut self, rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         let flags = self.get_all_flags();
         let (_, remainder) = self.divide_fully_uint(rhs);
@@ -7040,14 +6760,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_rem_uint)
     pub fn overflowing_rem_uint<U>(&self, rhs: U) -> (U, bool)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_overflowing_calc_rem!(self, Self::divide_fully_uint, rhs);
     }
@@ -7121,14 +6834,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic_uint/struct.BigUInt.html#method.overflowing_rem_assign_uint)
     pub fn overflowing_rem_assign_uint<U>(&mut self, rhs: U) -> bool
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         self.wrapping_rem_assign_uint(rhs);
         false
@@ -7192,14 +6898,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.pow_uint)
     pub fn pow_uint<U>(&self, exp: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc!(self, Self::pow_assign_uint, exp);
     }
@@ -7269,14 +6968,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.pow_assign_uint)
     pub fn pow_assign_uint<U>(&mut self, exp: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         general_pow_assign!(self, Self::common_pow_assign_uint, exp);
     }
@@ -7346,14 +7038,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.wrapping_pow_uint)
     pub fn wrapping_pow_uint<U>(&self, exp: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc!(self, Self::wrapping_pow_assign_uint, exp);
     }
@@ -7432,27 +7117,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.wrapping_pow_assign_uint)
     pub fn wrapping_pow_assign_uint<U>(&mut self, exp: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         general_pow_assign!(self, Self::common_pow_assign_uint, exp);
     }
 
     pub(super) fn common_pow_assign_uint<U>(&mut self, exp: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if self.is_zero_or_one()
             { return; }
@@ -7540,14 +7211,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow_uint)
     pub fn overflowing_pow_uint<U>(&self, exp: U) -> (Self, bool)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_overflowing_calc!(self, Self::overflowing_pow_assign_uint, exp);
     }
@@ -7625,14 +7289,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow_assign_uint)
     pub fn overflowing_pow_assign_uint<U>(&mut self, exp: U) -> bool
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_overflowing_calc_assign!(self, Self::pow_assign_uint, exp);
     }
@@ -7689,14 +7346,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.iroot_uint)
     pub fn iroot_uint<U>(&self, exp: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         general_calc_iroot!(self, Self::common_iroot_uint, exp);
     }
@@ -7766,27 +7416,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.iroot_assign_uint)
     pub fn iroot_assign_uint<U>(&mut self, exp: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_to_calc_assign!(self, Self::iroot_uint, exp);
     }
 
     pub(super) fn common_iroot_uint<U>(&self, exp: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         let mut highest = (Self::size_in_bits() - self.leading_zeros()).wrapping_div(exp.into_u32());
         if highest.is_zero()
@@ -7899,14 +7535,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog_uint)
     pub fn ilog_uint<U>(&self, base: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         general_calc_ilog!(self, Self::common_ilog_uint, base);
     }
@@ -7965,27 +7594,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog_assign_uint)
     pub fn ilog_assign_uint<U>(&mut self, base: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_to_calc_assign!(self, Self::ilog_uint, base);
     }
 
     pub(super) fn common_ilog_uint<U>(&self, base: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         general_calc_common_ilog!(self, Self::wrapping_div_assign_uint, base);
     }
@@ -11918,14 +11533,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.shift_left)
     pub fn shift_left<U>(&self, n: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc!(self, Self::shift_left_assign, n);
     }
@@ -11982,14 +11590,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.shift_left_assign)
     pub fn shift_left_assign<U>(&mut self, n: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if n.into_u128() >= self.length_in_bits().into_u128()
         {
@@ -12086,14 +11687,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.shift_right)
     pub fn shift_right<U>(&self, n: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc!(self, Self::shift_right_assign, n);
     }
@@ -12150,14 +11744,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.shift_right_assign)
     pub fn shift_right_assign<U>(&mut self, n: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if n.into_u128() >= self.length_in_bits().into_u128()
         {
@@ -12253,14 +11840,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.rotate_left)
     #[inline]
     pub fn rotate_left<U>(&self, n: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
        biguint_calc_assign_to_calc!(self, Self::rotate_left_assign, n);
     }
@@ -12316,14 +11896,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.rotate_left_assign)
     #[inline]
     pub fn rotate_left_assign<U>(&mut self, n: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         calc_rotate_assign!(self, Self::shift_left_assign, Self::shift_right, n);
     }
@@ -12374,14 +11947,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.rotate_right)
     #[inline]
     pub fn rotate_right<U>(&self, n: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc!(self, Self::rotate_right_assign, n);
     }
@@ -12437,14 +12003,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.rotate_right_assign)
     #[inline]
     pub fn rotate_right_assign<U>(&mut self, n: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         calc_rotate_assign!(self, Self::shift_right_assign, Self::shift_left, n);
     }
@@ -13067,14 +12626,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_biguint)
     #[inline]
     pub fn into_biguint<U, const M: usize>(&self) -> BigUInt<U, M>
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         BigUInt::<U, M>::from_biguint(&self)
     }
@@ -13127,14 +12679,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.into_uint)
     pub fn into_uint<U>(&self) -> U
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if T::size_in_bytes() >= U::size_in_bytes()
         {

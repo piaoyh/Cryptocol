@@ -16,22 +16,15 @@ use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, 
                 Shl, ShlAssign, Shr, ShrAssign, 
                 Add, AddAssign, Sub, SubAssign, Mul, MulAssign,
                 Div, DivAssign, Rem, RemAssign };
-                
-use crate::number::SmallUInt;
+
+use crate::number::{ SmallUInt, TraitsBigUInt };
 
 /// big_uint.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to big_uint_arithmetic.rs.
 pub struct BigUInt<T, const N: usize>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 {
     // Dummy struct for documentation
     #[allow(dead_code)] number: [T; N],
@@ -58,14 +51,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 /// - For more information on formatters,
 ///   see [the module-level documentation](https://doc.rust-lang.org/std/fmt/index.html).
 impl<T, const N: usize> Pointer for BigUInt<T, N>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 {
     // fn fmt(&self, f: &mut Formatter) -> fmt::Result
     /// Formats the value using the given formatter.

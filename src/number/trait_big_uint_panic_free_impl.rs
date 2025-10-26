@@ -14,26 +14,10 @@
 // #![allow(missing_docs)]
 // #![allow(rustdoc::missing_doc_code_examples)]
 
-use std::fmt::{ Display, Debug };
-use std::cmp::{ PartialEq, PartialOrd };
-use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
-                BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
-                Shl, ShlAssign, Shr, ShrAssign };
 
-use crate::number::{ SmallUInt, BigUInt, BigUInt_Modular, BigUInt_Prime, BigUInt_Panic_Free };
-use crate::number::trait_big_uint_modular_impl::{ common_modular_add_assign_uint,
-                                                  common_modular_add_assign,
-                                                  common_modular_sub_assign_uint,
-                                                  common_modular_sub_assign,
-                                                  common_modular_mul_assign_uint,
-                                                  common_modular_mul_assign,
-                                                  common_modular_pow_assign_uint,
-                                                  common_modular_pow_assign,
-                                                  common_modular_next_multiple_of_assign_uint,
-                                                  common_modular_next_multiple_of_assign };
-use crate::number::trait_big_uint_more_impl::{ common_next_multiple_of_assign_uint,
-                                               common_next_multiple_of_assign };
-use crate::number::trait_big_uint_prime_impl::{ common_gcd_uint, common_gcd };
+use crate::number::{ TraitsBigUInt, BigUInt,
+                    BigUInt_Modular, BigUInt_Prime, BigUInt_Panic_Free };
+
 
 /*** Macro Fuctions ***/
 
@@ -341,43 +325,22 @@ macro_rules! general_panic_free_calc_ilog
 
 
 impl<T, const N: usize> BigUInt_Panic_Free<T, N> for BigUInt<T, N>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 
 {
     /*** ADDITION ***/
 
     fn panic_free_modular_add_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
 
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_modular_add_assign_uint, rhs, modulo);
     }
     
     fn panic_free_modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
-        panic_free_modular_calc_assign!(self, common_modular_add_assign_uint, rhs, modulo);
+        panic_free_modular_calc_assign!(self, Self::common_modular_add_assign_uint, rhs, modulo);
     }
 
     fn panic_free_modular_add(&self, rhs: &Self, modulo: &Self) -> Self
@@ -387,35 +350,21 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn panic_free_modular_add_assign(&mut self, rhs: &Self, modulo: &Self)
     {
-        panic_free_modular_calc_assign!(self, common_modular_add_assign, rhs, modulo);
+        panic_free_modular_calc_assign!(self, Self::common_modular_add_assign, rhs, modulo);
     }
 
 
     /*** SUBTRACTION ***/
     fn panic_free_modular_sub_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_modular_sub_assign_uint, rhs, modulo);
     }
 
     fn panic_free_modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
-        panic_free_modular_calc_assign!(self, common_modular_sub_assign_uint, rhs, modulo);
+        panic_free_modular_calc_assign!(self, Self::common_modular_sub_assign_uint, rhs, modulo);
     }
 
     fn panic_free_modular_sub(&self, rhs: &Self, modulo: &Self) -> Self
@@ -425,7 +374,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn panic_free_modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)
     {
-        panic_free_modular_calc_assign!(self, common_modular_sub_assign, rhs, modulo);
+        panic_free_modular_calc_assign!(self, Self::common_modular_sub_assign, rhs, modulo);
     }
 
 
@@ -433,29 +382,15 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /*** MULTIPLICATION ***/
 
     fn panic_free_modular_mul_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_modular_mul_assign_uint, rhs, modulo);
     }
 
     fn panic_free_modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
-        panic_free_modular_calc_assign!(self, common_modular_mul_assign_uint, rhs, modulo);
+        panic_free_modular_calc_assign!(self, Self::common_modular_mul_assign_uint, rhs, modulo);
     }
 
     fn panic_free_modular_mul(&self, rhs: &Self, modulo: &Self) -> Self
@@ -465,21 +400,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 
     fn panic_free_modular_mul_assign(&mut self, rhs: &Self, modulo: &Self)
     {
-        panic_free_modular_calc_assign!(self, common_modular_mul_assign, rhs, modulo);
+        panic_free_modular_calc_assign!(self, Self::common_modular_mul_assign, rhs, modulo);
     }
 
 
     /*** DIVISION ***/
 
     fn panic_free_divide_fully_uint<U>(&self, rhs: U) -> (Self, Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if rhs.is_zero()
         {
@@ -494,53 +422,25 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     fn panic_free_div_uint<U>(&self, rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc_div!(self, Self::panic_free_divide_fully_uint, rhs);
     }
 
     fn panic_free_div_assign_uint<U>(&mut self, rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         panic_free_calc_div_rem_assign!(self, Self::panic_free_div_uint, rhs);
     }
 
     fn panic_free_modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_modular_div_assign_uint, rhs, modulo);
     }
 
     fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         let mut terminated = false;
         let mut mrhs = rhs;
@@ -672,53 +572,25 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     fn panic_free_rem_uint<U>(&self, rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc_rem!(self, Self::panic_free_divide_fully_uint, rhs);
     }
 
     fn panic_free_rem_assign_uint<U>(&mut self, rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         panic_free_calc_div_rem_assign!(self, Self::panic_free_rem_uint, rhs);
     }
 
     fn panic_free_modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_modular_rem_assign_uint, rhs, modulo);
     }
 
     fn panic_free_modular_rem_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         let mut terminated = false;
         let mut mrhs = rhs;
@@ -831,53 +703,25 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /*** METHODS FOR EXPONENTIATION AND LOGARITHM WITH UINT ***/
 
     fn panic_free_pow_uint<U>(&self, exp: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_pow_assign_uint, exp);
     }
 
     fn panic_free_pow_assign_uint<U>(&mut self, exp: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         panic_free_calc_pow_assign!(self, Self::common_pow_assign_uint, exp);
     }
 
     fn panic_free_modular_pow_uint<U>(&self, exp: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_modular_pow_assign_uint, exp, modulo);
     }
 
     fn panic_free_modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if modulo.is_zero_or_one() || (self.is_zero() && exp.is_zero())
         {
@@ -899,7 +743,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             self.set_undefined();
             return;
         }
-        common_modular_pow_assign_uint(self, mexp, modulo);
+        self.common_modular_pow_assign_uint(mexp, modulo);
     }
 
     fn panic_free_pow(&self, exp: &Self) -> Self
@@ -936,31 +780,17 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             self.set_undefined();
             return;
         }
-        common_modular_pow_assign(self, &mexp, modulo);
+        self.common_modular_pow_assign(&mexp, modulo);
     }
 
     fn panic_free_iroot_uint<U>(&self, exp: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         general_panic_free_calc_iroot!(self, Self::common_iroot_uint, exp);
     }
 
     fn panic_free_iroot_assign_uint<U>(&mut self, exp: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         calc_to_calc_assign!(self, Self::panic_free_iroot_uint, exp);
     }
@@ -976,27 +806,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     fn panic_free_ilog_uint<U>(&self, base: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         general_panic_free_calc_ilog!(self, Self::common_ilog_uint, base);
     }
 
     fn panic_free_ilog_assign_uint<U>(&mut self, base: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         calc_to_calc_assign!(self, Self::panic_free_ilog_uint, base);
     }
@@ -1048,14 +864,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /*** METHODS FOR MISCELLANEOUS ARITHMETIC OPERATIONS ***/
 
     fn panic_free_gcd_uint<U>(&self, other: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if self.is_zero() || other.is_zero()
         {
@@ -1065,19 +874,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
         else
         {
-            common_gcd_uint(self, other)
+            self.common_gcd_uint(other)
         }
     }
 
     fn panic_free_gcd_assign_uint<U>(&mut self, other: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         calc_to_calc_assign!(self, Self::panic_free_gcd_uint, other);
     }
@@ -1092,7 +894,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
         else
         {
-            common_gcd(self, other)
+            self.common_gcd(other)
         }
     }
 
@@ -1102,14 +904,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     fn panic_free_lcm_uint<U>(&self, other: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if self.is_zero() || other.is_zero()
         {
@@ -1124,14 +919,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     fn panic_free_lcm_assign_uint<U>(&mut self, other: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         calc_to_calc_assign!(self, Self::panic_free_lcm_uint, other);
     }
@@ -1156,27 +944,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     fn panic_free_next_multiple_of_uint<U>(&self, rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_next_multiple_of_assign_uint, rhs);
     }
 
     fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if rhs == U::zero()
         {
@@ -1185,32 +959,18 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         }
         else
         {
-            common_next_multiple_of_assign_uint(self, rhs);
+            self.common_next_multiple_of_assign_uint(rhs);
         }
     }
 
     fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_modular_next_multiple_of_assign_uint, rhs, modulo);
     }
 
     fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if modulo.is_zero_or_one() || rhs.is_zero()
         {
@@ -1228,7 +988,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
                 return;
             }
         }
-        common_modular_next_multiple_of_assign_uint(self, rhs, modulo);
+        self.common_modular_next_multiple_of_assign_uint(rhs, modulo);
     }
 
     fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self
@@ -1244,7 +1004,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             self.set_undefined();
             return;
         }
-        common_next_multiple_of_assign(self, rhs);
+        self.common_next_multiple_of_assign(rhs);
     }
 
     fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
@@ -1260,6 +1020,6 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
             self.set_undefined();
             return;
         }
-        common_modular_next_multiple_of_assign(self, rhs, modulo);
+        self.common_modular_next_multiple_of_assign(rhs, modulo);
     }
 }

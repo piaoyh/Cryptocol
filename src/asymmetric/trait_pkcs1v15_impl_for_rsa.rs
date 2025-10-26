@@ -14,6 +14,7 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
+
 macro_rules! pre_encrypt_into_array {
     ($to:expr, $length_in_bytes:expr, $type:ty) => {
         let mut len = if <$type>::size_in_bytes() == 16 {16_usize} else {8};
@@ -85,25 +86,25 @@ macro_rules! decrypt_into_array {
 macro_rules! crypt_into_something_with_padding {
     () => {
         fn encrypt_into_array<U, const M: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; M]) -> u64
-        where U: SmallUInt + Copy + Clone
+        where U: TraitsBigUInt<U>
         {
             encrypt_into_array!(self, message, length_in_bytes, cipher, U, M)
         }
 
         fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-        where U: SmallUInt + Copy + Clone
+        where U: TraitsBigUInt<U>
         {
             encrypt_into_vec!(self, message, length_in_bytes, cipher, U)
         }
 
         fn decrypt_into_array<U, const M: usize>(&mut self, cipher: *const u8, message: &mut [U; M]) -> u64
-        where U: SmallUInt + Copy + Clone
+        where U: TraitsBigUInt<U>
         {
             decrypt_into_array!(self, cipher, message, U)
         }
 
         fn decrypt_into_vec<U>(&mut self, cipher: *const u8, message: &mut Vec<U>) -> u64
-        where U: SmallUInt + Copy + Clone
+        where U: TraitsBigUInt<U>
         {
             pre_decrypt_into_vec!(message, U);
             let len = self.decrypt(cipher, message.as_mut_ptr() as *mut u8);
@@ -114,7 +115,7 @@ macro_rules! crypt_into_something_with_padding {
         }
 
         fn decrypt_vec_into_vec<U, V>(&mut self, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
-        where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+        where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
         {
             pre_decrypt_into_vec!(message, V);
             self.decrypt_into_vec(cipher.as_ptr() as *const u8, message)
@@ -125,25 +126,13 @@ macro_rules! crypt_into_something_with_padding {
 
 
 use std::ptr::copy_nonoverlapping;
-use std::fmt::{ Display, Debug };
-use std::cmp::{ PartialEq, PartialOrd };
-use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
-                BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
-                Shl, ShlAssign, Shr, ShrAssign };
 
-use crate::number::SmallUInt;
+use crate::number::TraitsBigUInt;
 use crate::random::Slapdash as Random;
 use crate::asymmetric::{ PKCS1V15, RSA_Generic };
 
 impl<const N: usize, T, const MR: usize> PKCS1V15 for RSA_Generic<N, T, MR>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 {
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {

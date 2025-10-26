@@ -14,13 +14,8 @@
 // #![allow(missing_docs)]
 // #![allow(rustdoc::missing_doc_code_examples)]
 
-use std::fmt::{ Display, Debug };
-use std::cmp::{ PartialEq, PartialOrd };
-use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
-                BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
-                Shl, ShlAssign, Shr, ShrAssign };
 
-use crate::number::SmallUInt;
+use crate::number::TraitsBigUInt;
 
 
 /// # Introduction
@@ -63,14 +58,7 @@ use crate::number::SmallUInt;
 /// ```
 #[allow(non_camel_case_types)]
 pub trait BigUInt_Prime<T, const N: usize> : Clone + Sized //+ Display + + ToString
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 
 {
     /*** METHODS FOR MISCELLANEOUS ARITHMETIC OPERATIONS ***/
@@ -128,14 +116,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.gcd_uint)
     fn gcd_uint<U>(&self, other: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn gcd_assign_uint<U>(&mut self, other: U)
     /// Calculates the greatest common divisor of `self` and `other`,
@@ -196,14 +177,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.gcd_assign_uint)
     fn gcd_assign_uint<U>(&mut self, other: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn lcm_uint<U>(&self, other: U) -> Self
     /// Calculates the least common multiple of `self` and `other`,
@@ -261,14 +235,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.lcm_uint)
     fn lcm_uint<U>(&self, other: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn lcm_assign_uint<U>(&mut self, other: U)
     /// Calculates the least common multiple of `self` and `other`,
@@ -329,14 +296,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.lcm_assign_uint)
     fn lcm_assign_uint<U>(&mut self, other: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn gcd(&self, other: &Self) -> Self
     /// Calculates the greatest common divisor of `self` and `other`,

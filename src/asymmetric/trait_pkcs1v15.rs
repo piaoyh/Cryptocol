@@ -14,7 +14,8 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use crate::number::SmallUInt;
+use crate::number::TraitsBigUInt;
+
 
 
 /// This trait PKCS1V15 is based on PKCS #1 ver. 1.5. It is considered not
@@ -120,7 +121,7 @@ pub trait PKCS1V15
     /// ## For more examples,
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.encrypt_into_vec) */
     fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone;
+    where U: TraitsBigUInt<U>;
 
     // fn encrypt_into_array<U, const M: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; M]) -> u64
     /// Encrypts the data with the padding defined according to 
@@ -177,7 +178,7 @@ pub trait PKCS1V15
     /// ## For more examples,
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.encrypt_into_array) */
     fn encrypt_into_array<U, const N: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone;
+    where U: TraitsBigUInt<U>;
 
     // fn encrypt_str(&mut self, message: &str, cipher: *mut u8) -> u64
     /// Encrypts the data in a `str` object with the padding defined according
@@ -261,7 +262,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.encrypt_str_into_vec) */
     #[inline]
     fn encrypt_str_into_vec<U>(&mut self, message: &str, cipher: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.encrypt_into_vec(message.as_ptr(), message.len() as u64, cipher)
     }
@@ -315,7 +316,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.encrypt_str_into_array) */
     #[inline]
     fn encrypt_str_into_array<U, const N: usize>(&mut self, message: &str, cipher: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.encrypt_into_array(message.as_ptr(), message.len() as u64, cipher)
     }
@@ -405,7 +406,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.encrypt_string_into_vec) */
     #[inline]
     fn encrypt_string_into_vec<U>(&mut self, message: &String, cipher: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.encrypt_into_vec(message.as_ptr(), message.len() as u64, cipher)
     }
@@ -461,7 +462,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.encrypt_string_into_array) */
     #[inline]
     fn encrypt_string_into_array<U, const N: usize>(&mut self, message: &String, cipher: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.encrypt_into_array(message.as_ptr(), message.len() as u64, cipher)
     }
@@ -510,7 +511,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.encrypt_vec) */
     #[inline]
     fn encrypt_vec<U>(&mut self, message: &Vec<U>, cipher: *mut u8) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.encrypt(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -553,7 +554,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.encrypt_vec_into_vec) */
     #[inline]
     fn encrypt_vec_into_vec<U, V>(&mut self, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.encrypt_into_vec(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -613,7 +614,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.encrypt_vec_into_array) */
     #[inline]
     fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, message: &Vec<U>, cipher: &mut [V; N]) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.encrypt_into_array(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -661,7 +662,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.encrypt_array) */
     #[inline]
     fn encrypt_array<U, const N: usize>(&mut self, message: &[U; N], cipher: *mut u8) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.encrypt(message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -703,7 +704,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.encrypt_array_into_vec) */
     #[inline]
     fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, message: &[U; N], cipher: &mut Vec<V>) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.encrypt_into_vec(message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -761,7 +762,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.encrypt_array_into_array) */
     #[inline]
     fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, message: &[U; N], cipher: &mut [V; M]) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.encrypt_into_array(message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -861,7 +862,7 @@ pub trait PKCS1V15
     /// ## For more examples,
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.decrypt_into_vec) */
     fn decrypt_into_vec<U>(&mut self, cipher: *const u8, message: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone;
+    where U: TraitsBigUInt<U>;
 
     // fn decrypt_into_array<U, const N: usize>(&mut self, cipher: *const u8, message: &mut [U; N]) -> u64
     /// Decrypts the data with the padding defined
@@ -917,7 +918,7 @@ pub trait PKCS1V15
     /// ## For more examples,
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.decrypt_into_array) */
     fn decrypt_into_array<U, const N: usize>(&mut self, cipher: *const u8, message: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone;
+    where U: TraitsBigUInt<U>;
 
     // fn decrypt_into_string(&mut self, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
     /// Decrypts the data with the padding defined according to PKCS #1
@@ -1020,7 +1021,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.decrypt_vec) */
     #[inline]
     fn decrypt_vec<U>(&mut self, cipher: &Vec<U>, message: *mut u8) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.decrypt(cipher.as_ptr() as *const u8, message)
     }
@@ -1064,7 +1065,7 @@ pub trait PKCS1V15
     /// ## For more examples,
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.decrypt_vec_into_vec) */
     fn decrypt_vec_into_vec<U, V>(&mut self, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone;
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>;
 
     // fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, cipher: &Vec<U>, message: &mut [V; N]) -> u64
     /// Decrypts the data stored in a `Vec<U>` object with the padding defined
@@ -1115,7 +1116,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.decrypt_vec_into_array) */
     #[inline]
     fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, cipher: &Vec<U>, message: &mut [V; N]) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.decrypt_into_array(cipher.as_ptr() as *const u8, message)
     }
@@ -1161,7 +1162,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.decrypt_vec_into_string) */
     #[inline]
     fn decrypt_vec_into_string<U>(&mut self, cipher: &Vec<U>, message: &mut String) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.decrypt_into_string(cipher.as_ptr() as *const u8, message)
     }
@@ -1216,7 +1217,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.decrypt_array) */
     #[inline]
     fn decrypt_array<U, const N: usize>(&mut self, cipher: &[U; N], message: *mut u8) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.decrypt(cipher.as_ptr() as *const u8, message)
     }
@@ -1261,7 +1262,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.decrypt_array_into_vec) */
     #[inline]
     fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, cipher: &[U; N], message: &mut Vec<V>) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.decrypt_into_vec(cipher.as_ptr() as *const u8, message)
     }
@@ -1315,7 +1316,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.decrypt_array_into_array) */
     #[inline]
     fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, cipher: &[U; N], message: &mut [V; M]) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.decrypt_into_array(cipher.as_ptr() as *const u8, message)
     }
@@ -1362,7 +1363,7 @@ pub trait PKCS1V15
     /// click [here](./documentation/pkcs1v15/struct.RSA_Generic.html#method.decrypt_array_into_string) */
     #[inline]
     fn decrypt_array_into_string<U, const N: usize>(&mut self, cipher: &[U; N], message: &mut String) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.decrypt_into_string(cipher.as_ptr() as *const u8, message)
     }

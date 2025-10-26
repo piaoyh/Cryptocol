@@ -14,6 +14,7 @@ use std::thread::{ spawn, available_parallelism };
 
 /// Utility function for concurrent operation that return unit type.
 /// 
+#[allow(dead_code)]
 pub fn do_simultaneously_unit(jobs: Vec<fn()>)
 {
     let number_of_threads: usize = match available_parallelism()

@@ -12,13 +12,7 @@
 // #![allow(rustdoc::missing_doc_code_examples)]
 
 
-use std::fmt::{ Display, Debug };
-use std::cmp::{ PartialEq, PartialOrd };
-use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
-                BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
-                Shl, ShlAssign, Shr, ShrAssign };
-
-use crate::number::SmallUInt;
+use crate::number::TraitsBigUInt;
 
 
 
@@ -71,14 +65,7 @@ use crate::number::SmallUInt;
 /// ```
 #[allow(non_camel_case_types)]
 pub trait BigUInt_Panic_Free<T, const N: usize> : Clone + Sized //+ Display + + ToString
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 {
     /*** ADDITION ***/
 
@@ -150,14 +137,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_add_uint)
     fn panic_free_modular_add_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
 
     // fn panic_free_modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
@@ -243,14 +223,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_add_assign_uint)
     fn panic_free_modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
 
     // fn panic_free_modular_add(&self, rhs: &Self, modulo: &Self) -> Self
@@ -480,14 +453,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_sub_uint)
     fn panic_free_modular_sub_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
 
     // fn panic_free_modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
@@ -574,14 +540,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_sub_assign_uint)
     fn panic_free_modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
 
     // fn panic_free_modular_sub(&self, rhs: &Self, modulo: &Self) -> Self
@@ -812,14 +771,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_mul_uint)
     fn panic_free_modular_mul_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
 
     // fn panic_free_modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
@@ -905,14 +857,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_mul_assign_uint)
     fn panic_free_modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
     
 
     // pub fn panic_free_modular_mul(&self, rhs: &Self, modulo: &Self) -> Self
@@ -1157,14 +1102,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_divide_fully_uint)
     fn panic_free_divide_fully_uint<U>(&self, rhs: U) -> (Self, Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_div_uint<U>(&self, rhs: U) -> Self
     /// Divides `self` by `rhs`, and returns the quotient.
@@ -1232,14 +1170,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_div_uint)
     fn panic_free_div_uint<U>(&self, rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_div_assign_uint<U>(&mut self, rhs: U)
     /// Divides `self` by `rhs`, and assigns the quotient to `self` back.
@@ -1314,14 +1245,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_div_assign_uint)
     fn panic_free_div_assign_uint<U>(&mut self, rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
     /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
@@ -1401,14 +1325,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_div_uint)
     fn panic_free_modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
@@ -1500,14 +1417,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_div_assign_uint)
     fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_divide_fully(&self, rhs: &Self) -> (Self, Self)
     /// Divides `self` by `rhs`,
@@ -1970,14 +1880,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_rem_uint)
     fn panic_free_rem_uint<U>(&self, rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_rem_assign_uint<U>(&mut self, rhs: U)
     /// Divides `self` by `rhs`, and assigns the remainder to `self` back.
@@ -2048,14 +1951,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_rem_assign_uint)
     fn panic_free_rem_assign_uint<U>(&mut self, rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> Self
     /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
@@ -2130,14 +2026,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_rem_uint)
     fn panic_free_modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_modular_rem_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
@@ -2224,14 +2113,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_rem_assign_uint)
     fn panic_free_modular_rem_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_rem(&self, rhs: &Self) -> Self
     /// Divides `self` by `rhs`, and returns the remainder.
@@ -2597,14 +2479,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_pow_uint)
     fn panic_free_pow_uint<U>(&self, exp: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_pow_assign_uint<U>(&self, exp: U) -> Self
     /// Raises `BigUInt` type number to the power of `exp`, using
@@ -2678,14 +2553,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_pow_assign_uint)
     fn panic_free_pow_assign_uint<U>(&mut self, exp: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_modular_pow_uint<U>(&self, exp: U, modulo: &Self) -> Self
     /// Raises `BigUInt` type number to the power of `exp`, using
@@ -2755,14 +2623,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.carrying_add_assign_uint)
     fn panic_free_modular_pow_uint<U>(&self, exp: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
     /// Raises `BigUInt` type number to the power of `exp`, using
@@ -2839,14 +2700,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_pow_assign_uint)
     fn panic_free_modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_pow(&mut self, exp: &Self) -> Self
     /// Raises `BigUInt` type number to the power of `exp`, using
@@ -3196,14 +3050,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_iroot_uint)
     fn panic_free_iroot_uint<U>(&self, exp: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_iroot_assign_uint<U>(&mut self, exp: U)
     /// Calculates the `exp`-th root of `self`, rounded down,
@@ -3281,14 +3128,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_iroot_assign_uint)
     fn panic_free_iroot_assign_uint<U>(&mut self, exp: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_iroot(&self, exp: &Self) -> Self
     /// Calculates the `exp`-th root of `self`, rounded down,
@@ -3504,14 +3344,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_ilog_uint)
     fn panic_free_ilog_uint<U>(&self, base: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_ilog_assign_uint<U>(&mut self, base: U)
     /// Calculates the logarithm of the number with respect to `base`,
@@ -3583,14 +3416,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_ilog_assign_uint)
     fn panic_free_ilog_assign_uint<U>(&mut self, base: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_ilog(&self, base: &Self) -> Self
     /// Calculates the logarithm of the number with respect to `base`,
@@ -3991,14 +3817,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_gcd_uint)
     fn panic_free_gcd_uint<U>(&self, other: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_gcd_assign_uint<U>(&mut self, other: U)
     /// Calculates the greatest common divisor of `self` and `other`,
@@ -4070,14 +3889,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_gcd_assign_uint)
     fn panic_free_gcd_assign_uint<U>(&mut self, other: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_lcm_uint<U>(&self, other: U) -> Self
     /// Calculates the least common multiple of `self` and `other`,
@@ -4142,14 +3954,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_lcm_uint)
     fn panic_free_lcm_uint<U>(&self, other: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_lcm_assign_uint<U>(&mut self, other: U)
     /// Calculates the least common multiple of `self` and `other`,
@@ -4220,14 +4025,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_lcm_assign_uint)
     fn panic_free_lcm_assign_uint<U>(&mut self, other: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
 
     // fn panic_free_gcd(&self, other: &Self) -> Self
@@ -4568,14 +4366,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_next_multiple_of_uint)
     fn panic_free_next_multiple_of_uint<U>(&self, rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
     /// Calculates the smallest value greater than or equal to `self`,
@@ -4640,14 +4431,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_next_multiple_of_assign_uint)
     fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
     
     // fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
     /// Calculates the smallest value greater than or equal to `self`,
@@ -4722,14 +4506,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_next_multiple_of_uint)
     fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
     
     // fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
     /// Calculates the smallest value greater than or equal to `self`,
@@ -4812,14 +4589,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_next_multiple_of_assign_uint)
     fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd;
+    where U: TraitsBigUInt<U>;
 
     // fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self
     /// Calculates the smallest value greater than or equal to `self`,

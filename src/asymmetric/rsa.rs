@@ -13,13 +13,7 @@
 #![allow(non_camel_case_types)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
-use std::fmt::{ Display, Debug };
-use std::cmp::{ PartialEq, PartialOrd };
-use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
-                BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
-                Shl, ShlAssign, Shr, ShrAssign };
-
-use crate::number::{ BigUInt, BigUInt_Modular, BigUInt_Prime, SmallUInt };
+use crate::number::{ TraitsBigUInt, BigUInt, BigUInt_Modular, BigUInt_Prime };
 use crate::random::Random;
 
 
@@ -115,14 +109,7 @@ pub type RSA_1024 = RSA_Generic<32, u32>;
 /// # Notice for Practical Use
 /// 
 pub struct RSA_Generic<const N: usize, T, const MR: usize = 5>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 {
     modulo: BigUInt<T, N>,
     key_public: BigUInt<T, N>,
@@ -131,14 +118,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 }
 
 impl<const N: usize, T, const MR: usize> RSA_Generic<N, T, MR>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 {
     #[inline]
     pub fn new() -> Self

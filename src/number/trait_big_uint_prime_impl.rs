@@ -15,171 +15,108 @@
 // #![allow(rustdoc::missing_doc_code_examples)]
 
 use std::fmt::{ Display, Debug };
-use std::cmp::{ PartialEq, PartialOrd };
+use std::str::FromStr;
 use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
                 Shl, ShlAssign, Shr, ShrAssign };
 
-use crate::number::{ SmallUInt, BigUInt, BigUInt_Prime, BigUInt_Modular };
+use crate::number::{ SmallUInt, TraitsBigUInt, BigUInt, BigUInt_Prime, BigUInt_Modular };
 use crate::number::biguint_calc_to_calc_assign;
 
 
 
-pub(super) fn common_gcd_uint<T, U, const N: usize>(me: &BigUInt<T, N>, other: U) -> BigUInt<T, N>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd,
-    U: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-        + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-        + Rem<Output=U> + RemAssign
-        + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-        + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-        + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-        + PartialEq + PartialOrd
+impl<T, const N: usize> BigUInt<T, N>
+where T: TraitsBigUInt<T>,
+    Self: Sized + Clone + Display + Debug + ToString
+        + Add<Output = Self> + AddAssign
+        + Sub<Output = Self> + SubAssign
+        + Mul<Output = Self> + MulAssign
+        + Div<Output = Self> + DivAssign
+        + Rem<Output = Self> + RemAssign
+        + Shl<i32, Output = Self> + ShlAssign<i32>
+        + Shr<i32, Output = Self> + ShrAssign<i32>
+        + BitAnd<Self, Output = Self> + BitAndAssign
+        + BitOr<Self, Output = Self> + BitOrAssign
+        + BitXor<Self, Output = Self> + BitXorAssign
+        + Not<Output = Self>
+        + From<T> + FromStr + From<[T; N]> + From<u32>
 {
-    let mut y = me.wrapping_rem_uint(other);
-    let mut x = other;
-    while !y.is_zero()
+    pub(super) fn common_gcd_uint<U>(&self, other: U) -> Self
+    where U: TraitsBigUInt<U>
     {
-        let t = y;
-        y = x.wrapping_rem(y);
-        x = t;
+        let mut y = self.wrapping_rem_uint(other);
+        let mut x = other;
+        while !y.is_zero()
+        {
+            let t = y;
+            y = x.wrapping_rem(y);
+            x = t;
+        }
+        Self::from_uint(x)
     }
-    BigUInt::<T, N>::from_uint(x)
-}
 
-pub(super) fn common_gcd<T, const N: usize>(me: &BigUInt<T, N>, other: &BigUInt<T, N>) -> BigUInt<T, N>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
-{
-    let mut x = me.clone();
-    let mut y = BigUInt::<T, N>::from_biguint(other);
-    let mut t: BigUInt<T, N>;
-    while !y.is_zero()
+    pub(super) fn common_gcd(&self, other: &Self) -> Self
     {
-        t = y;
-        y = x.wrapping_rem(&t);
-        x = t;
+        let mut x = self.clone();
+        let mut y = Self::from_biguint(other);
+        let mut t: Self;
+        while !y.is_zero()
+        {
+            t = y;
+            y = x.wrapping_rem(&t);
+            x = t;
+        }
+        x
     }
-    x
-}
-
-// pub(super) fn modular_common_gcd<T, const N: usize>(me: &BigUInt<T, N>, other: &BigUInt<T, N>, modulo: &BigUInt<T, N>) -> BigUInt<T, N>
-// where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-//         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-//         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-//         + Rem<Output=T> + RemAssign
-//         + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-//         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-//         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-//         + PartialEq + PartialOrd
-// {
-//     let mut x = me.wrapping_rem(modulo);
-//     let mut y = other.wrapping_rem(modulo);
-//     let mut t: BigUInt<T, N>;
-//     while !y.is_zero()
-//     {
-//         t = y;
-//         y = x.modular_rem(&t, modulo);
-//         x = t;
-//     }
-//     x
-// }
-
-/// Performs Millar Rabin method with a number less than `self`.
-pub(super) fn test_miller_rabin<T, const N: usize>(me: &BigUInt<T, N>, a: &BigUInt<T, N>) -> bool
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
-{
-    let self_minus_one = me.wrapping_sub_uint(1_u8);
-    let mut d = self_minus_one.clone();
-    let mut s = 0_u64;
-    while d.is_even()
+    
+    /// Performs Millar Rabin method with a number less than `self`.
+    fn test_miller_rabin(&self, a: &Self) -> bool
     {
-        d.shift_right_assign(1_u8);
-        s += 1;
-    }
-    let mut x = a.modular_pow(&d, me);
-    if x == self_minus_one || x.is_one()
-        { return true; }
-    for _ in 0..s-1
-    {
-        x.modular_pow_assign_uint(2_u8, me);
-        if x.is_one()
-            { return false; }
-        if x == self_minus_one
+        let self_minus_one = self.wrapping_sub_uint(1_u8);
+        let mut d = self_minus_one.clone();
+        let mut s = 0_u64;
+        while d.is_even()
+        {
+            d.shift_right_assign(1_u8);
+            s += 1;
+        }
+        let mut x = a.modular_pow(&d, self);
+        if x == self_minus_one || x.is_one()
             { return true; }
+        for _ in 0..s-1
+        {
+            x.modular_pow_assign_uint(2_u8, self);
+            if x.is_one()
+                { return false; }
+            if x == self_minus_one
+                { return true; }
+        }
+        false
     }
-    false
 }
+
 
 impl<T, const N: usize> BigUInt_Prime<T, N> for BigUInt<T, N>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 {    
     /*** METHODS FOR MISCELLANEOUS ARITHMETIC OPERATIONS ***/
 
     fn gcd_uint<U>(&self, other: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if self.is_zero() || other.is_zero()
             { panic!(); }
-        common_gcd_uint(self, other)
+        self.common_gcd_uint(other)
     }
 
     fn gcd_assign_uint<U>(&mut self, other: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_to_calc_assign!(self, Self::gcd_uint, other);
     }
 
     fn lcm_uint<U>(&self, other: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         if self.is_zero() || other.is_zero()
            { panic!(); }
@@ -187,14 +124,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     fn lcm_assign_uint<U>(&mut self, other: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         biguint_calc_to_calc_assign!(self, Self::lcm_uint, other);
     }
@@ -203,7 +133,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     {
         if self.is_zero() || other.is_zero()
             { panic!(); }
-        common_gcd(self, other)
+        self.common_gcd(other)
     }
 
     fn gcd_assign(&mut self, other: &Self)
@@ -340,14 +270,14 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         let common = if len < repetition {len} else {repetition};
         for i in 0..common
         {
-            if !test_miller_rabin(self, &Self::from_uint(a_list[i]))
+            if !self.test_miller_rabin(&Self::from_uint(a_list[i]))
                 { return false; }
         }
 
         let mut a = a_list[len-1] as u32 + 2;
         for _ in common..repetition
         {
-            if !test_miller_rabin(self, &Self::from_uint(a))
+            if !self.test_miller_rabin(&Self::from_uint(a))
                 { return false; }
             a += 2;
         }

@@ -17,21 +17,14 @@ use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, 
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
                 Shl, ShlAssign, Shr, ShrAssign };
 
-use crate::number::SmallUInt;
+use crate::number::{ SmallUInt, TraitsBigUInt };
 
 /// big_uint.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to big_uint_arithmetic_uint.rs.
 pub struct BigUInt<T, const N: usize>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 {
     // Dummy struct for documentation
     #[allow(dead_code)] number: [T; N],
@@ -39,27 +32,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 }
 
 impl<T, const N: usize> BigUInt<T, N>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd,
-    Self: Sized + Clone + Display + Debug + ToString
-        + Add<Output = Self> + AddAssign
-        + Sub<Output = Self> + SubAssign
-        + Mul<Output = Self> + MulAssign
-        + Div<Output = Self> + DivAssign
-        + Rem<Output = Self> + RemAssign
-        + Shl<i32, Output = Self> + ShlAssign<i32>
-        + Shr<i32, Output = Self> + ShrAssign<i32>
-        + BitAnd<Self, Output = Self> + BitAndAssign
-        + BitOr<Self, Output = Self> + BitOrAssign
-        + BitXor<Self, Output = Self> + BitXorAssign
-        + Not<Output = Self>
-        + From<T> + FromStr + From<[T; N]> + From<u32>
+where T: TraitsBigUInt<T>
 {
     /*** ADDITION ***/
 
@@ -371,14 +344,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// let res = _a_biguint.modular_add_uint(_rhs, &_m);
     /// ```
     pub fn modular_add_uint<U>(&self, _rhs: U, _modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
 
     {
         unimplemented!(); // Dummy code for documentation
@@ -762,14 +728,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// _a_biguint.modular_add_assign_uint(_rhs, &_m);
     /// ```
     pub fn modular_add_assign_uint<U>(&mut self, _rhs: U, _modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1837,14 +1796,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// let res = _a_biguint.modular_sub_uint(_rhs, &_m);
     /// ```
     pub fn modular_sub_uint<U>(&self, _rhs: U, _modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2249,14 +2201,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// _a_biguint.modular_sub_assign_uint(_rhs, &_m);
     /// ```
     pub fn modular_sub_assign_uint<U>(&mut self, _rhs: U, _modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3274,14 +3219,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// let res = _a_biguint.modular_mul_uint(_mul_uint, &_m);
     /// ```
     pub fn modular_mul_uint<U>(&self, _rhs: U, _modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3665,14 +3603,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// _a_biguint.modular_mul_assign_uint(_mul_uint, &_m);
     /// ```
     pub fn modular_mul_assign_uint<U>(&mut self, _rhs: U, _modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4480,14 +4411,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// }
     /// ```
     pub fn safe_mul_uint<U>(&self, _rhs: U) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4628,14 +4552,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// }
     /// ```
     pub fn safe_mul_assign_uint<U>(&mut self, _rhs: U)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4803,14 +4720,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// let quotient = _a_biguint.modular_div_uint(_rhs, &_m);
     /// ```
     pub fn modular_div_uint<U>(&self, _rhs: U, _modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5011,14 +4921,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// _a_biguint.modular_div_assign_uint(_divisor, &_modulo);
     /// ```
     pub fn modular_div_assign_uint<U>(&mut self, _rhs: U, _modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5529,14 +5432,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// let quotient = _dividend.modular_rem_uint(_divisor, &_modulo);
     /// ```
     pub fn modular_rem_uint<U>(&self, _rhs: U, _modulo: &Self) -> U
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5737,14 +5633,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// _a_biguint.modular_rem_assign_uint(_divisor, &_modulo);
     /// ```
     pub fn modular_rem_assign_uint<U>(&mut self, _rhs: U, _modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6236,14 +6125,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// let multiple = _a_biguint.modular_next_multiple_of_uint(_num, &_modulo);
     /// ```
     pub fn modular_next_multiple_of_uint<U>(&self, _rhs: U, _modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6385,14 +6267,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// _a_biguint.modular_next_multiple_of_assign_uint(_num, &_modulo);
     /// ```
     pub fn modular_next_multiple_of_assign_uint<U>(&mut self, _rhs: U, _modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6886,14 +6761,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// let _res = _a_biguint.modular_pow_uint(_exp, &_modulo);
     /// ```
     pub fn modular_pow_uint<U>(&self, _exp: U, _modulo: &Self) -> Self
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7206,14 +7074,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// _a_biguint.modular_pow_assign_uint(_exp, &_modulo);
     /// ```
     pub fn modular_pow_assign_uint<U>(&mut self, _exp: U, _modulo: &Self)
-    where U: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-            + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-            + Rem<Output=U> + RemAssign
-            + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-            + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-            + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-            + PartialEq + PartialOrd
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
