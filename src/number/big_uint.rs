@@ -35,7 +35,7 @@ pub trait TraitsBigUInt<T>: SmallUInt + Copy + Clone + Display + Debug + ToStrin
                         + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
                         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
                         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-                        + PartialEq + PartialOrd
+                        + PartialEq + PartialOrd //+ Send + 'static
 {}
 
 impl<T> TraitsBigUInt<T> for T
@@ -46,8 +46,10 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+        + PartialEq + PartialOrd //+ Send + 'static
 {}
+
+// unsafe impl<T> Send for T where T: Send {}
 
 // pub trait TraitsBigUInt<T>: SmallUInt + Copy + Clone + Display + Debug + ToString
 //         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign

@@ -158,17 +158,25 @@ mod rsa;
 mod trait_pkcs1v15;
 
 
+mod trait_oaep;
+
+
 mod trait_pkcs1v15_impl_for_rsa;
+
+
+
+mod trait_oaep_impl_for_rsa;
 
 
 // mod operation_mode_macros;
 
 pub use rsa::*;
 pub use trait_pkcs1v15::*;
+pub use trait_oaep::*;
 
-// /// many *.rs was too big because of documentation and plenty of examples
-// /// So, in order to provide documentation without `docs.rs`'s failing
-// /// generating documentation, dummy codes were made and documentation and
-// /// examples were moved to all the *.rs in documentation folder.
-// mod documentation;
-// pub use documentation::*;
+/// many *.rs was too big because of documentation and plenty of examples
+/// So, in order to provide documentation without `docs.rs`'s failing
+/// generating documentation, dummy codes were made and documentation and
+/// examples were moved to all the *.rs in documentation folder.
+mod documentation;
+pub use documentation::*;

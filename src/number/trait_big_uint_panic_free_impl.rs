@@ -326,7 +326,6 @@ macro_rules! general_panic_free_calc_ilog
 
 impl<T, const N: usize> BigUInt_Panic_Free<T, N> for BigUInt<T, N>
 where T: TraitsBigUInt<T>
-
 {
     /*** ADDITION ***/
 
