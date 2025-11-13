@@ -14,15 +14,8 @@
 // #![allow(missing_docs)]
 // #![allow(rustdoc::missing_doc_code_examples)]
 
-use std::fmt::{ Display, Debug };
-use std::str::FromStr;
-use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
-                BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
-                Shl, ShlAssign, Shr, ShrAssign };
-
 use crate::number::{ SmallUInt, TraitsBigUInt, BigUInt, BigUInt_Prime, BigUInt_Modular };
 use crate::number::biguint_calc_to_calc_assign;
-
 
 
 impl<T, const N: usize> BigUInt<T, N>

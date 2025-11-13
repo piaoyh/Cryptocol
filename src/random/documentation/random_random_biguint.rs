@@ -15,13 +15,7 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use std::fmt::{ Debug, Display };
-use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
-                BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
-                Shl, ShlAssign, Shr, ShrAssign };
-use std::cmp::{ PartialEq, PartialOrd};
-
-use crate::number::{ SmallUInt, BigUInt };
+use crate::number::{ TraitsBigUInt, BigUInt };
 use crate::random::Random_Engine;
 
 
@@ -3492,14 +3486,7 @@ impl Random_Generic
     ///     { println!("Slapdash number {} => {}", i, num[i]); }
     /// ```
     pub fn random_array<T, const N: usize>(&mut self) -> [T; N]
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3727,14 +3714,7 @@ impl Random_Generic
     ///     { println!("Slapdash number {} => {}", i, num[i]); }
     /// ```
     pub fn put_random_in_array<T, const N: usize>(&mut self, out: &mut [T; N])
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4006,14 +3986,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4021,6 +3994,10 @@ impl Random_Generic
     // pub fn random_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
     /// Constucts a new `BigUInt<T, N>`-type object which has the random
     /// value less than a certain value, wrapped by enum `Some` of `Option`.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of type `&BigUInt<T, N>`.
     /// 
     /// # Output
     /// A random number wrapped by enum `Some` of `Option`, whose range is
@@ -4370,14 +4347,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4385,6 +4355,10 @@ impl Random_Generic
     // pub fn random_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
     /// Constucts a new `BigUInt<T, N>`-type object which has the random
     /// value less than a certain value.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of type `&BigUInt<T, N>`.
     /// 
     /// # Output
     /// The random number whose range is between 0 inclusively
@@ -4699,14 +4673,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5006,14 +4973,7 @@ impl Random_Generic
     /// assert!(r.is_odd());
     /// ```
     pub fn random_odd_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5021,6 +4981,10 @@ impl Random_Generic
     // pub fn random_odd_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
     /// Constucts a new `BigUInt<T, N>`-type object which has the random odd
     /// value less than a certain value, wrapped by enum `Some` of `Option`.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of type `&BigUInt<T, N>`.
     /// 
     /// # Output
     /// The random odd number whose range is between 0 inclusively and the
@@ -5391,14 +5355,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_odd_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5406,6 +5363,10 @@ impl Random_Generic
     // pub fn random_odd_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
     /// Constucts a new `BigUInt<T, N>`-type object which has the random odd
     /// value less than a certain value.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of type `&BigUInt<T, N>`.
     /// 
     /// # Output
     /// The random odd number whose range is between 0 inclusively and the
@@ -5741,14 +5702,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_odd_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6048,14 +6002,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6375,14 +6322,7 @@ impl Random_Generic
     /// assert!(r.is_odd());
     /// ```
     pub fn random_odd_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6390,6 +6330,11 @@ impl Random_Generic
     // pub fn random_prime_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
     /// Constucts a new `BigUInt<T, N>`-type object which represents a random
     /// prime number.
+    /// 
+    /// # Argument
+    /// The argument `repetition` defines how many times it tests whether the
+    /// generated random number is prime. Usually, `repetition` is given to be
+    /// 5 to have 99.9% accuracy.
     /// 
     /// # Output
     /// The random prime number that this method random_prime_Miller_Rabin()
@@ -6408,11 +6353,6 @@ impl Random_Generic
     ///   it is 99.9% that the number is a prime number.
     /// - The random prime numbers that may or may not be cryptographically
     ///   secure depending on what pseudo-random number generator is used.
-    /// 
-    /// # Argument
-    /// The argument `repetition` defines how many times it tests whether the
-    /// generated random number is prime. Usually, `repetition` is given to be
-    /// 5 to have 99.9% accuracy. 
     /// 
     /// # Cryptographical Security
     /// - If you use either `Random_*` or `Any_*`, it is considered to be
@@ -6670,14 +6610,7 @@ impl Random_Generic
     /// println!("Slapdash prime number: {}", prime);
     /// ```
     pub fn random_prime_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6685,6 +6618,11 @@ impl Random_Generic
     // pub fn random_prime_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
     /// Constucts a new `BigUInt<T, N>`-type object which represents a random
     /// prime number of full-size of BigUInt<T, N>.
+    /// 
+    /// # Argument
+    /// The argument `repetition` defines how many times it tests whether the
+    /// generated random number is prime. Usually, `repetition` is given to be
+    /// 5 to have 99.9% accuracy.
     /// 
     /// # Output
     /// The random prime number that this method random_prime_Miller_Rabin()
@@ -6706,11 +6644,6 @@ impl Random_Generic
     ///   it is 99.9% that the number is a prime number.
     /// - The random prime numbers that may or may not be cryptographically
     ///   secure depending on what pseudo-random number generator is used.
-    /// 
-    /// # Argument
-    /// The argument `repetition` defines how many times it tests whether the
-    /// generated random number is prime. Usually, `repetition` is given to be
-    /// 5 to have 99.9% accuracy. 
     /// 
     /// # Cryptographical Security
     /// - If you use either `Random_*` or `Any_*`, it is considered to be
@@ -6968,14 +6901,7 @@ impl Random_Generic
     /// println!("Slapdash prime number: {}", prime);
     /// ```
     pub fn random_prime_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6984,14 +6910,14 @@ impl Random_Generic
     /// Constucts a new `BigUInt<T, N>`-type object which represents a 
     /// `N * T::size_in_bits() / 2`-bit random prime number.
     /// 
-    /// # Output
-    /// This method returns a random prime number whose length is
-    /// `N * T::size_in_bits() / 2` bits.
-    /// 
     /// # Argument
     /// The argument `repetition` defines how many times it tests whether the
     /// generated random number is prime. Usually, `repetition` is given to be
     /// 5 to have 99.9% accuracy.
+    /// 
+    /// # Output
+    /// This method returns a random prime number whose length is
+    /// `N * T::size_in_bits() / 2` bits.
     /// 
     /// # Features
     /// - This method generates a random number of half length, and then simply
@@ -7269,14 +7195,7 @@ impl Random_Generic
     /// println!("Slapdash prime number: {}", prime);
     /// ```
     pub fn random_prime_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7526,14 +7445,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn prepared_random_prime_with_msb_set<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7783,14 +7695,7 @@ impl Random_Generic
     /// println!("Slapdash Number: {}", biguint);
     /// ```
     pub fn prepared_random_prime_with_half_length<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }

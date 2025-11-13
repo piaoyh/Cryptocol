@@ -12,11 +12,6 @@
 // #![allow(rustdoc::missing_doc_code_examples)]
 
 
-use std::fmt::{ Debug, Display };
-use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
-                BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
-                Shl, ShlAssign, Shr, ShrAssign };
-use std::cmp::{ PartialEq, PartialOrd};
 use std::ptr::copy_nonoverlapping;
 use std::time::{ SystemTime, UNIX_EPOCH };
 use std::collections::hash_map::RandomState;
@@ -24,9 +19,8 @@ use std::hash::{ BuildHasher, Hasher };
 #[cfg(not(target_family = "windows"))] use std::fs::File;
 #[cfg(not(target_family = "windows"))] use std::io::Read;
 
-use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime };
+use crate::number::{ SmallUInt, TraitsBigUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime };
 use crate::random::Random_Engine;
-
 
 
 pub(super) const SECURE_COUNT: u128 = u16::MAX as u128;
@@ -1231,14 +1225,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_uint)
     pub fn random_uint<T>(&mut self) -> T
-    where T: SmallUInt + Copy + Clone
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         match T::size_in_bytes()
         {
@@ -1252,6 +1239,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
 
     // pub fn random_under_uint<T>(&mut self, ceiling: T) -> Option<T>
     /// Generates random numbers of type `T` less than `ceiling`.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of the type `T`.
     /// 
     /// # Output
     /// It returns a random number of type `T` less than `ceiling`
@@ -1279,20 +1270,17 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_under_uint)
     #[inline]
     pub fn random_under_uint<T>(&mut self, ceiling: T) -> Option<T>
-    where T: SmallUInt + Copy + Clone
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         if ceiling != T::zero() { Some(self.random_under_uint_::<T>(ceiling)) } else {None}
     }
 
     // pub fn random_under_uint_<T>(&mut self, ceiling: T) -> T
     /// Generates random numbers of type `T` less than `ceiling`.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of the type `T`.
     /// 
     /// # Output
     /// It returns a random number of type `T` less than `ceiling`.
@@ -1321,14 +1309,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_under_uint_)
     #[inline]
     pub fn random_under_uint_<T>(&mut self, ceiling: T) -> T
-    where T: SmallUInt + Copy + Clone
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         self.random_uint::<T>() % ceiling
     }
@@ -1336,6 +1317,12 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     // pub fn random_minmax_uint<T>(&mut self, from: T, ceiling: T) -> Option<T>
     /// Generates random numbers of type `T` less than `ceiling` exclusively
     /// and greater than or equal to `from` inclusively.
+    /// 
+    /// # Arguments
+    /// - `from` is the lower limitation which the generated random number
+    ///   should be greater than or equal to, and is of the type `T`..
+    /// - `ceiling` is the upper limitation which the generated random number
+    ///   should be less than, and is of the type `T`.
     /// 
     /// # Output
     /// If `ceiling` is `0` or `from` is greater than or equal to `ceiling`,
@@ -1361,14 +1348,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_minmax_uint)
     #[inline]
     pub fn random_minmax_uint<T>(&mut self, from: T, ceiling: T) -> Option<T>
-    where T: SmallUInt + Copy + Clone
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         if ceiling > from { Some(self.random_minmax_uint_(from, ceiling)) } else { None }
     }
@@ -1376,6 +1356,12 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     // pub fn random_minmax_uint_<T>(&mut self, from: T, ceiling: T) -> T
     /// Generates random numbers of type `T` less than `ceiling` exclusively
     /// and greater than or equal to `from` inclusively.
+    /// 
+    /// # Arguments
+    /// - `from` is the lower limitation which the generated random number
+    ///   should be greater than or equal to, and is of the type `T`..
+    /// - `ceiling` is the upper limitation which the generated random number
+    ///   should be less than, and is of the type `T`.
     /// 
     /// # Output
     /// It returns a random number of type `T` less than `ceiling`
@@ -1407,14 +1393,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_minmax_uint_)
     #[inline]
     pub fn random_minmax_uint_<T>(&mut self, from: T, ceiling: T) -> T
-    where T: SmallUInt + Copy + Clone
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         self.random_under_uint_(ceiling - from) + from
     }
@@ -1446,14 +1425,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_odd_uint)
     pub fn random_odd_uint<T>(&mut self) -> T
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         let mut res = self.random_uint::<T>();
         res.set_lsb();
@@ -1462,6 +1434,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
 
     // pub fn random_odd_under_uint<T>(&mut self, ceiling: T) -> Option<T>
     /// Generates random odd numbers of type `T` less than `ceiling`.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of the type `T`.
     /// 
     /// # Output
     /// It returns a random odd numbers of type `T` less than `ceiling`
@@ -1503,20 +1479,17 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_odd_under_uint)
     #[inline]
     pub fn random_odd_under_uint<T>(&mut self, ceiling: T) -> Option<T>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         if ceiling.is_zero_or_one() { None } else { Some(self.random_odd_under_uint_(ceiling)) }
     }
 
     // pub fn random_odd_under_uint_<T>(&mut self, ceiling: T) -> T
     /// Generates random odd numbers of type `T` less than `ceiling`.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of the type `T`.
     /// 
     /// # Output
     /// It returns a random odd numbers of type `T` less than `ceiling`.
@@ -1560,14 +1533,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_odd_under_uint_)
     pub fn random_odd_under_uint_<T>(&mut self, mut ceiling: T) -> T
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         if ceiling.is_zero_or_one()
             { panic!(); }
@@ -1604,14 +1570,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_with_msb_set_uint)
     pub fn random_with_msb_set_uint<T>(&mut self) -> T
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         let mut res = self.random_uint::<T>();
         res.set_msb();
@@ -1645,14 +1604,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_odd_with_msb_set_uint)
     pub fn random_odd_with_msb_set_uint<T>(&mut self) -> T
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         let mut res = self.random_odd_uint::<T>();
         res.set_msb();
@@ -1661,6 +1613,11 @@ impl<const COUNT: u128> Random_Generic<COUNT>
 
     // pub fn random_prime_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
     /// Returns a random prime number.
+    /// 
+    /// # Argument
+    /// The argument `repetition` defines how many times it tests whether or not
+    /// the generated random number is prime. Usually, `repetition` is given to
+    /// be 5 to have 99.9% hit rate.
     /// 
     /// # Output
     /// A random prime number whose range is from 2 up to T::max() inclusively.
@@ -1679,11 +1636,6 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   it is about 99.9% that the number is a prime number.
     /// - The random prime numbers that may or may not be cryptographically
     ///   secure depending on what pseudo-random number generator is used.
-    /// 
-    /// # Argument
-    /// The argument `repetition` defines how many times it tests whether or not
-    /// the generated random number is prime. Usually, `repetition` is given to
-    /// be 5 to have 99.9% hit rate.
     /// 
     /// # Cryptographical Security
     /// - If you use either `Random_*` or `Any_*`, it is considered to be
@@ -1712,14 +1664,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_prime_using_miller_rabin_uint)
     pub fn random_prime_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         let mut res = self.random_odd_uint::<T>();
         while !res.is_prime_using_miller_rabin(repetition)
@@ -1730,6 +1675,11 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     // pub fn random_prime_with_msb_set_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
     /// Returns a full-sized random prime number, which is its MSB (Most
     /// Segnificant Bit) is set `1`.
+    /// 
+    /// # Argument
+    /// The argument `repetition` defines how many times it tests whether or not
+    /// the generated random number is prime. Usually, `repetition` is given to
+    /// be 5 to have 99.9% hit rate.
     /// 
     /// # Output
     /// A full-sized random prime number, which is its MSB (Most Segnificant
@@ -1753,11 +1703,6 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// it is about 99.9% that the number is a prime number.
     /// - The random prime numbers that may or may not be cryptographically
     /// secure depending on what pseudo-random number generator is used.
-    /// 
-    /// # Argument
-    /// The argument `repetition` defines how many times it tests whether or not
-    /// the generated random number is prime. Usually, `repetition` is given to
-    /// be 5 to have 99.9% hit rate.
     /// 
     /// # Cryptographical Security
     /// - If you use either `Random_*` or `Any_*`, it is considered to be
@@ -1786,14 +1731,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_uint)
     pub fn random_prime_with_msb_set_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         let mut res = self.random_odd_with_msb_set_uint::<T>();
         while !res.is_prime_using_miller_rabin(repetition)
@@ -1836,14 +1774,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_array)
     pub fn random_array<T, const N: usize>(&mut self) -> [T; N]
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         let mut res = [T::zero(); N];
         self.put_random_in_array(&mut res);
@@ -1886,14 +1817,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.put_random_in_array)
     pub fn put_random_in_array<T, const N: usize>(&mut self, out: &mut [T; N])
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         self.produce_aux_state();
         self.produce_main_state();
@@ -1974,14 +1898,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_biguint)
     #[inline]
     pub fn random_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         BigUInt::<T, N>::from_array(self.random_array::<T, N>()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    )
     }
@@ -1989,6 +1906,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     // pub fn random_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
     /// Constucts a new `BigUInt<T, N>`-type object which has the random
     /// value less than a certain value, wrapped by enum `Some` of `Option`.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of type `&BigUInt<T, N>`.
     /// 
     /// # Output
     /// A random number wrapped by enum `Some` of `Option`, whose range is
@@ -2056,14 +1977,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_under_biguint)
     #[inline]
     pub fn random_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         if ceiling.eq_uint(0_u8) {None} else {Some(self.random_under_biguint_::<T, N>(ceiling))}
     }
@@ -2071,6 +1985,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     // pub fn random_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
     /// Constucts a new `BigUInt<T, N>`-type object which has the random
     /// value less than a certain value.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of type `&BigUInt<T, N>`.
     /// 
     /// # Output
     /// The random number whose range is between 0 inclusively
@@ -2141,14 +2059,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_under_biguint_)
     #[inline]
     pub fn random_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         self.random_biguint::<T, N>().wrapping_rem(ceiling)
     }
@@ -2156,6 +2067,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     // pub fn random_odd_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
     /// Constucts a new `BigUInt<T, N>`-type object which has the random odd
     /// value.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of type `&BigUInt<T, N>`.
     /// 
     /// # Output
     /// The random number that this method `any_odd()` returns is a pure
@@ -2223,14 +2138,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_odd_biguint)
     pub fn random_odd_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         let mut res = self.random_biguint::<T, N>();
         res.set_lsb();
@@ -2240,6 +2148,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     // pub fn random_odd_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
     /// Constucts a new `BigUInt<T, N>`-type object which has the random odd
     /// value less than a certain value, wrapped by enum `Some` of `Option`.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of type `&BigUInt<T, N>`.
     /// 
     /// # Output
     /// The random odd number whose range is between 0 inclusively and the
@@ -2309,14 +2221,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_odd_under_biguint)
     #[inline]
     pub fn random_odd_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         if ceiling.is_zero_or_one() { None } else { Some(self.random_odd_under_biguint_(ceiling)) }
     }
@@ -2324,6 +2229,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     // pub fn random_odd_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
     /// Constucts a new `BigUInt<T, N>`-type object which has the random odd
     /// value less than a certain value.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of type `&BigUInt<T, N>`.
     /// 
     /// # Output
     /// The random odd number whose range is between 0 inclusively and the
@@ -2396,14 +2305,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_odd_under_biguint_)
     #[inline]
     pub fn random_odd_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         if ceiling.is_zero_or_one()
             { panic!(); }
@@ -2484,14 +2386,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_with_msb_set_biguint)
     #[inline]
     pub fn random_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         let mut res = self.random_biguint::<T, N>();
         res.set_msb();
@@ -2569,14 +2464,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_odd_with_msb_set_biguint)
     pub fn random_odd_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         let mut r = self.random_with_msb_set_biguint();
         r.set_lsb();
@@ -2587,6 +2475,11 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     // pub fn random_prime_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
     /// Constucts a new `BigUInt<T, N>`-type object which represents a random
     /// prime number.
+    /// 
+    /// # Argument
+    /// The argument `repetition` defines how many times it tests whether the
+    /// generated random number is prime. Usually, `repetition` is given to be
+    /// 5 to have 99.9% accuracy.
     /// 
     /// # Output
     /// The random prime number that this method random_prime_Miller_Rabin()
@@ -2605,11 +2498,6 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   it is 99.9% that the number is a prime number.
     /// - The random prime numbers that may or may not be cryptographically
     ///   secure depending on what pseudo-random number generator is used.
-    /// 
-    /// # Argument
-    /// The argument `repetition` defines how many times it tests whether the
-    /// generated random number is prime. Usually, `repetition` is given to be
-    /// 5 to have 99.9% accuracy. 
     /// 
     /// # Cryptographical Security
     /// - If you use either `Random_*` or `Any_*`, it is considered to be
@@ -2661,14 +2549,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_prime_using_miller_rabin_biguint)
     pub fn random_prime_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         let mut res = self.random_odd_biguint::<T, N>();
         while !res.is_prime_using_miller_rabin(repetition)
@@ -2679,6 +2560,11 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     // pub fn random_prime_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
     /// Constucts a new `BigUInt<T, N>`-type object which represents a random
     /// prime number of full-size of BigUInt<T, N>.
+    /// 
+    /// # Argument
+    /// The argument `repetition` defines how many times it tests whether the
+    /// generated random number is prime. Usually, `repetition` is given to be
+    /// 5 to have 99.9% accuracy.
     /// 
     /// # Output
     /// The random prime number that this method random_prime_Miller_Rabin()
@@ -2700,11 +2586,6 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   it is 99.9% that the number is a prime number.
     /// - The random prime numbers that may or may not be cryptographically
     ///   secure depending on what pseudo-random number generator is used.
-    /// 
-    /// # Argument
-    /// The argument `repetition` defines how many times it tests whether the
-    /// generated random number is prime. Usually, `repetition` is given to be
-    /// 5 to have 99.9% accuracy. 
     /// 
     /// # Cryptographical Security
     /// - If you use either `Random_*` or `Any_*`, it is considered to be
@@ -2756,14 +2637,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_biguint)
     pub fn random_prime_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         let mut res = self.random_odd_with_msb_set_biguint::<T, N>();
         while !res.is_prime_using_miller_rabin(repetition)
@@ -2775,14 +2649,14 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// Constucts a new `BigUInt<T, N>`-type object which represents a 
     /// `N * T::size_in_bits() / 2`-bit random prime number.
     /// 
-    /// # Output
-    /// This method returns a random prime number whose length is
-    /// `N * T::size_in_bits() / 2` bits.
-    /// 
     /// # Argument
     /// The argument `repetition` defines how many times it tests whether the
     /// generated random number is prime. Usually, `repetition` is given to be
     /// 5 to have 99.9% accuracy.
+    /// 
+    /// # Output
+    /// This method returns a random prime number whose length is
+    /// `N * T::size_in_bits() / 2` bits.
     /// 
     /// # Features
     /// - This method generates a random number of half length, and then simply
@@ -2854,14 +2728,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_prime_with_half_length_using_miller_rabin_biguint)
     pub fn random_prime_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         let half = (T::BITS * N as u32) >> 1;
         let mut res: BigUInt<T, N> = self.random_with_msb_set_biguint();
@@ -2915,14 +2782,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.prepared_random_prime_with_msb_set)
     #[inline]
     pub fn prepared_random_prime_with_msb_set<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         self.get_prepared_prime_number(T::size_in_bytes() as usize * N)
     }
@@ -2966,27 +2826,13 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.prepared_random_prime_with_half_length)
     pub fn prepared_random_prime_with_half_length<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         self.get_prepared_prime_number((T::size_in_bytes() as usize * N) >> 1)
     }
 
     fn get_prepared_prime_number<T, const N: usize>(&mut self, length: usize) -> BigUInt<T, N>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         const COLUMN: usize = 100;
         const NUM_STR: [[&str; COLUMN]; 4] = [

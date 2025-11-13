@@ -15,13 +15,7 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use std::fmt::{ Debug, Display };
-use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
-                BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
-                Shl, ShlAssign, Shr, ShrAssign };
-use std::cmp::{ PartialEq, PartialOrd};
-
-use crate::number::SmallUInt;
+use crate::number::TraitsBigUInt;
 
 
 /// Random.rs may be too big
@@ -1273,20 +1267,17 @@ impl Random_Generic
     ///     { println!("{} Slapdash number (Slapdash) = {}", i, slapdash.random_uint::<u128>()); }
     /// ```
     pub fn random_uint<T>(&mut self) -> T
-    where T: SmallUInt + Copy + Clone
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn random_under_uint<T>(&mut self, ceiling: T) -> Option<T>
     /// Generates random numbers of type `T` less than `ceiling`.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of the type `T`.
     /// 
     /// # Output
     /// It returns a random number of type `T` less than `ceiling`
@@ -1469,20 +1460,17 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_under_uint<T>(&mut self, ceiling: T) -> Option<T>
-    where T: SmallUInt + Copy + Clone
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn random_under_uint_<T>(&mut self, ceiling: T) -> T
     /// Generates random numbers of type `T` less than `ceiling`.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of the type `T`.
     /// 
     /// # Output
     /// It returns a random number of type `T` less than `ceiling`.
@@ -1782,14 +1770,7 @@ impl Random_Generic
     /// println!("Slapdash number u16 = {}", _num);
     /// ```
     pub fn random_under_uint_<T>(&mut self, ceiling: T) -> T
-    where T: SmallUInt + Copy + Clone
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1797,6 +1778,12 @@ impl Random_Generic
     // pub fn random_minmax_uint<T>(&mut self, from: T, ceiling: T) -> Option<T>
     /// Generates random numbers of type `T` less than `ceiling` exclusively
     /// and greater than or equal to `from` inclusively.
+    /// 
+    /// # Arguments
+    /// - `from` is the lower limitation which the generated random number
+    ///   should be greater than or equal to, and is of the type `T`..
+    /// - `ceiling` is the upper limitation which the generated random number
+    ///   should be less than, and is of the type `T`.
     /// 
     /// # Output
     /// If `ceiling` is `0` or `from` is greater than or equal to `ceiling`,
@@ -1977,14 +1964,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_minmax_uint<T>(&mut self, from: T, ceiling: T) -> Option<T>
-    where T: SmallUInt + Copy + Clone
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1992,6 +1972,12 @@ impl Random_Generic
     // pub fn random_minmax_uint_<T>(&mut self, from: T, ceiling: T) -> T
     /// Generates random numbers of type `T` less than `ceiling` exclusively
     /// and greater than or equal to `from` inclusively.
+    /// 
+    /// # Arguments
+    /// - `from` is the lower limitation which the generated random number
+    ///   should be greater than or equal to, and is of the type `T`..
+    /// - `ceiling` is the upper limitation which the generated random number
+    ///   should be less than, and is of the type `T`.
     /// 
     /// # Output
     /// It returns a random number of type `T` less than `ceiling`
@@ -2295,14 +2281,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_minmax_uint_<T>(&mut self, from: T, ceiling: T) -> T
-    where T: SmallUInt + Copy + Clone
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2559,20 +2538,17 @@ impl Random_Generic
     /// println!("Slapdash odd number usize = {}", slapdash.random_odd_uint::<usize>());
     /// ```
     pub fn random_odd_uint<T>(&mut self) -> T
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn random_odd_under_uint<T>(&mut self, ceiling: T) -> Option<T>
     /// Generates random odd numbers of type `T` less than `ceiling`.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of the type `T`.
     /// 
     /// # Output
     /// It returns a random odd numbers of type `T` less than `ceiling`
@@ -3029,20 +3005,17 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_odd_under_uint<T>(&mut self, ceiling: T) -> Option<T>
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn random_odd_under_uint_<T>(&mut self, ceiling: T) -> T
     /// Generates random odd numbers of type `T` less than `ceiling`.
+    /// 
+    /// # Argument
+    /// The argument `ceiling` is the upper limitation which the generated
+    /// random number should be less than, and is of the type `T`.
     /// 
     /// # Output
     /// It returns a random odd numbers of type `T` less than `ceiling`.
@@ -3662,14 +3635,7 @@ impl Random_Generic
     /// println!("Slapdash number u16 = {}", num);
     /// ```
     pub fn random_odd_under_uint_<T>(&mut self, ceiling: T) -> T
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3926,14 +3892,7 @@ impl Random_Generic
     /// println!("Slapdash usize-sized number = {}", slapdash.random_with_msb_set_uint::<usize>());
     /// ```
     pub fn random_with_msb_set_uint<T>(&mut self) -> T
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4190,20 +4149,18 @@ impl Random_Generic
     /// println!("Slapdash usize-sized odd number = {}", slapdash.random_odd_with_msb_set_uint::<usize>());
     /// ```
     pub fn random_odd_with_msb_set_uint<T>(&mut self) -> T
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
 
     // pub fn random_prime_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
     /// Returns a random prime number.
+    /// 
+    /// # Argument
+    /// The argument `repetition` defines how many times it tests whether or not
+    /// the generated random number is prime. Usually, `repetition` is given to
+    /// be 5 to have 99.9% hit rate.
     /// 
     /// # Output
     /// A random prime number whose range is from 2 up to T::max() inclusively.
@@ -4222,11 +4179,6 @@ impl Random_Generic
     ///   it is about 99.9% that the number is a prime number.
     /// - The random prime numbers that may or may not be cryptographically
     ///   secure depending on what pseudo-random number generator is used.
-    /// 
-    /// # Argument
-    /// The argument `repetition` defines how many times it tests whether or not
-    /// the generated random number is prime. Usually, `repetition` is given to
-    /// be 5 to have 99.9% hit rate.
     /// 
     /// # Cryptographical Security
     /// - If you use either `Random_*` or `Any_*`, it is considered to be
@@ -4480,14 +4432,7 @@ impl Random_Generic
     /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<usize>(5));
     /// ```
     pub fn random_prime_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4495,6 +4440,11 @@ impl Random_Generic
     // pub fn random_prime_with_msb_set_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
     /// Returns a full-sized random prime number, which is its MSB (Most
     /// Segnificant Bit) is set `1`.
+    /// 
+    /// # Argument
+    /// The argument `repetition` defines how many times it tests whether or not
+    /// the generated random number is prime. Usually, `repetition` is given to
+    /// be 5 to have 99.9% hit rate.
     /// 
     /// # Output
     /// A full-sized random prime number, which is its MSB (Most Segnificant
@@ -4518,11 +4468,6 @@ impl Random_Generic
     /// it is about 99.9% that the number is a prime number.
     /// - The random prime numbers that may or may not be cryptographically
     /// secure depending on what pseudo-random number generator is used.
-    /// 
-    /// # Argument
-    /// The argument `repetition` defines how many times it tests whether or not
-    /// the generated random number is prime. Usually, `repetition` is given to
-    /// be 5 to have 99.9% hit rate.
     /// 
     /// # Cryptographical Security
     /// - If you use either `Random_*` or `Any_*`, it is considered to be
@@ -4776,14 +4721,7 @@ impl Random_Generic
     /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
     /// ```
     pub fn random_prime_with_msb_set_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation
     }
