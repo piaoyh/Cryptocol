@@ -69,15 +69,15 @@ fn rsa_decrypt()
     println!("rsa_decrypt");
     use std::fmt::Write;
     use cryptocol::asymmetric::PKCS1V15;
+    
     // Example for RSA_1024
-    use cryptocol::number::BigUInt;
     use cryptocol::define_utypes_with;
     use cryptocol::asymmetric::RSA_1024;
-
     define_utypes_with!(u32);
-    let prime1 = BigUInt::<u32, 32>::from_str_radix("b1bbabfc84567b1a2cf004a81bcae9582cadc6c3de2b498778fec2ee7006c1b70a3363863626750243a94930d0538b7fd4f274b033ba021be777d3bea33ab289", 16).unwrap();
-    let prime2 = BigUInt::<u32, 32>::from_str_radix("cd6e2bda2d076f711d812621a0cc0e26274e93f4b4b815f27b0663d063466b2e190ffc4caad0f6feb4710fede0a1d853f72dd170e7e94768d531bbefdf84bb75", 16).unwrap();
-    let mut rsa = RSA_1024::new_with_primes(prime1.clone(), prime2.clone());
+
+    let prime1 = U512::from_str_radix("b1bbabfc84567b1a2cf004a81bcae9582cadc6c3de2b498778fec2ee7006c1b70a3363863626750243a94930d0538b7fd4f274b033ba021be777d3bea33ab289", 16).unwrap();
+    let prime2 = U512::from_str_radix("cd6e2bda2d076f711d812621a0cc0e26274e93f4b4b815f27b0663d063466b2e190ffc4caad0f6feb4710fede0a1d853f72dd170e7e94768d531bbefdf84bb75", 16).unwrap();
+    let mut rsa = RSA_1024::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
     println!("Private Key: {}", rsa.get_private_key());
     println!("Public Key: {}", rsa.get_public_key());
     println!("Product value: {}", rsa.get_modulo());
@@ -110,7 +110,7 @@ fn rsa_decrypt()
     println!("Bb =\t{}", converted);
     assert_eq!(converted, "In the beginning God created the heavens and the earth.");
     assert_eq!(converted, message);
-    let phi = (prime1.wrapping_sub_uint(1_u8)).wrapping_mul(&prime2.wrapping_sub_uint(1_u8));
+    let phi: U1024 = (prime1.wrapping_sub_uint(1_u8)).expanding_mul(&prime2.wrapping_sub_uint(1_u8));
     println!("pub * pri = {}", rsa.get_private_key().modular_mul(&rsa.get_public_key(), &phi));
     println!();
     println!("-------------------------------");

@@ -154,13 +154,13 @@ where T: TraitsBigUInt<T>
         {
             q = a.wrapping_div(&b);
 
-            t = x1.clone();
-            x1 = x0.wrapping_sub(&q.wrapping_mul(&x1));
+            t = x1;
+            x1 = x0.wrapping_sub(&q.wrapping_mul(&t));
             x0 = t;
             x0_flags |= x0.get_all_flags();
 
-            t = y1.clone();
-            y1 = y0.wrapping_sub(&q.wrapping_mul(&y1));
+            t = y1;
+            y1 = y0.wrapping_sub(&q.wrapping_mul(&t));
             y0 = t;
             y0_flags |= y0.get_all_flags();
             

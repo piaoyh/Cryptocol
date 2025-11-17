@@ -232,8 +232,9 @@ where T: TraitsBigUInt<T>
     ///   and is of type `BigUInt<T, N>`.
     /// - `key_private` is the exponenent part of the private key,
     ///   and is of type `BigUInt<T, N>`.
-    /// - `modulo` is the product part the two prime numbers of the private key
-    ///   and the public key, and is of type `BigUInt<T, N>`.
+    /// - `modulo` is the common part of the private key and the public key, and
+    ///    is of type `BigUInt<T, N>`, which is the product of two prime numbers
+    ///    for generating the private key and the public key.
     /// 
     /// # Output
     /// A new object of the struct `RSA_Generic`
@@ -267,41 +268,42 @@ where T: TraitsBigUInt<T>
         }
     }
 
-    // pub fn new_with_primes<const M: usize>(prime_1: BigUInt<T, M>, prime_2: BigUInt<T, M>) -> Self
+    // pub fn new_with_primes(prime_1: BigUInt<T, N>, prime_2: BigUInt<T, N>) -> Self
     /// Constructs a new object of the struct `RSA_Generic`
     /// from given prime numbers.
     /// 
     /// # Arguments
-    /// - `prime_1` is one of the two prime numbers,
-    ///   and is of type `BigUInt<T, M>` where M is N/2.
-    /// - `prime_2` is the other one of the two prime numbers,
-    ///   and is of type `BigUInt<T, M>` where M is N/2.
+    /// - `prime_1` is one of the two prime numbers, and is of type
+    ///   `BigUInt<T, N>` with the length `T::size_in_bytes() * N / 2`.
+    /// - `prime_2` is the other one of the two prime numbers, and is of type
+    ///   `BigUInt<T, N>` with the length `T::size_in_bytes() * N / 2`.
     /// 
     /// # Output
     /// A new object of the struct `RSA_Generic`
     /// whose public key and private key are all given.
     /// 
     /// # Caution
-    /// M should be N/2.
+    /// The lengths of `prime_1` and `prime_2` should be
+    /// `T::size_in_bytes() * N / 2`.
     /// Otherwise, the performance of this module may not guaranteed.
     /// 
-    /// # Example 1 for RSA_1024_u16
+    /// # Example 1 for RSA_1024
     /// ```
-    /// use cryptocol::asymmetric::RSA_1024_u16;
+    /// use cryptocol::asymmetric::RSA_1024;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
     /// let prime1 = U512::from_str_radix("FF119CE47EE8EBDC06F87902569A80FBB66DF6514FB6CFAE8210ADBD4F9D4071", 16).unwrap();
     /// let prime2 = U512::from_str_radix("975BA2539AA5CE0A8AFB43EDDDBDE7EE6432274E8DC17F6A3543DFBBAA3ED30B", 16).unwrap();
     /// 
-    /// let rsa = RSA_1024_u16::new_with_primes(prime1, prime2);
-    /// println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    /// println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// let rsa = RSA_1024::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
     /// ```
     ///
     /// # For more examples,
     /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.new_with_primes)
-    pub fn new_with_primes<const M: usize>(prime_1: BigUInt<T, M>, prime_2: BigUInt<T, M>) -> Self
+    pub fn new_with_primes(prime_1: BigUInt<T, N>, prime_2: BigUInt<T, N>) -> Self
     {
         let mut rsa = Self
         {
@@ -316,12 +318,6 @@ where T: TraitsBigUInt<T>
     // pub fn new_with_prepared_keys() -> Self
     /// Constructs a new object of the struct `RSA_Generic`
     /// from prepared prime numbers.
-    /// 
-    /// # Arguments
-    /// - `prime_1` is one of the two prime numbers,
-    ///   and is of type `BigUInt<T, M>` where M is N/2.
-    /// - `prime_2` is the other one of the two prime numbers,
-    ///   and is of type `BigUInt<T, M>` where M is N/2.
     /// 
     /// # Output
     /// A new object of the struct `RSA_Generic`
@@ -360,45 +356,135 @@ where T: TraitsBigUInt<T>
         Self::new_with_primes(prime_1, prime_2)
     }
 
+    // pub fn get_public_key(&self) -> BigUInt<T, N>
+    /// Returns the exponenent part of the public key
+    /// 
+    /// # Output
+    /// The exponenent part of the public key of the type `BigUInt<T, N>`
+    /// 
+    /// # Example 1
+    /// click [here](struct@RSA_Generic#method.new_with_prepared_keys)
     #[inline]
     pub fn get_public_key(&self) -> BigUInt<T, N>
     {
         self.key_public.clone()
     }
 
+    // pub fn get_private_key(&self) -> BigUInt<T, N>
+    /// Returns the exponenent part of the private key
+    /// 
+    /// # Output
+    /// The exponenent part of the private key of the type `BigUInt<T, N>`
+    /// 
+    /// # Example 1
+    /// click [here](struct@RSA_Generic#method.new_with_prepared_keys)
     #[inline]
     pub fn get_private_key(&self) -> BigUInt<T, N>
     {
         self.key_private.clone()
     }
 
+    // pub fn get_modulo(&self) -> BigUInt<T, N>
+    /// Returns the common part of the private key and the public key
+    /// 
+    /// # Output
+    /// The common part of the private key and the public key,
+    /// which is the product of two prime numbers for generating the private key
+    /// and the public key, and is of type `BigUInt<T, N>`.
+    /// 
+    /// # Example 1
+    /// click [here](struct@RSA_Generic#method.new_with_prepared_keys)
     #[inline]
     pub fn get_modulo(&self) -> BigUInt<T, N>
     {
         self.modulo.clone()
     }
 
+    // pub fn set_public_key(&mut self, key_public: BigUInt<T, N>)
+    /// Sets the exponenent part of the public key
+    /// 
+    /// # Arguments
+    /// `key_public` is the exponenent part of the public key,
+    /// and is of type `BigUInt<T, N>`.
+    /// 
+    /// # Caution
+    /// - `key_public` cannot be an arbitrary `BigUInt<T, N>`-typed number
+    ///   but is supposed to be well-designed `BigUInt<T, N>`-typed number
+    ///   derived from two big prime numbers.
+    /// - If `key_public` is an arbitrary `BigUInt<T, N>`-typed number,
+    ///   the behaviour of the most methods of `Self` are not defined.
+    /// 
+    /// # Example 1 for RSA_1024
+    /// ```
+    /// use cryptocol::asymmetric::RSA_1024;
+    /// use cryptocol::number::BigUInt;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut rsa = RSA_1024::new();
+    /// rsa.set_public_key(U1024::from(7_u8));
+    /// rsa.set_private_key(U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap());
+    /// rsa.set_modulo(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap());
+    /// let private_key = rsa.get_private_key();
+    /// let public_key = rsa.get_public_key();
+    /// let modulo = rsa.get_modulo();
+    /// println!("RSA_1024: private key = {:X}:{:x}", private_key, modulo);
+    /// println!("RSA_1024: public key = {:X}:{:x}", public_key, modulo);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.set_public_key)
     #[inline]
     pub fn set_public_key(&mut self, key_public: BigUInt<T, N>)
     {
         self.key_public = key_public;
     }
 
+    // pub fn set_private_key(&mut self, key_private: BigUInt<T, N>)
+    /// Sets the exponenent part of the private key
+    /// 
+    /// # Arguments
+    /// `key_private` is the exponenent part of the private key,
+    /// and is of type `BigUInt<T, N>`.
+    /// 
+    /// # Caution
+    /// - `key_private` cannot be an arbitrary `BigUInt<T, N>`-typed number
+    ///   but is supposed to be well-designed `BigUInt<T, N>`-typed number
+    ///   derived from two big prime numbers.
+    /// - If `key_private` is an arbitrary `BigUInt<T, N>`-typed number,
+    ///   the behaviour of the most methods of `Self` are not defined.
+    /// 
+    /// # Example 1 for RSA_1024
+    /// click [here](struct@RSA_Generic#method.set_public_key)
     #[inline]
     pub fn set_private_key(&mut self, key_private: BigUInt<T, N>)
     {
         self.key_private = key_private;
     }
 
+    // pub fn set_modulo(&mut self, modulo: BigUInt<T, N>)
+    /// Sets the common part of the private key and the public key
+    /// 
+    /// # Arguments
+    /// `modulo` is the common part of the private key and the public key, and
+    /// is of type `BigUInt<T, N>`, which is the product of two prime numbers
+    /// for generating the private key and the public key.
+    /// 
+    /// # Caution
+    /// - `modulo` cannot be an arbitrary `BigUInt<T, N>`-typed number
+    ///   but is supposed to be well-designed `BigUInt<T, N>`-typed number
+    ///   derived from two big prime numbers.
+    /// - If `modulo` is an arbitrary `BigUInt<T, N>`-typed number,
+    ///   the behaviour of the most methods of `Self` are not defined.
+    /// 
+    /// # Example 1 for RSA_1024
+    /// click [here](struct@RSA_Generic#method.set_public_key)
     #[inline]
     pub fn set_modulo(&mut self, modulo: BigUInt<T, N>)
     {
         self.modulo = modulo;
     }
 
-    /// # Caution
-    /// M should be N/2. Otherwise, the performance of this module may not
-    /// guaranteed .
     fn choose_prime_numbers() -> (BigUInt<T, N>, BigUInt<T, N>)
     {
         let mut rand = Random::new();
@@ -409,19 +495,69 @@ where T: TraitsBigUInt<T>
         (prime_1, prime_2)
     }
 
+    // pub fn find_keys(&mut self)
+    /// Finds (decides) proper keys automatically.
+    /// 
+    /// # Features
+    /// The public key and the private key are automatically set to be proper
+    /// values.
+    /// 
+    /// # Example 1 for RSA_1024
+    /// ```
+    /// use cryptocol::asymmetric::RSA_1024;
+    /// 
+    /// let mut rsa = RSA_1024::new();
+    /// rsa.find_keys();
+    /// let private_key = rsa.get_private_key();
+    /// let public_key = rsa.get_public_key();
+    /// let modulo = rsa.get_modulo();
+    /// println!("RSA_1024: private key = {:X}:{:x}", private_key, modulo);
+    /// println!("RSA_1024: public key = {:X}:{:x}", public_key, modulo);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.find_keys)
     pub fn find_keys(&mut self)
     {
         let (prime_1, prime_2) = Self::choose_prime_numbers();
         self.calculate_keys(prime_1, prime_2);
     }
 
+    // pub fn calculate_keys(&mut self, prime_1: BigUInt<T, N>, prime_2: BigUInt<T, N>)
+    /// Calculates keys from the given prime numbers
+    /// 
+    /// # Arguments
+    /// - `prime_1` is one of the two prime numbers,
+    ///   and is of type `BigUInt<T, M>` where M is N/2.
+    /// - `prime_2` is the other one of the two prime numbers,
+    ///   and is of type `BigUInt<T, M>` where M is N/2.
+    /// 
     /// # Caution
-    /// M should be N/2. Otherwise, the performance of this module may not
-    /// guaranteed .
-    pub fn calculate_keys<const M: usize>(&mut self, prime_1: BigUInt<T, M>, prime_2: BigUInt<T, M>)
+    /// The lengths of `prime_1` and `prime_2` should be
+    /// `T::size_in_bytes() * N / 2`.
+    /// Otherwise, the performance of this module may not guaranteed.
+    /// 
+    /// # Example 1 for RSA_1024
+    /// ```
+    /// use cryptocol::asymmetric::RSA_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let mut rsa = RSA_1024::new();
+    /// let prime1 = U512::from_str_radix("9696CB197B606EE02CCA95643546AF6EBDB3D58EF0382F2BA46BAF9089490A5856AD6E6DC3169C7B1AE4E6CDBB7B18BC9CFABDCCB5157649D475B3396A893B59", 16).unwrap();
+    /// let prime2 = U512::from_str_radix("8821AE888CFE44FB3667C54A1C40452D02309B64940AE5FA957390F250BDC919DC350E4DB6B4E5CF05F393D9B4DF89E55BB5F7DFC114F465A250EF55284BF793", 16).unwrap();
+    /// 
+    /// rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.calculate_keys)
+    pub fn calculate_keys(&mut self, prime_1: BigUInt<T, N>, prime_2: BigUInt<T, N>)
     {
-        self.modulo = prime_1.expanding_mul(&prime_2);
-        let phi = prime_1.wrapping_sub_uint(1_u8).expanding_mul(&prime_2.wrapping_sub_uint(1_u8));
+        self.modulo = prime_1.wrapping_mul(&prime_2);
+        let phi = prime_1.wrapping_sub_uint(1_u8).wrapping_mul(&prime_2.wrapping_sub_uint(1_u8));
         self.key_public = BigUInt::<T, N>::from_uint(2_u8);
         let mut one: BigUInt<T, N>;
         (one, self.key_private, _) = self.key_public.extended_gcd(&phi);
@@ -432,7 +568,7 @@ where T: TraitsBigUInt<T>
             (one, self.key_private, _) = self.key_public.extended_gcd(&phi);
         }
         if self.key_private.is_underflow()
-            { self.key_private = phi.wrapping_sub(&BigUInt::<T, N>::zero().wrapping_sub(&self.key_private)); }
+            { self.key_private = phi.wrapping_sub(&BigUInt::<T, N>::zero().wrapping_sub(&self.key_private)).wrapping_rem(&phi); }
         else
             { self.key_private.wrapping_rem_assign(&phi); }
     }
@@ -441,11 +577,36 @@ where T: TraitsBigUInt<T>
     /// Encrypts data in the form of `BigUInt<T, N>`.
     ///
     /// # Arguments
-    /// `message` is of the type `&BigUInt<T, N>`
-    /// and the plaintext to be encrypted.
+    /// `message` is the plaintext to be encrypted
+    /// in the forma of the type `&BigUInt<T, N>`.
     ///
     /// # Output
     /// This method returns the encrypted data in the form of `BigUInt<T, N>`.
+    /// 
+    /// # Example 1 for RSA_1024
+    /// ```
+    /// use cryptocol::asymmetric::RSA_1024;
+    /// use cryptocol::number::BigUInt;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let public_key = U1024::from(7_u8);
+    /// let private_key = U1024::from_str_radix("11A086687252F0D0ECE2E723F06808EEA5467A8EE1025EE5CAC299448454B33D1A9A97596144EBF52706CEEA13F427DF7000E05542DC34ABA46ECE12D1CF5D1286A9DCDE69407D78F699CF592CAFDF5741019FCA261BAA65529AB2FADC9D00F5712A14480C9724DA29C2354DB2DCABEDD89735A6B663984831B427061704E6D7", 16).unwrap();
+    /// let modulo = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
+    /// 
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: Message = {}", message);
+    /// 
+    /// let cipher = rsa.encrypt_biguint(&message.into_biguint());
+    /// println!("RSA_1024: Cipher = {}", cipher);
+    /// assert_eq!(cipher.to_string(), "18990444273600905180995060516989662905254261731195035701565206356299504237028371798240343074431853089671262075536405296229684167693688757404552244758551778537810033711541966014458437636847820750518338546544929478474442855272138237274277632124436569414527899485686220502485118890982309705646418471801278267757");
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.encrypt_biguint)
     #[inline]
     pub fn encrypt_biguint(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
     {
@@ -456,11 +617,40 @@ where T: TraitsBigUInt<T>
     /// Decrypts data in the form of `BigUInt<T, N>`.
     ///
     /// # Arguments
-    /// `cipher` is of the type `&BigUInt<T, N>`
-    /// and the ciphertext to be decrypted.
+    /// `cipher` is the ciphertext to be decrypted
+    /// in the form of the type `&BigUInt<T, N>`.
     ///
     /// # Output
     /// This method returns the decrypted data in the form of `BigUInt<T, N>`.
+    /// 
+    /// # Example 1 for RSA_1024
+    /// ```
+    /// use cryptocol::asymmetric::RSA_1024;
+    /// use cryptocol::number::BigUInt;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let public_key = U1024::from(5_u8);
+    /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
+    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
+    /// 
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: Message = {}", message);
+    /// 
+    /// let cipher = rsa.encrypt_biguint(&message.into_biguint());
+    /// println!("RSA_1024: Cipher = {}", cipher);
+    /// assert_eq!(cipher.to_string(), "14606510048253867029240420178508564108451783358298159314675299406727811512421137371598262884039995862707112191947061756986450584374674399814383778098601569518162693028818693718348755996275446231182729645715458251628617879799341412409848928638803776786415819193665392421517724782387829698801381262832285920668");
+    /// 
+    /// let recovered = rsa.decrypt_biguint(&cipher);
+    /// println!("RSA_1024: Recovered = {}", recovered);
+    /// assert_eq!(recovered, message.into_biguint());
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.decrypt_biguint)
     #[inline]
     pub fn decrypt_biguint(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
     {
@@ -468,14 +658,20 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
-    /// Encrypts data in the array of `BigUInt<T, N>`.
+    /// Encrypts data in the form of the array of `BigUInt<T, N>`.
     ///
     /// # Arguments
-    /// `message` is of the type `&[BigUInt<T, N>; M]`
-    /// and the plaintext to be encrypted.
+    /// `message` is the plaintext to be encrypted
+    /// in the form of the type `&[BigUInt<T, N>; M]`.
     ///
     /// # Output
-    /// This method returns the encrypted data as the array of `BigUInt<T, N>`.
+    /// This method returns the encrypted data
+    /// in the form of the array of `BigUInt<T, N>`.
+    /// 
+    /// # Example 1 for RSA_1024
+    /// ```
+    /// 
+    /// ```
     ///
     /// # Caution
     /// This method is very impractical. Normally, RSA is extremely slow
@@ -491,14 +687,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn decrypt_array_biguint(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
-    /// Decrypts data in the array of `BigUInt<T, N>`.
+    /// Decrypts data in the form of the array of `BigUInt<T, N>`.
     ///
     /// # Arguments
-    /// `cipher` is of the type `&[BigUInt<T, N>; M]`
-    /// and the ciphertext to be decrypted.
+    /// `cipher` is the ciphertext to be decrypted
+    /// in the form of the type `&[BigUInt<T, N>; M]`.
     ///
     /// # Output
-    /// This method returns the decrypted data as the array of `BigUInt<T, N>`.
+    /// This method returns the decrypted data
+    /// in the form of the array of `BigUInt<T, N>`.
     ///
     /// # Caution
     /// This method is very impractical. Normally, RSA is extremely slow
@@ -514,14 +711,18 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn encrypt_unit(&self, message: &[T; N]) -> [T; N]
-    /// Encrypts data in the array of `T`.
+    /// Encrypts data in the form of the array of `T`.
     ///
     /// # Arguments
-    /// `message` is of the type `&[T; N]`
-    /// and the plaintext to be encrypted.
+    /// `message` is the plaintext to be encrypted of the type `&[T; N]`.
     ///
     /// # Output
-    /// This method returns the encrypted data as the array of `T`.
+    /// This method returns the encrypted data in the form of the array of `T`.
+    /// 
+    /// # Example 1 for RSA_1024
+    /// ```
+    /// 
+    /// ```
     pub fn encrypt_unit(&self, message: &[T; N]) -> [T; N]
     {
         let mut m = BigUInt::<T, N>::from_array(message.clone());
@@ -532,14 +733,18 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn decrypt_unit(&self, cipher: &[T; N]) -> [T; N]
-    /// Decrypts data in the form of `BigUInt<T, N>`.
+    /// Decrypts data in the form of the array of `T`.
     ///
     /// # Arguments
-    /// `cipher` is of the type `&BigUInt<T, N>`
-    /// and the ciphertext to be decrypted.
+    /// `cipher` is the ciphertext to be decrypted of the type `&[T; N]`.
     ///
     /// # Output
-    /// This method returns the decrypted data in the array of `BigUInt<T, N>`.
+    /// This method returns the decrypted data in the form of the array of `T`.
+    /// 
+    /// # Example 1 for RSA_1024
+    /// ```
+    /// 
+    /// ```
     #[inline]
     pub fn decrypt_unit(&self, cipher: &[T; N]) -> [T; N]
     {
@@ -551,14 +756,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn encrypt_array_unit<const M: usize>(&self, message: &[[T; N]; M]) -> [[T; N]; M]
-    /// Encrypts data in the array of `[T; N]`.
+    /// Encrypts data in the form of the array of `[T; N]`.
     ///
     /// # Arguments
-    /// `message` is of the type `&[[T; N]; M]`
-    /// and the plaintext to be encrypted.
+    /// `message` is the plaintext to be encrypted of the type `&[[T; N]; M]`.
     ///
     /// # Output
-    /// This method returns the encrypted data in the array of `[T; N]`.
+    /// This method returns the encrypted data
+    /// in the form of the array of `[T; N]`.
+    /// 
+    /// # Example 1 for RSA_1024
+    /// ```
+    /// 
+    /// ```
     ///
     /// # Caution
     /// This method is very impractical. Normally, RSA is extremely slow
@@ -574,14 +784,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn decrypt_array_unit(&self, cipher: &[[T; N]; M]) -> [[T; N]; M]
-    /// Decrypts data in the array of `[T; N]`.
+    /// Decrypts data in the form of the array of `[T; N]`.
     ///
     /// # Arguments
-    /// `cipher` is of the type `&[[T; N]; M]`
-    /// and the ciphertext to be decrypted.
+    /// `cipher` is the ciphertext to be decrypted of the type `&[[T; N]; M]`.
     ///
     /// # Output
-    /// This method returns the decrypted data in the array of `[T; N]`.
+    /// This method returns the decrypted data
+    /// in the form of the array of `[T; N]`.
     ///
     /// # Caution
     /// This method is very impractical. Normally, RSA is extremely slow

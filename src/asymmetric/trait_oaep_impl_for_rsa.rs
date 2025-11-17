@@ -205,7 +205,7 @@ where T: TraitsBigUInt<T>
     fn mgf1<S, const M: usize, U, O, const L: usize>(&self, seed: [S; M], hash: U) -> [O; L]
     where S: TraitsBigUInt<S>, U: Random_Engine, O: TraitsBigUInt<O>
     {
-        let mut mask = [O::zero(); L];
+        let mask = [O::zero(); L];
         for i in 0..4
         {
 
