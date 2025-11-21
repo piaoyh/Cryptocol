@@ -577,8 +577,8 @@ where T: TraitsBigUInt<T>
     /// Encrypts data in the form of `BigUInt<T, N>`.
     ///
     /// # Arguments
-    /// `message` is the plaintext to be encrypted
-    /// in the forma of the type `&BigUInt<T, N>`.
+    /// `message` is the plaintext to be encrypted in the forma of the type
+    /// `&BigUInt<T, N>`, and should be less than `self.modulo`.
     ///
     /// # Output
     /// This method returns the encrypted data in the form of `BigUInt<T, N>`.
@@ -617,8 +617,8 @@ where T: TraitsBigUInt<T>
     /// Decrypts data in the form of `BigUInt<T, N>`.
     ///
     /// # Arguments
-    /// `cipher` is the ciphertext to be decrypted
-    /// in the form of the type `&BigUInt<T, N>`.
+    /// `cipher` is the ciphertext to be decrypted in the form of the type
+    /// `&BigUInt<T, N>`, and should be less than `self.modulo`.
     ///
     /// # Output
     /// This method returns the decrypted data in the form of `BigUInt<T, N>`.
@@ -661,17 +661,16 @@ where T: TraitsBigUInt<T>
     /// Encrypts data in the form of the array of `BigUInt<T, N>`.
     ///
     /// # Arguments
-    /// `message` is the plaintext to be encrypted
-    /// in the form of the type `&[BigUInt<T, N>; M]`.
+    /// `message` is the plaintext to be encrypted in the form of the type
+    /// `&[BigUInt<T, N>; M]`, and each element of the array should be less
+    ///  than `self.modulo`.
     ///
     /// # Output
     /// This method returns the encrypted data
     /// in the form of the array of `BigUInt<T, N>`.
     /// 
     /// # Example 1 for RSA_1024
-    /// ```
-    /// 
-    /// ```
+    /// click [here](struct@RSA_Generic#method.decrypt_array_biguint)
     ///
     /// # Caution
     /// This method is very impractical. Normally, RSA is extremely slow
@@ -690,12 +689,48 @@ where T: TraitsBigUInt<T>
     /// Decrypts data in the form of the array of `BigUInt<T, N>`.
     ///
     /// # Arguments
-    /// `cipher` is the ciphertext to be decrypted
-    /// in the form of the type `&[BigUInt<T, N>; M]`.
+    /// `cipher` is the ciphertext to be decrypted in the form of the type
+    /// `&[BigUInt<T, N>; M]`, and each element of the array should be less
+    ///  than `self.modulo`.
     ///
     /// # Output
     /// This method returns the decrypted data
     /// in the form of the array of `BigUInt<T, N>`.
+    /// 
+    /// # Example 1 for RSA_1024
+    /// ```
+    /// use cryptocol::asymmetric::RSA_1024;
+    /// use cryptocol::number::BigUInt;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let public_key = U1024::from(5_u8);
+    /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
+    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [U1024::from_string("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
+    ///                 U1024::from_string("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
+    ///                 U1024::from_string("3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
+    /// 
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: Message = {}-{}-{}", message[0], message[1], message[2]);
+    /// 
+    /// let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
+    /// println!("RSA_1024: Cipher = {}-{}-{}", cipher[0], cipher[1], cipher[2]);
+    /// assert_eq!(cipher[0].to_string(), "11498347717307207939984362127351227343891647828020606575311543799151890764127473045317534512340185778744636841280042786182569650057937658603208825508942688973104517576288781331746748391854265838779283687892786769606159370940757555192222397126885152499974714907155577213949301954426519701752245072900923522752");
+    /// assert_eq!(cipher[1].to_string(), "45166296929219312241602148452388101165982942196797433986896281306258443882182670297688602803542744940710777118285870195236223805296014729404603886413057185221555925116647357044154437182045242075682782556942753834770554330814409546713579993834957473055501649369674260085089688894770909747300380931410305465861");
+    /// assert_eq!(cipher[2].to_string(), "104258245100557014100388000089255129244422186376824260941762474305558950933838723741556706570805144408966737408754572353981049992762264824762423516397166237816159126666560150516613931243159392446246807361060328409075514311188817416397236549955030332963112158611270173312280594534996614952700041036430688843711");
+    /// 
+    /// let recovered = rsa.decrypt_array_biguint(&cipher);
+    /// println!("RSA_1024: Recovered = {}-{}-{}", recovered[0], recovered[1], recovered[2]);
+    /// assert_eq!(recovered[0], message[0].into_biguint());
+    /// assert_eq!(recovered[1], message[1].into_biguint());
+    /// assert_eq!(recovered[2], message[2].into_biguint());
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.decrypt_array_biguint)
     ///
     /// # Caution
     /// This method is very impractical. Normally, RSA is extremely slow
@@ -714,15 +749,14 @@ where T: TraitsBigUInt<T>
     /// Encrypts data in the form of the array of `T`.
     ///
     /// # Arguments
-    /// `message` is the plaintext to be encrypted of the type `&[T; N]`.
+    /// `message` is the plaintext to be encrypted of the type `&[T; N]`, and
+    /// `BigUInt::<T, N>::from_array(message)` should be less than `self.modulo`.
     ///
     /// # Output
     /// This method returns the encrypted data in the form of the array of `T`.
     /// 
     /// # Example 1 for RSA_1024
-    /// ```
-    /// 
-    /// ```
+    /// click [here](struct@RSA_Generic#method.decrypt_unit)
     pub fn encrypt_unit(&self, message: &[T; N]) -> [T; N]
     {
         let mut m = BigUInt::<T, N>::from_array(message.clone());
@@ -736,7 +770,8 @@ where T: TraitsBigUInt<T>
     /// Decrypts data in the form of the array of `T`.
     ///
     /// # Arguments
-    /// `cipher` is the ciphertext to be decrypted of the type `&[T; N]`.
+    /// `cipher` is the ciphertext to be decrypted of the type `&[T; N]`, and
+    /// `BigUInt::<T, N>::from_array(cipher)` should be less than `self.modulo`.
     ///
     /// # Output
     /// This method returns the decrypted data in the form of the array of `T`.
@@ -745,6 +780,9 @@ where T: TraitsBigUInt<T>
     /// ```
     /// 
     /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.decrypt_unit)
     #[inline]
     pub fn decrypt_unit(&self, cipher: &[T; N]) -> [T; N]
     {
@@ -766,9 +804,7 @@ where T: TraitsBigUInt<T>
     /// in the form of the array of `[T; N]`.
     /// 
     /// # Example 1 for RSA_1024
-    /// ```
-    /// 
-    /// ```
+    /// click [here](struct@RSA_Generic#method.decrypt_array_unit)
     ///
     /// # Caution
     /// This method is very impractical. Normally, RSA is extremely slow
@@ -792,6 +828,14 @@ where T: TraitsBigUInt<T>
     /// # Output
     /// This method returns the decrypted data
     /// in the form of the array of `[T; N]`.
+    /// 
+    /// # Example 1 for RSA_1024
+    /// ```
+    /// 
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.decrypt_array_unit)
     ///
     /// # Caution
     /// This method is very impractical. Normally, RSA is extremely slow
