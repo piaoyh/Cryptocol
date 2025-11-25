@@ -578,10 +578,16 @@ where T: TraitsBigUInt<T>
     ///
     /// # Arguments
     /// `message` is the plaintext to be encrypted in the forma of the type
-    /// `&BigUInt<T, N>`, and should be less than `self.modulo`.
+    /// `&BigUInt<T, N>`, and should be less than `self.modulo` which is the
+    /// product of the two prime numbers that were used to generate keys.
     ///
     /// # Output
     /// This method returns the encrypted data in the form of `BigUInt<T, N>`.
+    /// 
+    /// # Feature
+    /// If `message` is greater than or equal to `self.modulo`,
+    /// `message` will be distorted
+    /// so that the output of this method may not meaningful anymore.
     /// 
     /// # Example 1 for RSA_1024
     /// ```
@@ -607,6 +613,45 @@ where T: TraitsBigUInt<T>
     ///
     /// # For more examples,
     /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.encrypt_biguint)
+    /// 
+    /// # Example A of the failure for Message > self.modulo
+    /// ```
+    /// use cryptocol::asymmetric::RSA_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let public_key = U1024::from(5_u8);
+    /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
+    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.clone(), private_key.clone(), modulo.clone());
+    /// 
+    /// let message = modulo.wrapping_add_uint(1_u8);
+    /// let distorted = U1024::one();
+    /// 
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: Message = {}", message);
+    /// println!("RSA_1024: Distorted = {}", distorted);
+    /// 
+    /// let cipher = rsa.encrypt_biguint(&message);
+    /// println!("RSA_1024: Cipher = {}", cipher);
+    /// let cypher = rsa.encrypt_biguint(&distorted);
+    /// println!("RSA_1024: Cypher = {}", cypher);
+    /// assert_eq!(cipher.to_string(), "1");
+    /// assert_eq!(cypher.to_string(), "1");
+    /// assert_eq!(cipher, cypher);
+    /// 
+    /// let recovered = rsa.decrypt_biguint(&cipher);
+    /// println!("RSA_1024: Recovered = {}", recovered);
+    /// assert_ne!(recovered, message);
+    /// let back = rsa.decrypt_biguint(&cypher);
+    /// println!("RSA_1024: Back = {}", back);
+    /// assert_ne!(back, message);
+    /// assert_eq!(back, distorted);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.encrypt_biguint)
     #[inline]
     pub fn encrypt_biguint(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
     {
@@ -618,10 +663,18 @@ where T: TraitsBigUInt<T>
     ///
     /// # Arguments
     /// `cipher` is the ciphertext to be decrypted in the form of the type
-    /// `&BigUInt<T, N>`, and should be less than `self.modulo`.
+    /// `&BigUInt<T, N>`, and should be less than `self.modulo` which is the
+    /// product of the two prime numbers that were used to generate keys.
     ///
     /// # Output
     /// This method returns the decrypted data in the form of `BigUInt<T, N>`.
+    /// 
+    /// # Feature
+    /// If `cipher` is greater than or equal to `self.modulo`,
+    /// `cipher` will be distorted
+    /// so that the output of this method may not meaningful anymore.
+    /// If `cipher` is the result of correct encryption,
+    /// `cipher` can be neither greater than nor equal to `self.modulo`.
     /// 
     /// # Example 1 for RSA_1024
     /// ```
@@ -663,11 +716,17 @@ where T: TraitsBigUInt<T>
     /// # Arguments
     /// `message` is the plaintext to be encrypted in the form of the type
     /// `&[BigUInt<T, N>; M]`, and each element of the array should be less
-    ///  than `self.modulo`.
+    /// than `self.modulo` which is the product of the two prime numbers
+    /// that were used to generate keys.
     ///
     /// # Output
     /// This method returns the encrypted data
     /// in the form of the array of `BigUInt<T, N>`.
+    /// 
+    /// # Features
+    /// If any element of `message` is greater than or equal to `self.modulo`,
+    /// `message` will be distorted
+    /// so that the output of this method may not meaningful anymore.
     /// 
     /// # Example 1 for RSA_1024
     /// click [here](struct@RSA_Generic#method.decrypt_array_biguint)
@@ -691,11 +750,17 @@ where T: TraitsBigUInt<T>
     /// # Arguments
     /// `cipher` is the ciphertext to be decrypted in the form of the type
     /// `&[BigUInt<T, N>; M]`, and each element of the array should be less
-    ///  than `self.modulo`.
+    /// than `self.modulo` which is the product of the two prime numbers
+    /// that were used to generate keys.
     ///
     /// # Output
     /// This method returns the decrypted data
     /// in the form of the array of `BigUInt<T, N>`.
+    /// 
+    /// # Features
+    /// If any element of `cipher` is greater than or equal to `self.modulo`,
+    /// `cipher` will be distorted
+    /// so that the output of this method may not meaningful anymore.
     /// 
     /// # Example 1 for RSA_1024
     /// ```
@@ -750,10 +815,18 @@ where T: TraitsBigUInt<T>
     ///
     /// # Arguments
     /// `message` is the plaintext to be encrypted of the type `&[T; N]`, and
-    /// `BigUInt::<T, N>::from_array(message)` should be less than `self.modulo`.
+    /// `BigUInt::<T, N>::from_array(message).to_be()` should be less than
+    /// `self.modulo` which is the product of the two prime numbers
+    /// that were used to generate keys.
     ///
     /// # Output
     /// This method returns the encrypted data in the form of the array of `T`.
+    /// 
+    /// # Feature
+    /// If `BigUInt::<T, N>::from_array(message).to_be()` is greater than or
+    /// equal to `self.modulo` which is the product of the two prime numbers
+    /// that were used to generate keys, `message` will be distorted
+    /// so that the output of this method may not meaningful anymore.
     /// 
     /// # Example 1 for RSA_1024
     /// click [here](struct@RSA_Generic#method.decrypt_unit)
@@ -771,14 +844,61 @@ where T: TraitsBigUInt<T>
     ///
     /// # Arguments
     /// `cipher` is the ciphertext to be decrypted of the type `&[T; N]`, and
-    /// `BigUInt::<T, N>::from_array(cipher)` should be less than `self.modulo`.
+    /// `BigUInt::<T, N>::from_array(cipher).to_be()` should be less than
+    /// `self.modulo` which is the product of the two prime numbers
+    /// that were used to generate keys.
     ///
     /// # Output
     /// This method returns the decrypted data in the form of the array of `T`.
     /// 
+    /// # Feature
+    /// If `BigUInt::<T, N>::from_array(cipher).to_be()` is greater than or
+    /// equal to `self.modulo` which is the product of the two prime numbers
+    /// that were used to generate keys, `cipher` will be distorted
+    /// so that the output of this method may not meaningful anymore.
+    /// If `cipher` is the result of correct encryption,
+    /// `BigUInt::<T, N>::from_array(cipher).to_be()` can be neither greater
+    /// than nor equal to `self.modulo` which is the product of the two prime
+    /// numbers that were used to generate keys.
+    /// 
     /// # Example 1 for RSA_1024
     /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
     /// 
+    /// let public_key = U1024::from(5_u8);
+    /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
+    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF];
+    /// 
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_1024: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u32; 32];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u32, m.as_mut_ptr(), 32); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_1024: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0x5876D910, 0x9DF1BA1, 0x3D2ABEA9, 0xF9EAF9F1, 0xB4DD00B4, 0x4238994, 0x946574F8, 0xFB00D2B7, 0xD3F9E91D, 0x26D78E8F, 0x4D1B93C, 0x7666C3CC, 0x492EA323, 0xC7EFA926, 0x95E9D5CE, 0xF32C4732, 0x748103D, 0x298576A7, 0x4342BA6D, 0xFF59D1A9, 0x9D1585DD, 0xFA9B236F, 0x7B7982E2, 0x2B80425C, 0x1112A9DA, 0xA5EA8BC7, 0x41AF7FBB, 0x557B6333, 0xFA12D78B, 0x34B8451C, 0x867DF90A, 0xB412E61E]);
+    /// 
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 8];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr() as *const u32, rr.as_mut_ptr() as *mut u32, 32); }
+    /// 
+    /// print!("RSA_1024: Recovered = [");
+    /// for r in rr
+    ///     { println!("{:#X}, ", r); }
+    /// assert_eq!(rr, [0x_123456789ABCDEF00FEDCBA987654321, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF]);
+    /// assert_eq!(rr, message);
     /// ```
     ///
     /// # For more examples,

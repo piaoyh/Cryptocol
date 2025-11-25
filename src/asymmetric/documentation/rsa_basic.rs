@@ -2180,7 +2180,8 @@ where T: TraitsBigUInt<T>
     ///
     /// # Arguments
     /// `message` is the plaintext to be encrypted of the type
-    /// `&BigUInt<T, N>`, and should be less than `self.modulo`.
+    /// `&BigUInt<T, N>`, and should be less than `self.modulo` which is the
+    /// product of the two prime numbers that were used to generate keys.
     ///
     /// # Output
     /// This method returns the encrypted data in the form of `BigUInt<T, N>`.
@@ -2601,6 +2602,114 @@ where T: TraitsBigUInt<T>
     /// let cipher = rsa.encrypt_biguint(&message.into_biguint());
     /// println!("RSA_4096_u8: Cipher = {}", cipher);
     /// ```
+    /// 
+    /// # Example A of the failure for Message > self.modulo
+    /// ```
+    /// use cryptocol::asymmetric::RSA_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let public_key = U1024::from(5_u8);
+    /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
+    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.clone(), private_key.clone(), modulo.clone());
+    /// 
+    /// let message = modulo.wrapping_add_uint(1_u8);
+    /// let distorted = U1024::one();
+    /// 
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: Message = {}", message);
+    /// println!("RSA_1024: Distorted = {}", distorted);
+    /// 
+    /// let cipher = rsa.encrypt_biguint(&message);
+    /// println!("RSA_1024: Cipher = {}", cipher);
+    /// let cypher = rsa.encrypt_biguint(&distorted);
+    /// println!("RSA_1024: Cypher = {}", cypher);
+    /// assert_eq!(cipher.to_string(), "1");
+    /// assert_eq!(cypher.to_string(), "1");
+    /// assert_eq!(cipher, cypher);
+    /// 
+    /// let recovered = rsa.decrypt_biguint(&cipher);
+    /// println!("RSA_1024: Recovered = {}", recovered);
+    /// assert_ne!(recovered, message);
+    /// let back = rsa.decrypt_biguint(&cypher);
+    /// println!("RSA_1024: Back = {}", back);
+    /// assert_ne!(back, message);
+    /// assert_eq!(back, distorted);
+    /// ```
+    /// 
+    /// # Example B of the failure for Message == self.modulo
+    /// ```
+    /// use cryptocol::asymmetric::RSA_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let public_key = U1024::from(5_u8);
+    /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
+    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.clone(), private_key.clone(), modulo.clone());
+    /// 
+    /// let message = modulo.clone();
+    /// let distorted = U1024::zero();
+    /// 
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: Message = {}", message);
+    /// println!("RSA_1024: Distorted = {}", distorted);
+    /// 
+    /// let cipher = rsa.encrypt_biguint(&message);
+    /// println!("RSA_1024: Cipher = {}", cipher);
+    /// let cypher = rsa.encrypt_biguint(&distorted);
+    /// println!("RSA_1024: Cypher = {}", cypher);
+    /// assert_eq!(cipher.to_string(), "0");
+    /// assert_eq!(cypher.to_string(), "0");
+    /// assert_eq!(cipher, cypher);
+    /// 
+    /// let recovered = rsa.decrypt_biguint(&cipher);
+    /// println!("RSA_1024: Recovered = {}", recovered);
+    /// assert_ne!(recovered, message);
+    /// let back = rsa.decrypt_biguint(&cypher);
+    /// println!("RSA_1024: Back = {}", back);
+    /// assert_ne!(back, message);
+    /// assert_eq!(back, distorted);
+    /// ```
+    /// 
+    /// # Example C of the failure for Message < self.modulo
+    /// ```
+    /// use cryptocol::asymmetric::RSA_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let public_key = U1024::from(5_u8);
+    /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
+    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.clone(), private_key.clone(), modulo.clone());
+    /// 
+    /// let message = modulo.wrapping_sub_uint(1_u8);
+    /// let undistorted = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a8", 16).unwrap();
+    /// 
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: Message = {}", message);
+    /// println!("RSA_1024: Undistorted = {}", undistorted);
+    /// 
+    /// let cipher = rsa.encrypt_biguint(&message);
+    /// println!("RSA_1024: Cipher = {}", cipher);
+    /// let cypher = rsa.encrypt_biguint(&undistorted);
+    /// println!("RSA_1024: Cypher = {}", cypher);
+    /// assert_eq!(cipher.to_string(), "107593610008203780612632479874283724612849929433287325474357706755534020189965489050824167197114399993039200600891832987535334998852663448632692843291036287305929545774864548523913837119097088255084765151875474264208848513096610739812512238075122468981229742553101403587095991215625906902923820467139749087400");
+    /// assert_eq!(cypher.to_string(), "107593610008203780612632479874283724612849929433287325474357706755534020189965489050824167197114399993039200600891832987535334998852663448632692843291036287305929545774864548523913837119097088255084765151875474264208848513096610739812512238075122468981229742553101403587095991215625906902923820467139749087400");
+    /// assert_eq!(cipher, cypher);
+    /// 
+    /// let recovered = rsa.decrypt_biguint(&cipher);
+    /// println!("RSA_1024: Recovered = {}", recovered);
+    /// assert!(recovered == message);
+    /// let back = rsa.decrypt_biguint(&cypher);
+    /// println!("RSA_1024: Back = {}", back);
+    /// assert!(back == message);
+    /// assert!(back == undistorted);
+    /// ```
     #[inline]
     pub fn encrypt_biguint(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
     {
@@ -2612,10 +2721,18 @@ where T: TraitsBigUInt<T>
     ///
     /// # Arguments
     /// `cipher` is the ciphertext to be decrypted of the type
-    /// `&BigUInt<T, N>`, and should be less than `self.modulo`.
+    /// `&BigUInt<T, N>`, and should be less than `self.modulo` which is the
+    /// product of the two prime numbers that were used to generate keys.
     ///
     /// # Output
     /// This method returns the decrypted data in the form of `BigUInt<T, N>`.
+    /// 
+    /// # Features
+    /// If `cipher` is greater than or equal to `self.modulo`,
+    /// `cipher` will be distorted
+    /// so that the output of this method may not meaningful anymore.
+    /// If `cipher` is the result of correct encryption,
+    /// `cipher` can be neither greater than nor equal to `self.modulo`.
     /// 
     /// # Example 1 for RSA_1024
     /// ```
@@ -3121,11 +3238,17 @@ where T: TraitsBigUInt<T>
     /// # Arguments
     /// `cipher` is the ciphertext to be decrypted in the form of the type
     /// `&[BigUInt<T, N>; M]`, and each element of the array should be less
-    ///  than `self.modulo`.
+    /// than `self.modulo` which is the product of the two prime numbers
+    /// that were used to generate keys.
     ///
     /// # Output
     /// This method returns the decrypted data
     /// in the form of the array of `BigUInt<T, N>`.
+    /// 
+    /// # Features
+    /// If any element of `cipher` is greater than or equal to `self.modulo`,
+    /// `cipher` will be distorted
+    /// so that the output of this method may not meaningful anymore.
     /// 
     /// # Example 1 for RSA_1024
     /// ```
@@ -3749,14 +3872,773 @@ where T: TraitsBigUInt<T>
     /// Decrypts data in the form of the array of `T`.
     ///
     /// # Arguments
-    /// `cipher` is the ciphertext to be decrypted of the type `&[T; N]`.
+    /// `cipher` is the ciphertext to be decrypted of the type `&[T; N]`, and
+    /// `BigUInt::<T, N>::from_array(cipher).to_be()` should be less than
+    /// `self.modulo` which is the product of the two prime numbers
+    /// that were used to generate keys.
     ///
     /// # Output
     /// This method returns the decrypted data in the form of the array of `T`.
     /// 
+    /// # Feature
+    /// If `BigUInt::<T, N>::from_array(cipher).to_be()` is greater than or
+    /// equal to `self.modulo` which is the product of the two prime numbers
+    /// that were used to generate keys, `cipher` will be distorted
+    /// so that the output of this method may not meaningful anymore.
+    /// If `cipher` is the result of correct encryption,
+    /// `BigUInt::<T, N>::from_array(cipher).to_be()` can be neither greater
+    /// than nor equal to `self.modulo` which is the product of the two prime
+    /// numbers that were used to generate keys.
+    /// 
     /// # Example 1 for RSA_1024
     /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
     /// 
+    /// let public_key = U1024::from(5_u8);
+    /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
+    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF];
+    /// 
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_1024: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u32; 32];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u32, m.as_mut_ptr(), 32); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_1024: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0x5876D910, 0x9DF1BA1, 0x3D2ABEA9, 0xF9EAF9F1, 0xB4DD00B4, 0x4238994, 0x946574F8, 0xFB00D2B7, 0xD3F9E91D, 0x26D78E8F, 0x4D1B93C, 0x7666C3CC, 0x492EA323, 0xC7EFA926, 0x95E9D5CE, 0xF32C4732, 0x748103D, 0x298576A7, 0x4342BA6D, 0xFF59D1A9, 0x9D1585DD, 0xFA9B236F, 0x7B7982E2, 0x2B80425C, 0x1112A9DA, 0xA5EA8BC7, 0x41AF7FBB, 0x557B6333, 0xFA12D78B, 0x34B8451C, 0x867DF90A, 0xB412E61E]);
+    /// 
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 8];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr() as *const u32, rr.as_mut_ptr() as *mut u32, 32); }
+    /// 
+    /// print!("RSA_1024: Recovered = [");
+    /// for r in rr
+    ///     { println!("{:#X}, ", r); }
+    /// assert_eq!(rr, [0x_123456789ABCDEF00FEDCBA987654321, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF]);
+    /// assert_eq!(rr, message);
+    /// ```
+    /// 
+    /// # Example 2 for RSA_2048
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_2048;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U2048::from(7_u8);
+    /// let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
+    /// let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    /// let rsa = RSA_2048::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF];
+    /// 
+    /// println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_2048: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u32; 64];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u32, m.as_mut_ptr(), 64); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_2048: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0x47283873, 0x2CDBEDD8, 0x93922441, 0x8E8A2C0F, 0xD2483CDF, 0x712502C, 0x975FB948, 0xA5477C70, 0x5151E7A4, 0x7B83A1E1, 0x63B4157F, 0x9CB225EB, 0xF613588C, 0xA28B6E71, 0xD16F7440, 0xE80799C, 0xE5629F2E, 0x59A4DD76, 0x5CC7AF66, 0x17FD5732, 0x90E31987, 0x23B5BDDD, 0x2A329668, 0x91DA607E, 0xE2EB9B3B, 0x1DFC378F, 0x56EFB8F6, 0xA387D998, 0x7C819286, 0x7FFD1AC3, 0x81E4143F, 0x72B12533, 0x6C871DC6, 0x3317DDA8, 0x415F5497, 0x2FB59FFD, 0xF720E361, 0x515DB9B5, 0x8EB0C7D1, 0x2747A272, 0x661AB141, 0xFA4561A, 0x8E9DAD98, 0xC3DC9098, 0x6FC2E30, 0x6CCC919D, 0x44BCC6F4, 0xCA835FD1, 0xD660A677, 0xFC235E1F, 0x2D54CE65, 0x16AD846F, 0xB8FBDBC3, 0x5EBF02E, 0x63EE29D6, 0x49262F3B, 0x96CC8F26, 0x4BCD700C, 0x3362037A, 0xD909B057, 0x2D932D0D, 0x1394BCCB, 0xE545D5DF, 0x6A33D012]);
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 16];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr() as *const u32, rr.as_mut_ptr() as *mut u32, 64); }
+    /// 
+    /// print!("RSA_2048: Recovered = [");
+    /// for r in rr
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(rr, [0x_123456789ABCDEF00FEDCBA987654321, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF]);
+    /// assert_eq!(rr, message);
+    /// ```
+    /// 
+    /// # Example 3 for RSA_4096
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_4096;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U4096::from(5_u8);
+    /// let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
+    /// let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    /// let rsa = RSA_4096::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000];
+    /// 
+    /// println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_4096: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u32; 128];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u32, m.as_mut_ptr(), 128); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_4096: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0x9CB6ED19, 0xD4FB55D8, 0xC122734C, 0x2F1811F6, 0xA5114AFF, 0x93B93341, 0x6CEDD077, 0xCBABA04C, 0xB0873367, 0xDDBB2719, 0x8060C197, 0x17949273, 0x9EBA2656, 0xA6757910, 0xF832F645, 0x12836967, 0x2ED8B7ED, 0x501E8879, 0x920F899A, 0x6AEBB339, 0xB416EC59, 0xDCB94159, 0xD24DF92D, 0x2457DBC7, 0xBF6C9361, 0x6308ADE8, 0xB7E0A22C, 0xF8641498, 0x20367D0C, 0x994F70D2, 0x2E1B1007, 0x96EA933B, 0x65D11AD3, 0x78C0C565, 0xB2E327C9, 0xC9A3DB5, 0x2A5DA924, 0xFFBB3522, 0xA6187825, 0x14F47769, 0x3E3E549A, 0xDCBCE40A, 0x27323317, 0xECC35120, 0xAEEB915, 0xC47F38FD, 0x6A9DEF00, 0x2D7AC41D, 0x9E9EBA3C, 0xB5347E7, 0xE9F682DF, 0x936934BD, 0x715BC0D4, 0x7709F812, 0x44E0BDF7, 0x3BD64D43, 0xCCD014E8, 0x54F45FBE, 0x2E2A4FEE, 0x71FD352A, 0x527F1386, 0x81683594, 0x5370C3FF, 0xE19A6E62, 0x39978561, 0x4AAB76D6, 0x3A41D681, 0xB5EE9ED7, 0x465EA91C, 0xEF7222B1, 0x8098DF3C, 0x975E545D, 0xDE5D873A, 0x2FD8CF10, 0xFF806337, 0xDF0246B0, 0x12ABF503, 0xB185DA9D, 0xE1AD50CB, 0x746198FC, 0x86727129, 0x48A7C5FE, 0xFCA33C4C, 0xC1B4D550, 0xF2FC1DFE, 0x13DE163B, 0x7E9624D7, 0x45C84418, 0xCF8DEA12, 0xB7F566C7, 0x46CFC115, 0x81E6CDC4, 0xD8BCFF70, 0xB41D8E6C, 0x9F7ABF3F, 0x3FCD96B, 0x40203895, 0xDBE711C6, 0xEDDB977A, 0x4F0F98A1, 0xE4060DC6, 0x34AC5734, 0x884CDEB5, 0x860425FA, 0xB9D26FF9, 0x89E2B6CF, 0x94351640, 0xC2F3797, 0xC944A9CC, 0xC5570B76, 0x15CF86D7, 0x5455267A, 0xDF827B3, 0x89C4D05D, 0xD3C161C5, 0x71F3A803, 0x275ECEA5, 0xCE1A255, 0x4B055080, 0x6E115E15, 0x1D64B0AA, 0xF1A92FD5, 0x9A1B3206, 0x37FC92CA, 0x62EE5AFA, 0xD18E769A, 0xF5CCF050, 0xEC82A614]);
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 32];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr() as *const u32, rr.as_mut_ptr() as *mut u32, 128); }
+    /// 
+    /// print!("RSA_4096: Recovered = [");
+    /// for r in rr
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(rr, [0x_123456789ABCDEF00FEDCBA987654321, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000]);
+    /// assert_eq!(rr, message);
+    /// ```
+    /// 
+    /// # Example 4 for RSA_Generic
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_Generic;
+    /// use cryptocol::number::BigUInt;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = BigUInt::<u64, 4>::from(0xD_u8);
+    /// let private_key = BigUInt::<u64, 4>::from_str_radix("3F3597F1C44073A8D3C34F5FF1444665DAE8D8F268104A60C82825E1C3CD44D5", 16).unwrap();
+    /// let modulo = BigUInt::<u64, 4>::from_str_radix("88f41e8bd3e0fa98757c814fe013edde379c41da169a91050fa4964a1141853b", 16).unwrap();
+    /// let rsa = RSA_Generic::<4, u64, 5>::new_with_keys(public_key, private_key, modulo);
+    /// let message = [0x_FEDCBA9876543210_u64, 0x_1122334455667788, 0x_9900AABBCCDDEEFF, 0x_FEDCBA0987654321];
+    /// 
+    /// println!("RSA_Generic<4, u64, 5>: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_Generic<4, u64, 5>: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_Generic<4, u64, 5>: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let cipher = rsa.encrypt_unit(&message);
+    /// print!("RSA_Generic<4, u64, 5>: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0xAA75AA5E6838BB51, 0x14B74CBA736261B8, 0x582AED04672A4512, 0xE81777B9B19C8547]);
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// print!("RSA_Generic<4, u64, 5>: Recovered = [");
+    /// for r in recovered
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(recovered, [0x_FEDCBA9876543210, 0x_1122334455667788, 0x_9900AABBCCDDEEFF, 0x_FEDCBA0987654321]);
+    /// assert_eq!(recovered, message);
+    /// ```
+    /// 
+    /// # Example 5 for RSA_1024_u128
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_1024_u128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U1024::from(5_u8);
+    /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
+    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF];
+    /// 
+    /// println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_1024_u128: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let cipher = rsa.encrypt_unit(&message);
+    /// print!("RSA_1024_u128: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0xF9EAF9F13D2ABEA909DF1BA15876D910, 0xFB00D2B7946574F804238994B4DD00B4, 0x7666C3CC04D1B93C26D78E8FD3F9E91D, 0xF32C473295E9D5CEC7EFA926492EA323, 0xFF59D1A94342BA6D298576A70748103D, 0x2B80425C7B7982E2FA9B236F9D1585DD, 0x557B633341AF7FBBA5EA8BC71112A9DA, 0xB412E61E867DF90A34B8451CFA12D78B]);
+    /// let recovered = rsa.decrypt_unit(&cipher);   
+    /// 
+    /// print!("RSA_1024_u128: Recovered = [");
+    /// for r in recovered
+    ///     { println!("{:#X}, ", r); }
+    /// assert_eq!(recovered, [0x_123456789ABCDEF00FEDCBA987654321, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF]);
+    /// assert_eq!(recovered, message);
+    /// ```
+    /// 
+    /// # Example 6 for RSA_2048_u128
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_2048_u128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U2048::from(7_u8);
+    /// let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
+    /// let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    /// let rsa = RSA_2048_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF];
+    /// 
+    /// println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_2048_u128: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let cipher = rsa.encrypt_unit(&message);
+    /// print!("RSA_2048_u128: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0x8E8A2C0F939224412CDBEDD847283873, 0xA5477C70975FB9480712502CD2483CDF, 0x9CB225EB63B4157F7B83A1E15151E7A4, 0xE80799CD16F7440A28B6E71F613588C, 0x17FD57325CC7AF6659A4DD76E5629F2E, 0x91DA607E2A32966823B5BDDD90E31987, 0xA387D99856EFB8F61DFC378FE2EB9B3B, 0x72B1253381E4143F7FFD1AC37C819286, 0x2FB59FFD415F54973317DDA86C871DC6, 0x2747A2728EB0C7D1515DB9B5F720E361, 0xC3DC90988E9DAD980FA4561A661AB141, 0xCA835FD144BCC6F46CCC919D06FC2E30, 0x16AD846F2D54CE65FC235E1FD660A677, 0x49262F3B63EE29D605EBF02EB8FBDBC3, 0xD909B0573362037A4BCD700C96CC8F26, 0x6A33D012E545D5DF1394BCCB2D932D0D]);
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// 
+    /// print!("RSA_2048_u128: Recovered = [");
+    /// for r in recovered
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(recovered, [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF]);
+    /// assert_eq!(recovered, message);
+    /// ```
+    /// 
+    /// # Example 7 for RSA_4096_u128
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_4096_u128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U4096::from(5_u8);
+    /// let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
+    /// let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    /// let rsa = RSA_4096_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000];
+    /// 
+    /// println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_4096_u128: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let cipher = rsa.encrypt_unit(&message);
+    /// print!("RSA_4096_u128: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0x2F1811F6C122734CD4FB55D89CB6ED19, 0xCBABA04C6CEDD07793B93341A5114AFF, 0x179492738060C197DDBB2719B0873367, 0x12836967F832F645A67579109EBA2656, 0x6AEBB339920F899A501E88792ED8B7ED, 0x2457DBC7D24DF92DDCB94159B416EC59, 0xF8641498B7E0A22C6308ADE8BF6C9361, 0x96EA933B2E1B1007994F70D220367D0C, 0xC9A3DB5B2E327C978C0C56565D11AD3, 0x14F47769A6187825FFBB35222A5DA924, 0xECC3512027323317DCBCE40A3E3E549A, 0x2D7AC41D6A9DEF00C47F38FD0AEEB915, 0x936934BDE9F682DF0B5347E79E9EBA3C, 0x3BD64D4344E0BDF77709F812715BC0D4, 0x71FD352A2E2A4FEE54F45FBECCD014E8, 0xE19A6E625370C3FF81683594527F1386, 0xB5EE9ED73A41D6814AAB76D639978561, 0x975E545D8098DF3CEF7222B1465EA91C, 0xDF0246B0FF8063372FD8CF10DE5D873A, 0x746198FCE1AD50CBB185DA9D12ABF503, 0xC1B4D550FCA33C4C48A7C5FE86727129, 0x45C844187E9624D713DE163BF2FC1DFE, 0x81E6CDC446CFC115B7F566C7CF8DEA12, 0x3FCD96B9F7ABF3FB41D8E6CD8BCFF70, 0x4F0F98A1EDDB977ADBE711C640203895, 0x860425FA884CDEB534AC5734E4060DC6, 0xC2F37979435164089E2B6CFB9D26FF9, 0x5455267A15CF86D7C5570B76C944A9CC, 0x71F3A803D3C161C589C4D05D0DF827B3, 0x6E115E154B0550800CE1A255275ECEA5, 0x37FC92CA9A1B3206F1A92FD51D64B0AA, 0xEC82A614F5CCF050D18E769A62EE5AFA]);
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// 
+    /// print!("RSA_4096_u128: Recovered = [");
+    /// for r in recovered
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(recovered, [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000]);
+    /// assert_eq!(recovered, message);
+    /// ```
+    /// 
+    /// # Example 8 for RSA_1024_u64
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_1024_u64;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U1024::from(5_u8);
+    /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
+    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF];
+    /// 
+    /// println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_1024_u64: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u64; 16];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u64, m.as_mut_ptr(), 16); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_1024_u64: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0x9DF1BA15876D910, 0xF9EAF9F13D2ABEA9, 0x4238994B4DD00B4, 0xFB00D2B7946574F8, 0x26D78E8FD3F9E91D, 0x7666C3CC04D1B93C, 0xC7EFA926492EA323, 0xF32C473295E9D5CE, 0x298576A70748103D, 0xFF59D1A94342BA6D, 0xFA9B236F9D1585DD, 0x2B80425C7B7982E2, 0xA5EA8BC71112A9DA, 0x557B633341AF7FBB, 0x34B8451CFA12D78B, 0xB412E61E867DF90A]);
+    /// 
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 8];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr(), rr.as_mut_ptr() as *mut u64, 16); }
+    /// 
+    /// print!("RSA_1024_u64: Recovered = [");
+    /// for r in rr
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(rr, [0x123456789ABCDEF00FEDCBA987654321, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211, 0x1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0xF1E2D3C4B5A6978879605A4B3C2D1F, 0x102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x11112222333344445555666677778888, 0x99990000AAAABBBBCCCCDDDDEEEEFFFF]);
+    /// assert_eq!(rr, message);
+    /// ```
+    /// 
+    /// # Example 9 for RSA_2048_u64
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_2048_u64;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U2048::from(7_u8);
+    /// let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
+    /// let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    /// let rsa = RSA_2048_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF];
+    /// 
+    /// println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_2048_u64: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u64; 32];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u64, m.as_mut_ptr(), 32); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_2048_u64: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0x2CDBEDD847283873, 0x8E8A2C0F93922441, 0x712502CD2483CDF, 0xA5477C70975FB948, 0x7B83A1E15151E7A4, 0x9CB225EB63B4157F, 0xA28B6E71F613588C, 0xE80799CD16F7440, 0x59A4DD76E5629F2E, 0x17FD57325CC7AF66, 0x23B5BDDD90E31987, 0x91DA607E2A329668, 0x1DFC378FE2EB9B3B, 0xA387D99856EFB8F6, 0x7FFD1AC37C819286, 0x72B1253381E4143F, 0x3317DDA86C871DC6, 0x2FB59FFD415F5497, 0x515DB9B5F720E361, 0x2747A2728EB0C7D1, 0xFA4561A661AB141, 0xC3DC90988E9DAD98, 0x6CCC919D06FC2E30, 0xCA835FD144BCC6F4, 0xFC235E1FD660A677, 0x16AD846F2D54CE65, 0x5EBF02EB8FBDBC3, 0x49262F3B63EE29D6, 0x4BCD700C96CC8F26, 0xD909B0573362037A, 0x1394BCCB2D932D0D, 0x6A33D012E545D5DF]);
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 16];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr(), rr.as_mut_ptr() as *mut u64, 32); }
+    /// 
+    /// print!("RSA_2048_u64: Recovered = [");
+    /// for r in rr
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(rr, [0x123456789ABCDEF00FEDCBA987654321, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211, 0x1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0xF1E2D3C4B5A6079889706A5B4C3D2E1F, 0x102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x11112222333344445555666677778888, 0x99990000AAAABBBBCCCCDDDDEEEEFFFF, 0xFEDCBA98765432100123456789ABCDEF, 0x9900AABBCCDDEEFF1122334455667788, 0x8877665544332211FFEEDDCCBBAA0099, 0x9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x879605A4B3C2D1E00F1E2D3C4B5A6978, 0x98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x111122223333444499990000AAAABBBB, 0x5555666677778888CCCCDDDDEEEEFFFF]);
+    /// assert_eq!(rr, message);
+    /// ```
+    /// 
+    /// # Example 10 for RSA_4096_u64
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_4096_u64;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U4096::from(5_u8);
+    /// let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
+    /// let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    /// let rsa = RSA_4096_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000];
+    /// 
+    /// println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_4096_u64: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u64; 64];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u64, m.as_mut_ptr(), 64); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_4096_u64: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// 
+    /// assert_eq!(cipher, [0xD4FB55D89CB6ED19, 0x2F1811F6C122734C, 0x93B93341A5114AFF, 0xCBABA04C6CEDD077, 0xDDBB2719B0873367, 0x179492738060C197, 0xA67579109EBA2656, 0x12836967F832F645, 0x501E88792ED8B7ED, 0x6AEBB339920F899A, 0xDCB94159B416EC59, 0x2457DBC7D24DF92D, 0x6308ADE8BF6C9361, 0xF8641498B7E0A22C, 0x994F70D220367D0C, 0x96EA933B2E1B1007, 0x78C0C56565D11AD3, 0xC9A3DB5B2E327C9, 0xFFBB35222A5DA924, 0x14F47769A6187825, 0xDCBCE40A3E3E549A, 0xECC3512027323317, 0xC47F38FD0AEEB915, 0x2D7AC41D6A9DEF00, 0xB5347E79E9EBA3C, 0x936934BDE9F682DF, 0x7709F812715BC0D4, 0x3BD64D4344E0BDF7, 0x54F45FBECCD014E8, 0x71FD352A2E2A4FEE, 0x81683594527F1386, 0xE19A6E625370C3FF, 0x4AAB76D639978561, 0xB5EE9ED73A41D681, 0xEF7222B1465EA91C, 0x975E545D8098DF3C, 0x2FD8CF10DE5D873A, 0xDF0246B0FF806337, 0xB185DA9D12ABF503, 0x746198FCE1AD50CB, 0x48A7C5FE86727129, 0xC1B4D550FCA33C4C, 0x13DE163BF2FC1DFE, 0x45C844187E9624D7, 0xB7F566C7CF8DEA12, 0x81E6CDC446CFC115, 0xB41D8E6CD8BCFF70, 0x3FCD96B9F7ABF3F, 0xDBE711C640203895, 0x4F0F98A1EDDB977A, 0x34AC5734E4060DC6, 0x860425FA884CDEB5, 0x89E2B6CFB9D26FF9, 0xC2F379794351640, 0xC5570B76C944A9CC, 0x5455267A15CF86D7, 0x89C4D05D0DF827B3, 0x71F3A803D3C161C5, 0xCE1A255275ECEA5, 0x6E115E154B055080, 0xF1A92FD51D64B0AA, 0x37FC92CA9A1B3206, 0xD18E769A62EE5AFA, 0xEC82A614F5CCF050]);
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 32];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr(), rr.as_mut_ptr() as *mut u64, 64); }
+    /// 
+    /// print!("RSA_4096_u64: Recovered = [");
+    /// for r in rr
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(rr, [0x123456789ABCDEF00FEDCBA987654321, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211, 0x1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0xF1E2D3C4B5A6079889706A5B4C3D2E1F, 0x102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x11112222333344445555666677778888, 0x99990000AAAABBBBCCCCDDDDEEEEFFFF, 0xFEDCBA98765432100123456789ABCDEF, 0x9900AABBCCDDEEFF1122334455667788, 0x8877665544332211FFEEDDCCBBAA0099, 0x9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x879605A4B3C2D1E00F1E2D3C4B5A6978, 0x98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x111122223333444499990000AAAABBBB, 0x5555666677778888CCCCDDDDEEEEFFFF, 0x11111111111111111111111111111111, 0x22222222222222222222222222222222, 0x33333333333333333333333333333333, 0x44444444444444444444444444444444, 0x55555555555555555555555555555555, 0x66666666666666666666666666666666, 0x77777777777777777777777777777777, 0x88888888888888888888888888888888, 0x99999999999999999999999999999999, 0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0xBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0xDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0xEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x0]);
+    /// assert_eq!(rr, message);
+    /// ```
+    /// 
+    /// # Example 11 for RSA_1024_u32
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_1024_u32;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U1024::from(5_u8);
+    /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
+    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF];
+    /// 
+    /// println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_1024_u32: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u32; 32];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u32, m.as_mut_ptr(), 32); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_1024_u32: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0x5876D910, 0x9DF1BA1, 0x3D2ABEA9, 0xF9EAF9F1, 0xB4DD00B4, 0x4238994, 0x946574F8, 0xFB00D2B7, 0xD3F9E91D, 0x26D78E8F, 0x4D1B93C, 0x7666C3CC, 0x492EA323, 0xC7EFA926, 0x95E9D5CE, 0xF32C4732, 0x748103D, 0x298576A7, 0x4342BA6D, 0xFF59D1A9, 0x9D1585DD, 0xFA9B236F, 0x7B7982E2, 0x2B80425C, 0x1112A9DA, 0xA5EA8BC7, 0x41AF7FBB, 0x557B6333, 0xFA12D78B, 0x34B8451C, 0x867DF90A, 0xB412E61E]);
+    /// 
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 8];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr(), rr.as_mut_ptr() as *mut u32, 32); }
+    /// 
+    /// print!("RSA_1024_u32: Recovered = [");
+    /// for r in rr
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(rr, [0x123456789ABCDEF00FEDCBA987654321, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211, 0x1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0xF1E2D3C4B5A6978879605A4B3C2D1F, 0x102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x11112222333344445555666677778888, 0x99990000AAAABBBBCCCCDDDDEEEEFFFF]);
+    /// assert_eq!(rr, message);
+    /// ```
+    /// 
+    /// # Example 12 for RSA_2048_u32
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_2048_u32;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U2048::from(7_u8);
+    /// let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
+    /// let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    /// let rsa = RSA_2048_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF];
+    /// 
+    /// println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_2048_u32: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u32; 64];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u32, m.as_mut_ptr(), 64); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_2048_u32: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0x47283873, 0x2CDBEDD8, 0x93922441, 0x8E8A2C0F, 0xD2483CDF, 0x712502C, 0x975FB948, 0xA5477C70, 0x5151E7A4, 0x7B83A1E1, 0x63B4157F, 0x9CB225EB, 0xF613588C, 0xA28B6E71, 0xD16F7440, 0xE80799C, 0xE5629F2E, 0x59A4DD76, 0x5CC7AF66, 0x17FD5732, 0x90E31987, 0x23B5BDDD, 0x2A329668, 0x91DA607E, 0xE2EB9B3B, 0x1DFC378F, 0x56EFB8F6, 0xA387D998, 0x7C819286, 0x7FFD1AC3, 0x81E4143F, 0x72B12533, 0x6C871DC6, 0x3317DDA8, 0x415F5497, 0x2FB59FFD, 0xF720E361, 0x515DB9B5, 0x8EB0C7D1, 0x2747A272, 0x661AB141, 0xFA4561A, 0x8E9DAD98, 0xC3DC9098, 0x6FC2E30, 0x6CCC919D, 0x44BCC6F4, 0xCA835FD1, 0xD660A677, 0xFC235E1F, 0x2D54CE65, 0x16AD846F, 0xB8FBDBC3, 0x5EBF02E, 0x63EE29D6, 0x49262F3B, 0x96CC8F26, 0x4BCD700C, 0x3362037A, 0xD909B057, 0x2D932D0D, 0x1394BCCB, 0xE545D5DF, 0x6A33D012]);
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 16];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr(), rr.as_mut_ptr() as *mut u32, 64); }
+    /// 
+    /// print!("RSA_2048_u32: Recovered = [");
+    /// for r in rr
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(rr, [0x123456789ABCDEF00FEDCBA987654321, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211, 0x1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0xF1E2D3C4B5A6079889706A5B4C3D2E1F, 0x102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x11112222333344445555666677778888, 0x99990000AAAABBBBCCCCDDDDEEEEFFFF, 0xFEDCBA98765432100123456789ABCDEF, 0x9900AABBCCDDEEFF1122334455667788, 0x8877665544332211FFEEDDCCBBAA0099, 0x9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x879605A4B3C2D1E00F1E2D3C4B5A6978, 0x98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x111122223333444499990000AAAABBBB, 0x5555666677778888CCCCDDDDEEEEFFFF]);
+    /// assert_eq!(rr, message);
+    /// ```
+    /// 
+    /// # Example 13 for RSA_4096_u32
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_4096_u32;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U4096::from(5_u8);
+    /// let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
+    /// let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    /// let rsa = RSA_4096_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000];
+    /// 
+    /// println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_4096_u32: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u32; 128];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u32, m.as_mut_ptr(), 128); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_4096_u32: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// 
+    /// assert_eq!(cipher, [0x9CB6ED19, 0xD4FB55D8, 0xC122734C, 0x2F1811F6, 0xA5114AFF, 0x93B93341, 0x6CEDD077, 0xCBABA04C, 0xB0873367, 0xDDBB2719, 0x8060C197, 0x17949273, 0x9EBA2656, 0xA6757910, 0xF832F645, 0x12836967, 0x2ED8B7ED, 0x501E8879, 0x920F899A, 0x6AEBB339, 0xB416EC59, 0xDCB94159, 0xD24DF92D, 0x2457DBC7, 0xBF6C9361, 0x6308ADE8, 0xB7E0A22C, 0xF8641498, 0x20367D0C, 0x994F70D2, 0x2E1B1007, 0x96EA933B, 0x65D11AD3, 0x78C0C565, 0xB2E327C9, 0xC9A3DB5, 0x2A5DA924, 0xFFBB3522, 0xA6187825, 0x14F47769, 0x3E3E549A, 0xDCBCE40A, 0x27323317, 0xECC35120, 0xAEEB915, 0xC47F38FD, 0x6A9DEF00, 0x2D7AC41D, 0x9E9EBA3C, 0xB5347E7, 0xE9F682DF, 0x936934BD, 0x715BC0D4, 0x7709F812, 0x44E0BDF7, 0x3BD64D43, 0xCCD014E8, 0x54F45FBE, 0x2E2A4FEE, 0x71FD352A, 0x527F1386, 0x81683594, 0x5370C3FF, 0xE19A6E62, 0x39978561, 0x4AAB76D6, 0x3A41D681, 0xB5EE9ED7, 0x465EA91C, 0xEF7222B1, 0x8098DF3C, 0x975E545D, 0xDE5D873A, 0x2FD8CF10, 0xFF806337, 0xDF0246B0, 0x12ABF503, 0xB185DA9D, 0xE1AD50CB, 0x746198FC, 0x86727129, 0x48A7C5FE, 0xFCA33C4C, 0xC1B4D550, 0xF2FC1DFE, 0x13DE163B, 0x7E9624D7, 0x45C84418, 0xCF8DEA12, 0xB7F566C7, 0x46CFC115, 0x81E6CDC4, 0xD8BCFF70, 0xB41D8E6C, 0x9F7ABF3F, 0x3FCD96B, 0x40203895, 0xDBE711C6, 0xEDDB977A, 0x4F0F98A1, 0xE4060DC6, 0x34AC5734, 0x884CDEB5, 0x860425FA, 0xB9D26FF9, 0x89E2B6CF, 0x94351640, 0xC2F3797, 0xC944A9CC, 0xC5570B76, 0x15CF86D7, 0x5455267A, 0xDF827B3, 0x89C4D05D, 0xD3C161C5, 0x71F3A803, 0x275ECEA5, 0xCE1A255, 0x4B055080, 0x6E115E15, 0x1D64B0AA, 0xF1A92FD5, 0x9A1B3206, 0x37FC92CA, 0x62EE5AFA, 0xD18E769A, 0xF5CCF050, 0xEC82A614]);
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 32];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr(), rr.as_mut_ptr() as *mut u32, 128); }
+    /// 
+    /// print!("RSA_4096_u32: Recovered = [");
+    /// for r in rr
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(rr, [0x123456789ABCDEF00FEDCBA987654321, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211, 0x1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0xF1E2D3C4B5A6079889706A5B4C3D2E1F, 0x102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x11112222333344445555666677778888, 0x99990000AAAABBBBCCCCDDDDEEEEFFFF, 0xFEDCBA98765432100123456789ABCDEF, 0x9900AABBCCDDEEFF1122334455667788, 0x8877665544332211FFEEDDCCBBAA0099, 0x9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x879605A4B3C2D1E00F1E2D3C4B5A6978, 0x98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x111122223333444499990000AAAABBBB, 0x5555666677778888CCCCDDDDEEEEFFFF, 0x11111111111111111111111111111111, 0x22222222222222222222222222222222, 0x33333333333333333333333333333333, 0x44444444444444444444444444444444, 0x55555555555555555555555555555555, 0x66666666666666666666666666666666, 0x77777777777777777777777777777777, 0x88888888888888888888888888888888, 0x99999999999999999999999999999999, 0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0xBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0xDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0xEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x0]);
+    /// assert_eq!(rr, message);
+    /// ```
+    /// 
+    /// # Example 14 for RSA_1024_u16
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_1024_u16;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U1024::from(5_u8);
+    /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
+    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF];
+    /// 
+    /// println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_1024_u16: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u16; 64];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u16, m.as_mut_ptr(), 64); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_1024_u16: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0xD910, 0x5876, 0x1BA1, 0x9DF, 0xBEA9, 0x3D2A, 0xF9F1, 0xF9EA, 0xB4, 0xB4DD, 0x8994, 0x423, 0x74F8, 0x9465, 0xD2B7, 0xFB00, 0xE91D, 0xD3F9, 0x8E8F, 0x26D7, 0xB93C, 0x4D1, 0xC3CC, 0x7666, 0xA323, 0x492E, 0xA926, 0xC7EF, 0xD5CE, 0x95E9, 0x4732, 0xF32C, 0x103D, 0x748, 0x76A7, 0x2985, 0xBA6D, 0x4342, 0xD1A9, 0xFF59, 0x85DD, 0x9D15, 0x236F, 0xFA9B, 0x82E2, 0x7B79, 0x425C, 0x2B80, 0xA9DA, 0x1112, 0x8BC7, 0xA5EA, 0x7FBB, 0x41AF, 0x6333, 0x557B, 0xD78B, 0xFA12, 0x451C, 0x34B8, 0xF90A, 0x867D, 0xE61E, 0xB412]);
+    /// 
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 8];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr(), rr.as_mut_ptr() as *mut u16, 64); }
+    /// 
+    /// print!("RSA_1024_u16: Recovered = [");
+    /// for r in rr
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(rr, [0x123456789ABCDEF00FEDCBA987654321, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211, 0x1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0xF1E2D3C4B5A6978879605A4B3C2D1F, 0x102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x11112222333344445555666677778888, 0x99990000AAAABBBBCCCCDDDDEEEEFFFF]);
+    /// assert_eq!(rr, message);
+    /// ```
+    /// 
+    /// # Example 15 for RSA_2048_u16
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_2048_u16;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U2048::from(7_u8);
+    /// let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
+    /// let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    /// let rsa = RSA_2048_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF];
+    /// 
+    /// println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_2048_u16: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u16; 128];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u16, m.as_mut_ptr(), 128); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_2048_u16: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0x3873, 0x4728, 0xEDD8, 0x2CDB, 0x2441, 0x9392, 0x2C0F, 0x8E8A, 0x3CDF, 0xD248, 0x502C, 0x712, 0xB948, 0x975F, 0x7C70, 0xA547, 0xE7A4, 0x5151, 0xA1E1, 0x7B83, 0x157F, 0x63B4, 0x25EB, 0x9CB2, 0x588C, 0xF613, 0x6E71, 0xA28B, 0x7440, 0xD16F, 0x799C, 0xE80, 0x9F2E, 0xE562, 0xDD76, 0x59A4, 0xAF66, 0x5CC7, 0x5732, 0x17FD, 0x1987, 0x90E3, 0xBDDD, 0x23B5, 0x9668, 0x2A32, 0x607E, 0x91DA, 0x9B3B, 0xE2EB, 0x378F, 0x1DFC, 0xB8F6, 0x56EF, 0xD998, 0xA387, 0x9286, 0x7C81, 0x1AC3, 0x7FFD, 0x143F, 0x81E4, 0x2533, 0x72B1, 0x1DC6, 0x6C87, 0xDDA8, 0x3317, 0x5497, 0x415F, 0x9FFD, 0x2FB5, 0xE361, 0xF720, 0xB9B5, 0x515D, 0xC7D1, 0x8EB0, 0xA272, 0x2747, 0xB141, 0x661A, 0x561A, 0xFA4, 0xAD98, 0x8E9D, 0x9098, 0xC3DC, 0x2E30, 0x6FC, 0x919D, 0x6CCC, 0xC6F4, 0x44BC, 0x5FD1, 0xCA83, 0xA677, 0xD660, 0x5E1F, 0xFC23, 0xCE65, 0x2D54, 0x846F, 0x16AD, 0xDBC3, 0xB8FB, 0xF02E, 0x5EB, 0x29D6, 0x63EE, 0x2F3B, 0x4926, 0x8F26, 0x96CC, 0x700C, 0x4BCD, 0x37A, 0x3362, 0xB057, 0xD909, 0x2D0D, 0x2D93, 0xBCCB, 0x1394, 0xD5DF, 0xE545, 0xD012, 0x6A33]);
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 16];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr(), rr.as_mut_ptr() as *mut u16, 128); }
+    /// 
+    /// print!("RSA_2048_u16: Recovered = [");
+    /// for r in rr
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(rr, [0x123456789ABCDEF00FEDCBA987654321, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211, 0x1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0xF1E2D3C4B5A6079889706A5B4C3D2E1F, 0x102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x11112222333344445555666677778888, 0x99990000AAAABBBBCCCCDDDDEEEEFFFF, 0xFEDCBA98765432100123456789ABCDEF, 0x9900AABBCCDDEEFF1122334455667788, 0x8877665544332211FFEEDDCCBBAA0099, 0x9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x879605A4B3C2D1E00F1E2D3C4B5A6978, 0x98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x111122223333444499990000AAAABBBB, 0x5555666677778888CCCCDDDDEEEEFFFF]);
+    /// assert_eq!(rr, message);
+    /// ```
+    /// 
+    /// # Example 16 for RSA_4096_u16
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_4096_u16;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U4096::from(5_u8);
+    /// let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
+    /// let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    /// let rsa = RSA_4096_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000];
+    /// 
+    /// println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_4096_u16: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u16; 256];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u16, m.as_mut_ptr(), 256); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_4096_u16: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// 
+    /// assert_eq!(cipher, [0xED19, 0x9CB6, 0x55D8, 0xD4FB, 0x734C, 0xC122, 0x11F6, 0x2F18, 0x4AFF, 0xA511, 0x3341, 0x93B9, 0xD077, 0x6CED, 0xA04C, 0xCBAB, 0x3367, 0xB087, 0x2719, 0xDDBB, 0xC197, 0x8060, 0x9273, 0x1794, 0x2656, 0x9EBA, 0x7910, 0xA675, 0xF645, 0xF832, 0x6967, 0x1283, 0xB7ED, 0x2ED8, 0x8879, 0x501E, 0x899A, 0x920F, 0xB339, 0x6AEB, 0xEC59, 0xB416, 0x4159, 0xDCB9, 0xF92D, 0xD24D, 0xDBC7, 0x2457, 0x9361, 0xBF6C, 0xADE8, 0x6308, 0xA22C, 0xB7E0, 0x1498, 0xF864, 0x7D0C, 0x2036, 0x70D2, 0x994F, 0x1007, 0x2E1B, 0x933B, 0x96EA, 0x1AD3, 0x65D1, 0xC565, 0x78C0, 0x27C9, 0xB2E3, 0x3DB5, 0xC9A, 0xA924, 0x2A5D, 0x3522, 0xFFBB, 0x7825, 0xA618, 0x7769, 0x14F4, 0x549A, 0x3E3E, 0xE40A, 0xDCBC, 0x3317, 0x2732, 0x5120, 0xECC3, 0xB915, 0xAEE, 0x38FD, 0xC47F, 0xEF00, 0x6A9D, 0xC41D, 0x2D7A, 0xBA3C, 0x9E9E, 0x47E7, 0xB53, 0x82DF, 0xE9F6, 0x34BD, 0x9369, 0xC0D4, 0x715B, 0xF812, 0x7709, 0xBDF7, 0x44E0, 0x4D43, 0x3BD6, 0x14E8, 0xCCD0, 0x5FBE, 0x54F4, 0x4FEE, 0x2E2A, 0x352A, 0x71FD, 0x1386, 0x527F, 0x3594, 0x8168, 0xC3FF, 0x5370, 0x6E62, 0xE19A, 0x8561, 0x3997, 0x76D6, 0x4AAB, 0xD681, 0x3A41, 0x9ED7, 0xB5EE, 0xA91C, 0x465E, 0x22B1, 0xEF72, 0xDF3C, 0x8098, 0x545D, 0x975E, 0x873A, 0xDE5D, 0xCF10, 0x2FD8, 0x6337, 0xFF80, 0x46B0, 0xDF02, 0xF503, 0x12AB, 0xDA9D, 0xB185, 0x50CB, 0xE1AD, 0x98FC, 0x7461, 0x7129, 0x8672, 0xC5FE, 0x48A7, 0x3C4C, 0xFCA3, 0xD550, 0xC1B4, 0x1DFE, 0xF2FC, 0x163B, 0x13DE, 0x24D7, 0x7E96, 0x4418, 0x45C8, 0xEA12, 0xCF8D, 0x66C7, 0xB7F5, 0xC115, 0x46CF, 0xCDC4, 0x81E6, 0xFF70, 0xD8BC, 0x8E6C, 0xB41D, 0xBF3F, 0x9F7A, 0xD96B, 0x3FC, 0x3895, 0x4020, 0x11C6, 0xDBE7, 0x977A, 0xEDDB, 0x98A1, 0x4F0F, 0xDC6, 0xE406, 0x5734, 0x34AC, 0xDEB5, 0x884C, 0x25FA, 0x8604, 0x6FF9, 0xB9D2, 0xB6CF, 0x89E2, 0x1640, 0x9435, 0x3797, 0xC2F, 0xA9CC, 0xC944, 0xB76, 0xC557, 0x86D7, 0x15CF, 0x267A, 0x5455, 0x27B3, 0xDF8, 0xD05D, 0x89C4, 0x61C5, 0xD3C1, 0xA803, 0x71F3, 0xCEA5, 0x275E, 0xA255, 0xCE1, 0x5080, 0x4B05, 0x5E15, 0x6E11, 0xB0AA, 0x1D64, 0x2FD5, 0xF1A9, 0x3206, 0x9A1B, 0x92CA, 0x37FC, 0x5AFA, 0x62EE, 0x769A, 0xD18E, 0xF050, 0xF5CC, 0xA614, 0xEC82]);
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 32];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr(), rr.as_mut_ptr() as *mut u16, 256); }
+    /// 
+    /// print!("RSA_4096_u16: Recovered = [");
+    /// for r in rr
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(rr, [0x123456789ABCDEF00FEDCBA987654321, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211, 0x1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0xF1E2D3C4B5A6079889706A5B4C3D2E1F, 0x102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x11112222333344445555666677778888, 0x99990000AAAABBBBCCCCDDDDEEEEFFFF, 0xFEDCBA98765432100123456789ABCDEF, 0x9900AABBCCDDEEFF1122334455667788, 0x8877665544332211FFEEDDCCBBAA0099, 0x9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x879605A4B3C2D1E00F1E2D3C4B5A6978, 0x98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x111122223333444499990000AAAABBBB, 0x5555666677778888CCCCDDDDEEEEFFFF, 0x11111111111111111111111111111111, 0x22222222222222222222222222222222, 0x33333333333333333333333333333333, 0x44444444444444444444444444444444, 0x55555555555555555555555555555555, 0x66666666666666666666666666666666, 0x77777777777777777777777777777777, 0x88888888888888888888888888888888, 0x99999999999999999999999999999999, 0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0xBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0xDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0xEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x0]);
+    /// assert_eq!(rr, message);
+    /// ```
+    /// 
+    /// # Example 17 for RSA_1024_u8
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_1024_u8;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U1024::from(5_u8);
+    /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
+    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF];
+    /// 
+    /// println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_1024_u8: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u8; 128];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u8, m.as_mut_ptr(), 128); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_1024_u8: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0x10, 0xD9, 0x76, 0x58, 0xA1, 0x1B, 0xDF, 0x9, 0xA9, 0xBE, 0x2A, 0x3D, 0xF1, 0xF9, 0xEA, 0xF9, 0xB4, 0x0, 0xDD, 0xB4, 0x94, 0x89, 0x23, 0x4, 0xF8, 0x74, 0x65, 0x94, 0xB7, 0xD2, 0x0, 0xFB, 0x1D, 0xE9, 0xF9, 0xD3, 0x8F, 0x8E, 0xD7, 0x26, 0x3C, 0xB9, 0xD1, 0x4, 0xCC, 0xC3, 0x66, 0x76, 0x23, 0xA3, 0x2E, 0x49, 0x26, 0xA9, 0xEF, 0xC7, 0xCE, 0xD5, 0xE9, 0x95, 0x32, 0x47, 0x2C, 0xF3, 0x3D, 0x10, 0x48, 0x7, 0xA7, 0x76, 0x85, 0x29, 0x6D, 0xBA, 0x42, 0x43, 0xA9, 0xD1, 0x59, 0xFF, 0xDD, 0x85, 0x15, 0x9D, 0x6F, 0x23, 0x9B, 0xFA, 0xE2, 0x82, 0x79, 0x7B, 0x5C, 0x42, 0x80, 0x2B, 0xDA, 0xA9, 0x12, 0x11, 0xC7, 0x8B, 0xEA, 0xA5, 0xBB, 0x7F, 0xAF, 0x41, 0x33, 0x63, 0x7B, 0x55, 0x8B, 0xD7, 0x12, 0xFA, 0x1C, 0x45, 0xB8, 0x34, 0xA, 0xF9, 0x7D, 0x86, 0x1E, 0xE6, 0x12, 0xB4]);
+    /// 
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 8];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr(), rr.as_mut_ptr() as *mut u8, 128); }
+    /// 
+    /// print!("RSA_1024_u8: Recovered = [");
+    /// for r in rr
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(rr, [0x123456789ABCDEF00FEDCBA987654321, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211, 0x1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0xF1E2D3C4B5A6978879605A4B3C2D1F, 0x102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x11112222333344445555666677778888, 0x99990000AAAABBBBCCCCDDDDEEEEFFFF]);
+    /// assert_eq!(rr, message);
+    /// ```
+    /// 
+    /// # Example 18 for RSA_2048_u8
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_2048_u8;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U2048::from(7_u8);
+    /// let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
+    /// let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    /// let rsa = RSA_2048_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF];
+    /// 
+    /// println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_2048_u8: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u8; 256];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u8, m.as_mut_ptr(), 256); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_2048_u8: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// assert_eq!(cipher, [0x73, 0x38, 0x28, 0x47, 0xD8, 0xED, 0xDB, 0x2C, 0x41, 0x24, 0x92, 0x93, 0xF, 0x2C, 0x8A, 0x8E, 0xDF, 0x3C, 0x48, 0xD2, 0x2C, 0x50, 0x12, 0x7, 0x48, 0xB9, 0x5F, 0x97, 0x70, 0x7C, 0x47, 0xA5, 0xA4, 0xE7, 0x51, 0x51, 0xE1, 0xA1, 0x83, 0x7B, 0x7F, 0x15, 0xB4, 0x63, 0xEB, 0x25, 0xB2, 0x9C, 0x8C, 0x58, 0x13, 0xF6, 0x71, 0x6E, 0x8B, 0xA2, 0x40, 0x74, 0x6F, 0xD1, 0x9C, 0x79, 0x80, 0xE, 0x2E, 0x9F, 0x62, 0xE5, 0x76, 0xDD, 0xA4, 0x59, 0x66, 0xAF, 0xC7, 0x5C, 0x32, 0x57, 0xFD, 0x17, 0x87, 0x19, 0xE3, 0x90, 0xDD, 0xBD, 0xB5, 0x23, 0x68, 0x96, 0x32, 0x2A, 0x7E, 0x60, 0xDA, 0x91, 0x3B, 0x9B, 0xEB, 0xE2, 0x8F, 0x37, 0xFC, 0x1D, 0xF6, 0xB8, 0xEF, 0x56, 0x98, 0xD9, 0x87, 0xA3, 0x86, 0x92, 0x81, 0x7C, 0xC3, 0x1A, 0xFD, 0x7F, 0x3F, 0x14, 0xE4, 0x81, 0x33, 0x25, 0xB1, 0x72, 0xC6, 0x1D, 0x87, 0x6C, 0xA8, 0xDD, 0x17, 0x33, 0x97, 0x54, 0x5F, 0x41, 0xFD, 0x9F, 0xB5, 0x2F, 0x61, 0xE3, 0x20, 0xF7, 0xB5, 0xB9, 0x5D, 0x51, 0xD1, 0xC7, 0xB0, 0x8E, 0x72, 0xA2, 0x47, 0x27, 0x41, 0xB1, 0x1A, 0x66, 0x1A, 0x56, 0xA4, 0xF, 0x98, 0xAD, 0x9D, 0x8E, 0x98, 0x90, 0xDC, 0xC3, 0x30, 0x2E, 0xFC, 0x6, 0x9D, 0x91, 0xCC, 0x6C, 0xF4, 0xC6, 0xBC, 0x44, 0xD1, 0x5F, 0x83, 0xCA, 0x77, 0xA6, 0x60, 0xD6, 0x1F, 0x5E, 0x23, 0xFC, 0x65, 0xCE, 0x54, 0x2D, 0x6F, 0x84, 0xAD, 0x16, 0xC3, 0xDB, 0xFB, 0xB8, 0x2E, 0xF0, 0xEB, 0x5, 0xD6, 0x29, 0xEE, 0x63, 0x3B, 0x2F, 0x26, 0x49, 0x26, 0x8F, 0xCC, 0x96, 0xC, 0x70, 0xCD, 0x4B, 0x7A, 0x3, 0x62, 0x33, 0x57, 0xB0, 0x9, 0xD9, 0xD, 0x2D, 0x93, 0x2D, 0xCB, 0xBC, 0x94, 0x13, 0xDF, 0xD5, 0x45, 0xE5, 0x12, 0xD0, 0x33, 0x6A]);
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 16];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr(), rr.as_mut_ptr() as *mut u8, 256); }
+    /// 
+    /// print!("RSA_2048_u8: Recovered = [");
+    /// for r in rr
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(rr, [0x123456789ABCDEF00FEDCBA987654321, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211, 0x1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0xF1E2D3C4B5A6079889706A5B4C3D2E1F, 0x102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x11112222333344445555666677778888, 0x99990000AAAABBBBCCCCDDDDEEEEFFFF, 0xFEDCBA98765432100123456789ABCDEF, 0x9900AABBCCDDEEFF1122334455667788, 0x8877665544332211FFEEDDCCBBAA0099, 0x9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x879605A4B3C2D1E00F1E2D3C4B5A6978, 0x98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x111122223333444499990000AAAABBBB, 0x5555666677778888CCCCDDDDEEEEFFFF]);
+    /// assert_eq!(rr, message);
+    /// ```
+    /// 
+    /// # Example 19 for RSA_4096_u8
+    /// ```
+    /// use std::ptr::copy_nonoverlapping;
+    /// use cryptocol::asymmetric::RSA_4096_u8;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let public_key = U4096::from(5_u8);
+    /// let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
+    /// let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    /// let rsa = RSA_4096_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000];
+    /// 
+    /// println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
+    /// println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// print!("RSA_4096_u8: Message = [");
+    /// for m in message
+    ///     { print!("{:#X}, ", m); }
+    /// println!("]");
+    /// 
+    /// let mut m = [0u8; 512];
+    /// unsafe { copy_nonoverlapping(message.as_ptr() as *const u8, m.as_mut_ptr(), 512); }
+    /// let cipher = rsa.encrypt_unit(&m);
+    /// print!("RSA_4096_u8: Cipher = [");
+    /// for c in cipher
+    ///     { print!("{:#X}, ", c); }
+    /// println!("]");
+    /// 
+    /// assert_eq!(cipher, [0x19, 0xED, 0xB6, 0x9C, 0xD8, 0x55, 0xFB, 0xD4, 0x4C, 0x73, 0x22, 0xC1, 0xF6, 0x11, 0x18, 0x2F, 0xFF, 0x4A, 0x11, 0xA5, 0x41, 0x33, 0xB9, 0x93, 0x77, 0xD0, 0xED, 0x6C, 0x4C, 0xA0, 0xAB, 0xCB, 0x67, 0x33, 0x87, 0xB0, 0x19, 0x27, 0xBB, 0xDD, 0x97, 0xC1, 0x60, 0x80, 0x73, 0x92, 0x94, 0x17, 0x56, 0x26, 0xBA, 0x9E, 0x10, 0x79, 0x75, 0xA6, 0x45, 0xF6, 0x32, 0xF8, 0x67, 0x69, 0x83, 0x12, 0xED, 0xB7, 0xD8, 0x2E, 0x79, 0x88, 0x1E, 0x50, 0x9A, 0x89, 0xF, 0x92, 0x39, 0xB3, 0xEB, 0x6A, 0x59, 0xEC, 0x16, 0xB4, 0x59, 0x41, 0xB9, 0xDC, 0x2D, 0xF9, 0x4D, 0xD2, 0xC7, 0xDB, 0x57, 0x24, 0x61, 0x93, 0x6C, 0xBF, 0xE8, 0xAD, 0x8, 0x63, 0x2C, 0xA2, 0xE0, 0xB7, 0x98, 0x14, 0x64, 0xF8, 0xC, 0x7D, 0x36, 0x20, 0xD2, 0x70, 0x4F, 0x99, 0x7, 0x10, 0x1B, 0x2E, 0x3B, 0x93, 0xEA, 0x96, 0xD3, 0x1A, 0xD1, 0x65, 0x65, 0xC5, 0xC0, 0x78, 0xC9, 0x27, 0xE3, 0xB2, 0xB5, 0x3D, 0x9A, 0xC, 0x24, 0xA9, 0x5D, 0x2A, 0x22, 0x35, 0xBB, 0xFF, 0x25, 0x78, 0x18, 0xA6, 0x69, 0x77, 0xF4, 0x14, 0x9A, 0x54, 0x3E, 0x3E, 0xA, 0xE4, 0xBC, 0xDC, 0x17, 0x33, 0x32, 0x27, 0x20, 0x51, 0xC3, 0xEC, 0x15, 0xB9, 0xEE, 0xA, 0xFD, 0x38, 0x7F, 0xC4, 0x0, 0xEF, 0x9D, 0x6A, 0x1D, 0xC4, 0x7A, 0x2D, 0x3C, 0xBA, 0x9E, 0x9E, 0xE7, 0x47, 0x53, 0xB, 0xDF, 0x82, 0xF6, 0xE9, 0xBD, 0x34, 0x69, 0x93, 0xD4, 0xC0, 0x5B, 0x71, 0x12, 0xF8, 0x9, 0x77, 0xF7, 0xBD, 0xE0, 0x44, 0x43, 0x4D, 0xD6, 0x3B, 0xE8, 0x14, 0xD0, 0xCC, 0xBE, 0x5F, 0xF4, 0x54, 0xEE, 0x4F, 0x2A, 0x2E, 0x2A, 0x35, 0xFD, 0x71, 0x86, 0x13, 0x7F, 0x52, 0x94, 0x35, 0x68, 0x81, 0xFF, 0xC3, 0x70, 0x53, 0x62, 0x6E, 0x9A, 0xE1, 0x61, 0x85, 0x97, 0x39, 0xD6, 0x76, 0xAB, 0x4A, 0x81, 0xD6, 0x41, 0x3A, 0xD7, 0x9E, 0xEE, 0xB5, 0x1C, 0xA9, 0x5E, 0x46, 0xB1, 0x22, 0x72, 0xEF, 0x3C, 0xDF, 0x98, 0x80, 0x5D, 0x54, 0x5E, 0x97, 0x3A, 0x87, 0x5D, 0xDE, 0x10, 0xCF, 0xD8, 0x2F, 0x37, 0x63, 0x80, 0xFF, 0xB0, 0x46, 0x2, 0xDF, 0x3, 0xF5, 0xAB, 0x12, 0x9D, 0xDA, 0x85, 0xB1, 0xCB, 0x50, 0xAD, 0xE1, 0xFC, 0x98, 0x61, 0x74, 0x29, 0x71, 0x72, 0x86, 0xFE, 0xC5, 0xA7, 0x48, 0x4C, 0x3C, 0xA3, 0xFC, 0x50, 0xD5, 0xB4, 0xC1, 0xFE, 0x1D, 0xFC, 0xF2, 0x3B, 0x16, 0xDE, 0x13, 0xD7, 0x24, 0x96, 0x7E, 0x18, 0x44, 0xC8, 0x45, 0x12, 0xEA, 0x8D, 0xCF, 0xC7, 0x66, 0xF5, 0xB7, 0x15, 0xC1, 0xCF, 0x46, 0xC4, 0xCD, 0xE6, 0x81, 0x70, 0xFF, 0xBC, 0xD8, 0x6C, 0x8E, 0x1D, 0xB4, 0x3F, 0xBF, 0x7A, 0x9F, 0x6B, 0xD9, 0xFC, 0x3, 0x95, 0x38, 0x20, 0x40, 0xC6, 0x11, 0xE7, 0xDB, 0x7A, 0x97, 0xDB, 0xED, 0xA1, 0x98, 0xF, 0x4F, 0xC6, 0xD, 0x6, 0xE4, 0x34, 0x57, 0xAC, 0x34, 0xB5, 0xDE, 0x4C, 0x88, 0xFA, 0x25, 0x4, 0x86, 0xF9, 0x6F, 0xD2, 0xB9, 0xCF, 0xB6, 0xE2, 0x89, 0x40, 0x16, 0x35, 0x94, 0x97, 0x37, 0x2F, 0xC, 0xCC, 0xA9, 0x44, 0xC9, 0x76, 0xB, 0x57, 0xC5, 0xD7, 0x86, 0xCF, 0x15, 0x7A, 0x26, 0x55, 0x54, 0xB3, 0x27, 0xF8, 0xD, 0x5D, 0xD0, 0xC4, 0x89, 0xC5, 0x61, 0xC1, 0xD3, 0x3, 0xA8, 0xF3, 0x71, 0xA5, 0xCE, 0x5E, 0x27, 0x55, 0xA2, 0xE1, 0xC, 0x80, 0x50, 0x5, 0x4B, 0x15, 0x5E, 0x11, 0x6E, 0xAA, 0xB0, 0x64, 0x1D, 0xD5, 0x2F, 0xA9, 0xF1, 0x6, 0x32, 0x1B, 0x9A, 0xCA, 0x92, 0xFC, 0x37, 0xFA, 0x5A, 0xEE, 0x62, 0x9A, 0x76, 0x8E, 0xD1, 0x50, 0xF0, 0xCC, 0xF5, 0x14, 0xA6, 0x82, 0xEC]);
+    /// let recovered = rsa.decrypt_unit(&cipher);
+    /// let mut rr = [0u128; 32];
+    /// unsafe { copy_nonoverlapping(recovered.as_ptr(), rr.as_mut_ptr() as *mut u8, 512); }
+    /// 
+    /// print!("RSA_4096_u8: Recovered = [");
+    /// for r in rr
+    ///     { print!("{:#X}, ", r); }
+    /// println!("]");
+    /// assert_eq!(rr, [0x123456789ABCDEF00FEDCBA987654321, 0x11223344556677889900AABBCCDDEEFF, 0xFFEEDDCCBBAA00998877665544332211, 0x1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0xF1E2D3C4B5A6079889706A5B4C3D2E1F, 0x102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x11112222333344445555666677778888, 0x99990000AAAABBBBCCCCDDDDEEEEFFFF, 0xFEDCBA98765432100123456789ABCDEF, 0x9900AABBCCDDEEFF1122334455667788, 0x8877665544332211FFEEDDCCBBAA0099, 0x9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x879605A4B3C2D1E00F1E2D3C4B5A6978, 0x98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x111122223333444499990000AAAABBBB, 0x5555666677778888CCCCDDDDEEEEFFFF, 0x11111111111111111111111111111111, 0x22222222222222222222222222222222, 0x33333333333333333333333333333333, 0x44444444444444444444444444444444, 0x55555555555555555555555555555555, 0x66666666666666666666666666666666, 0x77777777777777777777777777777777, 0x88888888888888888888888888888888, 0x99999999999999999999999999999999, 0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0xBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0xDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0xEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x0]);
+    /// assert_eq!(rr, message);
     /// ```
     #[inline]
     pub fn decrypt_unit(&self, cipher: &[T; N]) -> [T; N]
