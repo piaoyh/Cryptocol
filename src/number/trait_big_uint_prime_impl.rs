@@ -237,7 +237,7 @@ where T: TraitsBigUInt<T>
             return small_self.is_prime_using_miller_rabin(repetition);
         }
 
-        let a_list = [2_u8, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71];
+        let a_list = [2_u8, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173];
         let len = a_list.len();
         for i in 1..len
         {
@@ -246,7 +246,7 @@ where T: TraitsBigUInt<T>
         }
 
         let common = if len < repetition {len} else {repetition};
-        for i in 0..common
+        for i in 20..(common + 20)
         {
             if !self.test_miller_rabin(&Self::from_uint(a_list[i]))
                 { return false; }
@@ -263,8 +263,33 @@ where T: TraitsBigUInt<T>
     }
 }
 
-
 /*
+fn collect_small_prime_numbers(n: usize)
+{
+    let mut primes = vec![2_u32, 3];
+    let mut i = 3;
+    while primes.len() < n
+    {
+        let mut is_prime = true;
+        for k in primes.clone()
+        {
+            if i % k == 0
+            {
+                is_prime = false;
+                break;
+            }
+        }
+        if is_prime
+            { primes.push(i); }
+        i += 2;
+    }
+
+    print!("Primes: [");
+    for prime in primes
+        { print!("{prime}, "); }
+    println!("]");
+}
+    
 impl<T, const N: usize> BigUInt<T, N>
 where T: TraitsBigUInt<T>
 {
@@ -358,26 +383,6 @@ where T: TraitsBigUInt<T>
                 { thread.join().unwrap(); }
             *ark_mut_res.lock().unwrap()
         }
-    }
-
-    fn is_prime_using_miller_rabin_sequentially(&self, repetition: usize, a_list: [u8; 20]) -> bool
-    {
-        let len = a_list.len();
-        let common = if len < repetition {len} else {repetition};
-        for i in 0..common
-        {
-            if !self.test_miller_rabin(&Self::from_uint(a_list[i]))
-                { return false; }
-        }
-
-        let mut a = a_list[len-1] as u32 + 2;
-        for _ in common..repetition
-        {
-            if !self.test_miller_rabin(&Self::from_uint(a))
-                { return false; }
-            a += 2;
-        }
-        true
     }
 }
 */

@@ -107,6 +107,7 @@ pub type RSA_1024 = RSA_1024_u32;
 /// - `N`: is related with the length of the BigUInt. The total length of
 ///   BigUInt is `size_of::<T>() * N`.
 /// - `MR`: is the repetition of Millar-Rabin algorithm to find a prime number.
+///    Its default value is `7` for 99.99% accuracy.
 /// 
 /// # Reference
 /// [Read more](https://en.wikipedia.org/wiki/RSA_cryptosystem)
@@ -146,7 +147,7 @@ pub type RSA_1024 = RSA_1024_u32;
 /// 
 /// # Notice for Practical Use
 /// 
-pub struct RSA_Generic<const N: usize, T, const MR: usize = 5>
+pub struct RSA_Generic<const N: usize, T, const MR: usize = 7>
 where T: TraitsBigUInt<T>
 {
     modulo: BigUInt<T, N>,
@@ -485,14 +486,10 @@ where T: TraitsBigUInt<T>
         self.modulo = modulo;
     }
 
+    #[inline]
     fn choose_prime_numbers() -> (BigUInt<T, N>, BigUInt<T, N>)
     {
-        let mut rand = Random::new();
-        let prime_1: BigUInt<T, N> = rand.random_prime_with_half_length_using_miller_rabin_biguint(MR);
-        let mut prime_2 = rand.random_prime_with_half_length_using_miller_rabin_biguint(MR);
-        while prime_1 == prime_2
-            { prime_2 = rand.random_prime_with_half_length_using_miller_rabin_biguint(MR); }
-        (prime_1, prime_2)
+        crate::random::Random::new().random_prime_with_half_length_using_rsa_biguint(MR)
     }
 
     // pub fn find_keys(&mut self)
@@ -731,7 +728,7 @@ where T: TraitsBigUInt<T>
     /// # Example 1 for RSA_1024
     /// click [here](struct@RSA_Generic#method.decrypt_array_biguint)
     ///
-    /// # Caution
+    /// # Notice
     /// This method is very impractical. Normally, RSA is extremely slow
     /// in encryption/decryption compared to AES. So, almost nobody would use
     /// RSA in the same way of AES. You are not encourged to use this
@@ -797,7 +794,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.decrypt_array_biguint)
     ///
-    /// # Caution
+    /// # Notice
     /// This method is very impractical. Normally, RSA is extremely slow
     /// in encryption/decryption compared to AES. So, almost nobody would use
     /// RSA in the same way of AES. You are not encourged to use this
@@ -926,7 +923,7 @@ where T: TraitsBigUInt<T>
     /// # Example 1 for RSA_1024
     /// click [here](struct@RSA_Generic#method.decrypt_array_unit)
     ///
-    /// # Caution
+    /// # Notice
     /// This method is very impractical. Normally, RSA is extremely slow
     /// in encryption/decryption compared to AES. So, almost nobody would use
     /// RSA in the same way of AES. You are not encourged to use this
@@ -957,7 +954,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.decrypt_array_unit)
     ///
-    /// # Caution
+    /// # Notice
     /// This method is very impractical. Normally, RSA is extremely slow
     /// in encryption/decryption compared to AES. So, almost nobody would use
     /// RSA in the same way of AES. You are not encourged to use this

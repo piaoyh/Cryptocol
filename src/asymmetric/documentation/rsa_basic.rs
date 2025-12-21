@@ -3858,7 +3858,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(recovered[2], message[2].into_biguint());
     /// ```
     ///
-    /// # Caution
+    /// # Notice
     /// This method is very impractical. Normally, RSA is extremely slow
     /// in encryption/decryption compared to AES. So, almost nobody would use
     /// RSA in the same way of AES. You are not encourged to use this
