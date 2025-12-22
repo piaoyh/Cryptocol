@@ -2993,6 +2993,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     where T: TraitsBigUInt<T>
     {
         use crate::asymmetric::RSA_Generic;
+        let length = T::BITS * N as u32;
         loop
         {
             let prime_1: BigUInt<T, N> = self.random_prime_using_miller_rabin_biguint(repetition);
@@ -3000,11 +3001,21 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             while prime_1 == prime_2
                 { prime_2 = self.random_prime_using_miller_rabin_biguint(repetition); }
             let rsa = RSA_Generic::<N, T>::new_with_primes(prime_1.clone(), prime_2.clone());
-            let message = rsa.get_modulo().wrapping_div_uint(3_u32).wrapping_mul_uint(2_u32);
+            let message = rsa.get_modulo().shift_right(length);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover == message
-                { return (prime_1, prime_2); }
+            {
+                let cipher = rsa.encrypt_biguint(&prime_1);
+                let recover = rsa.decrypt_biguint(&cipher);
+                if prime_1 == recover
+                {
+                    let cipher = rsa.encrypt_biguint(&prime_2);
+                    let recover = rsa.decrypt_biguint(&cipher);
+                    if prime_2 == recover
+                        { return (prime_1, prime_2); }
+                }
+            }
         }
     }
 
@@ -3120,6 +3131,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     where T: TraitsBigUInt<T>
     {
         use crate::asymmetric::RSA_Generic;
+        let length = T::BITS * N as u32;
         loop
         {
             let prime_1: BigUInt<T, N> = self.random_prime_with_msb_set_using_miller_rabin_biguint(repetition);
@@ -3127,11 +3139,21 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             while prime_1 == prime_2
                 { prime_2 = self.random_prime_with_msb_set_using_miller_rabin_biguint(repetition); }
             let rsa = RSA_Generic::<N, T>::new_with_primes(prime_1.clone(), prime_2.clone());
-            let message = rsa.get_modulo().wrapping_div_uint(3_u32).wrapping_mul_uint(2_u32);
+            let message = rsa.get_modulo().shift_right(length);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover == message
-                { return (prime_1, prime_2); }
+            {
+                let cipher = rsa.encrypt_biguint(&prime_1);
+                let recover = rsa.decrypt_biguint(&cipher);
+                if prime_1 == recover
+                {
+                    let cipher = rsa.encrypt_biguint(&prime_2);
+                    let recover = rsa.decrypt_biguint(&cipher);
+                    if prime_2 == recover
+                        { return (prime_1, prime_2); }
+                }
+            }
         }
     }
 
@@ -3257,18 +3279,29 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     where T: TraitsBigUInt<T>
     {
         use crate::asymmetric::RSA_Generic;
+        let length = N * (T::BITS >> 1) as usize;
         loop
         {
-            let prime_1: BigUInt<T, N> = self.random_prime_with_half_length_using_miller_rabin_biguint(repetition);
+            let prime_1: BigUInt<T, N> = self.random_prime_with_msb_set_using_miller_rabin_biguint(repetition);
             let mut prime_2: BigUInt<T, N> = self.random_prime_with_half_length_using_miller_rabin_biguint(repetition);
             while prime_1 == prime_2
                 { prime_2 = self.random_prime_with_half_length_using_miller_rabin_biguint(repetition); }
             let rsa = RSA_Generic::<N, T>::new_with_primes(prime_1.clone(), prime_2.clone());
-            let message = rsa.get_modulo().shift_right(N * (T::BITS >> 1) as usize);
+            let message = rsa.get_modulo().shift_right(length);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover == message
-                { return (prime_1, prime_2); }
+            {
+                let cipher = rsa.encrypt_biguint(&prime_1);
+                let recover = rsa.decrypt_biguint(&cipher);
+                if prime_1 == recover
+                {
+                    let cipher = rsa.encrypt_biguint(&prime_2);
+                    let recover = rsa.decrypt_biguint(&cipher);
+                    if prime_2 == recover
+                        { return (prime_1, prime_2); }
+                }
+            }
         }
     }
 
@@ -3382,4 +3415,24 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         let col = self.random_usize() % COLUMN;
         BigUInt::<T, N>::from_str_radix(NUM_STR[row][col], 16).unwrap()
     }
+
+    // pub fn prepared_random_prime_numbers(&mut self) -> &[[&str; COLUMN]; 4]
+    /// Returns a refenece to the prepared prime number pool, which represents
+    /// a two-dimensional array prime numbers.
+    /// 
+    /// # Output
+    /// A refenece to the prepared prime number pool, which represents
+    /// a two-dimensional array prime number strings.
+    /// 
+    /// # Features
+    /// - The zeroth one-dimensional array contains 2048-bit prime number array.
+    /// - The first one-dimensional array contains 1024-bit prime number array.
+    /// - The second one-dimensional array contains 512-bit prime number array.
+    /// - The third one-dimensional array contains 256-bit prime number array.
+    #[inline]
+    pub fn prepared_random_prime_numbers() -> &'static [[&'static str; COLUMN]; 4]
+    {
+        &NUM_STR
+    }
 }
+
