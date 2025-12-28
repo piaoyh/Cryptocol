@@ -57,7 +57,6 @@ fn rsa_encrypt()
 fn rsa_decrypt()
 {
     println!("rsa_decrypt");
-    use std::fmt::Write;
     use cryptocol::asymmetric::PKCS1V15;
     
     // Example for RSA_1024

@@ -40,7 +40,6 @@ use crate::number::TraitsBigUInt;
 ///   `m = 117` for a 1024-bit key, `m = 245` for a 2048-bit key, and
 ///   `m = 501` for a 4096-bit key).
 /// 
-/// 
 /// # Key Field Details
 /// ## 1. Leading 0x00 (1 byte)
 /// This byte ensures that the integer represented by the block is numerically
@@ -123,7 +122,7 @@ pub trait PKCS1V15
     /// - For more information about the padding bits according to PKCS #1 ver. 1.5,
     ///   Read [here](https://datatracker.ietf.org/doc/html/rfc2313).
     /// 
-    /// # Example 1 for Normal message
+    /// # Example for RSA_1024
     /// click [here](trait@PKCS1V15#method.decrypt)
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 
@@ -847,7 +846,6 @@ pub trait PKCS1V15
     /// 
     /// # Example for RSA_1024
     /// ```
-    /// use std::fmt::Write;
     /// use cryptocol::asymmetric::{ RSA_1024, PKCS1V15 };
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
