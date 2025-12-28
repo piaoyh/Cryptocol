@@ -2969,56 +2969,6 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         res
     }
 
-    // pub fn random_prime_using_rsa_biguint<T, const N: usize>(&mut self, repetition: usize) -> (BigUInt<T, N>, BigUInt<T, N>)
-    /// Constucts a new `BigUInt<T, N>`-type object which represents a random
-    /// prime number.
-    /// 
-    /// # Argument
-    /// The argument `repetition` defines how many times it tests whether the
-    /// generated random number is prime. Usually, `repetition` is given to be
-    /// `5` for 99.9% accuracy or `7` for 99.99% accuracy.
-    /// 
-    /// # Output
-    /// The tuple of the two random prime numbers that this method returns is
-    /// the tuple of the two random prime number each of which ranges from
-    /// 2 up to BigUInt::max() inclusively.
-    /// 
-    /// # Features
-    /// This method uses Millar-Rabin algorithm and then determines whether or
-    /// not the generated random prime number candidate is really prime with
-    /// the RSA test. If it fails, this method repeats searching for another
-    /// ranmdom prime candidate until this method finds the true random prime
-    /// number, and return it. 
-    pub fn random_prime_using_rsa_biguint<T, const N: usize>(&mut self, repetition: usize) -> (BigUInt<T, N>, BigUInt<T, N>)
-    where T: TraitsBigUInt<T>
-    {
-        use crate::asymmetric::RSA_Generic;
-        let length = T::BITS * N as u32;
-        loop
-        {
-            let prime_1: BigUInt<T, N> = self.random_prime_using_miller_rabin_biguint(repetition);
-            let mut prime_2: BigUInt<T, N> = self.random_prime_using_miller_rabin_biguint(repetition);
-            while prime_1 == prime_2
-                { prime_2 = self.random_prime_using_miller_rabin_biguint(repetition); }
-            let rsa = RSA_Generic::<N, T>::new_with_primes(prime_1.clone(), prime_2.clone());
-            let message = rsa.get_modulo().shift_right(length);
-            let cipher = rsa.encrypt_biguint(&message);
-            let recover = rsa.decrypt_biguint(&cipher);
-            if recover == message
-            {
-                let cipher = rsa.encrypt_biguint(&prime_1);
-                let recover = rsa.decrypt_biguint(&cipher);
-                if prime_1 == recover
-                {
-                    let cipher = rsa.encrypt_biguint(&prime_2);
-                    let recover = rsa.decrypt_biguint(&cipher);
-                    if prime_2 == recover
-                        { return (prime_1, prime_2); }
-                }
-            }
-        }
-    }
-
     // pub fn random_prime_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
     /// Constucts a new `BigUInt<T, N>`-type object which represents a random
     /// prime number of full-size of BigUInt<T, N>.
@@ -3105,56 +3055,6 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         while !res.is_prime_using_miller_rabin(repetition)
             { res = self.random_odd_with_msb_set_biguint::<T, N>(); }
         res
-    }
-
-    // pub fn random_prime_with_msb_set_using_rsa_biguint<T, const N: usize>(&mut self, repetition: usize) -> (BigUInt<T, N>, BigUInt<T, N>)
-    /// Constucts a new `BigUInt<T, N>`-type object which represents a random
-    /// prime number.
-    /// 
-    /// # Argument
-    /// The argument `repetition` defines how many times it tests whether the
-    /// generated random number is prime. Usually, `repetition` is given to be
-    /// `5` for 99.9% accuracy or `7` for 99.99% accuracy.
-    /// 
-    /// # Output
-    /// The tuple of the two random prime numbers that this method returns is
-    /// the tuple of the two random prime number each of which ranges
-    /// from BigUInt::halfmax() up to BigUInt::max() inclusively.
-    /// 
-    /// # Features
-    /// This method uses Millar-Rabin algorithm and then determines whether or
-    /// not the generated random prime number candidate is really prime with
-    /// the RSA test. If it fails, this method repeats searching for another
-    /// ranmdom prime candidate until this method finds the true random prime
-    /// number, and return it. 
-    pub fn random_prime_with_msb_set_using_rsa_biguint<T, const N: usize>(&mut self, repetition: usize) -> (BigUInt<T, N>, BigUInt<T, N>)
-    where T: TraitsBigUInt<T>
-    {
-        use crate::asymmetric::RSA_Generic;
-        let length = T::BITS * N as u32;
-        loop
-        {
-            let prime_1: BigUInt<T, N> = self.random_prime_with_msb_set_using_miller_rabin_biguint(repetition);
-            let mut prime_2: BigUInt<T, N> = self.random_prime_with_msb_set_using_miller_rabin_biguint(repetition);
-            while prime_1 == prime_2
-                { prime_2 = self.random_prime_with_msb_set_using_miller_rabin_biguint(repetition); }
-            let rsa = RSA_Generic::<N, T>::new_with_primes(prime_1.clone(), prime_2.clone());
-            let message = rsa.get_modulo().shift_right(length);
-            let cipher = rsa.encrypt_biguint(&message);
-            let recover = rsa.decrypt_biguint(&cipher);
-            if recover == message
-            {
-                let cipher = rsa.encrypt_biguint(&prime_1);
-                let recover = rsa.decrypt_biguint(&cipher);
-                if prime_1 == recover
-                {
-                    let cipher = rsa.encrypt_biguint(&prime_2);
-                    let recover = rsa.decrypt_biguint(&cipher);
-                    if prime_2 == recover
-                        { return (prime_1, prime_2); }
-                }
-            }
-        }
     }
 
     // pub fn random_prime_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
@@ -3274,7 +3174,20 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// not the generated random prime number candidate is really prime with
     /// the RSA test. If it fails, this method repeats searching for another
     /// ranmdom prime candidate until this method finds the true random prime
-    /// number, and return it. 
+    /// number, and return it.
+    /// 
+    /// # Example
+    /// ```
+    /// use cryptocol::random::Random;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut prng = Random::new();
+    /// let (prime1, prime2): (U1024, U1024) = prng.random_prime_with_half_length_using_rsa_biguint(7);
+    /// let (prime1, prime2): (U512, U512) = (prime1.into_biguint(), prime2.into_biguint());
+    /// println!("U512 Prime number: {}", prime1);
+    /// println!("U512 Prime number: {}", prime2);
+    /// ```
     pub fn random_prime_with_half_length_using_rsa_biguint<T, const N: usize>(&mut self, repetition: usize) -> (BigUInt<T, N>, BigUInt<T, N>)
     where T: TraitsBigUInt<T>
     {
@@ -3287,7 +3200,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             while prime_1 == prime_2
                 { prime_2 = self.random_prime_with_half_length_using_miller_rabin_biguint(repetition); }
             let rsa = RSA_Generic::<N, T>::new_with_primes(prime_1.clone(), prime_2.clone());
-            let message = rsa.get_modulo().shift_right(length);
+            let message = rsa.get_modulus().shift_right(length);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover == message

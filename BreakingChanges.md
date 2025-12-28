@@ -1,5 +1,22 @@
 # Breaking Changes
 
+## Breaking changes from ver. 0.18.2 to ver. 0.18.3
+
+| Ver. 0.18.2                                                                                                                           | Ver. 0.18.3 |
+|---------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| pub fn random_prime_with_msb_set_using_rsa_biguint<T, const N: usize>(&mut self, repetition: usize) -> (BigUInt<T, N>, BigUInt<T, N>) | removed     |
+| pub fn random_prime_using_rsa_biguint<T, const N: usize>(&mut self, repetition: usize) -> (BigUInt<T, N>, BigUInt<T, N>)              | removed     |
+
+- The methods above have been removed from the struct Random_Generic.
+
+| Ver. 0.18.2                                          | Ver. 0.18.3                                           |
+|------------------------------------------------------|-------------------------------------------------------|
+| pub fn get_modulo(&self) -> BigUInt<T, N>            | pub fn get_modulus(&self) -> BigUInt<T, N>            |
+| pub fn set_modulo(&mut self, modulus: BigUInt<T, N>) | pub fn set_modulus(&mut self, modulus: BigUInt<T, N>) |
+| pub fn set_modulo(&mut self, modulo: BigUInt<T, N>)  | pub fn set_modulus(&mut self, modulus: BigUInt<T, N>) |
+
+- The methods above have been changed in its names in RSA_Generic.
+
 ## Breaking changes from ver. 0.17.3 to ver. 0.18.0
 
 | Ver. 0.17.3 | Ver. 0.18.0    |
@@ -50,7 +67,7 @@
 | pub fn new() -> Self                              | removed     |
 | pub fn new_with_seeds<T>(seed: T, aux: T) -> Self | removed     |
 
-- The methods above have been removed from the trait Random_Generic.
+- The methods above have been removed from the struct Random_Generic.
 
 ## Breaking changes from ver. 0.14.1 to ver. 0.15.0
 

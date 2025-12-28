@@ -204,9 +204,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_1024::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_1024: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_1024: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_1024: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_1024: public key = {:X}:{:x}", public_key, modulus);
     });
 
     // Example for RSA_2048
@@ -216,9 +216,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_2048::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_2048: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_2048: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_2048: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_2048: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_4096
@@ -228,9 +228,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_4096::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_4096: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_4096: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_4096: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_4096: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_Genric
@@ -240,9 +240,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_Generic::<8, u32, 5>::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_Generic<8, u32, 5>: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_Generic<8, u32, 5>: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_Generic<8, u32, 5>: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_Generic<8, u32, 5>: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_1024_u128
@@ -252,9 +252,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_1024_u128::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_1024_u128: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_1024_u128: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_1024_u128: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_1024_u128: public key = {:X}:{:x}", public_key, modulus);
     });
 
     // Example for RSA_2048_u128
@@ -264,9 +264,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_2048_u128::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_2048_u128: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_2048_u128: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_2048_u128: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_2048_u128: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_4096_u128
@@ -276,9 +276,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_4096_u128::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_4096_u128: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_4096_u128: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_4096_u128: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_4096_u128: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_1024_u64
@@ -288,9 +288,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_1024_u64::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_1024_u64: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_1024_u64: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_1024_u64: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_1024_u64: public key = {:X}:{:x}", public_key, modulus);
     });
 
     // Example for RSA_2048_u64
@@ -300,9 +300,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_2048_u64::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_2048_u64: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_2048_u64: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_2048_u64: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_2048_u64: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_4096_u64
@@ -312,9 +312,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_4096_u64::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_4096_u64: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_4096_u64: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_4096_u64: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_4096_u64: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_1024_u32
@@ -324,9 +324,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_1024_u32::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_1024_u32: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_1024_u32: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_1024_u32: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_1024_u32: public key = {:X}:{:x}", public_key, modulus);
     });
 
     // Example for RSA_2048_u32
@@ -336,9 +336,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_2048_u32::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_2048_u32: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_2048_u32: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_2048_u32: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_2048_u32: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_4096_u32
@@ -348,9 +348,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_4096_u32::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_4096_u32: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_4096_u32: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_4096_u32: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_4096_u32: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_1024_u16
@@ -360,9 +360,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_1024_u16::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_1024_u16: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_1024_u16: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_1024_u16: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_1024_u16: public key = {:X}:{:x}", public_key, modulus);
     });
 
     // Example for RSA_2048_u16
@@ -372,9 +372,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_2048_u16::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_2048_u16: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_2048_u16: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_2048_u16: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_2048_u16: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_4096_u16
@@ -384,9 +384,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_4096_u16::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_4096_u16: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_4096_u16: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_4096_u16: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_4096_u16: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_1024_u8
@@ -396,9 +396,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_1024_u8::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_1024_u8: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_1024_u8: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_1024_u8: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_1024_u8: public key = {:X}:{:x}", public_key, modulus);
     });
 
     // Example for RSA_2048_u8
@@ -408,9 +408,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_2048_u8::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_2048_u8: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_2048_u8: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_2048_u8: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_2048_u8: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_4096_u8
@@ -420,9 +420,9 @@ fn rsa_new_with_automatic_keys()
         let rsa = RSA_4096_u8::new_with_automatic_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_4096_u8: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_4096_u8: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_4096_u8: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_4096_u8: public key = {:X}:{:x}", public_key, modulus);
     });
 
     do_simultaneously(thread);
@@ -440,209 +440,209 @@ fn rsa_new_with_keys()
 
     let private_key = U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap();
     let public_key = U1024::from(7_u8);
-    let modulo = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
+    let modulus = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
 
-    let rsa = RSA_1024::new_with_keys(public_key, private_key, modulo);
-    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_1024::new_with_keys(public_key, private_key, modulus);
+    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_2048
     use cryptocol::asymmetric::RSA_2048;
 
     let private_key = U2048::from_str_radix("67EA9B746A1CD56D22A34A4B4CA0902596D39C7F7B88B2726B7757C1F82628F1F15B51F9A51B22CB932F1CFE59B34178CD6ED42571006CCECC23D2050D3189D4A9175E8BC1DFE77C55EF68E3036BED29BFA70CB76D51D74E54D3535B72CC676899C5FC60021929B939F57CFF92A471A48BFA806FDA2CF942515BC9012AAAE479303614EB9BA52EC8A76CA78AAEA820EC8214AADB70E12492C66060384B609F56395532879C06FA33D7242E55D30AD79BE7D6F8E97152405ABC7097AF6DBEF5B7D2DCD1D414BB29E387327025D66F6D32142C858DC33BC6861A7A95AF46431FDB6AD3B3108E7AA0387CCF99504DC882E2FB2E127CB981123421A629908EC4570B", 16).unwrap();
     let public_key = U2048::from(3_u8);
-    let modulo = U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap();
+    let modulus = U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap();
 
-    let rsa = RSA_2048::new_with_keys(public_key, private_key, modulo);
-    println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_2048::new_with_keys(public_key, private_key, modulus);
+    println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_4096
     use cryptocol::asymmetric::RSA_4096;
 
     let private_key = U4096::from_str_radix("16D9A2A76977853F423E2DDBA4AECBA372B95E082577329BCA5852F4400907D2B34366C1DD35B01EE9A2483E823E635EB7492797BE652252E131EADD6A68CCFA952B49A7F09B9AB2653386B2DEEF6874F2724392C4544BEF7D18E83E7CEF59E21F550C23CE848A05A19DE2D97347946E86F734FCA112938024608A9C5C1D72D658F369B49D3A4C77ADB6483C632AAE94F345791F9313D304277B1E4275F72F7C9B7C2DAB7DA91B94C807E5553FE534A923D22206F6A987CB9214FCA3EB78CE22A434CBAF7C3DF29010688F7930E9EB2BBF6113DE6A35F78EFCFC9A17A868277BAD58F432F097405E3F9415FE4E15D11D8D5376747F6046DF74AE76C5B50D28C5D972724F09E84FD057DAC07625C06ACE068A171480D73F51CAF7728F9EE0F0D4F794F81B2AFCD7C15898C7C5B964130F0D4EA1819999CDBC8E000C500DF8FECCEB9EB8AA75C16EAA6C02C61A3129B49472136E1231BB9D563BFAF93B1322DF047F9FF7CDB74610AF49E7ADD790746C5DB31B1D48888764511AE10FF2F22BF4D1CBFE809A9C716D9C4043C59120BC5EA9CC0CA20C06D6DF11B0574E534757F9BC78617CB484C988871A065348DF542869140D0D0F58EB3A76E2E1394C21D8FFEEC315CFA03DC70269234EACFD8AEFDBCDF0C0EAE6C743135FFA2B504F937BD9F473F10862C2D59C38FAAEDB9E930EB9264723B90923B40056594592A16D7D0D9D", 16).unwrap();
     let public_key = U4096::from(5_u8);
-    let modulo = U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap();
+    let modulus = U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap();
 
-    let rsa = RSA_4096::new_with_keys(public_key, private_key, modulo);
-    println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_4096::new_with_keys(public_key, private_key, modulus);
+    println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_Genric
     use cryptocol::asymmetric::RSA_Generic;
 
     let private_key = U512::from_str_radix("46CAC62F340DCC24A6FD1C603B57B4EE361C7C4370B01D769E53BC74CABC6153", 16).unwrap();
     let public_key = U512::from(3_u8);
-    let modulo = U512::from_str_radix("6a302946ce14b236fa7baa9059038f669cf8c4f1988fe647d4583bd600fecf6d", 16).unwrap();
+    let modulus = U512::from_str_radix("6a302946ce14b236fa7baa9059038f669cf8c4f1988fe647d4583bd600fecf6d", 16).unwrap();
 
-    let rsa = RSA_Generic::<16, u32, 5>::new_with_keys(public_key, private_key, modulo);
-    println!("RSA_Generic: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_Generic: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_Generic::<16, u32, 5>::new_with_keys(public_key, private_key, modulus);
+    println!("RSA_Generic: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_Generic: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_1024_u128
     use cryptocol::asymmetric::RSA_1024_u128;
 
     let private_key = U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap();
     let public_key = U1024::from(7_u8);
-    let modulo = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
+    let modulus = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
 
-    let rsa = RSA_1024_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_1024_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_2048_u128
     use cryptocol::asymmetric::RSA_2048_u128;
 
     let private_key = U2048::from_str_radix("67EA9B746A1CD56D22A34A4B4CA0902596D39C7F7B88B2726B7757C1F82628F1F15B51F9A51B22CB932F1CFE59B34178CD6ED42571006CCECC23D2050D3189D4A9175E8BC1DFE77C55EF68E3036BED29BFA70CB76D51D74E54D3535B72CC676899C5FC60021929B939F57CFF92A471A48BFA806FDA2CF942515BC9012AAAE479303614EB9BA52EC8A76CA78AAEA820EC8214AADB70E12492C66060384B609F56395532879C06FA33D7242E55D30AD79BE7D6F8E97152405ABC7097AF6DBEF5B7D2DCD1D414BB29E387327025D66F6D32142C858DC33BC6861A7A95AF46431FDB6AD3B3108E7AA0387CCF99504DC882E2FB2E127CB981123421A629908EC4570B", 16).unwrap();
     let public_key = U2048::from(3_u8);
-    let modulo = U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap();
+    let modulus = U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap();
 
-    let rsa = RSA_2048_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_2048_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_4096_u128
     use cryptocol::asymmetric::RSA_4096_u128;
 
     let private_key = U4096::from_str_radix("16D9A2A76977853F423E2DDBA4AECBA372B95E082577329BCA5852F4400907D2B34366C1DD35B01EE9A2483E823E635EB7492797BE652252E131EADD6A68CCFA952B49A7F09B9AB2653386B2DEEF6874F2724392C4544BEF7D18E83E7CEF59E21F550C23CE848A05A19DE2D97347946E86F734FCA112938024608A9C5C1D72D658F369B49D3A4C77ADB6483C632AAE94F345791F9313D304277B1E4275F72F7C9B7C2DAB7DA91B94C807E5553FE534A923D22206F6A987CB9214FCA3EB78CE22A434CBAF7C3DF29010688F7930E9EB2BBF6113DE6A35F78EFCFC9A17A868277BAD58F432F097405E3F9415FE4E15D11D8D5376747F6046DF74AE76C5B50D28C5D972724F09E84FD057DAC07625C06ACE068A171480D73F51CAF7728F9EE0F0D4F794F81B2AFCD7C15898C7C5B964130F0D4EA1819999CDBC8E000C500DF8FECCEB9EB8AA75C16EAA6C02C61A3129B49472136E1231BB9D563BFAF93B1322DF047F9FF7CDB74610AF49E7ADD790746C5DB31B1D48888764511AE10FF2F22BF4D1CBFE809A9C716D9C4043C59120BC5EA9CC0CA20C06D6DF11B0574E534757F9BC78617CB484C988871A065348DF542869140D0D0F58EB3A76E2E1394C21D8FFEEC315CFA03DC70269234EACFD8AEFDBCDF0C0EAE6C743135FFA2B504F937BD9F473F10862C2D59C38FAAEDB9E930EB9264723B90923B40056594592A16D7D0D9D", 16).unwrap();
     let public_key = U4096::from(5_u8);
-    let modulo = U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap();
+    let modulus = U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap();
 
-    let rsa = RSA_4096_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_4096_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_1024_u64
     use cryptocol::asymmetric::RSA_1024_u64;
 
     let private_key = U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap();
     let public_key = U1024::from(7_u8);
-    let modulo = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
+    let modulus = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
 
-    let rsa = RSA_1024_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_1024_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_2048_u64
     use cryptocol::asymmetric::RSA_2048_u64;
 
     let private_key = U2048::from_str_radix("67EA9B746A1CD56D22A34A4B4CA0902596D39C7F7B88B2726B7757C1F82628F1F15B51F9A51B22CB932F1CFE59B34178CD6ED42571006CCECC23D2050D3189D4A9175E8BC1DFE77C55EF68E3036BED29BFA70CB76D51D74E54D3535B72CC676899C5FC60021929B939F57CFF92A471A48BFA806FDA2CF942515BC9012AAAE479303614EB9BA52EC8A76CA78AAEA820EC8214AADB70E12492C66060384B609F56395532879C06FA33D7242E55D30AD79BE7D6F8E97152405ABC7097AF6DBEF5B7D2DCD1D414BB29E387327025D66F6D32142C858DC33BC6861A7A95AF46431FDB6AD3B3108E7AA0387CCF99504DC882E2FB2E127CB981123421A629908EC4570B", 16).unwrap();
     let public_key = U2048::from(3_u8);
-    let modulo = U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap();
+    let modulus = U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap();
 
-    let rsa = RSA_2048_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_2048_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_4096_u64
     use cryptocol::asymmetric::RSA_4096_u64;
 
     let private_key = U4096::from_str_radix("16D9A2A76977853F423E2DDBA4AECBA372B95E082577329BCA5852F4400907D2B34366C1DD35B01EE9A2483E823E635EB7492797BE652252E131EADD6A68CCFA952B49A7F09B9AB2653386B2DEEF6874F2724392C4544BEF7D18E83E7CEF59E21F550C23CE848A05A19DE2D97347946E86F734FCA112938024608A9C5C1D72D658F369B49D3A4C77ADB6483C632AAE94F345791F9313D304277B1E4275F72F7C9B7C2DAB7DA91B94C807E5553FE534A923D22206F6A987CB9214FCA3EB78CE22A434CBAF7C3DF29010688F7930E9EB2BBF6113DE6A35F78EFCFC9A17A868277BAD58F432F097405E3F9415FE4E15D11D8D5376747F6046DF74AE76C5B50D28C5D972724F09E84FD057DAC07625C06ACE068A171480D73F51CAF7728F9EE0F0D4F794F81B2AFCD7C15898C7C5B964130F0D4EA1819999CDBC8E000C500DF8FECCEB9EB8AA75C16EAA6C02C61A3129B49472136E1231BB9D563BFAF93B1322DF047F9FF7CDB74610AF49E7ADD790746C5DB31B1D48888764511AE10FF2F22BF4D1CBFE809A9C716D9C4043C59120BC5EA9CC0CA20C06D6DF11B0574E534757F9BC78617CB484C988871A065348DF542869140D0D0F58EB3A76E2E1394C21D8FFEEC315CFA03DC70269234EACFD8AEFDBCDF0C0EAE6C743135FFA2B504F937BD9F473F10862C2D59C38FAAEDB9E930EB9264723B90923B40056594592A16D7D0D9D", 16).unwrap();
     let public_key = U4096::from(5_u8);
-    let modulo = U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap();
+    let modulus = U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap();
 
-    let rsa = RSA_4096_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_4096_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_1024_u32
     use cryptocol::asymmetric::RSA_1024_u32;
 
     let private_key = U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap();
     let public_key = U1024::from(7_u8);
-    let modulo = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
+    let modulus = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
 
-    let rsa = RSA_1024_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_1024_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_2048_u32
     use cryptocol::asymmetric::RSA_2048_u32;
 
     let private_key = U2048::from_str_radix("67EA9B746A1CD56D22A34A4B4CA0902596D39C7F7B88B2726B7757C1F82628F1F15B51F9A51B22CB932F1CFE59B34178CD6ED42571006CCECC23D2050D3189D4A9175E8BC1DFE77C55EF68E3036BED29BFA70CB76D51D74E54D3535B72CC676899C5FC60021929B939F57CFF92A471A48BFA806FDA2CF942515BC9012AAAE479303614EB9BA52EC8A76CA78AAEA820EC8214AADB70E12492C66060384B609F56395532879C06FA33D7242E55D30AD79BE7D6F8E97152405ABC7097AF6DBEF5B7D2DCD1D414BB29E387327025D66F6D32142C858DC33BC6861A7A95AF46431FDB6AD3B3108E7AA0387CCF99504DC882E2FB2E127CB981123421A629908EC4570B", 16).unwrap();
     let public_key = U2048::from(3_u8);
-    let modulo = U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap();
+    let modulus = U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap();
 
-    let rsa = RSA_2048_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_2048_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_4096_u32
     use cryptocol::asymmetric::RSA_4096_u32;
 
     let private_key = U4096::from_str_radix("16D9A2A76977853F423E2DDBA4AECBA372B95E082577329BCA5852F4400907D2B34366C1DD35B01EE9A2483E823E635EB7492797BE652252E131EADD6A68CCFA952B49A7F09B9AB2653386B2DEEF6874F2724392C4544BEF7D18E83E7CEF59E21F550C23CE848A05A19DE2D97347946E86F734FCA112938024608A9C5C1D72D658F369B49D3A4C77ADB6483C632AAE94F345791F9313D304277B1E4275F72F7C9B7C2DAB7DA91B94C807E5553FE534A923D22206F6A987CB9214FCA3EB78CE22A434CBAF7C3DF29010688F7930E9EB2BBF6113DE6A35F78EFCFC9A17A868277BAD58F432F097405E3F9415FE4E15D11D8D5376747F6046DF74AE76C5B50D28C5D972724F09E84FD057DAC07625C06ACE068A171480D73F51CAF7728F9EE0F0D4F794F81B2AFCD7C15898C7C5B964130F0D4EA1819999CDBC8E000C500DF8FECCEB9EB8AA75C16EAA6C02C61A3129B49472136E1231BB9D563BFAF93B1322DF047F9FF7CDB74610AF49E7ADD790746C5DB31B1D48888764511AE10FF2F22BF4D1CBFE809A9C716D9C4043C59120BC5EA9CC0CA20C06D6DF11B0574E534757F9BC78617CB484C988871A065348DF542869140D0D0F58EB3A76E2E1394C21D8FFEEC315CFA03DC70269234EACFD8AEFDBCDF0C0EAE6C743135FFA2B504F937BD9F473F10862C2D59C38FAAEDB9E930EB9264723B90923B40056594592A16D7D0D9D", 16).unwrap();
     let public_key = U4096::from(5_u8);
-    let modulo = U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap();
+    let modulus = U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap();
 
-    let rsa = RSA_4096_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_4096_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_1024_u16
     use cryptocol::asymmetric::RSA_1024_u16;
 
     let private_key = U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap();
     let public_key = U1024::from(7_u8);
-    let modulo = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
+    let modulus = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
 
-    let rsa = RSA_1024_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_1024_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_2048_u16
     use cryptocol::asymmetric::RSA_2048_u16;
 
     let private_key = U2048::from_str_radix("67EA9B746A1CD56D22A34A4B4CA0902596D39C7F7B88B2726B7757C1F82628F1F15B51F9A51B22CB932F1CFE59B34178CD6ED42571006CCECC23D2050D3189D4A9175E8BC1DFE77C55EF68E3036BED29BFA70CB76D51D74E54D3535B72CC676899C5FC60021929B939F57CFF92A471A48BFA806FDA2CF942515BC9012AAAE479303614EB9BA52EC8A76CA78AAEA820EC8214AADB70E12492C66060384B609F56395532879C06FA33D7242E55D30AD79BE7D6F8E97152405ABC7097AF6DBEF5B7D2DCD1D414BB29E387327025D66F6D32142C858DC33BC6861A7A95AF46431FDB6AD3B3108E7AA0387CCF99504DC882E2FB2E127CB981123421A629908EC4570B", 16).unwrap();
     let public_key = U2048::from(3_u8);
-    let modulo = U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap();
+    let modulus = U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap();
 
-    let rsa = RSA_2048_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_2048_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_4096_u16
     use cryptocol::asymmetric::RSA_4096_u16;
 
     let private_key = U4096::from_str_radix("16D9A2A76977853F423E2DDBA4AECBA372B95E082577329BCA5852F4400907D2B34366C1DD35B01EE9A2483E823E635EB7492797BE652252E131EADD6A68CCFA952B49A7F09B9AB2653386B2DEEF6874F2724392C4544BEF7D18E83E7CEF59E21F550C23CE848A05A19DE2D97347946E86F734FCA112938024608A9C5C1D72D658F369B49D3A4C77ADB6483C632AAE94F345791F9313D304277B1E4275F72F7C9B7C2DAB7DA91B94C807E5553FE534A923D22206F6A987CB9214FCA3EB78CE22A434CBAF7C3DF29010688F7930E9EB2BBF6113DE6A35F78EFCFC9A17A868277BAD58F432F097405E3F9415FE4E15D11D8D5376747F6046DF74AE76C5B50D28C5D972724F09E84FD057DAC07625C06ACE068A171480D73F51CAF7728F9EE0F0D4F794F81B2AFCD7C15898C7C5B964130F0D4EA1819999CDBC8E000C500DF8FECCEB9EB8AA75C16EAA6C02C61A3129B49472136E1231BB9D563BFAF93B1322DF047F9FF7CDB74610AF49E7ADD790746C5DB31B1D48888764511AE10FF2F22BF4D1CBFE809A9C716D9C4043C59120BC5EA9CC0CA20C06D6DF11B0574E534757F9BC78617CB484C988871A065348DF542869140D0D0F58EB3A76E2E1394C21D8FFEEC315CFA03DC70269234EACFD8AEFDBCDF0C0EAE6C743135FFA2B504F937BD9F473F10862C2D59C38FAAEDB9E930EB9264723B90923B40056594592A16D7D0D9D", 16).unwrap();
     let public_key = U4096::from(5_u8);
-    let modulo = U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap();
+    let modulus = U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap();
 
-    let rsa = RSA_4096_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_4096_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_1024_u8
     use cryptocol::asymmetric::RSA_1024_u8;
 
     let private_key = U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap();
     let public_key = U1024::from(7_u8);
-    let modulo = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
+    let modulus = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
 
-    let rsa = RSA_1024_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_1024_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_2048_u8
     use cryptocol::asymmetric::RSA_2048_u8;
 
     let private_key = U2048::from_str_radix("67EA9B746A1CD56D22A34A4B4CA0902596D39C7F7B88B2726B7757C1F82628F1F15B51F9A51B22CB932F1CFE59B34178CD6ED42571006CCECC23D2050D3189D4A9175E8BC1DFE77C55EF68E3036BED29BFA70CB76D51D74E54D3535B72CC676899C5FC60021929B939F57CFF92A471A48BFA806FDA2CF942515BC9012AAAE479303614EB9BA52EC8A76CA78AAEA820EC8214AADB70E12492C66060384B609F56395532879C06FA33D7242E55D30AD79BE7D6F8E97152405ABC7097AF6DBEF5B7D2DCD1D414BB29E387327025D66F6D32142C858DC33BC6861A7A95AF46431FDB6AD3B3108E7AA0387CCF99504DC882E2FB2E127CB981123421A629908EC4570B", 16).unwrap();
     let public_key = U2048::from(3_u8);
-    let modulo = U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap();
+    let modulus = U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap();
 
-    let rsa = RSA_2048_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_2048_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
 
     // Example for RSA_4096_u8
     use cryptocol::asymmetric::RSA_4096_u8;
 
     let private_key = U4096::from_str_radix("16D9A2A76977853F423E2DDBA4AECBA372B95E082577329BCA5852F4400907D2B34366C1DD35B01EE9A2483E823E635EB7492797BE652252E131EADD6A68CCFA952B49A7F09B9AB2653386B2DEEF6874F2724392C4544BEF7D18E83E7CEF59E21F550C23CE848A05A19DE2D97347946E86F734FCA112938024608A9C5C1D72D658F369B49D3A4C77ADB6483C632AAE94F345791F9313D304277B1E4275F72F7C9B7C2DAB7DA91B94C807E5553FE534A923D22206F6A987CB9214FCA3EB78CE22A434CBAF7C3DF29010688F7930E9EB2BBF6113DE6A35F78EFCFC9A17A868277BAD58F432F097405E3F9415FE4E15D11D8D5376747F6046DF74AE76C5B50D28C5D972724F09E84FD057DAC07625C06ACE068A171480D73F51CAF7728F9EE0F0D4F794F81B2AFCD7C15898C7C5B964130F0D4EA1819999CDBC8E000C500DF8FECCEB9EB8AA75C16EAA6C02C61A3129B49472136E1231BB9D563BFAF93B1322DF047F9FF7CDB74610AF49E7ADD790746C5DB31B1D48888764511AE10FF2F22BF4D1CBFE809A9C716D9C4043C59120BC5EA9CC0CA20C06D6DF11B0574E534757F9BC78617CB484C988871A065348DF542869140D0D0F58EB3A76E2E1394C21D8FFEEC315CFA03DC70269234EACFD8AEFDBCDF0C0EAE6C743135FFA2B504F937BD9F473F10862C2D59C38FAAEDB9E930EB9264723B90923B40056594592A16D7D0D9D", 16).unwrap();
     let public_key = U4096::from(5_u8);
-    let modulo = U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap();
+    let modulus = U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap();
 
-    let rsa = RSA_4096_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
-    println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    let rsa = RSA_4096_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
+    println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("-------------------------------");
 }
 
@@ -662,8 +662,8 @@ fn rsa_new_with_primes()
         let prime2 = U512::from_str_radix("975BA2539AA5CE0A8AFB43EDDDBDE7EE6432274E8DC17F6A3543DFBBAA3ED30B", 16).unwrap();
 
         let rsa = RSA_1024::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
 
     // Example for RSA_2048
@@ -674,8 +674,8 @@ fn rsa_new_with_primes()
         let prime2 = U1024::from_str_radix("DD94ECE66B19E7201B165E79C6A63F5FAF1207A3F75EECB1CAF944CB06F47D4610163F46035834981B419A64AAD2C39575F4D10FBFF01DFAFAB3C1106E2D0E97", 16).unwrap();
 
         let rsa = RSA_2048::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_4096
@@ -686,8 +686,8 @@ fn rsa_new_with_primes()
         let prime2 = U2048::from_str_radix("94A16F977E8532F43A8A87C2EDC63A8B6D9930F99AA80EE1BC0E38C088B5128EC6539B32420D513757E16D41C338146A13A9107730BCC7C53CA73BC5FC2D9D3685806610C8602158BA28DF64AC0D27A66195EEC59FB424B21DA52D0A5B78034299C7CF14207175C856AC0171BA0AADDA6B75651554627C8A4BD028F43E81DC8F", 16).unwrap();
 
         let rsa = RSA_4096::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_Genric
@@ -698,8 +698,8 @@ fn rsa_new_with_primes()
         let prime2 = U512::from_str_radix("EA2A0C0B9696A6249323A66E5B4C2A8DD2E3417D3F9B3F48E603AD85943547DF", 16).unwrap();
 
         let rsa = RSA_Generic::<32, u16, 5>::new_with_primes(prime1, prime2);
-        println!("RSA_Generic: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_Generic: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_Generic: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_Generic: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_1024_u128
@@ -710,8 +710,8 @@ fn rsa_new_with_primes()
         let prime2 = U512::from_str_radix("975BA2539AA5CE0A8AFB43EDDDBDE7EE6432274E8DC17F6A3543DFBBAA3ED30B", 16).unwrap();
 
         let rsa = RSA_1024_u128::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
 
     // Example for RSA_2048_u128
@@ -722,8 +722,8 @@ fn rsa_new_with_primes()
         let prime2 = U1024::from_str_radix("DD94ECE66B19E7201B165E79C6A63F5FAF1207A3F75EECB1CAF944CB06F47D4610163F46035834981B419A64AAD2C39575F4D10FBFF01DFAFAB3C1106E2D0E97", 16).unwrap();
 
         let rsa = RSA_2048_u128::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_4096_u128
@@ -734,8 +734,8 @@ fn rsa_new_with_primes()
         let prime2 = U2048::from_str_radix("94A16F977E8532F43A8A87C2EDC63A8B6D9930F99AA80EE1BC0E38C088B5128EC6539B32420D513757E16D41C338146A13A9107730BCC7C53CA73BC5FC2D9D3685806610C8602158BA28DF64AC0D27A66195EEC59FB424B21DA52D0A5B78034299C7CF14207175C856AC0171BA0AADDA6B75651554627C8A4BD028F43E81DC8F", 16).unwrap();
 
         let rsa = RSA_4096_u128::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_1024_u64
@@ -746,8 +746,8 @@ fn rsa_new_with_primes()
         let prime2 = U512::from_str_radix("975BA2539AA5CE0A8AFB43EDDDBDE7EE6432274E8DC17F6A3543DFBBAA3ED30B", 16).unwrap();
 
         let rsa = RSA_1024_u64::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
 
     // Example for RSA_2048_u64
@@ -758,8 +758,8 @@ fn rsa_new_with_primes()
         let prime2 = U1024::from_str_radix("DD94ECE66B19E7201B165E79C6A63F5FAF1207A3F75EECB1CAF944CB06F47D4610163F46035834981B419A64AAD2C39575F4D10FBFF01DFAFAB3C1106E2D0E97", 16).unwrap();
 
         let rsa = RSA_2048_u64::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_4096_u64
@@ -770,8 +770,8 @@ fn rsa_new_with_primes()
         let prime2 = U2048::from_str_radix("94A16F977E8532F43A8A87C2EDC63A8B6D9930F99AA80EE1BC0E38C088B5128EC6539B32420D513757E16D41C338146A13A9107730BCC7C53CA73BC5FC2D9D3685806610C8602158BA28DF64AC0D27A66195EEC59FB424B21DA52D0A5B78034299C7CF14207175C856AC0171BA0AADDA6B75651554627C8A4BD028F43E81DC8F", 16).unwrap();
 
         let rsa = RSA_4096_u64::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_1024_u32
@@ -782,8 +782,8 @@ fn rsa_new_with_primes()
         let prime2 = U512::from_str_radix("975BA2539AA5CE0A8AFB43EDDDBDE7EE6432274E8DC17F6A3543DFBBAA3ED30B", 16).unwrap();
 
         let rsa = RSA_1024_u32::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
 
     // Example for RSA_2048_u32
@@ -794,8 +794,8 @@ fn rsa_new_with_primes()
         let prime2 = U1024::from_str_radix("DD94ECE66B19E7201B165E79C6A63F5FAF1207A3F75EECB1CAF944CB06F47D4610163F46035834981B419A64AAD2C39575F4D10FBFF01DFAFAB3C1106E2D0E97", 16).unwrap();
 
         let rsa = RSA_2048_u32::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_4096_u32
@@ -806,8 +806,8 @@ fn rsa_new_with_primes()
         let prime2 = U2048::from_str_radix("94A16F977E8532F43A8A87C2EDC63A8B6D9930F99AA80EE1BC0E38C088B5128EC6539B32420D513757E16D41C338146A13A9107730BCC7C53CA73BC5FC2D9D3685806610C8602158BA28DF64AC0D27A66195EEC59FB424B21DA52D0A5B78034299C7CF14207175C856AC0171BA0AADDA6B75651554627C8A4BD028F43E81DC8F", 16).unwrap();
 
         let rsa = RSA_4096_u32::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_1024_u16
@@ -818,8 +818,8 @@ fn rsa_new_with_primes()
         let prime2 = U512::from_str_radix("975BA2539AA5CE0A8AFB43EDDDBDE7EE6432274E8DC17F6A3543DFBBAA3ED30B", 16).unwrap();
 
         let rsa = RSA_1024_u16::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
 
     // Example for RSA_2048_u16
@@ -830,8 +830,8 @@ fn rsa_new_with_primes()
         let prime2 = U1024::from_str_radix("DD94ECE66B19E7201B165E79C6A63F5FAF1207A3F75EECB1CAF944CB06F47D4610163F46035834981B419A64AAD2C39575F4D10FBFF01DFAFAB3C1106E2D0E97", 16).unwrap();
 
         let rsa = RSA_2048_u16::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_4096_u16
@@ -842,8 +842,8 @@ fn rsa_new_with_primes()
         let prime2 = U2048::from_str_radix("94A16F977E8532F43A8A87C2EDC63A8B6D9930F99AA80EE1BC0E38C088B5128EC6539B32420D513757E16D41C338146A13A9107730BCC7C53CA73BC5FC2D9D3685806610C8602158BA28DF64AC0D27A66195EEC59FB424B21DA52D0A5B78034299C7CF14207175C856AC0171BA0AADDA6B75651554627C8A4BD028F43E81DC8F", 16).unwrap();
 
         let rsa = RSA_4096_u16::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_1024_u8
@@ -854,8 +854,8 @@ fn rsa_new_with_primes()
         let prime2 = U512::from_str_radix("975BA2539AA5CE0A8AFB43EDDDBDE7EE6432274E8DC17F6A3543DFBBAA3ED30B", 16).unwrap();
 
         let rsa = RSA_1024_u8::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
 
     // Example for RSA_2048_u8
@@ -866,8 +866,8 @@ fn rsa_new_with_primes()
         let prime2 = U1024::from_str_radix("DD94ECE66B19E7201B165E79C6A63F5FAF1207A3F75EECB1CAF944CB06F47D4610163F46035834981B419A64AAD2C39575F4D10FBFF01DFAFAB3C1106E2D0E97", 16).unwrap();
 
         let rsa = RSA_2048_u8::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_4096_u8
@@ -878,8 +878,8 @@ fn rsa_new_with_primes()
         let prime2 = U2048::from_str_radix("94A16F977E8532F43A8A87C2EDC63A8B6D9930F99AA80EE1BC0E38C088B5128EC6539B32420D513757E16D41C338146A13A9107730BCC7C53CA73BC5FC2D9D3685806610C8602158BA28DF64AC0D27A66195EEC59FB424B21DA52D0A5B78034299C7CF14207175C856AC0171BA0AADDA6B75651554627C8A4BD028F43E81DC8F", 16).unwrap();
 
         let rsa = RSA_4096_u8::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
 
     do_simultaneously(thread);
@@ -896,9 +896,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_1024::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_1024: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_1024: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_1024: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_1024: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_2048
     use cryptocol::asymmetric::RSA_2048;
@@ -906,9 +906,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_2048::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_2048: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_2048: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_2048: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_2048: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_4096
     use cryptocol::asymmetric::RSA_4096;
@@ -916,9 +916,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_4096::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_4096: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_4096: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_4096: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_4096: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_Genric
     use cryptocol::asymmetric::RSA_Generic;
@@ -926,9 +926,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_Generic::<8, u32, 5>::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_Generic<8, u32, 5>: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_Generic<8, u32, 5>: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_Generic<8, u32, 5>: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_Generic<8, u32, 5>: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_1024_u128
     use cryptocol::asymmetric::RSA_1024_u128;
@@ -936,9 +936,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_1024_u128::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_1024_u128: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_1024_u128: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_1024_u128: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_1024_u128: public key = {:X}:{:x}", public_key, modulus);
 
     // Example for RSA_2048_u128
     use cryptocol::asymmetric::RSA_2048_u128;
@@ -946,9 +946,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_2048_u128::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_2048_u128: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_2048_u128: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_2048_u128: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_2048_u128: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_4096_u128
     use cryptocol::asymmetric::RSA_4096_u128;
@@ -956,9 +956,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_4096_u128::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_4096_u128: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_4096_u128: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_4096_u128: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_4096_u128: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_1024_u64
     use cryptocol::asymmetric::RSA_1024_u64;
@@ -966,9 +966,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_1024_u64::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_1024_u64: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_1024_u64: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_1024_u64: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_1024_u64: public key = {:X}:{:x}", public_key, modulus);
 
     // Example for RSA_2048_u64
     use cryptocol::asymmetric::RSA_2048_u64;
@@ -976,9 +976,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_2048_u64::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_2048_u64: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_2048_u64: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_2048_u64: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_2048_u64: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_4096_u64
     use cryptocol::asymmetric::RSA_4096_u64;
@@ -986,9 +986,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_4096_u64::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_4096_u64: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_4096_u64: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_4096_u64: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_4096_u64: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_1024_u32
     use cryptocol::asymmetric::RSA_1024_u32;
@@ -996,9 +996,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_1024_u32::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_1024_u32: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_1024_u32: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_1024_u32: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_1024_u32: public key = {:X}:{:x}", public_key, modulus);
 
     // Example for RSA_2048_u32
     use cryptocol::asymmetric::RSA_2048_u32;
@@ -1006,9 +1006,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_2048_u32::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_2048_u32: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_2048_u32: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_2048_u32: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_2048_u32: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_4096_u32
     use cryptocol::asymmetric::RSA_4096_u32;
@@ -1016,9 +1016,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_4096_u32::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_4096_u32: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_4096_u32: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_4096_u32: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_4096_u32: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_1024_u16
     use cryptocol::asymmetric::RSA_1024_u16;
@@ -1026,9 +1026,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_1024_u16::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_1024_u16: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_1024_u16: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_1024_u16: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_1024_u16: public key = {:X}:{:x}", public_key, modulus);
 
     // Example for RSA_2048_u16
     use cryptocol::asymmetric::RSA_2048_u16;
@@ -1036,9 +1036,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_2048_u16::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_2048_u16: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_2048_u16: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_2048_u16: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_2048_u16: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_4096_u16
     use cryptocol::asymmetric::RSA_4096_u16;
@@ -1046,9 +1046,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_4096_u16::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_4096_u16: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_4096_u16: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_4096_u16: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_4096_u16: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_1024_u8
     use cryptocol::asymmetric::RSA_1024_u8;
@@ -1056,9 +1056,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_1024_u8::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_1024_u8: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_1024_u8: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_1024_u8: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_1024_u8: public key = {:X}:{:x}", public_key, modulus);
 
     // Example for RSA_2048_u8
     use cryptocol::asymmetric::RSA_2048_u8;
@@ -1066,9 +1066,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_2048_u8::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_2048_u8: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_2048_u8: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_2048_u8: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_2048_u8: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_4096_u8
     use cryptocol::asymmetric::RSA_4096_u8;
@@ -1076,9 +1076,9 @@ fn rsa_new_with_prepared_keys()
     let rsa = RSA_4096_u8::new_with_prepared_keys();
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_4096_u8: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_4096_u8: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_4096_u8: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_4096_u8: public key = {:X}:{:x}", public_key, modulus);
     println!("-------------------------------");
 }
 
@@ -1095,12 +1095,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_1024::new();
     rsa.set_public_key(U1024::from(7_u8));
     rsa.set_private_key(U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap());
-    rsa.set_modulo(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap());
+    rsa.set_modulus(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_1024: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_1024: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_1024: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_1024: public key = {:X}:{:x}", public_key, modulus);
 
     // Example for RSA_2048
     use cryptocol::asymmetric::RSA_2048;
@@ -1108,12 +1108,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_2048::new();
     rsa.set_public_key(U2048::from(7_u8));
     rsa.set_private_key(U2048::from_str_radix("67EA9B746A1CD56D22A34A4B4CA0902596D39C7F7B88B2726B7757C1F82628F1F15B51F9A51B22CB932F1CFE59B34178CD6ED42571006CCECC23D2050D3189D4A9175E8BC1DFE77C55EF68E3036BED29BFA70CB76D51D74E54D3535B72CC676899C5FC60021929B939F57CFF92A471A48BFA806FDA2CF942515BC9012AAAE479303614EB9BA52EC8A76CA78AAEA820EC8214AADB70E12492C66060384B609F56395532879C06FA33D7242E55D30AD79BE7D6F8E97152405ABC7097AF6DBEF5B7D2DCD1D414BB29E387327025D66F6D32142C858DC33BC6861A7A95AF46431FDB6AD3B3108E7AA0387CCF99504DC882E2FB2E127CB981123421A629908EC4570B", 16).unwrap());
-    rsa.set_modulo(U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap());
+    rsa.set_modulus(U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_2048: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_2048: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_2048: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_2048: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_4096
     use cryptocol::asymmetric::RSA_4096;
@@ -1121,12 +1121,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_4096::new();
     rsa.set_public_key(U4096::from(5_u8));
     rsa.set_private_key(U4096::from_str_radix("16D9A2A76977853F423E2DDBA4AECBA372B95E082577329BCA5852F4400907D2B34366C1DD35B01EE9A2483E823E635EB7492797BE652252E131EADD6A68CCFA952B49A7F09B9AB2653386B2DEEF6874F2724392C4544BEF7D18E83E7CEF59E21F550C23CE848A05A19DE2D97347946E86F734FCA112938024608A9C5C1D72D658F369B49D3A4C77ADB6483C632AAE94F345791F9313D304277B1E4275F72F7C9B7C2DAB7DA91B94C807E5553FE534A923D22206F6A987CB9214FCA3EB78CE22A434CBAF7C3DF29010688F7930E9EB2BBF6113DE6A35F78EFCFC9A17A868277BAD58F432F097405E3F9415FE4E15D11D8D5376747F6046DF74AE76C5B50D28C5D972724F09E84FD057DAC07625C06ACE068A171480D73F51CAF7728F9EE0F0D4F794F81B2AFCD7C15898C7C5B964130F0D4EA1819999CDBC8E000C500DF8FECCEB9EB8AA75C16EAA6C02C61A3129B49472136E1231BB9D563BFAF93B1322DF047F9FF7CDB74610AF49E7ADD790746C5DB31B1D48888764511AE10FF2F22BF4D1CBFE809A9C716D9C4043C59120BC5EA9CC0CA20C06D6DF11B0574E534757F9BC78617CB484C988871A065348DF542869140D0D0F58EB3A76E2E1394C21D8FFEEC315CFA03DC70269234EACFD8AEFDBCDF0C0EAE6C743135FFA2B504F937BD9F473F10862C2D59C38FAAEDB9E930EB9264723B90923B40056594592A16D7D0D9D", 16).unwrap());
-    rsa.set_modulo(U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap());
+    rsa.set_modulus(U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_4096: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_4096: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_4096: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_4096: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_Genric
     use cryptocol::asymmetric::RSA_Generic;
@@ -1134,12 +1134,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_Generic::<8, u32, 5>::new();
     rsa.set_public_key(BigUInt::<u32, 8>::from(3_u8));
     rsa.set_private_key(BigUInt::<u32, 8>::from_str_radix("46CAC62F340DCC24A6FD1C603B57B4EE361C7C4370B01D769E53BC74CABC6153", 16).unwrap());
-    rsa.set_modulo(BigUInt::<u32, 8>::from_str_radix("6a302946ce14b236fa7baa9059038f669cf8c4f1988fe647d4583bd600fecf6d", 16).unwrap());
+    rsa.set_modulus(BigUInt::<u32, 8>::from_str_radix("6a302946ce14b236fa7baa9059038f669cf8c4f1988fe647d4583bd600fecf6d", 16).unwrap());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_Generic<8, u32, 5>: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_Generic<8, u32, 5>: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_Generic<8, u32, 5>: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_Generic<8, u32, 5>: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_1024_u128
     use cryptocol::asymmetric::RSA_1024_u128;
@@ -1147,12 +1147,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_1024_u128::new();
     rsa.set_public_key(U1024::from(7_u8).into_biguint());
     rsa.set_private_key(U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap().into_biguint());
-    rsa.set_modulo(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap().into_biguint());
+    rsa.set_modulus(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_1024_u128: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_1024_u128: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_1024_u128: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_1024_u128: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_2048_u128
     use cryptocol::asymmetric::RSA_2048_u128;
@@ -1160,12 +1160,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_2048_u128::new();
     rsa.set_public_key(U2048::from(7_u8).into_biguint());
     rsa.set_private_key(U2048::from_str_radix("67EA9B746A1CD56D22A34A4B4CA0902596D39C7F7B88B2726B7757C1F82628F1F15B51F9A51B22CB932F1CFE59B34178CD6ED42571006CCECC23D2050D3189D4A9175E8BC1DFE77C55EF68E3036BED29BFA70CB76D51D74E54D3535B72CC676899C5FC60021929B939F57CFF92A471A48BFA806FDA2CF942515BC9012AAAE479303614EB9BA52EC8A76CA78AAEA820EC8214AADB70E12492C66060384B609F56395532879C06FA33D7242E55D30AD79BE7D6F8E97152405ABC7097AF6DBEF5B7D2DCD1D414BB29E387327025D66F6D32142C858DC33BC6861A7A95AF46431FDB6AD3B3108E7AA0387CCF99504DC882E2FB2E127CB981123421A629908EC4570B", 16).unwrap().into_biguint());
-    rsa.set_modulo(U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap().into_biguint());
+    rsa.set_modulus(U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_2048_u128: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_2048_u128: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_2048_u128: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_2048_u128: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_4096
     use cryptocol::asymmetric::RSA_4096_u128;
@@ -1173,12 +1173,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_4096_u128::new();
     rsa.set_public_key(U4096::from(5_u8).into_biguint());
     rsa.set_private_key(U4096::from_str_radix("16D9A2A76977853F423E2DDBA4AECBA372B95E082577329BCA5852F4400907D2B34366C1DD35B01EE9A2483E823E635EB7492797BE652252E131EADD6A68CCFA952B49A7F09B9AB2653386B2DEEF6874F2724392C4544BEF7D18E83E7CEF59E21F550C23CE848A05A19DE2D97347946E86F734FCA112938024608A9C5C1D72D658F369B49D3A4C77ADB6483C632AAE94F345791F9313D304277B1E4275F72F7C9B7C2DAB7DA91B94C807E5553FE534A923D22206F6A987CB9214FCA3EB78CE22A434CBAF7C3DF29010688F7930E9EB2BBF6113DE6A35F78EFCFC9A17A868277BAD58F432F097405E3F9415FE4E15D11D8D5376747F6046DF74AE76C5B50D28C5D972724F09E84FD057DAC07625C06ACE068A171480D73F51CAF7728F9EE0F0D4F794F81B2AFCD7C15898C7C5B964130F0D4EA1819999CDBC8E000C500DF8FECCEB9EB8AA75C16EAA6C02C61A3129B49472136E1231BB9D563BFAF93B1322DF047F9FF7CDB74610AF49E7ADD790746C5DB31B1D48888764511AE10FF2F22BF4D1CBFE809A9C716D9C4043C59120BC5EA9CC0CA20C06D6DF11B0574E534757F9BC78617CB484C988871A065348DF542869140D0D0F58EB3A76E2E1394C21D8FFEEC315CFA03DC70269234EACFD8AEFDBCDF0C0EAE6C743135FFA2B504F937BD9F473F10862C2D59C38FAAEDB9E930EB9264723B90923B40056594592A16D7D0D9D", 16).unwrap().into_biguint());
-    rsa.set_modulo(U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap().into_biguint());
+    rsa.set_modulus(U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_4096_u128: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_4096_u128: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_4096_u128: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_4096_u128: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_1024_u64
     use cryptocol::asymmetric::RSA_1024_u64;
@@ -1186,12 +1186,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_1024_u64::new();
     rsa.set_public_key(U1024::from(7_u8).into_biguint());
     rsa.set_private_key(U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap().into_biguint());
-    rsa.set_modulo(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap().into_biguint());
+    rsa.set_modulus(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_1024_u64: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_1024_u64: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_1024_u64: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_1024_u64: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_2048_u64
     use cryptocol::asymmetric::RSA_2048_u64;
@@ -1199,12 +1199,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_2048_u64::new();
     rsa.set_public_key(U2048::from(7_u8).into_biguint());
     rsa.set_private_key(U2048::from_str_radix("67EA9B746A1CD56D22A34A4B4CA0902596D39C7F7B88B2726B7757C1F82628F1F15B51F9A51B22CB932F1CFE59B34178CD6ED42571006CCECC23D2050D3189D4A9175E8BC1DFE77C55EF68E3036BED29BFA70CB76D51D74E54D3535B72CC676899C5FC60021929B939F57CFF92A471A48BFA806FDA2CF942515BC9012AAAE479303614EB9BA52EC8A76CA78AAEA820EC8214AADB70E12492C66060384B609F56395532879C06FA33D7242E55D30AD79BE7D6F8E97152405ABC7097AF6DBEF5B7D2DCD1D414BB29E387327025D66F6D32142C858DC33BC6861A7A95AF46431FDB6AD3B3108E7AA0387CCF99504DC882E2FB2E127CB981123421A629908EC4570B", 16).unwrap().into_biguint());
-    rsa.set_modulo(U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap().into_biguint());
+    rsa.set_modulus(U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_2048_u64: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_2048_u64: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_2048_u64: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_2048_u64: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_4096_u64
     use cryptocol::asymmetric::RSA_4096_u64;
@@ -1212,12 +1212,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_4096_u64::new();
     rsa.set_public_key(U4096::from(5_u8).into_biguint());
     rsa.set_private_key(U4096::from_str_radix("16D9A2A76977853F423E2DDBA4AECBA372B95E082577329BCA5852F4400907D2B34366C1DD35B01EE9A2483E823E635EB7492797BE652252E131EADD6A68CCFA952B49A7F09B9AB2653386B2DEEF6874F2724392C4544BEF7D18E83E7CEF59E21F550C23CE848A05A19DE2D97347946E86F734FCA112938024608A9C5C1D72D658F369B49D3A4C77ADB6483C632AAE94F345791F9313D304277B1E4275F72F7C9B7C2DAB7DA91B94C807E5553FE534A923D22206F6A987CB9214FCA3EB78CE22A434CBAF7C3DF29010688F7930E9EB2BBF6113DE6A35F78EFCFC9A17A868277BAD58F432F097405E3F9415FE4E15D11D8D5376747F6046DF74AE76C5B50D28C5D972724F09E84FD057DAC07625C06ACE068A171480D73F51CAF7728F9EE0F0D4F794F81B2AFCD7C15898C7C5B964130F0D4EA1819999CDBC8E000C500DF8FECCEB9EB8AA75C16EAA6C02C61A3129B49472136E1231BB9D563BFAF93B1322DF047F9FF7CDB74610AF49E7ADD790746C5DB31B1D48888764511AE10FF2F22BF4D1CBFE809A9C716D9C4043C59120BC5EA9CC0CA20C06D6DF11B0574E534757F9BC78617CB484C988871A065348DF542869140D0D0F58EB3A76E2E1394C21D8FFEEC315CFA03DC70269234EACFD8AEFDBCDF0C0EAE6C743135FFA2B504F937BD9F473F10862C2D59C38FAAEDB9E930EB9264723B90923B40056594592A16D7D0D9D", 16).unwrap().into_biguint());
-    rsa.set_modulo(U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap().into_biguint());
+    rsa.set_modulus(U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_4096_u64: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_4096_u64: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_4096_u64: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_4096_u64: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_1024_u32
     use cryptocol::asymmetric::RSA_1024_u32;
@@ -1225,12 +1225,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_1024_u32::new();
     rsa.set_public_key(U1024::from(7_u8).into_biguint());
     rsa.set_private_key(U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap().into_biguint());
-    rsa.set_modulo(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap().into_biguint());
+    rsa.set_modulus(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_1024_u32: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_1024_u32: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_1024_u32: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_1024_u32: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_2048_u32
     use cryptocol::asymmetric::RSA_2048_u32;
@@ -1238,12 +1238,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_2048_u32::new();
     rsa.set_public_key(U2048::from(7_u8).into_biguint());
     rsa.set_private_key(U2048::from_str_radix("67EA9B746A1CD56D22A34A4B4CA0902596D39C7F7B88B2726B7757C1F82628F1F15B51F9A51B22CB932F1CFE59B34178CD6ED42571006CCECC23D2050D3189D4A9175E8BC1DFE77C55EF68E3036BED29BFA70CB76D51D74E54D3535B72CC676899C5FC60021929B939F57CFF92A471A48BFA806FDA2CF942515BC9012AAAE479303614EB9BA52EC8A76CA78AAEA820EC8214AADB70E12492C66060384B609F56395532879C06FA33D7242E55D30AD79BE7D6F8E97152405ABC7097AF6DBEF5B7D2DCD1D414BB29E387327025D66F6D32142C858DC33BC6861A7A95AF46431FDB6AD3B3108E7AA0387CCF99504DC882E2FB2E127CB981123421A629908EC4570B", 16).unwrap().into_biguint());
-    rsa.set_modulo(U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap().into_biguint());
+    rsa.set_modulus(U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_2048_u32: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_2048_u32: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_2048_u32: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_2048_u32: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_4096_u32
     use cryptocol::asymmetric::RSA_4096_u32;
@@ -1251,12 +1251,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_4096_u32::new();
     rsa.set_public_key(U4096::from(5_u8).into_biguint());
     rsa.set_private_key(U4096::from_str_radix("16D9A2A76977853F423E2DDBA4AECBA372B95E082577329BCA5852F4400907D2B34366C1DD35B01EE9A2483E823E635EB7492797BE652252E131EADD6A68CCFA952B49A7F09B9AB2653386B2DEEF6874F2724392C4544BEF7D18E83E7CEF59E21F550C23CE848A05A19DE2D97347946E86F734FCA112938024608A9C5C1D72D658F369B49D3A4C77ADB6483C632AAE94F345791F9313D304277B1E4275F72F7C9B7C2DAB7DA91B94C807E5553FE534A923D22206F6A987CB9214FCA3EB78CE22A434CBAF7C3DF29010688F7930E9EB2BBF6113DE6A35F78EFCFC9A17A868277BAD58F432F097405E3F9415FE4E15D11D8D5376747F6046DF74AE76C5B50D28C5D972724F09E84FD057DAC07625C06ACE068A171480D73F51CAF7728F9EE0F0D4F794F81B2AFCD7C15898C7C5B964130F0D4EA1819999CDBC8E000C500DF8FECCEB9EB8AA75C16EAA6C02C61A3129B49472136E1231BB9D563BFAF93B1322DF047F9FF7CDB74610AF49E7ADD790746C5DB31B1D48888764511AE10FF2F22BF4D1CBFE809A9C716D9C4043C59120BC5EA9CC0CA20C06D6DF11B0574E534757F9BC78617CB484C988871A065348DF542869140D0D0F58EB3A76E2E1394C21D8FFEEC315CFA03DC70269234EACFD8AEFDBCDF0C0EAE6C743135FFA2B504F937BD9F473F10862C2D59C38FAAEDB9E930EB9264723B90923B40056594592A16D7D0D9D", 16).unwrap().into_biguint());
-    rsa.set_modulo(U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap().into_biguint());
+    rsa.set_modulus(U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_4096_u32: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_4096_u32: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_4096_u32: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_4096_u32: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_1024_u16
     use cryptocol::asymmetric::RSA_1024_u16;
@@ -1264,12 +1264,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_1024_u16::new();
     rsa.set_public_key(U1024::from(7_u8).into_biguint());
     rsa.set_private_key(U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap().into_biguint());
-    rsa.set_modulo(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap().into_biguint());
+    rsa.set_modulus(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_1024_u16: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_1024_u16: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_1024_u16: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_1024_u16: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_2048_u16
     use cryptocol::asymmetric::RSA_2048_u16;
@@ -1277,12 +1277,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_2048_u16::new();
     rsa.set_public_key(U2048::from(7_u8).into_biguint());
     rsa.set_private_key(U2048::from_str_radix("67EA9B746A1CD56D22A34A4B4CA0902596D39C7F7B88B2726B7757C1F82628F1F15B51F9A51B22CB932F1CFE59B34178CD6ED42571006CCECC23D2050D3189D4A9175E8BC1DFE77C55EF68E3036BED29BFA70CB76D51D74E54D3535B72CC676899C5FC60021929B939F57CFF92A471A48BFA806FDA2CF942515BC9012AAAE479303614EB9BA52EC8A76CA78AAEA820EC8214AADB70E12492C66060384B609F56395532879C06FA33D7242E55D30AD79BE7D6F8E97152405ABC7097AF6DBEF5B7D2DCD1D414BB29E387327025D66F6D32142C858DC33BC6861A7A95AF46431FDB6AD3B3108E7AA0387CCF99504DC882E2FB2E127CB981123421A629908EC4570B", 16).unwrap().into_biguint());
-    rsa.set_modulo(U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap().into_biguint());
+    rsa.set_modulus(U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_2048_u16: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_2048_u16: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_2048_u16: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_2048_u16: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_4096_u16
     use cryptocol::asymmetric::RSA_4096_u16;
@@ -1290,12 +1290,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_4096_u16::new();
     rsa.set_public_key(U4096::from(5_u8).into_biguint());
     rsa.set_private_key(U4096::from_str_radix("16D9A2A76977853F423E2DDBA4AECBA372B95E082577329BCA5852F4400907D2B34366C1DD35B01EE9A2483E823E635EB7492797BE652252E131EADD6A68CCFA952B49A7F09B9AB2653386B2DEEF6874F2724392C4544BEF7D18E83E7CEF59E21F550C23CE848A05A19DE2D97347946E86F734FCA112938024608A9C5C1D72D658F369B49D3A4C77ADB6483C632AAE94F345791F9313D304277B1E4275F72F7C9B7C2DAB7DA91B94C807E5553FE534A923D22206F6A987CB9214FCA3EB78CE22A434CBAF7C3DF29010688F7930E9EB2BBF6113DE6A35F78EFCFC9A17A868277BAD58F432F097405E3F9415FE4E15D11D8D5376747F6046DF74AE76C5B50D28C5D972724F09E84FD057DAC07625C06ACE068A171480D73F51CAF7728F9EE0F0D4F794F81B2AFCD7C15898C7C5B964130F0D4EA1819999CDBC8E000C500DF8FECCEB9EB8AA75C16EAA6C02C61A3129B49472136E1231BB9D563BFAF93B1322DF047F9FF7CDB74610AF49E7ADD790746C5DB31B1D48888764511AE10FF2F22BF4D1CBFE809A9C716D9C4043C59120BC5EA9CC0CA20C06D6DF11B0574E534757F9BC78617CB484C988871A065348DF542869140D0D0F58EB3A76E2E1394C21D8FFEEC315CFA03DC70269234EACFD8AEFDBCDF0C0EAE6C743135FFA2B504F937BD9F473F10862C2D59C38FAAEDB9E930EB9264723B90923B40056594592A16D7D0D9D", 16).unwrap().into_biguint());
-    rsa.set_modulo(U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap().into_biguint());
+    rsa.set_modulus(U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_4096_u16: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_4096_u16: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_4096_u16: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_4096_u16: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_1024_u8
     use cryptocol::asymmetric::RSA_1024_u8;
@@ -1303,12 +1303,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_1024_u8::new();
     rsa.set_public_key(U1024::from(7_u8).into_biguint());
     rsa.set_private_key(U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap().into_biguint());
-    rsa.set_modulo(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap().into_biguint());
+    rsa.set_modulus(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_1024_u8: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_1024_u8: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_1024_u8: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_1024_u8: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_2048_u8
     use cryptocol::asymmetric::RSA_2048_u8;
@@ -1316,12 +1316,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_2048_u8::new();
     rsa.set_public_key(U2048::from(7_u8).into_biguint());
     rsa.set_private_key(U2048::from_str_radix("67EA9B746A1CD56D22A34A4B4CA0902596D39C7F7B88B2726B7757C1F82628F1F15B51F9A51B22CB932F1CFE59B34178CD6ED42571006CCECC23D2050D3189D4A9175E8BC1DFE77C55EF68E3036BED29BFA70CB76D51D74E54D3535B72CC676899C5FC60021929B939F57CFF92A471A48BFA806FDA2CF942515BC9012AAAE479303614EB9BA52EC8A76CA78AAEA820EC8214AADB70E12492C66060384B609F56395532879C06FA33D7242E55D30AD79BE7D6F8E97152405ABC7097AF6DBEF5B7D2DCD1D414BB29E387327025D66F6D32142C858DC33BC6861A7A95AF46431FDB6AD3B3108E7AA0387CCF99504DC882E2FB2E127CB981123421A629908EC4570B", 16).unwrap().into_biguint());
-    rsa.set_modulo(U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap().into_biguint());
+    rsa.set_modulus(U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_2048_u8: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_2048_u8: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_2048_u8: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_2048_u8: public key = {:X}:{:x}", public_key, modulus);
     
     // Example for RSA_4096_u8
     use cryptocol::asymmetric::RSA_4096_u8;
@@ -1329,12 +1329,12 @@ fn rsa_set_keys()
     let mut rsa = RSA_4096_u8::new();
     rsa.set_public_key(U4096::from(5_u8).into_biguint());
     rsa.set_private_key(U4096::from_str_radix("16D9A2A76977853F423E2DDBA4AECBA372B95E082577329BCA5852F4400907D2B34366C1DD35B01EE9A2483E823E635EB7492797BE652252E131EADD6A68CCFA952B49A7F09B9AB2653386B2DEEF6874F2724392C4544BEF7D18E83E7CEF59E21F550C23CE848A05A19DE2D97347946E86F734FCA112938024608A9C5C1D72D658F369B49D3A4C77ADB6483C632AAE94F345791F9313D304277B1E4275F72F7C9B7C2DAB7DA91B94C807E5553FE534A923D22206F6A987CB9214FCA3EB78CE22A434CBAF7C3DF29010688F7930E9EB2BBF6113DE6A35F78EFCFC9A17A868277BAD58F432F097405E3F9415FE4E15D11D8D5376747F6046DF74AE76C5B50D28C5D972724F09E84FD057DAC07625C06ACE068A171480D73F51CAF7728F9EE0F0D4F794F81B2AFCD7C15898C7C5B964130F0D4EA1819999CDBC8E000C500DF8FECCEB9EB8AA75C16EAA6C02C61A3129B49472136E1231BB9D563BFAF93B1322DF047F9FF7CDB74610AF49E7ADD790746C5DB31B1D48888764511AE10FF2F22BF4D1CBFE809A9C716D9C4043C59120BC5EA9CC0CA20C06D6DF11B0574E534757F9BC78617CB484C988871A065348DF542869140D0D0F58EB3A76E2E1394C21D8FFEEC315CFA03DC70269234EACFD8AEFDBCDF0C0EAE6C743135FFA2B504F937BD9F473F10862C2D59C38FAAEDB9E930EB9264723B90923B40056594592A16D7D0D9D", 16).unwrap().into_biguint());
-    rsa.set_modulo(U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap().into_biguint());
+    rsa.set_modulus(U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap().into_biguint());
     let private_key = rsa.get_private_key();
     let public_key = rsa.get_public_key();
-    let modulo = rsa.get_modulo();
-    println!("RSA_4096_u8: private key = {:X}:{:x}", private_key, modulo);
-    println!("RSA_4096_u8: public key = {:X}:{:x}", public_key, modulo);
+    let modulus = rsa.get_modulus();
+    println!("RSA_4096_u8: private key = {:X}:{:x}", private_key, modulus);
+    println!("RSA_4096_u8: public key = {:X}:{:x}", public_key, modulus);
     println!("-------------------------------");
 }
 
@@ -1352,9 +1352,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_1024: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_1024: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_1024: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_1024: public key = {:X}:{:x}", public_key, modulus);
     });
 
     // Example for RSA_2048
@@ -1365,9 +1365,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_2048: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_2048: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_2048: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_2048: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_4096
@@ -1378,9 +1378,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_4096: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_4096: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_4096: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_4096: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_Genric
@@ -1391,9 +1391,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_Generic<8, u32, 5>: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_Generic<8, u32, 5>: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_Generic<8, u32, 5>: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_Generic<8, u32, 5>: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_1024_u128
@@ -1404,9 +1404,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_1024_u128: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_1024_u128: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_1024_u128: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_1024_u128: public key = {:X}:{:x}", public_key, modulus);
     });
 
     // Example for RSA_2048_u128
@@ -1417,9 +1417,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_2048_u128: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_2048_u128: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_2048_u128: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_2048_u128: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_4096_u128
@@ -1430,9 +1430,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_4096_u128: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_4096_u128: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_4096_u128: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_4096_u128: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_1024_u64
@@ -1443,9 +1443,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_1024_u64: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_1024_u64: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_1024_u64: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_1024_u64: public key = {:X}:{:x}", public_key, modulus);
     });
 
     // Example for RSA_2048_u64
@@ -1456,9 +1456,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_2048_u64: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_2048_u64: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_2048_u64: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_2048_u64: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_4096_u64
@@ -1469,9 +1469,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_4096_u64: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_4096_u64: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_4096_u64: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_4096_u64: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_1024_u32
@@ -1482,9 +1482,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_1024_u32: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_1024_u32: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_1024_u32: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_1024_u32: public key = {:X}:{:x}", public_key, modulus);
     });
 
     // Example for RSA_2048_u32
@@ -1495,9 +1495,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_2048_u32: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_2048_u32: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_2048_u32: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_2048_u32: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_4096_u32
@@ -1508,9 +1508,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_4096_u32: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_4096_u32: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_4096_u32: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_4096_u32: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_1024_u16
@@ -1521,9 +1521,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_1024_u16: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_1024_u16: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_1024_u16: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_1024_u16: public key = {:X}:{:x}", public_key, modulus);
     });
 
     // Example for RSA_2048_u16
@@ -1534,9 +1534,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_2048_u16: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_2048_u16: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_2048_u16: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_2048_u16: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_4096_u16
@@ -1547,9 +1547,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_4096_u16: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_4096_u16: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_4096_u16: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_4096_u16: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_1024_u8
@@ -1560,9 +1560,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_1024_u8: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_1024_u8: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_1024_u8: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_1024_u8: public key = {:X}:{:x}", public_key, modulus);
     });
 
     // Example for RSA_2048_u8
@@ -1573,9 +1573,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_2048_u8: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_2048_u8: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_2048_u8: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_2048_u8: public key = {:X}:{:x}", public_key, modulus);
     });
     
     // Example for RSA_4096_u8
@@ -1586,9 +1586,9 @@ fn rsa_find_keys()
         rsa.find_keys();
         let private_key = rsa.get_private_key();
         let public_key = rsa.get_public_key();
-        let modulo = rsa.get_modulo();
-        println!("RSA_4096_u8: private key = {:X}:{:x}", private_key, modulo);
-        println!("RSA_4096_u8: public key = {:X}:{:x}", public_key, modulo);
+        let modulus = rsa.get_modulus();
+        println!("RSA_4096_u8: private key = {:X}:{:x}", private_key, modulus);
+        println!("RSA_4096_u8: public key = {:X}:{:x}", public_key, modulus);
     });
 
     do_simultaneously(thread);
@@ -1612,8 +1612,8 @@ fn calculate_keys()
         let prime2 = U512::from_str_radix("8821AE888CFE44FB3667C54A1C40452D02309B64940AE5FA957390F250BDC919DC350E4DB6B4E5CF05F393D9B4DF89E55BB5F7DFC114F465A250EF55284BF793", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
 
     // Example for RSA_2048
@@ -1625,8 +1625,8 @@ fn calculate_keys()
         let prime2 = U1024::from_str_radix("91B307B767F9BDE99AB167625F41A0396E3B06CC6C1059E5EACF42342013C99EBE230B7AD380577521F242E3A84AD15B2F7B96F95B5C35FA409FE60410457A8DB1CBF45D2592509DFA83A4B4EDBEE35075B79EA36B4B99B5F88F5AEC40CB0CD5C1B2D9853EA830CF08FAE6E5232F47F5BCE755AC8F3A0DFD861F1124BE3457C9", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_4096
@@ -1638,8 +1638,8 @@ fn calculate_keys()
         let prime2 = U2048::from_str_radix("D29FC14636D944F57043C63461D40846452C3211654B3C68F77C1C8F28D8E4E323F27779B1F4F6BC2C3D245F77D18CDEEAAB8FCA778991608D6A10D1C7A1F36F2B143EF89A463AC998098116E7024790DE0FA381120986FEC53A659AC6F0D2B1D7EAC64466F6F62CA409B683DF9882980DE906BC1CC105C60134841D29356F731A6ABB832215AEE148D9E1DE35EAB9E61A289C1EC811F615502954088BDFAFDFF9902505E41EB4C896727D1032D795B1B315104536F8F9EE6757360E5E3E4B80D1E62D355C4DB2C59C9F8B66CADF0781C3D9211E71471CB93F79489EDDDF5C1E546ADA8EB42BF27960E4EB75EDD90A3B3A32C815A6879886A82D107E150587CD", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_Genric
@@ -1651,8 +1651,8 @@ fn calculate_keys()
         let prime2 = U512::from_str_radix("97A3CE282F1D1497870F3120D24216F9EE7BA23B50326416A7A67EEB250E8579", 16).unwrap();
 
         rsa.calculate_keys(prime1, prime2);
-        println!("RSA_Generic: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_Generic: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_Generic: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_Generic: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_1024_u128
@@ -1664,8 +1664,8 @@ fn calculate_keys()
         let prime2 = U512::from_str_radix("8821AE888CFE44FB3667C54A1C40452D02309B64940AE5FA957390F250BDC919DC350E4DB6B4E5CF05F393D9B4DF89E55BB5F7DFC114F465A250EF55284BF793", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
 
     // Example for RSA_2048_u128
@@ -1677,8 +1677,8 @@ fn calculate_keys()
         let prime2 = U1024::from_str_radix("91B307B767F9BDE99AB167625F41A0396E3B06CC6C1059E5EACF42342013C99EBE230B7AD380577521F242E3A84AD15B2F7B96F95B5C35FA409FE60410457A8DB1CBF45D2592509DFA83A4B4EDBEE35075B79EA36B4B99B5F88F5AEC40CB0CD5C1B2D9853EA830CF08FAE6E5232F47F5BCE755AC8F3A0DFD861F1124BE3457C9", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_4096_u128
@@ -1690,8 +1690,8 @@ fn calculate_keys()
         let prime2 = U2048::from_str_radix("D29FC14636D944F57043C63461D40846452C3211654B3C68F77C1C8F28D8E4E323F27779B1F4F6BC2C3D245F77D18CDEEAAB8FCA778991608D6A10D1C7A1F36F2B143EF89A463AC998098116E7024790DE0FA381120986FEC53A659AC6F0D2B1D7EAC64466F6F62CA409B683DF9882980DE906BC1CC105C60134841D29356F731A6ABB832215AEE148D9E1DE35EAB9E61A289C1EC811F615502954088BDFAFDFF9902505E41EB4C896727D1032D795B1B315104536F8F9EE6757360E5E3E4B80D1E62D355C4DB2C59C9F8B66CADF0781C3D9211E71471CB93F79489EDDDF5C1E546ADA8EB42BF27960E4EB75EDD90A3B3A32C815A6879886A82D107E150587CD", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_1024_u64
@@ -1703,8 +1703,8 @@ fn calculate_keys()
         let prime2 = U512::from_str_radix("8821AE888CFE44FB3667C54A1C40452D02309B64940AE5FA957390F250BDC919DC350E4DB6B4E5CF05F393D9B4DF89E55BB5F7DFC114F465A250EF55284BF793", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
 
     // Example for RSA_2048_u64
@@ -1716,8 +1716,8 @@ fn calculate_keys()
         let prime2 = U1024::from_str_radix("91B307B767F9BDE99AB167625F41A0396E3B06CC6C1059E5EACF42342013C99EBE230B7AD380577521F242E3A84AD15B2F7B96F95B5C35FA409FE60410457A8DB1CBF45D2592509DFA83A4B4EDBEE35075B79EA36B4B99B5F88F5AEC40CB0CD5C1B2D9853EA830CF08FAE6E5232F47F5BCE755AC8F3A0DFD861F1124BE3457C9", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_4096_u64
@@ -1729,8 +1729,8 @@ fn calculate_keys()
         let prime2 = U2048::from_str_radix("D29FC14636D944F57043C63461D40846452C3211654B3C68F77C1C8F28D8E4E323F27779B1F4F6BC2C3D245F77D18CDEEAAB8FCA778991608D6A10D1C7A1F36F2B143EF89A463AC998098116E7024790DE0FA381120986FEC53A659AC6F0D2B1D7EAC64466F6F62CA409B683DF9882980DE906BC1CC105C60134841D29356F731A6ABB832215AEE148D9E1DE35EAB9E61A289C1EC811F615502954088BDFAFDFF9902505E41EB4C896727D1032D795B1B315104536F8F9EE6757360E5E3E4B80D1E62D355C4DB2C59C9F8B66CADF0781C3D9211E71471CB93F79489EDDDF5C1E546ADA8EB42BF27960E4EB75EDD90A3B3A32C815A6879886A82D107E150587CD", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_1024_u32
@@ -1742,8 +1742,8 @@ fn calculate_keys()
         let prime2 = U512::from_str_radix("8821AE888CFE44FB3667C54A1C40452D02309B64940AE5FA957390F250BDC919DC350E4DB6B4E5CF05F393D9B4DF89E55BB5F7DFC114F465A250EF55284BF793", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
 
     // Example for RSA_2048_u32
@@ -1755,8 +1755,8 @@ fn calculate_keys()
         let prime2 = U1024::from_str_radix("91B307B767F9BDE99AB167625F41A0396E3B06CC6C1059E5EACF42342013C99EBE230B7AD380577521F242E3A84AD15B2F7B96F95B5C35FA409FE60410457A8DB1CBF45D2592509DFA83A4B4EDBEE35075B79EA36B4B99B5F88F5AEC40CB0CD5C1B2D9853EA830CF08FAE6E5232F47F5BCE755AC8F3A0DFD861F1124BE3457C9", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_4096_u32
@@ -1768,8 +1768,8 @@ fn calculate_keys()
         let prime2 = U2048::from_str_radix("D29FC14636D944F57043C63461D40846452C3211654B3C68F77C1C8F28D8E4E323F27779B1F4F6BC2C3D245F77D18CDEEAAB8FCA778991608D6A10D1C7A1F36F2B143EF89A463AC998098116E7024790DE0FA381120986FEC53A659AC6F0D2B1D7EAC64466F6F62CA409B683DF9882980DE906BC1CC105C60134841D29356F731A6ABB832215AEE148D9E1DE35EAB9E61A289C1EC811F615502954088BDFAFDFF9902505E41EB4C896727D1032D795B1B315104536F8F9EE6757360E5E3E4B80D1E62D355C4DB2C59C9F8B66CADF0781C3D9211E71471CB93F79489EDDDF5C1E546ADA8EB42BF27960E4EB75EDD90A3B3A32C815A6879886A82D107E150587CD", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_1024_u16
@@ -1781,8 +1781,8 @@ fn calculate_keys()
         let prime2 = U512::from_str_radix("8821AE888CFE44FB3667C54A1C40452D02309B64940AE5FA957390F250BDC919DC350E4DB6B4E5CF05F393D9B4DF89E55BB5F7DFC114F465A250EF55284BF793", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
 
     // Example for RSA_2048_u16
@@ -1794,8 +1794,8 @@ fn calculate_keys()
         let prime2 = U1024::from_str_radix("91B307B767F9BDE99AB167625F41A0396E3B06CC6C1059E5EACF42342013C99EBE230B7AD380577521F242E3A84AD15B2F7B96F95B5C35FA409FE60410457A8DB1CBF45D2592509DFA83A4B4EDBEE35075B79EA36B4B99B5F88F5AEC40CB0CD5C1B2D9853EA830CF08FAE6E5232F47F5BCE755AC8F3A0DFD861F1124BE3457C9", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_4096_u16
@@ -1807,8 +1807,8 @@ fn calculate_keys()
         let prime2 = U2048::from_str_radix("D29FC14636D944F57043C63461D40846452C3211654B3C68F77C1C8F28D8E4E323F27779B1F4F6BC2C3D245F77D18CDEEAAB8FCA778991608D6A10D1C7A1F36F2B143EF89A463AC998098116E7024790DE0FA381120986FEC53A659AC6F0D2B1D7EAC64466F6F62CA409B683DF9882980DE906BC1CC105C60134841D29356F731A6ABB832215AEE148D9E1DE35EAB9E61A289C1EC811F615502954088BDFAFDFF9902505E41EB4C896727D1032D795B1B315104536F8F9EE6757360E5E3E4B80D1E62D355C4DB2C59C9F8B66CADF0781C3D9211E71471CB93F79489EDDDF5C1E546ADA8EB42BF27960E4EB75EDD90A3B3A32C815A6879886A82D107E150587CD", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_1024_u8
@@ -1820,8 +1820,8 @@ fn calculate_keys()
         let prime2 = U512::from_str_radix("8821AE888CFE44FB3667C54A1C40452D02309B64940AE5FA957390F250BDC919DC350E4DB6B4E5CF05F393D9B4DF89E55BB5F7DFC114F465A250EF55284BF793", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
 
     // Example for RSA_2048_u8
@@ -1833,8 +1833,8 @@ fn calculate_keys()
         let prime2 = U1024::from_str_radix("91B307B767F9BDE99AB167625F41A0396E3B06CC6C1059E5EACF42342013C99EBE230B7AD380577521F242E3A84AD15B2F7B96F95B5C35FA409FE60410457A8DB1CBF45D2592509DFA83A4B4EDBEE35075B79EA36B4B99B5F88F5AEC40CB0CD5C1B2D9853EA830CF08FAE6E5232F47F5BCE755AC8F3A0DFD861F1124BE3457C9", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
     
     // Example for RSA_4096_u8
@@ -1846,8 +1846,8 @@ fn calculate_keys()
         let prime2 = U2048::from_str_radix("D29FC14636D944F57043C63461D40846452C3211654B3C68F77C1C8F28D8E4E323F27779B1F4F6BC2C3D245F77D18CDEEAAB8FCA778991608D6A10D1C7A1F36F2B143EF89A463AC998098116E7024790DE0FA381120986FEC53A659AC6F0D2B1D7EAC64466F6F62CA409B683DF9882980DE906BC1CC105C60134841D29356F731A6ABB832215AEE148D9E1DE35EAB9E61A289C1EC811F615502954088BDFAFDFF9902505E41EB4C896727D1032D795B1B315104536F8F9EE6757360E5E3E4B80D1E62D355C4DB2C59C9F8B66CADF0781C3D9211E71471CB93F79489EDDDF5C1E546ADA8EB42BF27960E4EB75EDD90A3B3A32C815A6879886A82D107E150587CD", 16).unwrap();
 
         rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-        println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-        println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+        println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+        println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     });
 
     do_simultaneously(thread);
@@ -1866,12 +1866,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U1024::from(7_u8);
     let private_key = U1024::from_str_radix("11A086687252F0D0ECE2E723F06808EEA5467A8EE1025EE5CAC299448454B33D1A9A97596144EBF52706CEEA13F427DF7000E05542DC34ABA46ECE12D1CF5D1286A9DCDE69407D78F699CF592CAFDF5741019FCA261BAA65529AB2FADC9D00F5712A14480C9724DA29C2354DB2DCABEDD89735A6B663984831B427061704E6D7", 16).unwrap();
-    let modulo = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
-    let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
+    let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
 
-    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -1883,12 +1883,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U2048::from(3_u8);
     let private_key = U2048::from_str_radix("701F1A22CF4EC7F8084FCE973A11B7C769D977C65E2CE023C8680270882A63AA5A1F591DBB7D9250CFE60485E22076BBF7112339393D3BB9E55A44B7584EF4A77C74040796B78464BF1E636A4033725D89B667CE27682731F2DA5A77662A7C39AF47E0078D9CFD8398DC67C20237758AE3E4CC3EE9A6364A5A70D6A886F7C5AD782D8E9700C462DC5550E884501351BF7CA151550F46724324548F2E83B7D1832A0F04B30314C14AE9FCE01E1D91B6ACF4EDAAADCD17298924B0B687DA02028B26F90A817EDFA1773396FDE0EA61A2E86C8ED519A38910F6974ABA4DDEEEF3F3D6420A62A6A7038B4DAA8D3CEB868FF4D79C2B0BF5B9D4E8A0F373AB963B3A3B", 16).unwrap();
-    let modulo = U2048::from_str_radix("a82ea73436f62bf40c77b5e2d71a93ab1ec633a98d435035ac9c03a8cc3f957f872f05ac993c5b7937d906c8d330b219f299b4d5d5dbd996d807671304766efb3aae060b621346971ead951f604d2b8c4e919bb53b1c3acaec4787b3193fba5686ebd00b546b7c45654a9ba30353305055d7325e5e79516f87a941fcca73a885da9d96da9a86019b32e68bdca7737d4d24de47271efc65157108665b368414bb458c5646dde153694c78ee6e7a767e3d9f28801508dfb50c63a9aba588ca8c3db6d331754692ef56ffcb442649d207c50e4f860e62b4615bc15047f6d6f058ddda1788f43db6bcfe30b948ccb328a6374c24a9d6779f5e3f2e72b4d17795b39f", 16).unwrap();
-    let rsa = RSA_2048::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("a82ea73436f62bf40c77b5e2d71a93ab1ec633a98d435035ac9c03a8cc3f957f872f05ac993c5b7937d906c8d330b219f299b4d5d5dbd996d807671304766efb3aae060b621346971ead951f604d2b8c4e919bb53b1c3acaec4787b3193fba5686ebd00b546b7c45654a9ba30353305055d7325e5e79516f87a941fcca73a885da9d96da9a86019b32e68bdca7737d4d24de47271efc65157108665b368414bb458c5646dde153694c78ee6e7a767e3d9f28801508dfb50c63a9aba588ca8c3db6d331754692ef56ffcb442649d207c50e4f860e62b4615bc15047f6d6f058ddda1788f43db6bcfe30b948ccb328a6374c24a9d6779f5e3f2e72b4d17795b39f", 16).unwrap();
+    let rsa = RSA_2048::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U2048::from_string("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap();
 
-    println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -1900,12 +1900,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U4096::from_string("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap();
 
-    println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -1917,12 +1917,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = BigUInt::<u64, 4>::from(5_u8);
     let private_key = BigUInt::<u64, 4>::from_str_radix("56C852580B06FD2C819A2A2AB58017266A58A101105A4F2FF0A9D17BB746239D", 16).unwrap();
-    let modulo = BigUInt::<u64, 4>::from_str_radix("90a333e81260fb4a2d5646472e802696ddd96c20e9c0faae3db46db413927641", 16).unwrap();
-    let rsa = RSA_Generic::<4, u64, 5>::new_with_keys(public_key, private_key, modulo);
+    let modulus = BigUInt::<u64, 4>::from_str_radix("90a333e81260fb4a2d5646472e802696ddd96c20e9c0faae3db46db413927641", 16).unwrap();
+    let rsa = RSA_Generic::<4, u64, 5>::new_with_keys(public_key, private_key, modulus);
     let message = BigUInt::<u64, 4>::from_string("55555555555555555555555555555555555555555555555").unwrap();
 
-    println!("RSA_Generic<4, u64, 5>: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_Generic<4, u64, 5>: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_Generic<4, u64, 5>: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_Generic<4, u64, 5>: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_Generic<4, u64, 5>: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message);
@@ -1934,12 +1934,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U1024::from(7_u8);
     let private_key = U1024::from_str_radix("11A086687252F0D0ECE2E723F06808EEA5467A8EE1025EE5CAC299448454B33D1A9A97596144EBF52706CEEA13F427DF7000E05542DC34ABA46ECE12D1CF5D1286A9DCDE69407D78F699CF592CAFDF5741019FCA261BAA65529AB2FADC9D00F5712A14480C9724DA29C2354DB2DCABEDD89735A6B663984831B427061704E6D7", 16).unwrap();
-    let modulo = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
-    let rsa = RSA_1024_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
+    let rsa = RSA_1024_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
 
-    println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u128: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -1951,12 +1951,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U2048::from(3_u8);
     let private_key = U2048::from_str_radix("701F1A22CF4EC7F8084FCE973A11B7C769D977C65E2CE023C8680270882A63AA5A1F591DBB7D9250CFE60485E22076BBF7112339393D3BB9E55A44B7584EF4A77C74040796B78464BF1E636A4033725D89B667CE27682731F2DA5A77662A7C39AF47E0078D9CFD8398DC67C20237758AE3E4CC3EE9A6364A5A70D6A886F7C5AD782D8E9700C462DC5550E884501351BF7CA151550F46724324548F2E83B7D1832A0F04B30314C14AE9FCE01E1D91B6ACF4EDAAADCD17298924B0B687DA02028B26F90A817EDFA1773396FDE0EA61A2E86C8ED519A38910F6974ABA4DDEEEF3F3D6420A62A6A7038B4DAA8D3CEB868FF4D79C2B0BF5B9D4E8A0F373AB963B3A3B", 16).unwrap();
-    let modulo = U2048::from_str_radix("a82ea73436f62bf40c77b5e2d71a93ab1ec633a98d435035ac9c03a8cc3f957f872f05ac993c5b7937d906c8d330b219f299b4d5d5dbd996d807671304766efb3aae060b621346971ead951f604d2b8c4e919bb53b1c3acaec4787b3193fba5686ebd00b546b7c45654a9ba30353305055d7325e5e79516f87a941fcca73a885da9d96da9a86019b32e68bdca7737d4d24de47271efc65157108665b368414bb458c5646dde153694c78ee6e7a767e3d9f28801508dfb50c63a9aba588ca8c3db6d331754692ef56ffcb442649d207c50e4f860e62b4615bc15047f6d6f058ddda1788f43db6bcfe30b948ccb328a6374c24a9d6779f5e3f2e72b4d17795b39f", 16).unwrap();
-    let rsa = RSA_2048_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("a82ea73436f62bf40c77b5e2d71a93ab1ec633a98d435035ac9c03a8cc3f957f872f05ac993c5b7937d906c8d330b219f299b4d5d5dbd996d807671304766efb3aae060b621346971ead951f604d2b8c4e919bb53b1c3acaec4787b3193fba5686ebd00b546b7c45654a9ba30353305055d7325e5e79516f87a941fcca73a885da9d96da9a86019b32e68bdca7737d4d24de47271efc65157108665b368414bb458c5646dde153694c78ee6e7a767e3d9f28801508dfb50c63a9aba588ca8c3db6d331754692ef56ffcb442649d207c50e4f860e62b4615bc15047f6d6f058ddda1788f43db6bcfe30b948ccb328a6374c24a9d6779f5e3f2e72b4d17795b39f", 16).unwrap();
+    let rsa = RSA_2048_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U2048::from_string("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap();
 
-    println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u128: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -1968,12 +1968,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U4096::from_string("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap();
 
-    println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u128: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -1985,12 +1985,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U1024::from(7_u8);
     let private_key = U1024::from_str_radix("11A086687252F0D0ECE2E723F06808EEA5467A8EE1025EE5CAC299448454B33D1A9A97596144EBF52706CEEA13F427DF7000E05542DC34ABA46ECE12D1CF5D1286A9DCDE69407D78F699CF592CAFDF5741019FCA261BAA65529AB2FADC9D00F5712A14480C9724DA29C2354DB2DCABEDD89735A6B663984831B427061704E6D7", 16).unwrap();
-    let modulo = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
-    let rsa = RSA_1024_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
+    let rsa = RSA_1024_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
 
-    println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u64: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2002,12 +2002,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U2048::from(3_u8);
     let private_key = U2048::from_str_radix("701F1A22CF4EC7F8084FCE973A11B7C769D977C65E2CE023C8680270882A63AA5A1F591DBB7D9250CFE60485E22076BBF7112339393D3BB9E55A44B7584EF4A77C74040796B78464BF1E636A4033725D89B667CE27682731F2DA5A77662A7C39AF47E0078D9CFD8398DC67C20237758AE3E4CC3EE9A6364A5A70D6A886F7C5AD782D8E9700C462DC5550E884501351BF7CA151550F46724324548F2E83B7D1832A0F04B30314C14AE9FCE01E1D91B6ACF4EDAAADCD17298924B0B687DA02028B26F90A817EDFA1773396FDE0EA61A2E86C8ED519A38910F6974ABA4DDEEEF3F3D6420A62A6A7038B4DAA8D3CEB868FF4D79C2B0BF5B9D4E8A0F373AB963B3A3B", 16).unwrap();
-    let modulo = U2048::from_str_radix("a82ea73436f62bf40c77b5e2d71a93ab1ec633a98d435035ac9c03a8cc3f957f872f05ac993c5b7937d906c8d330b219f299b4d5d5dbd996d807671304766efb3aae060b621346971ead951f604d2b8c4e919bb53b1c3acaec4787b3193fba5686ebd00b546b7c45654a9ba30353305055d7325e5e79516f87a941fcca73a885da9d96da9a86019b32e68bdca7737d4d24de47271efc65157108665b368414bb458c5646dde153694c78ee6e7a767e3d9f28801508dfb50c63a9aba588ca8c3db6d331754692ef56ffcb442649d207c50e4f860e62b4615bc15047f6d6f058ddda1788f43db6bcfe30b948ccb328a6374c24a9d6779f5e3f2e72b4d17795b39f", 16).unwrap();
-    let rsa = RSA_2048_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("a82ea73436f62bf40c77b5e2d71a93ab1ec633a98d435035ac9c03a8cc3f957f872f05ac993c5b7937d906c8d330b219f299b4d5d5dbd996d807671304766efb3aae060b621346971ead951f604d2b8c4e919bb53b1c3acaec4787b3193fba5686ebd00b546b7c45654a9ba30353305055d7325e5e79516f87a941fcca73a885da9d96da9a86019b32e68bdca7737d4d24de47271efc65157108665b368414bb458c5646dde153694c78ee6e7a767e3d9f28801508dfb50c63a9aba588ca8c3db6d331754692ef56ffcb442649d207c50e4f860e62b4615bc15047f6d6f058ddda1788f43db6bcfe30b948ccb328a6374c24a9d6779f5e3f2e72b4d17795b39f", 16).unwrap();
+    let rsa = RSA_2048_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U2048::from_string("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap();
 
-    println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u64: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2019,12 +2019,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U4096::from_string("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap();
 
-    println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u64: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2036,12 +2036,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U1024::from(7_u8);
     let private_key = U1024::from_str_radix("11A086687252F0D0ECE2E723F06808EEA5467A8EE1025EE5CAC299448454B33D1A9A97596144EBF52706CEEA13F427DF7000E05542DC34ABA46ECE12D1CF5D1286A9DCDE69407D78F699CF592CAFDF5741019FCA261BAA65529AB2FADC9D00F5712A14480C9724DA29C2354DB2DCABEDD89735A6B663984831B427061704E6D7", 16).unwrap();
-    let modulo = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
-    let rsa = RSA_1024_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
+    let rsa = RSA_1024_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
 
-    println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u32: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2053,12 +2053,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U2048::from(3_u8);
     let private_key = U2048::from_str_radix("701F1A22CF4EC7F8084FCE973A11B7C769D977C65E2CE023C8680270882A63AA5A1F591DBB7D9250CFE60485E22076BBF7112339393D3BB9E55A44B7584EF4A77C74040796B78464BF1E636A4033725D89B667CE27682731F2DA5A77662A7C39AF47E0078D9CFD8398DC67C20237758AE3E4CC3EE9A6364A5A70D6A886F7C5AD782D8E9700C462DC5550E884501351BF7CA151550F46724324548F2E83B7D1832A0F04B30314C14AE9FCE01E1D91B6ACF4EDAAADCD17298924B0B687DA02028B26F90A817EDFA1773396FDE0EA61A2E86C8ED519A38910F6974ABA4DDEEEF3F3D6420A62A6A7038B4DAA8D3CEB868FF4D79C2B0BF5B9D4E8A0F373AB963B3A3B", 16).unwrap();
-    let modulo = U2048::from_str_radix("a82ea73436f62bf40c77b5e2d71a93ab1ec633a98d435035ac9c03a8cc3f957f872f05ac993c5b7937d906c8d330b219f299b4d5d5dbd996d807671304766efb3aae060b621346971ead951f604d2b8c4e919bb53b1c3acaec4787b3193fba5686ebd00b546b7c45654a9ba30353305055d7325e5e79516f87a941fcca73a885da9d96da9a86019b32e68bdca7737d4d24de47271efc65157108665b368414bb458c5646dde153694c78ee6e7a767e3d9f28801508dfb50c63a9aba588ca8c3db6d331754692ef56ffcb442649d207c50e4f860e62b4615bc15047f6d6f058ddda1788f43db6bcfe30b948ccb328a6374c24a9d6779f5e3f2e72b4d17795b39f", 16).unwrap();
-    let rsa = RSA_2048_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("a82ea73436f62bf40c77b5e2d71a93ab1ec633a98d435035ac9c03a8cc3f957f872f05ac993c5b7937d906c8d330b219f299b4d5d5dbd996d807671304766efb3aae060b621346971ead951f604d2b8c4e919bb53b1c3acaec4787b3193fba5686ebd00b546b7c45654a9ba30353305055d7325e5e79516f87a941fcca73a885da9d96da9a86019b32e68bdca7737d4d24de47271efc65157108665b368414bb458c5646dde153694c78ee6e7a767e3d9f28801508dfb50c63a9aba588ca8c3db6d331754692ef56ffcb442649d207c50e4f860e62b4615bc15047f6d6f058ddda1788f43db6bcfe30b948ccb328a6374c24a9d6779f5e3f2e72b4d17795b39f", 16).unwrap();
+    let rsa = RSA_2048_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U2048::from_string("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap();
 
-    println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u32: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2070,12 +2070,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U4096::from_string("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap();
 
-    println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u32: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2087,12 +2087,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U1024::from(7_u8);
     let private_key = U1024::from_str_radix("11A086687252F0D0ECE2E723F06808EEA5467A8EE1025EE5CAC299448454B33D1A9A97596144EBF52706CEEA13F427DF7000E05542DC34ABA46ECE12D1CF5D1286A9DCDE69407D78F699CF592CAFDF5741019FCA261BAA65529AB2FADC9D00F5712A14480C9724DA29C2354DB2DCABEDD89735A6B663984831B427061704E6D7", 16).unwrap();
-    let modulo = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
-    let rsa = RSA_1024_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
+    let rsa = RSA_1024_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
 
-    println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u16: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2104,12 +2104,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U2048::from(3_u8);
     let private_key = U2048::from_str_radix("701F1A22CF4EC7F8084FCE973A11B7C769D977C65E2CE023C8680270882A63AA5A1F591DBB7D9250CFE60485E22076BBF7112339393D3BB9E55A44B7584EF4A77C74040796B78464BF1E636A4033725D89B667CE27682731F2DA5A77662A7C39AF47E0078D9CFD8398DC67C20237758AE3E4CC3EE9A6364A5A70D6A886F7C5AD782D8E9700C462DC5550E884501351BF7CA151550F46724324548F2E83B7D1832A0F04B30314C14AE9FCE01E1D91B6ACF4EDAAADCD17298924B0B687DA02028B26F90A817EDFA1773396FDE0EA61A2E86C8ED519A38910F6974ABA4DDEEEF3F3D6420A62A6A7038B4DAA8D3CEB868FF4D79C2B0BF5B9D4E8A0F373AB963B3A3B", 16).unwrap();
-    let modulo = U2048::from_str_radix("a82ea73436f62bf40c77b5e2d71a93ab1ec633a98d435035ac9c03a8cc3f957f872f05ac993c5b7937d906c8d330b219f299b4d5d5dbd996d807671304766efb3aae060b621346971ead951f604d2b8c4e919bb53b1c3acaec4787b3193fba5686ebd00b546b7c45654a9ba30353305055d7325e5e79516f87a941fcca73a885da9d96da9a86019b32e68bdca7737d4d24de47271efc65157108665b368414bb458c5646dde153694c78ee6e7a767e3d9f28801508dfb50c63a9aba588ca8c3db6d331754692ef56ffcb442649d207c50e4f860e62b4615bc15047f6d6f058ddda1788f43db6bcfe30b948ccb328a6374c24a9d6779f5e3f2e72b4d17795b39f", 16).unwrap();
-    let rsa = RSA_2048_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("a82ea73436f62bf40c77b5e2d71a93ab1ec633a98d435035ac9c03a8cc3f957f872f05ac993c5b7937d906c8d330b219f299b4d5d5dbd996d807671304766efb3aae060b621346971ead951f604d2b8c4e919bb53b1c3acaec4787b3193fba5686ebd00b546b7c45654a9ba30353305055d7325e5e79516f87a941fcca73a885da9d96da9a86019b32e68bdca7737d4d24de47271efc65157108665b368414bb458c5646dde153694c78ee6e7a767e3d9f28801508dfb50c63a9aba588ca8c3db6d331754692ef56ffcb442649d207c50e4f860e62b4615bc15047f6d6f058ddda1788f43db6bcfe30b948ccb328a6374c24a9d6779f5e3f2e72b4d17795b39f", 16).unwrap();
+    let rsa = RSA_2048_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U2048::from_string("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap();
 
-    println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u16: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2121,12 +2121,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U4096::from_string("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap();
 
-    println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u16: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2138,12 +2138,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U1024::from(7_u8);
     let private_key = U1024::from_str_radix("11A086687252F0D0ECE2E723F06808EEA5467A8EE1025EE5CAC299448454B33D1A9A97596144EBF52706CEEA13F427DF7000E05542DC34ABA46ECE12D1CF5D1286A9DCDE69407D78F699CF592CAFDF5741019FCA261BAA65529AB2FADC9D00F5712A14480C9724DA29C2354DB2DCABEDD89735A6B663984831B427061704E6D7", 16).unwrap();
-    let modulo = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
-    let rsa = RSA_1024_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
+    let rsa = RSA_1024_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
 
-    println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u8: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2155,12 +2155,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U2048::from(3_u8);
     let private_key = U2048::from_str_radix("701F1A22CF4EC7F8084FCE973A11B7C769D977C65E2CE023C8680270882A63AA5A1F591DBB7D9250CFE60485E22076BBF7112339393D3BB9E55A44B7584EF4A77C74040796B78464BF1E636A4033725D89B667CE27682731F2DA5A77662A7C39AF47E0078D9CFD8398DC67C20237758AE3E4CC3EE9A6364A5A70D6A886F7C5AD782D8E9700C462DC5550E884501351BF7CA151550F46724324548F2E83B7D1832A0F04B30314C14AE9FCE01E1D91B6ACF4EDAAADCD17298924B0B687DA02028B26F90A817EDFA1773396FDE0EA61A2E86C8ED519A38910F6974ABA4DDEEEF3F3D6420A62A6A7038B4DAA8D3CEB868FF4D79C2B0BF5B9D4E8A0F373AB963B3A3B", 16).unwrap();
-    let modulo = U2048::from_str_radix("a82ea73436f62bf40c77b5e2d71a93ab1ec633a98d435035ac9c03a8cc3f957f872f05ac993c5b7937d906c8d330b219f299b4d5d5dbd996d807671304766efb3aae060b621346971ead951f604d2b8c4e919bb53b1c3acaec4787b3193fba5686ebd00b546b7c45654a9ba30353305055d7325e5e79516f87a941fcca73a885da9d96da9a86019b32e68bdca7737d4d24de47271efc65157108665b368414bb458c5646dde153694c78ee6e7a767e3d9f28801508dfb50c63a9aba588ca8c3db6d331754692ef56ffcb442649d207c50e4f860e62b4615bc15047f6d6f058ddda1788f43db6bcfe30b948ccb328a6374c24a9d6779f5e3f2e72b4d17795b39f", 16).unwrap();
-    let rsa = RSA_2048_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("a82ea73436f62bf40c77b5e2d71a93ab1ec633a98d435035ac9c03a8cc3f957f872f05ac993c5b7937d906c8d330b219f299b4d5d5dbd996d807671304766efb3aae060b621346971ead951f604d2b8c4e919bb53b1c3acaec4787b3193fba5686ebd00b546b7c45654a9ba30353305055d7325e5e79516f87a941fcca73a885da9d96da9a86019b32e68bdca7737d4d24de47271efc65157108665b368414bb458c5646dde153694c78ee6e7a767e3d9f28801508dfb50c63a9aba588ca8c3db6d331754692ef56ffcb442649d207c50e4f860e62b4615bc15047f6d6f058ddda1788f43db6bcfe30b948ccb328a6374c24a9d6779f5e3f2e72b4d17795b39f", 16).unwrap();
+    let rsa = RSA_2048_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U2048::from_string("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap();
 
-    println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u8: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2172,12 +2172,12 @@ fn rsa_encrypt_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U4096::from_string("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap();
 
-    println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u8: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2198,12 +2198,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
 
-    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2219,12 +2219,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U2048::from_string("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap();
 
-    println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2240,12 +2240,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U4096::from_string("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap();
 
-    println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2261,12 +2261,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = BigUInt::<u64, 4>::from(0xD_u8);
     let private_key = BigUInt::<u64, 4>::from_str_radix("3F3597F1C44073A8D3C34F5FF1444665DAE8D8F268104A60C82825E1C3CD44D5", 16).unwrap();
-    let modulo = BigUInt::<u64, 4>::from_str_radix("88f41e8bd3e0fa98757c814fe013edde379c41da169a91050fa4964a1141853b", 16).unwrap();
-    let rsa = RSA_Generic::<4, u64, 5>::new_with_keys(public_key, private_key, modulo);
+    let modulus = BigUInt::<u64, 4>::from_str_radix("88f41e8bd3e0fa98757c814fe013edde379c41da169a91050fa4964a1141853b", 16).unwrap();
+    let rsa = RSA_Generic::<4, u64, 5>::new_with_keys(public_key, private_key, modulus);
     let message = BigUInt::<u64, 4>::from_string("55555555555555555555555555555555555555555555555").unwrap();
 
-    println!("RSA_Generic<4, u64, 5>: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_Generic<4, u64, 5>: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_Generic<4, u64, 5>: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_Generic<4, u64, 5>: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_Generic<4, u64, 5>: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message);
@@ -2282,12 +2282,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
 
-    println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u128: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2303,12 +2303,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U2048::from_string("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap();
 
-    println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u128: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2324,12 +2324,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U4096::from_string("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap();
 
-    println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u128: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2345,12 +2345,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
 
-    println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u64: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2366,12 +2366,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U2048::from_string("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap();
 
-    println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u64: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2387,12 +2387,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U4096::from_string("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap();
 
-    println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u64: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2408,12 +2408,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U1024::from(7_u8);
     let private_key = U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap();
-    let modulo = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
-    let rsa = RSA_1024_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
+    let rsa = RSA_1024_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
 
-    println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u32: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2429,12 +2429,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("67EA9B746A1CD56D22A34A4B4CA0902596D39C7F7B88B2726B7757C1F82628F1F15B51F9A51B22CB932F1CFE59B34178CD6ED42571006CCECC23D2050D3189D4A9175E8BC1DFE77C55EF68E3036BED29BFA70CB76D51D74E54D3535B72CC676899C5FC60021929B939F57CFF92A471A48BFA806FDA2CF942515BC9012AAAE479303614EB9BA52EC8A76CA78AAEA820EC8214AADB70E12492C66060384B609F56395532879C06FA33D7242E55D30AD79BE7D6F8E97152405ABC7097AF6DBEF5B7D2DCD1D414BB29E387327025D66F6D32142C858DC33BC6861A7A95AF46431FDB6AD3B3108E7AA0387CCF99504DC882E2FB2E127CB981123421A629908EC4570B", 16).unwrap();
-    let modulo = U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap();
-    let rsa = RSA_2048_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("9bdfe92e9f2b4023b3f4ef70f2f0d838623d6abf394d0baba13303a2f4393d6aea08faf677a8b4315cc6ab7d868ce23534263e382980a3363235bb0793ca4ebefda30dd1a2cfdb3a80e71d548521e3be9f7a931323fac2f57f3cfd092c329b1ce6a8fa900325be95d6f03b7f5bf6aa76d1f7c0a7c74375e37a09ad81c00056b7637cc194d65b80229e6fa2fa18106eb682877e4763bdf6aa0315332a8709dd120b407a9e5d48f90b0b361b8b5c85ca5c2578aa01abdf00361fa3fca45a180b3211abaae3642188c455af8147f7cf31ac1cbb9532aaabbaecb40eb96c24bea9bc0c8ca36d83a25d73f14b13bf45de7e6483c246de199f10d89bad30b81a0f887b", 16).unwrap();
+    let rsa = RSA_2048_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U2048::from_string("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap();
 
-    println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u32: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2450,12 +2450,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("16D9A2A76977853F423E2DDBA4AECBA372B95E082577329BCA5852F4400907D2B34366C1DD35B01EE9A2483E823E635EB7492797BE652252E131EADD6A68CCFA952B49A7F09B9AB2653386B2DEEF6874F2724392C4544BEF7D18E83E7CEF59E21F550C23CE848A05A19DE2D97347946E86F734FCA112938024608A9C5C1D72D658F369B49D3A4C77ADB6483C632AAE94F345791F9313D304277B1E4275F72F7C9B7C2DAB7DA91B94C807E5553FE534A923D22206F6A987CB9214FCA3EB78CE22A434CBAF7C3DF29010688F7930E9EB2BBF6113DE6A35F78EFCFC9A17A868277BAD58F432F097405E3F9415FE4E15D11D8D5376747F6046DF74AE76C5B50D28C5D972724F09E84FD057DAC07625C06ACE068A171480D73F51CAF7728F9EE0F0D4F794F81B2AFCD7C15898C7C5B964130F0D4EA1819999CDBC8E000C500DF8FECCEB9EB8AA75C16EAA6C02C61A3129B49472136E1231BB9D563BFAF93B1322DF047F9FF7CDB74610AF49E7ADD790746C5DB31B1D48888764511AE10FF2F22BF4D1CBFE809A9C716D9C4043C59120BC5EA9CC0CA20C06D6DF11B0574E534757F9BC78617CB484C988871A065348DF542869140D0D0F58EB3A76E2E1394C21D8FFEEC315CFA03DC70269234EACFD8AEFDBCDF0C0EAE6C743135FFA2B504F937BD9F473F10862C2D59C38FAAEDB9E930EB9264723B90923B40056594592A16D7D0D9D", 16).unwrap();
-    let modulo = U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap();
-    let rsa = RSA_4096_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("c72dbd530230cce40abeb30a9a33b60708cd8c4ef63091dcfe3f16ae76e1e10436e7004154dd34a85dbd0f0813e36b8ccc0fae90f5b5f3f20e915e9e276f6dd78f1eeb77f5016e7f6cdba95b31866f2ef6519dfb1e855acfa27f815134aaf70f3af39af5013a1971bc9558e476e9fc4ef2b0938fe0c42036f569879441cbe44ff664b937de05120c57823398d91e7cb389319fa8d6c50470ae7c83540b1e467d93a1d77a7e543845b3735aaa9b5a93543e286172b02ff34843c5d9075f0d2586754a4858c675641dc293d431fe5df11f3f8e7be802b8d566226b497e9cdcae7ce988ae6d8747771ebfb2eb235c58b9f08984c25336695731e5a13044139baf6a84137b163fb48e30d63809adc3853559e92df2420167d8eab2907724cbd33f5d712080a97195557b5e492c4472aba6e3dd9afe5ca37f2ccdff168d89e2ae6640935eb32f07fbb29663d320e65f14602974ac30124f1030f331db97f94471772e7a4a62074d517ea8c38bfac2492ca54bfa565c06e70263eab20c5f682d78b01a446a7a074b6ec5b14844fb28649eb9f746d7936ba191d9a7890a1f96bb3f4caa06a97383da413042e9c2b898f4397a1628d236607a0e0c1e4ef32a3d3d9ac59b0aab6632e85420be5de39ceb11b01c5fe3ee45d40418d8f21e894b292df523f570f96419ed5c3c0d0382b73ccec1f57976d790544d4ece8ebd145be1c130e827", 16).unwrap();
+    let rsa = RSA_4096_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U4096::from_string("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap();
 
-    println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u32: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2471,12 +2471,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
 
-    println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u16: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2492,12 +2492,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U2048::from_string("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap();
 
-    println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u16: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2513,12 +2513,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U4096::from_string("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap();
 
-    println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u16: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2534,12 +2534,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
 
-    println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u8: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2555,12 +2555,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U2048::from_string("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap();
 
-    println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u8: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2576,12 +2576,12 @@ fn rsa_decrypt_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = U4096::from_string("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap();
 
-    println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u8: Message = {}", message);
 
     let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -2603,16 +2603,16 @@ fn rsa_failure_decrypt_biguint()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024::new_with_keys(public_key.clone(), private_key.clone(), modulo.clone());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024::new_with_keys(public_key.clone(), private_key.clone(), modulus.clone());
 
-    // Example for Message > self.modulo
-    println!("Message > self.modulo");
-    let message = modulo.wrapping_add_uint(1_u8);
+    // Example for Message > self.modulus
+    println!("Message > self.modulus");
+    let message = modulus.wrapping_add_uint(1_u8);
     let distorted = U1024::one();
 
-    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024: Message = {}", message);
     println!("RSA_1024: Distorted = {}", distorted);
 
@@ -2633,13 +2633,13 @@ fn rsa_failure_decrypt_biguint()
     assert_eq!(back, distorted);
     println!();
 
-    // Example for Message == self.modulo
-    println!("Message == self.modulo");
-    let message = modulo.clone();
+    // Example for Message == self.modulus
+    println!("Message == self.modulus");
+    let message = modulus.clone();
     let distorted = U1024::zero();
 
-    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024: Message = {}", message);
     println!("RSA_1024: Distorted = {}", distorted);
 
@@ -2660,13 +2660,13 @@ fn rsa_failure_decrypt_biguint()
     assert_eq!(back, distorted);
     println!();
 
-    // Example for Message < self.modulo
-    println!("Message < self.modulo");
-    let message = modulo.wrapping_sub_uint(1_u8);
+    // Example for Message < self.modulus
+    println!("Message < self.modulus");
+    let message = modulus.wrapping_sub_uint(1_u8);
     let undistorted = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a8", 16).unwrap();
 
-    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024: Message = {}", message);
     println!("RSA_1024: Undistorted = {}", undistorted);
 
@@ -2700,14 +2700,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U1024::from_string("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U1024::from_string("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U1024::from_string("3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -2727,14 +2727,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U2048::from_string("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U2048::from_string("22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U2048::from_string("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -2754,14 +2754,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U4096::from_string("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U4096::from_string("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U4096::from_string("3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -2781,14 +2781,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = BigUInt::<u8, 32>::from(0xD_u8);
     let private_key = BigUInt::<u8, 32>::from_str_radix("3F3597F1C44073A8D3C34F5FF1444665DAE8D8F268104A60C82825E1C3CD44D5", 16).unwrap();
-    let modulo = BigUInt::<u8, 32>::from_str_radix("88f41e8bd3e0fa98757c814fe013edde379c41da169a91050fa4964a1141853b", 16).unwrap();
-    let rsa = RSA_Generic::<32, u8, 5>::new_with_keys(public_key, private_key, modulo);
+    let modulus = BigUInt::<u8, 32>::from_str_radix("88f41e8bd3e0fa98757c814fe013edde379c41da169a91050fa4964a1141853b", 16).unwrap();
+    let rsa = RSA_Generic::<32, u8, 5>::new_with_keys(public_key, private_key, modulus);
     let message = [BigUInt::<u8, 32>::from_string("111111111111111111111111111111111111111111111111").unwrap(),
                     BigUInt::<u8, 32>::from_string("22222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     BigUInt::<u8, 32>::from_string("33333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_Generic::<32, u8, 5>: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_Generic::<32, u8, 5>: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_Generic::<32, u8, 5>: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_Generic::<32, u8, 5>: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_Generic::<32, u8, 5>: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -2808,14 +2808,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U1024::from_string("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U1024::from_string("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U1024::from_string("3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u128: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -2835,14 +2835,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U2048::from_string("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U2048::from_string("22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U2048::from_string("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u128: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -2862,14 +2862,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U4096::from_string("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U4096::from_string("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U4096::from_string("3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u128: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -2889,14 +2889,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U1024::from_string("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U1024::from_string("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U1024::from_string("3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u64: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -2916,14 +2916,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U2048::from_string("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U2048::from_string("22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U2048::from_string("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u64: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -2943,14 +2943,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U4096::from_string("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U4096::from_string("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U4096::from_string("3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u64: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -2970,14 +2970,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U1024::from_string("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U1024::from_string("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U1024::from_string("3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u32: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -2997,14 +2997,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U2048::from_string("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U2048::from_string("22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U2048::from_string("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u32: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -3024,14 +3024,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U4096::from_string("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U4096::from_string("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U4096::from_string("3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u32: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -3051,14 +3051,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U1024::from_string("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U1024::from_string("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U1024::from_string("3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u16: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -3078,14 +3078,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U2048::from_string("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U2048::from_string("22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U2048::from_string("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u16: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -3105,14 +3105,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U4096::from_string("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U4096::from_string("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U4096::from_string("3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u16: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -3132,14 +3132,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U1024::from_string("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U1024::from_string("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U1024::from_string("3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_1024_u8: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].clone(), message[1].clone(), message[2].clone()]);
@@ -3159,14 +3159,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U2048::from_string("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U2048::from_string("22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U2048::from_string("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_2048_u8: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].clone(), message[1].clone(), message[2].clone()]);
@@ -3186,14 +3186,14 @@ fn rsa_decrypt_array_biguint()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [U4096::from_string("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
                     U4096::from_string("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
                     U4096::from_string("3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
 
-    println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     println!("RSA_4096_u8: Message = {}-{}-{}", message[0], message[1], message[2]);
 
     let cipher = rsa.encrypt_array_biguint(&[message[0].clone(), message[1].clone(), message[2].clone()]);
@@ -3223,12 +3223,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF];
 
-    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_1024: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3258,12 +3258,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF];
 
-    println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_2048: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3293,12 +3293,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000];
 
-    println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_4096: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3328,12 +3328,12 @@ fn rsa_decrypt_unit()
 
     let public_key = BigUInt::<u64, 4>::from(0xD_u8);
     let private_key = BigUInt::<u64, 4>::from_str_radix("3F3597F1C44073A8D3C34F5FF1444665DAE8D8F268104A60C82825E1C3CD44D5", 16).unwrap();
-    let modulo = BigUInt::<u64, 4>::from_str_radix("88f41e8bd3e0fa98757c814fe013edde379c41da169a91050fa4964a1141853b", 16).unwrap();
-    let rsa = RSA_Generic::<4, u64, 5>::new_with_keys(public_key, private_key, modulo);
+    let modulus = BigUInt::<u64, 4>::from_str_radix("88f41e8bd3e0fa98757c814fe013edde379c41da169a91050fa4964a1141853b", 16).unwrap();
+    let rsa = RSA_Generic::<4, u64, 5>::new_with_keys(public_key, private_key, modulus);
     let message = [0x_FEDCBA9876543210_u64, 0x_1122334455667788, 0x_9900AABBCCDDEEFF, 0x_FEDCBA0987654321];
 
-    println!("RSA_Generic<4, u64, 5>: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_Generic<4, u64, 5>: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_Generic<4, u64, 5>: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_Generic<4, u64, 5>: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_Generic<4, u64, 5>: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3358,12 +3358,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF];
 
-    println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_1024_u128: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3388,12 +3388,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF];
 
-    println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_2048_u128: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3419,12 +3419,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000];
 
-    println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_4096_u128: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3450,12 +3450,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF];
 
-    println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_1024_u64: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3486,12 +3486,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF];
 
-    println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_2048_u64: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3521,12 +3521,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000];
 
-    println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_4096_u64: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3557,12 +3557,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF];
 
-    println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_1024_u32: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3593,12 +3593,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF];
 
-    println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_2048_u32: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3628,12 +3628,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000];
 
-    println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_4096_u32: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3664,12 +3664,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF];
 
-    println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_1024_u16: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3700,12 +3700,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF];
 
-    println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_2048_u16: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3735,12 +3735,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000];
 
-    println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_4096_u16: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3771,12 +3771,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U1024::from(5_u8);
     let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    let rsa = RSA_1024_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    let rsa = RSA_1024_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF];
 
-    println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_1024_u8: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3807,12 +3807,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U2048::from(7_u8);
     let private_key = U2048::from_str_radix("4935A7A0CA0F94101C34BC4A3180F18FE756C4CAFAFDED502AF6B7EC89E42D89C0163CFD43CC58F90F9CEA3045B565957732102340ACF51695E3F635FBD3AAEE83F71EB37103D234B108380932372E677200AD37074BBCEEC60FBEE4AB73C8F7030F712C8A70B43A05BD10700A0C50579CE8A8AEEF96D1D8BF7EDA7CF946F64A04F4C739591D41E2D0CD9E65FA6CED2AAEAE2BB3E9CE38BD0BA06DFF1847965DBE264447EE0C1AE7452638014AA2959B1FEAE409987C65321651C896732A62F0581F87A94DC41D85C3936C369A803DB0D6BD99B346C01A74295C24260E0055BFA97013967F9D6A868E57A67EBF17A6C9D7D5FB50BEFA4A4AD93BC558B8A78297", 16).unwrap();
-    let modulo = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
-    let rsa = RSA_2048_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("aad28721d779aed041d06202738233a51bca75d99efb29bb0eea57d297146a416ade8e4ef3877a45246e2270a2a7425cc0ca25a796e8e68a08693e7df6433981de95f24d5d08ea7af26882c01fd616f15f56e980665b638278cf6815900e2a405c795d67edb1a48762b9265ac21cbb7718c989982f0a944f1427fdce45a59403b080b68d260dafd1fb64b374aaac80bd1f595bd0ff175ca6108fdd2f83905774f66828ba84fab66412430666d46d1b94bb0da1c9d9c9062497677ea5b6b751f1e51651d86b6d377c3b44767134496a8fe2d7157e5f17281ad156d1a05eea359bc847d2d835474e1d4dc517902ffcfb036f7444bf296ad86ab0795f058a6a7a4f", 16).unwrap();
+    let rsa = RSA_2048_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF];
 
-    println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_2048_u8: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3842,12 +3842,12 @@ fn rsa_decrypt_unit()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("65D454FB951A5CEFCA5203530570263DC58CA1F8C489801223754B92F3AFAFCF390C35A6C4F01FBFB6F70563146F1A5610816C34781F831871D946665E7752B92E522A1556DFD885332EC38E0A65A3D934C40C1B123A8181EFC7BE48657EC3437FED43EE8197E2E2F61F639DFEEBA157ED5F33B748A5ADE0881B8A377DFB4FD889732DE0F5DE07454E1845E64CD28321CF7D1B7EBACAE56F5B2EE12232927312A7D4113EACF69903245F86587EFDA359E19CAF07884D3DDD82482B1A8ACBA989933014EED53FAE4DB84A97F2CCD8CBC0C769E909CE918785EB8CA6C13232F0D88F8A0F2A124815BA1B6F5991D258B3262F012FE931BB50E90D1EB9FE3793CD8A18182768BCC1926552BDA2F452FFE5A25DADBF36F83D01FB072B463841A939F0EFAFD7E6564E7F71705CDCFB1281AF424D4EB6282F1F33ADD58DD862B3DE496D6F379BAD1E068893C3A2FFC75DDB1DC18042569AFA0F9DE44A582534BE73DA29D40E624A82A19F6D48609609600FF34BCA8E4D69F18101A3F0BAE655D5F389D568BB91E54465E5AA0FB52CA6E372A21BCDEB45EA16FC36FEFDBC9FF3F295B53C25458C75EE869755A4E4557BD639DE5D80AA9FDE709A53F4D6D135FD8611D0EED5CBB9430C13292C74DF5380BCDE17A4C3BF0E692E505683560CBA89C931934C76B4C499A5092C586EE014732761CEB7C9D67BF43472D89644D2250DAA0E82CD", 16).unwrap();
-    let modulo = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
-    let rsa = RSA_4096_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("7f496a3a7a60f42bbce68427c6cc2fcd36efca76f5abe016ac529e77b09b9bc3074f4310762c27afa4b4c6bbd98ae0eb94a1c741962763de8e4f97fff615276779e6b49aac97cea67ffa74718cff0ccf81f50f21d6c921e26bb9adda7ede74145fe894ea21fddb9bb3a73c857ea689ade8b700a51acf1958aa226cc55d7a23ceabcff95933558916a19e575fe00723ea435c625e697d9ecb31fa996abf370fd751c9158e58343f43ed7767ee9ebd0c305a03dac96a608d54e2da35e12d7e93ebf7fc1a2a8a8f99e1265d3def800efeb0f944634c4235e967666fd0717ebfad0eb36c92f496da1b28a24b2ff646eedfefbac17be37e2a25235066687dc578c0ee1a0790c4437f848078eefd7082f84fc343c1accf9cc24f5e8e0eb021f4dd25fd308c91a79c416639c63e8ad87d452a2d25b4d37356a8d8e70b82df6226fbda1fb7d5a6346d18a9ec79401d6bb3776fa2115eb1c6bc83213eef559f10d0cd21a6d159f3a8910fc13d3a2c031eb3394e7a7928df1d854122b0dc032cb3272adc131ed8bd6e82af43294db9b0640189ebf6da9922af531638f7f71282c240518559e3c839767d78b5b5031f1a88b13028a55587f15a047cd2f565bad97a9a50afab1699397dcc92f10bc0140d2a796686253eabf412ea85e70c0c1d47a22b803fcf94af4ad3dda0dca583ff830b57b2cf86e1c2c0dd15b2a26372f3e43a1300226d", 16).unwrap();
+    let rsa = RSA_4096_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000];
 
-    println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_4096_u8: Message = [");
     for m in message
         { print!("{:#X}, ", m); }
@@ -3888,13 +3888,13 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U1024::from(7_u8);
     let private_key = U1024::from_str_radix("4703E575111E5E33F674DB8CB5C7AA883BCBC715FFF564645CD67F2AB09470D71575D6D88FBB6BC0FABD4837B2F1F3F01FE4F7D135EF2FA15476D88107881CB8D6594A0010F987144DD6243268D07A6C7002F5949E0886BA36F8BAA886B0D8311277977315FC7F93CD95AB72592F65A2AB7BE609C69AFC3D9B54BA3BB78FAD87", 16).unwrap();
-    let modulo = U1024::from_str_radix("636bdad717f750af25d6ccf831b121f1ed507d1eccbdf2f2e85f7ed55d9c9df9ead82cc8c93996daf8a2984dfa85ef1cf973c158184edc48430cc8b4a424f504093508b4a1235839fd887c0ef40d7740b770a375457b0e95cda768e23799f94c34982315e6974fa1e1fb63d2a1be2ed341f22275bd098a6bb56e7efe2ba6f2ef", 16).unwrap();
-    let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("636bdad717f750af25d6ccf831b121f1ed507d1eccbdf2f2e85f7ed55d9c9df9ead82cc8c93996daf8a2984dfa85ef1cf973c158184edc48430cc8b4a424f504093508b4a1235839fd887c0ef40d7740b770a375457b0e95cda768e23799f94c34982315e6974fa1e1fb63d2a1be2ed341f22275bd098a6bb56e7efe2ba6f2ef", 16).unwrap();
+    let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [ [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF],
                     [0x_23456789ABCDEF00FEDCBA9876543211_u128, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB],
                     [0x_3456789ABCDEF00FEDCBA98765432112_u128, 0x_CCDDEEFF112233449900AABB55667788, 0x_44332211FFEEDD88776655CCBBAA0099, 0x_9807A6B5C5B6A70894D3E2F11F2E3D4C, 0x_F1E2D35A4B3C2D1FC4B5A697887960, 0x_4E3F201102F3E4D98A7B6C5D5C6B7A89, 0x_55556666333344447777888811112222, 0x_EEEEFFFF99990000CCCCDDDDAAAABBBB] ];
-    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_1024: Message = [");
     for mm in message
     {
@@ -3944,13 +3944,13 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U2048::from(5_u8);
     let private_key = U2048::from_str_radix("49E61033258BFDFF87ADB347816E3D13BC07A9929F4064C5336F5FEC074C857BA6F64415DB647DD6CEE42842DF409A2B036839B814E6F2A1E507F2CDD91FB2B42BE6B4A40E0CFA0779437B42B8996CA31034CB90D84CB283870BE414756316FB300523F700BCC3D9E1B8183F8EA4675FF6F59D84FF3E120CE54C94B0A44E2C1DCCA68F3F0842DB99FCD7698234C374ABB28C2B5F5A5B1914F15F41163E16A54AEDA0CB6679EA1026BA97C00B0726DB7837F7478275D3688D2981898A7BB040CC9927F4204E8BA93B97992D1C13C17D9A53F4B834A2A56DD9633F5288BA125859413D3F197F7278F95F37503D2FDDF9F540154C491AAE943B13EF3C047AA5E1AD", 16).unwrap();
-    let modulo = U2048::from_str_radix("7b2a1affe93ea7548ccc2acc826265cb8eb76ff45ec0a7f355b99fdeb6d4de78c0efc6cf18522710ae26edc4c96bab9d05adb58822d63f0dd30d3f57148a29d6f3d5d7bc176af60c74c5cd6f33aa5fba7057fdf1687fd4308bbe7c2218fa7ba2a55de69babe5466b22dd7dbf4312019ff0eeb132febcc8c028d4f7d111d79eddc056ec9cd74e3a369eefbc634b6544bcbd80ff73a941ab7614ccf740da8a1010a6e1799953abfdcbe9892520eb35733602807ef52fb6b4cf0664560e2feda618cceecba02038d0c3349e1634f778544f2ab941bd61788f30db3c0aeebefb02759f2e605f301e48b5235f3340fecb37e04bd34f53a2f516904532135a4a38b9e7", 16).unwrap();
-    let rsa = RSA_2048::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("7b2a1affe93ea7548ccc2acc826265cb8eb76ff45ec0a7f355b99fdeb6d4de78c0efc6cf18522710ae26edc4c96bab9d05adb58822d63f0dd30d3f57148a29d6f3d5d7bc176af60c74c5cd6f33aa5fba7057fdf1687fd4308bbe7c2218fa7ba2a55de69babe5466b22dd7dbf4312019ff0eeb132febcc8c028d4f7d111d79eddc056ec9cd74e3a369eefbc634b6544bcbd80ff73a941ab7614ccf740da8a1010a6e1799953abfdcbe9892520eb35733602807ef52fb6b4cf0664560e2feda618cceecba02038d0c3349e1634f778544f2ab941bd61788f30db3c0aeebefb02759f2e605f301e48b5235f3340fecb37e04bd34f53a2f516904532135a4a38b9e7", 16).unwrap();
+    let rsa = RSA_2048::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [[0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF],
                     [0x_21123456789ABCDEF00FEDCBA9876543_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_89706A5B4C3D2E1FF1E2D3C4B5A60798, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_11112222777788883333444455556666, 0x_99990000EEEEFFFFAAAABBBBCCCCDDDD, 0x_0123456789ABCDEFFEDCBA9876543210, 0x_11223344556677889900AABBCCDDEEFF, 0x_88776655BBAA009944332211FFEEDDCC, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_0F1E2D3C4B5A6978879605A4B3C2D1E0, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_0000AAAABBBB11112222333344449999, 0x_CCCCDDDDEEEEFFFF5555666677778888],
                     [0x_321123456789ABCDEF00FEDCBA987654_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCC5544332211BBAA0099887766, 0x_1F2E3D4CC4D3E2F15B6A70899807A6B5, 0x_F1E2D3C4B4C3D2E1F5A6079889706A5B, 0x_102F3E4DD4E3F2015C6B7A8998A7B6C5, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB, 0x_FEDCBA989ABCDEF87654321001234567, 0x_CCDDEEFF112233449900AABB55667788, 0x_FFEEDDCCBBAA00998877665544332211, 0x_9807A6B51F2E3D4C5B6A7089C4D3E2F1, 0x_879605A44B5A6978B3C2D1E00F1E2D3C, 0x_5D4E3F201102F3E98A7B6C4D5C6B7A89, 0x_11112222AAAABBBB3333444499990000, 0x_77778888CCCCDDDD55556666EEEEFFFF]];
-    println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_2048: Message = [");
     for mm in message
     {
@@ -3999,14 +3999,14 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("4E0F13FFD94F4F793ED6900C7A99EA88942D3A065EB7E72E741A77CE7BB6AD5B7FFB2B83B6154A975FAE613F22A739F54E305BDCD85A5A3D5C59C28FEDB6AC2CF03272A57C25ED4CEAAF8006321DA2529F381EF51B050FA1AC7DE541624A19AFE8561C1407F9D3333AA364DDA03A5E50ACA61C7E52850C519549AB45B82AE1E831D7FE401A641CB47A4711340F4B6D2F9822D32442168D2517B5CB9E6A01FB89D9B8240858269DA12F8B0E247AD1D0DA835C3F38390EB4BA56EAA266FF113CA7DD7817AF156E994C21738839D1E4B6AE4B04332F09DC6A047F75FF521E6868697998CBCE9CBA7C505A97C01C510BED5CDBB55D4E624CA14A9D5A4A05851F0842904604D544B6FBF154BAF9FAB89A2765A41A6BD17E631B079429AED230B2F72777350CEF5CA6E89784376003BA8F189F671D9451EE86039EF8F2DE7B6E9A3A37A4C15BD8ACE6CCA3B218CD59D018674DDE5BCF25487464AFDA648A475D6BCEA1A95F2E2937DB1CEE3C9E7EBB2492ED275DCD9089A2909CBBDEB0368EDC5E6DBD12582E171DF0724C5534204F656E095339C5E19D5665D214D3E4F05F6A18F3D0B3E95D16996EE3E49A239C8673A78D0DD90F36DBE6F85B316DD1E2AFED84D3823F5EAE9088176309CC33056B2976C31C8EC94C5FAA62E466CFC8FFE8D6DCB106DB27BA551C1A041561E597C967C1C8568D3C605BD703877343E0C4B4E932E10D", 16).unwrap();
-    let modulo = U4096::from_str_radix("6192d8ffcfa323578e8c340f9940652ab9388887f665e0fa112115c21aa458b25ff9f664a39a9d3d3799f98eeb510872a1bc72d40e70f0ccb3703333e92457382c3f0f4edb2f68a0255b6007bea50ae7470626b261c6538a179d5e91badca01be26ba31909f84800094c3e150848f5e4d7cfa39de7264f65fa9c161726359a623e4dfdd020fd23e198d8d581131e487b7e2b87ed529c306e5da33e8604827a6c50262d0a6e3045097b6dd1ad9986451124334f06475261e8eca54b00bed58bd1d4d61d9adaca3f9f29d06a48465de459ddc53ffacc5384859f537f26a6028283d7fefec243e91b64713db023654ee8b412a2b4a1fadfc99d44b0dc86e666ca5470704b8bfe5fd708ddd576bd021bf4c2d813279ec0d74f4e03a53557f2cefde2cd9e9d01c72be14754f7a4472dfe8ef653fe73980d1edc3727501f5594863d2e32a8abf8fc04c44f8aac2e9bda32a8d154a62107bdc1f2f394b9ae693e84d6c7ba4143c15b39fed115fd4265fc230c3e9cd830d56f7866e09042569c80517596f8fcef6ed1e31962d3805d2d811248b11006e1dc14d03c98f5daeca854ad44eac60878e807d26656e5f91e4cfeeb16b8f8ba4d04d398737af8fd4a6b7f1b31e390dee1dfc5e117cdd76b4e26b2407480d97a1503f8aa01f676d6ddbce264e1cd4ec3f2ef903632865fe85795d5298432df45cae39771f83155b8da0979de9f23", 16).unwrap();
-    let rsa = RSA_4096::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("6192d8ffcfa323578e8c340f9940652ab9388887f665e0fa112115c21aa458b25ff9f664a39a9d3d3799f98eeb510872a1bc72d40e70f0ccb3703333e92457382c3f0f4edb2f68a0255b6007bea50ae7470626b261c6538a179d5e91badca01be26ba31909f84800094c3e150848f5e4d7cfa39de7264f65fa9c161726359a623e4dfdd020fd23e198d8d581131e487b7e2b87ed529c306e5da33e8604827a6c50262d0a6e3045097b6dd1ad9986451124334f06475261e8eca54b00bed58bd1d4d61d9adaca3f9f29d06a48465de459ddc53ffacc5384859f537f26a6028283d7fefec243e91b64713db023654ee8b412a2b4a1fadfc99d44b0dc86e666ca5470704b8bfe5fd708ddd576bd021bf4c2d813279ec0d74f4e03a53557f2cefde2cd9e9d01c72be14754f7a4472dfe8ef653fe73980d1edc3727501f5594863d2e32a8abf8fc04c44f8aac2e9bda32a8d154a62107bdc1f2f394b9ae693e84d6c7ba4143c15b39fed115fd4265fc230c3e9cd830d56f7866e09042569c80517596f8fcef6ed1e31962d3805d2d811248b11006e1dc14d03c98f5daeca854ad44eac60878e807d26656e5f91e4cfeeb16b8f8ba4d04d398737af8fd4a6b7f1b31e390dee1dfc5e117cdd76b4e26b2407480d97a1503f8aa01f676d6ddbce264e1cd4ec3f2ef903632865fe85795d5298432df45cae39771f83155b8da0979de9f23", 16).unwrap();
+    let rsa = RSA_4096::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [[0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000],
                     [0x_3456789ABCDEF00FEDCBA98765432112_u128, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_89706A5B4C3D2E1FF1E2D3C4B5A60798, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB, 0x_0123456789ABCDEFFEDCBA9876543210, 0x_556677889900AABB11223344CCDDEEFF, 0x_44332211FFEEDDCC88776655BBAA0099, 0x_4D3E2F11F29807A6B5CE3D4C5B6A7089, 0x_2D1E00F1E2D879605A4B3C3C4B5A6978, 0x_E3F201102F3E98A7B6C5D44D5C6B7A89, 0x_333344449999111122220000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000],
                     [0x_56789ABCDEF00FEDCBA9876543211234_u128, 0x_11223344CCDDEEFF556677889900AABB, 0x_FFEEDDCC5544332211BBAA0099887766, 0x_5B6A70899807A6B51F2E3D4CC4D3E2F1, 0x_B5A6079889706A5BF1E2D3C44C3D2E1F, 0x_102F3E4DD4E3F2015C6B7A8998A7B6C5, 0x_33334444555566661111222277778888, 0x_99990000EEEEFFFFAAAABBBBCCCCDDDD, 0x_FEDCBA99ABCDEF876543210012345678, 0x_CCDDEEFF112233449900AABB55667788, 0x_88776655BBAA009944332211FFEEDDCC, 0x_9807A6B5C5B6A7089C4D3E2F11F2E3D4, 0x_879605A43C4B5A6978B3C2D1E00F1E2D, 0x_E3F201102F3E98A7B6C5D44D5C6B7A89, 0x_111122220000AAAABBBB333344449999, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000]];
 
-    println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_4096: Message = [");
     for mm in message
     {
@@ -4055,14 +4055,14 @@ fn rsa_decrypt_array_unit()
 
     let public_key = BigUInt::<u64, 4>::from(5_u8);
     let private_key = BigUInt::<u64, 4>::from_str_radix("92D109331B85A642EC6AE3F68A4E7272426A4BD0A0C16EF9B62F9269ACF9E8CD", 16).unwrap();
-    let modulo = BigUInt::<u64, 4>::from_str_radix("b7854b7fe2670fd3a7859cf42ce20f1087aad03f863107e2b7bac58e09483f3d", 16).unwrap();
-    let rsa = RSA_Generic::<4, u64, 5>::new_with_keys(public_key, private_key, modulo);
+    let modulus = BigUInt::<u64, 4>::from_str_radix("b7854b7fe2670fd3a7859cf42ce20f1087aad03f863107e2b7bac58e09483f3d", 16).unwrap();
+    let rsa = RSA_Generic::<4, u64, 5>::new_with_keys(public_key, private_key, modulus);
     let message = [[0x_FEDCBA9876543210_u64, 0x_1122334455667788, 0x_9900AABBCCDDEEFF, 0x_FEDCBA0987654321],
                     [0x_10FEDCBA98765432_u64, 0x_8811223344556677, 0x_CCDDEEFF9900AABB, 0x_9876FEDCBA054321],
                     [0x_3210FEDCBA987654_u64, 0x_7788112233445566, 0x_9900EEFFAABBCCDD, 0x_FEDC54321BA09876]];
 
-    println!("RSA_Generic<4, u64, 5>: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_Generic<4, u64, 5>: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_Generic<4, u64, 5>: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_Generic<4, u64, 5>: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_Generic<4, u64, 5>: Message = [");
     for mm in message
     {
@@ -4106,13 +4106,13 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U1024::from(7_u8);
     let private_key = U1024::from_str_radix("4703E575111E5E33F674DB8CB5C7AA883BCBC715FFF564645CD67F2AB09470D71575D6D88FBB6BC0FABD4837B2F1F3F01FE4F7D135EF2FA15476D88107881CB8D6594A0010F987144DD6243268D07A6C7002F5949E0886BA36F8BAA886B0D8311277977315FC7F93CD95AB72592F65A2AB7BE609C69AFC3D9B54BA3BB78FAD87", 16).unwrap();
-    let modulo = U1024::from_str_radix("636bdad717f750af25d6ccf831b121f1ed507d1eccbdf2f2e85f7ed55d9c9df9ead82cc8c93996daf8a2984dfa85ef1cf973c158184edc48430cc8b4a424f504093508b4a1235839fd887c0ef40d7740b770a375457b0e95cda768e23799f94c34982315e6974fa1e1fb63d2a1be2ed341f22275bd098a6bb56e7efe2ba6f2ef", 16).unwrap();
-    let rsa = RSA_1024_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("636bdad717f750af25d6ccf831b121f1ed507d1eccbdf2f2e85f7ed55d9c9df9ead82cc8c93996daf8a2984dfa85ef1cf973c158184edc48430cc8b4a424f504093508b4a1235839fd887c0ef40d7740b770a375457b0e95cda768e23799f94c34982315e6974fa1e1fb63d2a1be2ed341f22275bd098a6bb56e7efe2ba6f2ef", 16).unwrap();
+    let rsa = RSA_1024_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [ [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF],
                     [0x_23456789ABCDEF00FEDCBA9876543211_u128, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB],
                     [0x_3456789ABCDEF00FEDCBA98765432112_u128, 0x_CCDDEEFF112233449900AABB55667788, 0x_44332211FFEEDD88776655CCBBAA0099, 0x_9807A6B5C5B6A70894D3E2F11F2E3D4C, 0x_F1E2D35A4B3C2D1FC4B5A697887960, 0x_4E3F201102F3E4D98A7B6C5D5C6B7A89, 0x_55556666333344447777888811112222, 0x_EEEEFFFF99990000CCCCDDDDAAAABBBB] ];
-    println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_1024_u128: Message = [");
     for mm in message
     {
@@ -4156,13 +4156,13 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U2048::from(5_u8);
     let private_key = U2048::from_str_radix("49E61033258BFDFF87ADB347816E3D13BC07A9929F4064C5336F5FEC074C857BA6F64415DB647DD6CEE42842DF409A2B036839B814E6F2A1E507F2CDD91FB2B42BE6B4A40E0CFA0779437B42B8996CA31034CB90D84CB283870BE414756316FB300523F700BCC3D9E1B8183F8EA4675FF6F59D84FF3E120CE54C94B0A44E2C1DCCA68F3F0842DB99FCD7698234C374ABB28C2B5F5A5B1914F15F41163E16A54AEDA0CB6679EA1026BA97C00B0726DB7837F7478275D3688D2981898A7BB040CC9927F4204E8BA93B97992D1C13C17D9A53F4B834A2A56DD9633F5288BA125859413D3F197F7278F95F37503D2FDDF9F540154C491AAE943B13EF3C047AA5E1AD", 16).unwrap();
-    let modulo = U2048::from_str_radix("7b2a1affe93ea7548ccc2acc826265cb8eb76ff45ec0a7f355b99fdeb6d4de78c0efc6cf18522710ae26edc4c96bab9d05adb58822d63f0dd30d3f57148a29d6f3d5d7bc176af60c74c5cd6f33aa5fba7057fdf1687fd4308bbe7c2218fa7ba2a55de69babe5466b22dd7dbf4312019ff0eeb132febcc8c028d4f7d111d79eddc056ec9cd74e3a369eefbc634b6544bcbd80ff73a941ab7614ccf740da8a1010a6e1799953abfdcbe9892520eb35733602807ef52fb6b4cf0664560e2feda618cceecba02038d0c3349e1634f778544f2ab941bd61788f30db3c0aeebefb02759f2e605f301e48b5235f3340fecb37e04bd34f53a2f516904532135a4a38b9e7", 16).unwrap();
-    let rsa = RSA_2048_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("7b2a1affe93ea7548ccc2acc826265cb8eb76ff45ec0a7f355b99fdeb6d4de78c0efc6cf18522710ae26edc4c96bab9d05adb58822d63f0dd30d3f57148a29d6f3d5d7bc176af60c74c5cd6f33aa5fba7057fdf1687fd4308bbe7c2218fa7ba2a55de69babe5466b22dd7dbf4312019ff0eeb132febcc8c028d4f7d111d79eddc056ec9cd74e3a369eefbc634b6544bcbd80ff73a941ab7614ccf740da8a1010a6e1799953abfdcbe9892520eb35733602807ef52fb6b4cf0664560e2feda618cceecba02038d0c3349e1634f778544f2ab941bd61788f30db3c0aeebefb02759f2e605f301e48b5235f3340fecb37e04bd34f53a2f516904532135a4a38b9e7", 16).unwrap();
+    let rsa = RSA_2048_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [[0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF],
                     [0x_21123456789ABCDEF00FEDCBA9876543_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_89706A5B4C3D2E1FF1E2D3C4B5A60798, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_11112222777788883333444455556666, 0x_99990000EEEEFFFFAAAABBBBCCCCDDDD, 0x_0123456789ABCDEFFEDCBA9876543210, 0x_11223344556677889900AABBCCDDEEFF, 0x_88776655BBAA009944332211FFEEDDCC, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_0F1E2D3C4B5A6978879605A4B3C2D1E0, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_0000AAAABBBB11112222333344449999, 0x_CCCCDDDDEEEEFFFF5555666677778888],
                     [0x_321123456789ABCDEF00FEDCBA987654_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCC5544332211BBAA0099887766, 0x_1F2E3D4CC4D3E2F15B6A70899807A6B5, 0x_F1E2D3C4B4C3D2E1F5A6079889706A5B, 0x_102F3E4DD4E3F2015C6B7A8998A7B6C5, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB, 0x_FEDCBA989ABCDEF87654321001234567, 0x_CCDDEEFF112233449900AABB55667788, 0x_FFEEDDCCBBAA00998877665544332211, 0x_9807A6B51F2E3D4C5B6A7089C4D3E2F1, 0x_879605A44B5A6978B3C2D1E00F1E2D3C, 0x_5D4E3F201102F3E98A7B6C4D5C6B7A89, 0x_11112222AAAABBBB3333444499990000, 0x_77778888CCCCDDDD55556666EEEEFFFF]];
-    println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_2048_u128: Message = [");
     for mm in message
     {
@@ -4207,14 +4207,14 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("4E0F13FFD94F4F793ED6900C7A99EA88942D3A065EB7E72E741A77CE7BB6AD5B7FFB2B83B6154A975FAE613F22A739F54E305BDCD85A5A3D5C59C28FEDB6AC2CF03272A57C25ED4CEAAF8006321DA2529F381EF51B050FA1AC7DE541624A19AFE8561C1407F9D3333AA364DDA03A5E50ACA61C7E52850C519549AB45B82AE1E831D7FE401A641CB47A4711340F4B6D2F9822D32442168D2517B5CB9E6A01FB89D9B8240858269DA12F8B0E247AD1D0DA835C3F38390EB4BA56EAA266FF113CA7DD7817AF156E994C21738839D1E4B6AE4B04332F09DC6A047F75FF521E6868697998CBCE9CBA7C505A97C01C510BED5CDBB55D4E624CA14A9D5A4A05851F0842904604D544B6FBF154BAF9FAB89A2765A41A6BD17E631B079429AED230B2F72777350CEF5CA6E89784376003BA8F189F671D9451EE86039EF8F2DE7B6E9A3A37A4C15BD8ACE6CCA3B218CD59D018674DDE5BCF25487464AFDA648A475D6BCEA1A95F2E2937DB1CEE3C9E7EBB2492ED275DCD9089A2909CBBDEB0368EDC5E6DBD12582E171DF0724C5534204F656E095339C5E19D5665D214D3E4F05F6A18F3D0B3E95D16996EE3E49A239C8673A78D0DD90F36DBE6F85B316DD1E2AFED84D3823F5EAE9088176309CC33056B2976C31C8EC94C5FAA62E466CFC8FFE8D6DCB106DB27BA551C1A041561E597C967C1C8568D3C605BD703877343E0C4B4E932E10D", 16).unwrap();
-    let modulo = U4096::from_str_radix("6192d8ffcfa323578e8c340f9940652ab9388887f665e0fa112115c21aa458b25ff9f664a39a9d3d3799f98eeb510872a1bc72d40e70f0ccb3703333e92457382c3f0f4edb2f68a0255b6007bea50ae7470626b261c6538a179d5e91badca01be26ba31909f84800094c3e150848f5e4d7cfa39de7264f65fa9c161726359a623e4dfdd020fd23e198d8d581131e487b7e2b87ed529c306e5da33e8604827a6c50262d0a6e3045097b6dd1ad9986451124334f06475261e8eca54b00bed58bd1d4d61d9adaca3f9f29d06a48465de459ddc53ffacc5384859f537f26a6028283d7fefec243e91b64713db023654ee8b412a2b4a1fadfc99d44b0dc86e666ca5470704b8bfe5fd708ddd576bd021bf4c2d813279ec0d74f4e03a53557f2cefde2cd9e9d01c72be14754f7a4472dfe8ef653fe73980d1edc3727501f5594863d2e32a8abf8fc04c44f8aac2e9bda32a8d154a62107bdc1f2f394b9ae693e84d6c7ba4143c15b39fed115fd4265fc230c3e9cd830d56f7866e09042569c80517596f8fcef6ed1e31962d3805d2d811248b11006e1dc14d03c98f5daeca854ad44eac60878e807d26656e5f91e4cfeeb16b8f8ba4d04d398737af8fd4a6b7f1b31e390dee1dfc5e117cdd76b4e26b2407480d97a1503f8aa01f676d6ddbce264e1cd4ec3f2ef903632865fe85795d5298432df45cae39771f83155b8da0979de9f23", 16).unwrap();
-    let rsa = RSA_4096_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("6192d8ffcfa323578e8c340f9940652ab9388887f665e0fa112115c21aa458b25ff9f664a39a9d3d3799f98eeb510872a1bc72d40e70f0ccb3703333e92457382c3f0f4edb2f68a0255b6007bea50ae7470626b261c6538a179d5e91badca01be26ba31909f84800094c3e150848f5e4d7cfa39de7264f65fa9c161726359a623e4dfdd020fd23e198d8d581131e487b7e2b87ed529c306e5da33e8604827a6c50262d0a6e3045097b6dd1ad9986451124334f06475261e8eca54b00bed58bd1d4d61d9adaca3f9f29d06a48465de459ddc53ffacc5384859f537f26a6028283d7fefec243e91b64713db023654ee8b412a2b4a1fadfc99d44b0dc86e666ca5470704b8bfe5fd708ddd576bd021bf4c2d813279ec0d74f4e03a53557f2cefde2cd9e9d01c72be14754f7a4472dfe8ef653fe73980d1edc3727501f5594863d2e32a8abf8fc04c44f8aac2e9bda32a8d154a62107bdc1f2f394b9ae693e84d6c7ba4143c15b39fed115fd4265fc230c3e9cd830d56f7866e09042569c80517596f8fcef6ed1e31962d3805d2d811248b11006e1dc14d03c98f5daeca854ad44eac60878e807d26656e5f91e4cfeeb16b8f8ba4d04d398737af8fd4a6b7f1b31e390dee1dfc5e117cdd76b4e26b2407480d97a1503f8aa01f676d6ddbce264e1cd4ec3f2ef903632865fe85795d5298432df45cae39771f83155b8da0979de9f23", 16).unwrap();
+    let rsa = RSA_4096_u128::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [[0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000],
                     [0x_3456789ABCDEF00FEDCBA98765432112_u128, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_89706A5B4C3D2E1FF1E2D3C4B5A60798, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB, 0x_0123456789ABCDEFFEDCBA9876543210, 0x_556677889900AABB11223344CCDDEEFF, 0x_44332211FFEEDDCC88776655BBAA0099, 0x_4D3E2F11F29807A6B5CE3D4C5B6A7089, 0x_2D1E00F1E2D879605A4B3C3C4B5A6978, 0x_E3F201102F3E98A7B6C5D44D5C6B7A89, 0x_333344449999111122220000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000],
                     [0x_56789ABCDEF00FEDCBA9876543211234_u128, 0x_11223344CCDDEEFF556677889900AABB, 0x_FFEEDDCC5544332211BBAA0099887766, 0x_5B6A70899807A6B51F2E3D4CC4D3E2F1, 0x_B5A6079889706A5BF1E2D3C44C3D2E1F, 0x_102F3E4DD4E3F2015C6B7A8998A7B6C5, 0x_33334444555566661111222277778888, 0x_99990000EEEEFFFFAAAABBBBCCCCDDDD, 0x_FEDCBA99ABCDEF876543210012345678, 0x_CCDDEEFF112233449900AABB55667788, 0x_88776655BBAA009944332211FFEEDDCC, 0x_9807A6B5C5B6A7089C4D3E2F11F2E3D4, 0x_879605A43C4B5A6978B3C2D1E00F1E2D, 0x_E3F201102F3E98A7B6C5D44D5C6B7A89, 0x_111122220000AAAABBBB333344449999, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000]];
 
-    println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u128: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u128: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_4096_u128: Message = [");
     for mm in message
     {
@@ -4259,13 +4259,13 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U1024::from(7_u8);
     let private_key = U1024::from_str_radix("4703E575111E5E33F674DB8CB5C7AA883BCBC715FFF564645CD67F2AB09470D71575D6D88FBB6BC0FABD4837B2F1F3F01FE4F7D135EF2FA15476D88107881CB8D6594A0010F987144DD6243268D07A6C7002F5949E0886BA36F8BAA886B0D8311277977315FC7F93CD95AB72592F65A2AB7BE609C69AFC3D9B54BA3BB78FAD87", 16).unwrap();
-    let modulo = U1024::from_str_radix("636bdad717f750af25d6ccf831b121f1ed507d1eccbdf2f2e85f7ed55d9c9df9ead82cc8c93996daf8a2984dfa85ef1cf973c158184edc48430cc8b4a424f504093508b4a1235839fd887c0ef40d7740b770a375457b0e95cda768e23799f94c34982315e6974fa1e1fb63d2a1be2ed341f22275bd098a6bb56e7efe2ba6f2ef", 16).unwrap();
-    let rsa = RSA_1024_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("636bdad717f750af25d6ccf831b121f1ed507d1eccbdf2f2e85f7ed55d9c9df9ead82cc8c93996daf8a2984dfa85ef1cf973c158184edc48430cc8b4a424f504093508b4a1235839fd887c0ef40d7740b770a375457b0e95cda768e23799f94c34982315e6974fa1e1fb63d2a1be2ed341f22275bd098a6bb56e7efe2ba6f2ef", 16).unwrap();
+    let rsa = RSA_1024_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [ [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF],
                     [0x_23456789ABCDEF00FEDCBA9876543211_u128, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB],
                     [0x_3456789ABCDEF00FEDCBA98765432112_u128, 0x_CCDDEEFF112233449900AABB55667788, 0x_44332211FFEEDD88776655CCBBAA0099, 0x_9807A6B5C5B6A70894D3E2F11F2E3D4C, 0x_F1E2D35A4B3C2D1FC4B5A697887960, 0x_4E3F201102F3E4D98A7B6C5D5C6B7A89, 0x_55556666333344447777888811112222, 0x_EEEEFFFF99990000CCCCDDDDAAAABBBB] ];
-    println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_1024_u64: Message = [");
     for mm in message
     {
@@ -4314,13 +4314,13 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U2048::from(5_u8);
     let private_key = U2048::from_str_radix("49E61033258BFDFF87ADB347816E3D13BC07A9929F4064C5336F5FEC074C857BA6F64415DB647DD6CEE42842DF409A2B036839B814E6F2A1E507F2CDD91FB2B42BE6B4A40E0CFA0779437B42B8996CA31034CB90D84CB283870BE414756316FB300523F700BCC3D9E1B8183F8EA4675FF6F59D84FF3E120CE54C94B0A44E2C1DCCA68F3F0842DB99FCD7698234C374ABB28C2B5F5A5B1914F15F41163E16A54AEDA0CB6679EA1026BA97C00B0726DB7837F7478275D3688D2981898A7BB040CC9927F4204E8BA93B97992D1C13C17D9A53F4B834A2A56DD9633F5288BA125859413D3F197F7278F95F37503D2FDDF9F540154C491AAE943B13EF3C047AA5E1AD", 16).unwrap();
-    let modulo = U2048::from_str_radix("7b2a1affe93ea7548ccc2acc826265cb8eb76ff45ec0a7f355b99fdeb6d4de78c0efc6cf18522710ae26edc4c96bab9d05adb58822d63f0dd30d3f57148a29d6f3d5d7bc176af60c74c5cd6f33aa5fba7057fdf1687fd4308bbe7c2218fa7ba2a55de69babe5466b22dd7dbf4312019ff0eeb132febcc8c028d4f7d111d79eddc056ec9cd74e3a369eefbc634b6544bcbd80ff73a941ab7614ccf740da8a1010a6e1799953abfdcbe9892520eb35733602807ef52fb6b4cf0664560e2feda618cceecba02038d0c3349e1634f778544f2ab941bd61788f30db3c0aeebefb02759f2e605f301e48b5235f3340fecb37e04bd34f53a2f516904532135a4a38b9e7", 16).unwrap();
-    let rsa = RSA_2048_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("7b2a1affe93ea7548ccc2acc826265cb8eb76ff45ec0a7f355b99fdeb6d4de78c0efc6cf18522710ae26edc4c96bab9d05adb58822d63f0dd30d3f57148a29d6f3d5d7bc176af60c74c5cd6f33aa5fba7057fdf1687fd4308bbe7c2218fa7ba2a55de69babe5466b22dd7dbf4312019ff0eeb132febcc8c028d4f7d111d79eddc056ec9cd74e3a369eefbc634b6544bcbd80ff73a941ab7614ccf740da8a1010a6e1799953abfdcbe9892520eb35733602807ef52fb6b4cf0664560e2feda618cceecba02038d0c3349e1634f778544f2ab941bd61788f30db3c0aeebefb02759f2e605f301e48b5235f3340fecb37e04bd34f53a2f516904532135a4a38b9e7", 16).unwrap();
+    let rsa = RSA_2048_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [[0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF],
                     [0x_21123456789ABCDEF00FEDCBA9876543_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_89706A5B4C3D2E1FF1E2D3C4B5A60798, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_11112222777788883333444455556666, 0x_99990000EEEEFFFFAAAABBBBCCCCDDDD, 0x_0123456789ABCDEFFEDCBA9876543210, 0x_11223344556677889900AABBCCDDEEFF, 0x_88776655BBAA009944332211FFEEDDCC, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_0F1E2D3C4B5A6978879605A4B3C2D1E0, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_0000AAAABBBB11112222333344449999, 0x_CCCCDDDDEEEEFFFF5555666677778888],
                     [0x_321123456789ABCDEF00FEDCBA987654_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCC5544332211BBAA0099887766, 0x_1F2E3D4CC4D3E2F15B6A70899807A6B5, 0x_F1E2D3C4B4C3D2E1F5A6079889706A5B, 0x_102F3E4DD4E3F2015C6B7A8998A7B6C5, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB, 0x_FEDCBA989ABCDEF87654321001234567, 0x_CCDDEEFF112233449900AABB55667788, 0x_FFEEDDCCBBAA00998877665544332211, 0x_9807A6B51F2E3D4C5B6A7089C4D3E2F1, 0x_879605A44B5A6978B3C2D1E00F1E2D3C, 0x_5D4E3F201102F3E98A7B6C4D5C6B7A89, 0x_11112222AAAABBBB3333444499990000, 0x_77778888CCCCDDDD55556666EEEEFFFF]];
-    println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_2048_u64: Message = [");
     for mm in message
     {
@@ -4369,14 +4369,14 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("4E0F13FFD94F4F793ED6900C7A99EA88942D3A065EB7E72E741A77CE7BB6AD5B7FFB2B83B6154A975FAE613F22A739F54E305BDCD85A5A3D5C59C28FEDB6AC2CF03272A57C25ED4CEAAF8006321DA2529F381EF51B050FA1AC7DE541624A19AFE8561C1407F9D3333AA364DDA03A5E50ACA61C7E52850C519549AB45B82AE1E831D7FE401A641CB47A4711340F4B6D2F9822D32442168D2517B5CB9E6A01FB89D9B8240858269DA12F8B0E247AD1D0DA835C3F38390EB4BA56EAA266FF113CA7DD7817AF156E994C21738839D1E4B6AE4B04332F09DC6A047F75FF521E6868697998CBCE9CBA7C505A97C01C510BED5CDBB55D4E624CA14A9D5A4A05851F0842904604D544B6FBF154BAF9FAB89A2765A41A6BD17E631B079429AED230B2F72777350CEF5CA6E89784376003BA8F189F671D9451EE86039EF8F2DE7B6E9A3A37A4C15BD8ACE6CCA3B218CD59D018674DDE5BCF25487464AFDA648A475D6BCEA1A95F2E2937DB1CEE3C9E7EBB2492ED275DCD9089A2909CBBDEB0368EDC5E6DBD12582E171DF0724C5534204F656E095339C5E19D5665D214D3E4F05F6A18F3D0B3E95D16996EE3E49A239C8673A78D0DD90F36DBE6F85B316DD1E2AFED84D3823F5EAE9088176309CC33056B2976C31C8EC94C5FAA62E466CFC8FFE8D6DCB106DB27BA551C1A041561E597C967C1C8568D3C605BD703877343E0C4B4E932E10D", 16).unwrap();
-    let modulo = U4096::from_str_radix("6192d8ffcfa323578e8c340f9940652ab9388887f665e0fa112115c21aa458b25ff9f664a39a9d3d3799f98eeb510872a1bc72d40e70f0ccb3703333e92457382c3f0f4edb2f68a0255b6007bea50ae7470626b261c6538a179d5e91badca01be26ba31909f84800094c3e150848f5e4d7cfa39de7264f65fa9c161726359a623e4dfdd020fd23e198d8d581131e487b7e2b87ed529c306e5da33e8604827a6c50262d0a6e3045097b6dd1ad9986451124334f06475261e8eca54b00bed58bd1d4d61d9adaca3f9f29d06a48465de459ddc53ffacc5384859f537f26a6028283d7fefec243e91b64713db023654ee8b412a2b4a1fadfc99d44b0dc86e666ca5470704b8bfe5fd708ddd576bd021bf4c2d813279ec0d74f4e03a53557f2cefde2cd9e9d01c72be14754f7a4472dfe8ef653fe73980d1edc3727501f5594863d2e32a8abf8fc04c44f8aac2e9bda32a8d154a62107bdc1f2f394b9ae693e84d6c7ba4143c15b39fed115fd4265fc230c3e9cd830d56f7866e09042569c80517596f8fcef6ed1e31962d3805d2d811248b11006e1dc14d03c98f5daeca854ad44eac60878e807d26656e5f91e4cfeeb16b8f8ba4d04d398737af8fd4a6b7f1b31e390dee1dfc5e117cdd76b4e26b2407480d97a1503f8aa01f676d6ddbce264e1cd4ec3f2ef903632865fe85795d5298432df45cae39771f83155b8da0979de9f23", 16).unwrap();
-    let rsa = RSA_4096_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("6192d8ffcfa323578e8c340f9940652ab9388887f665e0fa112115c21aa458b25ff9f664a39a9d3d3799f98eeb510872a1bc72d40e70f0ccb3703333e92457382c3f0f4edb2f68a0255b6007bea50ae7470626b261c6538a179d5e91badca01be26ba31909f84800094c3e150848f5e4d7cfa39de7264f65fa9c161726359a623e4dfdd020fd23e198d8d581131e487b7e2b87ed529c306e5da33e8604827a6c50262d0a6e3045097b6dd1ad9986451124334f06475261e8eca54b00bed58bd1d4d61d9adaca3f9f29d06a48465de459ddc53ffacc5384859f537f26a6028283d7fefec243e91b64713db023654ee8b412a2b4a1fadfc99d44b0dc86e666ca5470704b8bfe5fd708ddd576bd021bf4c2d813279ec0d74f4e03a53557f2cefde2cd9e9d01c72be14754f7a4472dfe8ef653fe73980d1edc3727501f5594863d2e32a8abf8fc04c44f8aac2e9bda32a8d154a62107bdc1f2f394b9ae693e84d6c7ba4143c15b39fed115fd4265fc230c3e9cd830d56f7866e09042569c80517596f8fcef6ed1e31962d3805d2d811248b11006e1dc14d03c98f5daeca854ad44eac60878e807d26656e5f91e4cfeeb16b8f8ba4d04d398737af8fd4a6b7f1b31e390dee1dfc5e117cdd76b4e26b2407480d97a1503f8aa01f676d6ddbce264e1cd4ec3f2ef903632865fe85795d5298432df45cae39771f83155b8da0979de9f23", 16).unwrap();
+    let rsa = RSA_4096_u64::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [[0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000],
                     [0x_3456789ABCDEF00FEDCBA98765432112_u128, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_89706A5B4C3D2E1FF1E2D3C4B5A60798, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB, 0x_0123456789ABCDEFFEDCBA9876543210, 0x_556677889900AABB11223344CCDDEEFF, 0x_44332211FFEEDDCC88776655BBAA0099, 0x_4D3E2F11F29807A6B5CE3D4C5B6A7089, 0x_2D1E00F1E2D879605A4B3C3C4B5A6978, 0x_E3F201102F3E98A7B6C5D44D5C6B7A89, 0x_333344449999111122220000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000],
                     [0x_56789ABCDEF00FEDCBA9876543211234_u128, 0x_11223344CCDDEEFF556677889900AABB, 0x_FFEEDDCC5544332211BBAA0099887766, 0x_5B6A70899807A6B51F2E3D4CC4D3E2F1, 0x_B5A6079889706A5BF1E2D3C44C3D2E1F, 0x_102F3E4DD4E3F2015C6B7A8998A7B6C5, 0x_33334444555566661111222277778888, 0x_99990000EEEEFFFFAAAABBBBCCCCDDDD, 0x_FEDCBA99ABCDEF876543210012345678, 0x_CCDDEEFF112233449900AABB55667788, 0x_88776655BBAA009944332211FFEEDDCC, 0x_9807A6B5C5B6A7089C4D3E2F11F2E3D4, 0x_879605A43C4B5A6978B3C2D1E00F1E2D, 0x_E3F201102F3E98A7B6C5D44D5C6B7A89, 0x_111122220000AAAABBBB333344449999, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000]];
 
-    println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u64: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u64: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_4096_u64: Message = [");
     for mm in message
     {
@@ -4425,13 +4425,13 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U1024::from(7_u8);
     let private_key = U1024::from_str_radix("4703E575111E5E33F674DB8CB5C7AA883BCBC715FFF564645CD67F2AB09470D71575D6D88FBB6BC0FABD4837B2F1F3F01FE4F7D135EF2FA15476D88107881CB8D6594A0010F987144DD6243268D07A6C7002F5949E0886BA36F8BAA886B0D8311277977315FC7F93CD95AB72592F65A2AB7BE609C69AFC3D9B54BA3BB78FAD87", 16).unwrap();
-    let modulo = U1024::from_str_radix("636bdad717f750af25d6ccf831b121f1ed507d1eccbdf2f2e85f7ed55d9c9df9ead82cc8c93996daf8a2984dfa85ef1cf973c158184edc48430cc8b4a424f504093508b4a1235839fd887c0ef40d7740b770a375457b0e95cda768e23799f94c34982315e6974fa1e1fb63d2a1be2ed341f22275bd098a6bb56e7efe2ba6f2ef", 16).unwrap();
-    let rsa = RSA_1024_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("636bdad717f750af25d6ccf831b121f1ed507d1eccbdf2f2e85f7ed55d9c9df9ead82cc8c93996daf8a2984dfa85ef1cf973c158184edc48430cc8b4a424f504093508b4a1235839fd887c0ef40d7740b770a375457b0e95cda768e23799f94c34982315e6974fa1e1fb63d2a1be2ed341f22275bd098a6bb56e7efe2ba6f2ef", 16).unwrap();
+    let rsa = RSA_1024_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [ [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF],
                     [0x_23456789ABCDEF00FEDCBA9876543211_u128, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB],
                     [0x_3456789ABCDEF00FEDCBA98765432112_u128, 0x_CCDDEEFF112233449900AABB55667788, 0x_44332211FFEEDD88776655CCBBAA0099, 0x_9807A6B5C5B6A70894D3E2F11F2E3D4C, 0x_F1E2D35A4B3C2D1FC4B5A697887960, 0x_4E3F201102F3E4D98A7B6C5D5C6B7A89, 0x_55556666333344447777888811112222, 0x_EEEEFFFF99990000CCCCDDDDAAAABBBB] ];
-    println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_1024_u32: Message = [");
     for mm in message
     {
@@ -4480,13 +4480,13 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U2048::from(5_u8);
     let private_key = U2048::from_str_radix("49E61033258BFDFF87ADB347816E3D13BC07A9929F4064C5336F5FEC074C857BA6F64415DB647DD6CEE42842DF409A2B036839B814E6F2A1E507F2CDD91FB2B42BE6B4A40E0CFA0779437B42B8996CA31034CB90D84CB283870BE414756316FB300523F700BCC3D9E1B8183F8EA4675FF6F59D84FF3E120CE54C94B0A44E2C1DCCA68F3F0842DB99FCD7698234C374ABB28C2B5F5A5B1914F15F41163E16A54AEDA0CB6679EA1026BA97C00B0726DB7837F7478275D3688D2981898A7BB040CC9927F4204E8BA93B97992D1C13C17D9A53F4B834A2A56DD9633F5288BA125859413D3F197F7278F95F37503D2FDDF9F540154C491AAE943B13EF3C047AA5E1AD", 16).unwrap();
-    let modulo = U2048::from_str_radix("7b2a1affe93ea7548ccc2acc826265cb8eb76ff45ec0a7f355b99fdeb6d4de78c0efc6cf18522710ae26edc4c96bab9d05adb58822d63f0dd30d3f57148a29d6f3d5d7bc176af60c74c5cd6f33aa5fba7057fdf1687fd4308bbe7c2218fa7ba2a55de69babe5466b22dd7dbf4312019ff0eeb132febcc8c028d4f7d111d79eddc056ec9cd74e3a369eefbc634b6544bcbd80ff73a941ab7614ccf740da8a1010a6e1799953abfdcbe9892520eb35733602807ef52fb6b4cf0664560e2feda618cceecba02038d0c3349e1634f778544f2ab941bd61788f30db3c0aeebefb02759f2e605f301e48b5235f3340fecb37e04bd34f53a2f516904532135a4a38b9e7", 16).unwrap();
-    let rsa = RSA_2048_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("7b2a1affe93ea7548ccc2acc826265cb8eb76ff45ec0a7f355b99fdeb6d4de78c0efc6cf18522710ae26edc4c96bab9d05adb58822d63f0dd30d3f57148a29d6f3d5d7bc176af60c74c5cd6f33aa5fba7057fdf1687fd4308bbe7c2218fa7ba2a55de69babe5466b22dd7dbf4312019ff0eeb132febcc8c028d4f7d111d79eddc056ec9cd74e3a369eefbc634b6544bcbd80ff73a941ab7614ccf740da8a1010a6e1799953abfdcbe9892520eb35733602807ef52fb6b4cf0664560e2feda618cceecba02038d0c3349e1634f778544f2ab941bd61788f30db3c0aeebefb02759f2e605f301e48b5235f3340fecb37e04bd34f53a2f516904532135a4a38b9e7", 16).unwrap();
+    let rsa = RSA_2048_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [[0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF],
                     [0x_21123456789ABCDEF00FEDCBA9876543_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_89706A5B4C3D2E1FF1E2D3C4B5A60798, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_11112222777788883333444455556666, 0x_99990000EEEEFFFFAAAABBBBCCCCDDDD, 0x_0123456789ABCDEFFEDCBA9876543210, 0x_11223344556677889900AABBCCDDEEFF, 0x_88776655BBAA009944332211FFEEDDCC, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_0F1E2D3C4B5A6978879605A4B3C2D1E0, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_0000AAAABBBB11112222333344449999, 0x_CCCCDDDDEEEEFFFF5555666677778888],
                     [0x_321123456789ABCDEF00FEDCBA987654_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCC5544332211BBAA0099887766, 0x_1F2E3D4CC4D3E2F15B6A70899807A6B5, 0x_F1E2D3C4B4C3D2E1F5A6079889706A5B, 0x_102F3E4DD4E3F2015C6B7A8998A7B6C5, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB, 0x_FEDCBA989ABCDEF87654321001234567, 0x_CCDDEEFF112233449900AABB55667788, 0x_FFEEDDCCBBAA00998877665544332211, 0x_9807A6B51F2E3D4C5B6A7089C4D3E2F1, 0x_879605A44B5A6978B3C2D1E00F1E2D3C, 0x_5D4E3F201102F3E98A7B6C4D5C6B7A89, 0x_11112222AAAABBBB3333444499990000, 0x_77778888CCCCDDDD55556666EEEEFFFF]];
-    println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_2048_u32: Message = [");
     for mm in message
     {
@@ -4535,14 +4535,14 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("4E0F13FFD94F4F793ED6900C7A99EA88942D3A065EB7E72E741A77CE7BB6AD5B7FFB2B83B6154A975FAE613F22A739F54E305BDCD85A5A3D5C59C28FEDB6AC2CF03272A57C25ED4CEAAF8006321DA2529F381EF51B050FA1AC7DE541624A19AFE8561C1407F9D3333AA364DDA03A5E50ACA61C7E52850C519549AB45B82AE1E831D7FE401A641CB47A4711340F4B6D2F9822D32442168D2517B5CB9E6A01FB89D9B8240858269DA12F8B0E247AD1D0DA835C3F38390EB4BA56EAA266FF113CA7DD7817AF156E994C21738839D1E4B6AE4B04332F09DC6A047F75FF521E6868697998CBCE9CBA7C505A97C01C510BED5CDBB55D4E624CA14A9D5A4A05851F0842904604D544B6FBF154BAF9FAB89A2765A41A6BD17E631B079429AED230B2F72777350CEF5CA6E89784376003BA8F189F671D9451EE86039EF8F2DE7B6E9A3A37A4C15BD8ACE6CCA3B218CD59D018674DDE5BCF25487464AFDA648A475D6BCEA1A95F2E2937DB1CEE3C9E7EBB2492ED275DCD9089A2909CBBDEB0368EDC5E6DBD12582E171DF0724C5534204F656E095339C5E19D5665D214D3E4F05F6A18F3D0B3E95D16996EE3E49A239C8673A78D0DD90F36DBE6F85B316DD1E2AFED84D3823F5EAE9088176309CC33056B2976C31C8EC94C5FAA62E466CFC8FFE8D6DCB106DB27BA551C1A041561E597C967C1C8568D3C605BD703877343E0C4B4E932E10D", 16).unwrap();
-    let modulo = U4096::from_str_radix("6192d8ffcfa323578e8c340f9940652ab9388887f665e0fa112115c21aa458b25ff9f664a39a9d3d3799f98eeb510872a1bc72d40e70f0ccb3703333e92457382c3f0f4edb2f68a0255b6007bea50ae7470626b261c6538a179d5e91badca01be26ba31909f84800094c3e150848f5e4d7cfa39de7264f65fa9c161726359a623e4dfdd020fd23e198d8d581131e487b7e2b87ed529c306e5da33e8604827a6c50262d0a6e3045097b6dd1ad9986451124334f06475261e8eca54b00bed58bd1d4d61d9adaca3f9f29d06a48465de459ddc53ffacc5384859f537f26a6028283d7fefec243e91b64713db023654ee8b412a2b4a1fadfc99d44b0dc86e666ca5470704b8bfe5fd708ddd576bd021bf4c2d813279ec0d74f4e03a53557f2cefde2cd9e9d01c72be14754f7a4472dfe8ef653fe73980d1edc3727501f5594863d2e32a8abf8fc04c44f8aac2e9bda32a8d154a62107bdc1f2f394b9ae693e84d6c7ba4143c15b39fed115fd4265fc230c3e9cd830d56f7866e09042569c80517596f8fcef6ed1e31962d3805d2d811248b11006e1dc14d03c98f5daeca854ad44eac60878e807d26656e5f91e4cfeeb16b8f8ba4d04d398737af8fd4a6b7f1b31e390dee1dfc5e117cdd76b4e26b2407480d97a1503f8aa01f676d6ddbce264e1cd4ec3f2ef903632865fe85795d5298432df45cae39771f83155b8da0979de9f23", 16).unwrap();
-    let rsa = RSA_4096_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("6192d8ffcfa323578e8c340f9940652ab9388887f665e0fa112115c21aa458b25ff9f664a39a9d3d3799f98eeb510872a1bc72d40e70f0ccb3703333e92457382c3f0f4edb2f68a0255b6007bea50ae7470626b261c6538a179d5e91badca01be26ba31909f84800094c3e150848f5e4d7cfa39de7264f65fa9c161726359a623e4dfdd020fd23e198d8d581131e487b7e2b87ed529c306e5da33e8604827a6c50262d0a6e3045097b6dd1ad9986451124334f06475261e8eca54b00bed58bd1d4d61d9adaca3f9f29d06a48465de459ddc53ffacc5384859f537f26a6028283d7fefec243e91b64713db023654ee8b412a2b4a1fadfc99d44b0dc86e666ca5470704b8bfe5fd708ddd576bd021bf4c2d813279ec0d74f4e03a53557f2cefde2cd9e9d01c72be14754f7a4472dfe8ef653fe73980d1edc3727501f5594863d2e32a8abf8fc04c44f8aac2e9bda32a8d154a62107bdc1f2f394b9ae693e84d6c7ba4143c15b39fed115fd4265fc230c3e9cd830d56f7866e09042569c80517596f8fcef6ed1e31962d3805d2d811248b11006e1dc14d03c98f5daeca854ad44eac60878e807d26656e5f91e4cfeeb16b8f8ba4d04d398737af8fd4a6b7f1b31e390dee1dfc5e117cdd76b4e26b2407480d97a1503f8aa01f676d6ddbce264e1cd4ec3f2ef903632865fe85795d5298432df45cae39771f83155b8da0979de9f23", 16).unwrap();
+    let rsa = RSA_4096_u32::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [[0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000],
                     [0x_3456789ABCDEF00FEDCBA98765432112_u128, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_89706A5B4C3D2E1FF1E2D3C4B5A60798, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB, 0x_0123456789ABCDEFFEDCBA9876543210, 0x_556677889900AABB11223344CCDDEEFF, 0x_44332211FFEEDDCC88776655BBAA0099, 0x_4D3E2F11F29807A6B5CE3D4C5B6A7089, 0x_2D1E00F1E2D879605A4B3C3C4B5A6978, 0x_E3F201102F3E98A7B6C5D44D5C6B7A89, 0x_333344449999111122220000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000],
                     [0x_56789ABCDEF00FEDCBA9876543211234_u128, 0x_11223344CCDDEEFF556677889900AABB, 0x_FFEEDDCC5544332211BBAA0099887766, 0x_5B6A70899807A6B51F2E3D4CC4D3E2F1, 0x_B5A6079889706A5BF1E2D3C44C3D2E1F, 0x_102F3E4DD4E3F2015C6B7A8998A7B6C5, 0x_33334444555566661111222277778888, 0x_99990000EEEEFFFFAAAABBBBCCCCDDDD, 0x_FEDCBA99ABCDEF876543210012345678, 0x_CCDDEEFF112233449900AABB55667788, 0x_88776655BBAA009944332211FFEEDDCC, 0x_9807A6B5C5B6A7089C4D3E2F11F2E3D4, 0x_879605A43C4B5A6978B3C2D1E00F1E2D, 0x_E3F201102F3E98A7B6C5D44D5C6B7A89, 0x_111122220000AAAABBBB333344449999, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000]];
 
-    println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u32: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u32: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_4096_u32: Message = [");
     for mm in message
     {
@@ -4591,13 +4591,13 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U1024::from(7_u8);
     let private_key = U1024::from_str_radix("4703E575111E5E33F674DB8CB5C7AA883BCBC715FFF564645CD67F2AB09470D71575D6D88FBB6BC0FABD4837B2F1F3F01FE4F7D135EF2FA15476D88107881CB8D6594A0010F987144DD6243268D07A6C7002F5949E0886BA36F8BAA886B0D8311277977315FC7F93CD95AB72592F65A2AB7BE609C69AFC3D9B54BA3BB78FAD87", 16).unwrap();
-    let modulo = U1024::from_str_radix("636bdad717f750af25d6ccf831b121f1ed507d1eccbdf2f2e85f7ed55d9c9df9ead82cc8c93996daf8a2984dfa85ef1cf973c158184edc48430cc8b4a424f504093508b4a1235839fd887c0ef40d7740b770a375457b0e95cda768e23799f94c34982315e6974fa1e1fb63d2a1be2ed341f22275bd098a6bb56e7efe2ba6f2ef", 16).unwrap();
-    let rsa = RSA_1024_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("636bdad717f750af25d6ccf831b121f1ed507d1eccbdf2f2e85f7ed55d9c9df9ead82cc8c93996daf8a2984dfa85ef1cf973c158184edc48430cc8b4a424f504093508b4a1235839fd887c0ef40d7740b770a375457b0e95cda768e23799f94c34982315e6974fa1e1fb63d2a1be2ed341f22275bd098a6bb56e7efe2ba6f2ef", 16).unwrap();
+    let rsa = RSA_1024_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [ [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF],
                     [0x_23456789ABCDEF00FEDCBA9876543211_u128, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB],
                     [0x_3456789ABCDEF00FEDCBA98765432112_u128, 0x_CCDDEEFF112233449900AABB55667788, 0x_44332211FFEEDD88776655CCBBAA0099, 0x_9807A6B5C5B6A70894D3E2F11F2E3D4C, 0x_F1E2D35A4B3C2D1FC4B5A697887960, 0x_4E3F201102F3E4D98A7B6C5D5C6B7A89, 0x_55556666333344447777888811112222, 0x_EEEEFFFF99990000CCCCDDDDAAAABBBB] ];
-    println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_1024_u16: Message = [");
     for mm in message
     {
@@ -4646,13 +4646,13 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U2048::from(5_u8);
     let private_key = U2048::from_str_radix("49E61033258BFDFF87ADB347816E3D13BC07A9929F4064C5336F5FEC074C857BA6F64415DB647DD6CEE42842DF409A2B036839B814E6F2A1E507F2CDD91FB2B42BE6B4A40E0CFA0779437B42B8996CA31034CB90D84CB283870BE414756316FB300523F700BCC3D9E1B8183F8EA4675FF6F59D84FF3E120CE54C94B0A44E2C1DCCA68F3F0842DB99FCD7698234C374ABB28C2B5F5A5B1914F15F41163E16A54AEDA0CB6679EA1026BA97C00B0726DB7837F7478275D3688D2981898A7BB040CC9927F4204E8BA93B97992D1C13C17D9A53F4B834A2A56DD9633F5288BA125859413D3F197F7278F95F37503D2FDDF9F540154C491AAE943B13EF3C047AA5E1AD", 16).unwrap();
-    let modulo = U2048::from_str_radix("7b2a1affe93ea7548ccc2acc826265cb8eb76ff45ec0a7f355b99fdeb6d4de78c0efc6cf18522710ae26edc4c96bab9d05adb58822d63f0dd30d3f57148a29d6f3d5d7bc176af60c74c5cd6f33aa5fba7057fdf1687fd4308bbe7c2218fa7ba2a55de69babe5466b22dd7dbf4312019ff0eeb132febcc8c028d4f7d111d79eddc056ec9cd74e3a369eefbc634b6544bcbd80ff73a941ab7614ccf740da8a1010a6e1799953abfdcbe9892520eb35733602807ef52fb6b4cf0664560e2feda618cceecba02038d0c3349e1634f778544f2ab941bd61788f30db3c0aeebefb02759f2e605f301e48b5235f3340fecb37e04bd34f53a2f516904532135a4a38b9e7", 16).unwrap();
-    let rsa = RSA_2048_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("7b2a1affe93ea7548ccc2acc826265cb8eb76ff45ec0a7f355b99fdeb6d4de78c0efc6cf18522710ae26edc4c96bab9d05adb58822d63f0dd30d3f57148a29d6f3d5d7bc176af60c74c5cd6f33aa5fba7057fdf1687fd4308bbe7c2218fa7ba2a55de69babe5466b22dd7dbf4312019ff0eeb132febcc8c028d4f7d111d79eddc056ec9cd74e3a369eefbc634b6544bcbd80ff73a941ab7614ccf740da8a1010a6e1799953abfdcbe9892520eb35733602807ef52fb6b4cf0664560e2feda618cceecba02038d0c3349e1634f778544f2ab941bd61788f30db3c0aeebefb02759f2e605f301e48b5235f3340fecb37e04bd34f53a2f516904532135a4a38b9e7", 16).unwrap();
+    let rsa = RSA_2048_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [[0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF],
                     [0x_21123456789ABCDEF00FEDCBA9876543_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_89706A5B4C3D2E1FF1E2D3C4B5A60798, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_11112222777788883333444455556666, 0x_99990000EEEEFFFFAAAABBBBCCCCDDDD, 0x_0123456789ABCDEFFEDCBA9876543210, 0x_11223344556677889900AABBCCDDEEFF, 0x_88776655BBAA009944332211FFEEDDCC, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_0F1E2D3C4B5A6978879605A4B3C2D1E0, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_0000AAAABBBB11112222333344449999, 0x_CCCCDDDDEEEEFFFF5555666677778888],
                     [0x_321123456789ABCDEF00FEDCBA987654_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCC5544332211BBAA0099887766, 0x_1F2E3D4CC4D3E2F15B6A70899807A6B5, 0x_F1E2D3C4B4C3D2E1F5A6079889706A5B, 0x_102F3E4DD4E3F2015C6B7A8998A7B6C5, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB, 0x_FEDCBA989ABCDEF87654321001234567, 0x_CCDDEEFF112233449900AABB55667788, 0x_FFEEDDCCBBAA00998877665544332211, 0x_9807A6B51F2E3D4C5B6A7089C4D3E2F1, 0x_879605A44B5A6978B3C2D1E00F1E2D3C, 0x_5D4E3F201102F3E98A7B6C4D5C6B7A89, 0x_11112222AAAABBBB3333444499990000, 0x_77778888CCCCDDDD55556666EEEEFFFF]];
-    println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_2048_u16: Message = [");
     for mm in message
     {
@@ -4701,14 +4701,14 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("4E0F13FFD94F4F793ED6900C7A99EA88942D3A065EB7E72E741A77CE7BB6AD5B7FFB2B83B6154A975FAE613F22A739F54E305BDCD85A5A3D5C59C28FEDB6AC2CF03272A57C25ED4CEAAF8006321DA2529F381EF51B050FA1AC7DE541624A19AFE8561C1407F9D3333AA364DDA03A5E50ACA61C7E52850C519549AB45B82AE1E831D7FE401A641CB47A4711340F4B6D2F9822D32442168D2517B5CB9E6A01FB89D9B8240858269DA12F8B0E247AD1D0DA835C3F38390EB4BA56EAA266FF113CA7DD7817AF156E994C21738839D1E4B6AE4B04332F09DC6A047F75FF521E6868697998CBCE9CBA7C505A97C01C510BED5CDBB55D4E624CA14A9D5A4A05851F0842904604D544B6FBF154BAF9FAB89A2765A41A6BD17E631B079429AED230B2F72777350CEF5CA6E89784376003BA8F189F671D9451EE86039EF8F2DE7B6E9A3A37A4C15BD8ACE6CCA3B218CD59D018674DDE5BCF25487464AFDA648A475D6BCEA1A95F2E2937DB1CEE3C9E7EBB2492ED275DCD9089A2909CBBDEB0368EDC5E6DBD12582E171DF0724C5534204F656E095339C5E19D5665D214D3E4F05F6A18F3D0B3E95D16996EE3E49A239C8673A78D0DD90F36DBE6F85B316DD1E2AFED84D3823F5EAE9088176309CC33056B2976C31C8EC94C5FAA62E466CFC8FFE8D6DCB106DB27BA551C1A041561E597C967C1C8568D3C605BD703877343E0C4B4E932E10D", 16).unwrap();
-    let modulo = U4096::from_str_radix("6192d8ffcfa323578e8c340f9940652ab9388887f665e0fa112115c21aa458b25ff9f664a39a9d3d3799f98eeb510872a1bc72d40e70f0ccb3703333e92457382c3f0f4edb2f68a0255b6007bea50ae7470626b261c6538a179d5e91badca01be26ba31909f84800094c3e150848f5e4d7cfa39de7264f65fa9c161726359a623e4dfdd020fd23e198d8d581131e487b7e2b87ed529c306e5da33e8604827a6c50262d0a6e3045097b6dd1ad9986451124334f06475261e8eca54b00bed58bd1d4d61d9adaca3f9f29d06a48465de459ddc53ffacc5384859f537f26a6028283d7fefec243e91b64713db023654ee8b412a2b4a1fadfc99d44b0dc86e666ca5470704b8bfe5fd708ddd576bd021bf4c2d813279ec0d74f4e03a53557f2cefde2cd9e9d01c72be14754f7a4472dfe8ef653fe73980d1edc3727501f5594863d2e32a8abf8fc04c44f8aac2e9bda32a8d154a62107bdc1f2f394b9ae693e84d6c7ba4143c15b39fed115fd4265fc230c3e9cd830d56f7866e09042569c80517596f8fcef6ed1e31962d3805d2d811248b11006e1dc14d03c98f5daeca854ad44eac60878e807d26656e5f91e4cfeeb16b8f8ba4d04d398737af8fd4a6b7f1b31e390dee1dfc5e117cdd76b4e26b2407480d97a1503f8aa01f676d6ddbce264e1cd4ec3f2ef903632865fe85795d5298432df45cae39771f83155b8da0979de9f23", 16).unwrap();
-    let rsa = RSA_4096_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("6192d8ffcfa323578e8c340f9940652ab9388887f665e0fa112115c21aa458b25ff9f664a39a9d3d3799f98eeb510872a1bc72d40e70f0ccb3703333e92457382c3f0f4edb2f68a0255b6007bea50ae7470626b261c6538a179d5e91badca01be26ba31909f84800094c3e150848f5e4d7cfa39de7264f65fa9c161726359a623e4dfdd020fd23e198d8d581131e487b7e2b87ed529c306e5da33e8604827a6c50262d0a6e3045097b6dd1ad9986451124334f06475261e8eca54b00bed58bd1d4d61d9adaca3f9f29d06a48465de459ddc53ffacc5384859f537f26a6028283d7fefec243e91b64713db023654ee8b412a2b4a1fadfc99d44b0dc86e666ca5470704b8bfe5fd708ddd576bd021bf4c2d813279ec0d74f4e03a53557f2cefde2cd9e9d01c72be14754f7a4472dfe8ef653fe73980d1edc3727501f5594863d2e32a8abf8fc04c44f8aac2e9bda32a8d154a62107bdc1f2f394b9ae693e84d6c7ba4143c15b39fed115fd4265fc230c3e9cd830d56f7866e09042569c80517596f8fcef6ed1e31962d3805d2d811248b11006e1dc14d03c98f5daeca854ad44eac60878e807d26656e5f91e4cfeeb16b8f8ba4d04d398737af8fd4a6b7f1b31e390dee1dfc5e117cdd76b4e26b2407480d97a1503f8aa01f676d6ddbce264e1cd4ec3f2ef903632865fe85795d5298432df45cae39771f83155b8da0979de9f23", 16).unwrap();
+    let rsa = RSA_4096_u16::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [[0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000],
                     [0x_3456789ABCDEF00FEDCBA98765432112_u128, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_89706A5B4C3D2E1FF1E2D3C4B5A60798, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB, 0x_0123456789ABCDEFFEDCBA9876543210, 0x_556677889900AABB11223344CCDDEEFF, 0x_44332211FFEEDDCC88776655BBAA0099, 0x_4D3E2F11F29807A6B5CE3D4C5B6A7089, 0x_2D1E00F1E2D879605A4B3C3C4B5A6978, 0x_E3F201102F3E98A7B6C5D44D5C6B7A89, 0x_333344449999111122220000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000],
                     [0x_56789ABCDEF00FEDCBA9876543211234_u128, 0x_11223344CCDDEEFF556677889900AABB, 0x_FFEEDDCC5544332211BBAA0099887766, 0x_5B6A70899807A6B51F2E3D4CC4D3E2F1, 0x_B5A6079889706A5BF1E2D3C44C3D2E1F, 0x_102F3E4DD4E3F2015C6B7A8998A7B6C5, 0x_33334444555566661111222277778888, 0x_99990000EEEEFFFFAAAABBBBCCCCDDDD, 0x_FEDCBA99ABCDEF876543210012345678, 0x_CCDDEEFF112233449900AABB55667788, 0x_88776655BBAA009944332211FFEEDDCC, 0x_9807A6B5C5B6A7089C4D3E2F11F2E3D4, 0x_879605A43C4B5A6978B3C2D1E00F1E2D, 0x_E3F201102F3E98A7B6C5D44D5C6B7A89, 0x_111122220000AAAABBBB333344449999, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000]];
 
-    println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u16: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u16: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_4096_u16: Message = [");
     for mm in message
     {
@@ -4757,13 +4757,13 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U1024::from(7_u8);
     let private_key = U1024::from_str_radix("4703E575111E5E33F674DB8CB5C7AA883BCBC715FFF564645CD67F2AB09470D71575D6D88FBB6BC0FABD4837B2F1F3F01FE4F7D135EF2FA15476D88107881CB8D6594A0010F987144DD6243268D07A6C7002F5949E0886BA36F8BAA886B0D8311277977315FC7F93CD95AB72592F65A2AB7BE609C69AFC3D9B54BA3BB78FAD87", 16).unwrap();
-    let modulo = U1024::from_str_radix("636bdad717f750af25d6ccf831b121f1ed507d1eccbdf2f2e85f7ed55d9c9df9ead82cc8c93996daf8a2984dfa85ef1cf973c158184edc48430cc8b4a424f504093508b4a1235839fd887c0ef40d7740b770a375457b0e95cda768e23799f94c34982315e6974fa1e1fb63d2a1be2ed341f22275bd098a6bb56e7efe2ba6f2ef", 16).unwrap();
-    let rsa = RSA_1024_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U1024::from_str_radix("636bdad717f750af25d6ccf831b121f1ed507d1eccbdf2f2e85f7ed55d9c9df9ead82cc8c93996daf8a2984dfa85ef1cf973c158184edc48430cc8b4a424f504093508b4a1235839fd887c0ef40d7740b770a375457b0e95cda768e23799f94c34982315e6974fa1e1fb63d2a1be2ed341f22275bd098a6bb56e7efe2ba6f2ef", 16).unwrap();
+    let rsa = RSA_1024_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [ [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF],
                     [0x_23456789ABCDEF00FEDCBA9876543211_u128, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB],
                     [0x_3456789ABCDEF00FEDCBA98765432112_u128, 0x_CCDDEEFF112233449900AABB55667788, 0x_44332211FFEEDD88776655CCBBAA0099, 0x_9807A6B5C5B6A70894D3E2F11F2E3D4C, 0x_F1E2D35A4B3C2D1FC4B5A697887960, 0x_4E3F201102F3E4D98A7B6C5D5C6B7A89, 0x_55556666333344447777888811112222, 0x_EEEEFFFF99990000CCCCDDDDAAAABBBB] ];
-    println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_1024_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_1024_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_1024_u8: Message = [");
     for mm in message
     {
@@ -4812,13 +4812,13 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U2048::from(5_u8);
     let private_key = U2048::from_str_radix("49E61033258BFDFF87ADB347816E3D13BC07A9929F4064C5336F5FEC074C857BA6F64415DB647DD6CEE42842DF409A2B036839B814E6F2A1E507F2CDD91FB2B42BE6B4A40E0CFA0779437B42B8996CA31034CB90D84CB283870BE414756316FB300523F700BCC3D9E1B8183F8EA4675FF6F59D84FF3E120CE54C94B0A44E2C1DCCA68F3F0842DB99FCD7698234C374ABB28C2B5F5A5B1914F15F41163E16A54AEDA0CB6679EA1026BA97C00B0726DB7837F7478275D3688D2981898A7BB040CC9927F4204E8BA93B97992D1C13C17D9A53F4B834A2A56DD9633F5288BA125859413D3F197F7278F95F37503D2FDDF9F540154C491AAE943B13EF3C047AA5E1AD", 16).unwrap();
-    let modulo = U2048::from_str_radix("7b2a1affe93ea7548ccc2acc826265cb8eb76ff45ec0a7f355b99fdeb6d4de78c0efc6cf18522710ae26edc4c96bab9d05adb58822d63f0dd30d3f57148a29d6f3d5d7bc176af60c74c5cd6f33aa5fba7057fdf1687fd4308bbe7c2218fa7ba2a55de69babe5466b22dd7dbf4312019ff0eeb132febcc8c028d4f7d111d79eddc056ec9cd74e3a369eefbc634b6544bcbd80ff73a941ab7614ccf740da8a1010a6e1799953abfdcbe9892520eb35733602807ef52fb6b4cf0664560e2feda618cceecba02038d0c3349e1634f778544f2ab941bd61788f30db3c0aeebefb02759f2e605f301e48b5235f3340fecb37e04bd34f53a2f516904532135a4a38b9e7", 16).unwrap();
-    let rsa = RSA_2048_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U2048::from_str_radix("7b2a1affe93ea7548ccc2acc826265cb8eb76ff45ec0a7f355b99fdeb6d4de78c0efc6cf18522710ae26edc4c96bab9d05adb58822d63f0dd30d3f57148a29d6f3d5d7bc176af60c74c5cd6f33aa5fba7057fdf1687fd4308bbe7c2218fa7ba2a55de69babe5466b22dd7dbf4312019ff0eeb132febcc8c028d4f7d111d79eddc056ec9cd74e3a369eefbc634b6544bcbd80ff73a941ab7614ccf740da8a1010a6e1799953abfdcbe9892520eb35733602807ef52fb6b4cf0664560e2feda618cceecba02038d0c3349e1634f778544f2ab941bd61788f30db3c0aeebefb02759f2e605f301e48b5235f3340fecb37e04bd34f53a2f516904532135a4a38b9e7", 16).unwrap();
+    let rsa = RSA_2048_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [[0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF],
                     [0x_21123456789ABCDEF00FEDCBA9876543_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_89706A5B4C3D2E1FF1E2D3C4B5A60798, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_11112222777788883333444455556666, 0x_99990000EEEEFFFFAAAABBBBCCCCDDDD, 0x_0123456789ABCDEFFEDCBA9876543210, 0x_11223344556677889900AABBCCDDEEFF, 0x_88776655BBAA009944332211FFEEDDCC, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_0F1E2D3C4B5A6978879605A4B3C2D1E0, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_0000AAAABBBB11112222333344449999, 0x_CCCCDDDDEEEEFFFF5555666677778888],
                     [0x_321123456789ABCDEF00FEDCBA987654_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCC5544332211BBAA0099887766, 0x_1F2E3D4CC4D3E2F15B6A70899807A6B5, 0x_F1E2D3C4B4C3D2E1F5A6079889706A5B, 0x_102F3E4DD4E3F2015C6B7A8998A7B6C5, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB, 0x_FEDCBA989ABCDEF87654321001234567, 0x_CCDDEEFF112233449900AABB55667788, 0x_FFEEDDCCBBAA00998877665544332211, 0x_9807A6B51F2E3D4C5B6A7089C4D3E2F1, 0x_879605A44B5A6978B3C2D1E00F1E2D3C, 0x_5D4E3F201102F3E98A7B6C4D5C6B7A89, 0x_11112222AAAABBBB3333444499990000, 0x_77778888CCCCDDDD55556666EEEEFFFF]];
-    println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_2048_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_2048_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_2048_u8: Message = [");
     for mm in message
     {
@@ -4867,14 +4867,14 @@ fn rsa_decrypt_array_unit()
 
     let public_key = U4096::from(5_u8);
     let private_key = U4096::from_str_radix("4E0F13FFD94F4F793ED6900C7A99EA88942D3A065EB7E72E741A77CE7BB6AD5B7FFB2B83B6154A975FAE613F22A739F54E305BDCD85A5A3D5C59C28FEDB6AC2CF03272A57C25ED4CEAAF8006321DA2529F381EF51B050FA1AC7DE541624A19AFE8561C1407F9D3333AA364DDA03A5E50ACA61C7E52850C519549AB45B82AE1E831D7FE401A641CB47A4711340F4B6D2F9822D32442168D2517B5CB9E6A01FB89D9B8240858269DA12F8B0E247AD1D0DA835C3F38390EB4BA56EAA266FF113CA7DD7817AF156E994C21738839D1E4B6AE4B04332F09DC6A047F75FF521E6868697998CBCE9CBA7C505A97C01C510BED5CDBB55D4E624CA14A9D5A4A05851F0842904604D544B6FBF154BAF9FAB89A2765A41A6BD17E631B079429AED230B2F72777350CEF5CA6E89784376003BA8F189F671D9451EE86039EF8F2DE7B6E9A3A37A4C15BD8ACE6CCA3B218CD59D018674DDE5BCF25487464AFDA648A475D6BCEA1A95F2E2937DB1CEE3C9E7EBB2492ED275DCD9089A2909CBBDEB0368EDC5E6DBD12582E171DF0724C5534204F656E095339C5E19D5665D214D3E4F05F6A18F3D0B3E95D16996EE3E49A239C8673A78D0DD90F36DBE6F85B316DD1E2AFED84D3823F5EAE9088176309CC33056B2976C31C8EC94C5FAA62E466CFC8FFE8D6DCB106DB27BA551C1A041561E597C967C1C8568D3C605BD703877343E0C4B4E932E10D", 16).unwrap();
-    let modulo = U4096::from_str_radix("6192d8ffcfa323578e8c340f9940652ab9388887f665e0fa112115c21aa458b25ff9f664a39a9d3d3799f98eeb510872a1bc72d40e70f0ccb3703333e92457382c3f0f4edb2f68a0255b6007bea50ae7470626b261c6538a179d5e91badca01be26ba31909f84800094c3e150848f5e4d7cfa39de7264f65fa9c161726359a623e4dfdd020fd23e198d8d581131e487b7e2b87ed529c306e5da33e8604827a6c50262d0a6e3045097b6dd1ad9986451124334f06475261e8eca54b00bed58bd1d4d61d9adaca3f9f29d06a48465de459ddc53ffacc5384859f537f26a6028283d7fefec243e91b64713db023654ee8b412a2b4a1fadfc99d44b0dc86e666ca5470704b8bfe5fd708ddd576bd021bf4c2d813279ec0d74f4e03a53557f2cefde2cd9e9d01c72be14754f7a4472dfe8ef653fe73980d1edc3727501f5594863d2e32a8abf8fc04c44f8aac2e9bda32a8d154a62107bdc1f2f394b9ae693e84d6c7ba4143c15b39fed115fd4265fc230c3e9cd830d56f7866e09042569c80517596f8fcef6ed1e31962d3805d2d811248b11006e1dc14d03c98f5daeca854ad44eac60878e807d26656e5f91e4cfeeb16b8f8ba4d04d398737af8fd4a6b7f1b31e390dee1dfc5e117cdd76b4e26b2407480d97a1503f8aa01f676d6ddbce264e1cd4ec3f2ef903632865fe85795d5298432df45cae39771f83155b8da0979de9f23", 16).unwrap();
-    let rsa = RSA_4096_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    let modulus = U4096::from_str_radix("6192d8ffcfa323578e8c340f9940652ab9388887f665e0fa112115c21aa458b25ff9f664a39a9d3d3799f98eeb510872a1bc72d40e70f0ccb3703333e92457382c3f0f4edb2f68a0255b6007bea50ae7470626b261c6538a179d5e91badca01be26ba31909f84800094c3e150848f5e4d7cfa39de7264f65fa9c161726359a623e4dfdd020fd23e198d8d581131e487b7e2b87ed529c306e5da33e8604827a6c50262d0a6e3045097b6dd1ad9986451124334f06475261e8eca54b00bed58bd1d4d61d9adaca3f9f29d06a48465de459ddc53ffacc5384859f537f26a6028283d7fefec243e91b64713db023654ee8b412a2b4a1fadfc99d44b0dc86e666ca5470704b8bfe5fd708ddd576bd021bf4c2d813279ec0d74f4e03a53557f2cefde2cd9e9d01c72be14754f7a4472dfe8ef653fe73980d1edc3727501f5594863d2e32a8abf8fc04c44f8aac2e9bda32a8d154a62107bdc1f2f394b9ae693e84d6c7ba4143c15b39fed115fd4265fc230c3e9cd830d56f7866e09042569c80517596f8fcef6ed1e31962d3805d2d811248b11006e1dc14d03c98f5daeca854ad44eac60878e807d26656e5f91e4cfeeb16b8f8ba4d04d398737af8fd4a6b7f1b31e390dee1dfc5e117cdd76b4e26b2407480d97a1503f8aa01f676d6ddbce264e1cd4ec3f2ef903632865fe85795d5298432df45cae39771f83155b8da0979de9f23", 16).unwrap();
+    let rsa = RSA_4096_u8::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     let message = [[0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6079889706A5B4C3D2E1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF, 0x_FEDCBA98765432100123456789ABCDEF, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_879605A4B3C2D1E00F1E2D3C4B5A6978, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_111122223333444499990000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000],
                     [0x_3456789ABCDEF00FEDCBA98765432112_u128, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_89706A5B4C3D2E1FF1E2D3C4B5A60798, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB, 0x_0123456789ABCDEFFEDCBA9876543210, 0x_556677889900AABB11223344CCDDEEFF, 0x_44332211FFEEDDCC88776655BBAA0099, 0x_4D3E2F11F29807A6B5CE3D4C5B6A7089, 0x_2D1E00F1E2D879605A4B3C3C4B5A6978, 0x_E3F201102F3E98A7B6C5D44D5C6B7A89, 0x_333344449999111122220000AAAABBBB, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000],
                     [0x_56789ABCDEF00FEDCBA9876543211234_u128, 0x_11223344CCDDEEFF556677889900AABB, 0x_FFEEDDCC5544332211BBAA0099887766, 0x_5B6A70899807A6B51F2E3D4CC4D3E2F1, 0x_B5A6079889706A5BF1E2D3C44C3D2E1F, 0x_102F3E4DD4E3F2015C6B7A8998A7B6C5, 0x_33334444555566661111222277778888, 0x_99990000EEEEFFFFAAAABBBBCCCCDDDD, 0x_FEDCBA99ABCDEF876543210012345678, 0x_CCDDEEFF112233449900AABB55667788, 0x_88776655BBAA009944332211FFEEDDCC, 0x_9807A6B5C5B6A7089C4D3E2F11F2E3D4, 0x_879605A43C4B5A6978B3C2D1E00F1E2D, 0x_E3F201102F3E98A7B6C5D44D5C6B7A89, 0x_111122220000AAAABBBB333344449999, 0x_5555666677778888CCCCDDDDEEEEFFFF, 0x_11111111111111111111111111111111, 0x_22222222222222222222222222222222, 0x_33333333333333333333333333333333, 0x_44444444444444444444444444444444, 0x_55555555555555555555555555555555, 0x_66666666666666666666666666666666, 0x_77777777777777777777777777777777, 0x_88888888888888888888888888888888, 0x_99999999999999999999999999999999, 0x_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA, 0x_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB, 0x_CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC, 0x_DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD, 0x_EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE, 0x_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 0x_00000000000000000000000000000000]];
 
-    println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    println!("RSA_4096_u8: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    println!("RSA_4096_u8: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     print!("RSA_4096_u8: Message = [");
     for mm in message
     {

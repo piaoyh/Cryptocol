@@ -174,7 +174,10 @@ where T: TraitsBigUInt<T>
             for i in 2..size
             {
                 if *ptr.add(i) == 0
-                    { len = i + 1; }
+                {
+                    len = i + 1;
+                    break;
+                }
             }
             if len < 12
                 { return 0; }

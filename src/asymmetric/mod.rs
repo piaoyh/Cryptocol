@@ -151,6 +151,7 @@
 
 
 mod rsa;
+mod ecc_25519;
 
 /// This trait PKCS1V15 is based on PKCS #1 ver. 1.5. It is considered not
 /// to be cryptographically secure enough. So, you are not encouraged to use
@@ -173,6 +174,8 @@ mod trait_oaep_impl_for_rsa;
 pub use rsa::*;
 pub use trait_pkcs1v15::*;
 pub use trait_oaep::*;
+
+pub use ecc_25519::*;
 
 /// many *.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing

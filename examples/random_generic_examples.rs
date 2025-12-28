@@ -12,9 +12,6 @@ use std::sync::{Mutex, Arc};
 use std::sync::mpsc::channel;
 use std::thread::{ spawn, available_parallelism };
 
-use cryptocol::asymmetric::RSA_Generic;
-use cryptocol::random::Random_Generic;
-
 fn do_simultaneously(jobs: Vec<fn()>)
 {
     let number_of_threads: usize = match available_parallelism()
@@ -64,6 +61,10 @@ pub fn main()
     random_smalluint();
     random_biguint();
     random_prepare_primes();
+    find_u256_primes();
+    find_u512_primes();
+    find_u1024_primes();
+    find_u2048_primes();
 }
 
 fn random_quick_start()
@@ -5101,6 +5102,7 @@ fn random_biguint()
     random_random_prime_using_miller_rabin_biguint();
     random_random_prime_with_msb_set_using_miller_rabin_biguint();
     random_random_prime_with_half_length_using_miller_rabin_biguint();
+    random_random_prime_with_half_length_using_rsa_biguint();
     random_prepared_random_prime_with_msb_set();
     random_prepared_random_prime_with_half_length();
 }
@@ -7315,6 +7317,21 @@ fn random_random_prime_with_half_length_using_miller_rabin_biguint()
     println!("-------------------------------");
 }
 
+fn random_random_prime_with_half_length_using_rsa_biguint()
+{
+    println!("random_random_prime_with_half_length_using_rsa_biguint");
+    use cryptocol::random::Random;
+    use cryptocol::define_utypes_with;
+    define_utypes_with!(u64);
+
+    let mut prng = Random::new();
+    let (prime1, prime2): (U1024, U1024) = prng.random_prime_with_half_length_using_rsa_biguint(7);
+    let (prime1, prime2): (U512, U512) = (prime1.into_biguint(), prime2.into_biguint());
+    println!("U512 Prime number: {}", prime1);
+    println!("U512 Prime number: {}", prime2);
+    println!("-------------------------------");
+}
+
 fn random_prepared_random_prime_with_msb_set()
 {
     println!("random_prepared_random_prime_with_msb_set");
@@ -7575,11 +7592,12 @@ const COLUMN: usize = 100;
 fn random_prepare_primes()
 {
     println!("random_prepare_primes");
-    use cryptocol::asymmetric::{ RSA_1024, RSA_2048, RSA_4096 };
+    use cryptocol::asymmetric::{ RSA_Generic, RSA_1024, RSA_2048, RSA_4096 };
     use cryptocol::random::RandGen;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
+    #[allow(non_snake_case)]
     let NUM_STR = RandGen::prepared_random_prime_numbers();
 
     // find_u2048_primes();
@@ -7594,7 +7612,7 @@ fn random_prepare_primes()
             let prime1 = U512::from_str_radix(num_str[0], 16).unwrap();
             let prime2 = U512::from_str_radix(num_str[i], 16).unwrap();
             let rsa = RSA_512::new_with_primes(prime1, prime2);
-            let message = rsa.get_modulo().shift_right(512_usize >> 1);
+            let message = rsa.get_modulus().shift_right(512_usize >> 1);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover != message
@@ -7608,7 +7626,7 @@ fn random_prepare_primes()
             let prime1 = U1024::from_str_radix(num_str[0], 16).unwrap();
             let prime2 = U1024::from_str_radix(num_str[i], 16).unwrap();
             let rsa = RSA_1024::new_with_primes(prime1, prime2);
-            let message = rsa.get_modulo().shift_right(1024_usize >> 1);
+            let message = rsa.get_modulus().shift_right(1024_usize >> 1);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover != message
@@ -7622,7 +7640,7 @@ fn random_prepare_primes()
             let prime1 = U2048::from_str_radix(num_str[0], 16).unwrap();
             let prime2 = U2048::from_str_radix(num_str[i], 16).unwrap();
             let rsa = RSA_2048::new_with_primes(prime1, prime2);
-            let message = rsa.get_modulo().shift_right(2048_usize >> 1);
+            let message = rsa.get_modulus().shift_right(2048_usize >> 1);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover != message
@@ -7636,7 +7654,7 @@ fn random_prepare_primes()
             let prime1 = U4096::from_str_radix(num_str[0], 16).unwrap();
             let prime2 = U4096::from_str_radix(num_str[i], 16).unwrap();
             let rsa = RSA_4096::new_with_primes(prime1, prime2);
-            let message = rsa.get_modulo().shift_right(4096_usize >> 1);
+            let message = rsa.get_modulus().shift_right(4096_usize >> 1);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover != message
@@ -7706,11 +7724,11 @@ fn find_u256_primes()
     {
         thread.push(||{
             let mut prng = Random::new();
-            let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint();
+            let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint(7);
             let base = PRIME::from_str_radix(NUM_STR, 16).unwrap();
 
             let rsa = RSA::new_with_primes(prime1.clone(), base.clone());
-            let message = rsa.get_modulo().shift_right(512_usize >> 1);
+            let message = rsa.get_modulus().shift_right(512_usize >> 1);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover == message
@@ -7719,7 +7737,7 @@ fn find_u256_primes()
                 { println!("U156 prime: prime1 is Wrong Prime."); }
 
             let rsa = RSA::new_with_primes(prime2.clone(), base);
-            let message = rsa.get_modulo().shift_right(512_usize >> 1);
+            let message = rsa.get_modulus().shift_right(512_usize >> 1);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover == message
@@ -7748,11 +7766,11 @@ fn find_u512_primes()
     {
         thread.push(||{
             let mut prng = Random::new();
-            let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint();
+            let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint(7);
             let base = PRIME::from_str_radix(NUM_STR, 16).unwrap();
 
             let rsa = RSA::new_with_primes(prime1.clone(), base.clone());
-            let message = rsa.get_modulo().shift_right(1024_usize >> 1);
+            let message = rsa.get_modulus().shift_right(1024_usize >> 1);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover == message
@@ -7761,7 +7779,7 @@ fn find_u512_primes()
                 { println!("U512 prime: prime1 is Wrong Prime."); }
 
             let rsa = RSA::new_with_primes(prime2.clone(), base);
-            let message = rsa.get_modulo().shift_right(1024_usize >> 1);
+            let message = rsa.get_modulus().shift_right(1024_usize >> 1);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover == message
@@ -7778,7 +7796,7 @@ fn find_u1024_primes()
 {
     use cryptocol::define_utypes_with;
     use cryptocol::random::Random;
-    use cryptocol::asymmetric::{ RSA_Generic, RSA_1024, RSA_2048, RSA_4096 };
+    use cryptocol::asymmetric::RSA_2048;
     define_utypes_with!(u32);
 
     type PRIME = U2048;
@@ -7790,11 +7808,11 @@ fn find_u1024_primes()
     {
         thread.push(||{
             let mut prng = Random::new();
-            let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint();
+            let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint(7);
             let base = PRIME::from_str_radix(NUM_STR, 16).unwrap();
  
             let rsa = RSA::new_with_primes(prime1.clone(), base.clone());
-            let message = rsa.get_modulo().shift_right(2048_usize >> 1);
+            let message = rsa.get_modulus().shift_right(2048_usize >> 1);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover == message
@@ -7803,7 +7821,7 @@ fn find_u1024_primes()
                 { println!("U1024 prime: prime1 is Wrong Prime."); }
 
             let rsa = RSA::new_with_primes(prime2.clone(), base);
-            let message = rsa.get_modulo().shift_right(2048_usize >> 1);
+            let message = rsa.get_modulus().shift_right(2048_usize >> 1);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover == message
@@ -7832,13 +7850,11 @@ fn find_u2048_primes()
     {
         thread.push(||{
             let mut prng = Random::new();
-            let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint();
+            let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint(7);
             let base = PRIME::from_str_radix(NUM_STR, 16).unwrap();
 
-println!("U2048 prime: prime1 is {:X}", prime1);
-println!("U2048 prime: prime2 is {:X}", prime2);return;
             let rsa = RSA::new_with_primes(prime1.clone(), base.clone());
-            let message = rsa.get_modulo().shift_right(4096_usize >> 1);
+            let message = rsa.get_modulus().shift_right(4096_usize >> 1);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover == message
@@ -7847,7 +7863,7 @@ println!("U2048 prime: prime2 is {:X}", prime2);return;
                 { println!("U2048 prime: prime1 is Wrong Prime."); }
 
             let rsa = RSA::new_with_primes(prime2.clone(), base);
-            let message = rsa.get_modulo().shift_right(2048_usize >> 1);
+            let message = rsa.get_modulus().shift_right(2048_usize >> 1);
             let cipher = rsa.encrypt_biguint(&message);
             let recover = rsa.decrypt_biguint(&cipher);
             if recover == message
@@ -7944,7 +7960,7 @@ fn finding()
         let base = U512::from_str_radix(NUM_STR[3][0], 16).unwrap();
 
         let rsa = RSA_512::new_with_primes(prime1.clone(), base.clone());
-        let message = rsa.get_modulo().wrapping_div_uint(3_u32).wrapping_mul_uint(2_u32);
+        let message = rsa.get_modulus().wrapping_div_uint(3_u32).wrapping_mul_uint(2_u32);
         let cipher = rsa.encrypt_biguint(&message);
         let recover = rsa.decrypt_biguint(&cipher);
         if recover == message
@@ -7953,7 +7969,7 @@ fn finding()
             { println!("U256 prime: prime1 is Wrong Prime."); }
 
         let rsa = RSA_512::new_with_primes(prime2.clone(), base);
-        let message = rsa.get_modulo().wrapping_div_uint(3_u32).wrapping_mul_uint(2_u32);
+        let message = rsa.get_modulus().wrapping_div_uint(3_u32).wrapping_mul_uint(2_u32);
         let cipher = rsa.encrypt_biguint(&message);
         let recover = rsa.decrypt_biguint(&cipher);
         if recover == message

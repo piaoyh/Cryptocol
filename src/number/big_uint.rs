@@ -290,7 +290,6 @@ macro_rules! biguint_overflowing_calc
     // let current_overflow = res.overflowing_add_assign_uint(rhs);
     // (res, current_overflow)
 }
-pub(super) use biguint_overflowing_calc;
 
 macro_rules! biguint_overflowing_calc_div
 {
@@ -304,7 +303,6 @@ macro_rules! biguint_overflowing_calc_div
     // let overflow = quotient.is_overflow();
     // (quotient, overflow)
 }
-pub(super) use biguint_overflowing_calc_div;
 
 macro_rules! biguint_overflowing_calc_rem
 {
@@ -317,7 +315,6 @@ macro_rules! biguint_overflowing_calc_rem
     // let (_, remainder) = self.divide_fully_uint(rhs);
     // (remainder, false)
 }
-pub(super) use biguint_overflowing_calc_rem;
 
 macro_rules! biguint_overflowing_calc_assign
 {
@@ -338,7 +335,6 @@ macro_rules! biguint_overflowing_calc_assign
     // self.set_flag_bit(flags);
     // current_overflow
 }
-pub(super) use biguint_overflowing_calc_assign;
 
 macro_rules! underflowing_calc_assign
 {

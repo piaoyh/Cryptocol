@@ -56,7 +56,6 @@ macro_rules! biguint_calc_assign_to_calc
     // res.modular_add_assign_uint(rhs, modulo);
     // res
 }
-pub(super) use biguint_calc_assign_to_calc;
 
 macro_rules! biguint_calc_assign_to_calc_div
 {
@@ -69,7 +68,6 @@ macro_rules! biguint_calc_assign_to_calc_div
     // let (quotient, _) = self.divide_fully_uint(rhs);
     // quotient
 }
-pub(super) use biguint_calc_assign_to_calc_div;
 
 macro_rules! biguint_calc_assign_to_calc_rem
 {
@@ -82,7 +80,6 @@ macro_rules! biguint_calc_assign_to_calc_rem
     // let (_, remainder) = self.divide_fully_uint(rhs);
     // remainder
 }
-pub(super) use biguint_calc_assign_to_calc_rem;
 
 macro_rules! calc_to_calc_assign
 {

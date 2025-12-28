@@ -37,7 +37,6 @@ macro_rules! biguint_modular_calc_assign
     //     { panic!(); }
     // self.common_modular_add_assign_uint(rhs, modulo);
 }
-pub(super) use biguint_modular_calc_assign;
 
 macro_rules! biguint_general_modular_calc_pow_assign
 {
@@ -68,7 +67,6 @@ macro_rules! biguint_general_modular_calc_pow_assign
     // self.set_number(res.get_number());
     // self.set_flag_bit(res.get_all_flags());
 }
-pub(super) use biguint_general_modular_calc_pow_assign;
 
 
 

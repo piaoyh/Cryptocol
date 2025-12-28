@@ -150,7 +150,7 @@ pub type RSA_1024 = RSA_1024_u32;
 pub struct RSA_Generic<const N: usize, T, const MR: usize = 7>
 where T: TraitsBigUInt<T>
 {
-    modulo: BigUInt<T, N>,
+    modulus: BigUInt<T, N>,
     key_public: BigUInt<T, N>,
     key_private: BigUInt<T, N>,
 }
@@ -182,7 +182,7 @@ where T: TraitsBigUInt<T>
     {
         Self
         {
-            modulo: BigUInt::<T, N>::new(),
+            modulus: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
         }
@@ -206,9 +206,9 @@ where T: TraitsBigUInt<T>
     /// let rsa = RSA_1024::new_with_automatic_keys();
     /// let private_key = rsa.get_private_key();
     /// let public_key = rsa.get_public_key();
-    /// let modulo = rsa.get_modulo();
-    /// println!("private key = {:X}:{:x}", private_key, modulo);
-    /// println!("public key = {:X}:{:x}", public_key, modulo);
+    /// let modulus = rsa.get_modulus();
+    /// println!("private key = {:X}:{:x}", private_key, modulus);
+    /// println!("public key = {:X}:{:x}", public_key, modulus);
     /// ```
     ///
     /// # For more examples,
@@ -217,7 +217,7 @@ where T: TraitsBigUInt<T>
     {
         let mut rsa = Self
         {
-            modulo: BigUInt::<T, N>::new(),
+            modulus: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
         };
@@ -225,7 +225,7 @@ where T: TraitsBigUInt<T>
         rsa
     }
 
-    // pub fn new_with_keys(key_public: BigUInt<T, N>, key_private: BigUInt<T, N>, modulo: BigUInt<T, N>) -> Self
+    // pub fn new_with_keys(key_public: BigUInt<T, N>, key_private: BigUInt<T, N>, modulus: BigUInt<T, N>) -> Self
     /// Constructs a new object of the struct `RSA_Generic` with given keys.
     /// 
     /// # Arguments
@@ -233,7 +233,7 @@ where T: TraitsBigUInt<T>
     ///   and is of type `BigUInt<T, N>`.
     /// - `key_private` is the exponenent part of the private key,
     ///   and is of type `BigUInt<T, N>`.
-    /// - `modulo` is the common part of the private key and the public key, and
+    /// - `modulus` is the common part of the private key and the public key, and
     ///    is of type `BigUInt<T, N>`, which is the product of two prime numbers
     ///    for generating the private key and the public key.
     /// 
@@ -249,21 +249,21 @@ where T: TraitsBigUInt<T>
     /// 
     /// let private_key = U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap();
     /// let public_key = U1024::from(7_u8);
-    /// let modulo = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
+    /// let modulus = U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap();
     ///
-    /// let rsa = RSA_1024::new_with_keys(public_key, private_key, modulo);
-    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// let rsa = RSA_1024::new_with_keys(public_key, private_key, modulus);
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     /// ```
     ///
     /// # For more examples,
     /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.new_with_keys)
     #[inline]
-    pub fn new_with_keys(key_public: BigUInt<T, N>, key_private: BigUInt<T, N>, modulo: BigUInt<T, N>) -> Self
+    pub fn new_with_keys(key_public: BigUInt<T, N>, key_private: BigUInt<T, N>, modulus: BigUInt<T, N>) -> Self
     {
         Self
         {
-            modulo,
+            modulus,
             key_public,
             key_private,
         }
@@ -298,8 +298,8 @@ where T: TraitsBigUInt<T>
     /// let prime2 = U512::from_str_radix("975BA2539AA5CE0A8AFB43EDDDBDE7EE6432274E8DC17F6A3543DFBBAA3ED30B", 16).unwrap();
     /// 
     /// let rsa = RSA_1024::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
-    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     /// ```
     ///
     /// # For more examples,
@@ -308,7 +308,7 @@ where T: TraitsBigUInt<T>
     {
         let mut rsa = Self
         {
-            modulo: BigUInt::<T, N>::new(),
+            modulus: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
         };
@@ -339,9 +339,9 @@ where T: TraitsBigUInt<T>
     /// let rsa = RSA_1024::new_with_prepared_keys();
     /// let private_key = rsa.get_private_key();
     /// let public_key = rsa.get_public_key();
-    /// let modulo = rsa.get_modulo();
-    /// println!("RSA_1024: private key = {:X}:{:x}", private_key, modulo);
-    /// println!("RSA_1024: public key = {:X}:{:x}", public_key, modulo);
+    /// let modulus = rsa.get_modulus();
+    /// println!("RSA_1024: private key = {:X}:{:x}", private_key, modulus);
+    /// println!("RSA_1024: public key = {:X}:{:x}", public_key, modulus);
     /// ```
     ///
     /// # For more examples,
@@ -385,7 +385,7 @@ where T: TraitsBigUInt<T>
         self.key_private.clone()
     }
 
-    // pub fn get_modulo(&self) -> BigUInt<T, N>
+    // pub fn get_modulus(&self) -> BigUInt<T, N>
     /// Returns the common part of the private key and the public key
     /// 
     /// # Output
@@ -396,9 +396,9 @@ where T: TraitsBigUInt<T>
     /// # Example 1
     /// click [here](struct@RSA_Generic#method.new_with_prepared_keys)
     #[inline]
-    pub fn get_modulo(&self) -> BigUInt<T, N>
+    pub fn get_modulus(&self) -> BigUInt<T, N>
     {
-        self.modulo.clone()
+        self.modulus.clone()
     }
 
     // pub fn set_public_key(&mut self, key_public: BigUInt<T, N>)
@@ -425,12 +425,12 @@ where T: TraitsBigUInt<T>
     /// let mut rsa = RSA_1024::new();
     /// rsa.set_public_key(U1024::from(7_u8));
     /// rsa.set_private_key(U1024::from_str_radix("6F21015F58239A612E66501D445CC4F221AB05A16AD9BCD5F3494E44397BCDED845BA62788A4B6C4E008A120F0FD7D45E96CFDB6CC0EF621889A39BA55037EE32946DCB260FB638EF573CA2F4BB3C922A91EA2719E0BC1268410E862D1A2BDF7317970DBDA5AC089FFA1A74DC097AAF08AEEEFAF34DDB1DF172B0743D43B0B", 16).unwrap());
-    /// rsa.set_modulo(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap());
+    /// rsa.set_modulus(U1024::from_str_radix("c772e0c82db6549484796c056c18b9ee836f8504611a3792df4b71e78a65992e6366f1f3024dd571b591cdd2a7d7e19a52d1ff6ffff40ba2fda3229ead5e90f2af877de674a7443acfbbeb3a3e5b1968cef3f6bdf0639edaa94174fa8c6d4701fca2d46a041f6ea3e0e921c70434781fd49f1b31f6cc2970aeefc981490b47e5", 16).unwrap());
     /// let private_key = rsa.get_private_key();
     /// let public_key = rsa.get_public_key();
-    /// let modulo = rsa.get_modulo();
-    /// println!("RSA_1024: private key = {:X}:{:x}", private_key, modulo);
-    /// println!("RSA_1024: public key = {:X}:{:x}", public_key, modulo);
+    /// let modulus = rsa.get_modulus();
+    /// println!("RSA_1024: private key = {:X}:{:x}", private_key, modulus);
+    /// println!("RSA_1024: public key = {:X}:{:x}", public_key, modulus);
     /// ```
     ///
     /// # For more examples,
@@ -463,27 +463,27 @@ where T: TraitsBigUInt<T>
         self.key_private = key_private;
     }
 
-    // pub fn set_modulo(&mut self, modulo: BigUInt<T, N>)
+    // pub fn set_modulus(&mut self, modulus: BigUInt<T, N>)
     /// Sets the common part of the private key and the public key
     /// 
     /// # Arguments
-    /// `modulo` is the common part of the private key and the public key, and
+    /// `modulus` is the common part of the private key and the public key, and
     /// is of type `BigUInt<T, N>`, which is the product of two prime numbers
     /// for generating the private key and the public key.
     /// 
     /// # Caution
-    /// - `modulo` cannot be an arbitrary `BigUInt<T, N>`-typed number
+    /// - `modulus` cannot be an arbitrary `BigUInt<T, N>`-typed number
     ///   but is supposed to be well-designed `BigUInt<T, N>`-typed number
     ///   derived from two big prime numbers.
-    /// - If `modulo` is an arbitrary `BigUInt<T, N>`-typed number,
+    /// - If `modulus` is an arbitrary `BigUInt<T, N>`-typed number,
     ///   the behaviour of the most methods of `Self` are not defined.
     /// 
     /// # Example 1 for RSA_1024
     /// click [here](struct@RSA_Generic#method.set_public_key)
     #[inline]
-    pub fn set_modulo(&mut self, modulo: BigUInt<T, N>)
+    pub fn set_modulus(&mut self, modulus: BigUInt<T, N>)
     {
-        self.modulo = modulo;
+        self.modulus = modulus;
     }
 
     #[inline]
@@ -507,9 +507,9 @@ where T: TraitsBigUInt<T>
     /// rsa.find_keys();
     /// let private_key = rsa.get_private_key();
     /// let public_key = rsa.get_public_key();
-    /// let modulo = rsa.get_modulo();
-    /// println!("RSA_1024: private key = {:X}:{:x}", private_key, modulo);
-    /// println!("RSA_1024: public key = {:X}:{:x}", public_key, modulo);
+    /// let modulus = rsa.get_modulus();
+    /// println!("RSA_1024: private key = {:X}:{:x}", private_key, modulus);
+    /// println!("RSA_1024: public key = {:X}:{:x}", public_key, modulus);
     /// ```
     ///
     /// # For more examples,
@@ -545,15 +545,15 @@ where T: TraitsBigUInt<T>
     /// let prime2 = U512::from_str_radix("8821AE888CFE44FB3667C54A1C40452D02309B64940AE5FA957390F250BDC919DC350E4DB6B4E5CF05F393D9B4DF89E55BB5F7DFC114F465A250EF55284BF793", 16).unwrap();
     /// 
     /// rsa.calculate_keys(prime1.into_biguint(), prime2.into_biguint());
-    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     /// ```
     ///
     /// # For more examples,
     /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.calculate_keys)
     pub fn calculate_keys(&mut self, prime_1: BigUInt<T, N>, prime_2: BigUInt<T, N>)
     {
-        self.modulo = prime_1.wrapping_mul(&prime_2);
+        self.modulus = prime_1.wrapping_mul(&prime_2);
         let phi = prime_1.wrapping_sub_uint(1_u8).wrapping_mul(&prime_2.wrapping_sub_uint(1_u8));
         self.key_public = BigUInt::<T, N>::from_uint(2_u8);
         let mut one: BigUInt<T, N>;
@@ -575,14 +575,14 @@ where T: TraitsBigUInt<T>
     ///
     /// # Arguments
     /// `message` is the plaintext to be encrypted in the forma of the type
-    /// `&BigUInt<T, N>`, and should be less than `self.modulo` which is the
+    /// `&BigUInt<T, N>`, and should be less than `self.modulus` which is the
     /// product of the two prime numbers that were used to generate keys.
     ///
     /// # Output
     /// This method returns the encrypted data in the form of `BigUInt<T, N>`.
     /// 
     /// # Feature
-    /// If `message` is greater than or equal to `self.modulo`,
+    /// If `message` is greater than or equal to `self.modulus`,
     /// `message` will be distorted
     /// so that the output of this method may not meaningful anymore.
     /// 
@@ -595,12 +595,12 @@ where T: TraitsBigUInt<T>
     /// 
     /// let public_key = U1024::from(7_u8);
     /// let private_key = U1024::from_str_radix("11A086687252F0D0ECE2E723F06808EEA5467A8EE1025EE5CAC299448454B33D1A9A97596144EBF52706CEEA13F427DF7000E05542DC34ABA46ECE12D1CF5D1286A9DCDE69407D78F699CF592CAFDF5741019FCA261BAA65529AB2FADC9D00F5712A14480C9724DA29C2354DB2DCABEDD89735A6B663984831B427061704E6D7", 16).unwrap();
-    /// let modulo = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
-    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let modulus = U1024::from_str_radix("7b63acdb204495b67a3451fb92d83e8684ed59e8271098488b5230df9e50e6abba3a2371a8e273b4112fa8668bad171c10062254d40570b17f07a283bcab8b83252bdf633cc22120ec097748bc5f46e1492f2f4e4bf6ae1f1d88c0d5fdfea18474a7ba71b2e25f4624dbe6f8dac0f436092a8b375bf4816a231fac86564a9513", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     /// let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
     /// 
-    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     /// println!("RSA_1024: Message = {}", message);
     /// 
     /// let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -611,7 +611,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.encrypt_biguint)
     /// 
-    /// # Example A of the failure for Message > self.modulo
+    /// # Example A of the failure for Message > self.modulus
     /// ```
     /// use cryptocol::asymmetric::RSA_1024;
     /// use cryptocol::define_utypes_with;
@@ -619,14 +619,14 @@ where T: TraitsBigUInt<T>
     /// 
     /// let public_key = U1024::from(5_u8);
     /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    /// let rsa = RSA_1024::new_with_keys(public_key.clone(), private_key.clone(), modulo.clone());
+    /// let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.clone(), private_key.clone(), modulus.clone());
     /// 
-    /// let message = modulo.wrapping_add_uint(1_u8);
+    /// let message = modulus.wrapping_add_uint(1_u8);
     /// let distorted = U1024::one();
     /// 
-    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     /// println!("RSA_1024: Message = {}", message);
     /// println!("RSA_1024: Distorted = {}", distorted);
     /// 
@@ -652,7 +652,7 @@ where T: TraitsBigUInt<T>
     #[inline]
     pub fn encrypt_biguint(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
     {
-        message.modular_pow(&self.key_public, &self.modulo)
+        message.modular_pow(&self.key_public, &self.modulus)
     }
 
     // pub fn decrypt_biguint(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
@@ -660,18 +660,18 @@ where T: TraitsBigUInt<T>
     ///
     /// # Arguments
     /// `cipher` is the ciphertext to be decrypted in the form of the type
-    /// `&BigUInt<T, N>`, and should be less than `self.modulo` which is the
+    /// `&BigUInt<T, N>`, and should be less than `self.modulus` which is the
     /// product of the two prime numbers that were used to generate keys.
     ///
     /// # Output
     /// This method returns the decrypted data in the form of `BigUInt<T, N>`.
     /// 
     /// # Feature
-    /// If `cipher` is greater than or equal to `self.modulo`,
+    /// If `cipher` is greater than or equal to `self.modulus`,
     /// `cipher` will be distorted
     /// so that the output of this method may not meaningful anymore.
     /// If `cipher` is the result of correct encryption,
-    /// `cipher` can be neither greater than nor equal to `self.modulo`.
+    /// `cipher` can be neither greater than nor equal to `self.modulus`.
     /// 
     /// # Example 1 for RSA_1024
     /// ```
@@ -682,12 +682,12 @@ where T: TraitsBigUInt<T>
     /// 
     /// let public_key = U1024::from(5_u8);
     /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     /// let message = U1024::from_string("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777").unwrap();
     /// 
-    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     /// println!("RSA_1024: Message = {}", message);
     /// 
     /// let cipher = rsa.encrypt_biguint(&message.into_biguint());
@@ -704,7 +704,7 @@ where T: TraitsBigUInt<T>
     #[inline]
     pub fn decrypt_biguint(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
     {
-        cipher.modular_pow(&self.key_private, &self.modulo)
+        cipher.modular_pow(&self.key_private, &self.modulus)
     }
 
     // pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]
@@ -713,7 +713,7 @@ where T: TraitsBigUInt<T>
     /// # Arguments
     /// `message` is the plaintext to be encrypted in the form of the type
     /// `&[BigUInt<T, N>; M]`, and each element of the array should be less
-    /// than `self.modulo` which is the product of the two prime numbers
+    /// than `self.modulus` which is the product of the two prime numbers
     /// that were used to generate keys.
     ///
     /// # Output
@@ -721,7 +721,7 @@ where T: TraitsBigUInt<T>
     /// in the form of the array of `BigUInt<T, N>`.
     /// 
     /// # Features
-    /// If any element of `message` is greater than or equal to `self.modulo`,
+    /// If any element of `message` is greater than or equal to `self.modulus`,
     /// `message` will be distorted
     /// so that the output of this method may not meaningful anymore.
     /// 
@@ -747,7 +747,7 @@ where T: TraitsBigUInt<T>
     /// # Arguments
     /// `cipher` is the ciphertext to be decrypted in the form of the type
     /// `&[BigUInt<T, N>; M]`, and each element of the array should be less
-    /// than `self.modulo` which is the product of the two prime numbers
+    /// than `self.modulus` which is the product of the two prime numbers
     /// that were used to generate keys.
     ///
     /// # Output
@@ -755,7 +755,7 @@ where T: TraitsBigUInt<T>
     /// in the form of the array of `BigUInt<T, N>`.
     /// 
     /// # Features
-    /// If any element of `cipher` is greater than or equal to `self.modulo`,
+    /// If any element of `cipher` is greater than or equal to `self.modulus`,
     /// `cipher` will be distorted
     /// so that the output of this method may not meaningful anymore.
     /// 
@@ -768,14 +768,14 @@ where T: TraitsBigUInt<T>
     /// 
     /// let public_key = U1024::from(5_u8);
     /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     /// let message = [U1024::from_string("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111").unwrap(),
     ///                 U1024::from_string("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222").unwrap(),
     ///                 U1024::from_string("3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333").unwrap()];
     /// 
-    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     /// println!("RSA_1024: Message = {}-{}-{}", message[0], message[1], message[2]);
     /// 
     /// let cipher = rsa.encrypt_array_biguint(&[message[0].into_biguint(), message[1].into_biguint(), message[2].into_biguint()]);
@@ -813,7 +813,7 @@ where T: TraitsBigUInt<T>
     /// # Arguments
     /// `message` is the plaintext to be encrypted of the type `&[T; N]`, and
     /// `BigUInt::<T, N>::from_array(message).to_be()` should be less than
-    /// `self.modulo` which is the product of the two prime numbers
+    /// `self.modulus` which is the product of the two prime numbers
     /// that were used to generate keys.
     ///
     /// # Output
@@ -821,7 +821,7 @@ where T: TraitsBigUInt<T>
     /// 
     /// # Feature
     /// If `BigUInt::<T, N>::from_array(message).to_be()` is greater than or
-    /// equal to `self.modulo` which is the product of the two prime numbers
+    /// equal to `self.modulus` which is the product of the two prime numbers
     /// that were used to generate keys, `message` will be distorted
     /// so that the output of this method may not meaningful anymore.
     /// 
@@ -842,7 +842,7 @@ where T: TraitsBigUInt<T>
     /// # Arguments
     /// `cipher` is the ciphertext to be decrypted of the type `&[T; N]`, and
     /// `BigUInt::<T, N>::from_array(cipher).to_be()` should be less than
-    /// `self.modulo` which is the product of the two prime numbers
+    /// `self.modulus` which is the product of the two prime numbers
     /// that were used to generate keys.
     ///
     /// # Output
@@ -850,12 +850,12 @@ where T: TraitsBigUInt<T>
     /// 
     /// # Feature
     /// If `BigUInt::<T, N>::from_array(cipher).to_be()` is greater than or
-    /// equal to `self.modulo` which is the product of the two prime numbers
+    /// equal to `self.modulus` which is the product of the two prime numbers
     /// that were used to generate keys, `cipher` will be distorted
     /// so that the output of this method may not meaningful anymore.
     /// If `cipher` is the result of correct encryption,
     /// `BigUInt::<T, N>::from_array(cipher).to_be()` can be neither greater
-    /// than nor equal to `self.modulo` which is the product of the two prime
+    /// than nor equal to `self.modulus` which is the product of the two prime
     /// numbers that were used to generate keys.
     /// 
     /// # Example 1 for RSA_1024
@@ -867,12 +867,12 @@ where T: TraitsBigUInt<T>
     /// 
     /// let public_key = U1024::from(5_u8);
     /// let private_key = U1024::from_str_radix("3D4990127949DDB062F2BE417E8EACAB79F3215C306217A0C5974FEE15D4CB6D9348A161523F49F83D1CD49CB261C98259F04FECED08E08F3F0C5EF1FE695A291782AA0B9500911299CDAE0297337E9CB219F71411133C4440184C349FAC497EE809ED6D1B472409AB88A99B843FD61DBBBBC4C9686871D5221D137F89AF64CD", 16).unwrap();
-    /// let modulo = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
-    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let modulus = U1024::from_str_radix("9937e82e2f38aa38f75edba3bc64afacb0dfd36678f53b11edfa47d33693fc91f03593734d9e38ec98c81387bdf477c5e0d8c7d0509631661d9eed5cfc07616849dec988a75bd976cd83c7b6b38cb3573d776435a28b33f2dbbcebb09e693d911fff63ff88e4de8c730a5ee8023b1c6e18a1551e949ebca6b1fedeff1dec08a9", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     /// let message = [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF];
     /// 
-    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     /// print!("RSA_1024: Message = [");
     /// for m in message
     ///     { print!("{:#X}, ", m); }
@@ -956,13 +956,13 @@ where T: TraitsBigUInt<T>
     /// 
     /// let public_key = U1024::from(7_u8);
     /// let private_key = U1024::from_str_radix("4703E575111E5E33F674DB8CB5C7AA883BCBC715FFF564645CD67F2AB09470D71575D6D88FBB6BC0FABD4837B2F1F3F01FE4F7D135EF2FA15476D88107881CB8D6594A0010F987144DD6243268D07A6C7002F5949E0886BA36F8BAA886B0D8311277977315FC7F93CD95AB72592F65A2AB7BE609C69AFC3D9B54BA3BB78FAD87", 16).unwrap();
-    /// let modulo = U1024::from_str_radix("636bdad717f750af25d6ccf831b121f1ed507d1eccbdf2f2e85f7ed55d9c9df9ead82cc8c93996daf8a2984dfa85ef1cf973c158184edc48430cc8b4a424f504093508b4a1235839fd887c0ef40d7740b770a375457b0e95cda768e23799f94c34982315e6974fa1e1fb63d2a1be2ed341f22275bd098a6bb56e7efe2ba6f2ef", 16).unwrap();
-    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulo.into_biguint());
+    /// let modulus = U1024::from_str_radix("636bdad717f750af25d6ccf831b121f1ed507d1eccbdf2f2e85f7ed55d9c9df9ead82cc8c93996daf8a2984dfa85ef1cf973c158184edc48430cc8b4a424f504093508b4a1235839fd887c0ef40d7740b770a375457b0e95cda768e23799f94c34982315e6974fa1e1fb63d2a1be2ed341f22275bd098a6bb56e7efe2ba6f2ef", 16).unwrap();
+    /// let rsa = RSA_1024::new_with_keys(public_key.into_biguint(), private_key.into_biguint(), modulus.into_biguint());
     /// let message = [ [0x_123456789ABCDEF00FEDCBA987654321_u128, 0x_11223344556677889900AABBCCDDEEFF, 0x_FFEEDDCCBBAA00998877665544332211, 0x_1F2E3D4C5B6A70899807A6B5C4D3E2F1, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_102F3E4D5C6B7A8998A7B6C5D4E3F201, 0x_11112222333344445555666677778888, 0x_99990000AAAABBBBCCCCDDDDEEEEFFFF],
     ///                 [0x_23456789ABCDEF00FEDCBA9876543211_u128, 0x_9900AABBCCDDEEFF1122334455667788, 0x_8877665544332211FFEEDDCCBBAA0099, 0x_9807A6B5C4D3E2F11F2E3D4C5B6A7089, 0x_F1E2D3C4B5A6978879605A4B3C2D1F, 0x_98A7B6C5D4E3F201102F3E4D5C6B7A89, 0x_55556666777788881111222233334444, 0x_CCCCDDDDEEEEFFFF99990000AAAABBBB],
     ///                 [0x_3456789ABCDEF00FEDCBA98765432112_u128, 0x_CCDDEEFF112233449900AABB55667788, 0x_44332211FFEEDD88776655CCBBAA0099, 0x_9807A6B5C5B6A70894D3E2F11F2E3D4C, 0x_F1E2D35A4B3C2D1FC4B5A697887960, 0x_4E3F201102F3E4D98A7B6C5D5C6B7A89, 0x_55556666333344447777888811112222, 0x_EEEEFFFF99990000CCCCDDDDAAAABBBB] ];
-    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulo());
-    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulo());
+    /// println!("RSA_1024: private key = {:X}:{:x}", rsa.get_private_key(), rsa.get_modulus());
+    /// println!("RSA_1024: public key = {:X}:{:x}", rsa.get_public_key(), rsa.get_modulus());
     /// print!("RSA_1024: Message = [");
     /// for mm in message
     /// {
@@ -1030,7 +1030,7 @@ where T: TraitsBigUInt<T>
     // #[inline]
     // pub fn sign_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>
     // {
-    //     message.to_be().modular_pow(&self.key_private, &modulo).to_be()
+    //     message.to_be().modular_pow(&self.key_private, &modulus).to_be()
     // }
 
     // // pub fn unsign_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
@@ -1038,11 +1038,11 @@ where T: TraitsBigUInt<T>
     // #[inline]
     // pub fn unsign_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
     // {
-    //     cipher.to_be().modular_pow(&self.key_public, &modulo).to_be()
+    //     cipher.to_be().modular_pow(&self.key_public, &modulus).to_be()
     // }
 
     // pub fn verify_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>
     // {
-    //     cipher.to_be().modular_pow(&self.key_public, &modulo).to_be()
+    //     cipher.to_be().modular_pow(&self.key_public, &modulus).to_be()
     // }
 }
