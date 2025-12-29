@@ -13,8 +13,8 @@
 #![allow(non_camel_case_types)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
-use crate::number::{ TraitsBigUInt, BigUInt, BigUInt_Modular, BigUInt_Prime };
-use crate::random::Random;
+use crate::number::{ TraitsBigUInt, BigUInt }; //, BigUInt_Modular, BigUInt_Prime };
+// use crate::random::Random;
 
 
 type ECC_25519_u128 = ECC_25519<u128, 2>;

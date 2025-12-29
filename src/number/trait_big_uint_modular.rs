@@ -41,26 +41,26 @@ use crate::number::TraitsBigUInt;
 /// 
 /// let a_biguint = U1024::from([1; 8]);
 /// let b_biguint = U1024::from_str_radix("00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001__00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001__00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001__00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001__00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001__00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001__00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001__00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000001", 2).unwrap();
-/// let modulo_biguint = UU128::from_str("1234567891234567879123456789111111111222222222333333333444444444555555555666666666777777777888888888999999999000000000").unwrap();
+/// let modulus_biguint = UU128::from_str("1234567891234567879123456789111111111222222222333333333444444444555555555666666666777777777888888888999999999000000000").unwrap();
 ///
-/// let mut res_biguint = a_biguint.modular_add(&b_biguint, &modulo_biguint);
-/// println!("{} + {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulo_biguint);
+/// let mut res_biguint = a_biguint.modular_add(&b_biguint, &modulus_biguint);
+/// println!("{} + {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulus_biguint);
 /// assert_eq!(res_biguint.to_string(), "715095817710923963845493130173735203953802580597972250927984767909588940861217692608653370556592101327600086389804546");
 /// 
-/// res_biguint = a_biguint.modular_sub(&b_biguint, &modulo_biguint);
-/// println!("{} - {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulo_biguint);
+/// res_biguint = a_biguint.modular_sub(&b_biguint, &modulus_biguint);
+/// println!("{} - {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulus_biguint);
 /// assert_eq!(res_biguint.to_string(), "0");
 /// 
-/// res_biguint = a_biguint.modular_mul(&b_biguint, &modulo_biguint);
-/// println!("{} * {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulo_biguint);
+/// res_biguint = a_biguint.modular_mul(&b_biguint, &modulus_biguint);
+/// println!("{} * {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulus_biguint);
 /// assert_eq!(res_biguint.to_string(), "607396048570755101032038914863987293211201188879216700220932513864139285125189692949640169667338866132733039020566529");
 ///
-/// res_biguint = a_biguint.modular_div(&b_biguint, &modulo_biguint);
-/// println!("{} / {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulo_biguint);
+/// res_biguint = a_biguint.modular_div(&b_biguint, &modulus_biguint);
+/// println!("{} / {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulus_biguint);
 /// assert_eq!(res_biguint.to_string(), "1");
 /// 
-/// res_biguint = a_biguint.modular_rem(&b_biguint, &modulo_biguint);
-/// println!("{} % {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulo_biguint);
+/// res_biguint = a_biguint.modular_rem(&b_biguint, &modulus_biguint);
+/// println!("{} % {} = {} (mod {})", a_biguint, b_biguint, res_biguint, modulus_biguint);
 /// assert_eq!(res_biguint.to_string(), "0");
 /// ```
 #[allow(non_camel_case_types)]
@@ -69,36 +69,36 @@ where T: TraitsBigUInt<T>
 {
     /*** ADDITION ***/
 
-    // fn modular_add_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
+    // fn modular_add_uint<U>(&self, rhs: U, modulus: &Self) -> Self
+    /// Calculates (`self` + `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type.
     /// 
     /// # Arguments
     /// - `rhs` is to be added to `self`, and primitive unsigned integer
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` + `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
+    /// - If `modulus` is either `zero` or `one`, this method will panic.
     /// 
     /// # Output
-    /// It returns the modulo-sum (`self` + `rhs`) % `modulo` with wrapping
-    /// (modular) addition at `modulo`.
+    /// It returns the modulus-sum (`self` + `rhs`) % `modulus` with wrapping
+    /// (modular) addition at `modulus`.
     /// 
     /// # Features
     /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally returns the remainder of `sum` divided by `modulo`.
-    /// - Wrapping (modular) addition at `modulo`.
+    ///   and then finally returns the remainder of `sum` divided by `modulus`.
+    /// - Wrapping (modular) addition at `modulus`.
     /// - The differences between this method `modular_add_uint()` and the
     ///   method `wrapping_add_uint()` are, first, where wrapping around
     ///   happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_add_uint()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_add_uint()` sets `OVERFLOW`
+    ///   at `modulus` while the method `wrapping_add_uint()` sets `OVERFLOW`
     ///   flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Methods
@@ -132,37 +132,37 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_add_uint)
-    fn modular_add_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn modular_add_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>;
 
-    // fn modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
+    // fn modular_add_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
+    /// Calculates (`self` + `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type,
     /// and then, assigns the result back to `self`.
     /// 
     /// # Arguments
     /// - `rhs` is to be added to `self`, and primitive unsigned integer
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` + `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
+    /// - If `modulus` is either `zero` or `one`, this method will panic.
     /// 
     /// # Features
     /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally assigns the remainder of `sum` divided by `modulo`
+    ///   and then finally assigns the remainder of `sum` divided by `modulus`
     ///   to `self` back.
-    /// - Wrapping (modular) addition at `modulo`.
+    /// - Wrapping (modular) addition at `modulus`.
     /// - The differences between this method `modular_add_assign_uint()` and
     ///   the method `wrapping_add_assign_uint()` are, first, where wrapping
     ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_add_assign_uint()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_add_assign_uint()` sets
+    ///   at `modulus` while the method `wrapping_add_assign_uint()` sets
     ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
     /// - All the flags are historical, which means, for example, if an
     ///   overflow occurred even once before this current operation or
@@ -210,38 +210,38 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_add_assign_uint)
-    fn modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn modular_add_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>;
 
-    // fn modular_add(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
+    // fn modular_add(&self, rhs: &Self, modulus: &Self) -> Self
+    /// Calculates (`self` + `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type.
     /// 
     /// # Arguments
     /// - `rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` + `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
+    /// - If `modulus` is either `zero` or `one`, this method will panic.
     /// 
     /// # Output
-    /// It returns the modulo-sum (`self` + `rhs`) % `modulo` with wrapping
-    /// (modular) addition at `modulo`.
+    /// It returns the modulus-sum (`self` + `rhs`) % `modulus` with wrapping
+    /// (modular) addition at `modulus`.
     /// 
     /// # Features
     /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally returns the remainder of `sum` divided by `modulo`.
-    /// - Wrapping (modular) addition at `modulo`.
+    ///   and then finally returns the remainder of `sum` divided by `modulus`.
+    /// - Wrapping (modular) addition at `modulus`.
     /// - The differences between this method `modular_add()` and the method
     ///   `wrapping_add()` are, first, where wrapping around happens,
     ///   and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_add()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_add()` sets `OVERFLOW`
+    ///   at `modulus` while the method `wrapping_add()` sets `OVERFLOW`
     ///   flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
@@ -278,35 +278,35 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_add)
-    fn modular_add(&self, rhs: &Self, modulo: &Self) -> Self;
+    fn modular_add(&self, rhs: &Self, modulus: &Self) -> Self;
 
-    // fn modular_add_assign(&mut self, rhs: &Self, modulo: &Self)
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
+    // fn modular_add_assign(&mut self, rhs: &Self, modulus: &Self)
+    /// Calculates (`self` + `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type,
     /// and then, assigns the result back to `self`.
     /// 
     /// # Arguments
     /// -`rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` + `rhs`),
     ///   and is of `&Self` typed.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
+    /// - If `modulus` is either `zero` or `one`, this method will panic.
     /// 
     /// # Features
     /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally assigns the remainder of `sum` divided by `modulo`
+    ///   and then finally assigns the remainder of `sum` divided by `modulus`
     ///   to `self` back.
-    /// - Wrapping (modular) addition at `modulo`.
+    /// - Wrapping (modular) addition at `modulus`.
     /// - The differences between this method `modular_add_assign_uint()` and
     ///   the method `wrapping_add_assign_uint()` are, first, where wrapping
     ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_add_assign()` wraps around at `maximum value + 1`.
     ///   Second, this method set `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_add_assign()` sets
+    ///   at `modulus` while the method `wrapping_add_assign()` sets
     ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
     /// - All the flags are historical, which means, for example, if an
     ///   overflow occurred even once before this current operation or
@@ -357,43 +357,43 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_add_assign)
-    fn modular_add_assign(&mut self, rhs: &Self, modulo: &Self);
+    fn modular_add_assign(&mut self, rhs: &Self, modulus: &Self);
 
 
 
     /*** SUBTRACTION ***/
 
-    // fn modular_sub_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
+    // fn modular_sub_uint<U>(&self, rhs: U, modulus: &Self) -> Self
+    /// Calculates (`self` - `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type.
     /// 
     /// # Arguments
     /// - `rhs` is to be subtracted from `self`, and primitive unsigned
     ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` - `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
+    /// - If `modulus` is either `zero` or `one`, this method will panic.
     /// 
     /// # Output
-    /// It returns the modulo-difference (`self` - `rhs`) % `modulo` with
-    /// wrapping (modular) subtraction at `modulo`.
+    /// It returns the modulus-difference (`self` - `rhs`) % `modulus` with
+    /// wrapping (modular) subtraction at `modulus`.
     /// 
     /// # Features
     /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
     ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
+    ///   by `modulus`.
+    /// - Wrapping (modular) subtraction at `modulus`.
     /// - The differences between this method `modular_sub_uint()` and the
     ///   method `wrapping_sub_uint()` are, first, where wrapping around
     ///   happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_sub_uint()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub_uint()` sets `UNDERFLOW`
+    ///   at `modulus` while the method `wrapping_sub_uint()` sets `UNDERFLOW`
     ///   flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
@@ -427,37 +427,37 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_sub_uint)
-    fn modular_sub_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn modular_sub_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>;
 
-    // fn modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
+    // fn modular_sub_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
+    /// Calculates (`self` - `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type,
     /// and then, assigns the result back to `self`.
     /// 
     /// # Arguments
     /// - `rhs` is to be subtracted from `self`, and primitive unsigned
     ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` - `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
+    /// - If `modulus` is either `zero` or `one`, this method will panic.
     /// 
     /// # Features
     /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
     ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
+    ///   by `modulus`.
+    /// - Wrapping (modular) subtraction at `modulus`.
     /// - The differences between this method `modular_sub_assign_uint()` and
     ///   the method `wrapping_sub_assign_uint()` are, first, where wrapping
     ///   around happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_sub_assign_uint()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub_assign_uint()` sets
+    ///   at `modulus` while the method `wrapping_sub_assign_uint()` sets
     ///   `UNDERFLOW` flag when wrapping around happens at `maximum value + 1`.
     /// - All the flags are historical, which means, for example, if an
     ///   underflow occurred even once before this current operation or
@@ -505,39 +505,39 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_sub_assign_uint)
-    fn modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn modular_sub_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>;
 
-    // fn modular_sub(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
+    // fn modular_sub(&self, rhs: &Self, modulus: &Self) -> Self
+    /// Calculates (`self` - `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type.
     /// 
     /// # Arguments
     /// - `rhs` is to be added to `self`, and is of `&Self` type..
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` - `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
+    /// - If `modulus` is either `zero` or `one`, this method will panic.
     /// 
     /// # Output
-    /// It returns the modulo-difference (`self` - `rhs`) % `modulo` with
-    /// wrapping (modular) subtraction at `modulo`.
+    /// It returns the modulus-difference (`self` - `rhs`) % `modulus` with
+    /// wrapping (modular) subtraction at `modulus`.
     /// 
     /// # Features
     /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
     ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
+    ///   by `modulus`.
+    /// - Wrapping (modular) subtraction at `modulus`.
     /// - The differences between this method `modular_sub()` and the
     ///   method `wrapping_sub()` are, first, where wrapping around
     ///   happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_sub()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub()` sets `UNDERFLOW`
+    ///   at `modulus` while the method `wrapping_sub()` sets `UNDERFLOW`
     ///   flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
@@ -574,35 +574,35 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_sub)
-    fn modular_sub(&self, rhs: &Self, modulo: &Self) -> Self;
+    fn modular_sub(&self, rhs: &Self, modulus: &Self) -> Self;
 
-    // fn modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
+    // fn modular_sub_assign(&mut self, rhs: &Self, modulus: &Self)
+    /// Calculates (`self` - `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type,
     /// and then, assigns the result back to `self`.
     /// 
     /// # Arguments
     /// -`rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` - `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
+    /// - If `modulus` is either `zero` or `one`, this method will panic.
     /// 
     /// # Features
     /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
     ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
+    ///   by `modulus`.
+    /// - Wrapping (modular) subtraction at `modulus`.
     /// - The differences between this method `modular_sub_assign()` and
     ///   the method `wrapping_sub_assign()` are, first, where wrapping
     ///   around happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_sub_assign()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub_assign()` sets
+    ///   at `modulus` while the method `wrapping_sub_assign()` sets
     ///   `UNDERFLOW` flag when wrapping around happens at `maximum value + 1`.
     /// - All the flags are historical, which means, for example, if an
     ///   underflow occurred even once before this current operation or
@@ -653,43 +653,43 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_sub_assign)
-    fn modular_sub_assign(&mut self, rhs: &Self, modulo: &Self);
+    fn modular_sub_assign(&mut self, rhs: &Self, modulus: &Self);
 
 
 
     /*** MULTIPLICATION ***/
 
-    // fn modular_mul_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
+    // fn modular_mul_uint<U>(&self, rhs: U, modulus: &Self) -> Self
+    /// Calculates (`self` * `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type.
     /// 
     /// # Arguments
     /// - `rhs` is to be multiplied to `self`, and primitive unsigned integer
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` * `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
+    /// - If `modulus` is either `zero` or `one`, this method will panic.
     /// 
     /// # Output
-    /// It returns the modulo-product (`self` * `rhs`) % `modulo` with wrapping
-    /// (modular) multiplication at `modulo`.
+    /// It returns the modulus-product (`self` * `rhs`) % `modulus` with wrapping
+    /// (modular) multiplication at `modulus`.
     /// 
     /// # Features
     /// - It takes the multiplication (= `product`) of `self` and `rhs`,
     ///   and then finally returns the remainder of `product`
-    ///   divided by `modulo`.
-    /// - Wrapping (modular) multiplication at `modulo`.
+    ///   divided by `modulus`.
+    /// - Wrapping (modular) multiplication at `modulus`.
     /// - The differences of between this method `modular_mul_uint()` and the
     ///   method `wrapping_mul_uint()` are, first, where wrapping around
     ///   happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_mul_uint()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul_uint()` sets `OVERFLOW`
+    ///   at `modulus` while the method `wrapping_mul_uint()` sets `OVERFLOW`
     ///   flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
@@ -723,37 +723,37 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_mul_uint)
-    fn modular_mul_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn modular_mul_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>;
 
-    // fn modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
+    // fn modular_mul_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
+    /// Calculates (`self` * `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type,
     /// and then, assigns the result back to `self`.
     /// 
     /// # Arguments
     /// - `rhs` is to be added to `self`, and primitive unsigned integer
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` * `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
+    /// - If `modulus` is either `zero` or `one`, this method will panic.
     /// 
     /// # Features
     /// - It takes the multiplication (= `product`) of `self` and `rhs`,
     ///   and then finally assigns the remainder of `product` divided
-    ///   by `modulo` to `self` back.
-    /// - Wrapping (modular) multiplication at `modulo`.
+    ///   by `modulus` to `self` back.
+    /// - Wrapping (modular) multiplication at `modulus`.
     /// - The differences between this method `modular_mul_assign_uint()` and
     ///   the method `wrapping_mul_assign_uint()` are, first, where wrapping
     ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_mul_assign_uint()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul_assign_uint()` sets
+    ///   at `modulus` while the method `wrapping_mul_assign_uint()` sets
     ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
     /// - All the flags are historical, which means, for example, if an
     ///   overflow occurred even once before this current operation or
@@ -802,39 +802,39 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_mul_assign_uint)
-    fn modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn modular_mul_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>;
 
-    // fn modular_mul(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
+    // fn modular_mul(&self, rhs: &Self, modulus: &Self) -> Self
+    /// Calculates (`self` * `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type.
     /// 
     /// # Arguments
     /// - `rhs` is to be multiplied to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` * `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
+    /// - If `modulus` is either `zero` or `one`, this method will panic.
     /// 
     /// # Output
-    /// It returns the modulo-product (`self` * `rhs`) % `modulo` with wrapping
-    /// (modular) multiplication at `modulo`.
+    /// It returns the modulus-product (`self` * `rhs`) % `modulus` with wrapping
+    /// (modular) multiplication at `modulus`.
     /// 
     /// # Features
     /// - It takes the multiplication (= `product`) of `self` and `rhs`,
     ///   and then finally returns the remainder of `product`
-    ///   divided by `modulo`.
-    /// - Wrapping (modular) multiplication at `modulo`.
+    ///   divided by `modulus`.
+    /// - Wrapping (modular) multiplication at `modulus`.
     /// - The differences between this method `modular_mul()` and the method
     ///   `wrapping_mul()` are, first, where wrapping around happens,
     ///   and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_mul()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul()` sets `OVERFLOW`
+    ///   at `modulus` while the method `wrapping_mul()` sets `OVERFLOW`
     ///   flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
@@ -871,35 +871,35 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_mul)
-    fn modular_mul(&self, rhs: &Self, modulo: &Self) -> Self;
+    fn modular_mul(&self, rhs: &Self, modulus: &Self) -> Self;
 
-    // fn modular_mul_assign(&self, rhs: &Self, modulo: &Self)
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
+    // fn modular_mul_assign(&self, rhs: &Self, modulus: &Self)
+    /// Calculates (`self` * `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type,
     /// and then, assigns the result back to `self`.
     /// 
     /// # Arguments
     /// -`rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` * `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either `zero` or `one`, this method will panic.
+    /// - If `modulus` is either `zero` or `one`, this method will panic.
     /// 
     /// # Features
     /// - It takes the multiplication (= `product`) of `self` and `rhs`,
     ///   and then finally assigns the remainder of `product` divided
-    ///   by `modulo` to `self` back.
-    /// - Wrapping (modular) multiplication at `modulo`.
+    ///   by `modulus` to `self` back.
+    /// - Wrapping (modular) multiplication at `modulus`.
     /// - The differences between this method `modular_mul_assign()` and
     ///   the method `wrapping_mul_assign()` are, first, where wrapping
     ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_mul_assign()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul_assign()` sets
+    ///   at `modulus` while the method `wrapping_mul_assign()` sets
     ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
     /// - All the flags are historical, which means, for example, if an
     ///   overflow occurred even once before this current operation or
@@ -950,35 +950,35 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_mul_assign)
-    fn modular_mul_assign(&mut self, rhs: &Self, modulo: &Self);
+    fn modular_mul_assign(&mut self, rhs: &Self, modulus: &Self);
 
 
  
     /*** DIVISION ***/
 
-    // fn modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn modular_div_uint<U>(&self, rhs: U, modulus: &Self) -> Self
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and returns the quotient.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of primitive unsigned integral data type
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either zero or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either zero or one, it will panic.
+    /// - If `rhs` is either zero or multiple of `modulus`, it will panic.
+    /// - If `modulus` is either zero or one, it will panic.
     /// 
     /// # Output
-    /// It returns the quotient of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
+    /// It returns the quotient of when (`self` % `modulus`) is divided by
+    /// (`rhs` % `modulus`) if (`rhs` % `modulus`) is not zero.
     /// 
     /// # Features
-    /// It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    /// and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    /// and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     /// and then finally returns the quotient of `rd1` divided by `rd2`.
     /// 
     /// # Counterpart Method
@@ -998,8 +998,8 @@ where T: TraitsBigUInt<T>
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
     /// let divisor = 128_u8;
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.modular_div_uint(divisor, &modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let quotient = dividend.modular_div_uint(divisor, &modulus);
     /// println!("{} / {} = {}", dividend, divisor, quotient);
     /// assert_eq!(quotient.to_string(), "3");
     /// assert_eq!(quotient.is_overflow(), false);
@@ -1013,28 +1013,28 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_div_uint)
-    fn modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn modular_div_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>;
 
-    // fn modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn modular_div_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and assigns the quotient back to `self`.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of primitive unsigned integral data type
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either zero or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either zero or one, it will panic.
+    /// - If `rhs` is either zero or multiple of `modulus`, it will panic.
+    /// - If `modulus` is either zero or one, it will panic.
     /// 
     /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// - It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     ///   and then finally returns the quotient of `rd1` divided by `rd2`.
     /// - All the flags are historical, which means, for example, if an
     ///   divided_by_zero occurred even once before this current operation or
@@ -1068,8 +1068,8 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = 128_u8;
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.modular_div_assign_uint(divisor, &modulo);
+    /// let modulus = UU32::from_uint(100_u8);
+    /// a_biguint.modular_div_assign_uint(divisor, &modulus);
     /// println!("After a_biguint.modular_div_assign_uint({}), a_biguint = {}", divisor, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "3");
     /// assert_eq!(a_biguint.is_overflow(), false);
@@ -1083,31 +1083,31 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_div_assign_uint)
-    fn modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn modular_div_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>;
 
-    // fn modular_div(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn modular_div(&self, rhs: &Self, modulus: &Self) -> Self
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and returns the quotient.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either zero or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either zero or one, it will panic.
+    /// - If `rhs` is either zero or multiple of `modulus`, it will panic.
+    /// - If `modulus` is either zero or one, it will panic.
     /// 
     /// # Output
-    /// It returns the quotient of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
+    /// It returns the quotient of when (`self` % `modulus`) is divided by
+    /// (`rhs` % `modulus`) if (`rhs` % `modulus`) is not zero.
     /// 
     /// # Features
-    /// It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    /// and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    /// and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     /// and then finally returns the quotient of `rd1` divided by `rd2`.
     /// 
     /// # Counterpart Method
@@ -1130,9 +1130,9 @@ where T: TraitsBigUInt<T>
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
     /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let quotient = dividend.modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient.to_string(), "3");
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -1145,26 +1145,26 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_div)
-    fn modular_div(&self, rhs: &Self, modulo: &Self) -> Self;
+    fn modular_div(&self, rhs: &Self, modulus: &Self) -> Self;
 
-    // fn modular_div_assign(&self, rhs: &Self, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn modular_div_assign(&self, rhs: &Self, modulus: &Self)
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and assigns the quotient back to `self`.
     /// 
     /// # Arguments
     /// -`rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either zero or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either zero or one, it will panic.
+    /// - If `rhs` is either zero or multiple of `modulus`, it will panic.
+    /// - If `modulus` is either zero or one, it will panic.
     /// 
     /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// - It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     ///   and then finally returns the quotient of `rd1` divided by `rd2`.
     /// - All the flags are historical, which means, for example, if an
     ///   divided_by_zero occurred even once before this current operation or
@@ -1201,9 +1201,9 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.modular_div_assign({}, {}),\na_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = UU32::from_uint(100_u8);
+    /// a_biguint.modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.modular_div_assign({}, {}),\na_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "3");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -1216,31 +1216,31 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_div_assign)
-    fn modular_div_assign(&mut self, rhs: &Self, modulo: &Self);
+    fn modular_div_assign(&mut self, rhs: &Self, modulus: &Self);
 
-    // fn modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> U
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn modular_rem_uint<U>(&self, rhs: U, modulus: &Self) -> U
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and returns the remainder.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of primitive unsigned integral data type
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either zero or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either zero or one, it will panic.
+    /// - If `rhs` is either zero or multiple of `modulus`, it will panic.
+    /// - If `modulus` is either zero or one, it will panic.
     /// 
     /// # Output
-    /// It returns the remainder of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
+    /// It returns the remainder of when (`self` % `modulus`) is divided by
+    /// (`rhs` % `modulus`) if (`rhs` % `modulus`) is not zero.
     /// 
     /// # Features
-    /// It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    /// and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    /// and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     /// and then finally returns the remainder of `rd1` divided by `rd2`.
     /// 
     /// # Counterpart Method
@@ -1260,36 +1260,36 @@ where T: TraitsBigUInt<T>
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
     /// let divisor = 128_u8;
-    /// let modulo = U256::from_uint(100_u8);
-    /// let remainder = dividend.modular_rem_uint(divisor, &modulo);
-    /// println!("{} % {} = {} (mod {})", dividend, divisor, remainder, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let remainder = dividend.modular_rem_uint(divisor, &modulus);
+    /// println!("{} % {} = {} (mod {})", dividend, divisor, remainder, modulus);
     /// assert_eq!(remainder.to_string(), "8");
     /// ```
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_rem_uint)
-    fn modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> U
+    fn modular_rem_uint<U>(&self, rhs: U, modulus: &Self) -> U
     where U: TraitsBigUInt<U>;
 
-    // fn modular_rem_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn modular_rem_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and assigns the remainder back to `self`.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of primitive unsigned integral data type
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either zero or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either zero or one, it will panic.
+    /// - If `rhs` is either zero or multiple of `modulus`, it will panic.
+    /// - If `modulus` is either zero or one, it will panic.
     /// 
     /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// - It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     ///   and then finally returns the remainder of `rd1` divided by `rd2`.
     /// - All the flags are historical, which means, for example, if an
     ///   divided_by_zero occurred even once before this current operation or
@@ -1323,8 +1323,8 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = 128_u8;
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.modular_rem_assign_uint(divisor, &modulo);
+    /// let modulus = UU32::from_uint(100_u8);
+    /// a_biguint.modular_rem_assign_uint(divisor, &modulus);
     /// println!("After a_biguint.modular_rem_assign_uint({}), a_biguint = {}", divisor, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "8");
     /// assert_eq!(a_biguint.is_overflow(), false);
@@ -1338,31 +1338,31 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_rem_assign_uint)
-    fn modular_rem_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn modular_rem_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>;
 
-    // fn modular_rem(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn modular_rem(&self, rhs: &Self, modulus: &Self) -> Self
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and returns the remainder.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either `zero` or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either `zero` or `one`, it will panic.
+    /// - If `rhs` is either `zero` or multiple of `modulus`, it will panic.
+    /// - If `modulus` is either `zero` or `one`, it will panic.
     /// 
     /// # Output
-    /// It returns the remainder of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
+    /// It returns the remainder of when (`self` % `modulus`) is divided by
+    /// (`rhs` % `modulus`) if (`rhs` % `modulus`) is not zero.
     /// 
     /// # Features
-    /// It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    /// and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    /// and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     /// and then finally returns the remainder of `rd1` divided by `rd2`.
     /// 
     /// # Counterpart Method
@@ -1385,9 +1385,9 @@ where T: TraitsBigUInt<T>
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
     /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// let remainder = dividend.modular_rem(&divisor, &modulo);
-    /// println!("{} % {} = {} (mod {})", dividend, divisor, remainder, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let remainder = dividend.modular_rem(&divisor, &modulus);
+    /// println!("{} % {} = {} (mod {})", dividend, divisor, remainder, modulus);
     /// assert_eq!(remainder.to_string(), "8");
     /// assert_eq!(remainder.is_overflow(), false);
     /// assert_eq!(remainder.is_underflow(), false);
@@ -1400,26 +1400,26 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_rem)
-    fn modular_rem(&self, rhs: &Self, modulo: &Self) -> Self;
+    fn modular_rem(&self, rhs: &Self, modulus: &Self) -> Self;
 
-    // fn modular_rem_assign(&self, rhs: &Self, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn modular_rem_assign(&self, rhs: &Self, modulus: &Self)
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and assigns the remainder back to `self`.
     /// 
     /// # Arguments
     /// -`rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is either zero or multiple of `modulo`, it will panic.
-    /// - If `modulo` is either zero or one, it will panic.
+    /// - If `rhs` is either zero or multiple of `modulus`, it will panic.
+    /// - If `modulus` is either zero or one, it will panic.
     /// 
     /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// - It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     ///   and then finally returns the remainder of `rd1` divided by `rd2`.
     /// - All the flags are historical, which means, for example, if an
     ///   divided_by_zero occurred even once before this current operation or
@@ -1456,8 +1456,8 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.modular_rem_assign(&divisor, &modulo);
+    /// let modulus = UU32::from_uint(100_u8);
+    /// a_biguint.modular_rem_assign(&divisor, &modulus);
     /// println!("After a_biguint.modular_rem_assign({}), a_biguint = {}", divisor, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "8");
     /// assert_eq!(a_biguint.is_overflow(), false);
@@ -1471,40 +1471,40 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_rem_assign)
-    fn modular_rem_assign(&mut self, rhs: &Self, modulo: &Self);
+    fn modular_rem_assign(&mut self, rhs: &Self, modulus: &Self);
 
 
 
     /*** METHODS FOR EXPONENTIATION AND LOGARITHM ***/
 
-    // fn modular_pow_uint<U>(&self, exp: U, modulo: &Self) -> Self
+    // fn modular_pow_uint<U>(&self, exp: U, modulus: &Self) -> Self
     /// Raises `BigUInt` type number to the power of `exp`, using
     /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
+    /// wrapping around at `modulus` of the `Self` type`,
     /// and returns the result. The type `U` has the trait `SmallUInt`.
     /// 
     /// # Arguments
     /// - `exp` is the power to raise `self` to, and is a primitive unsigned
     ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
+    /// - `modulus` is the divisor to divide the result of (`self` ** `exp`),
     ///    and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either zero or one, this method will panic.
+    /// - If `modulus` is either zero or one, this method will panic.
     /// - If both `self` and `exp` are zero, the result is mathematically
     ///   undefined, so this method will panic.
     /// 
     /// # Output
     /// It returns the result of `self` raised to the power of `exp`, using
     /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`.
+    /// wrapping around at `modulus` of the `Self` type`.
     /// 
     /// # Features
     /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - If overflowing (wrapping around at `modulo`) happens,
+    ///   wrapping around at `modulus` of the `Self` type`.
+    /// - If overflowing (wrapping around at `modulus`) happens,
     ///   the `OVERFLOW` flag of the return value will be set.
     /// 
     /// # Counterpart Method
@@ -1522,9 +1522,9 @@ where T: TraitsBigUInt<T>
     /// 
     /// let a_biguint = U256::from_uint(10_u8);
     /// let exp = 30_u8;
-    /// let modulo = U256::halfmax();
-    /// let res = a_biguint.modular_pow_uint(exp, &modulo);
-    /// println!("{} ** {} (mod {}) = {}", a_biguint, exp, modulo, res);
+    /// let modulus = U256::halfmax();
+    /// let res = a_biguint.modular_pow_uint(exp, &modulus);
+    /// println!("{} ** {} (mod {}) = {}", a_biguint, exp, modulus, res);
     /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
     /// assert_eq!(res.is_overflow(), false);
     /// assert_eq!(res.is_underflow(), false);
@@ -1537,33 +1537,33 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow_uint)
-    fn modular_pow_uint<U>(&self, exp: U, modulo: &Self) -> Self
+    fn modular_pow_uint<U>(&self, exp: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>;
 
-    // fn modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
+    // fn modular_pow_assign_uint<U>(&mut self, exp: U, modulus: &Self)
     /// Raises `BigUInt` type number to the power of `exp`, using
     /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
+    /// wrapping around at `modulus` of the `Self` type`,
     /// and assign the result to `self` back.
     /// The type `U` has the trait `SmallUInt`.
     ///
     /// # Arguments
     /// - `exp` is the power to raise `self` to and is a primitive unsigned
     ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
+    /// - `modulus` is the divisor to divide the result of (`self` ** `exp`),
     ///    and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either zero or one, this method will panic.
+    /// - If `modulus` is either zero or one, this method will panic.
     /// - If both `self` and `exp` are zero, the result is mathematically
     ///   undefined, so this method will panic.
     /// 
     /// # Features
     /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - If overflowing (wrapping around at `modulo`) happens,
+    ///   wrapping around at `modulus` of the `Self` type`.
+    /// - If overflowing (wrapping around at `modulus`) happens,
     ///   the `OVERFLOW` flag of the return value will be set.
     /// - All the flags are historical, which means, for example, if an
     ///   overflow occurred even once before this current operation or
@@ -1596,8 +1596,8 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = 30_u8;
-    /// let modulo = U256::halfmax();
-    /// a_biguint.modular_pow_assign_uint(exp, &modulo);
+    /// let modulus = U256::halfmax();
+    /// a_biguint.modular_pow_assign_uint(exp, &modulus);
     /// println!("After a_biguint.modular_pow_assign_uint({}), a_biguint = {}", exp, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
     /// assert_eq!(a_biguint.is_overflow(), false);
@@ -1610,36 +1610,36 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow_assign_uint)
-    fn modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
+    fn modular_pow_assign_uint<U>(&mut self, exp: U, modulus: &Self)
     where U: TraitsBigUInt<U>;
     
-    // fn modular_pow(&self, exp: &Self, modulo: &Self) -> Self
+    // fn modular_pow(&self, exp: &Self, modulus: &Self) -> Self
     /// Raises `BigUInt` type number to the power of `exp`, using
     /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
+    /// wrapping around at `modulus` of the `Self` type`,
     /// and returns the result.
     /// 
     /// # Arguments
     /// - `exp` is the power to raise `self` to, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
+    /// - `modulus` is the divisor to divide the result of (`self` ** `exp`),
     ///    and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either zero or one, this method will panic.
+    /// - If `modulus` is either zero or one, this method will panic.
     /// - If both `self` and `exp` are zero, the result is mathematically
     ///   undefined, so this method will panic.
     /// 
     /// # Output
     /// It returns the result of `self` raised to the power of `exp`, using
     /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`.
+    /// wrapping around at `modulus` of the `Self` type`.
     /// 
     /// # Features
     /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - If overflowing (wrapping around at `modulo`) happens,
+    ///   wrapping around at `modulus` of the `Self` type`.
+    /// - If overflowing (wrapping around at `modulus`) happens,
     ///   the `OVERFLOW` flag of the return value will be set.
     /// 
     /// # Counterpart Method
@@ -1661,9 +1661,9 @@ where T: TraitsBigUInt<T>
     /// 
     /// let a_biguint = UU32::from_uint(10_u8);
     /// let exp = UU32::from_uint(30_u8);
-    /// let modulo = UU32::halfmax();
-    /// let res = a_biguint.modular_pow(&exp, &modulo);
-    /// println!("{} ** {} (mod {}) = {}", a_biguint, exp, modulo, res);
+    /// let modulus = UU32::halfmax();
+    /// let res = a_biguint.modular_pow(&exp, &modulus);
+    /// println!("{} ** {} (mod {}) = {}", a_biguint, exp, modulus, res);
     /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
     /// assert_eq!(res.is_overflow(), false);
     /// assert_eq!(res.is_underflow(), false);
@@ -1676,30 +1676,30 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow)
-    fn modular_pow(&self, exp: &Self, modulo: &Self) -> Self;
+    fn modular_pow(&self, exp: &Self, modulus: &Self) -> Self;
 
-    // fn modular_pow_assign(&mut self, exp: &Self, modulo: &Self)
+    // fn modular_pow_assign(&mut self, exp: &Self, modulus: &Self)
     /// Raises `BigUInt` type number to the power of `exp`, using
     /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
+    /// wrapping around at `modulus` of the `Self` type`,
     /// and assign the result to `self` back.
     /// 
     /// # Arguments
     /// - `exp` is the power to raise `self` to, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
+    /// - `modulus` is the divisor to divide the result of (`self` ** `exp`),
     ///    and is of `&Self` type.
     /// 
     /// # Panics
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
-    /// - If `modulo` is either zero or one, this method will panic.
+    /// - If `modulus` is either zero or one, this method will panic.
     /// - If both `self` and `exp` are zero, the result is mathematically
     ///   undefined, so this method will panic.
     /// 
     /// # Features
     /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - If overflowing (wrapping around at `modulo`) happens,
+    ///   wrapping around at `modulus` of the `Self` type`.
+    /// - If overflowing (wrapping around at `modulus`) happens,
     ///   the `OVERFLOW` flag of the return value will be set.
     /// - All the flags are historical, which means, for example, if an
     ///   overflow occurred even once before this current operation or
@@ -1735,8 +1735,8 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(30_u8);
-    /// let modulo = U256::halfmax();
-    /// a_biguint.modular_pow_assign(&exp, &modulo);
+    /// let modulus = U256::halfmax();
+    /// a_biguint.modular_pow_assign(&exp, &modulus);
     /// println!("After a_biguint.modular_pow_assign({}), a_biguint = {}", exp, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
     /// assert_eq!(a_biguint.is_overflow(), false);
@@ -1750,21 +1750,21 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow_assign)
-    fn modular_pow_assign(&mut self, exp: &Self, modulo: &Self);
+    fn modular_pow_assign(&mut self, exp: &Self, modulus: &Self);
 
 
 
     /*** MULTIPLE ***/
 
-    // fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    // fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     /// Calculates the smallest value greater than or equal to `self`,
-    /// which is a multiple of `rhs`, wrapping around at `modulo`,
+    /// which is a multiple of `rhs`, wrapping around at `modulus`,
     /// and returns the result.
     /// 
     /// # Arguments
     /// - `rhs` is the base of multiple, and is a primitive unsigned integer
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of the calculation of
+    /// - `modulus` is the divisor to divide the result of the calculation of
     ///   the smallest value greater than or equal to `self`,
     ///   which is a multiple of `rhs`, and is of `&Self` type.
     ///
@@ -1772,22 +1772,22 @@ where T: TraitsBigUInt<T>
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
     /// - This function will panic if `rhs` is `zero`.
-    /// - This function will panic if `modulo` is either `zero` or `one`.
+    /// - This function will panic if `modulus` is either `zero` or `one`.
     /// 
     /// # Output
     /// It returns the smallest value greater than or equal to `self`,
-    /// which is a multiple of `rhs`, wrapping around at `modulo`. So,
-    /// if overflow occurs, it returns the value wrapped around at `modulo`.
+    /// which is a multiple of `rhs`, wrapping around at `modulus`. So,
+    /// if overflow occurs, it returns the value wrapped around at `modulus`.
     /// 
     /// # Feature
-    /// - Wrapping (modular) arround at `modulo`.
+    /// - Wrapping (modular) arround at `modulus`.
     /// - The differences between this method `modular_next_multiple_of_uint()`
     ///   and the method `next_multiple_of_uint()` are, first, where wrapping
     ///   around happens, and, second, when `OVERFLOW` flag is set. First, this
-    ///   method wraps around at `modulo` while the method
+    ///   method wraps around at `modulus` while the method
     ///   `next_multiple_of_uint()` wraps around at `maximum value + 1`.
     ///   Second, this method set `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `next_multiple_of_uint()` sets the
+    ///   at `modulus` while the method `next_multiple_of_uint()` sets the
     ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
@@ -1807,8 +1807,8 @@ where T: TraitsBigUInt<T>
     /// 
     /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
     /// let num = 100_u8;
-    /// let modulo = a_biguint.wrapping_add_uint(200_u8);
-    /// let multiple = a_biguint.modular_next_multiple_of_uint(num, &modulo);
+    /// let modulus = a_biguint.wrapping_add_uint(200_u8);
+    /// let multiple = a_biguint.modular_next_multiple_of_uint(num, &modulus);
     /// println!("The next multiple of {} is {}", a_biguint, multiple);
     /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123456800");
     /// assert_eq!(multiple.is_overflow(), false);
@@ -1822,18 +1822,18 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_next_multiple_of_uint)
-    fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>;
     
-    // fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    // fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     /// Calculates the smallest value greater than or equal to `self`,
-    /// which is a multiple of `rhs`, wrapping around at `modulo`,
+    /// which is a multiple of `rhs`, wrapping around at `modulus`,
     /// and assigns the result to `self` back.
     /// 
     /// # Arguments
     /// - `rhs` is the base of multiple, and is a primitive unsigned integer
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of the calculation of
+    /// - `modulus` is the divisor to divide the result of the calculation of
     ///   the smallest value greater than or equal to `self`,
     ///   which is a multiple of `rhs`, and is of `&Self` type.
     ///
@@ -1841,21 +1841,21 @@ where T: TraitsBigUInt<T>
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
     /// - This function will panic if `rhs` is `zero`.
-    /// - This function will panic if `modulo` is either `zero` or `one`.
+    /// - This function will panic if `modulus` is either `zero` or `one`.
     /// 
     /// # Features
-    /// - Wrapping (modular) arround at `modulo`.
+    /// - Wrapping (modular) arround at `modulus`.
     /// - `self` will be the smallest value greater than or equal to `self`,
-    ///   which is a multiple of `rhs`, wrapping around at `modulo`. So, if
-    ///   overflow occurs, `self` will be the value wrapped around at `modulo`.
+    ///   which is a multiple of `rhs`, wrapping around at `modulus`. So, if
+    ///   overflow occurs, `self` will be the value wrapped around at `modulus`.
     /// - The differences between this method
     ///   `modular_next_multiple_of_assign_uint()`
     ///   and the method `next_multiple_of_assign_uint()` are, first, where
     ///   wrapping around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps araound at `modulo` while the method
+    ///   First, this method wraps araound at `modulus` while the method
     ///   `next_multiple_of_assign_uint()` wraps araound at `maximum value + 1`.
     ///   Second, this method set `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `next_multiple_of_assign_uint()` sets the
+    ///   at `modulus` while the method `next_multiple_of_assign_uint()` sets the
     ///   `OVERFLOW` flag when wrapping around happens.
     /// - All the flags are historical, which means, for example, if an
     ///   overflow occurred even once before this current operation or
@@ -1889,8 +1889,8 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let num = 100_u8;
-    /// let modulo = a_biguint.wrapping_add_uint(200_u8);
-    /// a_biguint.modular_next_multiple_of_assign_uint(num, &modulo);
+    /// let modulus = a_biguint.wrapping_add_uint(200_u8);
+    /// a_biguint.modular_next_multiple_of_assign_uint(num, &modulus);
     /// println!("After a_biguint.modular_next_multiple_of_assign_uint({}), a_biguint = {}", num, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123456800");
     /// assert_eq!(a_biguint.is_overflow(), false);
@@ -1904,17 +1904,17 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_next_multiple_of_assign_uint)
-    fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>;
 
-    // fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
+    // fn modular_next_multiple_of(&self, rhs: &Self, modulus: &Self) -> Self
     /// Calculates the smallest value greater than or equal to `self`,
-    /// which is a multiple of `rhs`, wrapping around at `modulo`,
+    /// which is a multiple of `rhs`, wrapping around at `modulus`,
     /// and returns the result.
     /// 
     /// # Arguments
     /// - `rhs` is the base of multiple, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of the calculation of
+    /// - `modulus` is the divisor to divide the result of the calculation of
     ///   the smallest value greater than or equal to `self`,
     ///   which is a multiple of `rhs`, and is of `&Self` type.
     ///
@@ -1922,22 +1922,22 @@ where T: TraitsBigUInt<T>
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
     /// - This function will panic if `rhs` is `zero`.
-    /// - This function will panic if `modulo` is either `zero` or `one`.
+    /// - This function will panic if `modulus` is either `zero` or `one`.
     /// 
     /// # Output
     /// It returns the smallest value greater than or equal to `self`,
-    /// which is a multiple of `rhs`, wrapping around at `modulo`. So,
-    /// if overflow occurs, it returns the value wrapped around at `modulo`.
+    /// which is a multiple of `rhs`, wrapping around at `modulus`. So,
+    /// if overflow occurs, it returns the value wrapped around at `modulus`.
     /// 
     /// # Feature
-    /// - Wrapping (modular) arround at `modulo`.
+    /// - Wrapping (modular) arround at `modulus`.
     /// - The differences between this method `modular_next_multiple_of()` and
     ///   the method `next_multiple_of()` are, first, where wrapping around
     ///   happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `next_multiple_of()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `next_multiple_of()` sets `OVERFLOW`
+    ///   at `modulus` while the method `next_multiple_of()` sets `OVERFLOW`
     ///   flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
@@ -1960,8 +1960,8 @@ where T: TraitsBigUInt<T>
     /// 
     /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
     /// let num = U256::from(100_u8);
-    /// let modulo = a_biguint.wrapping_add_uint(200_u8);
-    /// let multiple = a_biguint.modular_next_multiple_of(&num, &modulo);
+    /// let modulus = a_biguint.wrapping_add_uint(200_u8);
+    /// let multiple = a_biguint.modular_next_multiple_of(&num, &modulus);
     /// println!("The next multiple of {} is {}", a_biguint, multiple);
     /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123456800");
     /// assert_eq!(multiple.is_overflow(), false);
@@ -1975,16 +1975,16 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_next_multiple_of)
-    fn modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self;
+    fn modular_next_multiple_of(&self, rhs: &Self, modulus: &Self) -> Self;
     
-    // fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)
+    // fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulus: &Self)
     /// Calculates the smallest value greater than or equal to `self`,
-    /// which is a multiple of `rhs`, wrapping around at `modulo`,
+    /// which is a multiple of `rhs`, wrapping around at `modulus`,
     /// and assigns the result to `self` back.
     /// 
     /// # Arguments
     /// - `rhs` is the base of multiple, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of the calculation of
+    /// - `modulus` is the divisor to divide the result of the calculation of
     ///   the smallest value greater than or equal to `self`,
     ///   which is a multiple of `rhs`, and is of `&Self` type.
     ///
@@ -1992,21 +1992,21 @@ where T: TraitsBigUInt<T>
     /// - If `size_of::<T>() * N` <= `128`, this method may panic
     ///   or its behavior may be undefined though it may not panic.
     /// - This function will panic if `rhs` is `zero`.
-    /// - This function will panic if `modulo` is either `zero` or `one`.
+    /// - This function will panic if `modulus` is either `zero` or `one`.
     /// 
     /// # Features
-    /// - Wrapping (modular) arround at `modulo`.
+    /// - Wrapping (modular) arround at `modulus`.
     /// - `self` will be the smallest value greater than or equal to `self`,
-    ///   which is a multiple of `rhs`, wrapping around at `modulo`. So, if
-    ///   overflow occurs, `self` will be the value wrapped around at `modulo`.
+    ///   which is a multiple of `rhs`, wrapping around at `modulus`. So, if
+    ///   overflow occurs, `self` will be the value wrapped around at `modulus`.
     /// - The differences between this method
     ///   `modular_next_multiple_of_assign()` and method
     ///   `next_multiple_of_assign()` are, first, where wrapping around
     ///   happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `next_multiple_of_assign()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `next_multiple_of_assign()` sets
+    ///   at `modulus` while the method `next_multiple_of_assign()` sets
     ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
     /// - All the flags are historical, which means, for example, if an
     ///   overflow occurred even once before this current operation or
@@ -2041,8 +2041,8 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// 
     /// let num = UU32::from(100_u8);
-    /// let modulo = a_biguint.wrapping_add_uint(200_u8);
-    /// a_biguint.modular_next_multiple_of_assign(&num, &modulo);
+    /// let modulus = a_biguint.wrapping_add_uint(200_u8);
+    /// a_biguint.modular_next_multiple_of_assign(&num, &modulus);
     /// println!("After a_biguint.modular_next_multiple_of_assign({}), a_biguint = {}", num, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123456800");
     /// assert_eq!(a_biguint.is_overflow(), false);
@@ -2056,5 +2056,5 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_next_multiple_of_assign)
-    fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self);
+    fn modular_next_multiple_of_assign(&mut self, rhs: &Self, modulus: &Self);
 }

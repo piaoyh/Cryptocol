@@ -45,15 +45,15 @@ macro_rules! biguint_calc_assign_to_calc
     // res.saturating_add_assign_uint(rhs);
     // res
 
-    ($me:expr, $func:expr, $rhs:expr, $modulo:expr) => {
+    ($me:expr, $func:expr, $rhs:expr, $modulus:expr) => {
         let mut res = Self::from_array($me.get_number().clone());
-        $func(&mut res, $rhs, $modulo);
+        $func(&mut res, $rhs, $modulus);
         return res;
     }
-    // biguint_calc_assign_to_calc!(self, Self::modular_add_assign_uint, rhs, modulo);
+    // biguint_calc_assign_to_calc!(self, Self::modular_add_assign_uint, rhs, modulus);
     //
     // let mut res = Self::from_array(self.get_number().clone());
-    // res.modular_add_assign_uint(rhs, modulo);
+    // res.modular_add_assign_uint(rhs, modulus);
     // res
 }
 
@@ -108,27 +108,27 @@ macro_rules! calc_to_calc_assign
 
 macro_rules! panic_free_modular_calc_assign
 {
-    ($me:expr, $func:expr, $rhs:expr, $modulo:expr) => {
-        if $modulo.is_zero_or_one()
+    ($me:expr, $func:expr, $rhs:expr, $modulus:expr) => {
+        if $modulus.is_zero_or_one()
         {
             $me.set_zero();
             $me.set_undefined();
         }
         else
         {
-            $func($me, $rhs, $modulo);
+            $func($me, $rhs, $modulus);
         }
     }
-    // panic_free_modular_calc_assign!(self, Self::common_modular_add_assign_uint, rhs, modulo);
+    // panic_free_modular_calc_assign!(self, Self::common_modular_add_assign_uint, rhs, modulus);
     //
-    // if modulo.is_zero_or_one()
+    // if modulus.is_zero_or_one()
     // {
     //     self.set_undefined();
     //     self.set_zero();
     // }
     // else
     // {
-    //     self.common_modular_add_assign(rhs, modulo);
+    //     self.common_modular_add_assign(rhs, modulus);
     // }
 }
 
@@ -326,77 +326,77 @@ where T: TraitsBigUInt<T>
 {
     /*** ADDITION ***/
 
-    fn panic_free_modular_add_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn panic_free_modular_add_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>
 
     {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_add_assign_uint, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_add_assign_uint, rhs, modulus);
     }
     
-    fn panic_free_modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn panic_free_modular_add_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>
     {
-        panic_free_modular_calc_assign!(self, Self::common_modular_add_assign_uint, rhs, modulo);
+        panic_free_modular_calc_assign!(self, Self::common_modular_add_assign_uint, rhs, modulus);
     }
 
-    fn panic_free_modular_add(&self, rhs: &Self, modulo: &Self) -> Self
+    fn panic_free_modular_add(&self, rhs: &Self, modulus: &Self) -> Self
     {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_add_assign, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_add_assign, rhs, modulus);
     }
 
-    fn panic_free_modular_add_assign(&mut self, rhs: &Self, modulo: &Self)
+    fn panic_free_modular_add_assign(&mut self, rhs: &Self, modulus: &Self)
     {
-        panic_free_modular_calc_assign!(self, Self::common_modular_add_assign, rhs, modulo);
+        panic_free_modular_calc_assign!(self, Self::common_modular_add_assign, rhs, modulus);
     }
 
 
     /*** SUBTRACTION ***/
-    fn panic_free_modular_sub_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn panic_free_modular_sub_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>
     {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_sub_assign_uint, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_sub_assign_uint, rhs, modulus);
     }
 
-    fn panic_free_modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn panic_free_modular_sub_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>
     {
-        panic_free_modular_calc_assign!(self, Self::common_modular_sub_assign_uint, rhs, modulo);
+        panic_free_modular_calc_assign!(self, Self::common_modular_sub_assign_uint, rhs, modulus);
     }
 
-    fn panic_free_modular_sub(&self, rhs: &Self, modulo: &Self) -> Self
+    fn panic_free_modular_sub(&self, rhs: &Self, modulus: &Self) -> Self
     {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_sub_assign, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_sub_assign, rhs, modulus);
     }
 
-    fn panic_free_modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)
+    fn panic_free_modular_sub_assign(&mut self, rhs: &Self, modulus: &Self)
     {
-        panic_free_modular_calc_assign!(self, Self::common_modular_sub_assign, rhs, modulo);
+        panic_free_modular_calc_assign!(self, Self::common_modular_sub_assign, rhs, modulus);
     }
 
 
 
     /*** MULTIPLICATION ***/
 
-    fn panic_free_modular_mul_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn panic_free_modular_mul_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>
     {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_mul_assign_uint, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_mul_assign_uint, rhs, modulus);
     }
 
-    fn panic_free_modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn panic_free_modular_mul_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>
     {
-        panic_free_modular_calc_assign!(self, Self::common_modular_mul_assign_uint, rhs, modulo);
+        panic_free_modular_calc_assign!(self, Self::common_modular_mul_assign_uint, rhs, modulus);
     }
 
-    fn panic_free_modular_mul(&self, rhs: &Self, modulo: &Self) -> Self
+    fn panic_free_modular_mul(&self, rhs: &Self, modulus: &Self) -> Self
     {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_mul_assign, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_mul_assign, rhs, modulus);
     }
 
-    fn panic_free_modular_mul_assign(&mut self, rhs: &Self, modulo: &Self)
+    fn panic_free_modular_mul_assign(&mut self, rhs: &Self, modulus: &Self)
     {
-        panic_free_modular_calc_assign!(self, Self::common_modular_mul_assign, rhs, modulo);
+        panic_free_modular_calc_assign!(self, Self::common_modular_mul_assign, rhs, modulus);
     }
 
 
@@ -429,27 +429,27 @@ where T: TraitsBigUInt<T>
         panic_free_calc_div_rem_assign!(self, Self::panic_free_div_uint, rhs);
     }
 
-    fn panic_free_modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn panic_free_modular_div_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>
     {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_div_assign_uint, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_div_assign_uint, rhs, modulus);
     }
 
-    fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>
     {
         let mut terminated = false;
         let mut mrhs = rhs;
-        if !modulo.is_zero_or_one()
+        if !modulus.is_zero_or_one()
         {
-            if *self >= *modulo
+            if *self >= *modulus
             {
-                self.wrapping_rem_assign(modulo);
+                self.wrapping_rem_assign(modulus);
                 self.reset_all_flags();
             }
-            if modulo.le_uint(rhs)
+            if modulus.le_uint(rhs)
             {
-                let modu = modulo.into_uint::<U>();
+                let modu = modulus.into_uint::<U>();
                 mrhs = rhs.wrapping_rem(modu);
             }
         }
@@ -468,7 +468,7 @@ where T: TraitsBigUInt<T>
             }
             terminated = true;
         }
-        if modulo.is_zero_or_one()
+        if modulus.is_zero_or_one()
         {
             self.set_zero();
             self.set_undefined();
@@ -478,23 +478,23 @@ where T: TraitsBigUInt<T>
             { return; }
 
         let flags = self.get_all_flags();
-        if *self >= *modulo
+        if *self >= *modulus
         {
-            self.wrapping_rem_assign(modulo);
+            self.wrapping_rem_assign(modulus);
             self.reset_all_flags();
         }
 
         if mrhs.length_in_bytes() > T::size_in_bytes()
         {
-            self.modular_div_assign(&Self::from_uint(rhs), modulo);
+            self.modular_div_assign(&Self::from_uint(rhs), modulus);
         }
-        else if modulo.gt_uint(rhs)
+        else if modulus.gt_uint(rhs)
         {
             self.wrapping_div_assign_uint(mrhs);
         }
         else
         {
-            let modu = modulo.into_uint::<U>();
+            let modu = modulus.into_uint::<U>();
             let mself = self.into_uint::<U>().wrapping_rem(modu);
             self.set_uint(mself.wrapping_div(mrhs));
         }
@@ -519,25 +519,25 @@ where T: TraitsBigUInt<T>
         panic_free_calc_div_rem_assign!(self, Self::panic_free_div, rhs);
     }
 
-    fn panic_free_modular_div(&self, rhs: &Self, modulo: &Self) -> Self
+    fn panic_free_modular_div(&self, rhs: &Self, modulus: &Self) -> Self
     {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_div_assign, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_div_assign, rhs, modulus);
     }
 
-    fn panic_free_modular_div_assign(&mut self, rhs: &Self, modulo: &Self)
+    fn panic_free_modular_div_assign(&mut self, rhs: &Self, modulus: &Self)
     {
         let mut terminated = false;
         let mut mrhs = rhs.clone();
         let flags = self.get_all_flags();
-        if !modulo.is_zero_or_one()
+        if !modulus.is_zero_or_one()
         {
-            if *self >= *modulo
+            if *self >= *modulus
             {
-                self.wrapping_rem_assign(modulo);
+                self.wrapping_rem_assign(modulus);
                 self.reset_all_flags();
             }
-            if modulo.le(rhs)
-                { mrhs.wrapping_rem_assign(modulo); }
+            if modulus.le(rhs)
+                { mrhs.wrapping_rem_assign(modulus); }
         }
 
         if mrhs.is_zero()
@@ -554,7 +554,7 @@ where T: TraitsBigUInt<T>
             }
             terminated = true;
         }
-        if modulo.is_zero_or_one()
+        if modulus.is_zero_or_one()
         {
             self.set_zero();
             self.set_undefined();
@@ -579,28 +579,28 @@ where T: TraitsBigUInt<T>
         panic_free_calc_div_rem_assign!(self, Self::panic_free_rem_uint, rhs);
     }
 
-    fn panic_free_modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn panic_free_modular_rem_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>
     {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_rem_assign_uint, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_rem_assign_uint, rhs, modulus);
     }
 
-    fn panic_free_modular_rem_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn panic_free_modular_rem_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>
     {
         let mut terminated = false;
         let mut mrhs = rhs;
         let flags = self.get_all_flags();
-        if !modulo.is_zero_or_one()
+        if !modulus.is_zero_or_one()
         {
-            if *self >= *modulo
+            if *self >= *modulus
             {
-                self.wrapping_rem_assign(modulo);
+                self.wrapping_rem_assign(modulus);
                 self.reset_all_flags();
             }
-            if modulo.le_uint(rhs)
+            if modulus.le_uint(rhs)
             {
-                let modu = modulo.into_uint::<U>();
+                let modu = modulus.into_uint::<U>();
                 mrhs = rhs.wrapping_rem(modu);
             }
         }
@@ -611,7 +611,7 @@ where T: TraitsBigUInt<T>
             self.set_divided_by_zero();
             terminated = true;
         }
-        if modulo.is_zero_or_one()
+        if modulus.is_zero_or_one()
         {
             if !terminated
                 { self.set_zero(); }
@@ -626,15 +626,15 @@ where T: TraitsBigUInt<T>
 
         if rhs.length_in_bytes() > T::size_in_bytes()
         {
-            self.panic_free_modular_rem_assign(&Self::from_uint(rhs), modulo);
+            self.panic_free_modular_rem_assign(&Self::from_uint(rhs), modulus);
         }
-        else if modulo.gt_uint(rhs)
+        else if modulus.gt_uint(rhs)
         {
             self.wrapping_rem_assign_uint(rhs);
         }
-        else    // if (U::size_in_bytes() <= T::size_in_bytes()) && (*self < modulo <= rhs)
+        else    // if (U::size_in_bytes() <= T::size_in_bytes()) && (*self < modulus <= rhs)
         {
-            let modu = modulo.into_uint::<U>();
+            let modu = modulus.into_uint::<U>();
             let mself = self.into_uint::<U>().wrapping_rem(modu);
             self.set_uint(mself.wrapping_rem(mrhs));
         }
@@ -651,25 +651,25 @@ where T: TraitsBigUInt<T>
         panic_free_calc_div_rem_assign!(self, Self::panic_free_rem, rhs);
     }
 
-    fn panic_free_modular_rem(&self, rhs: &Self, modulo: &Self) -> Self
+    fn panic_free_modular_rem(&self, rhs: &Self, modulus: &Self) -> Self
     {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_rem_assign, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_rem_assign, rhs, modulus);
     }
     
-    fn panic_free_modular_rem_assign(&mut self, rhs: &Self, modulo: &Self)
+    fn panic_free_modular_rem_assign(&mut self, rhs: &Self, modulus: &Self)
     {
         let mut terminated = false;
         let mut mrhs = rhs.clone();
         let flags = self.get_all_flags();
-        if !modulo.is_zero_or_one()
+        if !modulus.is_zero_or_one()
         {
-            if *self >= *modulo
+            if *self >= *modulus
             {
-                self.wrapping_rem_assign(modulo);
+                self.wrapping_rem_assign(modulus);
                 self.reset_all_flags();
             }
-            if *rhs >= *modulo
-                { mrhs = rhs.wrapping_rem(modulo); }
+            if *rhs >= *modulus
+                { mrhs = rhs.wrapping_rem(modulus); }
         }
 
         if mrhs.is_zero()
@@ -678,7 +678,7 @@ where T: TraitsBigUInt<T>
             self.set_divided_by_zero();
             terminated = true;
         }
-        if modulo.is_zero_or_one()
+        if modulus.is_zero_or_one()
         {
             if !terminated
                 { self.set_zero(); }
@@ -710,27 +710,27 @@ where T: TraitsBigUInt<T>
         panic_free_calc_pow_assign!(self, Self::common_pow_assign_uint, exp);
     }
 
-    fn panic_free_modular_pow_uint<U>(&self, exp: U, modulo: &Self) -> Self
+    fn panic_free_modular_pow_uint<U>(&self, exp: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>
     {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_pow_assign_uint, exp, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_pow_assign_uint, exp, modulus);
     }
 
-    fn panic_free_modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
+    fn panic_free_modular_pow_assign_uint<U>(&mut self, exp: U, modulus: &Self)
     where U: TraitsBigUInt<U>
     {
-        if modulo.is_zero_or_one() || (self.is_zero() && exp.is_zero())
+        if modulus.is_zero_or_one() || (self.is_zero() && exp.is_zero())
         {
             self.set_zero();
             self.set_undefined();
             return;
         }
-        if *self >= *modulo
-            { self.wrapping_rem_assign(modulo); }
+        if *self >= *modulus
+            { self.wrapping_rem_assign(modulus); }
         let mut mexp = exp;
-        if modulo.le_uint(exp)
+        if modulus.le_uint(exp)
         {
-            let modu = modulo.into_uint::<U>();
+            let modu = modulus.into_uint::<U>();
             mexp = exp.wrapping_rem(modu);
         }
         if self.is_zero() && mexp.is_zero()
@@ -739,7 +739,7 @@ where T: TraitsBigUInt<T>
             self.set_undefined();
             return;
         }
-        self.common_modular_pow_assign_uint(mexp, modulo);
+        self.common_modular_pow_assign_uint(mexp, modulus);
     }
 
     fn panic_free_pow(&self, exp: &Self) -> Self
@@ -752,31 +752,31 @@ where T: TraitsBigUInt<T>
         panic_free_calc_pow_assign!(self, Self::common_pow_assign, exp);
     }
 
-    fn panic_free_modular_pow(&self, exp: &Self, modulo: &Self) -> Self
+    fn panic_free_modular_pow(&self, exp: &Self, modulus: &Self) -> Self
     {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_pow_assign, exp, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_pow_assign, exp, modulus);
     }
 
-    fn panic_free_modular_pow_assign(&mut self, exp: &Self, modulo: &Self)
+    fn panic_free_modular_pow_assign(&mut self, exp: &Self, modulus: &Self)
     {
-        if modulo.is_zero_or_one() || (self.is_zero() && exp.is_zero())
+        if modulus.is_zero_or_one() || (self.is_zero() && exp.is_zero())
         {
             self.set_zero();
             self.set_undefined();
             return;
         }
-        if *self >= *modulo
-            { self.wrapping_rem_assign(modulo); }
+        if *self >= *modulus
+            { self.wrapping_rem_assign(modulus); }
         let mut mexp = exp.clone();
-        if *modulo <= *exp
-            { mexp.wrapping_rem_assign(&modulo); }
+        if *modulus <= *exp
+            { mexp.wrapping_rem_assign(&modulus); }
         if self.is_zero() && mexp.is_zero()
         {
             self.set_zero();
             self.set_undefined();
             return;
         }
-        self.common_modular_pow_assign(&mexp, modulo);
+        self.common_modular_pow_assign(&mexp, modulus);
     }
 
     fn panic_free_iroot_uint<U>(&self, exp: U) -> Self
@@ -959,24 +959,24 @@ where T: TraitsBigUInt<T>
         }
     }
 
-    fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>
     {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_next_multiple_of_assign_uint, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_next_multiple_of_assign_uint, rhs, modulus);
     }
 
-    fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>
     {
-        if modulo.is_zero_or_one() || rhs.is_zero()
+        if modulus.is_zero_or_one() || rhs.is_zero()
         {
             self.set_zero();
             self.set_undefined();
             return;
         }
-        else if modulo.le_uint(rhs)
+        else if modulus.le_uint(rhs)
         {
-            let modu = modulo.into_uint::<U>();
+            let modu = modulus.into_uint::<U>();
             if rhs.wrapping_rem(modu).is_zero()
             {
                 self.set_zero();
@@ -984,7 +984,7 @@ where T: TraitsBigUInt<T>
                 return;
             }
         }
-        self.common_modular_next_multiple_of_assign_uint(rhs, modulo);
+        self.common_modular_next_multiple_of_assign_uint(rhs, modulus);
     }
 
     fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self
@@ -1003,19 +1003,19 @@ where T: TraitsBigUInt<T>
         self.common_next_multiple_of_assign(rhs);
     }
 
-    fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
+    fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulus: &Self) -> Self
     {
-        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_next_multiple_of_assign, rhs, modulo);
+        biguint_calc_assign_to_calc!(self, Self::panic_free_modular_next_multiple_of_assign, rhs, modulus);
     }
 
-    fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)
+    fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulus: &Self)
     {
-        if modulo.is_zero_or_one() || rhs.is_zero() || rhs.wrapping_rem(modulo).is_zero()
+        if modulus.is_zero_or_one() || rhs.is_zero() || rhs.wrapping_rem(modulus).is_zero()
         {
             self.set_zero();
             self.set_undefined();
             return;
         }
-        self.common_modular_next_multiple_of_assign(rhs, modulo);
+        self.common_modular_next_multiple_of_assign(rhs, modulus);
     }
 }

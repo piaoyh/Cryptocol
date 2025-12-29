@@ -133,9 +133,9 @@ use crate::number::{ ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
 ///     println!("--------------------------------------");
 /// }
 /// 
-/// fn func1<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+/// fn func1<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
 /// {
-///     lhs.modular_add(rhs, modulo)
+///     lhs.modular_add(rhs, modulus)
 /// }
 /// 
 /// fn func2<T: SmallUInt>(num: T, repetition: usize) -> bool
@@ -3630,19 +3630,19 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// ```
     fn safe_add(self, rhs: Self) -> Self;
 
-    // fn modular_add(self, rhs: Self, modulo: Self) -> Self
-    /// Computes (`self` + `rhs`) % `modulo`, wrapping around at `modulo` of the
+    // fn modular_add(self, rhs: Self, modulus: Self) -> Self
+    /// Computes (`self` + `rhs`) % `modulus`, wrapping around at `modulus` of the
     /// type `Self` instead of overflowing.
     /// 
     /// # Output
-    /// It returns the modulo-sum (`self` + `rhs`) % `modulo` with wrapping
-    /// (modular) addition at `modulo`.
+    /// It returns the modulus-sum (`self` + `rhs`) % `modulus` with wrapping
+    /// (modular) addition at `modulus`.
     /// 
     /// # Feature
-    /// Wrapping (modular) addition at `modulo`. The differences between this
+    /// Wrapping (modular) addition at `modulus`. The differences between this
     /// method `modular_add_uint()` and the method `wrapping_add_uint()` are,
     /// first, where wrapping around happens, and, second, whether or not
-    /// `OVERFLOW` flag is set. First, this method wraps araound at `modulo`
+    /// `OVERFLOW` flag is set. First, this method wraps araound at `modulus`
     /// while the method `wrapping_add_uint()` wraps araound at maximum value.
     /// Second, this method does not set `OVERFLOW` flag even if wrapping
     /// around happens while the method `wrapping_add_uint()` sets `OVERFLOW`
@@ -3674,9 +3674,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_u8, 30);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_add(rhs, modulo)
+    ///     lhs.modular_add(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -3702,9 +3702,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_u16, 3000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_add(rhs, modulo)
+    ///     lhs.modular_add(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -3730,9 +3730,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_u32, 3_0000_0000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_add(rhs, modulo)
+    ///     lhs.modular_add(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -3758,9 +3758,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_u64, 3_0000_0000_0000_0000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_add(rhs, modulo)
+    ///     lhs.modular_add(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -3786,9 +3786,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_u128, 3_0000_0000_0000_0000_0000_0000_0000_0000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_add(rhs, modulo)
+    ///     lhs.modular_add(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -3814,9 +3814,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_usize, 3_0000_0000_0000_0000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_add(rhs, modulo)
+    ///     lhs.modular_add(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -3842,9 +3842,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_shortunion.get(), 3000_u16);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_add(rhs, modulo)
+    ///     lhs.modular_add(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -3870,9 +3870,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_intunion.get(), 3_0000_0000_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_add(rhs, modulo)
+    ///     lhs.modular_add(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -3898,9 +3898,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_longunion, 3_0000_0000_0000_0000_u64.into_longunion());
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_add(rhs, modulo)
+    ///     lhs.modular_add(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -3926,9 +3926,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_longerunion.get(), 3_0000_0000_0000_0000_0000_0000_0000_0000_u128);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_add(rhs, modulo)
+    ///     lhs.modular_add(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -3954,9 +3954,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_sizeunion.get(), 3_0000_0000_0000_0000_usize);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_add(rhs, modulo)
+    ///     lhs.modular_add(rhs, modulus)
     /// }
     /// ```
     /// You can use the above generic function `func<>()` for all
@@ -4145,9 +4145,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_sizeunion.get(), 3_0000_0000_0000_0000_usize);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_add(rhs, modulo)
+    ///     lhs.modular_add(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -4155,7 +4155,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// It is just experimental for Big Endian CPUs. So, you are not encouraged
     /// to use it for Big Endian CPUs for serious purpose. Only use this crate
     /// for Big-endian CPUs with your own full responsibility.
-    fn modular_add(self, rhs: Self, modulo: Self) -> Self;
+    fn modular_add(self, rhs: Self, modulus: Self) -> Self;
 
 
     /***** SUBTRACTION *****/
@@ -7926,19 +7926,19 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// for the primitive type `usize`, read [here](https://doc.rust-lang.org/core/primitive.usize.html#method.abs_diff).
     fn abs_diff(self, other: Self) -> Self;
 
-    // fn modular_sub(self, rhs: Self, modulo: Self) -> Self
-    /// Computes (`self` - `rhs`) % `modulo`, wrapping around at `modulo` of the
+    // fn modular_sub(self, rhs: Self, modulus: Self) -> Self
+    /// Computes (`self` - `rhs`) % `modulus`, wrapping around at `modulus` of the
     /// type `Self` instead of underflowing.
     /// 
     /// # Output
-    /// It returns the modulo-difference (`self` - `rhs`) % `modulo` with
-    /// wrapping (modular) subtraction at `modulo`.
+    /// It returns the modulus-difference (`self` - `rhs`) % `modulus` with
+    /// wrapping (modular) subtraction at `modulus`.
     /// 
     /// # Feature
-    /// Wrapping (modular) subtraction at `modulo`. The differences between
+    /// Wrapping (modular) subtraction at `modulus`. The differences between
     /// this method `modular_sub_uint()` and the method `wrapping_sub_uint()`
     /// are, first, where wrapping around happens, and, second, whether or not
-    /// `UNDERFLOW` flag is set. First, this method wraps araound at `modulo`
+    /// `UNDERFLOW` flag is set. First, this method wraps araound at `modulus`
     /// while the method `wrapping_sub_uint()` wraps araound at maximum value.
     /// Second, this method does not set `UNDERFLOW` flag even if wrapping
     /// around happens while the method `wrapping_sub_uint()` sets `UNDERFLOW`
@@ -7970,9 +7970,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_u8, 90);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_sub(rhs, modulo)
+    ///     lhs.modular_sub(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -7998,9 +7998,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_u16, 9000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_sub(rhs, modulo)
+    ///     lhs.modular_sub(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -8026,9 +8026,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_u32, 9_0000_0000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_sub(rhs, modulo)
+    ///     lhs.modular_sub(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -8054,9 +8054,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_u64, 9_0000_0000_0000_0000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_sub(rhs, modulo)
+    ///     lhs.modular_sub(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -8082,9 +8082,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_u128, 9_0000_0000_0000_0000_0000_0000_0000_0000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_sub(rhs, modulo)
+    ///     lhs.modular_sub(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -8110,9 +8110,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_usize, 9_0000_0000_0000_0000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_sub(rhs, modulo)
+    ///     lhs.modular_sub(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -8138,9 +8138,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_shortunion.get(), 9000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_sub(rhs, modulo)
+    ///     lhs.modular_sub(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -8166,9 +8166,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_intunion.get(), 9_0000_0000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_sub(rhs, modulo)
+    ///     lhs.modular_sub(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -8194,9 +8194,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_longunion.get(), 9_0000_0000_0000_0000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_sub(rhs, modulo)
+    ///     lhs.modular_sub(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -8222,9 +8222,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_longerunion.get(), 9_0000_0000_0000_0000_0000_0000_0000_0000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_sub(rhs, modulo)
+    ///     lhs.modular_sub(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -8250,9 +8250,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_sizeunion.get(), 9_0000_0000_0000_0000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_sub(rhs, modulo)
+    ///     lhs.modular_sub(rhs, modulus)
     /// }
     /// ```
     /// You can use the above generic function `func<>()` for all
@@ -8441,9 +8441,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(d_sizeunion.get(), 9_0000_0000_0000_0000);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_sub(rhs, modulo)
+    ///     lhs.modular_sub(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -8451,7 +8451,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// It is just experimental for Big Endian CPUs. So, you are not encouraged
     /// to use it for Big Endian CPUs for serious purpose. Only use this crate
     /// for Big-endian CPUs with your own full responsibility.
-    fn modular_sub(self, rhs: Self, modulo: Self) -> Self;
+    fn modular_sub(self, rhs: Self, modulus: Self) -> Self;
 
 
     /***** MULTIPLICATION *****/
@@ -12892,15 +12892,15 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// ```
     fn safe_mul(self, rhs: Self) -> Self;
 
-    // fn modular_mul(self, rhs: Self, modulo: Self) -> Self
-    /// Computes (`self` * `rhs`) % `modulo`, wrapping around at `modulo`
+    // fn modular_mul(self, rhs: Self, modulus: Self) -> Self
+    /// Computes (`self` * `rhs`) % `modulus`, wrapping around at `modulus`
     /// of the type `Self`.
     /// 
     /// # Feature
-    /// Wrapping (modular) multiplication at `modulo`. The differences between
+    /// Wrapping (modular) multiplication at `modulus`. The differences between
     /// this method `modular_mul_uint()` and the method `wrapping_mul_uint()`
     /// are, first, where wrapping around happens, and, second, whether or not
-    /// `OVERFLOW` flag is set. First, this method wraps araound at `modulo`
+    /// `OVERFLOW` flag is set. First, this method wraps araound at `modulus`
     /// while the method `wrapping_mul_uint()` wraps araound at maximum value.
     /// Second, this method does not set `OVERFLOW` flag even if wrapping around
     /// happens, while the method `wrapping_mul_uint()` sets `OVERFLOW` flag
@@ -12939,9 +12939,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(f_u8, 160_u8);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_mul(rhs, modulo)
+    ///     lhs.modular_mul(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -12970,9 +12970,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(f_u16, 16000_u16);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_mul(rhs, modulo)
+    ///     lhs.modular_mul(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -13001,9 +13001,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(f_u32, 16000000_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_mul(rhs, modulo)
+    ///     lhs.modular_mul(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -13032,9 +13032,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(f_u64, 1600000000000_u64);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_mul(rhs, modulo)
+    ///     lhs.modular_mul(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -13062,9 +13062,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(f_u128, 160000000000000000000000_u128);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_mul(rhs, modulo)
+    ///     lhs.modular_mul(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -13092,9 +13092,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(f_usize, 1600000000000_usize);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_mul(rhs, modulo)
+    ///     lhs.modular_mul(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -13122,9 +13122,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(f_shortunion.get(), 16000_u16);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_mul(rhs, modulo)
+    ///     lhs.modular_mul(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -13152,9 +13152,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(f_intunion.get(), 16000000_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_mul(rhs, modulo)
+    ///     lhs.modular_mul(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -13182,9 +13182,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(f_longunion.get(), 1600000000000_u64);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_mul(rhs, modulo)
+    ///     lhs.modular_mul(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -13212,9 +13212,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(f_longerunion.get(), 160000000000000000000000_u128);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_mul(rhs, modulo)
+    ///     lhs.modular_mul(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -13242,9 +13242,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(f_sizeunion.get(), 1600000000000_usize);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_mul(rhs, modulo)
+    ///     lhs.modular_mul(rhs, modulus)
     /// }
     /// ```
     /// You can use the above generic function `func<>()` for all
@@ -13455,9 +13455,9 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     assert_eq!(f_sizeunion.get(), 1600000000000_usize);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(lhs: T, rhs: T, modulus: T) -> T
     /// {
-    ///     lhs.modular_mul(rhs, modulo)
+    ///     lhs.modular_mul(rhs, modulus)
     /// }
     /// ```
     /// 
@@ -13465,7 +13465,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// It is just experimental for Big Endian CPUs. So, you are not encouraged
     /// to use it for Big Endian CPUs for serious purpose. Only use this crate
     /// for Big-endian CPUs with your own full responsibility.
-    fn modular_mul(self, rhs: Self, modulo: Self) -> Self;
+    fn modular_mul(self, rhs: Self, modulus: Self) -> Self;
 
 
     /***** DIVISION *****/
@@ -15781,7 +15781,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     
     
     
-    /***** MODULO *****/
+    /***** modulus *****/
 
     // fn wrapping_rem(self, rhs: Self) -> Self
     /// Computes `self` % `rhs`.
@@ -20819,13 +20819,13 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// for the primitive type `usize`, read [here](https://doc.rust-lang.org/core/primitive.usize.html#method.saturating_pow).
     fn saturating_pow(self, exp: u32) -> Self;
 
-    // fn modular_pow(self, exp: Self, modulo: Self) -> Self
+    // fn modular_pow(self, exp: Self, modulus: Self) -> Self
     /// Raises `self` to the power of `exp`, using exponentiation by squaring,
-    /// wrapping around at `modulo`.
+    /// wrapping around at `modulus`.
     /// 
     /// # Output
     /// It returns the result of `self` raised to the power of `exp`, wrapping
-    /// around at `modulo`.
+    /// around at `modulus`.
     /// 
     /// # Arguments
     /// The argument `exp` is `Self` data type which is the primitive unsigned
@@ -20834,7 +20834,7 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// `overflowing_pow()`, and `saturating_pow()` is `u32` data type.
     /// 
     /// # Feature
-    /// Wrapping (modular) exponentiation, wrapping around at `modulo`.
+    /// Wrapping (modular) exponentiation, wrapping around at `modulus`.
     /// 
     /// # Example 1 for u8
     /// ```
@@ -20843,22 +20843,22 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// {
     ///     let a_u8 = 74_u8;
     ///     let b_u8 = 18_u8;
-    ///     let modulo_u8 = 100_u8;
-    ///     let res_u8 = a_u8.modular_pow(b_u8, modulo_u8);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u8, b_u8, res_u8, modulo_u8);
+    ///     let modulus_u8 = 100_u8;
+    ///     let res_u8 = a_u8.modular_pow(b_u8, modulus_u8);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u8, b_u8, res_u8, modulus_u8);
     ///     assert_eq!(res_u8, 76_u8);
     /// 
     ///     let c_u8 = 74_u8;
     ///     let d_u8 = 18_u8;
-    ///     let modulo_u8 = 100_u8;
-    ///     let res_u8 = func(c_u8, d_u8, modulo_u8);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u8, d_u8, res_u8, modulo_u8);
+    ///     let modulus_u8 = 100_u8;
+    ///     let res_u8 = func(c_u8, d_u8, modulus_u8);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u8, d_u8, res_u8, modulus_u8);
     ///     assert_eq!(res_u8, 76_u8);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(base: T, exp: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(base: T, exp: T, modulus: T) -> T
     /// {
-    ///     base.modular_pow(exp, modulo)
+    ///     base.modular_pow(exp, modulus)
     /// }
     /// ```
     /// 
@@ -20869,22 +20869,22 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// {
     ///     let a_u16 = 741_u16;
     ///     let b_u16 = 185_u16;
-    ///     let modulo_u16 = 10000_u16;
-    ///     let res_u16 = a_u16.modular_pow(b_u16, modulo_u16);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u16, b_u16, res_u16, modulo_u16);
+    ///     let modulus_u16 = 10000_u16;
+    ///     let res_u16 = a_u16.modular_pow(b_u16, modulus_u16);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u16, b_u16, res_u16, modulus_u16);
     ///     assert_eq!(res_u16, 8901_u16);
     /// 
     ///     let c_u16 = 741_u16;
     ///     let d_u16 = 185_u16;
-    ///     let modulo_u16 = 10000_u16;
-    ///     let res_u16 = func(c_u16, d_u16, modulo_u16);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u16, d_u16, res_u16, modulo_u16);
+    ///     let modulus_u16 = 10000_u16;
+    ///     let res_u16 = func(c_u16, d_u16, modulus_u16);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u16, d_u16, res_u16, modulus_u16);
     ///     assert_eq!(res_u16, 8901_u16);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(base: T, exp: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(base: T, exp: T, modulus: T) -> T
     /// {
-    ///     base.modular_pow(exp, modulo)
+    ///     base.modular_pow(exp, modulus)
     /// }
     /// ```
     /// 
@@ -20895,22 +20895,22 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// { 
     ///     let a_u32 = 78541_u32;
     ///     let b_u32 = 18575_u32;
-    ///     let modulo_u32 = 10000000_u32;
-    ///     let res_u32 = a_u32.modular_pow(b_u32, modulo_u32);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u32, b_u32, res_u32, modulo_u32);
+    ///     let modulus_u32 = 10000000_u32;
+    ///     let res_u32 = a_u32.modular_pow(b_u32, modulus_u32);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u32, b_u32, res_u32, modulus_u32);
     ///     assert_eq!(res_u32, 4370501_u32);
     /// 
     ///     let c_u32 = 78541_u32;
     ///     let d_u32 = 18575_u32;
-    ///     let modulo_u32 = 10000000_u32;
-    ///     let res_u32 = func(c_u32, d_u32, modulo_u32);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u32, d_u32, res_u32, modulo_u32);
+    ///     let modulus_u32 = 10000000_u32;
+    ///     let res_u32 = func(c_u32, d_u32, modulus_u32);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u32, d_u32, res_u32, modulus_u32);
     ///     assert_eq!(res_u32, 4370501_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(base: T, exp: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(base: T, exp: T, modulus: T) -> T
     /// {
-    ///     base.modular_pow(exp, modulo)
+    ///     base.modular_pow(exp, modulus)
     /// }
     /// ```
     /// 
@@ -20921,22 +20921,22 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// {
     ///     let a_u64 = 123456789_u64;
     ///     let b_u64 = 9876543_u64;
-    ///     let modulo_u64 = 100000000000_u64;
-    ///     let res_u64 = a_u64.modular_pow(b_u64, modulo_u64);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u64, b_u64, res_u64, modulo_u64);
+    ///     let modulus_u64 = 100000000000_u64;
+    ///     let res_u64 = a_u64.modular_pow(b_u64, modulus_u64);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u64, b_u64, res_u64, modulus_u64);
     ///     assert_eq!(res_u64, 75010148669_u64);
     /// 
     ///     let c_u64 = 123456789_u64;
     ///     let d_u64 = 9876543_u64;
-    ///     let modulo_u64 = 100000000000_u64;
-    ///     let res_u64 = func(c_u64, d_u64, modulo_u64);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u64, d_u64, res_u64, modulo_u64);
+    ///     let modulus_u64 = 100000000000_u64;
+    ///     let res_u64 = func(c_u64, d_u64, modulus_u64);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u64, d_u64, res_u64, modulus_u64);
     ///     assert_eq!(res_u64, 75010148669_u64);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(base: T, exp: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(base: T, exp: T, modulus: T) -> T
     /// {
-    ///     base.modular_pow(exp, modulo)
+    ///     base.modular_pow(exp, modulus)
     /// }
     /// ```
     /// 
@@ -20947,22 +20947,22 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// {
     ///     let a_u128 = 258974_u128;
     ///     let b_u128 = 6622882488318_u128;
-    ///     let modulo_u128 = 4776913109852041418248056622882488319_u128;
-    ///     let res_u128 = a_u128.modular_pow(b_u128, modulo_u128);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u128, b_u128, res_u128, modulo_u128);
+    ///     let modulus_u128 = 4776913109852041418248056622882488319_u128;
+    ///     let res_u128 = a_u128.modular_pow(b_u128, modulus_u128);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u128, b_u128, res_u128, modulus_u128);
     ///     assert_eq!(res_u128, 2843356730633772030492705275006525566_u128);
     /// 
     ///     let c_u128 = 258974_u128;
     ///     let d_u128 = 6622882488318_u128;
-    ///     let modulo_u128 = 4776913109852041418248056622882488319_u128;
-    ///     let res_u128 = func(c_u128, d_u128, modulo_u128);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u128, d_u128, res_u128, modulo_u128);
+    ///     let modulus_u128 = 4776913109852041418248056622882488319_u128;
+    ///     let res_u128 = func(c_u128, d_u128, modulus_u128);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u128, d_u128, res_u128, modulus_u128);
     ///     assert_eq!(res_u128, 2843356730633772030492705275006525566_u128);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(base: T, exp: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(base: T, exp: T, modulus: T) -> T
     /// {
-    ///     base.modular_pow(exp, modulo)
+    ///     base.modular_pow(exp, modulus)
     /// }
     /// ```
     /// 
@@ -20973,22 +20973,22 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// {
     ///     let a_usize = 74_usize;
     ///     let b_usize = 18_usize;
-    ///     let modulo_usize = 100_usize;
-    ///     let res_usize = a_usize.modular_pow(b_usize, modulo_usize);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_usize, b_usize, res_usize, modulo_usize);
+    ///     let modulus_usize = 100_usize;
+    ///     let res_usize = a_usize.modular_pow(b_usize, modulus_usize);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_usize, b_usize, res_usize, modulus_usize);
     ///     assert_eq!(res_usize, 76_usize);
     /// 
     ///     let c_usize = 74_usize;
     ///     let d_usize = 18_usize;
-    ///     let modulo_usize = 100_usize;
-    ///     let res_usize = func(c_usize, d_usize, modulo_usize);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_usize, d_usize, res_usize, modulo_usize);
+    ///     let modulus_usize = 100_usize;
+    ///     let res_usize = func(c_usize, d_usize, modulus_usize);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_usize, d_usize, res_usize, modulus_usize);
     ///     assert_eq!(res_usize, 76_usize);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(base: T, exp: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(base: T, exp: T, modulus: T) -> T
     /// {
-    ///     base.modular_pow(exp, modulo)
+    ///     base.modular_pow(exp, modulus)
     /// }
     /// ```
     /// 
@@ -20999,22 +20999,22 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// {
     ///     let a_shortunion = 741_u16.into_shortunion();
     ///     let b_shortunion = 185_u16.into_shortunion();
-    ///     let modulo_shortunion = 10000_u16.into_shortunion();
-    ///     let res_shortunion = a_shortunion.modular_pow(b_shortunion, modulo_shortunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_shortunion, b_shortunion, res_shortunion, modulo_shortunion);
+    ///     let modulus_shortunion = 10000_u16.into_shortunion();
+    ///     let res_shortunion = a_shortunion.modular_pow(b_shortunion, modulus_shortunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_shortunion, b_shortunion, res_shortunion, modulus_shortunion);
     ///     assert_eq!(res_shortunion.get(), 8901_u16);
     /// 
     ///     let c_shortunion = 741_u16.into_shortunion();
     ///     let d_shortunion = 185_u16.into_shortunion();
-    ///     let modulo_shortunion = 10000_u16.into_shortunion();
-    ///     let res_shortunion = func(c_shortunion, d_shortunion, modulo_shortunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_shortunion, d_shortunion, res_shortunion, modulo_shortunion);
+    ///     let modulus_shortunion = 10000_u16.into_shortunion();
+    ///     let res_shortunion = func(c_shortunion, d_shortunion, modulus_shortunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_shortunion, d_shortunion, res_shortunion, modulus_shortunion);
     ///     assert_eq!(res_shortunion.get(), 8901_u16);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(base: T, exp: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(base: T, exp: T, modulus: T) -> T
     /// {
-    ///     base.modular_pow(exp, modulo)
+    ///     base.modular_pow(exp, modulus)
     /// }
     /// ```
     /// 
@@ -21025,22 +21025,22 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// {
     ///     let a_intunion = 78541_u32.into_intunion();
     ///     let b_intunion = 18575_u32.into_intunion();
-    ///     let modulo_intunion = 10000000_u32.into_intunion();
-    ///     let res_intunion = a_intunion.modular_pow(b_intunion, modulo_intunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_intunion, b_intunion, res_intunion, modulo_intunion);
+    ///     let modulus_intunion = 10000000_u32.into_intunion();
+    ///     let res_intunion = a_intunion.modular_pow(b_intunion, modulus_intunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_intunion, b_intunion, res_intunion, modulus_intunion);
     ///     assert_eq!(res_intunion.get(), 4370501_u32);
     /// 
     ///     let c_intunion = 78541_u32.into_intunion();
     ///     let d_intunion = 18575_u32.into_intunion();
-    ///     let modulo_intunion = 10000000_u32.into_intunion();
-    ///     let res_intunion = func(c_intunion, d_intunion, modulo_intunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_intunion, d_intunion, res_intunion, modulo_intunion);
+    ///     let modulus_intunion = 10000000_u32.into_intunion();
+    ///     let res_intunion = func(c_intunion, d_intunion, modulus_intunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_intunion, d_intunion, res_intunion, modulus_intunion);
     ///     assert_eq!(res_intunion.get(), 4370501_u32);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(base: T, exp: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(base: T, exp: T, modulus: T) -> T
     /// {
-    ///     base.modular_pow(exp, modulo)
+    ///     base.modular_pow(exp, modulus)
     /// }
     /// ```
     /// 
@@ -21051,22 +21051,22 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// {
     ///     let a_longunion = 123456789_u64.into_longunion();
     ///     let b_longunion = 9876543_u64.into_longunion();
-    ///     let modulo_longunion = 100000000000_u64.into_longunion();
-    ///     let res_longunion = a_longunion.modular_pow(b_longunion, modulo_longunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_longunion, b_longunion, res_longunion, modulo_longunion);
+    ///     let modulus_longunion = 100000000000_u64.into_longunion();
+    ///     let res_longunion = a_longunion.modular_pow(b_longunion, modulus_longunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_longunion, b_longunion, res_longunion, modulus_longunion);
     ///     assert_eq!(res_longunion.get(), 75010148669_u64);
     /// 
     ///     let c_longunion = 123456789_u64.into_longunion();
     ///     let d_longunion = 9876543_u64.into_longunion();
-    ///     let modulo_longunion = 100000000000_u64.into_longunion();
-    ///     let res_longunion = func(c_longunion, d_longunion, modulo_longunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_longunion, d_longunion, res_longunion, modulo_longunion);
+    ///     let modulus_longunion = 100000000000_u64.into_longunion();
+    ///     let res_longunion = func(c_longunion, d_longunion, modulus_longunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_longunion, d_longunion, res_longunion, modulus_longunion);
     ///     assert_eq!(res_longunion.get(), 75010148669_u64);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(base: T, exp: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(base: T, exp: T, modulus: T) -> T
     /// {
-    ///     base.modular_pow(exp, modulo)
+    ///     base.modular_pow(exp, modulus)
     /// }
     /// ```
     /// 
@@ -21077,22 +21077,22 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// {
     ///     let a_longerunion = 258974_u128.into_longerunion();
     ///     let b_longerunion = 6622882488318_u128.into_longerunion();
-    ///     let modulo_longerunion = 4776913109852041418248056622882488319_u128.into_longerunion();
-    ///     let res_longerunion = a_longerunion.modular_pow(b_longerunion, modulo_longerunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_longerunion, b_longerunion, res_longerunion, modulo_longerunion);
+    ///     let modulus_longerunion = 4776913109852041418248056622882488319_u128.into_longerunion();
+    ///     let res_longerunion = a_longerunion.modular_pow(b_longerunion, modulus_longerunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_longerunion, b_longerunion, res_longerunion, modulus_longerunion);
     ///     assert_eq!(res_longerunion.get(), 2843356730633772030492705275006525566_u128);
     /// 
     ///     let c_longerunion = 258974_u128.into_longerunion();
     ///     let d_longerunion = 6622882488318_u128.into_longerunion();
-    ///     let modulo_longerunion = 4776913109852041418248056622882488319_u128.into_longerunion();
-    ///     let res_longerunion = func(c_longerunion, d_longerunion, modulo_longerunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_longerunion, d_longerunion, res_longerunion, modulo_longerunion);
+    ///     let modulus_longerunion = 4776913109852041418248056622882488319_u128.into_longerunion();
+    ///     let res_longerunion = func(c_longerunion, d_longerunion, modulus_longerunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_longerunion, d_longerunion, res_longerunion, modulus_longerunion);
     ///     assert_eq!(res_longerunion.get(), 2843356730633772030492705275006525566_u128);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(base: T, exp: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(base: T, exp: T, modulus: T) -> T
     /// {
-    ///     base.modular_pow(exp, modulo)
+    ///     base.modular_pow(exp, modulus)
     /// }
     /// ```
     /// 
@@ -21103,22 +21103,22 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     /// {
     ///     let a_sizeunion = 74_usize.into_sizeunion();
     ///     let b_sizeunion = 18_usize.into_sizeunion();
-    ///     let modulo_sizeunion = 100_usize.into_sizeunion();
-    ///     let res_sizeunion = a_sizeunion.modular_pow(b_sizeunion, modulo_sizeunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_sizeunion, b_sizeunion, res_sizeunion, modulo_sizeunion);
+    ///     let modulus_sizeunion = 100_usize.into_sizeunion();
+    ///     let res_sizeunion = a_sizeunion.modular_pow(b_sizeunion, modulus_sizeunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_sizeunion, b_sizeunion, res_sizeunion, modulus_sizeunion);
     ///     assert_eq!(res_sizeunion.get(), 76_usize);
     /// 
     ///     let c_sizeunion = 74_usize.into_sizeunion();
     ///     let d_sizeunion = 18_usize.into_sizeunion();
-    ///     let modulo_sizeunion = 100_usize.into_sizeunion();
-    ///     let res_sizeunion = func(c_sizeunion, d_sizeunion, modulo_sizeunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_sizeunion, d_sizeunion, res_sizeunion, modulo_sizeunion);
+    ///     let modulus_sizeunion = 100_usize.into_sizeunion();
+    ///     let res_sizeunion = func(c_sizeunion, d_sizeunion, modulus_sizeunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_sizeunion, d_sizeunion, res_sizeunion, modulus_sizeunion);
     ///     assert_eq!(res_sizeunion.get(), 76_usize);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(base: T, exp: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(base: T, exp: T, modulus: T) -> T
     /// {
-    ///     base.modular_pow(exp, modulo)
+    ///     base.modular_pow(exp, modulus)
     /// }
     /// ```
     /// You can use the above generic function `func<>()` for all
@@ -21133,175 +21133,175 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     // Example for u8
     ///     let a_u8 = 74_u8;
     ///     let b_u8 = 18_u8;
-    ///     let modulo_u8 = 100_u8;
-    ///     let res_u8 = a_u8.modular_pow(b_u8, modulo_u8);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u8, b_u8, res_u8, modulo_u8);
+    ///     let modulus_u8 = 100_u8;
+    ///     let res_u8 = a_u8.modular_pow(b_u8, modulus_u8);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u8, b_u8, res_u8, modulus_u8);
     ///     assert_eq!(res_u8, 76_u8);
     /// 
     ///     let c_u8 = 74_u8;
     ///     let d_u8 = 18_u8;
-    ///     let modulo_u8 = 100_u8;
-    ///     let res_u8 = func(c_u8, d_u8, modulo_u8);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u8, d_u8, res_u8, modulo_u8);
+    ///     let modulus_u8 = 100_u8;
+    ///     let res_u8 = func(c_u8, d_u8, modulus_u8);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u8, d_u8, res_u8, modulus_u8);
     ///     assert_eq!(res_u8, 76_u8);
     /// 
     ///     // Example for u16
     ///     let a_u16 = 741_u16;
     ///     let b_u16 = 185_u16;
-    ///     let modulo_u16 = 10000_u16;
-    ///     let res_u16 = a_u16.modular_pow(b_u16, modulo_u16);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u16, b_u16, res_u16, modulo_u16);
+    ///     let modulus_u16 = 10000_u16;
+    ///     let res_u16 = a_u16.modular_pow(b_u16, modulus_u16);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u16, b_u16, res_u16, modulus_u16);
     ///     assert_eq!(res_u16, 8901_u16);
     /// 
     ///     let c_u16 = 741_u16;
     ///     let d_u16 = 185_u16;
-    ///     let modulo_u16 = 10000_u16;
-    ///     let res_u16 = func(c_u16, d_u16, modulo_u16);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u16, d_u16, res_u16, modulo_u16);
+    ///     let modulus_u16 = 10000_u16;
+    ///     let res_u16 = func(c_u16, d_u16, modulus_u16);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u16, d_u16, res_u16, modulus_u16);
     ///     assert_eq!(res_u16, 8901_u16);
     /// 
     ///     // Example for u32
     ///     let a_u32 = 78541_u32;
     ///     let b_u32 = 18575_u32;
-    ///     let modulo_u32 = 10000000_u32;
-    ///     let res_u32 = a_u32.modular_pow(b_u32, modulo_u32);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u32, b_u32, res_u32, modulo_u32);
+    ///     let modulus_u32 = 10000000_u32;
+    ///     let res_u32 = a_u32.modular_pow(b_u32, modulus_u32);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u32, b_u32, res_u32, modulus_u32);
     ///     assert_eq!(res_u32, 4370501_u32);
     /// 
     ///     let c_u32 = 78541_u32;
     ///     let d_u32 = 18575_u32;
-    ///     let modulo_u32 = 10000000_u32;
-    ///     let res_u32 = func(c_u32, d_u32, modulo_u32);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u32, d_u32, res_u32, modulo_u32);
+    ///     let modulus_u32 = 10000000_u32;
+    ///     let res_u32 = func(c_u32, d_u32, modulus_u32);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u32, d_u32, res_u32, modulus_u32);
     ///     assert_eq!(res_u32, 4370501_u32);
     /// 
     ///     // Example for u64
     ///     let a_u64 = 123456789_u64;
     ///     let b_u64 = 9876543_u64;
-    ///     let modulo_u64 = 100000000000_u64;
-    ///     let res_u64 = a_u64.modular_pow(b_u64, modulo_u64);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u64, b_u64, res_u64, modulo_u64);
+    ///     let modulus_u64 = 100000000000_u64;
+    ///     let res_u64 = a_u64.modular_pow(b_u64, modulus_u64);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u64, b_u64, res_u64, modulus_u64);
     ///     assert_eq!(res_u64, 75010148669_u64);
     /// 
     ///     let c_u64 = 123456789_u64;
     ///     let d_u64 = 9876543_u64;
-    ///     let modulo_u64 = 100000000000_u64;
-    ///     let res_u64 = func(c_u64, d_u64, modulo_u64);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u64, d_u64, res_u64, modulo_u64);
+    ///     let modulus_u64 = 100000000000_u64;
+    ///     let res_u64 = func(c_u64, d_u64, modulus_u64);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u64, d_u64, res_u64, modulus_u64);
     ///     assert_eq!(res_u64, 75010148669_u64);
     /// 
     ///     // Example for u128
     ///     let a_u128 = 258974_u128;
     ///     let b_u128 = 6622882488318_u128;
-    ///     let modulo_u128 = 4776913109852041418248056622882488319_u128;
-    ///     let res_u128 = a_u128.modular_pow(b_u128, modulo_u128);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u128, b_u128, res_u128, modulo_u128);
+    ///     let modulus_u128 = 4776913109852041418248056622882488319_u128;
+    ///     let res_u128 = a_u128.modular_pow(b_u128, modulus_u128);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_u128, b_u128, res_u128, modulus_u128);
     ///     assert_eq!(res_u128, 2843356730633772030492705275006525566_u128);
     /// 
     ///     let c_u128 = 258974_u128;
     ///     let d_u128 = 6622882488318_u128;
-    ///     let modulo_u128 = 4776913109852041418248056622882488319_u128;
-    ///     let res_u128 = func(c_u128, d_u128, modulo_u128);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u128, d_u128, res_u128, modulo_u128);
+    ///     let modulus_u128 = 4776913109852041418248056622882488319_u128;
+    ///     let res_u128 = func(c_u128, d_u128, modulus_u128);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_u128, d_u128, res_u128, modulus_u128);
     ///     assert_eq!(res_u128, 2843356730633772030492705275006525566_u128);
     /// 
     ///     // Example for usize
     ///     let a_usize = 74_usize;
     ///     let b_usize = 18_usize;
-    ///     let modulo_usize = 100_usize;
-    ///     let res_usize = a_usize.modular_pow(b_usize, modulo_usize);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_usize, b_usize, res_usize, modulo_usize);
+    ///     let modulus_usize = 100_usize;
+    ///     let res_usize = a_usize.modular_pow(b_usize, modulus_usize);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_usize, b_usize, res_usize, modulus_usize);
     ///     assert_eq!(res_usize, 76_usize);
     /// 
     ///     let c_usize = 74_usize;
     ///     let d_usize = 18_usize;
-    ///     let modulo_usize = 100_usize;
-    ///     let res_usize = func(c_usize, d_usize, modulo_usize);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_usize, d_usize, res_usize, modulo_usize);
+    ///     let modulus_usize = 100_usize;
+    ///     let res_usize = func(c_usize, d_usize, modulus_usize);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_usize, d_usize, res_usize, modulus_usize);
     ///     assert_eq!(res_usize, 76_usize);
     /// 
     ///     // Example for ShortUnion
     ///     let a_shortunion = 741_u16.into_shortunion();
     ///     let b_shortunion = 185_u16.into_shortunion();
-    ///     let modulo_shortunion = 10000_u16.into_shortunion();
-    ///     let res_shortunion = a_shortunion.modular_pow(b_shortunion, modulo_shortunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_shortunion, b_shortunion, res_shortunion, modulo_shortunion);
+    ///     let modulus_shortunion = 10000_u16.into_shortunion();
+    ///     let res_shortunion = a_shortunion.modular_pow(b_shortunion, modulus_shortunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_shortunion, b_shortunion, res_shortunion, modulus_shortunion);
     ///     assert_eq!(res_shortunion.get(), 8901_u16);
     /// 
     ///     let c_shortunion = 741_u16.into_shortunion();
     ///     let d_shortunion = 185_u16.into_shortunion();
-    ///     let modulo_shortunion = 10000_u16.into_shortunion();
-    ///     let res_shortunion = func(c_shortunion, d_shortunion, modulo_shortunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_shortunion, d_shortunion, res_shortunion, modulo_shortunion);
+    ///     let modulus_shortunion = 10000_u16.into_shortunion();
+    ///     let res_shortunion = func(c_shortunion, d_shortunion, modulus_shortunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_shortunion, d_shortunion, res_shortunion, modulus_shortunion);
     ///     assert_eq!(res_shortunion.get(), 8901_u16);
     /// 
     ///     // Example for IntUnion
     ///     let a_intunion = 78541_u32.into_intunion();
     ///     let b_intunion = 18575_u32.into_intunion();
-    ///     let modulo_intunion = 10000000_u32.into_intunion();
-    ///     let res_intunion = a_intunion.modular_pow(b_intunion, modulo_intunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_intunion, b_intunion, res_intunion, modulo_intunion);
+    ///     let modulus_intunion = 10000000_u32.into_intunion();
+    ///     let res_intunion = a_intunion.modular_pow(b_intunion, modulus_intunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_intunion, b_intunion, res_intunion, modulus_intunion);
     ///     assert_eq!(res_intunion.get(), 4370501_u32);
     /// 
     ///     let c_intunion = 78541_u32.into_intunion();
     ///     let d_intunion = 18575_u32.into_intunion();
-    ///     let modulo_intunion = 10000000_u32.into_intunion();
-    ///     let res_intunion = func(c_intunion, d_intunion, modulo_intunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_intunion, d_intunion, res_intunion, modulo_intunion);
+    ///     let modulus_intunion = 10000000_u32.into_intunion();
+    ///     let res_intunion = func(c_intunion, d_intunion, modulus_intunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_intunion, d_intunion, res_intunion, modulus_intunion);
     ///     assert_eq!(res_intunion.get(), 4370501_u32);
     /// 
     ///     // Example for LongUnion
     ///     let a_longunion = 123456789_u64.into_longunion();
     ///     let b_longunion = 9876543_u64.into_longunion();
-    ///     let modulo_longunion = 100000000000_u64.into_longunion();
-    ///     let res_longunion = a_longunion.modular_pow(b_longunion, modulo_longunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_longunion, b_longunion, res_longunion, modulo_longunion);
+    ///     let modulus_longunion = 100000000000_u64.into_longunion();
+    ///     let res_longunion = a_longunion.modular_pow(b_longunion, modulus_longunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_longunion, b_longunion, res_longunion, modulus_longunion);
     ///     assert_eq!(res_longunion.get(), 75010148669_u64);
     /// 
     ///     let c_longunion = 123456789_u64.into_longunion();
     ///     let d_longunion = 9876543_u64.into_longunion();
-    ///     let modulo_longunion = 100000000000_u64.into_longunion();
-    ///     let res_longunion = func(c_longunion, d_longunion, modulo_longunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_longunion, d_longunion, res_longunion, modulo_longunion);
+    ///     let modulus_longunion = 100000000000_u64.into_longunion();
+    ///     let res_longunion = func(c_longunion, d_longunion, modulus_longunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_longunion, d_longunion, res_longunion, modulus_longunion);
     ///     assert_eq!(res_longunion.get(), 75010148669_u64);
     /// 
     ///     // Example for LongerUnion
     ///     let a_longerunion = 258974_u128.into_longerunion();
     ///     let b_longerunion = 6622882488318_u128.into_longerunion();
-    ///     let modulo_longerunion = 4776913109852041418248056622882488319_u128.into_longerunion();
-    ///     let res_longerunion = a_longerunion.modular_pow(b_longerunion, modulo_longerunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_longerunion, b_longerunion, res_longerunion, modulo_longerunion);
+    ///     let modulus_longerunion = 4776913109852041418248056622882488319_u128.into_longerunion();
+    ///     let res_longerunion = a_longerunion.modular_pow(b_longerunion, modulus_longerunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_longerunion, b_longerunion, res_longerunion, modulus_longerunion);
     ///     assert_eq!(res_longerunion.get(), 2843356730633772030492705275006525566_u128);
     /// 
     ///     let c_longerunion = 258974_u128.into_longerunion();
     ///     let d_longerunion = 6622882488318_u128.into_longerunion();
-    ///     let modulo_longerunion = 4776913109852041418248056622882488319_u128.into_longerunion();
-    ///     let res_longerunion = func(c_longerunion, d_longerunion, modulo_longerunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_longerunion, d_longerunion, res_longerunion, modulo_longerunion);
+    ///     let modulus_longerunion = 4776913109852041418248056622882488319_u128.into_longerunion();
+    ///     let res_longerunion = func(c_longerunion, d_longerunion, modulus_longerunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_longerunion, d_longerunion, res_longerunion, modulus_longerunion);
     ///     assert_eq!(res_longerunion.get(), 2843356730633772030492705275006525566_u128);
     /// 
     ///     // Example for SizeUnion
     ///     let a_sizeunion = 74_usize.into_sizeunion();
     ///     let b_sizeunion = 18_usize.into_sizeunion();
-    ///     let modulo_sizeunion = 100_usize.into_sizeunion();
-    ///     let res_sizeunion = a_sizeunion.modular_pow(b_sizeunion, modulo_sizeunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_sizeunion, b_sizeunion, res_sizeunion, modulo_sizeunion);
+    ///     let modulus_sizeunion = 100_usize.into_sizeunion();
+    ///     let res_sizeunion = a_sizeunion.modular_pow(b_sizeunion, modulus_sizeunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", a_sizeunion, b_sizeunion, res_sizeunion, modulus_sizeunion);
     ///     assert_eq!(res_sizeunion.get(), 76_usize);
     /// 
     ///     let c_sizeunion = 74_usize.into_sizeunion();
     ///     let d_sizeunion = 18_usize.into_sizeunion();
-    ///     let modulo_sizeunion = 100_usize.into_sizeunion();
-    ///     let res_sizeunion = func(c_sizeunion, d_sizeunion, modulo_sizeunion);
-    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_sizeunion, d_sizeunion, res_sizeunion, modulo_sizeunion);
+    ///     let modulus_sizeunion = 100_usize.into_sizeunion();
+    ///     let res_sizeunion = func(c_sizeunion, d_sizeunion, modulus_sizeunion);
+    ///     println!("{} ** {} = {} (mod {}), where ** is the power operator", c_sizeunion, d_sizeunion, res_sizeunion, modulus_sizeunion);
     ///     assert_eq!(res_sizeunion.get(), 76_usize);
     /// }
     /// 
-    /// fn func<T: SmallUInt>(base: T, exp: T, modulo: T) -> T
+    /// fn func<T: SmallUInt>(base: T, exp: T, modulus: T) -> T
     /// {
-    ///     base.modular_pow(exp, modulo)
+    ///     base.modular_pow(exp, modulus)
     /// }
     /// ```
-    fn modular_pow(self, exp: Self, modulo: Self) -> Self;
+    fn modular_pow(self, exp: Self, modulus: Self) -> Self;
 
     // fn ilog(self, base: Self) -> u32;
     /// Returns the logarithm of the number with respect to an arbitrary base.

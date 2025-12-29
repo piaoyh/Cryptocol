@@ -120,14 +120,14 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl_ {
                 #[cfg(not(debug_assertions))]    return self.wrapping_add(rhs);
             }
 
-            /// Computes `self` + `rhs`, wrapping at `modulo`
+            /// Computes `self` + `rhs`, wrapping at `modulus`
             /// instead of overflowing.
             /// [Read more](trait@SmallUInt#tymethod.modular_add) in detail.
-            fn modular_add(self, rhs: Self, modulo: Self) -> Self
+            fn modular_add(self, rhs: Self, modulus: Self) -> Self
             {
-                let mlhs = self.wrapping_rem(modulo);
-                let mrhs = rhs.wrapping_rem(modulo);
-                let diff = modulo.wrapping_sub(mrhs);
+                let mlhs = self.wrapping_rem(modulus);
+                let mrhs = rhs.wrapping_rem(modulus);
+                let diff = modulus.wrapping_sub(mrhs);
                 if self.get() >= diff.get()
                     { mlhs.wrapping_sub(diff) }
                 else
@@ -176,20 +176,20 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl_ {
             /// [Read more](trait@SmallUInt#tymethod.abs_diff) in detail.
             #[inline] fn abs_diff(self, other: Self) -> Self    { self.abs_diff(other) }
 
-            /// Computes `self` - `rhs`, wrapping at `modulo`
+            /// Computes `self` - `rhs`, wrapping at `modulus`
             /// instead of overflowing.
             /// [Read more](trait@SmallUInt#tymethod.modular_sub) in detail.
-            fn modular_sub(self, rhs: Self, modulo: Self) -> Self
+            fn modular_sub(self, rhs: Self, modulus: Self) -> Self
             {
-                let mlhs = self.wrapping_rem(modulo);
-                let mrhs = rhs.wrapping_rem(modulo);
+                let mlhs = self.wrapping_rem(modulus);
+                let mrhs = rhs.wrapping_rem(modulus);
                 if mlhs.get() >= mrhs.get()
                 {
                     mlhs.wrapping_sub(mrhs)
                 }
                 else
                 {
-                    let diff = modulo.wrapping_sub(mrhs);
+                    let diff = modulus.wrapping_sub(mrhs);
                     mlhs.wrapping_add(diff)
                 }
             }
@@ -264,19 +264,19 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl_ {
                 #[cfg(not(debug_assertions))]    return self.wrapping_mul(rhs);
             }
 
-            /// Computes `self` * `rhs`, wrapping at `modulo`
+            /// Computes `self` * `rhs`, wrapping at `modulus`
             /// instead of overflowing.
             /// [Read more](trait@SmallUInt#tymethod.modular_mul) in detail.
-            fn modular_mul(self, rhs: Self, modulo: Self) -> Self
+            fn modular_mul(self, rhs: Self, modulus: Self) -> Self
             {
-                let mut mrhs = rhs.wrapping_rem(modulo);
-                let mut mlhs = self.wrapping_rem(modulo);
+                let mut mrhs = rhs.wrapping_rem(modulus);
+                let mut mlhs = self.wrapping_rem(modulus);
                 let mut res = Self::zero();
                 while mrhs.get() > Self::zero().get()
                 {
                     if mrhs.is_odd()
-                        { res = res.modular_add(mlhs, modulo); }
-                    mlhs = mlhs.modular_add(mlhs, modulo);
+                        { res = res.modular_add(mlhs, modulus); }
+                    mlhs = mlhs.modular_add(mlhs, modulus);
                     mrhs.set(mrhs.get() >> 1);
                 }
                 res
@@ -376,19 +376,19 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl_ {
             /// in detail.
             #[inline] fn pow(self, exp: u32) -> Self    { self.pow(exp) }
 
-            /// Computes `self.pow(exp)`, saturating at `modulo`
+            /// Computes `self.pow(exp)`, saturating at `modulus`
             /// instead of overflowing.
             /// [Read more](trait@SmallUInt#tymethod.modular_pow) in detail.
-            fn modular_pow(self, exp: Self, modulo: Self) -> Self
+            fn modular_pow(self, exp: Self, modulus: Self) -> Self
             {
-                let mut mlhs = self.wrapping_rem(modulo);
+                let mut mlhs = self.wrapping_rem(modulus);
                 let mut res = Self::one();
                 let mut mexp = exp;
                 while mexp.get() > 0
                 {
                     if mexp.is_odd()
-                        { res = res.modular_mul(mlhs, modulo); }
-                    mlhs = mlhs.modular_mul(mlhs, modulo);
+                        { res = res.modular_mul(mlhs, modulus); }
+                    mlhs = mlhs.modular_mul(mlhs, modulus);
                     mexp.set(mexp.get() >> 1);
                 }
                 res

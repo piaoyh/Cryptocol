@@ -3195,7 +3195,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         let length = N * (T::BITS >> 1) as usize;
         loop
         {
-            let prime_1: BigUInt<T, N> = self.random_prime_with_msb_set_using_miller_rabin_biguint(repetition);
+            let prime_1: BigUInt<T, N> = self.random_prime_with_half_length_using_miller_rabin_biguint(repetition);
             let mut prime_2: BigUInt<T, N> = self.random_prime_with_half_length_using_miller_rabin_biguint(repetition);
             while prime_1 == prime_2
                 { prime_2 = self.random_prime_with_half_length_using_miller_rabin_biguint(repetition); }

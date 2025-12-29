@@ -2866,13 +2866,13 @@ where T: TraitsBigUInt<T>,
         unimplemented!(); // Dummy code for documentation
     }
 
-    // pub fn panic_free_modular_div(&self, _rhs: &Self, _modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // pub fn panic_free_modular_div(&self, _rhs: &Self, _modulus: &Self) -> Self
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and returns the quotient.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -2880,37 +2880,37 @@ where T: TraitsBigUInt<T>,
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Output
-    /// It returns the quotient of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
+    /// It returns the quotient of when (`self` % `modulus`) is divided by
+    /// (`rhs` % `modulus`) if (`rhs` % `modulus`) is not zero.
     /// 
     /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// - It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     ///   and then finally returns the quotient of `rd1` divided by `rd2`.
     /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, the quotient will have the value `zero` and
+    ///   `modulus` or `modulus` is zero or one.
+    /// - If `modulus` is either zero or one, and `rhs` is zero or multiple of
+    ///   `modulus` then, the quotient will have the value `zero` and
     ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, the quotient will have the value `zero` and
+    /// - If `modulus` is either zero or one, and `rhs` is not zero nor multiple
+    ///   of `modulus` then, the quotient will have the value `zero` and
     ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is zero or multiple of `modulo` then, the
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus`, and `self` is zero or multiple of `modulus` then, the
     ///   quotient will have the value `zero`, and `UNDEFINED` and
     ///   `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is not zero, and `modulo` is neither zero nor
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus`, and `self` is not zero, and `modulus` is neither zero nor
     ///   one, the quotient will have the max value and `INFINITY`, and
     ///   `DIVIDED_BY_ZERO` flags will be set.
     /// - In summary, the quotients and the flags will be set as follows:
     /// 
-    /// | `modulo` | `rhs`               | `self`              | quotient | flags                          |
+    /// | `modulus` | `rhs`               | `self`              | quotient | flags                          |
     /// |----------|---------------------|---------------------|----------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | >= 0                | 0        | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0 (mod `modulo`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | >= 2     | 0 (mod `modulo`)    | != 0 (mod `modulo`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
+    /// | 0 or 1   | 0 (mod `modulus`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | 0 or 1   | != 0 (mod `modulus`) | >= 0                | 0        | `UNDEFINED`                    |
+    /// | >= 2     | 0 (mod `modulus`)    | 0 (mod `modulus`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | >= 2     | 0 (mod `modulus`)    | != 0 (mod `modulus`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
     /// 
     /// # Counterpart Method
     /// The method
@@ -2928,9 +2928,9 @@ where T: TraitsBigUInt<T>,
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
     /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient.to_string(), "3");
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -2941,7 +2941,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2 for modulo >= 2 and dividend == 0 and divisor != 0
+    /// # Example 2 for modulus >= 2 and dividend == 0 and divisor != 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -2949,9 +2949,9 @@ where T: TraitsBigUInt<T>,
     /// 
     /// let dividend = U256::zero();
     /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient.to_string(), "0");
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -2962,7 +2962,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 3 for modulo >= 2 and dividend == multiple of modulo and divisor != 0
+    /// # Example 3 for modulus >= 2 and dividend == multiple of modulus and divisor != 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -2970,9 +2970,9 @@ where T: TraitsBigUInt<T>,
     /// 
     /// let dividend = U256::from_uint(10000_u16);
     /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient.to_string(), "0");
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -2983,7 +2983,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 4 for modulo >= 2 and divisor == 0 and dividend != 0
+    /// # Example 4 for modulus >= 2 and divisor == 0 and dividend != 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -2991,9 +2991,9 @@ where T: TraitsBigUInt<T>,
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
     /// let divisor = U256::zero();
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient, U256::max());
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -3004,7 +3004,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 5 for modulo >= 2 and divisor == multiple of modulo and dividend != 0
+    /// # Example 5 for modulus >= 2 and divisor == multiple of modulus and dividend != 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3012,9 +3012,9 @@ where T: TraitsBigUInt<T>,
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
     /// let divisor = U256::from_uint(200_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient, U256::max());
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -3025,7 +3025,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 6 for modulo >= 2 and divisor == 0 and dividend == 0
+    /// # Example 6 for modulus >= 2 and divisor == 0 and dividend == 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3033,9 +3033,9 @@ where T: TraitsBigUInt<T>,
     /// 
     /// let dividend = U256::zero();
     /// let divisor = U256::zero();
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient.to_string(), "0");
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -3046,7 +3046,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 7 for modulo >= 2 and divisor == 0 and dividend == multiple of modulo
+    /// # Example 7 for modulus >= 2 and divisor == 0 and dividend == multiple of modulus
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3054,9 +3054,9 @@ where T: TraitsBigUInt<T>,
     /// 
     /// let dividend = U256::from_uint(30000_u16);
     /// let divisor = U256::zero();
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient.to_string(), "0");
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -3067,7 +3067,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 8 for modulo >= 2 and divisor == multiple of modulo and dividend == 0
+    /// # Example 8 for modulus >= 2 and divisor == multiple of modulus and dividend == 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3075,9 +3075,9 @@ where T: TraitsBigUInt<T>,
     /// 
     /// let dividend = U256::zero();
     /// let divisor = U256::from_uint(200_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient.to_string(), "0");
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -3088,7 +3088,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 9 for modulo >= 2 and divisor == multiple of modulo and dividend == multiple of modulo
+    /// # Example 9 for modulus >= 2 and divisor == multiple of modulus and dividend == multiple of modulus
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3096,9 +3096,9 @@ where T: TraitsBigUInt<T>,
     /// 
     /// let dividend = U256::from_uint(30000_u16);
     /// let divisor = U256::from_uint(200_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient.to_string(), "0");
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -3109,7 +3109,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 10 for modulo == 0 and divisor != 0 and dividend != 0
+    /// # Example 10 for modulus == 0 and divisor != 0 and dividend != 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3117,9 +3117,9 @@ where T: TraitsBigUInt<T>,
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
     /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::zero();
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::zero();
+    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient.to_string(), "0");
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -3130,7 +3130,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 11 for modulo == 1 and divisor != 0 and dividend != 0
+    /// # Example 11 for modulus == 1 and divisor != 0 and dividend != 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3138,9 +3138,9 @@ where T: TraitsBigUInt<T>,
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
     /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::one();
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::one();
+    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient.to_string(), "0");
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -3151,7 +3151,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 12 for modulo == 0 and divisor == 0 and dividend == 0
+    /// # Example 12 for modulus == 0 and divisor == 0 and dividend == 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3159,9 +3159,9 @@ where T: TraitsBigUInt<T>,
     /// 
     /// let dividend = U256::zero();
     /// let divisor = U256::zero();
-    /// let modulo = U256::zero();
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::zero();
+    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient.to_string(), "0");
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -3172,7 +3172,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(quotient.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 13 for modulo == 1 and divisor == 0 and dividend == 0
+    /// # Example 13 for modulus == 1 and divisor == 0 and dividend == 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3180,9 +3180,9 @@ where T: TraitsBigUInt<T>,
     /// 
     /// let dividend = U256::zero();
     /// let divisor = U256::zero();
-    /// let modulo = U256::one();
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::one();
+    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient.to_string(), "0");
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -3199,12 +3199,12 @@ where T: TraitsBigUInt<T>,
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
-    /// for modulo in [U256::zero(), U256::one()]
+    /// for modulus in [U256::zero(), U256::one()]
     /// {
     ///     let op1 = U256::zero();
     ///     let op2 = U256::zero();
-    ///     let res = op1.panic_free_modular_div(&op2, &modulo);
-    ///     println!("{} / {} = {} (mod {})", op1, op2, res, modulo);
+    ///     let res = op1.panic_free_modular_div(&op2, &modulus);
+    ///     println!("{} / {} = {} (mod {})", op1, op2, res, modulus);
     ///     assert_eq!(res.to_string(), "0");
     ///     assert_eq!(res.is_overflow(), false);
     ///     assert_eq!(res.is_underflow(), false);
@@ -3217,8 +3217,8 @@ where T: TraitsBigUInt<T>,
     ///     for dividend in [U256::from_string("76801874298166903427690031858186486050853753882811946569946433649006").unwrap(), U256::from_uint(50_u8)]
     ///     {
     ///         let rhs = U256::zero();
-    ///         let res = dividend.panic_free_modular_div(&rhs, &modulo);
-    ///         println!("{} / {} = {} (mod {})", dividend, rhs, res, modulo);
+    ///         let res = dividend.panic_free_modular_div(&rhs, &modulus);
+    ///         println!("{} / {} = {} (mod {})", dividend, rhs, res, modulus);
     ///         assert_eq!(res.to_string(), "0");
     ///         assert_eq!(res.is_overflow(), false);
     ///         assert_eq!(res.is_underflow(), false);
@@ -3230,8 +3230,8 @@ where T: TraitsBigUInt<T>,
     /// 
     ///         for divisor in [U256::from_uint(3_u8), U256::from_uint(50_u8)]
     ///         {
-    ///             let res = dividend.panic_free_modular_div(&divisor, &modulo);
-    ///             println!("{} / {} = {} (mod {})", dividend, divisor, res, modulo);
+    ///             let res = dividend.panic_free_modular_div(&divisor, &modulus);
+    ///             println!("{} / {} = {} (mod {})", dividend, divisor, res, modulus);
     ///             assert_eq!(res.to_string(), "0");
     ///             assert_eq!(res.is_overflow(), false);
     ///             assert_eq!(res.is_underflow(), false);
@@ -3244,18 +3244,18 @@ where T: TraitsBigUInt<T>,
     ///     }
     /// }
     /// ```
-    pub fn panic_free_modular_div(&self, _rhs: &Self, _modulo: &Self) -> Self
+    pub fn panic_free_modular_div(&self, _rhs: &Self, _modulus: &Self) -> Self
     {
         unimplemented!(); // Dummy code for documentation
     }
 
-    // pub fn panic_free_modular_div_assign(&mut self, _rhs: &Self, _modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // pub fn panic_free_modular_div_assign(&mut self, _rhs: &Self, _modulus: &Self)
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and assigns the quotient back to `self`.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -3263,34 +3263,34 @@ where T: TraitsBigUInt<T>,
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// - It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     ///   and then finally assigns the quotient of `rd1` divided by `rd2`
     ///   back to `self`.
     /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, the quotient will have the value `zero` and
+    ///   `modulus` or `modulus` is zero or one.
+    /// - If `modulus` is either zero or one, and `rhs` is zero or multiple of
+    ///   `modulus` then, the quotient will have the value `zero` and
     ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, the quotient will have the value `zero` and
+    /// - If `modulus` is either zero or one, and `rhs` is not zero nor multiple
+    ///   of `modulus` then, the quotient will have the value `zero` and
     ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is zero or multiple of `modulo` then, the
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus`, and `self` is zero or multiple of `modulus` then, the
     ///   quotient will have the value `zero`, and `UNDEFINED` and
     ///   `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is not zero, and `modulo` is neither zero nor
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus`, and `self` is not zero, and `modulus` is neither zero nor
     ///   one, the quotient will have the max value and `INFINITY`, and
     ///   `DIVIDED_BY_ZERO` flags will be set.
     /// - In summary, the quotients and the flags will be set as follows:
     /// 
-    /// | `modulo` | `rhs`               | `self`              | quotient | flags                          |
+    /// | `modulus` | `rhs`               | `self`              | quotient | flags                          |
     /// |----------|---------------------|---------------------|----------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | >= 0                | 0        | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0 (mod `modulo`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | >= 2     | 0 (mod `modulo`)    | != 0 (mod `modulo`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
+    /// | 0 or 1   | 0 (mod `modulus`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | 0 or 1   | != 0 (mod `modulus`) | >= 0                | 0        | `UNDEFINED`                    |
+    /// | >= 2     | 0 (mod `modulus`)    | 0 (mod `modulus`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | >= 2     | 0 (mod `modulus`)    | != 0 (mod `modulus`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
     /// 
     /// - All the flags are historical, which means, for example, if an
     ///   divided_by_zero occurred even once before this current operation or
@@ -3323,9 +3323,9 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = UU32::from_uint(100_u8);
+    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "3");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -3336,7 +3336,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 2 for Normal case for modulo >= 2 and self == 0 and divisor != 0
+    /// # Example 2 for Normal case for modulus >= 2 and self == 0 and divisor != 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3353,9 +3353,9 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = UU32::from_uint(100_u8);
+    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "0");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -3366,7 +3366,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 3 for Normal case for modulo >= 2 and self == multiple of modulo and divisor != 0
+    /// # Example 3 for Normal case for modulus >= 2 and self == multiple of modulus and divisor != 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3383,9 +3383,9 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = UU32::from_uint(100_u8);
+    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "0");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -3396,7 +3396,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 4 for modulo >= 2 and self != 0 and divisor == 0
+    /// # Example 4 for modulus >= 2 and self != 0 and divisor == 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3413,9 +3413,9 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
-    /// let modulo = U256::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = U256::from_uint(100_u8);
+    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "115792089237316195423570985008687907853269984665640564039457584007913129639935");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -3426,7 +3426,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 5 for modulo >= 2 and self != 0 and divisor == multiple of modulo
+    /// # Example 5 for modulus >= 2 and self != 0 and divisor == multiple of modulus
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3443,9 +3443,9 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
-    /// let modulo = U256::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign_uint({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = U256::from_uint(100_u8);
+    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.panic_free_modular_div_assign_uint({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "115792089237316195423570985008687907853269984665640564039457584007913129639935");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -3456,7 +3456,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 6 for modulo >= 2 and self == 0 and divisor == 0
+    /// # Example 6 for modulus >= 2 and self == 0 and divisor == 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3473,9 +3473,9 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
-    /// let modulo = U256::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign_uint({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = U256::from_uint(100_u8);
+    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.panic_free_modular_div_assign_uint({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "0");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -3486,7 +3486,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 7 for modulo >= 2 and self == 0 and divisor == multiple of modulo
+    /// # Example 7 for modulus >= 2 and self == 0 and divisor == multiple of modulus
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3503,9 +3503,9 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(200_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = U256::from_uint(100_u8);
+    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "0");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -3516,7 +3516,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 8 for modulo >= 2 and self == multiple of modulo and divisor == 0
+    /// # Example 8 for modulus >= 2 and self == multiple of modulus and divisor == 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3533,9 +3533,9 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
-    /// let modulo = U256::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = U256::from_uint(100_u8);
+    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "0");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -3546,7 +3546,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 9 for modulo >= 2 and self == multiple of modulo and divisor == multiple of modulo
+    /// # Example 9 for modulus >= 2 and self == multiple of modulus and divisor == multiple of modulus
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3563,9 +3563,9 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(200_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = U256::from_uint(100_u8);
+    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "0");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -3576,7 +3576,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 10 for modulo == 0 and divisor != 0 and dividend != 0
+    /// # Example 10 for modulus == 0 and divisor != 0 and dividend != 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3593,9 +3593,9 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::zero();
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = U256::zero();
+    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "0");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -3606,7 +3606,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 11 for modulo == 1 and divisor != 0 and dividend != 0
+    /// # Example 11 for modulus == 1 and divisor != 0 and dividend != 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3623,9 +3623,9 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::one();
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = U256::one();
+    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "0");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -3636,7 +3636,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 12 for modulo == 0 and divisor == 0 and dividend == 0
+    /// # Example 12 for modulus == 0 and divisor == 0 and dividend == 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3653,9 +3653,9 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
-    /// let modulo = U256::zero();
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = U256::zero();
+    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "0");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -3666,7 +3666,7 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     /// 
-    /// # Example 13 for modulo == 1 and divisor == 0 and dividend == 0
+    /// # Example 13 for modulus == 1 and divisor == 0 and dividend == 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -3683,9 +3683,9 @@ where T: TraitsBigUInt<T>,
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = U256::zero();
-    /// let modulo = U256::one();
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = U256::one();
+    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "0");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -3702,7 +3702,7 @@ where T: TraitsBigUInt<T>,
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// for modulo in [U256::zero(), U256::one()]
+    /// for modulus in [U256::zero(), U256::one()]
     /// {
     ///     let mut dividend = U256::zero();
     ///     println!("Originally, op1 = {}", dividend);
@@ -3715,8 +3715,8 @@ where T: TraitsBigUInt<T>,
     ///     assert_eq!(dividend.is_right_carry(), false);
     /// 
     ///     let divisor = U256::zero();
-    ///     dividend.panic_free_modular_div_assign(&divisor, &modulo);
-    ///     println!("After a_biguint.panic_free_modular_div_assign({}, {}), op1 = {}", divisor, modulo, dividend);
+    ///     dividend.panic_free_modular_div_assign(&divisor, &modulus);
+    ///     println!("After a_biguint.panic_free_modular_div_assign({}, {}), op1 = {}", divisor, modulus, dividend);
     ///     assert_eq!(dividend.to_string(), "0");
     ///     assert_eq!(dividend.is_overflow(), false);
     ///     assert_eq!(dividend.is_underflow(), false);
@@ -3739,8 +3739,8 @@ where T: TraitsBigUInt<T>,
     ///         assert_eq!(dividend.is_right_carry(), false);
     /// 
     ///         let divisor = U256::zero();
-    ///         dividend.panic_free_modular_div_assign(&divisor, &modulo);
-    ///         println!("After op1.panic_free_modular_div_assign({}, {}), dividend = {}", divisor, modulo, dividend);
+    ///         dividend.panic_free_modular_div_assign(&divisor, &modulus);
+    ///         println!("After op1.panic_free_modular_div_assign({}, {}), dividend = {}", divisor, modulus, dividend);
     ///         assert_eq!(dividend.to_string(), "0");
     ///         assert_eq!(dividend.is_overflow(), false);
     ///         assert_eq!(dividend.is_underflow(), false);
@@ -3762,8 +3762,8 @@ where T: TraitsBigUInt<T>,
     ///             assert_eq!(dividend.is_left_carry(), false);
     ///             assert_eq!(dividend.is_right_carry(), false);
     /// 
-    ///             dividend.panic_free_modular_div_assign(&divisor, &modulo);
-    ///             println!("After dividend.panic_free_modular_div_assign({}, {}), dividend = {}", divisor, modulo, dividend);
+    ///             dividend.panic_free_modular_div_assign(&divisor, &modulus);
+    ///             println!("After dividend.panic_free_modular_div_assign({}, {}), dividend = {}", divisor, modulus, dividend);
     ///             assert_eq!(dividend.to_string(), "0");
     ///             assert_eq!(dividend.is_overflow(), false);
     ///             assert_eq!(dividend.is_underflow(), false);
@@ -3776,7 +3776,7 @@ where T: TraitsBigUInt<T>,
     ///     }
     /// }
     /// ```
-    pub fn panic_free_modular_div_assign(&mut self, _rhs: &Self, _modulo: &Self)
+    pub fn panic_free_modular_div_assign(&mut self, _rhs: &Self, _modulus: &Self)
     {
         unimplemented!(); // Dummy code for documentation
     } 

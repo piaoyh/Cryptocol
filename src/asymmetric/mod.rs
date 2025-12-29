@@ -175,7 +175,7 @@ pub use rsa::*;
 pub use trait_pkcs1v15::*;
 pub use trait_oaep::*;
 
-pub use ecc_25519::*;
+// pub use ecc_25519::*;
 
 /// many *.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing

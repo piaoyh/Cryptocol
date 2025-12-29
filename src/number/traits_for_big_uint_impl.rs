@@ -40,15 +40,15 @@ macro_rules! calc_assign_to_calc
     // s <<= rhs;
     // s
 
-    // ($me:expr, $func:expr, $rhs:expr, $modulo:expr) => {
+    // ($me:expr, $func:expr, $rhs:expr, $modulus:expr) => {
     //     let mut res = Self::from_array(Self::get_number($me).clone());
-    //     $func(&mut res, $rhs, $modulo);
+    //     $func(&mut res, $rhs, $modulus);
     //     return res;
     // }
-    // calc_assign_to_calc!(self, Self::modular_add_assign_uint, rhs, modulo);
+    // calc_assign_to_calc!(self, Self::modular_add_assign_uint, rhs, modulus);
     //
     // let mut res = Self::from_array(self.get_number().clone());
-    // res.modular_add_assign_uint(rhs, modulo);
+    // res.modular_add_assign_uint(rhs, modulus);
     // res
 }
 

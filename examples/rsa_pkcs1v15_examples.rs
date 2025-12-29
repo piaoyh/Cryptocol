@@ -18,10 +18,12 @@ pub fn main()
 {
     rsa_encrypt();
     rsa_decrypt();
+    rsa_decrypt_into_string();
 
     rsa_same_primes_test();
     rsa_composites_test();
     rsa_composite_prime_test();
+    prime_test();
 }
 
 fn rsa_encrypt()
@@ -320,4 +322,15 @@ fn rsa_composite_prime_test()
     // assert_eq!(converted, "In the beginning God created the heavens and the earth.");
     // assert_eq!(converted, message);
     println!("-------------------------------");
+}
+
+fn prime_test()
+{
+    use cryptocol::random::Random;
+    use cryptocol::define_utypes_with;
+    define_utypes_with!(u32);
+
+    let mut r = Random::new();
+    let (p, q): (U512, U512) = r.random_prime_with_half_length_using_rsa_biguint(7);
+    println!("{}\n{}", p, q);
 }

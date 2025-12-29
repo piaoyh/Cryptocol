@@ -69,14 +69,14 @@ where T: TraitsBigUInt<T>
 {
     /*** ADDITION ***/
 
-    // fn panic_free_modular_add_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
+    // fn panic_free_modular_add_uint<U>(&self, rhs: U, modulus: &Self) -> Self
+    /// Calculates (`self` + `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type.
     /// 
     /// # Arguments
     /// - `rhs` is to be added to `self`, and primitive unsigned integer
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` + `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -84,26 +84,26 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Output
-    /// It returns the modulo-sum (`self` + `rhs`) % `modulo` with wrapping
-    /// (modular) addition at `modulo`.
+    /// It returns the modulus-sum (`self` + `rhs`) % `modulus` with wrapping
+    /// (modular) addition at `modulus`.
     /// 
     /// # Features
     /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally returns the remainder of `sum` divided by `modulo`.
-    /// - Wrapping (modular) addition at `modulo`.
+    ///   and then finally returns the remainder of `sum` divided by `modulus`.
+    /// - Wrapping (modular) addition at `modulus`.
     /// - The differences between this method `panic_free_modular_add_uint()`
     ///   and the method `wrapping_add_uint()` are, first, where
     ///   wrapping around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_add_uint()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_add_uint()` sets
+    ///   at `modulus` while the method `wrapping_add_uint()` sets
     ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of the
     ///   return value will be set and the return value will have the value `0`.
     /// - In summary, the return value and its flags will be set as follows:
     /// 
-    /// | `modulo` | return value | flags       |
+    /// | `modulus` | return value | flags       |
     /// |----------|--------------|-------------|
     /// | 0 or 1   | 0            | `UNDEFINED` |
     /// 
@@ -136,19 +136,19 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_add_uint)
-    fn panic_free_modular_add_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn panic_free_modular_add_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>;
 
 
-    // fn panic_free_modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
+    // fn panic_free_modular_add_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
+    /// Calculates (`self` + `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type,
     /// and then, assigns the result back to `self`.
     /// 
     /// # Arguments
     /// - `rhs` is to be added to `self`, and primitive unsigned integer
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` + `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -157,23 +157,23 @@ where T: TraitsBigUInt<T>
     /// 
     /// # Features
     /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally assigns the remainder of `sum` divided by `modulo`
+    ///   and then finally assigns the remainder of `sum` divided by `modulus`
     ///   to `self` back.
-    /// - Wrapping (modular) addition at `modulo`.
+    /// - Wrapping (modular) addition at `modulus`.
     /// - The differences between this method
     ///   `panic_free_modular_add_assign_uint()` and the method
     ///   `wrapping_add_assign_uint()` are, first, where wrapping
     ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_add_assign_uint()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_add_assign_uint()` sets
+    ///   at `modulus` while the method `wrapping_add_assign_uint()` sets
     ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of `self`
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of `self`
     ///   will be set and `self` will have the value `0`.
     /// - In summary, `self` and its flags will be set as follows:
     /// 
-    /// | `modulo` | result value (self) | flags       |
+    /// | `modulus` | result value (self) | flags       |
     /// |----------|---------------------|-------------|
     /// | 0 or 1   | 0                   | `UNDEFINED` |
     /// 
@@ -222,17 +222,17 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_add_assign_uint)
-    fn panic_free_modular_add_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn panic_free_modular_add_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>;
 
 
-    // fn panic_free_modular_add(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
+    // fn panic_free_modular_add(&self, rhs: &Self, modulus: &Self) -> Self
+    /// Calculates (`self` + `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type.
     /// 
     /// # Arguments
     /// - `rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` + `rhs`),
     ///   and is of `Self`-typed.
     /// 
     /// # Panics
@@ -240,26 +240,26 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Output
-    /// It returns the modulo-sum (`self` + `rhs`) % `modulo` with wrapping
-    /// (modular) addition at `modulo`.
+    /// It returns the modulus-sum (`self` + `rhs`) % `modulus` with wrapping
+    /// (modular) addition at `modulus`.
     /// 
     /// # Features
     /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally returns the remainder of `sum` divided by `modulo`.
-    /// - Wrapping (modular) addition at `modulo`.
+    ///   and then finally returns the remainder of `sum` divided by `modulus`.
+    /// - Wrapping (modular) addition at `modulus`.
     /// - The differences between this method `panic_free_modular_add()` and
     ///   the method `wrapping_add()` are, first, where wrapping around
     ///   happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_add()` wraps wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo`, while the method `wrapping_add()` sets `OVERFLOW`
+    ///   at `modulus`, while the method `wrapping_add()` sets `OVERFLOW`
     ///   flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of the
     ///   return value will be set and the return value will have the value `0`.
     /// - In summary, the return value and its flags will be set as follows:
     /// 
-    /// | `modulo` | return value | flags       |
+    /// | `modulus` | return value | flags       |
     /// |----------|--------------|-------------|
     /// | 0 or 1   | 0            | `UNDEFINED` |
     /// 
@@ -294,17 +294,17 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_add)
-    fn panic_free_modular_add(&self, rhs: &Self, modulo: &Self) -> Self;
+    fn panic_free_modular_add(&self, rhs: &Self, modulus: &Self) -> Self;
 
 
-    // fn panic_free_modular_add_assign(&mut self, rhs: &Self, modulo: &Self)
-    /// Calculates (`self` + `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
+    // fn panic_free_modular_add_assign(&mut self, rhs: &Self, modulus: &Self)
+    /// Calculates (`self` + `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type,
     /// and then, assigns the result back to `self`.
     /// 
     /// # Arguments
     /// -`rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` + `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` + `rhs`),
     ///   and is of `Self`-typed.
     /// 
     /// # Panics
@@ -313,22 +313,22 @@ where T: TraitsBigUInt<T>
     /// 
     /// # Features
     /// - It takes the addition (= `sum`) of `self` and `rhs`,
-    ///   and then finally assigns the remainder of `sum` divided by `modulo`
+    ///   and then finally assigns the remainder of `sum` divided by `modulus`
     ///   to `self` back.
-    /// - Wrapping (modular) addition at `modulo`.
+    /// - Wrapping (modular) addition at `modulus`.
     /// - The differences between this method `panic_free_modular_add_assign()`
     ///   and the method `wrapping_add_assign()` are, first, where wrapping
     ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_add_assign()` wraps around at maximum value.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo`, while the method `wrapping_add_assign()` sets
+    ///   at `modulus`, while the method `wrapping_add_assign()` sets
     ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of `self`
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of `self`
     ///   will be set and `self` will have the value `0`.
     /// - In summary, `self` and its flags will be set as follows:
     /// 
-    /// | `modulo` | result value (self) | flags       |
+    /// | `modulus` | result value (self) | flags       |
     /// |----------|---------------------|-------------|
     /// | 0 or 1   | 0                   | `UNDEFINED` |
     /// 
@@ -378,20 +378,20 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_add_assign)
-    fn panic_free_modular_add_assign(&mut self, rhs: &Self, modulo: &Self);
+    fn panic_free_modular_add_assign(&mut self, rhs: &Self, modulus: &Self);
 
 
             
     /*** SUBTRACTION ***/
 
-    // fn panic_free_modular_sub_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
+    // fn panic_free_modular_sub_uint<U>(&self, rhs: U, modulus: &Self) -> Self
+    /// Calculates (`self` - `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type.
     /// 
     /// # Arguments
     /// - `rhs` is to be added to `self`, and primitive unsigned integer
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` - `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -399,27 +399,27 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Output
-    /// It returns the modulo-difference (`self` - `rhs`) % `modulo` with
-    /// wrapping (modular) subtraction at `modulo`.
+    /// It returns the modulus-difference (`self` - `rhs`) % `modulus` with
+    /// wrapping (modular) subtraction at `modulus`.
     /// 
     /// # Features
     /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
     ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
+    ///   by `modulus`.
+    /// - Wrapping (modular) subtraction at `modulus`.
     /// - The differences between this method `panic_free_modular_sub_uint()`
     ///   and the method `wrapping_sub_uint()` are, first, where
     ///   wrapping around happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_sub_uint()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub_uint()` sets
+    ///   at `modulus` while the method `wrapping_sub_uint()` sets
     ///   `UNDERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of the
     ///   return value will be set and the return value will have the value `0`.
     /// - In summary, the return value and its flags will be set as follows:
     /// 
-    /// | `modulo` | return value | flags       |
+    /// | `modulus` | return value | flags       |
     /// |----------|--------------|-------------|
     /// | 0 or 1   | 0            | `UNDEFINED` |
     /// 
@@ -452,19 +452,19 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_sub_uint)
-    fn panic_free_modular_sub_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn panic_free_modular_sub_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>;
 
 
-    // fn panic_free_modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
+    // fn panic_free_modular_sub_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
+    /// Calculates (`self` - `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type,
     /// and then, assigns the result back to `self`.
     /// 
     /// # Arguments
     /// - `rhs` is to be added to `self`, and primitive unsigned integer
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` - `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -474,22 +474,22 @@ where T: TraitsBigUInt<T>
     /// # Features
     /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
     ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
+    ///   by `modulus`.
+    /// - Wrapping (modular) subtraction at `modulus`.
     /// - The differences between this method
     ///   `panic_free_modular_sub_assign_uint()` and the method
     ///   `wrapping_sub_assign_uint()` are, first, where wrapping
     ///   around happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_sub_assign_uint()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub_assign_uint()` sets
+    ///   at `modulus` while the method `wrapping_sub_assign_uint()` sets
     ///   `UNDERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of `self`
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of `self`
     ///   will be set and `self` will have the value `0`.
     /// - In summary, `self` and its flags will be set as follows:
     /// 
-    /// | `modulo` | result value (self) | flags       |
+    /// | `modulus` | result value (self) | flags       |
     /// |----------|---------------------|-------------|
     /// | 0 or 1   | 0                   | `UNDEFINED` |
     /// 
@@ -539,17 +539,17 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_sub_assign_uint)
-    fn panic_free_modular_sub_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn panic_free_modular_sub_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>;
 
 
-    // fn panic_free_modular_sub(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
+    // fn panic_free_modular_sub(&self, rhs: &Self, modulus: &Self) -> Self
+    /// Calculates (`self` - `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type.
     /// 
     /// # Arguments
     /// -`rhs` is to be subtracted from `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` - `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -557,27 +557,27 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Output
-    /// It returns the modulo-sum (`self` + `rhs`) % `modulo` with wrapping
-    /// (modular) addition at `modulo`.
+    /// It returns the modulus-sum (`self` + `rhs`) % `modulus` with wrapping
+    /// (modular) addition at `modulus`.
     /// 
     /// # Features
     /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
     ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
+    ///   by `modulus`.
+    /// - Wrapping (modular) subtraction at `modulus`.
     /// - The differences between this method `panic_free_modular_sub()`
     ///   and the method `wrapping_sub()` are, first, where
     ///   wrapping around happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_sub()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub()` sets `UNDERFLOW`
+    ///   at `modulus` while the method `wrapping_sub()` sets `UNDERFLOW`
     ///   flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of the
     ///   return value will be set and the return value will have the value `0`.
     /// - In summary, the return value and its flags will be set as follows:
     /// 
-    /// | `modulo` | return value | flags       |
+    /// | `modulus` | return value | flags       |
     /// |----------|--------------|-------------|
     /// | 0 or 1   | 0            | `UNDEFINED` |
     /// 
@@ -612,17 +612,17 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_sub)
-    fn panic_free_modular_sub(&self, _rhs: &Self, _modulo: &Self) -> Self;
+    fn panic_free_modular_sub(&self, _rhs: &Self, _modulus: &Self) -> Self;
 
 
-    // fn panic_free_modular_sub_assign(&mut self, rhs: &Self, modulo: &Self)
-    /// Calculates (`self` - `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
+    // fn panic_free_modular_sub_assign(&mut self, rhs: &Self, modulus: &Self)
+    /// Calculates (`self` - `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type,
     /// and then, assigns the result back to `self`.
     /// 
     /// # Arguments
     /// -`rhs` is to be subtracted from `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` - `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` - `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -632,21 +632,21 @@ where T: TraitsBigUInt<T>
     /// # Features
     /// - It takes the subtraction (= `difference`) of `rhs` from `self`, and
     ///   then finally returns the remainder of `difference` divided
-    ///   by `modulo`.
-    /// - Wrapping (modular) subtraction at `modulo`.
+    ///   by `modulus`.
+    /// - Wrapping (modular) subtraction at `modulus`.
     /// - The differences between this method `panic_free_modular_sub_assign()`
     ///    and the method `wrapping_sub_assign()` are, first, where wrapping
     ///   around happens, and, second, when `UNDERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_sub_assign()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `UNDERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_sub_assign()` sets `UNDERFLOW`
+    ///   at `modulus` while the method `wrapping_sub_assign()` sets `UNDERFLOW`
     ///   flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of `self`
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of `self`
     ///   will be set and `self` will have the value `0`.
     /// - In summary, `self` and its flags will be set as follows:
     /// 
-    /// | `modulo` | result value (self) | flags       |
+    /// | `modulus` | result value (self) | flags       |
     /// |----------|---------------------|-------------|
     /// | 0 or 1   | 0                   | `UNDEFINED` |
     /// 
@@ -696,20 +696,20 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_sub_assign)
-    fn panic_free_modular_sub_assign(&mut self, rhs: &Self, modulo: &Self);
+    fn panic_free_modular_sub_assign(&mut self, rhs: &Self, modulus: &Self);
 
 
 
     /*** MULTIPLICATION ***/
 
-    // fn panic_free_modular_mul_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
+    // fn panic_free_modular_mul_uint<U>(&self, rhs: U, modulus: &Self) -> Self
+    /// Calculates (`self` * `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type.
     /// 
     /// # Arguments
     /// - `rhs` is to be multiplied to `self`, and primitive unsigned integer
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` * `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -717,27 +717,27 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Output
-    /// It returns the modulo-product (`self` * `rhs`) % `modulo` with wrapping
-    /// (modular) multiplication at `modulo`.
+    /// It returns the modulus-product (`self` * `rhs`) % `modulus` with wrapping
+    /// (modular) multiplication at `modulus`.
     /// 
     /// # Features
     /// - It takes the multiplication (= `product`) of `self` and `rhs`,
     ///   and then finally returns the remainder of `product`
-    ///   divided by `modulo`.
-    /// - Wrapping (modular) multiplication at `modulo`.
+    ///   divided by `modulus`.
+    /// - Wrapping (modular) multiplication at `modulus`.
     /// - The differences of between this method `modular_mul_uint()` and the
     ///   method `wrapping_mul_uint()` are, first, where wrapping around
     ///   happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_mul_uint()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul_uint()` sets `OVERFLOW`
+    ///   at `modulus` while the method `wrapping_mul_uint()` sets `OVERFLOW`
     ///   flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of the
     ///   return value will be set and the return value will have the value `0`.
     /// - In summary, the return value and its flags will be set as follows:
     /// 
-    /// | `modulo` | return value | flags       |
+    /// | `modulus` | return value | flags       |
     /// |----------|--------------|-------------|
     /// | 0 or 1   | 0            | `UNDEFINED` |
     /// 
@@ -770,19 +770,19 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_mul_uint)
-    fn panic_free_modular_mul_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn panic_free_modular_mul_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>;
 
 
-    // fn panic_free_modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
+    // fn panic_free_modular_mul_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
+    /// Calculates (`self` * `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type,
     /// and then assigns the result back to `self`.
     /// 
     /// # Arguments
     /// - `rhs` is to be multiplied to `self`, and primitive unsigned integer
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` * `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -792,22 +792,22 @@ where T: TraitsBigUInt<T>
     /// # Features
     /// - It takes the multiplication (= `product`) of `self` and `rhs`,
     ///   and then finally returns the remainder of `product`
-    ///   divided by `modulo`.
-    /// - Wrapping (modular) multiplication at `modulo`.
+    ///   divided by `modulus`.
+    /// - Wrapping (modular) multiplication at `modulus`.
     /// - The differences between this method
     ///   `panic_free_modular_mul_assign_uint()` and the method
     ///   `wrapping_mul_assign_uint()` are, first, where wrapping
     ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_mul_assign_uint()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul_assign_uint()` sets
+    ///   at `modulus` while the method `wrapping_mul_assign_uint()` sets
     ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of `self`
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of `self`
     ///   will be set and `self` will have the value `0`.
     /// - In summary, `self` and its flags will be set as follows:
     /// 
-    /// | `modulo` | result value (self) | flags       |
+    /// | `modulus` | result value (self) | flags       |
     /// |----------|---------------------|-------------|
     /// | 0 or 1   | 0                   | `UNDEFINED` |
     /// 
@@ -856,17 +856,17 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_mul_assign_uint)
-    fn panic_free_modular_mul_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn panic_free_modular_mul_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>;
     
 
-    // pub fn panic_free_modular_mul(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type.
+    // pub fn panic_free_modular_mul(&self, rhs: &Self, modulus: &Self) -> Self
+    /// Calculates (`self` * `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type.
     /// 
     /// # Arguments
     /// - `rhs` is to be multiplied to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` * `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -874,27 +874,27 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Output
-    /// It returns the modulo-product (`self` * `rhs`) % `modulo` with wrapping
-    /// (modular) multiplication at `modulo`.
+    /// It returns the modulus-product (`self` * `rhs`) % `modulus` with wrapping
+    /// (modular) multiplication at `modulus`.
     /// 
     /// # Features
     /// - It takes the multiplication (= `product`) of `self` and `rhs`,
     ///   and then finally returns the remainder of `product`
-    ///   divided by `modulo`.
-    /// - Wrapping (modular) multiplication at `modulo`.
+    ///   divided by `modulus`.
+    /// - Wrapping (modular) multiplication at `modulus`.
     /// - The differences of between this method `modular_mul()` and the
     ///   method `wrapping_mul()` are, first, where wrapping around
     ///   happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_mul()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul()` sets `OVERFLOW`
+    ///   at `modulus` while the method `wrapping_mul()` sets `OVERFLOW`
     ///   flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of the
     ///   return value will be set and the return value will have the value `0`.
     /// - In summary, the return value and its flags will be set as follows:
     /// 
-    /// | `modulo` | return value | flags       |
+    /// | `modulus` | return value | flags       |
     /// |----------|--------------|-------------|
     /// | 0 or 1   | 0            | `UNDEFINED` |
     /// 
@@ -929,17 +929,17 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_mul)
-    fn panic_free_modular_mul(&self, rhs: &Self, modulo: &Self) -> Self;
+    fn panic_free_modular_mul(&self, rhs: &Self, modulus: &Self) -> Self;
 
 
-    // pub fn panic_free_modular_mul_assign(&self, rhs: &Self, modulo: &Self)
-    /// Calculates (`self` * `rhs`) % `modulo`,
-    /// wrapping around at `modulo` of the `Self` type,
+    // pub fn panic_free_modular_mul_assign(&self, rhs: &Self, modulus: &Self)
+    /// Calculates (`self` * `rhs`) % `modulus`,
+    /// wrapping around at `modulus` of the `Self` type,
     /// and then assigns the result back to `self`.
     /// 
     /// # Arguments
     /// -`rhs` is to be multiplied to `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` * `rhs`),
+    /// - `modulus` is the divisor to divide the result of (`self` * `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -949,22 +949,22 @@ where T: TraitsBigUInt<T>
     /// # Features
     /// - It takes the multiplication (= `product`) of `self` and `rhs`,
     ///   and then finally returns the remainder of `product`
-    ///   divided by `modulo`.
-    /// - Wrapping (modular) multiplication at `modulo`.
+    ///   divided by `modulus`.
+    /// - Wrapping (modular) multiplication at `modulus`.
     /// - The differences between this method
     ///   `panic_free_modular_mul_assign()` and the method
     ///   `wrapping_mul_assign()` are, first, where wrapping
     ///   around happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `wrapping_mul_assign()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `wrapping_mul_assign()` sets
+    ///   at `modulus` while the method `wrapping_mul_assign()` sets
     ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of the
     ///   return value will be set and the result value will have the value `0`.
     /// - In summary, the result value and its flags will be set as follows:
     /// 
-    /// | `modulo` | result value (self) | flags       |
+    /// | `modulus` | result value (self) | flags       |
     /// |----------|---------------------|-------------|
     /// | 0 or 1   | 0                   | `UNDEFINED` |
     /// 
@@ -1014,7 +1014,7 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_mul_assign)
-    fn panic_free_modular_mul_assign(&mut self, _rhs: &Self, _modulo: &Self);
+    fn panic_free_modular_mul_assign(&mut self, _rhs: &Self, _modulus: &Self);
 
 
 
@@ -1247,14 +1247,14 @@ where T: TraitsBigUInt<T>
     fn panic_free_div_assign_uint<U>(&mut self, rhs: U)
     where U: TraitsBigUInt<U>;
 
-    // fn panic_free_modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn panic_free_modular_div_uint<U>(&self, rhs: U, modulus: &Self) -> Self
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and returns the quotient.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of primitive unsigned integral data type
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -1262,44 +1262,44 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Output
-    /// It returns the quotient of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
+    /// It returns the quotient of when (`self` % `modulus`) is divided by
+    /// (`rhs` % `modulus`) if (`rhs` % `modulus`) is not zero.
     /// 
     /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// - It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     ///   and then finally returns the quotient of `rd1` divided by `rd2`.
     /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, the quotient will have the value `zero` and
+    ///   `modulus` or `modulus` is zero or one.
+    /// - If `modulus` is either zero or one, and `rhs` is zero or multiple of
+    ///   `modulus` then, the quotient will have the value `zero` and
     ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, the quotient will have the value `zero` and
+    /// - If `modulus` is either zero or one, and `rhs` is not zero nor multiple
+    ///   of `modulus` then, the quotient will have the value `zero` and
     ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is zero or multiple of `modulo` then, the
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus`, and `self` is zero or multiple of `modulus` then, the
     ///   quotient will have the value `zero`, and `UNDEFINED` and
     ///   `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is not zero, and `modulo` is neither zero nor
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus`, and `self` is not zero, and `modulus` is neither zero nor
     ///   one, the quotient will have the max value and `INFINITY`, and
     ///   `DIVIDED_BY_ZERO` flags will be set.
     /// - In summary, the quotients and the flags will be set as follows:
     /// 
-    /// | `modulo` | `rhs`               | `self`              | quotient | flags                          |
+    /// | `modulus` | `rhs`               | `self`              | quotient | flags                          |
     /// |----------|---------------------|---------------------|----------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | >= 0                | 0        | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0 (mod `modulo`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | >= 2     | 0 (mod `modulo`)    | != 0 (mod `modulo`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
+    /// | 0 or 1   | 0 (mod `modulus`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | 0 or 1   | != 0 (mod `modulus`) | >= 0                | 0        | `UNDEFINED`                    |
+    /// | >= 2     | 0 (mod `modulus`)    | 0 (mod `modulus`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | >= 2     | 0 (mod `modulus`)    | != 0 (mod `modulus`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
     /// [panic_free_modular_div()](trait@BigUInt_Panic_Free#tymethod.panic_free_modular_div)
     /// is proper rather than this method `panic_free_modular_div_uint()`.
     /// 
-    /// # Example 1 for a normal case for modulo >= 2 and dividend != 0 and divisor != 0
+    /// # Example 1 for a normal case for modulus >= 2 and dividend != 0 and divisor != 0
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::define_utypes_with;
@@ -1309,8 +1309,8 @@ where T: TraitsBigUInt<T>
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
     /// let divisor = 128_u8;
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.modular_div_uint(divisor, &modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let quotient = dividend.modular_div_uint(divisor, &modulus);
     /// println!("{} / {} = {}", dividend, divisor, quotient);
     /// assert_eq!(quotient.to_string(), "3");
     /// assert_eq!(quotient.is_overflow(), false);
@@ -1324,17 +1324,17 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_div_uint)
-    fn panic_free_modular_div_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn panic_free_modular_div_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>;
 
-    // fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and assigns the quotient back to `self`.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of primitive unsigned integral data type
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -1342,34 +1342,34 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// - It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     ///   and then finally assigns the quotient of `rd1` divided by `rd2`
     ///   back to `self`.
     /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, the quotient will have the value `zero` and
+    ///   `modulus` or `modulus` is zero or one.
+    /// - If `modulus` is either zero or one, and `rhs` is zero or multiple of
+    ///   `modulus` then, the quotient will have the value `zero` and
     ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, the quotient will have the value `zero` and
+    /// - If `modulus` is either zero or one, and `rhs` is not zero nor multiple
+    ///   of `modulus` then, the quotient will have the value `zero` and
     ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is zero or multiple of `modulo` then, the
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus`, and `self` is zero or multiple of `modulus` then, the
     ///   quotient will have the value `zero`, and `UNDEFINED` and
     ///   `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is not zero, and `modulo` is neither zero nor
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus`, and `self` is not zero, and `modulus` is neither zero nor
     ///   one, the quotient will have the max value and `INFINITY`, and
     ///   `DIVIDED_BY_ZERO` flags will be set.
     /// - In summary, the quotients and the flags will be set as follows:
     /// 
-    /// | `modulo` | `rhs`               | `self`              | quotient | flags                          |
+    /// | `modulus` | `rhs`               | `self`              | quotient | flags                          |
     /// |----------|---------------------|---------------------|----------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | >= 0                | 0        | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0 (mod `modulo`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | >= 2     | 0 (mod `modulo`)    | != 0 (mod `modulo`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
+    /// | 0 or 1   | 0 (mod `modulus`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | 0 or 1   | != 0 (mod `modulus`) | >= 0                | 0        | `UNDEFINED`                    |
+    /// | >= 2     | 0 (mod `modulus`)    | 0 (mod `modulus`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | >= 2     | 0 (mod `modulus`)    | != 0 (mod `modulus`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
     /// 
     /// - All the flags are historical, which means, for example, if an
     ///   divided_by_zero occurred even once before this current operation or
@@ -1392,7 +1392,7 @@ where T: TraitsBigUInt<T>
     /// 
     /// let mut a_biguint = UU32::from_str("123456789015758942546236989636279846864825945392").unwrap();
     /// let divisor = 128_u8;
-    /// let modulo = UU32::from_uint(100_u8);
+    /// let modulus = UU32::from_uint(100_u8);
     /// println!("Originally, a_biguint = {}", a_biguint);
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -1402,8 +1402,8 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_left_carry(), false);
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
-    /// a_biguint.panic_free_modular_div_assign_uint(divisor, &modulo);
-    /// println!("After a_biguint.modular_div_assign_uint({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// a_biguint.panic_free_modular_div_assign_uint(divisor, &modulus);
+    /// println!("After a_biguint.modular_div_assign_uint({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "3");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -1416,7 +1416,7 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_div_assign_uint)
-    fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>;
 
     // fn panic_free_divide_fully(&self, rhs: &Self) -> (Self, Self)
@@ -1645,13 +1645,13 @@ where T: TraitsBigUInt<T>
     /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_div_assign)
     fn panic_free_div_assign(&mut self, rhs: &Self);
 
-    // fn panic_free_modular_div(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn panic_free_modular_div(&self, rhs: &Self, modulus: &Self) -> Self
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and returns the quotient.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -1659,37 +1659,37 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Output
-    /// It returns the quotient of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
+    /// It returns the quotient of when (`self` % `modulus`) is divided by
+    /// (`rhs` % `modulus`) if (`rhs` % `modulus`) is not zero.
     /// 
     /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// - It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     ///   and then finally returns the quotient of `rd1` divided by `rd2`.
     /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, the quotient will have the value `zero` and
+    ///   `modulus` or `modulus` is zero or one.
+    /// - If `modulus` is either zero or one, and `rhs` is zero or multiple of
+    ///   `modulus` then, the quotient will have the value `zero` and
     ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, the quotient will have the value `zero` and
+    /// - If `modulus` is either zero or one, and `rhs` is not zero nor multiple
+    ///   of `modulus` then, the quotient will have the value `zero` and
     ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is zero or multiple of `modulo` then, the
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus`, and `self` is zero or multiple of `modulus` then, the
     ///   quotient will have the value `zero`, and `UNDEFINED` and
     ///   `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is not zero, and `modulo` is neither zero nor
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus`, and `self` is not zero, and `modulus` is neither zero nor
     ///   one, the quotient will have the max value and `INFINITY`, and
     ///   `DIVIDED_BY_ZERO` flags will be set.
     /// - In summary, the quotients and the flags will be set as follows:
     /// 
-    /// | `modulo` | `rhs`               | `self`              | quotient | flags                          |
+    /// | `modulus` | `rhs`               | `self`              | quotient | flags                          |
     /// |----------|---------------------|---------------------|----------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | >= 0                | 0        | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0 (mod `modulo`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | >= 2     | 0 (mod `modulo`)    | != 0 (mod `modulo`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
+    /// | 0 or 1   | 0 (mod `modulus`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | 0 or 1   | != 0 (mod `modulus`) | >= 0                | 0        | `UNDEFINED`                    |
+    /// | >= 2     | 0 (mod `modulus`)    | 0 (mod `modulus`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | >= 2     | 0 (mod `modulus`)    | != 0 (mod `modulus`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
     /// 
     /// # Counterpart Method
     /// The method
@@ -1709,9 +1709,9 @@ where T: TraitsBigUInt<T>
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
     /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulo);
-    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let quotient = dividend.panic_free_modular_div(&divisor, &modulus);
+    /// println!("{} / {} = {} (mod {})", dividend, divisor, quotient, modulus);
     /// assert_eq!(quotient.to_string(), "3");
     /// assert_eq!(quotient.is_overflow(), false);
     /// assert_eq!(quotient.is_underflow(), false);
@@ -1724,15 +1724,15 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_modular_div)
-    fn panic_free_modular_div(&self, rhs: &Self, modulo: &Self) -> Self;
+    fn panic_free_modular_div(&self, rhs: &Self, modulus: &Self) -> Self;
 
-    // fn panic_free_modular_div_assign(&mut self, rhs: &Self, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn panic_free_modular_div_assign(&mut self, rhs: &Self, modulus: &Self)
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and assigns the quotient back to `self`.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -1740,34 +1740,34 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// - It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     ///   and then finally assigns the quotient of `rd1` divided by `rd2`
     ///   back to `self`.
     /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, the quotient will have the value `zero` and
+    ///   `modulus` or `modulus` is zero or one.
+    /// - If `modulus` is either zero or one, and `rhs` is zero or multiple of
+    ///   `modulus` then, the quotient will have the value `zero` and
     ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, the quotient will have the value `zero` and
+    /// - If `modulus` is either zero or one, and `rhs` is not zero nor multiple
+    ///   of `modulus` then, the quotient will have the value `zero` and
     ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is zero or multiple of `modulo` then, the
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus`, and `self` is zero or multiple of `modulus` then, the
     ///   quotient will have the value `zero`, and `UNDEFINED` and
     ///   `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo`, and `self` is not zero, and `modulo` is neither zero nor
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus`, and `self` is not zero, and `modulus` is neither zero nor
     ///   one, the quotient will have the max value and `INFINITY`, and
     ///   `DIVIDED_BY_ZERO` flags will be set.
     /// - In summary, the quotients and the flags will be set as follows:
     /// 
-    /// | `modulo` | `rhs`               | `self`              | quotient | flags                          |
+    /// | `modulus` | `rhs`               | `self`              | quotient | flags                          |
     /// |----------|---------------------|---------------------|----------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | >= 0                | 0        | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0 (mod `modulo`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | >= 2     | 0 (mod `modulo`)    | != 0 (mod `modulo`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
+    /// | 0 or 1   | 0 (mod `modulus`)    | >= 0                | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | 0 or 1   | != 0 (mod `modulus`) | >= 0                | 0        | `UNDEFINED`                    |
+    /// | >= 2     | 0 (mod `modulus`)    | 0 (mod `modulus`)    | 0        | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | >= 2     | 0 (mod `modulus`)    | != 0 (mod `modulus`) | max      | `INFINITY`, `DIVIDED_BY_ZERO`  |
     /// 
     /// - All the flags are historical, which means, for example, if an
     ///   divided_by_zero occurred even once before this current operation or
@@ -1802,9 +1802,9 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulo);
-    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = UU32::from_uint(100_u8);
+    /// a_biguint.panic_free_modular_div_assign(&divisor, &modulus);
+    /// println!("After a_biguint.panic_free_modular_div_assign({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "3");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -1817,7 +1817,7 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_arithmetic/struct.BigUInt.html#method.panic_free_modular_div_assign)
-    fn panic_free_modular_div_assign(&mut self, rhs: &Self, modulo: &Self);
+    fn panic_free_modular_div_assign(&mut self, rhs: &Self, modulus: &Self);
 
     // fn panic_free_rem_uint<U>(&self, rhs: U) -> Self
     /// Divides `self` by `rhs`, and returns the remainder.
@@ -1953,14 +1953,14 @@ where T: TraitsBigUInt<T>
     fn panic_free_rem_assign_uint<U>(&mut self, rhs: U)
     where U: TraitsBigUInt<U>;
 
-    // fn panic_free_modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn panic_free_modular_rem_uint<U>(&self, rhs: U, modulus: &Self) -> Self
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and returns the remainder.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of primitive unsigned integral data type
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -1968,32 +1968,32 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Output
-    /// It returns the remainder of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
+    /// It returns the remainder of when (`self` % `modulus`) is divided by
+    /// (`rhs` % `modulus`) if (`rhs` % `modulus`) is not zero.
     /// 
     /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// - It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     ///   and then finally returns the remainder of `rd1` divided by `rd2`.
     /// - Overflow will not happen.
     /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, the remainder will have the value `zero` and
+    ///   `modulus` or `modulus` is zero or one.
+    /// - If `modulus` is either zero or one, and `rhs` is zero or multiple of
+    ///   `modulus` then, the remainder will have the value `zero` and
     ///   `DIVIDED_BY_ZERO` flag of the remainder will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, the remainder will have the value `zero` and
+    /// - If `modulus` is either zero or one, and `rhs` is not zero nor multiple
+    ///   of `modulus` then, the remainder will have the value `zero` and
     ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo` then, the remainder will have the value `zero` and
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus` then, the remainder will have the value `zero` and
     ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
     /// - In summary, the remainder and the flags will be set as follows:
     /// 
-    /// | `modulo` | `rhs`               | remainder | flags                          |
+    /// | `modulus` | `rhs`               | remainder | flags                          |
     /// |----------|---------------------|-----------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | 0         | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | 0         | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0         | `DIVIDED_BY_ZERO`              |
+    /// | 0 or 1   | 0 (mod `modulus`)    | 0         | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | 0 or 1   | != 0 (mod `modulus`) | 0         | `UNDEFINED`                    |
+    /// | >= 2     | 0 (mod `modulus`)    | 0         | `DIVIDED_BY_ZERO`              |
     /// 
     /// # Counterpart Method
     /// If `rhs` is bigger than `u128`, the method
@@ -2010,9 +2010,9 @@ where T: TraitsBigUInt<T>
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
     /// let divisor = 128_u8;
-    /// let modulo = U256::from_uint(100_u8);
-    /// let remainder = dividend.panic_free_modular_rem_uint(divisor, &modulo);
-    /// println!("{} % {} = {} (mod {})", dividend, divisor, remainder, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let remainder = dividend.panic_free_modular_rem_uint(divisor, &modulus);
+    /// println!("{} % {} = {} (mod {})", dividend, divisor, remainder, modulus);
     /// assert_eq!(remainder.to_string(), "8");
     /// assert_eq!(remainder.is_overflow(), false);
     /// assert_eq!(remainder.is_underflow(), false);
@@ -2025,17 +2025,17 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_rem_uint)
-    fn panic_free_modular_rem_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn panic_free_modular_rem_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>;
 
-    // fn panic_free_modular_rem_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn panic_free_modular_rem_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and assigns the remainder back to `self`.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of primitive unsigned integral data type
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -2043,29 +2043,29 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// - It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     ///   and then finally assigns the remainder of `rd1` divided by `rd2`
     ///   back to `self`.
     /// - Overflow will not happen.
     /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, `self` will have the value `zero` and its
+    ///   `modulus` or `modulus` is zero or one.
+    /// - If `modulus` is either zero or one, and `rhs` is zero or multiple of
+    ///   `modulus` then, `self` will have the value `zero` and its
     ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, `self` will have the value `zero` and its
+    /// - If `modulus` is either zero or one, and `rhs` is not zero nor multiple
+    ///   of `modulus` then, `self` will have the value `zero` and its
     ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo` then, `self` will have the value `zero` and its
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus` then, `self` will have the value `zero` and its
     ///   `DIVIDED_BY_ZERO` flag will be set.
     /// - In summary, `self` and its flags will be set as follows:
     /// 
-    /// | `modulo` | `rhs`               | remainder (= `self`) | flags                          |
+    /// | `modulus` | `rhs`               | remainder (= `self`) | flags                          |
     /// |----------|---------------------|----------------------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | 0                    | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | 0                    | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0                    | `DIVIDED_BY_ZERO`              |
+    /// | 0 or 1   | 0 (mod `modulus`)    | 0                    | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | 0 or 1   | != 0 (mod `modulus`) | 0                    | `UNDEFINED`                    |
+    /// | >= 2     | 0 (mod `modulus`)    | 0                    | `DIVIDED_BY_ZERO`              |
     /// 
     /// - All the flags are historical, which means, for example, if an
     ///   divided_by_zero occurred even once before this current operation or
@@ -2097,8 +2097,8 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = 128_u8;
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_rem_assign_uint(divisor, &modulo);
+    /// let modulus = UU32::from_uint(100_u8);
+    /// a_biguint.panic_free_modular_rem_assign_uint(divisor, &modulus);
     /// println!("After a_biguint.modular_rem_assign_uint({}), a_biguint = {}", divisor, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "8");
     /// assert_eq!(a_biguint.is_overflow(), false);
@@ -2112,7 +2112,7 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_rem_assign_uint)
-    fn panic_free_modular_rem_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn panic_free_modular_rem_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>;
 
     // fn panic_free_rem(&self, rhs: &Self) -> Self
@@ -2248,13 +2248,13 @@ where T: TraitsBigUInt<T>
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_rem_assign)
     fn panic_free_rem_assign(&mut self, rhs: &Self);
 
-    // fn panic_free_modular_rem(&self, rhs: &Self, modulo: &Self) -> Self
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn panic_free_modular_rem(&self, rhs: &Self, modulus: &Self) -> Self
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and returns the remainder.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -2262,32 +2262,32 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Output
-    /// It returns the remainder of when (`self` % `modulo`) is divided by
-    /// (`rhs` % `modulo`) if (`rhs` % `modulo`) is not zero.
+    /// It returns the remainder of when (`self` % `modulus`) is divided by
+    /// (`rhs` % `modulus`) if (`rhs` % `modulus`) is not zero.
     /// 
     /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// - It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     ///   and then finally returns the remainder of `rd1` divided by `rd2`.
     /// - Overflow will not happen.
     /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, the remainder will have the value `zero` and
+    ///   `modulus` or `modulus` is zero or one.
+    /// - If `modulus` is either zero or one, and `rhs` is zero or multiple of
+    ///   `modulus` then, the remainder will have the value `zero` and
     ///   `DIVIDED_BY_ZERO` flag of the remainder will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, the remainder will have the value `zero` and
+    /// - If `modulus` is either zero or one, and `rhs` is not zero nor multiple
+    ///   of `modulus` then, the remainder will have the value `zero` and
     ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo` then, the remainder will have the value `zero` and
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus` then, the remainder will have the value `zero` and
     ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
     /// - In summary, the remainder and the flags will be set as follows:
     /// 
-    /// | `modulo` | `rhs`               | remainder | flags                          |
+    /// | `modulus` | `rhs`               | remainder | flags                          |
     /// |----------|---------------------|-----------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | 0         | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | 0         | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0         | `DIVIDED_BY_ZERO`              |
+    /// | 0 or 1   | 0 (mod `modulus`)    | 0         | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | 0 or 1   | != 0 (mod `modulus`) | 0         | `UNDEFINED`                    |
+    /// | >= 2     | 0 (mod `modulus`)    | 0         | `DIVIDED_BY_ZERO`              |
     /// 
     /// # Counterpart Method
     /// The method
@@ -2307,9 +2307,9 @@ where T: TraitsBigUInt<T>
     /// 
     /// let dividend = U256::from_str("123456789015758942546236989636279846864825945392").unwrap();
     /// let divisor = U256::from_uint(128_u8);
-    /// let modulo = U256::from_uint(100_u8);
-    /// let remainder = dividend.panic_free_modular_rem(&divisor, &modulo);
-    /// println!("{} % {} = {} (mod {})", dividend, divisor, remainder, modulo);
+    /// let modulus = U256::from_uint(100_u8);
+    /// let remainder = dividend.panic_free_modular_rem(&divisor, &modulus);
+    /// println!("{} % {} = {} (mod {})", dividend, divisor, remainder, modulus);
     /// assert_eq!(remainder.to_string(), "8");
     /// assert_eq!(remainder.is_overflow(), false);
     /// assert_eq!(remainder.is_underflow(), false);
@@ -2322,15 +2322,15 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_rem)
-    fn panic_free_modular_rem(&self, rhs: &Self, modulo: &Self) -> Self;
+    fn panic_free_modular_rem(&self, rhs: &Self, modulus: &Self) -> Self;
 
-    // fn panic_free_modular_rem_assign(&self, rhs: &Self, modulo: &Self)
-    /// Divides (`self` % `modulo`) by (`rhs` % `modulo`),
+    // fn panic_free_modular_rem_assign(&self, rhs: &Self, modulus: &Self)
+    /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
     /// and assigns the remainder back to `self`.
     /// 
     /// # Arguments
     /// - `rhs` divides `self`, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the remainder of (`self` / `rhs`),
+    /// - `modulus` is the divisor to divide the remainder of (`self` / `rhs`),
     ///   and is of `&Self` type.
     /// 
     /// # Panics
@@ -2338,29 +2338,29 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Features
-    /// - It takes the remainder (= `rd1`) of `self` divided by `modulo`,
-    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulo`,
+    /// - It takes the remainder (= `rd1`) of `self` divided by `modulus`,
+    ///   and takes the remainder (= `rd2`) of `rhs` divided by `modulus`,
     ///   and then finally assigns the remainder of `rd1` divided by `rd2`
     ///   back to `self`.
     /// - Overflow will not happen.
     /// - __It does not panic__ even if `rhs` is zero or multiple of
-    ///   `modulo` or `modulo` is zero or one.
-    /// - If `modulo` is either zero or one, and `rhs` is zero or multiple of
-    ///   `modulo` then, `self` will have the value `zero` and its
+    ///   `modulus` or `modulus` is zero or one.
+    /// - If `modulus` is either zero or one, and `rhs` is zero or multiple of
+    ///   `modulus` then, `self` will have the value `zero` and its
     ///   `UNDEFINED` and `DIVIDED_BY_ZERO` flags will be set.
-    /// - If `modulo` is either zero or one, and `rhs` is not zero nor multiple
-    ///   of `modulo` then, `self` will have the value `zero` and its
+    /// - If `modulus` is either zero or one, and `rhs` is not zero nor multiple
+    ///   of `modulus` then, `self` will have the value `zero` and its
     ///   `UNDEFINED` flag will be set.
-    /// - If `modulo` is greater than one, and `rhs` is either zero or multiple
-    ///   of `modulo` then, `self` will have the value `zero` and its
+    /// - If `modulus` is greater than one, and `rhs` is either zero or multiple
+    ///   of `modulus` then, `self` will have the value `zero` and its
     ///   `DIVIDED_BY_ZERO` flag will be set.
     /// - In summary, `self` and its flags will be set as follows:
     /// 
-    /// | `modulo` | `rhs`               | remainder (= `self`) | flags                          |
+    /// | `modulus` | `rhs`               | remainder (= `self`) | flags                          |
     /// |----------|---------------------|----------------------|--------------------------------|
-    /// | 0 or 1   | 0 (mod `modulo`)    | 0                    | `UNDEFINED`, `DIVIDED_BY_ZERO` |
-    /// | 0 or 1   | != 0 (mod `modulo`) | 0                    | `UNDEFINED`                    |
-    /// | >= 2     | 0 (mod `modulo`)    | 0                    | `DIVIDED_BY_ZERO`              |
+    /// | 0 or 1   | 0 (mod `modulus`)    | 0                    | `UNDEFINED`, `DIVIDED_BY_ZERO` |
+    /// | 0 or 1   | != 0 (mod `modulus`) | 0                    | `UNDEFINED`                    |
+    /// | >= 2     | 0 (mod `modulus`)    | 0                    | `DIVIDED_BY_ZERO`              |
     /// 
     /// - All the flags are historical, which means, for example, if an
     ///   divided_by_zero occurred even once before this current operation or
@@ -2395,9 +2395,9 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let divisor = UU32::from_uint(128_u8);
-    /// let modulo = UU32::from_uint(100_u8);
-    /// a_biguint.panic_free_modular_rem_assign(&divisor, &modulo);
-    /// println!("After a_biguint.modular_rem_assign({}, {}), a_biguint = {}", divisor, modulo, a_biguint);
+    /// let modulus = UU32::from_uint(100_u8);
+    /// a_biguint.panic_free_modular_rem_assign(&divisor, &modulus);
+    /// println!("After a_biguint.modular_rem_assign({}, {}), a_biguint = {}", divisor, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "8");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -2410,7 +2410,7 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_rem_assign)
-    fn panic_free_modular_rem_assign(&mut self, rhs: &Self, modulo: &Self);
+    fn panic_free_modular_rem_assign(&mut self, rhs: &Self, modulus: &Self);
 
 
 
@@ -2555,16 +2555,16 @@ where T: TraitsBigUInt<T>
     fn panic_free_pow_assign_uint<U>(&mut self, exp: U)
     where U: TraitsBigUInt<U>;
 
-    // fn panic_free_modular_pow_uint<U>(&self, exp: U, modulo: &Self) -> Self
+    // fn panic_free_modular_pow_uint<U>(&self, exp: U, modulus: &Self) -> Self
     /// Raises `BigUInt` type number to the power of `exp`, using
     /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
+    /// wrapping around at `modulus` of the `Self` type`,
     /// and returns the result. The type `U` has the trait `SmallUInt`.
     /// 
     /// # Arguments
     /// - `exp` is the power to raise `self` to, and is a primitive unsigned
     ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
+    /// - `modulus` is the divisor to divide the result of (`self` ** `exp`),
     ///    and is of `&Self` type.
     /// 
     /// # Panics
@@ -2574,20 +2574,20 @@ where T: TraitsBigUInt<T>
     /// # Output
     /// It returns the result of `self` raised to the power of `exp`, using
     /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`.
+    /// wrapping around at `modulus` of the `Self` type`.
     /// 
     /// # Features
     /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - If overflowing (wrapping around at `modulo`) happens,
+    ///   wrapping around at `modulus` of the `Self` type`.
+    /// - If overflowing (wrapping around at `modulus`) happens,
     ///   the `OVERFLOW` flag of the return value will be set.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of the
     ///   return value will be set and the return value will have the value `0`.
     /// - If both `self` and `exp` are `zero`, the `UNDEFINED` flag of the
     ///   return value will be set and the return value will have the value `0`.
     /// - In summary, the return value and its flags will be set as follows:
     /// 
-    /// | `modulo` | `self` | `exp` | return value | flags       |
+    /// | `modulus` | `self` | `exp` | return value | flags       |
     /// |----------|--------|-------|--------------|-------------|
     /// | 0 or 1   | >= 0   | >= 0  | 0            | `UNDEFINED` |
     /// | > 1      | 0      | 0     | 0            | `UNDEFINED` |
@@ -2607,9 +2607,9 @@ where T: TraitsBigUInt<T>
     /// 
     /// let a_biguint = U256::from_uint(10_u8);
     /// let exp = 30_u8;
-    /// let modulo = U256::halfmax();
-    /// let res = a_biguint.modular_pow_uint(exp, &modulo);
-    /// println!("{} ** {} (mod {}) = {}", a_biguint, exp, modulo, res);
+    /// let modulus = U256::halfmax();
+    /// let res = a_biguint.modular_pow_uint(exp, &modulus);
+    /// println!("{} ** {} (mod {}) = {}", a_biguint, exp, modulus, res);
     /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
     /// assert_eq!(res.is_overflow(), false);
     /// assert_eq!(res.is_underflow(), false);
@@ -2622,20 +2622,20 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.carrying_add_assign_uint)
-    fn panic_free_modular_pow_uint<U>(&self, exp: U, modulo: &Self) -> Self
+    fn panic_free_modular_pow_uint<U>(&self, exp: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>;
 
-    // fn panic_free_modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
+    // fn panic_free_modular_pow_assign_uint<U>(&mut self, exp: U, modulus: &Self)
     /// Raises `BigUInt` type number to the power of `exp`, using
     /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
+    /// wrapping around at `modulus` of the `Self` type`,
     /// and assign the result to `self` back.
     /// The type `U` has the trait `SmallUInt`.
     /// 
     /// # Arguments
     /// - `exp` is the power to raise `self` to, and is a primitive unsigned
     ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
+    /// - `modulus` is the divisor to divide the result of (`self` ** `exp`),
     ///    and is of `&Self` type.
     /// 
     /// # Panics
@@ -2644,19 +2644,19 @@ where T: TraitsBigUInt<T>
     /// 
     /// # Features
     /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
+    ///   wrapping around at `modulus` of the `Self` type`.
     /// - All the flags are historical, which means, for example, if an
     ///   overflow occurred even once before this current operation or
     ///   `OVERFLOW` flag is already set before this current operation,
     ///   the `OVERFLOW` flag is not changed even if this current operation
     ///   does not cause overflow.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of the
     ///   return value will be set and the return value will have the value `0`.
     /// - If both `self` and `exp` are `zero`, the `UNDEFINED` flag of the
     ///   return value will be set and the return value will have the value `0`.
     /// - In summary, the return value and its flags will be set as follows:
     /// 
-    /// | `modulo` | `self` | `exp` | result value | flags       |
+    /// | `modulus` | `self` | `exp` | result value | flags       |
     /// |----------|--------|-------|--------------|-------------|
     /// | 0 or 1   | >= 0   | >= 0  | 0            | `UNDEFINED` |
     /// | > 1      | 0      | 0     | 0            | `UNDEFINED` |
@@ -2684,9 +2684,9 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = 30_u8;
-    /// let modulo = U256::halfmax();
-    /// a_biguint.panic_free_modular_pow_assign_uint(exp, &modulo);
-    /// println!("After a_biguint.panic_free_modular_pow_assign_uint({}, {}), a_biguint = {}", exp, modulo, a_biguint);
+    /// let modulus = U256::halfmax();
+    /// a_biguint.panic_free_modular_pow_assign_uint(exp, &modulus);
+    /// println!("After a_biguint.panic_free_modular_pow_assign_uint({}, {}), a_biguint = {}", exp, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -2699,7 +2699,7 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_pow_assign_uint)
-    fn panic_free_modular_pow_assign_uint<U>(&mut self, exp: U, modulo: &Self)
+    fn panic_free_modular_pow_assign_uint<U>(&mut self, exp: U, modulus: &Self)
     where U: TraitsBigUInt<U>;
 
     // fn panic_free_pow(&mut self, exp: &Self) -> Self
@@ -2836,15 +2836,15 @@ where T: TraitsBigUInt<T>
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_pow_assign)
     fn panic_free_pow_assign(&mut self, exp: &Self);
 
-    // fn panic_free_modular_pow(&self, exp: &Self, modulo: &Self) -> Self
+    // fn panic_free_modular_pow(&self, exp: &Self, modulus: &Self) -> Self
     /// Raises `BigUInt` type number to the power of `exp`, using
     /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
+    /// wrapping around at `modulus` of the `Self` type`,
     /// and returns the result.
     /// 
     /// # Arguments
     /// - `exp` is the power to raise `self` to, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
+    /// - `modulus` is the divisor to divide the result of (`self` ** `exp`),
     ///    and is of `&Self` type.
     ///
     /// # Panics
@@ -2854,20 +2854,20 @@ where T: TraitsBigUInt<T>
     /// # Output
     /// It returns the result of `self` raised to the power of `exp`, using
     /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`.
+    /// wrapping around at `modulus` of the `Self` type`.
     /// 
     /// # Features
     /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
-    /// - If overflowing (wrapping around at `modulo`) happens,
+    ///   wrapping around at `modulus` of the `Self` type`.
+    /// - If overflowing (wrapping around at `modulus`) happens,
     ///   the `OVERFLOW` flag of the return value will be set.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of the
     ///   return value will be set and the return value will have the value `0`.
     /// - If both `self` and `exp` are `zero`, the `UNDEFINED` flag of the
     ///   return value will be set and the return value will have the value `0`.
     /// - In summary, the return value and its flags will be set as follows:
     /// 
-    /// | `modulo` | `self` | `exp` | return value | flags       |
+    /// | `modulus` | `self` | `exp` | return value | flags       |
     /// |----------|--------|-------|--------------|-------------|
     /// | 0 or 1   | >= 0   | >= 0  | 0            | `UNDEFINED` |
     /// | > 1      | 0      | 0     | 0            | `UNDEFINED` |
@@ -2889,9 +2889,9 @@ where T: TraitsBigUInt<T>
     /// 
     /// let a_biguint = UU32::from_uint(10_u8);
     /// let exp = UU32::from_uint(30_u8);
-    /// let modulo = UU32::halfmax();
-    /// let res = a_biguint.panic_free_modular_pow(&exp, &modulo);
-    /// println!("{} ** {} = {} (mod {})", a_biguint, exp, res, modulo);
+    /// let modulus = UU32::halfmax();
+    /// let res = a_biguint.panic_free_modular_pow(&exp, &modulus);
+    /// println!("{} ** {} = {} (mod {})", a_biguint, exp, res, modulus);
     /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
     /// assert_eq!(res.is_overflow(), false);
     /// assert_eq!(res.is_underflow(), false);
@@ -2904,17 +2904,17 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_pow)
-    fn panic_free_modular_pow(&self, exp: &Self, modulo: &Self) -> Self;
+    fn panic_free_modular_pow(&self, exp: &Self, modulus: &Self) -> Self;
 
-    // fn panic_free_modular_pow_assign(&mut self, exp: &Self, modulo: &Self)
+    // fn panic_free_modular_pow_assign(&mut self, exp: &Self, modulus: &Self)
     /// Raises `BigUInt` type number to the power of `exp`, using
     /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at `modulo` of the `Self` type`,
+    /// wrapping around at `modulus` of the `Self` type`,
     /// and assign the result to `self` back.
     /// 
     /// # Arguments
     /// - `exp` is the power to raise `self` to, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of (`self` ** `exp`),
+    /// - `modulus` is the divisor to divide the result of (`self` ** `exp`),
     ///    and is of `&Self` type.
     /// 
     /// # Panics
@@ -2923,19 +2923,19 @@ where T: TraitsBigUInt<T>
     /// 
     /// # Features
     /// - Wrapping (modular) exponentiation,
-    ///   wrapping around at `modulo` of the `Self` type`.
+    ///   wrapping around at `modulus` of the `Self` type`.
     /// - All the flags are historical, which means, for example, if an
     ///   overflow occurred even once before this current operation or
     ///   `OVERFLOW` flag is already set before this current operation,
     ///   the `OVERFLOW` flag is not changed even if this current operation
     ///   does not cause overflow.
-    /// - If `modulo` is either `zero` or `one`, the `UNDEFINED` flag of the
+    /// - If `modulus` is either `zero` or `one`, the `UNDEFINED` flag of the
     ///   return value will be set and the return value will have the value `0`.
     /// - If both `self` and `exp` are `zero`, the `UNDEFINED` flag of the
     ///   return value will be set and the return value will have the value `0`.
     /// - In summary, the return value and its flags will be set as follows:
     /// 
-    /// | `modulo` | `self` | `exp` | result value | flags       |
+    /// | `modulus` | `self` | `exp` | result value | flags       |
     /// |----------|--------|-------|--------------|-------------|
     /// | 0 or 1   | >= 0   | >= 0  | 0            | `UNDEFINED` |
     /// | > 1      | 0      | 0     | 0            | `UNDEFINED` |
@@ -2966,9 +2966,9 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let exp = U256::from_uint(30_u8);
-    /// let modulo = U256::halfmax();
-    /// a_biguint.panic_free_modular_pow_assign(&exp, &modulo);
-    /// println!("After a_biguint.panic_free_modular_pow_assign({}, {}), a_biguint = {}", exp, modulo, a_biguint);
+    /// let modulus = U256::halfmax();
+    /// a_biguint.panic_free_modular_pow_assign(&exp, &modulus);
+    /// println!("After a_biguint.panic_free_modular_pow_assign({}, {}), a_biguint = {}", exp, modulus, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
     /// assert_eq!(a_biguint.is_overflow(), false);
     /// assert_eq!(a_biguint.is_underflow(), false);
@@ -2981,7 +2981,7 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_pow_assign)
-    fn panic_free_modular_pow_assign(&mut self, exp: &Self, modulo: &Self);
+    fn panic_free_modular_pow_assign(&mut self, exp: &Self, modulus: &Self);
 
 
     // fn panic_free_iroot_uint<U>(&self, exp: U) -> Self
@@ -4433,15 +4433,15 @@ where T: TraitsBigUInt<T>
     fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
     where U: TraitsBigUInt<U>;
     
-    // fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    // fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     /// Calculates the smallest value greater than or equal to `self`,
-    /// which is a multiple of `rhs`, wrapping around at `modulo`,
+    /// which is a multiple of `rhs`, wrapping around at `modulus`,
     /// and returns the result.
     /// 
     /// # Arguments
     /// - `rhs` is the base of multiple, and is a primitive unsigned integer
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of the calculation of
+    /// - `modulus` is the divisor to divide the result of the calculation of
     ///   the smallest value greater than or equal to `self`,
     ///   which is a multiple of `rhs`, and is of `&Self` type.
     ///
@@ -4451,27 +4451,27 @@ where T: TraitsBigUInt<T>
     /// 
     /// # Output
     /// - It returns the smallest value greater than or equal to `self`,
-    ///   which is a multiple of `rhs`, wrapping around at `modulo`. So,
-    ///   if overflow occurs, it returns the value wrapped around at `modulo`.
+    ///   which is a multiple of `rhs`, wrapping around at `modulus`. So,
+    ///   if overflow occurs, it returns the value wrapped around at `modulus`.
     /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
     ///   of the return value will be set.
-    /// - If `modulo` is either `zero` or `one`, it returns `zero` and
+    /// - If `modulus` is either `zero` or `one`, it returns `zero` and
     ///   the `UNDEFINED` flag of the return value will be set.
     /// 
     /// # Features
-    /// - Wrapping (modular) arround at `modulo`.
+    /// - Wrapping (modular) arround at `modulus`.
     /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
     ///   of the return value will be set.
-    /// - If `modulo` is either `zero` or `one`, it returns `zero` and
+    /// - If `modulus` is either `zero` or `one`, it returns `zero` and
     ///   the `UNDEFINED` flag of the return value will be set.
     /// - The differences between this method
     ///   `panic_free_modular_next_multiple_of_uint()`
     ///   and the method `panic_free_next_multiple_of_uint()` are, first,
     ///   where wrapping around happens, and, second, when `OVERFLOW` flag is
-    ///   set. First, this method wraps araound at `modulo` while the method
+    ///   set. First, this method wraps araound at `modulus` while the method
     ///   `panic_free_next_multiple_of_uint()` wraps araound at `maximum
     ///   value + 1`. Second, this method set `OVERFLOW` flag when wrapping
-    ///   around happens at `modulo` while the method
+    ///   around happens at `modulus` while the method
     ///   `panic_free_next_multiple_of_uint()` sets the `OVERFLOW` flag
     ///   when wrapping around happens.
     /// 
@@ -4490,8 +4490,8 @@ where T: TraitsBigUInt<T>
     /// 
     /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
     /// let num = 100_u8;
-    /// let modulo = a_biguint.wrapping_add_uint(200_u8);
-    /// let multiple = a_biguint.panic_free_modular_next_multiple_of_uint(num, &modulo);
+    /// let modulus = a_biguint.wrapping_add_uint(200_u8);
+    /// let multiple = a_biguint.panic_free_modular_next_multiple_of_uint(num, &modulus);
     /// println!("The next multiple of {} is {}", a_biguint, multiple);
     /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123456800");
     /// assert_eq!(multiple.is_overflow(), false);
@@ -4505,18 +4505,18 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_next_multiple_of_uint)
-    fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulo: &Self) -> Self
+    fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     where U: TraitsBigUInt<U>;
     
-    // fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    // fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     /// Calculates the smallest value greater than or equal to `self`,
-    /// which is a multiple of `rhs`, wrapping around at `modulo`,
+    /// which is a multiple of `rhs`, wrapping around at `modulus`,
     /// and assigns the result to `self` back.
     /// 
     /// # Arguments
     /// - `rhs` is the base of multiple, and is a primitive unsigned integer
     ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `modulo` is the divisor to divide the result of the calculation of
+    /// - `modulus` is the divisor to divide the result of the calculation of
     ///   the smallest value greater than or equal to `self`,
     ///   which is a multiple of `rhs`, and is of `&Self` type.
     ///
@@ -4525,22 +4525,22 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Features
-    /// - Wrapping (modular) arround at `modulo`.
+    /// - Wrapping (modular) arround at `modulus`.
     /// - `self` will be the smallest value greater than or equal to `self`,
-    ///   which is a multiple of `rhs`, wrapping around at `modulo`. So, if
-    ///   overflow occurs, `self` will be the value wrapped around at `modulo`.
+    ///   which is a multiple of `rhs`, wrapping around at `modulus`. So, if
+    ///   overflow occurs, `self` will be the value wrapped around at `modulus`.
     /// - If `rhs` is zero, it assigns `zero` to `self` back
     ///   and the `UNDEFINED` flag of `self` will be set.
-    /// - If `modulo` is either `zero` or `one`, it assigns `zero`
+    /// - If `modulus` is either `zero` or `one`, it assigns `zero`
     ///   to `self` back and the `UNDEFINED` flag of `self` will be set.
     /// - The differences between this method
     ///   `panic_free_modular_next_multiple_of_assign_uint()`
     ///   and the method `panic_free_next_multiple_of_assign_uint()` are, first,
     ///   where wrapping around happens, and, second, when `OVERFLOW` flag is
-    ///   set. First, this method wraps araound at `modulo` while the method
+    ///   set. First, this method wraps araound at `modulus` while the method
     ///   `panic_free_next_multiple_of_assign_uint()` wraps araound at `maximum
     ///   value + 1`. Second, this method set `OVERFLOW` flag when wrapping
-    ///   around happens at `modulo` while the method
+    ///   around happens at `modulus` while the method
     ///   `panic_free_next_multiple_of_assign_uint()` sets the `OVERFLOW` flag
     ///   when wrapping around happens.
     /// - All the flags are historical, which means, for example, if an
@@ -4573,8 +4573,8 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
     /// let num = 100_u8;
-    /// let modulo = a_biguint.wrapping_add_uint(200_u8);
-    /// a_biguint.panic_free_modular_next_multiple_of_assign_uint(num, &modulo);
+    /// let modulus = a_biguint.wrapping_add_uint(200_u8);
+    /// a_biguint.panic_free_modular_next_multiple_of_assign_uint(num, &modulus);
     /// println!("After a_biguint.modular_next_multiple_of_assign_uint({}), a_biguint = {}", num, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123456800");
     /// assert_eq!(a_biguint.is_overflow(), false);
@@ -4588,7 +4588,7 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_next_multiple_of_assign_uint)
-    fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulo: &Self)
+    fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     where U: TraitsBigUInt<U>;
 
     // fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self
@@ -4716,14 +4716,14 @@ where T: TraitsBigUInt<T>
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_next_multiple_of_assign)
     fn panic_free_next_multiple_of_assign(&mut self, rhs: &Self);
 
-    // fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self
+    // fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulus: &Self) -> Self
     /// Calculates the smallest value greater than or equal to `self`,
-    /// which is a multiple of `rhs`, wrapping around at `modulo`,
+    /// which is a multiple of `rhs`, wrapping around at `modulus`,
     /// and returns the result.
     /// 
     /// # Arguments
     /// - `rhs` is the base of multiple, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of the calculation of
+    /// - `modulus` is the divisor to divide the result of the calculation of
     ///   the smallest value greater than or equal to `self`,
     ///   which is a multiple of `rhs`, and is of `&Self` type.
     ///
@@ -4733,27 +4733,27 @@ where T: TraitsBigUInt<T>
     /// 
     /// # Output
     /// - It returns the smallest value greater than or equal to `self`,
-    ///   which is a multiple of `rhs`, wrapping around at `modulo`. So,
-    ///   if overflow occurs, it returns the value wrapped around at `modulo`.
+    ///   which is a multiple of `rhs`, wrapping around at `modulus`. So,
+    ///   if overflow occurs, it returns the value wrapped around at `modulus`.
     /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
     ///   of the return value will be set.
-    /// - If `modulo` is either `zero` or `one`, it returns `zero` and
+    /// - If `modulus` is either `zero` or `one`, it returns `zero` and
     ///   the `UNDEFINED` flag of the return value will be set.
     /// 
     /// # Feature
-    /// - Wrapping (modular) arround at `modulo`.
+    /// - Wrapping (modular) arround at `modulus`.
     /// - If `rhs` is zero, it returns `zero` and the `UNDEFINED` flag
     ///   of the return value will be set.
-    /// - If `modulo` is either `zero` or `one`, it returns `zero` and
+    /// - If `modulus` is either `zero` or `one`, it returns `zero` and
     ///   the `UNDEFINED` flag of the return value will be set.
     /// - The differences between this method
     ///   `panic_free_modular_next_multiple_of()` and the method
     ///   `panic_free_next_multiple_of()` are, first, where wrapping around
     ///   happens, and, second, when `OVERFLOW` flag is set.
-    ///   First, this method wraps around at `modulo` while the method
+    ///   First, this method wraps around at `modulus` while the method
     ///   `panic_free_next_multiple_of()` wraps around at `maximum value + 1`.
     ///   Second, this method sets `OVERFLOW` flag when wrapping around happens
-    ///   at `modulo` while the method `panic_free_next_multiple_of()` sets
+    ///   at `modulus` while the method `panic_free_next_multiple_of()` sets
     ///   `OVERFLOW` flag when wrapping around happens at `maximum value + 1`.
     /// 
     /// # Counterpart Method
@@ -4774,8 +4774,8 @@ where T: TraitsBigUInt<T>
     /// 
     /// let a_biguint = U256::from_str("123456789012345678901234567890123456789").unwrap();
     /// let num = U256::from(100_u8);
-    /// let modulo = a_biguint.wrapping_add_uint(200_u8);
-    /// let multiple = a_biguint.panic_free_modular_next_multiple_of(&num, &modulo);
+    /// let modulus = a_biguint.wrapping_add_uint(200_u8);
+    /// let multiple = a_biguint.panic_free_modular_next_multiple_of(&num, &modulus);
     /// println!("The next multiple of {} is {}", a_biguint, multiple);
     /// assert_eq!(multiple.to_string(), "123456789012345678901234567890123456800");
     /// assert_eq!(multiple.is_overflow(), false);
@@ -4789,16 +4789,16 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_next_multiple_of)
-    fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulo: &Self) -> Self;    
+    fn panic_free_modular_next_multiple_of(&self, rhs: &Self, modulus: &Self) -> Self;    
     
-    // fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self)
+    // fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulus: &Self)
     /// Calculates the smallest value greater than or equal to `self`,
-    /// which is a multiple of `rhs`, wrapping around at `modulo`,
+    /// which is a multiple of `rhs`, wrapping around at `modulus`,
     /// and assigns the result to `self` back.
     /// 
     /// # Arguments
     /// - `rhs` is the base of multiple, and is of `&Self` type.
-    /// - `modulo` is the divisor to divide the result of the calculation of
+    /// - `modulus` is the divisor to divide the result of the calculation of
     ///   the smallest value greater than or equal to `self`,
     ///   which is a multiple of `rhs`, and is of `&Self` type.
     ///
@@ -4807,22 +4807,22 @@ where T: TraitsBigUInt<T>
     /// or its behavior may be undefined though it may not panic.
     /// 
     /// # Features
-    /// - Wrapping (modular) arround at `modulo`.
+    /// - Wrapping (modular) arround at `modulus`.
     /// - `self` will be the smallest value greater than or equal to `self`,
-    ///   which is a multiple of `rhs`, wrapping around at `modulo`. So, if
-    ///   overflow occurs, `self` will be the value wrapped around at `modulo`.
+    ///   which is a multiple of `rhs`, wrapping around at `modulus`. So, if
+    ///   overflow occurs, `self` will be the value wrapped around at `modulus`.
     /// - If `rhs` is zero, it assigns `zero` to `self` back
     ///   and the `UNDEFINED` flag of `self` will be set.
-    /// - If `modulo` is either `zero` or `one`, it assigns `zero`
+    /// - If `modulus` is either `zero` or `one`, it assigns `zero`
     ///   to `self` back and the `UNDEFINED` flag of `self` will be set.
     /// - The differences between this method
     ///   `panic_free_modular_next_multiple_of_assign()`
     ///   and the method `panic_free_next_multiple_of_assign()` are, first,
     ///   where wrapping around happens, and, second, when `OVERFLOW` flag is
-    ///   set. First, this method wraps araound at `modulo` while the method
+    ///   set. First, this method wraps araound at `modulus` while the method
     ///   `panic_free_next_multiple_of_assign()` wraps araound at `maximum
     ///   value + 1`. Second, this method set `OVERFLOW` flag when wrapping
-    ///   around happens at `modulo` while the method
+    ///   around happens at `modulus` while the method
     ///   `panic_free_next_multiple_of_assign()` sets the `OVERFLOW` flag
     ///   when wrapping around happens.
     /// - All the flags are historical, which means, for example, if an
@@ -4856,8 +4856,8 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_undefined(), false);
     /// 
     /// let num = UU32::from(100_u8);
-    /// let modulo = a_biguint.wrapping_add_uint(200_u8);
-    /// a_biguint.panic_free_modular_next_multiple_of_assign(&num, &modulo);
+    /// let modulus = a_biguint.wrapping_add_uint(200_u8);
+    /// a_biguint.panic_free_modular_next_multiple_of_assign(&num, &modulus);
     /// println!("After a_biguint.modular_next_multiple_of_assign({}), a_biguint = {}", num, a_biguint);
     /// assert_eq!(a_biguint.to_string(), "123456789012345678901234567890123456800");
     /// assert_eq!(a_biguint.is_overflow(), false);
@@ -4869,5 +4869,5 @@ where T: TraitsBigUInt<T>
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_next_multiple_of_assign)
-    fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulo: &Self);
+    fn panic_free_modular_next_multiple_of_assign(&mut self, rhs: &Self, modulus: &Self);
 }

@@ -121,18 +121,18 @@ where T: TraitsBigUInt<T>
         biguint_calc_to_calc_assign!(self, Self::gcd, other);
     }
 
-    // fn modular_gcd(&self, other: &Self, modulo: &Self) -> Self
+    // fn modular_gcd(&self, other: &Self, modulus: &Self) -> Self
     // {
-    //     let me = self.wrapping_rem(modulo);
-    //     let it = other.wrapping_rem(modulo);
+    //     let me = self.wrapping_rem(modulus);
+    //     let it = other.wrapping_rem(modulus);
     //     if me.is_zero() || it.is_zero()
     //         { panic!(); }
     //     common_gcd(&me, &it)
     // }
 
-    // fn modular_gcd_assign(&mut self, other: &Self, modulo: &Self)
+    // fn modular_gcd_assign(&mut self, other: &Self, modulus: &Self)
     // {
-    //     biguint_calc_to_calc_assign!(self, Self::modular_gcd, other, modulo);
+    //     biguint_calc_to_calc_assign!(self, Self::modular_gcd, other, modulus);
     // }
 
     fn extended_gcd(&self, other: &Self) -> (Self, Self, Self)
@@ -173,10 +173,10 @@ where T: TraitsBigUInt<T>
         (a, x0, y0)
     }
 
-    // fn modular_extended_gcd(&self, other: &Self, modulo:  &Self) -> (Self, Self, Self)
+    // fn modular_extended_gcd(&self, other: &Self, modulus:  &Self) -> (Self, Self, Self)
     // {
-    //     let mut a = self.wrapping_rem(modulo);
-    //     let mut b = other.wrapping_rem(modulo);
+    //     let mut a = self.wrapping_rem(modulus);
+    //     let mut b = other.wrapping_rem(modulus);
     //     if a.is_zero() || b.is_zero()
     //         { panic!(); }
 
@@ -190,20 +190,20 @@ where T: TraitsBigUInt<T>
     //     let mut y0_flags = 0_u8;
     //     while !b.is_zero()
     //     {
-    //         q = a.modular_div(&b, modulo);
+    //         q = a.modular_div(&b, modulus);
 
     //         t = x1.clone();
-    //         x1 = x0.modular_sub(&q.modular_mul(&x1, modulo), modulo);
+    //         x1 = x0.modular_sub(&q.modular_mul(&x1, modulus), modulus);
     //         x0 = t;
     //         x0_flags |= x0.get_all_flags();
 
     //         t = y1.clone();
-    //         y1 = y0.modular_sub(&q.modular_mul(&y1, modulo), modulo);
+    //         y1 = y0.modular_sub(&q.modular_mul(&y1, modulus), modulus);
     //         y0 = t;
     //         y0_flags |= y0.get_all_flags();
             
     //         t = b;
-    //         b = a.modular_rem(&t, modulo);
+    //         b = a.modular_rem(&t, modulus);
     //         a = t;
     //     }
     //     x0.set_all_flags(x0_flags);

@@ -380,15 +380,15 @@ macro_rules! biguint_calc_assign_to_calc
     // res.saturating_add_assign_uint(rhs);
     // res
 
-    ($me:expr, $func:expr, $rhs:expr, $modulo:expr) => {
+    ($me:expr, $func:expr, $rhs:expr, $modulus:expr) => {
         let mut res = Self::from_array($me.get_number().clone());
-        $func(&mut res, $rhs, $modulo);
+        $func(&mut res, $rhs, $modulus);
         return res;
     }
-    // biguint_calc_assign_to_calc!(self, Self::modular_add_assign_uint, rhs, modulo);
+    // biguint_calc_assign_to_calc!(self, Self::modular_add_assign_uint, rhs, modulus);
     //
     // let mut res = Self::from_array(self.get_number().clone());
-    // res.modular_add_assign_uint(rhs, modulo);
+    // res.modular_add_assign_uint(rhs, modulus);
     // res
 }
 pub(super) use biguint_calc_assign_to_calc;
@@ -443,14 +443,14 @@ macro_rules! biguint_calc_to_calc_assign
     // self.set_number(res.get_number());
     // self.set_all_flags(res.get_all_flags());
 
-    ($me:expr, $func:expr, $rhs:expr, $modulo:expr) => {
-        let res = $func($me, $rhs, $modulo);
+    ($me:expr, $func:expr, $rhs:expr, $modulus:expr) => {
+        let res = $func($me, $rhs, $modulus);
         $me.set_number(res.get_number());
         $me.set_all_flags(res.get_all_flags());
     };
-    // biguint_calc_to_calc_assign!(self, Self::modular_gcd, rhs, modulo);
+    // biguint_calc_to_calc_assign!(self, Self::modular_gcd, rhs, modulus);
     //
-    // let res = self.modular_gcd(&rhs, &modulo);
+    // let res = self.modular_gcd(&rhs, &modulus);
     // self.set_number(res.get_number());
     // self.set_all_flags(res.get_all_flags());
 }
