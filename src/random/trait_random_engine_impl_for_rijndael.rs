@@ -36,7 +36,7 @@ Random_Engine for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFIN
         let mut cipher = [0_u64; 8];
         let mut nonce = [0_u32; NB];
         let len = if NB < 4 {NB} else {4};
-        unsafe { copy_nonoverlapping(&count as  *const u128 as *const u32, nonce.as_mut_ptr() as *mut u32, len); }
+        unsafe { copy_nonoverlapping(&count as *const u128 as *const u32, nonce.as_mut_ptr() as *mut u32, len); }
         self.encrypt_array_into_array(nonce, message, &mut cipher);
         cipher
     }

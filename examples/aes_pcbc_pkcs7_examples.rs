@@ -1693,7 +1693,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = [0_u8; 64];
     a_aes.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
@@ -1719,7 +1719,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = [0_u8; 64];
     a_aes.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
@@ -1745,7 +1745,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = [0_u8; 64];
     a_aes.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
@@ -1771,7 +1771,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = [0_u8; 64];
     a_rijndael.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
@@ -1806,7 +1806,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = [0_u8; 64];
     a_rijndael.encrypt(iv, message.as_ptr(), message.len() as u64, cipher.as_mut_ptr());
     print!("C =\t");
@@ -1837,7 +1837,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = Vec::<u8>::new();
     a_aes.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
@@ -1863,7 +1863,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = Vec::<u8>::new();
     a_aes.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
@@ -1889,7 +1889,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = Vec::<u8>::new();
     a_aes.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
@@ -1915,7 +1915,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = Vec::<u8>::new();
     a_rijndael.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
@@ -1950,7 +1950,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc_into_vec()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = Vec::<u8>::new();
     a_rijndael.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
@@ -1981,7 +1981,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc_into_array()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = [0_u8; 64];
     a_aes.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");
@@ -2007,7 +2007,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc_into_array()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = [0_u8; 64];
     a_aes.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");
@@ -2033,7 +2033,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc_into_array()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = [0_u8; 64];
     a_aes.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");
@@ -2059,7 +2059,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc_into_array()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = [0_u8; 64];
     a_rijndael.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");
@@ -2094,7 +2094,7 @@ fn aes_encrypt_array_with_padding_pkcs7_pcbc_into_array()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = [0_u8; 64];
     a_rijndael.encrypt_array_into_array(iv, &message, &mut cipher);
     print!("C =\t");

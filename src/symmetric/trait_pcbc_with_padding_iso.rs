@@ -2005,7 +2005,7 @@ pub trait PCBC_ISO<T> : Sized
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let mut cipher = [0_u8; 64];
     /// a_aes.encrypt_array(iv, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
@@ -2035,7 +2035,7 @@ pub trait PCBC_ISO<T> : Sized
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 56];
@@ -2079,7 +2079,7 @@ pub trait PCBC_ISO<T> : Sized
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let mut cipher = [0_u8; 64];
     /// taes.encrypt_array(iv, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
@@ -2110,7 +2110,7 @@ pub trait PCBC_ISO<T> : Sized
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let mut cipher = [0_u8; 56];
     /// tdes.encrypt_array(iv, &message, cipher.as_mut_ptr());
     /// print!("C =\t");
@@ -2178,7 +2178,7 @@ pub trait PCBC_ISO<T> : Sized
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let mut cipher = Vec::<u8>::new();
     /// a_aes.encrypt_array_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
@@ -2208,7 +2208,7 @@ pub trait PCBC_ISO<T> : Sized
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
@@ -2241,7 +2241,7 @@ pub trait PCBC_ISO<T> : Sized
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let mut cipher = Vec::<u8>::new();
     /// taes.encrypt_array_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
@@ -2272,7 +2272,7 @@ pub trait PCBC_ISO<T> : Sized
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let mut cipher = Vec::<u8>::new();
     /// tdes.encrypt_array_into_vec(iv, &message, &mut cipher);
     /// print!("C =\t");
@@ -2356,7 +2356,7 @@ pub trait PCBC_ISO<T> : Sized
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let mut cipher = [0_u8; 64];
     /// a_aes.encrypt_array_into_array(iv, &message, &mut cipher);
     /// print!("C =\t");
@@ -2386,7 +2386,7 @@ pub trait PCBC_ISO<T> : Sized
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 56];
@@ -2418,7 +2418,7 @@ pub trait PCBC_ISO<T> : Sized
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let mut cipher = [0_u8; 64];
     /// taes.encrypt_array_into_array(iv, &message, &mut cipher);
     /// for c in cipher.clone()
@@ -2448,7 +2448,7 @@ pub trait PCBC_ISO<T> : Sized
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let mut cipher = [0_u8; 56];
     /// tdes.encrypt_array_into_array(iv, &message, &mut cipher);
     /// for c in cipher.clone()

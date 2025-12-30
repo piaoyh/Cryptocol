@@ -1194,11 +1194,12 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         {
             if let Ok(mut file) = File::open("/dev/random")
             {
-                let mut buffer = [0u8; 64];
-                if let Ok(n) = file.read(&mut buffer)
+                // let mut buffer = [0u8; 64];
+                // if let Ok(n) = file.read(&mut buffer)
+                if let Ok(n) = file.read(unsafe { &mut *(seed_buffer.as_mut_ptr() as *mut u8 as *mut [u8; 64]) }) //buffer)
                 {
                     let n = if n >= 64 {64} else {n};
-                    unsafe { copy_nonoverlapping(buffer.as_ptr(), seed_buffer.as_mut_ptr() as *mut u8, n); }
+                    // unsafe { copy_nonoverlapping(buffer.as_ptr(), seed_buffer.as_mut_ptr() as *mut u8, n); }
                     read_long = n >> 3;
                     if (n & 0b111) != 0
                         { read_long += 1; }

@@ -401,7 +401,7 @@ fn bigcryptor128_encrypt_array_ofb()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = [0_u8; 55];
     taes.encrypt_array(iv, &message, cipher.as_mut_ptr());
     print!("C =\t");
@@ -431,7 +431,7 @@ fn bigcryptor128_encrypt_array_ofb_into_vec()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = Vec::<u8>::new();
     taes.encrypt_array_into_vec(iv, &message, &mut cipher);
     print!("C =\t");
@@ -461,7 +461,7 @@ fn bigcryptor128_encrypt_array_ofb_into_array()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let mut cipher = [0_u8; 55];
     taes.encrypt_array_into_array(iv, &message, &mut cipher);
     for c in cipher.clone()

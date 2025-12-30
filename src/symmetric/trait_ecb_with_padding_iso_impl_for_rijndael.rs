@@ -43,11 +43,6 @@ ECB_ISO<[u32; NB]> for Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE,
 {
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
-        if (length_in_bytes < Self::BLOCK_SIZE as u64) || (length_in_bytes % Self::BLOCK_SIZE as u64 != 0)
-        {
-            self.set_failed();
-            return 0;
-        }
         let mut progress = 0_usize;
         let mut encoded: [IntUnion; NB];
         let mut block = [IntUnion::new(); NB];

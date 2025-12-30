@@ -3271,7 +3271,7 @@ impl DES_Generic
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 56];
@@ -3299,7 +3299,7 @@ impl DES_Generic
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 56];
@@ -3330,7 +3330,7 @@ impl DES_Generic
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher1 = [0_u8; 56];
@@ -3367,7 +3367,7 @@ impl DES_Generic
     /// let mes = "";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 0];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 8];
@@ -3395,7 +3395,7 @@ impl DES_Generic
     /// let mes = "7 bytes";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 7];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 8];
@@ -3423,7 +3423,7 @@ impl DES_Generic
     /// let mes = "I am OK.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 8];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 16];
@@ -3451,7 +3451,7 @@ impl DES_Generic
     /// let mes = "PARK Youngho";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 12];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 16];
@@ -3479,7 +3479,7 @@ impl DES_Generic
     /// let mes = "고맙습니다.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 16];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 24];
@@ -3542,7 +3542,7 @@ impl DES_Generic
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
@@ -3570,7 +3570,7 @@ impl DES_Generic
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
@@ -3601,7 +3601,7 @@ impl DES_Generic
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     ///
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
@@ -3639,7 +3639,7 @@ impl DES_Generic
     /// let mes = "";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 0];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
@@ -3667,7 +3667,7 @@ impl DES_Generic
     /// let mes = "7 bytes";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 7];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
@@ -3695,7 +3695,7 @@ impl DES_Generic
     /// let mes = "I am OK.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 8];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
@@ -3723,7 +3723,7 @@ impl DES_Generic
     /// let mes = "PARK Youngho";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 12];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
@@ -3751,7 +3751,7 @@ impl DES_Generic
     /// let mes = "고맙습니다.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 16];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = Vec::<u8>::new();
@@ -3830,7 +3830,7 @@ impl DES_Generic
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 56];
@@ -3857,7 +3857,7 @@ impl DES_Generic
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 56];
@@ -3888,7 +3888,7 @@ impl DES_Generic
     /// let mes = "In the beginning God created the heavens and the earth.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 55];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher1 = [0_u8; 56];
@@ -3925,7 +3925,7 @@ impl DES_Generic
     /// let mes = "";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 0];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 8];
@@ -3953,7 +3953,7 @@ impl DES_Generic
     /// let mes = "7 bytes";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 7];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 8];
@@ -3981,7 +3981,7 @@ impl DES_Generic
     /// let mes = "I am OK.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 8];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 16];
@@ -4009,7 +4009,7 @@ impl DES_Generic
     /// let mes = "PARK Youngho";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 12];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 16];
@@ -4037,7 +4037,7 @@ impl DES_Generic
     /// let mes = "고맙습니다.";
     /// println!("M =\t{}", mes);
     /// let mut message = [0_u8; 16];
-    /// message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    /// message.copy_from_slice(mes.as_bytes());
     /// let iv = 0x_FEDCBA0987654321_u64;
     /// println!("IV =	{}", iv);
     /// let mut cipher = [0_u8; 24];

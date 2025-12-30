@@ -2351,7 +2351,7 @@ fn des_encrypt_array_with_padding_iso_pcbc()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
@@ -2374,7 +2374,7 @@ fn des_encrypt_array_with_padding_iso_pcbc()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
@@ -2400,7 +2400,7 @@ fn des_encrypt_array_with_padding_iso_pcbc()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
@@ -2433,7 +2433,7 @@ fn des_encrypt_array_with_padding_iso_pcbc()
     let mes = "";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 0];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
@@ -2456,7 +2456,7 @@ fn des_encrypt_array_with_padding_iso_pcbc()
     let mes = "7 bytes";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 7];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
@@ -2479,7 +2479,7 @@ fn des_encrypt_array_with_padding_iso_pcbc()
     let mes = "I am OK.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 8];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
@@ -2502,7 +2502,7 @@ fn des_encrypt_array_with_padding_iso_pcbc()
     let mes = "PARK Youngho";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 12];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
@@ -2525,7 +2525,7 @@ fn des_encrypt_array_with_padding_iso_pcbc()
     let mes = "고맙습니다.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 16];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
@@ -2556,7 +2556,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_vec()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
@@ -2579,7 +2579,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_vec()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
@@ -2605,7 +2605,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_vec()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
 
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
@@ -2639,7 +2639,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_vec()
     let mes = "";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 0];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
@@ -2662,7 +2662,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_vec()
     let mes = "7 bytes";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 7];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
@@ -2685,7 +2685,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_vec()
     let mes = "I am OK.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 8];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
@@ -2708,7 +2708,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_vec()
     let mes = "PARK Youngho";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 12];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
@@ -2731,7 +2731,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_vec()
     let mes = "고맙습니다.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 16];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = Vec::<u8>::new();
@@ -2762,7 +2762,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_array()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
@@ -2784,7 +2784,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_array()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 56];
@@ -2810,7 +2810,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_array()
     let mes = "In the beginning God created the heavens and the earth.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 55];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher1 = [0_u8; 56];
@@ -2843,7 +2843,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_array()
     let mes = "";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 0];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
@@ -2866,7 +2866,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_array()
     let mes = "7 bytes";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 7];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 8];
@@ -2889,7 +2889,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_array()
     let mes = "I am OK.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 8];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
@@ -2912,7 +2912,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_array()
     let mes = "PARK Youngho";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 12];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 16];
@@ -2935,7 +2935,7 @@ fn des_encrypt_array_with_padding_iso_pcbc_into_array()
     let mes = "고맙습니다.";
     println!("M =\t{}", mes);
     let mut message = [0_u8; 16];
-    message.copy_from_slice(unsafe { mes.to_string().as_mut_vec() });
+    message.copy_from_slice(mes.as_bytes());
     let iv = 0x_FEDCBA0987654321_u64;
     println!("IV =	{}", iv);
     let mut cipher = [0_u8; 24];
