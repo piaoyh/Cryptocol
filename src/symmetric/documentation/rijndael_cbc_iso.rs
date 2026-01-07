@@ -1,4 +1,4 @@
-// Copyright 2025 PARK Youngho.
+// Copyright 2025, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -15,7 +15,7 @@
 
 
 use std::vec::Vec;
-use crate::number::SmallUInt;
+use crate::number::TraitsBigUInt;
 
 
 /// trait_cbc_with_padding_iso.rs may be too big
@@ -626,7 +626,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
     /// ```
     pub fn encrypt_into_array<U, const N: usize>(&mut self, iv: [u32; NB], message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1002,7 +1002,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
     /// ```
     pub fn encrypt_str_into_vec<U>(&mut self, iv: [u32; NB], message: &str, cipher: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1201,7 +1201,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
     /// ```
     pub fn encrypt_str_into_array<U, const N: usize>(&mut self, iv: [u32; NB], message: &str, cipher: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1581,7 +1581,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
     /// ```
     pub fn encrypt_string_into_vec<U>(&mut self, iv: [u32; NB], message: &String, cipher: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1782,7 +1782,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
     /// ```
     pub fn encrypt_string_into_array<U, const N: usize>(&mut self, iv: [u32; NB], message: &String, cipher: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1981,7 +1981,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
     /// ```
     pub fn encrypt_vec<U>(&mut self, iv: [u32; NB], message: &Vec<U>, cipher: *mut u8) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2174,7 +2174,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
     /// ```
     pub fn encrypt_vec_into_vec<U, V>(&mut self, iv: [u32; NB], message: &Vec<U>, cipher: &mut Vec<V>) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2385,7 +2385,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
     /// ```
     pub fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: [u32; NB], message: &Vec<U>, cipher: &mut [V; N]) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2588,7 +2588,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
     /// ```
     pub fn encrypt_array<U, const N: usize>(&mut self, iv: [u32; NB], message: &[U; N], cipher: *mut u8) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2785,7 +2785,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
     /// ```
     pub fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: [u32; NB], message: &[U; N], cipher: &mut Vec<V>) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2998,7 +2998,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(txt, "9B F6 E2 EC CA F7 6A 69 44 8E 22 06 B0 0C DD C7 FF 8B BB A7 03 11 E1 9C 41 40 A0 B6 B3 40 5C 4B DF 2C 01 C2 97 E1 3E 71 F4 30 CB 9D B7 8B 6F 67 43 01 1E D5 50 C1 BE 68 14 CE 9C F7 8B 14 61 FB ");
     /// ```
     pub fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: [u32; NB], message: &[U; N], cipher: &mut [V; M]) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3575,7 +3575,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_into_vec<U>(&mut self, iv: [u32; NB], cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3874,7 +3874,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_into_array<U, const N: usize>(&mut self, iv: [u32; NB], cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4391,7 +4391,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_vec<U>(&mut self, iv: [u32; NB], cipher: &Vec<U>, message: *mut u8) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4671,7 +4671,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_vec_into_vec<U, V>(&mut self, iv: [u32; NB], cipher: &Vec<U>, message: &mut Vec<V>) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4960,7 +4960,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: [u32; NB], cipher: &Vec<U>, message: &mut [V; N]) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5182,7 +5182,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_vec_into_string<U>(&mut self, iv: [u32; NB], cipher: &Vec<U>, message: &mut String) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5471,7 +5471,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_array<U, const N: usize>(&mut self, iv: [u32; NB], cipher: &[U; N], message: *mut u8) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5750,7 +5750,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: [u32; NB], cipher: &[U; N], message: &mut Vec<V>) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6038,7 +6038,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: [u32; NB], cipher: &[U; N], message: &mut [V; M]) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6259,7 +6259,7 @@ impl <const NB: usize, const NK: usize> Rijndael_Generic<NB, NK>
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_array_into_string<U, const N: usize>(&mut self, iv: [u32; NB], cipher: &[U; N], message: &mut String) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         unimplemented!(); // Dummy code for documentation
     }

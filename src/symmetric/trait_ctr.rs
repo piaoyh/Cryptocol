@@ -1,4 +1,4 @@
-// Copyright 2025 PARK Youngho.
+// Copyright 2025, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -15,7 +15,7 @@
 
 
 use std::vec::Vec;
-use crate::number::SmallUInt;
+use crate::number::TraitsBigUInt;
 use crate::symmetric::pre_decrypt_into_vec_no_padding;
 
 
@@ -347,7 +347,7 @@ pub trait CTR<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.encrypt_into_vec)
     fn encrypt_into_vec<U>(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone;
+    where U: TraitsBigUInt<U>;
 
     // fn encrypt_into_array<U, const N: usize>(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
     /// Encrypts the data without any padding in CTR (CounTeR) mode,
@@ -505,7 +505,7 @@ pub trait CTR<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.encrypt_into_array)
     fn encrypt_into_array<U, const N: usize>(&mut self, nonce: T, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone;
+    where U: TraitsBigUInt<U>;
 
     // fn encrypt_str(&mut self, nonce: T, message: &str, cipher: *mut u8) -> u64
     /// Encrypts the data in a `str` object without any padding in CTR (CounTeR) mode.
@@ -796,7 +796,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.encrypt_str_into_vec)
     #[inline]
     fn encrypt_str_into_vec<U>(&mut self, nonce: T, message: &str, cipher: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, cipher)
     }
@@ -949,7 +949,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.encrypt_str_into_array)
     #[inline]
     fn encrypt_str_into_array<U, const N: usize>(&mut self, nonce: T, message: &str, cipher: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, cipher)
     }
@@ -1244,7 +1244,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.encrypt_string_into_vec)
     #[inline]
     fn encrypt_string_into_vec<U>(&mut self, nonce: T, message: &String, cipher: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.encrypt_into_vec(nonce, message.as_ptr(), message.len() as u64, cipher)
     }
@@ -1398,7 +1398,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.encrypt_string_into_array)
     #[inline]
     fn encrypt_string_into_array<U, const N: usize>(&mut self, nonce: T, message: &String, cipher: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.encrypt_into_array(nonce, message.as_ptr(), message.len() as u64, cipher)
     }
@@ -1555,7 +1555,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.encrypt_vec)
     #[inline]
     fn encrypt_vec<U>(&mut self, nonce: T, message: &Vec<U>, cipher: *mut u8) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.encrypt(nonce, message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -1706,7 +1706,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.encrypt_vec_into_vec)
     #[inline]
     fn encrypt_vec_into_vec<U, V>(&mut self, nonce: T, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.encrypt_into_vec(nonce, message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -1869,7 +1869,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.encrypt_vec_into_array)
     #[inline]
     fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, nonce: T, message: &Vec<U>, cipher: &mut [V; N]) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.encrypt_into_array(nonce, message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -2029,7 +2029,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.encrypt_array)
     #[inline]
     fn encrypt_array<U, const N: usize>(&mut self, nonce: T, message: &[U; N], cipher: *mut u8) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.encrypt(nonce, message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -2183,7 +2183,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.encrypt_array_into_vec)
     #[inline]
     fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, nonce: T, message: &[U; N], cipher: &mut Vec<V>) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.encrypt_into_vec(nonce, message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -2346,7 +2346,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.encrypt_array_into_array)
     #[inline]
     fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, nonce: T, message: &[U; N], cipher: &mut [V; M]) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.encrypt_into_array(nonce, message.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -2802,7 +2802,7 @@ pub trait CTR<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.decrypt_into_vec)
     fn decrypt_into_vec<U>(&mut self, nonce: T, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         pre_decrypt_into_vec_no_padding!(message, length_in_bytes, U);
         let len = self.decrypt(nonce, cipher, length_in_bytes, message.as_mut_ptr() as *mut u8);
@@ -3040,7 +3040,7 @@ pub trait CTR<T> : Sized
     /// ## For more examples,
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.decrypt_into_array)
     fn decrypt_into_array<U, const N: usize>(&mut self, nonce: T, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
-    where U: SmallUInt + Copy + Clone;
+    where U: TraitsBigUInt<U>;
 
     // fn decrypt_into_string(&mut self, nonce: T, cipher: *const u8, length_in_bytes: u64, message: &mut String) -> u64
     /// Decrypts the data without any padding in CTR (CounTeR) mode,
@@ -3450,7 +3450,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.decrypt_vec)
     #[inline]
     fn decrypt_vec<U>(&mut self, nonce: T, cipher: &Vec<U>, message: *mut u8) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.decrypt(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
@@ -3673,7 +3673,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.decrypt_vec_into_vec)
     #[inline]
     fn decrypt_vec_into_vec<U, V>(&mut self, nonce: T, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.decrypt_into_vec(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
@@ -3903,7 +3903,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.decrypt_vec_into_array)
     #[inline]
     fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, nonce: T, cipher: &Vec<U>, message: &mut [V; N]) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.decrypt_into_array(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
@@ -4080,7 +4080,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.decrypt_vec_into_string)
     #[inline]
     fn decrypt_vec_into_string<U>(&mut self, nonce: T, cipher: &Vec<U>, message: &mut String) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.decrypt_into_string(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
@@ -4313,7 +4313,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.decrypt_array)
     #[inline]
     fn decrypt_array<U, const N: usize>(&mut self, nonce: T, cipher: &[U; N], message: *mut u8) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.decrypt(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
@@ -4534,7 +4534,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.decrypt_array_into_vec)
     #[inline]
     fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, nonce: T, cipher: &[U; N], message: &mut Vec<V>) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.decrypt_into_vec(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }
@@ -4765,7 +4765,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.decrypt_array_into_array)
     #[inline]
     fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, nonce: T, cipher: &[U; N], message: &mut [V; M]) -> u64
-    where U: SmallUInt + Copy + Clone, V: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
     {
         self.decrypt_into_array(nonce, cipher.as_ptr() as *const u8, (N as u32 * U::size_in_bytes()) as u64, message)
     }
@@ -4941,7 +4941,7 @@ pub trait CTR<T> : Sized
     /// click [here](./documentation/big_cryptor64_ctr/struct.BigCryptor64.html#method.decrypt_array_into_string)
     #[inline]
     fn decrypt_array_into_string<U, const N: usize>(&mut self, nonce: T, cipher: &[U; N], message: &mut String) -> u64
-    where U: SmallUInt + Copy + Clone
+    where U: TraitsBigUInt<U>
     {
         self.decrypt_into_string(nonce, cipher.as_ptr() as *const u8, (cipher.len() as u32 * U::size_in_bytes()) as u64, message)
     }

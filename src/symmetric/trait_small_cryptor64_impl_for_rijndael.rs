@@ -14,7 +14,7 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use crate::number::{IntUnion, LongUnion};
+use crate::number::{ IntUnion, LongUnion };
 use crate::symmetric::{ SmallCryptor,  Rijndael_Generic };
 
 

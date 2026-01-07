@@ -1,4 +1,4 @@
-// Copyright 2025 PARK Youngho.
+// Copyright 2025, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -131,13 +131,13 @@ use crate::number::TraitsBigUInt;
 use crate::random::Slapdash as Random;
 use crate::asymmetric::{ PKCS1V15, RSA_Generic };
 
-impl<const N: usize, T, const MR: usize> PKCS1V15 for RSA_Generic<N, T, MR>
+impl<const N: usize, T> PKCS1V15 for RSA_Generic<N, T>
 where T: TraitsBigUInt<T>
 {
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
         let size = T::size_in_bytes() as usize * N;
-        if length_in_bytes > size as u64 - 11
+        if length_in_bytes > (size - 11) as u64
             { return 0; }
 
         let mut m = [T::zero(); N];

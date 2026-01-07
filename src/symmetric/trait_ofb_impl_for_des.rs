@@ -16,7 +16,7 @@
 
 use std::ptr::copy_nonoverlapping;
 
-use crate::number::SmallUInt;
+use crate::number::TraitsBigUInt;
 use crate::symmetric::{ DES_Generic, OFB };
 use crate::symmetric::{ crypt_ofb, crypt_into_something_without_padding,
                         pre_encrypt_into_array, pre_encrypt_into_vec,

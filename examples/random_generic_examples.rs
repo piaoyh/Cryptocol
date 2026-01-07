@@ -56,15 +56,17 @@ fn do_simultaneously(jobs: Vec<fn()>)
 
 pub fn main()
 {
-    random_quick_start();
-    random_constructors();
-    random_smalluint();
-    random_biguint();
-    random_prepare_primes();
-    find_u256_primes();
-    find_u512_primes();
-    find_u1024_primes();
-    find_u2048_primes();
+    // random_quick_start();
+    // random_constructors();
+    // random_smalluint();
+    // random_biguint();
+    // random_prepare_primes();
+    // find_u128_primes();
+    // find_u256_primes();
+    // find_u512_primes();
+    // find_u1024_primes();
+    // find_u2048_primes();
+    find_u4096_primes();
 }
 
 fn random_quick_start()
@@ -7708,42 +7710,40 @@ fn do_with_arg_simultaneously(jobs: Vec<(&'static [&'static str; COLUMN], usize,
         { thread.join().unwrap(); }
 }
 
-fn find_u256_primes()
+fn find_u128_primes()
 {
     use cryptocol::define_utypes_with;
     use cryptocol::random::Random;
-    use cryptocol::asymmetric::RSA_Generic;
     define_utypes_with!(u32);
 
-    type PRIME = U512;
-    type RSA = RSA_Generic<16, u32>;
-    const NUM_STR: &str = "B438E6DC10A4FD3C54C2D8CFA523352D7E0EBBC0698DDE11634CD9C74A4BC4B3";
-
+    type PRIME = U256;
     let mut thread = Vec::<fn()>::new();
     for _ in 0..50
     {
         thread.push(||{
             let mut prng = Random::new();
             let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint(7);
-            let base = PRIME::from_str_radix(NUM_STR, 16).unwrap();
+            println!("{:X}\n{:X}", prime1, prime2);
+        });
+    }
 
-            let rsa = RSA::new_with_primes(prime1.clone(), base.clone());
-            let message = rsa.get_modulus().shift_right(512_usize >> 1);
-            let cipher = rsa.encrypt_biguint(&message);
-            let recover = rsa.decrypt_biguint(&cipher);
-            if recover == message
-                { println!("U256 prime: prime1 is {:X}", prime1); }
-            else
-                { println!("U156 prime: prime1 is Wrong Prime."); }
+    do_simultaneously(thread);
+}
 
-            let rsa = RSA::new_with_primes(prime2.clone(), base);
-            let message = rsa.get_modulus().shift_right(512_usize >> 1);
-            let cipher = rsa.encrypt_biguint(&message);
-            let recover = rsa.decrypt_biguint(&cipher);
-            if recover == message
-                { println!("U256 prime: prime2 is {:X}", prime2); }
-            else
-                { println!("U256 prime: prime2 is Wrong Prime."); }
+fn find_u256_primes()
+{
+    use cryptocol::define_utypes_with;
+    use cryptocol::random::Random;
+    define_utypes_with!(u32);
+
+    type PRIME = U512;
+    let mut thread = Vec::<fn()>::new();
+    for _ in 0..50
+    {
+        thread.push(||{
+            let mut prng = Random::new();
+            let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint(7);
+            println!("{:X}\n{:X}", prime1, prime2);
         });
     }
 
@@ -7754,38 +7754,16 @@ fn find_u512_primes()
 {
     use cryptocol::define_utypes_with;
     use cryptocol::random::Random;
-    use cryptocol::asymmetric::RSA_1024;
     define_utypes_with!(u32);
 
     type PRIME = U1024;
-    type RSA = RSA_1024;
-    const NUM_STR: &str = "950BE5031347033FAD37E4AA8FBA7B9687432E00C8D5E7829B0366B5E602FB308513C315D751E9F704127BFAD3995001765A47BD45C213E3CE22E5142C279F39";
-
     let mut thread = Vec::<fn()>::new();
     for _ in 0..50
     {
         thread.push(||{
             let mut prng = Random::new();
             let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint(7);
-            let base = PRIME::from_str_radix(NUM_STR, 16).unwrap();
-
-            let rsa = RSA::new_with_primes(prime1.clone(), base.clone());
-            let message = rsa.get_modulus().shift_right(1024_usize >> 1);
-            let cipher = rsa.encrypt_biguint(&message);
-            let recover = rsa.decrypt_biguint(&cipher);
-            if recover == message
-                { println!("U512 prime: prime1 is {:X}", prime1); }
-            else
-                { println!("U512 prime: prime1 is Wrong Prime."); }
-
-            let rsa = RSA::new_with_primes(prime2.clone(), base);
-            let message = rsa.get_modulus().shift_right(1024_usize >> 1);
-            let cipher = rsa.encrypt_biguint(&message);
-            let recover = rsa.decrypt_biguint(&cipher);
-            if recover == message
-                { println!("U512 prime: prime2 is {:X}", prime2); }
-            else
-                { println!("U512 prime: prime2 is Wrong Prime."); }
+            println!("{:X}\n{:X}", prime1, prime2);
         });
     }
 
@@ -7796,38 +7774,16 @@ fn find_u1024_primes()
 {
     use cryptocol::define_utypes_with;
     use cryptocol::random::Random;
-    use cryptocol::asymmetric::RSA_2048;
     define_utypes_with!(u32);
 
     type PRIME = U2048;
-    type RSA = RSA_2048;
-    const NUM_STR: &str = "EDA36FC2173A4905961C3772EE419804D2CE8E30AF11DFFED65A99D73571BE321005E9B9DD520FD889EEFF8C6887436A9D37E9033A8FCADC360564E3D5DDF8D12EC55A328968B4C4EFBE7F7410276D448ACD6692836ADCBEC6BAD8B58935916DE3D67FDE6BB4D1C1047FAC556D33E8CA2EEED508C014E5B9B9A76AC06FA27AC1";
-
     let mut thread = Vec::<fn()>::new();
-    for _ in 0..50
+    for _ in 0..48
     {
         thread.push(||{
             let mut prng = Random::new();
             let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint(7);
-            let base = PRIME::from_str_radix(NUM_STR, 16).unwrap();
- 
-            let rsa = RSA::new_with_primes(prime1.clone(), base.clone());
-            let message = rsa.get_modulus().shift_right(2048_usize >> 1);
-            let cipher = rsa.encrypt_biguint(&message);
-            let recover = rsa.decrypt_biguint(&cipher);
-            if recover == message
-                { println!("U1024 prime: prime1 is {:X}", prime1); }
-            else
-                { println!("U1024 prime: prime1 is Wrong Prime."); }
-
-            let rsa = RSA::new_with_primes(prime2.clone(), base);
-            let message = rsa.get_modulus().shift_right(2048_usize >> 1);
-            let cipher = rsa.encrypt_biguint(&message);
-            let recover = rsa.decrypt_biguint(&cipher);
-            if recover == message
-                { println!("U1024 prime: prime2 is {:X}", prime2); }
-            else
-                { println!("U1024 prime: prime2 is Wrong Prime."); }
+            println!("{:X}\n{:X}", prime1, prime2);
         });
     }
 
@@ -7838,38 +7794,36 @@ fn find_u2048_primes()
 {
     use cryptocol::define_utypes_with;
     use cryptocol::random::Random;
-    use cryptocol::asymmetric::RSA_4096;
     define_utypes_with!(u32);
 
     type PRIME = U4096;
-    type RSA = RSA_4096;
-    const NUM_STR: &str = "DF5EE9D60161F39444CE204C5825BC56B3110B774A66B5CCB188E405C38AF82372C4B497B2A8044E6BCCD06226F7C406CF0CA06950A2544693C6286D8CA7855B3479E3C9E99F4B7F434E7DD2BF457C81C07D183F63C546237393B0ABD5055026B7F5AE974E9965FC5B7F3F7F0DA1DB29387232178DF14E6A4D1521DF8241B1C2EEA56A060686DF0C60C326F956EC6C0DFAD1F7DA926253EAC05D992412BF6B69C123385092F95EF9A67FF2E45C744FA28197438E0BF7E9979EF52E277C60A615CEF051B35DBE01EC6A71E47798FDED006226FC8F78C3A88D20A00406D1C062D10D94D475A639B32A6DA53348FC84E9B5E150E01D4F7EB1D8B035575CE56799C5";
-
     let mut thread = Vec::<fn()>::new();
     for _ in 0..50
     {
         thread.push(||{
             let mut prng = Random::new();
             let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint(7);
-            let base = PRIME::from_str_radix(NUM_STR, 16).unwrap();
+            println!("{:X}\n{:X}", prime1, prime2);
+        });
+    }
 
-            let rsa = RSA::new_with_primes(prime1.clone(), base.clone());
-            let message = rsa.get_modulus().shift_right(4096_usize >> 1);
-            let cipher = rsa.encrypt_biguint(&message);
-            let recover = rsa.decrypt_biguint(&cipher);
-            if recover == message
-                { println!("U2048 prime: prime1 is {:X}", prime1); }
-            else
-                { println!("U2048 prime: prime1 is Wrong Prime."); }
+    do_simultaneously(thread);
+}
 
-            let rsa = RSA::new_with_primes(prime2.clone(), base);
-            let message = rsa.get_modulus().shift_right(2048_usize >> 1);
-            let cipher = rsa.encrypt_biguint(&message);
-            let recover = rsa.decrypt_biguint(&cipher);
-            if recover == message
-                { println!("U2048 prime: prime2 is {:X}", prime2); }
-            else
-                { println!("U2048 prime: prime2 is Wrong Prime."); }
+fn find_u4096_primes()
+{
+    use cryptocol::define_utypes_with;
+    use cryptocol::random::Random;
+    define_utypes_with!(u32);
+
+    type PRIME = U8192;
+    let mut thread = Vec::<fn()>::new();
+    for _ in 0..8
+    {
+        thread.push(||{
+            let mut prng = Random::new();
+            let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint(7);
+            println!("{:X}\n{:X}", prime1, prime2);
         });
     }
 
