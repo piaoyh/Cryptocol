@@ -7818,7 +7818,7 @@ fn find_u4096_primes()
 
     type PRIME = U8192;
     let mut thread = Vec::<fn()>::new();
-    for _ in 0..8
+    for _ in 0..7
     {
         thread.push(||{
             let mut prng = Random::new();

@@ -16,15 +16,17 @@
 
 pub fn main()
 {
-    // rsa_encrypt_string();
-    // rsa_decrypt();
-    // rsa_decrypt_into_vec();
-    // rsa_decrypt_into_array();
-    // rsa_decrypt_into_string();
-    // rsa_decrypt_vec();
-    // rsa_decrypt_vec_into_vec();
-    // rsa_decrypt_vec_into_array();
-    // rsa_decrypt_vec_into_string();
+    rsa_encrypt_string();
+    rsa_encrypt_string_into_vec();
+    rsa_encrypt_string_into_array();
+    rsa_decrypt();
+    rsa_decrypt_into_vec();
+    rsa_decrypt_into_array();
+    rsa_decrypt_into_string();
+    rsa_decrypt_vec();
+    rsa_decrypt_vec_into_vec();
+    rsa_decrypt_vec_into_array();
+    rsa_decrypt_vec_into_string();
     rsa_decrypt_array();
     rsa_decrypt_array_into_vec();
     rsa_decrypt_array_into_array();
@@ -63,6 +65,72 @@ fn rsa_encrypt_string()
 
     let mut recovered = String::new();
     rsa.decrypt_into_string(cipher.as_ptr(), &mut recovered);
+    println!("Recovered =\t {}", recovered);
+    assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    assert_eq!(recovered, message);
+    println!("-------------------------------");
+}
+
+fn rsa_encrypt_string_into_vec()
+{
+    println!("rsa_encrypt_string_into_vec");
+    use cryptocol::asymmetric::PKCS1V15;
+    
+    // Example for RSA_1024
+    use cryptocol::asymmetric::RSA_1024;
+    use cryptocol::define_utypes_with;
+    define_utypes_with!(u32);
+
+    let prime1 = U512::from_str_radix("C22E75B2ECE32673042DA138C285720DEE2EAEF521D08E1E3FD3BC50F7D5B8CCB1C2B7FD7A8B9B8A233139B27CC94D7444E84E5F08C92E02DE01FC426E8B0EDF", 16).unwrap();
+    let prime2 = U512::from_str_radix("EA0752E2BB207AFEF136323991B8BE152FDEB579C07A73999D0D6F20F3836301F2F880007D28356DACCE3E032EB8F64450EB97AAB4D912AFC90919C7E205A45B", 16).unwrap();
+    let mut rsa = RSA_1024::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
+    println!("Private Key: {}", rsa.get_private_key());
+    println!("Public Key: {}", rsa.get_public_key());
+    println!("Product value: {}", rsa.get_modulus());
+    let message = String::from("In the beginning God created the heavens and the earth.");
+    println!("M =\t{}", message);
+    let mut cipher = Vec::<u8>::new();
+    rsa.encrypt_string_into_vec(&message, &mut cipher);
+    print!("C =\t");
+    for c in cipher.clone()
+        { print!("{:02X} ", c); }
+    println!();
+
+    let mut recovered = String::new();
+    rsa.decrypt_vec_into_string(&cipher, &mut recovered);
+    println!("Recovered =\t {}", recovered);
+    assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
+    assert_eq!(recovered, message);
+    println!("-------------------------------");
+}
+
+fn rsa_encrypt_string_into_array()
+{
+    println!("rsa_encrypt_string_into_array");
+    use cryptocol::asymmetric::PKCS1V15;
+    
+    // Example for RSA_1024
+    use cryptocol::asymmetric::RSA_1024;
+    use cryptocol::define_utypes_with;
+    define_utypes_with!(u32);
+
+    let prime1 = U512::from_str_radix("EB40B5394E5BDA1BA07FDCAAE0A9B72A855B5C60144A45E0411B43CA7E1DD818E099A9B758DBBF71F5D91C62CD5C9B3A2083BAF67A34F5A3BBB2AADA4FFBCF05", 16).unwrap();
+    let prime2 = U512::from_str_radix("BB4A66D84474FCC903BF67EF90F455D1C5B1C93B5A9A80D819486C533871940DEB2AB38A9E43733B99219E479CC9C86F8951600ABD95CD305ABEC4325DDC062B", 16).unwrap();
+    let mut rsa = RSA_1024::new_with_primes(prime1.into_biguint(), prime2.into_biguint());
+    println!("Private Key: {}", rsa.get_private_key());
+    println!("Public Key: {}", rsa.get_public_key());
+    println!("Product value: {}", rsa.get_modulus());
+    let message = "In the beginning God created the heavens and the earth.".to_string();
+    println!("M =\t{}", message);
+    let mut cipher = [0u8; 128];
+    rsa.encrypt_string_into_array(&message, &mut cipher);
+    print!("C =\t");
+    for c in cipher.clone()
+        { print!("{:02X} ", c); }
+    println!();
+
+    let mut recovered = String::new();
+    rsa.decrypt_array_into_string(&cipher, &mut recovered);
     println!("Recovered =\t {}", recovered);
     assert_eq!(recovered, "In the beginning God created the heavens and the earth.");
     assert_eq!(recovered, message);
@@ -469,9 +537,9 @@ fn rsa_decrypt_vec_into_vec()
         println!("Public Key: {}", rsa.get_public_key());
         println!("Product value: {}", rsa.get_modulus());
         
-        let mut key = [0u8; 16];
+        let mut key = Vec::<u8>::new();
         for i in 0u8..16
-            { key[i as usize] = i; }
+            { key.push(i); }
         let mut iv = [0u8; 16];
         iv[0] = 13;
         iv[1] = 17;
@@ -482,9 +550,9 @@ fn rsa_decrypt_vec_into_vec()
         let mut cipher = Vec::new();
         aes.encrypt_str_into_vec(iv.clone(), message, &mut cipher);
         let mut encrypted_key = Vec::<u8>::new();
-        rsa.encrypt_array_into_vec(&key, &mut encrypted_key);
+        rsa.encrypt_vec_into_vec(&key, &mut encrypted_key);
         let mut encrypted_iv= Vec::<u8>::new();
-        rsa.encrypt_array_into_vec(&iv, &mut encrypted_iv);
+        rsa.encrypt_vec_into_vec(&iv.to_vec(), &mut encrypted_iv);
         (encrypted_key, encrypted_iv, cipher)
     }
 
@@ -508,14 +576,12 @@ fn rsa_decrypt_vec_into_vec()
         println!();
         let mut iv = vec![0u8; 16];
         rsa.decrypt_vec_into_vec(&encrypted_iv, &mut iv);
+        let iv: [u8; 16] = iv.try_into().expect("Not fit to the size of array");
         print!("iv = ");
         for i in 0_usize..16
             { print!("{:X}", iv[i]); }
         println!();
-        let mut iv_ = [0u8; 16];
-        for i in 0_usize..16
-            { iv_[i] = iv[i]; }
-        let iv = unsafe { SharedArrays::<u32, 4, u8, 16>::from_src(&iv_).des };
+        let iv = unsafe { SharedArrays::<u32, 4, u8, 16>::from_src(&iv).des };
         let mut aes = AES_128::new_with_key(& unsafe { *(key.as_ptr() as *const [u8; 16]) });
         let mut recovered = String::new();
         aes.decrypt_vec_into_string(iv, &cipher, &mut recovered);
