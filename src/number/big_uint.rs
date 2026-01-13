@@ -1,4 +1,4 @@
-// Copyright 2023, 2024, 2025 PARK Youngho.
+// Copyright 2023, 2024, 2025, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -21,7 +21,7 @@ use std::cmp::{ PartialEq, PartialOrd, Ordering };
 use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
                 Shl, ShlAssign, Shr, ShrAssign, RangeBounds };
-// use std::marker::{ Send, Sync };
+use std::marker::{ Send, Sync };
 
 use crate::number::{ SmallUInt, LongerUnion, SharedValues, SharedArrays, NumberErr };
 
@@ -35,7 +35,7 @@ pub trait TraitsBigUInt<T>: SmallUInt + Copy + Clone + Display + Debug + ToStrin
                         + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
                         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
                         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-                        + PartialEq + PartialOrd //+ Send + 'static
+                        + PartialEq + PartialOrd + Send + Sync + 'static
 {}
 
 impl<T> TraitsBigUInt<T> for T
@@ -46,7 +46,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
         + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd //+ Send + 'static
+        + PartialEq + PartialOrd + Send + Sync + 'static
 {}
 
 // unsafe impl<T> Send for T where T: Send {}

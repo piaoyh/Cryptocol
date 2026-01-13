@@ -12,16 +12,16 @@
 // #[allow(dead_code)]``
 pub fn main()
 {
-    // biguint_prime_quick_start();
-    // biguint_prime_gcd_uint();
-    // biguint_prime_gcd_assign_uint();
-    // biguint_prime_lcm_uint();
-    // biguint_prime_lcm_assign_uint();
-    // biguint_prime_gcd();
-    // biguint_prime_gcd_assign();
-    // biguint_prime_extended_gcd();
-    // biguint_prime_lcm();
-    // biguint_prime_lcm_assign();
+    biguint_prime_quick_start();
+    biguint_prime_gcd_uint();
+    biguint_prime_gcd_assign_uint();
+    biguint_prime_lcm_uint();
+    biguint_prime_lcm_assign_uint();
+    biguint_prime_gcd();
+    biguint_prime_gcd_assign();
+    biguint_prime_extended_gcd();
+    biguint_prime_lcm();
+    biguint_prime_lcm_assign();
     biguint_prime_is_prime_using_miller_rabin();
 }
 
@@ -1309,8 +1309,6 @@ fn biguint_prime_is_prime_using_miller_rabin()
     use cryptocol::define_utypes_with;
     use cryptocol::number::BigUInt_Prime;
     define_utypes_with!(u8);
-
-    use cryptocol::random::Random;
 
     // let biguint = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
     // println!("512-bit Random Prime Number = {}", biguint);

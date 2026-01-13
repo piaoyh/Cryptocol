@@ -48,9 +48,27 @@ where T: TraitsBigUInt<T>
         }
         x
     }
+
+    // Filter out composite numbers.
+    // If self is filtered out because it is a composite number,
+    // it returns true. Otherwise, it returns false
+    pub(crate) fn filter_out_composite_number(&self) -> bool
+    {
+        if self.is_zero_or_one() || self.is_even()
+            { return true; }
+
+        let a_list = [3_u8, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71];
+        let len = a_list.len();
+        for i in 0..len
+        {
+            if self.wrapping_rem_uint(a_list[i]).is_zero()
+                { return true; }
+        }
+        false
+    }
     
     /// Performs Millar Rabin method with a number less than `self`.
-    fn test_miller_rabin(&self, a: &Self) -> bool
+    pub(crate) fn test_miller_rabin(&self, a: &Self) -> bool
     {
         let self_minus_one = self.wrapping_sub_uint(1_u8);
         let mut d = self_minus_one.clone();
@@ -228,7 +246,7 @@ where T: TraitsBigUInt<T>
 
     fn is_prime_using_miller_rabin(&self, repetition: usize) -> bool
     {
-        if self.is_zero_or_one() || self.is_even()
+        if self.filter_out_composite_number()
             { return false; }
         
         if self.le_uint(u128::MAX)
@@ -237,16 +255,10 @@ where T: TraitsBigUInt<T>
             return small_self.is_prime_using_miller_rabin(repetition);
         }
 
-        let a_list = [2_u8, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173];
+        let a_list = [73_u16, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173];
         let len = a_list.len();
-        for i in 1..len
-        {
-            if self.wrapping_rem_uint(a_list[i]).is_zero()
-                { return false; }
-        }
-
         let common = if len < repetition {len} else {repetition};
-        for i in 20..(common + 20)
+        for i in 0..common
         {
             if !self.test_miller_rabin(&Self::from_uint(a_list[i]))
                 { return false; }

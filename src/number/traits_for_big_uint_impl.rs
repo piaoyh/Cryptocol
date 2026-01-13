@@ -16,7 +16,7 @@
 use std::str::FromStr;
 use std::convert::From;
 use std::mem::size_of_val;
-use std::fmt::{ Alignment, Error, Formatter, Display, Debug, Pointer,
+use std::fmt::{ Alignment, Error, Formatter, Display, Pointer,
                 Binary, Octal, LowerHex, UpperHex, LowerExp, UpperExp };
 use std::cmp::{ PartialEq, PartialOrd, Ordering };
 use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
@@ -24,7 +24,7 @@ use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, 
                 Add, AddAssign, Sub, SubAssign, Mul, MulAssign,
                 Div, DivAssign, Rem, RemAssign };
 
-use crate::number::{ SmallUInt, TraitsBigUInt, BigUInt, NumberErr };
+use crate::number::{ TraitsBigUInt, BigUInt, NumberErr };
 
 
 macro_rules! calc_assign_to_calc
@@ -2441,14 +2441,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> DivAssign for BigUInt<T, N>
-where T: SmallUInt + Copy + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 {
     // fn div_assign(&mut self, rhs: Self)
     /// Divides `self` by `rhs`, and assigns the quotient to `self` back.
@@ -3316,14 +3309,7 @@ macro_rules! shl_for_BigUInt_impl {
         /// }
         /// ```
         impl<T, const N: usize> Shl<$f> for BigUInt<T, N>
-        where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-                + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-                + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-                + Rem<Output=T> + RemAssign
-                + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-                + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-                + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-                + PartialEq + PartialOrd
+        where T: TraitsBigUInt<T>
         {
             type Output = Self;
 
@@ -3480,14 +3466,7 @@ macro_rules! shlassign_i_for_BigUInt_impl {
         /// }
         /// ```
         impl<T, const N: usize> ShlAssign<$f> for BigUInt<T, N>
-        where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-                + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-                + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-                + Rem<Output=T> + RemAssign
-                + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-                + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-                + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-                + PartialEq + PartialOrd
+        where T: TraitsBigUInt<T>
         {
             // fn shl_assign(&mut self, rhs: $f)
             /// shifts the field `number: [T;N]` to the left by `n`,
@@ -3668,14 +3647,7 @@ macro_rules! shlassign_u_for_BigUInt_impl {
         /// }
         /// ```
         impl<T, const N: usize> ShlAssign<$f> for BigUInt<T, N>
-        where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-                + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-                + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-                + Rem<Output=T> + RemAssign
-                + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-                + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-                + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-                + PartialEq + PartialOrd
+        where T: TraitsBigUInt<T>
         {
             // fn shl_assign(&mut self, rhs: $f)
             /// shifts the field `number: [T;N]` to the left by `n`,
@@ -3870,14 +3842,7 @@ macro_rules! shr_for_BigUInt_impl {
         /// }
         /// ```
         impl<T, const N: usize> Shr<$f> for BigUInt<T, N>
-        where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-                + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-                + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-                + Rem<Output=T> + RemAssign
-                + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-                + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-                + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-                + PartialEq + PartialOrd
+        where T: TraitsBigUInt<T>
         {
             type Output = Self;
 
@@ -4034,14 +3999,7 @@ macro_rules! shrassign_i_for_BigUInt_impl {
         /// }
         /// ```
         impl<T, const N: usize> ShrAssign<$f> for BigUInt<T, N>
-        where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-                + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-                + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-                + Rem<Output=T> + RemAssign
-                + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-                + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-                + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-                + PartialEq + PartialOrd
+        where T: TraitsBigUInt<T>
         {
             // fn shr_assign(&mut self, rhs: $f)
             /// shifts the field `number: [T;N]` to the right by `n`,
@@ -4223,14 +4181,7 @@ macro_rules! shrassign_u_for_BigUInt_impl {
         /// }
         /// ```
         impl<T, const N: usize> ShrAssign<$f> for BigUInt<T, N>
-        where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-                + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-                + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-                + Rem<Output=T> + RemAssign
-                + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-                + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-                + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-                + PartialEq + PartialOrd
+        where T: TraitsBigUInt<T>
         {
             // fn shr_assign(&mut self, rhs: $f)
             /// shifts the field `number: [T;N]` to the right by `n`,
@@ -5088,14 +5039,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> BitXorAssign for BigUInt<T, N>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString 
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 {
     // fn bitxor_assign(&mut self, rhs: Self)
     /// Performs the bitwise XOR (^) operation,
@@ -5277,15 +5221,7 @@ where T: TraitsBigUInt<T>
 ///   for types that do not have a full equivalence relation.
 /// For more information, [read more](https://doc.rust-lang.org/std/cmp/trait.PartialEq.html#).
 impl<T, U, const N: usize> PartialEq<U> for BigUInt<T, N>
-where T: TraitsBigUInt<T>,
-    U: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-        + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-        + Rem<Output=U> + RemAssign
-        + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-        + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-        + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>, U: TraitsBigUInt<U>
 {
     // fn eq(&self, other: &U) -> bool
     /// Compares `self` and `other` to find whether `self` is equal to `other`.
@@ -5376,15 +5312,7 @@ where T: TraitsBigUInt<T>
 
 
 impl<T, U, const N: usize> PartialOrd<U> for BigUInt<T, N>
-where T: TraitsBigUInt<T>,
-    U: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-        + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-        + Rem<Output=U> + RemAssign
-        + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-        + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-        + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>, U: TraitsBigUInt<U>
 {
     // fn partial_cmp(&self, other: &U) -> Option<Ordering>
     /// # __self < other -> bool__
@@ -5837,15 +5765,7 @@ where T: TraitsBigUInt<T>
 
 
 impl<T, U, const N: usize> From<U> for BigUInt<T, N>
-where T: TraitsBigUInt<T>,
-    U: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
-        + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
-        + Rem<Output=U> + RemAssign
-        + Shl<Output=U> + ShlAssign + Shr<Output=U> + ShrAssign
-        + BitAnd<Output=U> + BitAndAssign + BitOr<Output=U> + BitOrAssign
-        + BitXor<Output=U> + BitXorAssign + Not<Output=U>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>, U: TraitsBigUInt<U>
 {
     // fn from(val: U) -> Self
     /// Constructs a new `BigUInt<T, N>`-type object from a primitive unsigned

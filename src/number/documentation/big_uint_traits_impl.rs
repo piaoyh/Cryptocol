@@ -1498,14 +1498,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> DivAssign for BigUInt<T, N>
-where T: SmallUInt + Copy + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 {
     // fn div_assign(&mut self, rhs: Self)
     /// Divides `self` by `rhs`, and assigns the quotient to `self` back.
@@ -3166,14 +3159,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> BitXorAssign for BigUInt<T, N>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString 
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 {
     // fn bitxor_assign(&mut self, rhs: Self)
     /// Performs the bitwise XOR (^) operation,
@@ -4157,14 +4143,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> DivAssign<&Self> for BigUInt<T, N>
-where T: SmallUInt + Copy + Copy + Clone + Display + Debug + ToString
-        + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-        + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-        + Rem<Output=T> + RemAssign
-        + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + PartialEq + PartialOrd
+where T: TraitsBigUInt<T>
 {
     #[inline]
     fn div_assign(&mut self, rhs: &Self)
