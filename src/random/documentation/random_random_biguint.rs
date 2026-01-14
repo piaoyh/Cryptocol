@@ -18,7 +18,6 @@
 use crate::number::{ TraitsBigUInt, BigUInt };
 use crate::random::Random_Engine;
 
-
 /// Random.rs may be too big
 /// because of documentation and plenty of examples.
 /// So, in order to provide documentation without `docs.rs`'s failing
@@ -6334,7 +6333,7 @@ impl Random_Generic
     /// # Argument
     /// The argument `repetition` defines how many times it tests whether the
     /// generated random number is prime. Usually, `repetition` is given to be
-    /// 5 to have 99.9% accuracy.
+    /// `5` for 99.9% accuracy or `7` for 99.99% accuracy.
     /// 
     /// # Output
     /// The random prime number that this method random_prime_Miller_Rabin()
@@ -6353,12 +6352,6 @@ impl Random_Generic
     ///   it is 99.9% that the number is a prime number.
     /// - The random prime numbers that may or may not be cryptographically
     ///   secure depending on what pseudo-random number generator is used.
-    /// 
-    /// # Cryptographical Security
-    /// - If you use either `Random_*` or `Any_*`, it is considered to be
-    ///   cryptographically secure.
-    /// - If you use `Slapdash_*`, it is considered that it may be
-    ///   cryptographically insecure.
     /// 
     /// # Counterpart Methods
     /// - If you want to use a normal random number, you are highly recommended
@@ -6622,14 +6615,14 @@ impl Random_Generic
     /// # Argument
     /// The argument `repetition` defines how many times it tests whether the
     /// generated random number is prime. Usually, `repetition` is given to be
-    /// 5 to have 99.9% accuracy.
+    /// `5` for 99.9% accuracy or `7` for 99.99% accuracy.
     /// 
     /// # Output
-    /// The random prime number that this method random_prime_Miller_Rabin()
-    /// returns is a random prime number whose range is from
+    /// The random prime numbers which ranges from
     /// BigUInt::halfmax() up to BigUInt::max() inclusively.
     /// 
     /// # Features
+    /// - This method uses concurrency.
     /// - This method generates a random number, and then simply sets its MSB
     ///   (Most Significant Bit) to be one, and then checks whether or not the
     ///   generated random number is prime number, and then it repeats until it
@@ -6642,14 +6635,6 @@ impl Random_Generic
     ///   tested number is not a prime number is 1/16 (= 1/4 * 1/4). Therefore,
     ///   if you test any number 5 times and they all result in a prime number,
     ///   it is 99.9% that the number is a prime number.
-    /// - The random prime numbers that may or may not be cryptographically
-    ///   secure depending on what pseudo-random number generator is used.
-    /// 
-    /// # Cryptographical Security
-    /// - If you use either `Random_*` or `Any_*`, it is considered to be
-    ///   cryptographically secure.
-    /// - If you use `Slapdash_*`, it is considered that it may be
-    ///   cryptographically insecure.
     /// 
     /// # Counterpart Methods
     /// - If you want to use a normal random number, you are highly recommended
@@ -6901,6 +6886,293 @@ impl Random_Generic
     /// println!("Slapdash prime number: {}", prime);
     /// ```
     pub fn random_prime_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
+    where T: TraitsBigUInt<T>
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn random_prime_with_msb_set_using_miller_rabin_biguint_sequentially<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
+    /// Constucts a new `BigUInt<T, N>`-type object which represents a random
+    /// prime number of full-size of BigUInt<T, N>.
+    /// 
+    /// # Argument
+    /// The argument `repetition` defines how many times it tests whether the
+    /// generated random number is prime. Usually, `repetition` is given to be
+    /// `5` for 99.9% accuracy or `7` for 99.99% accuracy.
+    /// 
+    /// # Output
+    /// The random prime numbers which ranges from
+    /// BigUInt::halfmax() up to BigUInt::max() inclusively.
+    /// 
+    /// # Features
+    /// - This method does not use concurrency.
+    /// - This method generates a random number, and then simply sets its MSB
+    ///   (Most Significant Bit) to be one, and then checks whether or not the
+    ///   generated random number is prime number, and then it repeats until it
+    ///   will generate a prime number.
+    /// - It uses [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
+    /// - If this test results in composite number, the tested number is surely
+    ///   a composite number. If this test results in prime number, the
+    ///   probability that the tested number is not a prime number is 1/4. So,
+    ///   if the test results in prime number twice, the probability that the
+    ///   tested number is not a prime number is 1/16 (= 1/4 * 1/4). Therefore,
+    ///   if you test any number 5 times and they all result in a prime number,
+    ///   it is 99.9% that the number is a prime number.
+    /// 
+    /// # Example 1 for Random
+    /// ```
+    /// use cryptocol::random::Random;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut rand = Random::new();
+    /// let prime: U256 = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 2 for Any
+    /// ```
+    /// use cryptocol::random::Any;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any::new();
+    /// let prime: U384 = any.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 3 for Random_BIG_KECCAK_1024
+    /// ```
+    /// use cryptocol::random::Random_BIG_KECCAK_1024;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut rand = Random_BIG_KECCAK_1024::new();
+    /// let prime: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 4 for Random_SHA3_512
+    /// ```
+    /// use cryptocol::random::Random_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut rand = Random_SHA3_512::new();
+    /// let prime: U768 = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 5 for Random_SHA2_512
+    /// ```
+    /// use cryptocol::random::Random_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut rand = Random_SHA2_512::new();
+    /// let prime: U1024 = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 6 for Any_SHAKE_256
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHAKE_256::new();
+    /// let prime: U2048 = any.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 7 for Any_SHAKE_128
+    /// ```
+    /// use cryptocol::random::Any_SHAKE_128;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHAKE_128::new();
+    /// let prime: U3072 = any.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 8 for Any_SHA3_512
+    /// ```
+    /// use cryptocol::random::Any_SHA3_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHA3_512::new();
+    /// let prime: U4096 = any.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 9 for Any_SHA3_256
+    /// ```
+    /// use cryptocol::random::Any_SHA3_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHA3_256::new();
+    /// let prime: U5120 = any.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 10 for Any_SHA2_512
+    /// ```
+    /// use cryptocol::random::Any_SHA2_512;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHA2_512::new();
+    /// let prime: U6144 = any.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 11 for Any_SHA2_256
+    /// ```
+    /// use cryptocol::random::Any_SHA2_256;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_SHA2_256::new();
+    /// let prime: U7168 = any.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 12 for Slapdash_SHA1
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA1;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_SHA1::new();
+    /// let prime: U8192 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 13 for Slapdash_SHA0
+    /// ```
+    /// use cryptocol::random::Slapdash_SHA0;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_SHA0::new();
+    /// let prime: U16384 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 14 for Slapdash_MD5
+    /// ```
+    /// use cryptocol::random::Slapdash_MD5;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_MD5::new();
+    /// let prime: U256 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 15 for Slapdash_MD4
+    /// ```
+    /// use cryptocol::random::Slapdash_MD4;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_MD4::new();
+    /// let prime: U384 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 16 for Random_Rijndael
+    /// ```
+    /// use cryptocol::random::Random_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut rand = Random_Rijndael::new();
+    /// let prime: U512 = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 17 for Any_Rijndael
+    /// ```
+    /// use cryptocol::random::Any_Rijndael;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut any = Any_Rijndael::new();
+    /// let prime: U768 = any.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Any prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 18 for Slapdash_DES
+    /// ```
+    /// use cryptocol::random::Slapdash_DES;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_DES::new();
+    /// let prime: U1024 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 19 for Slapdash_Num_C
+    /// ```
+    /// use cryptocol::random::Slapdash_Num_C;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash_Num_C::new();
+    /// let prime: U2048 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    /// 
+    /// # Example 20 for Slapdash
+    /// ```
+    /// use cryptocol::random::Slapdash;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut slapdash = Slapdash::new();
+    /// let prime: U3072 = slapdash.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Slapdash prime number: {}", prime);
+    /// ```
+    pub fn random_prime_with_msb_set_using_miller_rabin_biguint_sequentially<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
+    where T: TraitsBigUInt<T>
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
+    // pub fn random_primes_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize, how_many: usize) -> Vec<BigUInt<T, N>>
+    /// Returns a collection of new `BigUInt<T, N>`-type objects which represent
+    /// random prime numbers of full-size of BigUInt<T, N>.
+    /// 
+    /// # Argument
+    /// - `repetition`: determines how many times it tests whether the
+    ///   generated random number is prime. Usually, `repetition` is given
+    ///   to be `5` for 99.9% accuracy or `7` for 99.99% accuracy.
+    /// - `how_many`: determines how many prime numbers this method returns.
+    /// 
+    /// # Output
+    /// The random prime number which ranges from
+    /// BigUInt::halfmax() up to BigUInt::max() inclusively.
+    /// 
+    /// # Features
+    /// - This method generates several threads, each of which checks whether or
+    ///   not the given random number is prime number, and then it repeats until
+    ///   it will find `how_many` prime numbers.
+    /// - It uses [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
+    /// - If this test results in composite number, the tested number is surely
+    ///   a composite number. If this test results in prime number, the
+    ///   probability that the tested number is not a prime number is 1/4. So,
+    ///   if the test results in prime number twice, the probability that the
+    ///   tested number is not a prime number is 1/16 (= 1/4 * 1/4). Therefore,
+    ///   if you test any number 5 times and they all result in a prime number,
+    ///   it is 99.9% that the number is a prime number.
+    /// - The random prime numbers that may or may not be cryptographically
+    ///   secure depending on what pseudo-random number generator is used.
+    pub fn random_primes_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize, how_many: usize) -> Vec<BigUInt<T, N>>
     where T: TraitsBigUInt<T>
     {
         unimplemented!(); // Dummy code for documentation

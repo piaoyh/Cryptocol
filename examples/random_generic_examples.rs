@@ -27,7 +27,8 @@ pub fn main()
     // find_u1024_primes();
     // find_u2048_primes();
     // find_u4096_primes();
-    random_test();
+    // random_concurrency_test_for_random_primes_with_msb_set_using_miller_rabin_biguint();
+    random_concurrency_test_for_random_prime_with_msb_set_using_miller_rabin_biguint();
 }
 
 fn do_simultaneously(jobs: Vec<fn()>)
@@ -7937,13 +7938,13 @@ fn finding()
 }
 */
 
-fn random_test()
+fn random_concurrency_test_for_random_primes_with_msb_set_using_miller_rabin_biguint()
 {
-    println!("random_test()");
+    println!("random_concurrency_test_for_random_primes_with_msb_set_using_miller_rabin_biguint()");
     use std::time::SystemTime;
     use cryptocol::random::Random;
     use cryptocol::define_utypes_with;
-    define_utypes_with!(u8);
+    define_utypes_with!(u64);
 
     type PRIME = U1024;
     let repetition = 7_usize;
@@ -7959,6 +7960,7 @@ fn random_test()
     {
         println!("Random Prime Number = {}", v[i]);
     }
+    println!("-----");
 
     let mut v = Vec::<PRIME>::new();
     let old = SystemTime::now();
@@ -7974,59 +7976,90 @@ fn random_test()
         println!("Random Prime Number = {}", v[i]);
     }
     println!("Concurrent version is {} times faster than Seqential version", elapsed_s as f32 / elapsed_c as f32);
-    return;
+    println!("---------------------------");
+}
 
+fn random_concurrency_test_for_random_prime_with_msb_set_using_miller_rabin_biguint()
+{
+    println!("random_concurrency_test_for_random_prime_with_msb_set_using_miller_rabin_biguint()");
+    use std::time::SystemTime;
+    use cryptocol::random::Random;
+    use cryptocol::define_utypes_with;
+    define_utypes_with!(u64);
 
+    type PRIME = U1024;
+    let repetition = 7_usize;
+    let mut rand = Random::new();
+    let mut elapsed_c = 0;
+    let mut elapsed_s = 0;
 
     // concurrent case
     let old = SystemTime::now();
     let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint(repetition);
     let elapsed = SystemTime::now().duration_since(old);
-    println!("Concurrent Elapsed time: {}", elapsed.unwrap().as_micros());
+    let elapsed = elapsed.unwrap().as_micros();
+    println!("Concurrent Elapsed time: {}", elapsed);
     println!("Random Prime Number = {}", a_biguint);
+    elapsed_c += elapsed;
 
     let old = SystemTime::now();
     let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint(repetition);
     let elapsed = SystemTime::now().duration_since(old);
-    println!("Concurrent Elapsed time: {}", elapsed.unwrap().as_micros());
+    let elapsed = elapsed.unwrap().as_micros();
+    println!("Concurrent Elapsed time: {}", elapsed);
     println!("Random Prime Number = {}", a_biguint);
+    elapsed_c += elapsed;
 
     let old = SystemTime::now();
     let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint(repetition);
     let elapsed = SystemTime::now().duration_since(old);
-    println!("Concurrent Elapsed time: {}", elapsed.unwrap().as_micros());
+    let elapsed = elapsed.unwrap().as_micros();
+    println!("Concurrent Elapsed time: {}", elapsed);
     println!("Random Prime Number = {}", a_biguint);
+    elapsed_c += elapsed;
 
     let old = SystemTime::now();
     let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint(repetition);
     let elapsed = SystemTime::now().duration_since(old);
-    println!("Concurrent Elapsed time: {}", elapsed.unwrap().as_micros());
+    let elapsed = elapsed.unwrap().as_micros();
+    println!("Concurrent Elapsed time: {}", elapsed);
     println!("Random Prime Number = {}", a_biguint);
+    elapsed_c += elapsed;
     println!("------------------------");
     
     // sequential case
     let old = SystemTime::now();
     let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(repetition);
     let elapsed = SystemTime::now().duration_since(old);
-    println!("Sequential Elapsed time: {}", elapsed.unwrap().as_micros());
+    let elapsed = elapsed.unwrap().as_micros();
+    println!("Sequential Elapsed time: {}", elapsed);
     println!("Random Prime Number = {}", a_biguint);
+    elapsed_s += elapsed;
 
     let old = SystemTime::now();
     let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(repetition);
     let elapsed = SystemTime::now().duration_since(old);
-    println!("Sequential Elapsed time: {}", elapsed.unwrap().as_micros());
+    let elapsed = elapsed.unwrap().as_micros();
+    println!("Sequential Elapsed time: {}", elapsed);
     println!("Random Prime Number = {}", a_biguint);
+    elapsed_s += elapsed;
 
     let old = SystemTime::now();
     let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(repetition);
     let elapsed = SystemTime::now().duration_since(old);
-    println!("Sequential Elapsed time: {}", elapsed.unwrap().as_micros());
+    let elapsed = elapsed.unwrap().as_micros();
+    println!("Sequential Elapsed time: {}", elapsed);
     println!("Random Prime Number = {}", a_biguint);
+    elapsed_s += elapsed;
 
     let old = SystemTime::now();
     let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(repetition);
     let elapsed = SystemTime::now().duration_since(old);
-    println!("Sequential Elapsed time: {}", elapsed.unwrap().as_micros());
+    let elapsed = elapsed.unwrap().as_micros();
+    println!("Sequential Elapsed time: {}", elapsed);
     println!("Random Prime Number = {}", a_biguint);
+    elapsed_s += elapsed;
+
+    println!("Concurrent version is {} times faster than Seqential version", elapsed_s as f32 / elapsed_c as f32);
     println!("---------------------------");
 }

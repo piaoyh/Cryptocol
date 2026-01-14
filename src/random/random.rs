@@ -12,14 +12,12 @@
 // #![allow(rustdoc::missing_doc_code_examples)]
 
 
-use std::marker::{ Send, Sync };
 use std::ptr::copy_nonoverlapping;
 use std::time::{ SystemTime, UNIX_EPOCH };
 use std::collections::hash_map::RandomState;
 use std::collections::VecDeque;
 use std::hash::{ BuildHasher, Hasher };
 use std::sync::atomic::{ AtomicBool, Ordering };
-use std::sync::mpsc::channel;
 use std::sync::Mutex;
 use std::thread::{ available_parallelism, scope };
 
@@ -3022,12 +3020,6 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// - The random prime numbers that may or may not be cryptographically
     ///   secure depending on what pseudo-random number generator is used.
     /// 
-    /// # Cryptographical Security
-    /// - If you use either `Random_*` or `Any_*`, it is considered to be
-    ///   cryptographically secure.
-    /// - If you use `Slapdash_*`, it is considered that it may be
-    ///   cryptographically insecure.
-    /// 
     /// # Counterpart Methods
     /// - If you want to use a normal random number, you are highly recommended
     ///   to use the method
@@ -3080,16 +3072,29 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         res
     }
 
-    pub(crate) fn random_prime_candidate_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
+    pub(crate) fn random_prime_candidate_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
     where T: TraitsBigUInt<T>
     {
-        // The probability that an arbitrary number is a prime number
-        // is 1 / (L * ln(2)) where L is the number of bits
-        // and ln is natural logarithm. ln(2) is about 0.6931.
         let mut candidate = self.random_odd_with_msb_set_biguint::<T, N>();
         while candidate.filter_out_composite_number()
         {
             candidate = self.random_odd_with_msb_set_biguint::<T, N>();
+        }
+        candidate
+    }
+
+    pub(crate) fn random_prime_candidate_with_half_length_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
+    where T: TraitsBigUInt<T>
+    {
+        let half = T::BITS * N as u32;
+        let mut candidate = self.random_odd_with_msb_set_biguint::<T, N>();
+        candidate.shift_right_assign(half);
+        candidate.set_lsb();
+        while candidate.filter_out_composite_number()
+        {
+            candidate = self.random_odd_with_msb_set_biguint::<T, N>();
+            candidate.shift_right_assign(half);
+            candidate.set_lsb();
         }
         candidate
     }
@@ -3104,11 +3109,11 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// `5` for 99.9% accuracy or `7` for 99.99% accuracy.
     /// 
     /// # Output
-    /// The tuple of the two random prime numbers that this method returns is
-    /// the tuple of the two random prime number each of which ranges from
+    /// The random prime numbers which ranges from
     /// BigUInt::halfmax() up to BigUInt::max() inclusively.
     /// 
     /// # Features
+    /// - This method uses concurrency.
     /// - This method generates a random number, and then simply sets its MSB
     ///   (Most Significant Bit) to be one, and then checks whether or not the
     ///   generated random number is prime number, and then it repeats until it
@@ -3121,14 +3126,6 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     ///   tested number is not a prime number is 1/16 (= 1/4 * 1/4). Therefore,
     ///   if you test any number 5 times and they all result in a prime number,
     ///   it is 99.9% that the number is a prime number.
-    /// - The random prime numbers that may or may not be cryptographically
-    ///   secure depending on what pseudo-random number generator is used.
-    /// 
-    /// # Cryptographical Security
-    /// - If you use either `Random_*` or `Any_*`, it is considered to be
-    ///   cryptographically secure.
-    /// - If you use `Slapdash_*`, it is considered that it may be
-    ///   cryptographically insecure.
     /// 
     /// # Counterpart Methods
     /// - If you want to use a normal random number, you are highly recommended
@@ -3173,142 +3170,54 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_biguint)
+    #[inline]
     pub fn random_prime_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
     where T: TraitsBigUInt<T>
     {
-        let mut number_of_threads = match available_parallelism()
-        {
-            Ok(non_zero) => non_zero.get() as usize,
-            Err(_) => 1_usize,
-        };
-
-        if number_of_threads <= 2
-        {
-            return self.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially::<T, N>(repetition)
-        }
-
-        // The probability that an arbitrary number is a prime number
-        // is 1 / (L * ln(2)) where L is the number of bits
-        // and ln is natural logarithm. ln(2) is about 0.6931.
-        let needs = T::size_in_bits() * N as u32 * 7 / 10 * 11 / 1000;
-        let needs = if needs < 1 {2} else {needs+1};
-        let a_list = [73_usize, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173];
-        let (tx, rx) = channel();
-        let running = AtomicBool::new(true);
-        let len = a_list.len();
-        number_of_threads -= 1;
-        if (needs as usize) < number_of_threads
-            { number_of_threads = needs as usize; }
-
-        let prime;
-        loop
-        {
-            let mut candidates = VecDeque::new();
-            for _ in 0..needs
-            {
-                let candidate = self.random_prime_candidate_with_msb_set_using_miller_rabin_biguint::<T, N>();
-                candidates.push_back((candidate, 0_usize));
-            }
-            let prime_like = Mutex::new(candidates);
-            scope(|s| {
-                for _ in 0..number_of_threads
-                {
-                    s.spawn(|| {
-                        let rand = Random::new();
-                        loop
-                        {
-                            if !running.load(Ordering::Relaxed)
-                                { break; }
-                            let mut prime = { prime_like.lock().unwrap().pop_front().unwrap() };
-                            if repetition <= len
-                            {
-                                if prime.1 < repetition - 1
-                                {
-                                    if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
-                                    {
-                                        prime.1 += 1;
-                                        { prime_like.lock().unwrap().push_back(prime); }
-                                    }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                                else    // prime.1 >= repetition - 1
-                                {
-                                    if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
-                                        { let _ = tx.send(prime.0); }
-                                    running.store(false, Ordering::Relaxed);
-                                    break;
-                                }
-                            }
-                            else    // if repetition > len
-                            {
-                                if prime.1 < len
-                                {
-                                    if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
-                                    {
-                                        prime.1 += 1;
-                                        { prime_like.lock().unwrap().push_back(prime); }
-                                    }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                                else if prime.1 == len
-                                {
-                                    prime.1 = a_list[len-1] + 2;
-                                    if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(prime.1))
-                                    {
-                                        prime.1 += 2;
-                                        { prime_like.lock().unwrap().push_back(prime); }
-                                    }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                                else    // if prime.1 > len
-                                {
-                                    if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(prime.1))
-                                    {
-                                        if prime.1 >= a_list[len-1] + ((repetition - len) << 1)
-                                        {
-                                            let _ = tx.send(prime.0);
-                                            running.store(false, Ordering::Relaxed);
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            prime.1 += 2;
-                                            { prime_like.lock().unwrap().push_back(prime); }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-            match rx.recv()
-            {
-                Ok(res) => {
-                    drop(tx);
-                    running.store(false, Ordering::Relaxed);
-                    prime = res;
-                    break;
-                },
-                Err(_) => { continue; }
-            }
-        }
-        prime
+        self.random_primes_with_msb_set_using_miller_rabin_biguint(repetition, 1).pop().unwrap()
     }
 
+    // pub fn random_prime_with_msb_set_using_miller_rabin_biguint_sequentially<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
+    /// Constucts a new `BigUInt<T, N>`-type object which represents a random
+    /// prime number of full-size of BigUInt<T, N>.
+    /// 
+    /// # Argument
+    /// The argument `repetition` defines how many times it tests whether the
+    /// generated random number is prime. Usually, `repetition` is given to be
+    /// `5` for 99.9% accuracy or `7` for 99.99% accuracy.
+    /// 
+    /// # Output
+    /// The random prime numbers which ranges from
+    /// BigUInt::halfmax() up to BigUInt::max() inclusively.
+    /// 
+    /// # Features
+    /// - This method does not use concurrency.
+    /// - This method generates a random number, and then simply sets its MSB
+    ///   (Most Significant Bit) to be one, and then checks whether or not the
+    ///   generated random number is prime number, and then it repeats until it
+    ///   will generate a prime number.
+    /// - It uses [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
+    /// - If this test results in composite number, the tested number is surely
+    ///   a composite number. If this test results in prime number, the
+    ///   probability that the tested number is not a prime number is 1/4. So,
+    ///   if the test results in prime number twice, the probability that the
+    ///   tested number is not a prime number is 1/16 (= 1/4 * 1/4). Therefore,
+    ///   if you test any number 5 times and they all result in a prime number,
+    ///   it is 99.9% that the number is a prime number.
+    /// 
+    /// # Example 1 for Random
+    /// ```
+    /// use cryptocol::random::Random;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut rand = Random::new();
+    /// let prime: U256 = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
+    /// println!("Random prime number: {}", prime);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially)
     pub fn random_prime_with_msb_set_using_miller_rabin_biguint_sequentially<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
     where T: TraitsBigUInt<T>
     {
@@ -3318,6 +3227,34 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         res
     }
 
+    // pub fn random_primes_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize, how_many: usize) -> Vec<BigUInt<T, N>>
+    /// Returns a collection of new `BigUInt<T, N>`-type objects which represent
+    /// random prime numbers of full-size of BigUInt<T, N>.
+    /// 
+    /// # Argument
+    /// - `repetition`: determines how many times it tests whether the
+    ///   generated random number is prime. Usually, `repetition` is given
+    ///   to be `5` for 99.9% accuracy or `7` for 99.99% accuracy.
+    /// - `how_many`: determines how many prime numbers this method returns.
+    /// 
+    /// # Output
+    /// The random prime number which ranges from
+    /// BigUInt::halfmax() up to BigUInt::max() inclusively.
+    /// 
+    /// # Features
+    /// - This method generates several threads, each of which checks whether or
+    ///   not the given random number is prime number, and then it repeats until
+    ///   it will find `how_many` prime numbers.
+    /// - It uses [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
+    /// - If this test results in composite number, the tested number is surely
+    ///   a composite number. If this test results in prime number, the
+    ///   probability that the tested number is not a prime number is 1/4. So,
+    ///   if the test results in prime number twice, the probability that the
+    ///   tested number is not a prime number is 1/16 (= 1/4 * 1/4). Therefore,
+    ///   if you test any number 5 times and they all result in a prime number,
+    ///   it is 99.9% that the number is a prime number.
+    /// - The random prime numbers that may or may not be cryptographically
+    ///   secure depending on what pseudo-random number generator is used.
     pub fn random_primes_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize, how_many: usize) -> Vec<BigUInt<T, N>>
     where T: TraitsBigUInt<T>
     {
@@ -3338,7 +3275,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         let mut candidates = VecDeque::new();
         for _ in 0..number_of_threads
         {
-            let candidate = self.random_prime_candidate_with_msb_set_using_miller_rabin_biguint::<T, N>();
+            let candidate = self.random_prime_candidate_with_msb_set_biguint::<T, N>();
             candidates.push_back((candidate, 0_usize));
         }
 
@@ -3368,7 +3305,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                                 }
                                 else
                                 {
-                                    let candidate = rand.random_prime_candidate_with_msb_set_using_miller_rabin_biguint::<T, N>();
+                                    let candidate = rand.random_prime_candidate_with_msb_set_biguint::<T, N>();
                                     { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
                                 }
                             }
@@ -3388,7 +3325,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                                         break;
                                     }
                                 }
-                                let candidate = rand.random_prime_candidate_with_msb_set_using_miller_rabin_biguint::<T, N>();
+                                let candidate = rand.random_prime_candidate_with_msb_set_biguint::<T, N>();
                                 { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
                             }
                         }
@@ -3403,7 +3340,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                                 }
                                 else
                                 {
-                                    let candidate = rand.random_prime_candidate_with_msb_set_using_miller_rabin_biguint::<T, N>();
+                                    let candidate = rand.random_prime_candidate_with_msb_set_biguint::<T, N>();
                                     { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
                                 }
                             }
@@ -3417,7 +3354,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                                 }
                                 else
                                 {
-                                    let candidate = rand.random_prime_candidate_with_msb_set_using_miller_rabin_biguint::<T, N>();
+                                    let candidate = rand.random_prime_candidate_with_msb_set_biguint::<T, N>();
                                     { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
                                 }
                             }
@@ -3438,7 +3375,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                                             running.store(false, Ordering::Relaxed);
                                             break;
                                         }
-                                        let candidate = rand.random_prime_candidate_with_msb_set_using_miller_rabin_biguint::<T, N>();
+                                        let candidate = rand.random_prime_candidate_with_msb_set_biguint::<T, N>();
                                         { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
                                     }
                                     else
@@ -3449,7 +3386,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                                 }
                                 else
                                 {
-                                    let candidate = rand.random_prime_candidate_with_msb_set_using_miller_rabin_biguint::<T, N>();
+                                    let candidate = rand.random_prime_candidate_with_msb_set_biguint::<T, N>();
                                     { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
                                 }
                             }
@@ -3559,6 +3496,177 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         res
     }
 
+    // pub fn random_primes_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize, how_many: usize) -> Vec<BigUInt<T, N>>
+    /// Returns a collection of new `BigUInt<T, N>`-type objects which represent
+    /// random prime numbers of half-size of BigUInt<T, N>.
+    /// 
+    /// # Argument
+    /// - `repetition`: determines how many times it tests whether the
+    ///   generated random number is prime. Usually, `repetition` is given
+    ///   to be `5` for 99.9% accuracy or `7` for 99.99% accuracy.
+    /// - `how_many`: determines how many prime numbers this method returns.
+    /// 
+    /// # Output
+    /// The random prime number which ranges from
+    /// BigUInt::halfmax() up to BigUInt::max() inclusively.
+    /// 
+    /// # Features
+    /// - This method generates several threads, each of which checks whether or
+    ///   not the given random number is prime number, and then it repeats until
+    ///   it will find `how_many` prime numbers.
+    /// - It uses [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
+    /// - If this test results in composite number, the tested number is surely
+    ///   a composite number. If this test results in prime number, the
+    ///   probability that the tested number is not a prime number is 1/4. So,
+    ///   if the test results in prime number twice, the probability that the
+    ///   tested number is not a prime number is 1/16 (= 1/4 * 1/4). Therefore,
+    ///   if you test any number 5 times and they all result in a prime number,
+    ///   it is 99.9% that the number is a prime number.
+    /// - The random prime numbers that may or may not be cryptographically
+    ///   secure depending on what pseudo-random number generator is used.
+    pub fn random_primes_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize, how_many: usize) -> Vec<BigUInt<T, N>>
+    where T: TraitsBigUInt<T>
+    {
+        let mut v = Vec::new();
+        let mut number_of_threads = match available_parallelism()
+        {
+            Ok(non_zero) => non_zero.get() as usize,
+            Err(_) => 1_usize,
+        };
+
+        if number_of_threads <= 2
+        {
+            for _ in 0..how_many
+                { v.push(self.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially::<T, N>(repetition)); }
+            return v;
+        }
+        number_of_threads >>= 1;
+        let mut candidates = VecDeque::new();
+        for _ in 0..number_of_threads
+        {
+            let candidate = self.random_prime_candidate_with_half_length_biguint::<T, N>();
+            candidates.push_back((candidate, 0_usize));
+        }
+
+        let a_list = [73_usize, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173];
+        let prime_like = Mutex::new(candidates);
+        let vv = Mutex::new(v);
+        let running = AtomicBool::new(true);
+        let len = a_list.len();
+        scope(|s| {
+            for _ in 0..number_of_threads
+            {
+                s.spawn(|| {
+                    let mut rand = Random::new();
+                    loop
+                    {
+                        let mut prime = { prime_like.lock().unwrap().pop_front().unwrap() };
+                        if !running.load(Ordering::Relaxed)
+                            { break; }
+                        if repetition <= len
+                        {
+                            if prime.1 < repetition - 1
+                            {
+                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
+                                {
+                                    prime.1 += 1;
+                                    { prime_like.lock().unwrap().push_back(prime); }
+                                }
+                                else
+                                {
+                                    let candidate = rand.random_prime_candidate_with_half_length_biguint::<T, N>();
+                                    { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
+                                }
+                            }
+                            else    // prime.1 >= repetition - 1
+                            {
+                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
+                                {
+                                    let length;
+                                    {
+                                        let mut v = vv.lock().unwrap();
+                                        v.push(prime.0);
+                                        length = v.len();
+                                    }
+                                    if length >= how_many
+                                    {
+                                        running.store(false, Ordering::Relaxed);
+                                        break;
+                                    }
+                                }
+                                let candidate = rand.random_prime_candidate_with_half_length_biguint::<T, N>();
+                                { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
+                            }
+                        }
+                        else    // if repetition > len
+                        {
+                            if prime.1 < len
+                            {
+                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
+                                {
+                                    prime.1 += 1;
+                                    { prime_like.lock().unwrap().push_back(prime); }
+                                }
+                                else
+                                {
+                                    let candidate = rand.random_prime_candidate_with_half_length_biguint::<T, N>();
+                                    { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
+                                }
+                            }
+                            else if prime.1 == len
+                            {
+                                prime.1 = a_list[len-1] + 2;
+                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(prime.1))
+                                {
+                                    prime.1 += 2;
+                                    { prime_like.lock().unwrap().push_back(prime); }
+                                }
+                                else
+                                {
+                                    let candidate = rand.random_prime_candidate_with_half_length_biguint::<T, N>();
+                                    { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
+                                }
+                            }
+                            else    // if prime.1 > len
+                            {
+                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(prime.1))
+                                {
+                                    if prime.1 >= a_list[len-1] + ((repetition - len) << 1)
+                                    {
+                                        let length;
+                                        {
+                                            let mut v = vv.lock().unwrap();
+                                            v.push(prime.0);
+                                            length = v.len();
+                                        }
+                                        if length >= how_many
+                                        {
+                                            running.store(false, Ordering::Relaxed);
+                                            break;
+                                        }
+                                        let candidate = rand.random_prime_candidate_with_half_length_biguint::<T, N>();
+                                        { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
+                                    }
+                                    else
+                                    {
+                                        prime.1 += 2;
+                                        { prime_like.lock().unwrap().push_back(prime); }
+                                    }
+                                }
+                                else
+                                {
+                                    let candidate = rand.random_prime_candidate_with_half_length_biguint::<T, N>();
+                                    { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+        vv.into_inner().unwrap()
+    }
+
     // pub fn random_prime_with_half_length_using_rsa_biguint<T, const N: usize>(&mut self, repetition: usize) -> (BigUInt<T, N>, BigUInt<T, N>)
     /// Constucts a new `BigUInt<T, N>`-type object which represents a random
     /// prime number.
@@ -3599,8 +3707,9 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         let length = N * (T::BITS >> 1) as usize;
         loop
         {
-            let prime_1: BigUInt<T, N> = self.random_prime_with_half_length_using_miller_rabin_biguint(repetition);
-            let mut prime_2: BigUInt<T, N> = self.random_prime_with_half_length_using_miller_rabin_biguint(repetition);
+            let mut primes: Vec<BigUInt<T, N>> = self.random_primes_with_half_length_using_miller_rabin_biguint(repetition, 2);
+            let prime_1 = primes.pop().unwrap();
+            let mut prime_2 = primes.pop().unwrap();
             while prime_1 == prime_2
                 { prime_2 = self.random_prime_with_half_length_using_miller_rabin_biguint(repetition); }
             let rsa = RSA_Generic::<N, T>::new_with_primes(prime_1.clone(), prime_2.clone());
