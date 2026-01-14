@@ -3192,23 +3192,161 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         // and ln is natural logarithm. ln(2) is about 0.6931.
         let needs = T::size_in_bits() * N as u32 * 7 / 10 * 11 / 1000;
         let needs = if needs < 1 {2} else {needs+1};
-        let mut candidates = VecDeque::new();
-        for _ in 0..needs
-        {
-            let candidate = self.random_prime_candidate_with_msb_set_using_miller_rabin_biguint::<T, N>();
-            candidates.push_back((candidate, 0_usize));
-        }
-        
-        println!("size = {}", candidates.len());
         let a_list = [73_usize, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173];
-        let prime_like = Mutex::new(candidates);
         let (tx, rx) = channel();
         let running = AtomicBool::new(true);
         let len = a_list.len();
         number_of_threads -= 1;
         if (needs as usize) < number_of_threads
             { number_of_threads = needs as usize; }
-            println!("number_of_threads = {}", number_of_threads);
+
+        let prime;
+        loop
+        {
+            let mut candidates = VecDeque::new();
+            for _ in 0..needs
+            {
+                let candidate = self.random_prime_candidate_with_msb_set_using_miller_rabin_biguint::<T, N>();
+                candidates.push_back((candidate, 0_usize));
+            }
+            let prime_like = Mutex::new(candidates);
+            scope(|s| {
+                for _ in 0..number_of_threads
+                {
+                    s.spawn(|| {
+                        let rand = Random::new();
+                        loop
+                        {
+                            if !running.load(Ordering::Relaxed)
+                                { break; }
+                            let mut prime = { prime_like.lock().unwrap().pop_front().unwrap() };
+                            if repetition <= len
+                            {
+                                if prime.1 < repetition - 1
+                                {
+                                    if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
+                                    {
+                                        prime.1 += 1;
+                                        { prime_like.lock().unwrap().push_back(prime); }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                                else    // prime.1 >= repetition - 1
+                                {
+                                    if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
+                                        { let _ = tx.send(prime.0); }
+                                    running.store(false, Ordering::Relaxed);
+                                    break;
+                                }
+                            }
+                            else    // if repetition > len
+                            {
+                                if prime.1 < len
+                                {
+                                    if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
+                                    {
+                                        prime.1 += 1;
+                                        { prime_like.lock().unwrap().push_back(prime); }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                                else if prime.1 == len
+                                {
+                                    prime.1 = a_list[len-1] + 2;
+                                    if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(prime.1))
+                                    {
+                                        prime.1 += 2;
+                                        { prime_like.lock().unwrap().push_back(prime); }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                                else    // if prime.1 > len
+                                {
+                                    if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(prime.1))
+                                    {
+                                        if prime.1 >= a_list[len-1] + ((repetition - len) << 1)
+                                        {
+                                            let _ = tx.send(prime.0);
+                                            running.store(false, Ordering::Relaxed);
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            prime.1 += 2;
+                                            { prime_like.lock().unwrap().push_back(prime); }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+            match rx.recv()
+            {
+                Ok(res) => {
+                    drop(tx);
+                    running.store(false, Ordering::Relaxed);
+                    prime = res;
+                    break;
+                },
+                Err(_) => { continue; }
+            }
+        }
+        prime
+    }
+
+    pub fn random_prime_with_msb_set_using_miller_rabin_biguint_sequentially<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
+    where T: TraitsBigUInt<T>
+    {
+        let mut res = self.random_odd_with_msb_set_biguint::<T, N>();
+        while !res.is_prime_using_miller_rabin(repetition)
+            { res = self.random_odd_with_msb_set_biguint::<T, N>(); }
+        res
+    }
+
+    pub fn random_primes_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize, how_many: usize) -> Vec<BigUInt<T, N>>
+    where T: TraitsBigUInt<T>
+    {
+        let mut v = Vec::new();
+        let mut number_of_threads = match available_parallelism()
+        {
+            Ok(non_zero) => non_zero.get() as usize,
+            Err(_) => 1_usize,
+        };
+
+        if number_of_threads <= 2
+        {
+            for _ in 0..how_many
+                { v.push(self.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially::<T, N>(repetition)); }
+            return v;
+        }
+        number_of_threads >>= 1;
+        let mut candidates = VecDeque::new();
+        for _ in 0..number_of_threads
+        {
+            let candidate = self.random_prime_candidate_with_msb_set_using_miller_rabin_biguint::<T, N>();
+            candidates.push_back((candidate, 0_usize));
+        }
+
+        let a_list = [73_usize, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173];
+        let prime_like = Mutex::new(candidates);
+        let vv = Mutex::new(v);
+        let running = AtomicBool::new(true);
+        let len = a_list.len();
         scope(|s| {
             for _ in 0..number_of_threads
             {
@@ -3238,15 +3376,20 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                             {
                                 if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
                                 {
-                                    let _ = tx.send(prime.0);
-                                    running.store(false, Ordering::Relaxed);
-                                    break;
+                                    let length;
+                                    {
+                                        let mut v = vv.lock().unwrap();
+                                        v.push(prime.0);
+                                        length = v.len();
+                                    }
+                                    if length >= how_many
+                                    {
+                                        running.store(false, Ordering::Relaxed);
+                                        break;
+                                    }
                                 }
-                                else
-                                {
-                                    let candidate = rand.random_prime_candidate_with_msb_set_using_miller_rabin_biguint::<T, N>();
-                                    { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
-                                }
+                                let candidate = rand.random_prime_candidate_with_msb_set_using_miller_rabin_biguint::<T, N>();
+                                { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
                             }
                         }
                         else    // if repetition > len
@@ -3284,12 +3427,25 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                                 {
                                     if prime.1 >= a_list[len-1] + ((repetition - len) << 1)
                                     {
-                                        let _ = tx.send(prime.0);
-                                        running.store(false, Ordering::Relaxed);
-                                        break;
+                                        let length;
+                                        {
+                                            let mut v = vv.lock().unwrap();
+                                            v.push(prime.0);
+                                            length = v.len();
+                                        }
+                                        if length >= how_many
+                                        {
+                                            running.store(false, Ordering::Relaxed);
+                                            break;
+                                        }
+                                        let candidate = rand.random_prime_candidate_with_msb_set_using_miller_rabin_biguint::<T, N>();
+                                        { prime_like.lock().unwrap().push_back((candidate, 0_usize)); }
                                     }
-                                    prime.1 += 2;
-                                    { prime_like.lock().unwrap().push_back(prime); }
+                                    else
+                                    {
+                                        prime.1 += 2;
+                                        { prime_like.lock().unwrap().push_back(prime); }
+                                    }
                                 }
                                 else
                                 {
@@ -3302,18 +3458,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                 });
             }
         });
-
-        drop(tx);
-        rx.recv().unwrap()
-    }
-
-    pub fn random_prime_with_msb_set_using_miller_rabin_biguint_sequentially<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
-    {
-        let mut res = self.random_odd_with_msb_set_biguint::<T, N>();
-        while !res.is_prime_using_miller_rabin(repetition)
-            { res = self.random_odd_with_msb_set_biguint::<T, N>(); }
-        res
+        vv.into_inner().unwrap()
     }
 
     // pub fn random_prime_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
