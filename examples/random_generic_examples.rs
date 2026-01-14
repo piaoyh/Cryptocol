@@ -12,6 +12,24 @@ use std::sync::{Mutex, Arc};
 use std::sync::mpsc::channel;
 use std::thread::{ spawn, available_parallelism };
 
+
+
+pub fn main()
+{
+    // random_quick_start();
+    // random_constructors();
+    // random_smalluint();
+    // random_biguint();
+    // random_prepare_primes();
+    // find_u128_primes();
+    // find_u256_primes();
+    // find_u512_primes();
+    // find_u1024_primes();
+    // find_u2048_primes();
+    // find_u4096_primes();
+    random_test();
+}
+
 fn do_simultaneously(jobs: Vec<fn()>)
 {
     let number_of_threads: usize = match available_parallelism()
@@ -52,21 +70,6 @@ fn do_simultaneously(jobs: Vec<fn()>)
     drop(tx);
     for thread in threads
         { thread.join().unwrap(); }
-}
-
-pub fn main()
-{
-    // random_quick_start();
-    // random_constructors();
-    // random_smalluint();
-    // random_biguint();
-    // random_prepare_primes();
-    // find_u128_primes();
-    // find_u256_primes();
-    // find_u512_primes();
-    // find_u1024_primes();
-    // find_u2048_primes();
-    find_u4096_primes();
 }
 
 fn random_quick_start()
@@ -7933,3 +7936,67 @@ fn finding()
     }
 }
 */
+
+fn random_test()
+{
+    println!("random_test()");
+    use std::time::SystemTime;
+    use cryptocol::random::Random;
+    use cryptocol::define_utypes_with;
+    define_utypes_with!(u8);
+
+    type PRIME = U1024;
+    let repetition = 7_usize;
+    let mut rand = Random::new();
+
+    // concurrent case
+    let old = SystemTime::now();
+    let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Concurrent Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("Random Prime Number = {}", a_biguint);
+
+    let old = SystemTime::now();
+    let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Concurrent Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("Random Prime Number = {}", a_biguint);
+
+    let old = SystemTime::now();
+    let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Concurrent Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("Random Prime Number = {}", a_biguint);
+
+    let old = SystemTime::now();
+    let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Concurrent Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("Random Prime Number = {}", a_biguint);
+    println!("------------------------")
+    // sequential case
+    let old = SystemTime::now();
+    let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Sequential Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("Random Prime Number = {}", a_biguint);
+
+    let old = SystemTime::now();
+    let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Sequential Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("Random Prime Number = {}", a_biguint);
+
+    let old = SystemTime::now();
+    let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Sequential Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("Random Prime Number = {}", a_biguint);
+
+    let old = SystemTime::now();
+    let a_biguint: PRIME = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Sequential Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("Random Prime Number = {}", a_biguint);
+    println!("---------------------------");
+}

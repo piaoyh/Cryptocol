@@ -1326,3 +1326,87 @@ fn biguint_prime_is_prime_using_miller_rabin()
     assert_eq!(b, false);
     println!("---------------------------");
 }
+
+/*
+fn biguint_prime_is_prime_using_miller_rabin()
+{
+    println!("biguint_prime_is_prime_using_miller_rabin()");
+    use cryptocol::number::BigUInt_Prime;
+    // use cryptocol::random::Random;
+    use cryptocol::define_utypes_with;
+    define_utypes_with!(u8);
+
+    // let biguint = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+    // println!("512-bit Random Prime Number = {}", biguint);
+
+    use std::time::SystemTime;
+    let repetition = 5_usize;
+
+    // prime numer case
+    let a_biguint = U512::from_string("262586890850443215026048316017358917147061433899850397175592679960211511929529269359755816708006242574764016656012965410420527921966695199932942678613269").unwrap();
+    let old = SystemTime::now();
+    let b = a_biguint.is_prime_using_miller_rabin(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Concurrent Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("{} is {}a prime number", a_biguint, if b {""} else {"not "});
+    assert_eq!(b, true);
+
+    let a_biguint = U512::from_string("262586890850443215026048316017358917147061433899850397175592679960211511929529269359755816708006242574764016656012965410420527921966695199932942678613269").unwrap();
+    let old = SystemTime::now();
+    let b = a_biguint.is_prime_using_miller_rabin(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Concurrent Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("{} is {}a prime number", a_biguint, if b {""} else {"not "});
+    assert_eq!(b, true);
+
+    let a_biguint = U512::from_string("262586890850443215026048316017358917147061433899850397175592679960211511929529269359755816708006242574764016656012965410420527921966695199932942678613269").unwrap();
+    let old = SystemTime::now();
+    let b = a_biguint.is_prime_using_miller_rabin_sequentially(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Sequential Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("{} is {}a prime number", a_biguint, if b {""} else {"not "});
+    assert_eq!(b, true);
+
+    let a_biguint = U512::from_string("262586890850443215026048316017358917147061433899850397175592679960211511929529269359755816708006242574764016656012965410420527921966695199932942678613269").unwrap();
+    let old = SystemTime::now();
+    let b = a_biguint.is_prime_using_miller_rabin_sequentially(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Sequential Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("{} is {}a prime number", a_biguint, if b {""} else {"not "});
+    assert_eq!(b, true);
+
+    // composite number case
+    let a_biguint = U512::from_string("111112222233333444445555566666777778888899999").unwrap();
+    let old = SystemTime::now();
+    let b = a_biguint.is_prime_using_miller_rabin(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Concurrent Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("{} is {}a prime number", a_biguint, if b {""} else {"not "});
+    assert_eq!(b, false);
+
+    let a_biguint = U512::from_string("111112222233333444445555566666777778888899999").unwrap();
+    let old = SystemTime::now();
+    let b = a_biguint.is_prime_using_miller_rabin(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Concurrent Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("{} is {}a prime number", a_biguint, if b {""} else {"not "});
+    assert_eq!(b, false);
+
+    let a_biguint = U512::from_string("111112222233333444445555566666777778888899999").unwrap();
+    let old = SystemTime::now();
+    let b = a_biguint.is_prime_using_miller_rabin_sequentially(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Sequential Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("{} is {}a prime number", a_biguint, if b {""} else {"not "});
+    assert_eq!(b, false);
+
+    let a_biguint = U512::from_string("111112222233333444445555566666777778888899999").unwrap();
+    let old = SystemTime::now();
+    let b = a_biguint.is_prime_using_miller_rabin_sequentially(repetition);
+    let elapsed = SystemTime::now().duration_since(old);
+    println!("Sequential Elapsed time: {}", elapsed.unwrap().as_micros());
+    println!("{} is {}a prime number", a_biguint, if b {""} else {"not "});
+    assert_eq!(b, false);
+    println!("---------------------------");
+}
+*/
