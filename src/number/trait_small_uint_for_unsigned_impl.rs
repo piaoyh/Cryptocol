@@ -664,6 +664,29 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
                 }
             }
 
+            // fn filter_out_composite_number(&self) -> bool;
+            /// Filter out composite numbers. 
+            /// If self is filtered out if it 
+            /// 
+            /// # Output
+            /// `true` if `self` is is a composite number.
+            /// Otherwise, it returns `false`.
+            fn filter_out_composite_number(&self) -> bool
+            {
+                use crate::number::A_LIST;
+
+                if self.is_zero_or_one() || self.is_even()
+                    { return true; }
+
+                let len = A_LIST.len();
+                for i in 1..len
+                {
+                    if self.into_u128().wrapping_rem(A_LIST[i].into_u128()).is_zero()
+                        { return true; }
+                }
+                false
+            }
+
             /// Tests a `SmallUInt`-type object to find whether or not `self`
             /// is a prime number.
             /// [Read more](trait@SmallUInt#tymethod.test_miller_rabin)
@@ -698,52 +721,46 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
             /// to learn deterministic decision with Millar-Rabin algorithm.
             fn is_prime_using_miller_rabin(self, repetition: usize) -> bool
             {
-                if self.is_zero_or_one() || self.is_even()
+                use crate::number::A_LIST;
+
+                if self.filter_out_composite_number()
                     { return false; }
 
                 let a_list;
                 // if self.into_u128() <= u8::MAX as u128   // > u8::MAX, repetition is meaningless.
-                //     { a_list = vec![2_u32]; } else
+                //     { a_list = vec![2_u16]; } else
                 if self.into_u128() <= 2047_u128    // > u8::MAX, repetition is meaningless.
-                    { a_list = vec![2_u32]; }
+                    { a_list = vec![2_u16]; }
                 // else if self.into_u128() <= u16::MAX as u128
-                //     { a_list = vec![2_u32, 3]; }
+                //     { a_list = vec![2_u16, 3]; }
                 else if self.into_u128() <= 137_3653_u128    // > u16::MAX
-                    { a_list = vec![2_u32, 3]; }
+                    { a_list = vec![2_u16, 3]; }
                 else if self.into_u128() <= 908_0191_u128    // < u32::MAX
-                    { a_list = vec![31_u32, 73]; }
-                // else if self.into_u128() <= u32::MAX as u128
-                //     { a_list = vec![2_u32, 7, 61]; }
+                    { a_list = vec![31_u16, 73]; }
+                // else if self.into_u128() <= u16::MAX as u128
+                //     { a_list = vec![2_u16, 7, 61]; }
                 else if self.into_u128() <= 2532_6001_u128  // > u32::MAX == 47_5912_3141
-                    { a_list = vec![2_u32, 7, 61]; }
+                    { a_list = vec![2_u16, 7, 61]; }
                 else if self.into_u128() <= 1_1220_0466_9633_u128   // < u64::MAX
-                    { a_list = vec![2_u32, 13, 23, 1662803]; }
+                    { a_list = vec![2_u16, 13, 23, 1662803]; }
                 else if self.into_u128() <= 2_1523_0289_8747_u128   // < u64::MAX
-                    { a_list = vec![2_u32, 3, 5, 7, 11]; }
+                    { a_list = vec![2_u16, 3, 5, 7, 11]; }
                 else if self.into_u128() <= 3_4747_4966_0383_u128   // < u64::MAX
-                    { a_list = vec![2_u32, 3, 5, 7, 11, 13]; }
+                    { a_list = vec![2_u16, 3, 5, 7, 11, 13]; }
                 else if self.into_u128() <= 341_5500_7172_8321_u128   // < u64::MAX
-                    { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17]; }
+                    { a_list = vec![2_u16, 3, 5, 7, 11, 13, 17]; }
                 else if self.into_u128() <= 382_5123_0565_4641_3051_u128   // < u64::MAX
-                    { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23]; }
+                    { a_list = vec![2_u16, 3, 5, 7, 11, 13, 17, 19, 23]; }
                 // else if self.into_u128() <= u64::MAX as u128
-                //     { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]; }
+                //     { a_list = vec![2_u16, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]; }
                 else
                 {
-                    let b_list = [3_u8, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71];
-                    for a in b_list
-                    {
-                        if self.wrapping_rem(a as Self).is_zero()
-                        {
-                            return false;
-                        }
-                    }
                     if self.into_u128() <= 3186_6585_7834_0311_5116_7461_u128   // < u128::MAX
-                        { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]; }
+                        { a_list = vec![2_u16, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]; }
                     else if self.into_u128() <=  3_3170_4406_4679_8873_8596_1981_u128   // < u128::MAX
-                        { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41]; }
+                        { a_list = vec![2_u16, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41]; }
                     else    // if self <= u128::MAX as Self
-                        { a_list = vec![2_u32, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71]; }
+                        { a_list = A_LIST.to_vec(); }
                 }
 
                 let len = a_list.len();

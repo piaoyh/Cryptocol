@@ -7472,6 +7472,40 @@ impl Random_Generic
         unimplemented!(); // Dummy code for documentation
     }
 
+    // pub fn random_primes_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize, how_many: usize) -> Vec<BigUInt<T, N>>
+    /// Returns a collection of new `BigUInt<T, N>`-type objects which represent
+    /// random prime numbers of half-size of BigUInt<T, N>.
+    /// 
+    /// # Argument
+    /// - `repetition`: determines how many times it tests whether the
+    ///   generated random number is prime. Usually, `repetition` is given
+    ///   to be `5` for 99.9% accuracy or `7` for 99.99% accuracy.
+    /// - `how_many`: determines how many prime numbers this method returns.
+    /// 
+    /// # Output
+    /// The random prime number which ranges from
+    /// BigUInt::halfmax() up to BigUInt::max() inclusively.
+    /// 
+    /// # Features
+    /// - This method generates several threads, each of which checks whether or
+    ///   not the given random number is prime number, and then it repeats until
+    ///   it will find `how_many` prime numbers.
+    /// - It uses [Miller Rabin algorithm](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
+    /// - If this test results in composite number, the tested number is surely
+    ///   a composite number. If this test results in prime number, the
+    ///   probability that the tested number is not a prime number is 1/4. So,
+    ///   if the test results in prime number twice, the probability that the
+    ///   tested number is not a prime number is 1/16 (= 1/4 * 1/4). Therefore,
+    ///   if you test any number 5 times and they all result in a prime number,
+    ///   it is 99.9% that the number is a prime number.
+    /// - The random prime numbers that may or may not be cryptographically
+    ///   secure depending on what pseudo-random number generator is used.
+    pub fn random_primes_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize, how_many: usize) -> Vec<BigUInt<T, N>>
+    where T: TraitsBigUInt<T>
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
     // pub fn prepared_random_prime_with_msb_set<T, const N: usize>(&mut self) -> BigUInt<T, N>
     /// Constucts a new `BigUInt<T, N>`-type object out of the prepared prime
     /// number pool, which represents a prime number of full-size of

@@ -23216,14 +23216,16 @@ pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
     ///     num.iroot(exp)
     /// }
     /// ```
-    /// 
-    /// # Big-endian issue
-    /// It is just experimental for Big Endian CPUs. So, you are not encouraged
-    /// to use it for Big Endian CPUs for serious purpose. Only use this crate
-    /// for Big-endian CPUs with your own full responsibility.
-    /// Tests a `SmallUInt`-type object to find whether or not it is a
-    /// prime number.
     fn iroot(self, exp: Self) -> Self;
+
+    // fn filter_out_composite_number(&self) -> bool;
+    /// Filter out composite numbers. 
+    /// If self is filtered out if it 
+    /// 
+    /// # Output
+    /// `true` if `self` is is a composite number.
+    /// Otherwise, it returns `false`.
+    fn filter_out_composite_number(&self) -> bool;
 
     // fn test_miller_rabin(self, a: Self) -> bool
     /// Tests a `SmallUInt`-type object to find whether or not `self` is a

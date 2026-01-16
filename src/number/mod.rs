@@ -203,6 +203,7 @@ pub use shared_arrays::*;
 pub use big_uint::*;
 pub use number_errors::*;
 use macros_for_integer_unions::*;
+pub(crate) use trait_big_uint_prime_impl::A_LIST;
 
 
 

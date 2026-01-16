@@ -24,7 +24,7 @@ use std::thread::{ available_parallelism, scope };
 #[cfg(not(target_family = "windows"))] use std::fs::File;
 #[cfg(not(target_family = "windows"))] use std::io::Read;
 
-use crate::number::{ SmallUInt, TraitsBigUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime };
+use crate::number::{ SmallUInt, TraitsBigUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime, A_LIST };
 use crate::random::{ Random, Random_Engine };
 
 
@@ -3279,11 +3279,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             candidates.push_back((candidate, 0_usize));
         }
 
-        let a_list = [73_usize, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173];
         let prime_like = Mutex::new(candidates);
         let vv = Mutex::new(v);
         let running = AtomicBool::new(true);
-        let len = a_list.len();
+        let len = A_LIST.len();
         scope(|s| {
             for _ in 0..number_of_threads
             {
@@ -3298,7 +3297,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                         {
                             if prime.1 < repetition - 1
                             {
-                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
+                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(A_LIST[prime.1]))
                                 {
                                     prime.1 += 1;
                                     { prime_like.lock().unwrap().push_back(prime); }
@@ -3311,7 +3310,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                             }
                             else    // prime.1 >= repetition - 1
                             {
-                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
+                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(A_LIST[prime.1]))
                                 {
                                     let length;
                                     {
@@ -3333,7 +3332,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                         {
                             if prime.1 < len
                             {
-                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
+                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(A_LIST[prime.1]))
                                 {
                                     prime.1 += 1;
                                     { prime_like.lock().unwrap().push_back(prime); }
@@ -3346,7 +3345,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                             }
                             else if prime.1 == len
                             {
-                                prime.1 = a_list[len-1] + 2;
+                                prime.1 = A_LIST[len-1] as usize + 2;
                                 if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(prime.1))
                                 {
                                     prime.1 += 2;
@@ -3362,7 +3361,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                             {
                                 if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(prime.1))
                                 {
-                                    if prime.1 >= a_list[len-1] + ((repetition - len) << 1)
+                                    if prime.1 >= A_LIST[len-1] as usize + ((repetition - len) << 1)
                                     {
                                         let length;
                                         {
@@ -3547,12 +3546,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             let candidate = self.random_prime_candidate_with_half_length_biguint::<T, N>();
             candidates.push_back((candidate, 0_usize));
         }
-
-        let a_list = [73_usize, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173];
         let prime_like = Mutex::new(candidates);
         let vv = Mutex::new(v);
         let running = AtomicBool::new(true);
-        let len = a_list.len();
+        let len = A_LIST.len();
         scope(|s| {
             for _ in 0..number_of_threads
             {
@@ -3567,7 +3564,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                         {
                             if prime.1 < repetition - 1
                             {
-                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
+                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(A_LIST[prime.1]))
                                 {
                                     prime.1 += 1;
                                     { prime_like.lock().unwrap().push_back(prime); }
@@ -3580,7 +3577,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                             }
                             else    // prime.1 >= repetition - 1
                             {
-                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
+                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(A_LIST[prime.1]))
                                 {
                                     let length;
                                     {
@@ -3602,7 +3599,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                         {
                             if prime.1 < len
                             {
-                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(a_list[prime.1]))
+                                if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(A_LIST[prime.1]))
                                 {
                                     prime.1 += 1;
                                     { prime_like.lock().unwrap().push_back(prime); }
@@ -3615,7 +3612,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                             }
                             else if prime.1 == len
                             {
-                                prime.1 = a_list[len-1] + 2;
+                                prime.1 = A_LIST[len-1] as usize + 2;
                                 if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(prime.1))
                                 {
                                     prime.1 += 2;
@@ -3631,7 +3628,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
                             {
                                 if prime.0.test_miller_rabin(&BigUInt::<T, N>::from_uint(prime.1))
                                 {
-                                    if prime.1 >= a_list[len-1] + ((repetition - len) << 1)
+                                    if prime.1 >= A_LIST[len-1] as usize + ((repetition - len) << 1)
                                     {
                                         let length;
                                         {

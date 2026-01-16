@@ -12,8 +12,6 @@ use std::sync::{Mutex, Arc};
 use std::sync::mpsc::channel;
 use std::thread::{ spawn, available_parallelism };
 
-
-
 pub fn main()
 {
     // random_quick_start();
@@ -26,9 +24,9 @@ pub fn main()
     // find_u512_primes();
     // find_u1024_primes();
     // find_u2048_primes();
-    // find_u4096_primes();
+    find_u4096_primes();
     // random_concurrency_test_for_random_primes_with_msb_set_using_miller_rabin_biguint();
-    random_concurrency_test_for_random_prime_with_msb_set_using_miller_rabin_biguint();
+    // random_concurrency_test_for_random_prime_with_msb_set_using_miller_rabin_biguint();
 }
 
 fn do_simultaneously(jobs: Vec<fn()>)
@@ -7821,17 +7819,10 @@ fn find_u4096_primes()
     define_utypes_with!(u32);
 
     type PRIME = U8192;
-    let mut thread = Vec::<fn()>::new();
-    for _ in 0..7
-    {
-        thread.push(||{
-            let mut prng = Random::new();
-            let (prime1, prime2): (PRIME, PRIME) = prng.random_prime_with_half_length_using_rsa_biguint(7);
-            println!("{:X}\n{:X}", prime1, prime2);
-        });
-    }
-
-    do_simultaneously(thread);
+    let repetition = 7;
+    let mut rand = Random::new();
+    let (p1, p2): (PRIME, PRIME) = rand.random_prime_with_half_length_using_rsa_biguint(repetition);
+    println!("{:X}\n{:X}", p1, p2);
 }
 
 /*

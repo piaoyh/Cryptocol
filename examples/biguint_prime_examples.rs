@@ -12,17 +12,18 @@
 // #[allow(dead_code)]``
 pub fn main()
 {
-    biguint_prime_quick_start();
-    biguint_prime_gcd_uint();
-    biguint_prime_gcd_assign_uint();
-    biguint_prime_lcm_uint();
-    biguint_prime_lcm_assign_uint();
-    biguint_prime_gcd();
-    biguint_prime_gcd_assign();
-    biguint_prime_extended_gcd();
-    biguint_prime_lcm();
-    biguint_prime_lcm_assign();
-    biguint_prime_is_prime_using_miller_rabin();
+    // biguint_prime_quick_start();
+    // biguint_prime_gcd_uint();
+    // biguint_prime_gcd_assign_uint();
+    // biguint_prime_lcm_uint();
+    // biguint_prime_lcm_assign_uint();
+    // biguint_prime_gcd();
+    // biguint_prime_gcd_assign();
+    // biguint_prime_extended_gcd();
+    // biguint_prime_lcm();
+    // biguint_prime_lcm_assign();
+    // biguint_prime_is_prime_using_miller_rabin();
+    find_small_primes();
 }
 
 
@@ -1324,6 +1325,40 @@ fn biguint_prime_is_prime_using_miller_rabin()
     let b = a_biguint.is_prime_using_miller_rabin(5_usize);
     println!("{} is {}a prime number", a_biguint, if b {""} else {"not "});
     assert_eq!(b, false);
+    println!("---------------------------");
+}
+
+fn find_small_primes()
+{
+    println!("find_small_primes()");
+
+    let mut primes = [3u16; 303];
+    let mut lim = 1_usize;
+    let mut prime = 5_u16;
+    loop
+    {
+        let mut next = false;
+        for idx in 0..lim
+        {
+            if prime % primes[idx] == 0
+            {
+                prime += 2;
+                next = true;
+                break;
+            }
+        }
+        if next
+            { continue; }
+        primes[lim] = prime;
+        lim += 1;
+        prime += 2;
+        if lim >= primes.len()
+            { break; }
+    }
+    print!("[");
+    for idx in 0..lim-1
+        { print!("{}, ", primes[idx]); }
+    println!("{}]", primes[lim-1]);
     println!("---------------------------");
 }
 
