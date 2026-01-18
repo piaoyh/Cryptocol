@@ -293,16 +293,15 @@ where T: TraitsBigUInt<T>
             return small_self.is_prime_using_miller_rabin(repetition);
         }
 
-        let a_list = [73_u16, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173];
-        let len = a_list.len();
+        let len = A_LIST.len();
         let common = if len < repetition {len} else {repetition};
         for i in 0..common
         {
-            if !self.test_miller_rabin(&Self::from_uint(a_list[i]))
+            if !self.test_miller_rabin(&Self::from_uint(A_LIST[i]))
                 { return false; }
         }
 
-        let mut a = a_list[len-1] as u32 + 2;
+        let mut a = A_LIST[len-1] as u32 + 2;
         for _ in common..repetition
         {
             if !self.test_miller_rabin(&Self::from_uint(a))
