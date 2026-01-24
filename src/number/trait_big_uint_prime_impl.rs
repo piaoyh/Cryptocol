@@ -14,7 +14,6 @@
 // #![allow(missing_docs)]
 // #![allow(rustdoc::missing_doc_code_examples)]
 
-use std::ops::Rem;
 
 use crate::number::{ SmallUInt, TraitsBigUInt, BigUInt, BigUInt_Prime, BigUInt_Modular };
 use crate::number::biguint_calc_to_calc_assign;

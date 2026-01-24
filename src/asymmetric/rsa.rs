@@ -147,6 +147,8 @@ pub type RSA_1024 = RSA_1024_u32;
 /// 
 /// # Notice for Practical Use
 /// 
+
+    use crate::symmetric::SmallCryptor128;
 pub struct RSA_Generic<const N: usize, T, const MR: usize = 7>
 where T: TraitsBigUInt<T>
 {

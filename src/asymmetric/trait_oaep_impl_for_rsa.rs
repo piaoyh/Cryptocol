@@ -131,6 +131,16 @@ use crate::number::TraitsBigUInt;
 use crate::random::Slapdash as Random;
 use crate::asymmetric::{ OAEP, RSA_Generic };
 
+
+impl<const N: usize, T, const MR: usize> RSA_Generic<N, T, MR>
+where T: TraitsBigUInt<T>
+{
+    fn MGF1()
+    {
+        
+    }
+}
+
 impl<const N: usize, T, const MR: usize> OAEP for RSA_Generic<N, T, MR>
 where T: TraitsBigUInt<T>
 {

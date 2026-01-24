@@ -723,8 +723,8 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
             {
                 use crate::number::A_LIST;
 
-                if self.filter_out_composite_number()
-                    { return false; }
+                if self.is_zero_or_one() || self.is_even()
+                    { return true; }
 
                 let a_list;
                 // if self.into_u128() <= u8::MAX as u128   // > u8::MAX, repetition is meaningless.
@@ -741,8 +741,8 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
                 //     { a_list = vec![2_u16, 7, 61]; }
                 else if self.into_u128() <= 2532_6001_u128  // > u32::MAX == 47_5912_3141
                     { a_list = vec![2_u16, 7, 61]; }
-                else if self.into_u128() <= 1_1220_0466_9633_u128   // < u64::MAX
-                    { a_list = vec![2_u16, 13, 23, 1662803]; }
+                // else if self.into_u128() <= 1_1220_0466_9633_u128   // < u64::MAX
+                //     { a_list = vec![2_u16, 13, 23, 1662803]; }
                 else if self.into_u128() <= 2_1523_0289_8747_u128   // < u64::MAX
                     { a_list = vec![2_u16, 3, 5, 7, 11]; }
                 else if self.into_u128() <= 3_4747_4966_0383_u128   // < u64::MAX
@@ -760,7 +760,11 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
                     else if self.into_u128() <=  3_3170_4406_4679_8873_8596_1981_u128   // < u128::MAX
                         { a_list = vec![2_u16, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41]; }
                     else    // if self <= u128::MAX as Self
-                        { a_list = A_LIST.to_vec(); }
+                    {
+                        if self.filter_out_composite_number()
+                            { return false; }
+                        a_list = A_LIST.to_vec();
+                    }
                 }
 
                 let len = a_list.len();
@@ -789,12 +793,10 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
             /// Otherwise, it is probabilistic. 
             /// [Read more](trait@SmallUInt#tymethod.is_prime_using_miller_rabin)
             /// in detail.
+            #[inline]
             fn is_prime(self) -> bool
             {
-                if self.is_zero_or_one() || self.is_even()
-                    { return false; }
-                
-                self.is_prime_using_miller_rabin(20)
+                self.is_prime_using_miller_rabin(256)
             }
 
             /// Calculates the greatest common divisor of `self` and `other`,

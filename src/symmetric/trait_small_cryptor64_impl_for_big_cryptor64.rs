@@ -14,7 +14,7 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use crate::symmetric::{ SmallCryptor,  BigCryptor64 };
+use crate::symmetric::{ SmallCryptor, SmallCryptor64,  BigCryptor64 };
 
 
 impl SmallCryptor<u64, 8> for BigCryptor64
@@ -26,3 +26,5 @@ impl SmallCryptor<u64, 8> for BigCryptor64
     #[inline] fn turn_encryptor(&mut self)  { self.turn_encryptor(); }
     #[inline] fn turn_decryptor(&mut self)  { self.turn_decryptor(); }
 }
+
+impl SmallCryptor64 for BigCryptor64 {}

@@ -16,7 +16,7 @@
 
 use std::vec::Vec;
 use crate::number::{ LongUnion, LongerUnion, SmallUInt };
-use crate::symmetric::{ DES, SmallCryptor };
+use crate::symmetric::{ DES, SmallCryptor64 };
 
 
 
@@ -180,7 +180,7 @@ use crate::symmetric::{ DES, SmallCryptor };
 pub struct BigCryptor64
 {
     block: LongUnion,
-    smallcryptor: Vec<Box<dyn SmallCryptor<u64, 8>>>,
+    smallcryptor: Vec<Box<dyn SmallCryptor64>>,
     enc: fn (s: &mut Self, message: u64) -> u64,
     dec: fn (s: &mut Self, cipher: u64) -> u64,
 }
@@ -226,7 +226,7 @@ impl BigCryptor64
         }
     }
 
-    // pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor<u64, 8>>; N]) -> Self
+    // pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor64>; N]) -> Self
     /// Constructs a new object BigCryptor64 with some small cryptors
     /// (components).
     /// 
@@ -243,7 +243,7 @@ impl BigCryptor64
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::symmetric::{ BigCryptor64, SmallCryptor, DES };
-    /// let cryptors: [Box<dyn SmallCryptor<u64, 8>>; 3] = [ Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
+    /// let cryptors: [Box<dyn SmallCryptor64>; 3] = [ Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
     ///                                         Box::new(DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)),
     ///                                         Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)) ];
     /// let mut _tdes = BigCryptor64::new_with_small_cryptor_array(cryptors);
@@ -251,14 +251,14 @@ impl BigCryptor64
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_cryptor64_basic/struct.BigCryptor64.html#method.new_with_small_cryptor_array)
-    pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor<u64, 8>>; N]) -> Self
+    pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor64>; N]) -> Self
     {
         let mut bigcryptor = Self::new();
         bigcryptor.push_small_cryptor_array(smallcryptor);
         bigcryptor
     }
 
-    // pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor<u64, 8>>>) -> Self
+    // pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor64>>) -> Self
     /// Constructs a new object `BigCryptor64` with some small cryptors
     /// (components).
     /// 
@@ -276,7 +276,7 @@ impl BigCryptor64
     /// ```
     /// use cryptocol::symmetric::{ BigCryptor64, SmallCryptor, DES };
     /// 
-    /// let cryptors: Vec<Box<dyn SmallCryptor<u64, 8>>> = vec![ Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
+    /// let cryptors: Vec<Box<dyn SmallCryptor64>> = vec![ Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
     ///                                         Box::new(DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)),
     ///                                         Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)) ];
     /// let mut _tdes = BigCryptor64::new_with_small_cryptor_vec(cryptors);
@@ -284,14 +284,14 @@ impl BigCryptor64
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_cryptor64_basic/struct.BigCryptor64.html#method.new_with_small_cryptor_vec)
-    pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor<u64, 8>>>) -> Self
+    pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor64>>) -> Self
     {
         let mut bigcryptor = Self::new();
         bigcryptor.push_small_cryptor_vec(smallcryptor);
         bigcryptor
     }
 
-    // pub fn push_small_cryptor<S: SmallCryptor<u64, 8> + 'static>(&mut self, smallcryptor: S)
+    // pub fn push_small_cryptor<S: SmallCryptor64 + 'static>(&mut self, smallcryptor: S)
     /// Adds a small cryptor (component) to `Self`'s own small cryptor
     /// container.
     /// 
@@ -316,12 +316,12 @@ impl BigCryptor64
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_cryptor64_basic/struct.BigCryptor64.html#method.push_small_cryptor)
-    pub fn push_small_cryptor<S: SmallCryptor<u64, 8> + 'static>(&mut self, smallcryptor: S)
+    pub fn push_small_cryptor<S: SmallCryptor64 + 'static>(&mut self, smallcryptor: S)
     {
         self.smallcryptor.push(Box::<S>::new(smallcryptor));
     }
 
-    // pub fn push_small_cryptor_array<const N: usize>(&mut self, smallcryptors: [Box<dyn SmallCryptor<u64, 8>>; N])
+    // pub fn push_small_cryptor_array<const N: usize>(&mut self, smallcryptors: [Box<dyn SmallCryptor64>; N])
     /// Adds small cryptors (components) to `Self`'s own small cryptor
     /// container.
     /// 
@@ -336,7 +336,7 @@ impl BigCryptor64
     /// use cryptocol::symmetric::{ BigCryptor64, SmallCryptor, DES };
     /// 
     /// let mut tdes = BigCryptor64::new();
-    /// let cryptors: [Box<dyn SmallCryptor<u64, 8>>; 3] = [ Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
+    /// let cryptors: [Box<dyn SmallCryptor64>; 3] = [ Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
     ///                                         Box::new(DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)),
     ///                                         Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)) ];
     /// tdes.push_small_cryptor_array(cryptors);
@@ -344,7 +344,7 @@ impl BigCryptor64
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_cryptor64_basic/struct.BigCryptor64.html#method.push_small_cryptor_array)
-    pub fn push_small_cryptor_array<const N: usize>(&mut self, smallcryptors: [Box<dyn SmallCryptor<u64, 8>>; N])
+    pub fn push_small_cryptor_array<const N: usize>(&mut self, smallcryptors: [Box<dyn SmallCryptor64>; N])
     {
         for val in smallcryptors
             { self.smallcryptor.push(val); }
@@ -366,7 +366,7 @@ impl BigCryptor64
     /// use cryptocol::symmetric::{ BigCryptor64, SmallCryptor, DES };
     /// 
     /// let mut tdes = BigCryptor64::new();
-    /// let cryptors: Vec<Box<dyn SmallCryptor<u64, 8>>> = vec![ Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
+    /// let cryptors: Vec<Box<dyn SmallCryptor64>> = vec![ Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)),
     ///                                         Box::new(DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)),
     ///                                         Box::new(DES::encryptor_with_key_u64(0x_1234567890ABCDEF_u64)) ];
     /// tdes.push_small_cryptor_vec(cryptors);
@@ -374,7 +374,7 @@ impl BigCryptor64
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_cryptor64_basic/struct.BigCryptor64.html#method.push_small_cryptor_vec)
-    pub fn push_small_cryptor_vec(&mut self, smallcryptor: Vec<Box<dyn SmallCryptor<u64, 8>>>)
+    pub fn push_small_cryptor_vec(&mut self, smallcryptor: Vec<Box<dyn SmallCryptor64>>)
     {
         self.smallcryptor = smallcryptor;
     }
@@ -791,7 +791,7 @@ impl BigCryptor64
         self.block.get() == Self::FAILURE
     }
 
-    #[inline] pub(crate) fn get_smallcryptor(&self) -> &Vec<Box<dyn SmallCryptor<u64, 8>>>  { &self.smallcryptor }
+    #[inline] pub(crate) fn get_smallcryptor(&self) -> &Vec<Box<dyn SmallCryptor64>>  { &self.smallcryptor }
 
     pub(crate) fn move_to_next_key(&mut self)
     {

@@ -422,6 +422,15 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl_ {
 
 
     /***** METHODS FOR GENERATING RANDOM PRIME NUMBERS *****/
+
+            // fn filter_out_composite_number(&self) -> bool;
+            /// Filter out composite numbers. 
+            /// If self is filtered out if it 
+            /// 
+            /// # Output
+            /// `true` if `self` is is a composite number.
+            /// Otherwise, it returns `false`.
+            fn filter_out_composite_number(&self) -> bool   { self.get().filter_out_composite_number()}
             
             /// Tests a `SmallUInt`-type object to find whether or not `self`
             /// is a prime number.

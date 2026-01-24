@@ -16,7 +16,7 @@
 
 use std::vec::Vec;
 use crate::number::{ LongerUnion, SmallUInt };
-use crate::symmetric::SmallCryptor;
+use crate::symmetric::SmallCryptor128;
 
 
 
@@ -179,7 +179,7 @@ use crate::symmetric::SmallCryptor;
 pub struct BigCryptor128
 {
     block: LongerUnion,
-    smallcryptor: Vec<Box<dyn SmallCryptor<u128, 16>>>,
+    smallcryptor: Vec<Box<dyn SmallCryptor128>>,
     enc: fn (s: &mut Self, message: u128) -> u128,
     dec: fn (s: &mut Self, cipher: u128) -> u128,
 }
@@ -226,7 +226,7 @@ impl BigCryptor128
         }
     }
 
-    // pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor<u128, 16>>; N]) -> Self
+    // pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor128>; N]) -> Self
     /// Constructs a new object BigCryptor128 with some small cryptors
     /// (components).
     /// 
@@ -244,7 +244,7 @@ impl BigCryptor128
     /// ```
     /// use cryptocol::symmetric::{ BigCryptor128, SmallCryptor, AES_128 };
     /// 
-    /// let cryptors: [Box<dyn SmallCryptor<u128, 16>>; 3] = [ Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)),
+    /// let cryptors: [Box<dyn SmallCryptor128>; 3] = [ Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)),
     ///                                         Box::new(AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
     ///                                         Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)) ];
     /// let mut _taes = BigCryptor128::new_with_small_cryptor_array(cryptors);
@@ -252,14 +252,14 @@ impl BigCryptor128
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_cryptor128_basic/struct.BigCryptor128.html#method.new_with_small_cryptor_array)
-    pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor<u128, 16>>; N]) -> Self
+    pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor128>; N]) -> Self
     {
         let mut bigcryptor = Self::new();
         bigcryptor.push_small_cryptor_array(smallcryptor);
         bigcryptor
     }
 
-    // pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor<u128, 16>>>) -> Self
+    // pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor128>>) -> Self
     /// Constructs a new object `BigCryptor128` with some small cryptors
     /// (components).
     /// 
@@ -276,7 +276,7 @@ impl BigCryptor128
     /// # Example 1 for normal case
     /// ```
     /// use cryptocol::symmetric::{ BigCryptor128, SmallCryptor, AES_128 };
-    /// let cryptors: Vec<Box<dyn SmallCryptor<u128, 16>>> = vec![ Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)),
+    /// let cryptors: Vec<Box<dyn SmallCryptor128>> = vec![ Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)),
     ///                                         Box::new(AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
     ///                                         Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)) ];
     /// let mut _taes = BigCryptor128::new_with_small_cryptor_vec(cryptors);
@@ -284,14 +284,14 @@ impl BigCryptor128
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_cryptor128_basic/struct.BigCryptor128.html#method.new_with_small_cryptor_vec)
-    pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor<u128, 16>>>) -> Self
+    pub fn new_with_small_cryptor_vec(smallcryptor: Vec<Box<dyn SmallCryptor128>>) -> Self
     {
         let mut bigcryptor = Self::new();
         bigcryptor.push_small_cryptor_vec(smallcryptor);
         bigcryptor
     }
 
-    // pub fn push_small_cryptor<S: SmallCryptor<u128, 16> + 'static>(&mut self, smallcryptor: S)
+    // pub fn push_small_cryptor<S: SmallCryptor128 + 'static>(&mut self, smallcryptor: S)
     /// Adds a small cryptor (component) to `Self`'s own small cryptor
     /// container.
     /// 
@@ -315,7 +315,7 @@ impl BigCryptor128
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_cryptor128_basic/struct.BigCryptor128.html#method.push_small_cryptor)
-    pub fn push_small_cryptor<S: SmallCryptor<u128, 16> + 'static>(&mut self, smallcryptor: S)
+    pub fn push_small_cryptor<S: SmallCryptor128 + 'static>(&mut self, smallcryptor: S)
     {
         self.smallcryptor.push(Box::<S>::new(smallcryptor));
     }
@@ -334,7 +334,7 @@ impl BigCryptor128
     /// ```
     /// use cryptocol::symmetric::{ BigCryptor128, SmallCryptor, AES_128 };
     /// let mut taes = BigCryptor128::new();
-    /// let cryptors: [Box<dyn SmallCryptor<u128, 16>>; 3] = [ Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)),
+    /// let cryptors: [Box<dyn SmallCryptor128>; 3] = [ Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)),
     ///                                         Box::new(AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
     ///                                         Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)) ];
     /// taes.push_small_cryptor_array(cryptors);
@@ -342,7 +342,7 @@ impl BigCryptor128
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_cryptor128_basic/struct.BigCryptor128.html#method.push_small_cryptor_array)
-    pub fn push_small_cryptor_array<const N: usize>(&mut self, smallcryptor: [Box<dyn SmallCryptor<u128, 16>>; N])
+    pub fn push_small_cryptor_array<const N: usize>(&mut self, smallcryptor: [Box<dyn SmallCryptor128>; N])
     {
         for val in smallcryptor
             { self.smallcryptor.push(val); }
@@ -363,7 +363,7 @@ impl BigCryptor128
     /// ```
     /// use cryptocol::symmetric::{ BigCryptor128, SmallCryptor, AES_128 };
     /// let mut taes = BigCryptor128::new();
-    /// let cryptors: Vec<Box<dyn SmallCryptor<u128, 16>>> = vec![ Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)),
+    /// let cryptors: Vec<Box<dyn SmallCryptor128>> = vec![ Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)),
     ///                                         Box::new(AES_128::decryptor_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
     ///                                         Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCBA0987654321_u128)) ];
     /// taes.push_small_cryptor_vec(cryptors);
@@ -371,7 +371,7 @@ impl BigCryptor128
     /// 
     /// # For more examples,
     /// click [here](./documentation/big_cryptor128_basic/struct.BigCryptor128.html#method.push_small_cryptor_vec)
-    pub fn push_small_cryptor_vec(&mut self, smallcryptor: Vec<Box<dyn SmallCryptor<u128, 16>>>)
+    pub fn push_small_cryptor_vec(&mut self, smallcryptor: Vec<Box<dyn SmallCryptor128>>)
     {
         self.smallcryptor = smallcryptor;
     }

@@ -224,7 +224,7 @@ pub use trait_pcbc_with_padding_iso::PCBC_ISO;
 pub use trait_cfb::CFB;
 pub use trait_ofb::OFB;
 pub use trait_ctr::CTR;
-pub use trait_small_cryptor::SmallCryptor;
+pub use trait_small_cryptor::{ SmallCryptor, SmallCryptor64, SmallCryptor128 };
 
 
 /// many *.rs was too big because of documentation and plenty of examples

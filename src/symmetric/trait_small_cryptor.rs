@@ -14,7 +14,7 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-/// SmallCryptor<u64, 8> and SmallCryptor<u128, 16> are the traits for the
+/// SmallCryptor<u128, 16> and SmallCryptor<u64, 8> are the traits for the
 /// components for BigCryptor128 and BigCryptor64, respectively.
 pub trait SmallCryptor<T, const N: usize>
 {
@@ -27,5 +27,5 @@ pub trait SmallCryptor<T, const N: usize>
     // fn clone_cryptor(&self) -> Self;
 }
 
-// trait SmallCryptor64 = SmallCryptor<u64, 8>;
-// trait SmallCryptor128 = SmallCryptor<u128, 16>;
+pub trait SmallCryptor64: SmallCryptor<u64, 8> {}
+pub trait SmallCryptor128: SmallCryptor<u128, 16> {}
