@@ -659,6 +659,8 @@ SHA2_512_t_Generic<t, A5A5A5A5A5A5A5A5,
                     RR1, RR8, RR14, RR18, RR19, RR28, RR34,
                     RR39, RR41, RR61, SR6, SR7>
 {
+    /// Default output length of the hash value in byte 
+    pub(crate) const DEFUALT_OUTPUT_LENGTH_IN_BYTES: usize = t / 8;
     const K: [u64; 80] = [  K00, K01, K02, K03, K04, K05, K06, K07,
                             K08, K09, K10, K11, K12, K13, K14, K15,
                             K16, K17, K18, K19, K20, K21, K22, K23,

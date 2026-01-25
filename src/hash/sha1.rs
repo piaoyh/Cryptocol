@@ -783,6 +783,8 @@ impl<const N: usize, const H0: u32, const H1: u32, const H2: u32, const H3: u32,
         const K2: u32, const K3: u32, const RL1: u32, const RL5: u32, const RL30: u32>
 SHA1_Generic<N, H0, H1, H2, H3, H4, ROUND, K0, K1, K2, K3, RL1, RL5, RL30>
 {
+    /// Default output length of the hash value in byte 
+    pub(crate) const DEFUALT_OUTPUT_LENGTH_IN_BYTES: usize = N * 4;
     const K: [u32; 4] = [ K0, K1, K2, K3 ];
     const H: [u32; 5] = [ H0, H1, H2, H3, H4 ];
 

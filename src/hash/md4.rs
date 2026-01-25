@@ -494,6 +494,8 @@ impl<const N: usize, const H0: u32, const H1: u32, const H2: u32, const H3: u32,
 MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2, 
             R00, R01, R02, R03, R10, R11, R12, R13, R20, R21, R22, R23>
 {
+    /// Default output length of the hash value in byte 
+    pub(crate) const DEFUALT_OUTPUT_LENGTH_IN_BYTES: usize = N * 4;
     const K: [u32; 3] = [ K0, K1, K2 ];
     const R: [[u32; 4]; 3] = [  [R00, R01, R02, R03],
                                 [R10, R11, R12, R13],

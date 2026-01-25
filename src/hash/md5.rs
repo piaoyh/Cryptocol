@@ -617,6 +617,8 @@ MD5_Generic<N, H0, H1, H2, H3, ROUND,
             R00, R01, R02, R03, R10, R11, R12, R13,
             R20, R21, R22, R23, R30, R31, R32, R33>
 {
+    /// Default output length of the hash value in byte 
+    pub(crate) const DEFUALT_OUTPUT_LENGTH_IN_BYTES: usize = N * 4;
     const K: [u32; 64] = [  K00, K01, K02, K03, K04, K05, K06, K07,
                             K08, K09, K10, K11, K12, K13, K14, K15,
                             K16, K17, K18, K19, K20, K21, K22, K23,

@@ -15,12 +15,12 @@
 
 use std::ops::{ Add, Sub, Neg };
 
-use crate::symmetric::{ SmallCryptor, BigCryptor64, BigCryptor128,
+use crate::symmetric::{ SmallCryptor64, SmallCryptor128, BigCryptor64, BigCryptor128,
                         DES_Generic, Rijndael_Generic };
 
 
 impl <S> Add<S> for BigCryptor128
-where S: SmallCryptor<u128, 16> + 'static
+where S: SmallCryptor128 + 'static
 {
     type Output = Self;
 
@@ -34,7 +34,7 @@ where S: SmallCryptor<u128, 16> + 'static
 
 
 impl <S> Sub<S> for BigCryptor128
-where S: SmallCryptor<u128, 16> + 'static
+where S: SmallCryptor128 + 'static
 {
     type Output = Self;
 
@@ -49,7 +49,7 @@ where S: SmallCryptor<u128, 16> + 'static
 
 
 impl <S> Add<S> for BigCryptor64
-where S: SmallCryptor<u64, 8> + 'static
+where S: SmallCryptor64 + 'static
 {
     type Output = Self;
 
@@ -63,7 +63,7 @@ where S: SmallCryptor<u64, 8> + 'static
 
 
 impl <S> Sub<S> for BigCryptor64
-where S: SmallCryptor<u64, 8> + 'static
+where S: SmallCryptor64 + 'static
 {
     type Output = Self;
 
@@ -364,7 +364,7 @@ Add<S> for DES_Generic<ROUND, SHIFT,
                         S740, S741, S742, S743, S744, S745, S746, S747,
                         S748, S749, S750, S751, S752, S753, S754, S755,
                         S756, S757, S758, S759, S760, S761, S762, S763>
-where S: SmallCryptor<u64, 8> + 'static
+where S: SmallCryptor64 + 'static
 {
     type Output = BigCryptor64;
 
@@ -663,7 +663,7 @@ Sub<S> for DES_Generic<ROUND, SHIFT,
                         S740, S741, S742, S743, S744, S745, S746, S747,
                         S748, S749, S750, S751, S752, S753, S754, S755,
                         S756, S757, S758, S759, S760, S761, S762, S763>
-where S: SmallCryptor<u64, 8> + 'static
+where S: SmallCryptor64 + 'static
 {
     type Output = BigCryptor64;
 
@@ -987,7 +987,7 @@ Add<S> for Rijndael_Generic<ROUND, 4, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, S
                             MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13,
                             MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
                             RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
-where S: SmallCryptor<u128, 16> + 'static
+where S: SmallCryptor128 + 'static
 {
     type Output = BigCryptor128;
 
@@ -1012,7 +1012,7 @@ Sub<S> for Rijndael_Generic<ROUND, 4, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, S
                             MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13,
                             MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
                             RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
-where S: SmallCryptor<u128, 16> + 'static
+where S: SmallCryptor128 + 'static
 {
     type Output = BigCryptor128;
 
@@ -1062,7 +1062,7 @@ Add<S> for Rijndael_Generic<ROUND, 2, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, S
                             MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13,
                             MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
                             RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
-where S: SmallCryptor<u64, 8> + 'static
+where S: SmallCryptor64 + 'static
 {
     type Output = BigCryptor64;
 
@@ -1087,7 +1087,7 @@ Sub<S> for Rijndael_Generic<ROUND, 2, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, S
                             MC00, MC01, MC02, MC03, MC10, MC11, MC12, MC13,
                             MC20, MC21, MC22, MC23, MC30, MC31, MC32, MC33,
                             RC0, RC1, RC2, RC3, RC4, RC5, RC6, RC7, RC8, RC9, ROT>
-where S: SmallCryptor<u64, 8> + 'static
+where S: SmallCryptor64 + 'static
 {
     type Output = BigCryptor64;
 

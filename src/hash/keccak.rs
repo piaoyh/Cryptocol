@@ -17,7 +17,7 @@ use std::fmt::{ self, Debug, Display, Formatter };
 use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign,
                 BitXor, BitXorAssign, Not, Shl };
 
-use crate::number::{ SmallUInt, LongUnion };
+use crate::number::{ TraitsBigUInt, SmallUInt, LongUnion };
 
 
 #[allow(non_camel_case_types)]
@@ -1364,10 +1364,9 @@ pub type TINY_SHA3_64 = Keccak_Generic<9, {KECCAK_CONST::SHA3}, 18, u8>;
 /// - T : The parameter `T` is the datatype of the unit block to process. It
 ///   is one of `u8`, `u16`, `u32`, `u64`, and `u128`.
 ///   Usually, for the official SHA3, SHAKE, and cSHAKE, `T` is `u64`.
-///   So, the default value is `24` for SHA3, SHAKE, and cSHAKE.
 /// - LFSR : The parameter `LFSR` is the 8-bit linear feedback shift register.
-///   It is expressed in the form of polynormial such as x^8 + x^6 + x^5 + x^4
-///   + 1 (= x^0). The highest order term x^8 indicates 8-bit register. The
+///   It is expressed in the form of polynormial such as x^8 + x^6 + x^5 + x^4 +
+///   1 (= x^0). The highest order term x^8 indicates 8-bit register. The
 ///   exponents 6, 5, 4, and 0 means the bits of the register to be taken, such
 ///   as 6th, 5th, 4th and 0th bits. The taken bits will be eXclusive ORed with
 ///   one another to get one-bit result. And then, the LSB (Least Segnificant
@@ -1721,10 +1720,7 @@ pub struct Keccak_Generic<const RATE: usize = 72, const PADDING: usize = 0,
         const RHO_MUL_X: usize = 2, const RHO_MUL_Y: usize = 3, const RHO_T: u32 = 24,
         const PI_MUL_X: usize = 1, const PI_MUL_Y: usize = 3,
         const CHI_ADD_1: usize = 1, const CHI_ADD_2: usize = 2>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + Shl<Output = T>
+where T: TraitsBigUInt<T>
 {
     state: [[T; 5]; 5],
 }
@@ -1738,10 +1734,7 @@ Keccak_Generic<RATE, PADDING, ROUNDS, T, LFSR,
                 THETA_SUB, THETA_ADD, THETA_ROT,
                 RHO_MUL_X, RHO_MUL_Y, RHO_T,
                 PI_MUL_X, PI_MUL_Y, CHI_ADD_1, CHI_ADD_2>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + Shl<Output = T>
+where T: TraitsBigUInt<T>
 {
     const RC: [T; ROUNDS] = make_RC!(T, ROUNDS, LFSR);
     const SEPARATOR: u8 = match PADDING
@@ -1752,11 +1745,11 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
                                 _ => { 0b_0000_0001 },  // KECCAK
                             };
     const TAIL: u8 = 0b_1000_0000;
-    const OUPUT_LENGTH: usize = if (PADDING == KECCAK_CONST::SHAKE) || (PADDING == KECCAK_CONST::CSHAKE)
+    /// Default output length of the hash value in byte 
+    pub(crate) const DEFUALT_OUTPUT_LENGTH_IN_BYTES: usize = if (PADDING == KECCAK_CONST::SHAKE) || (PADDING == KECCAK_CONST::CSHAKE)
                                     { T::BITS as usize / 8 * 25 - RATE }
                                 else
                                     { (T::BITS as usize / 8 * 25 - RATE) / 2 };
-    
 
     // pub fn new() -> Self
     /// Creates the new object of `Self`.
@@ -2486,8 +2479,8 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     pub fn get_hash_value_in_vec(&mut self) -> Vec<u8>
     {
         let mut out = Vec::<u8>::new();
-        out.resize(Self::OUPUT_LENGTH, 0);
-        self.get_hash_value(out.as_mut_ptr(), Self::OUPUT_LENGTH);
+        out.resize(Self::DEFUALT_OUTPUT_LENGTH_IN_BYTES, 0);
+        self.get_hash_value(out.as_mut_ptr(), Self::DEFUALT_OUTPUT_LENGTH_IN_BYTES);
         out
     }
 
@@ -2592,7 +2585,7 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     #[inline]
     pub fn get_hash_value_in_string(&mut self) -> String
     {
-        self.get_hash_code_in_string(Self::OUPUT_LENGTH)
+        self.get_hash_code_in_string(Self::DEFUALT_OUTPUT_LENGTH_IN_BYTES)
     }
 
     // pub fn get_hash_code_in_string(&mut self, length_in_bytes: usize) -> String
@@ -3849,12 +3842,13 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     }
 
     // pub fn get_desirable_output_length() -> usize
-    /// Returns the desiable `OUTPUT_LENGTH` of specific algorithm.
-    /// The desiable `OUTPUT_LENGTH` is expressed not in bits but in bytes here.
+    /// Returns the desiable `DEFUALT_OUTPUT_LENGTH_IN_BYTES` of specific algorithm.
+    /// The desiable `DEFUALT_OUTPUT_LENGTH_IN_BYTES` is expressed
+    /// not in bits but in bytes here.
     /// 
     /// # Output
-    /// This method returns the desiable `OUTPUT_LENGTH` of specific algorithm
-    /// in the type `usize`.
+    /// This method returns the desiable `DEFUALT_OUTPUT_LENGTH_IN_BYTES` of specific
+    /// algorithm in the type `usize`.
     /// 
     /// # Example 1 for SHA3_256
     /// ```
@@ -3864,68 +3858,12 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
     /// assert_eq!(LENGTH, 32);
     /// ```
     /// 
-    /// # Example 2 for SHAKE_256
-    /// ```
-    /// use cryptocol::hash::SHAKE_256;
-    /// let LENGTH = SHAKE_256::get_desirable_output_length();
-    /// println!("The desirable output length of SHAKE-256 is {}", LENGTH);
-    /// assert_eq!(LENGTH, 64);
-    /// ```
-    /// 
-    /// # Example 3 for cSHAKE_256
-    /// ```
-    /// use cryptocol::hash::cSHAKE_256;
-    /// let LENGTH = cSHAKE_256::get_desirable_output_length();
-    /// println!("The desirable output length of cSHAKE-256 is {}", LENGTH);
-    /// assert_eq!(LENGTH, 64);
-    /// ```
-    /// 
-    /// # Example 4 for KECCAK_256
-    /// ```
-    /// use cryptocol::hash::KECCAK_256;
-    /// let LENGTH = KECCAK_256::get_desirable_output_length();
-    /// println!("The desirable output length of KECCAK-256 is {}", LENGTH);
-    /// assert_eq!(LENGTH, 32);
-    /// ```
-    /// 
-    /// # Example 5 for BIG_SHA3_1536
-    /// ```
-    /// use cryptocol::hash::BIG_SHA3_1536;
-    /// let LENGTH = BIG_SHA3_1536::get_desirable_output_length();
-    /// println!("The desirable output length of BIG_SHA3_1536 is {}", LENGTH);
-    /// assert_eq!(LENGTH, 192);
-    /// ```
-    /// 
-    /// # Example 6 for SMALL_SHA3_256
-    /// ```
-    /// use cryptocol::hash::SMALL_SHA3_256;
-    /// let LENGTH = SMALL_SHA3_256::get_desirable_output_length();
-    /// println!("The desirable output length of SMALL_SHA3_256 is {}", LENGTH);
-    /// assert_eq!(LENGTH, 32);
-    /// ```
-    /// 
-    /// # Example 7 for SMALLER_SHAKE_128
-    /// ```
-    /// use cryptocol::hash::SMALLER_SHAKE_128;
-    /// let LENGTH = SMALLER_SHAKE_128::get_desirable_output_length();
-    /// println!("The desirable output length of SMALLER_SHAKE_128 is {}", LENGTH);
-    /// assert_eq!(LENGTH, 32);
-    /// ```
-    /// 
-    /// # Example 8 for TINY_SHA3_64
-    /// ```
-    /// use cryptocol::hash::TINY_SHA3_64;
-    /// let LENGTH = TINY_SHA3_64::get_desirable_output_length();
-    /// println!("The desirable output length of TINY_SHA3_64 is {}", LENGTH);
-    /// assert_eq!(LENGTH, 8);
-    /// ```
-    /// 
     /// # For more examples,
     /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.get_desirable_output_length)
     #[inline]
     pub fn get_desirable_output_length() -> usize
     {
-        Self::OUPUT_LENGTH
+        Self::DEFUALT_OUTPUT_LENGTH_IN_BYTES
     }
 
     #[inline]
@@ -4026,10 +3964,7 @@ Display for Keccak_Generic<RATE, PADDING, ROUNDS, T, LFSR,
                 THETA_SUB, THETA_ADD, THETA_ROT,
                 RHO_MUL_X, RHO_MUL_Y, RHO_T,
                 PI_MUL_X, PI_MUL_Y, CHI_ADD_1, CHI_ADD_2>
-where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-        + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-        + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-        + Shl<Output = T>
+where T: TraitsBigUInt<T>
 {
     /// Formats the value using the given formatter.
     /// You will hardly use this method directly.
