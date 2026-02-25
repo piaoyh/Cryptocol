@@ -6,8 +6,8 @@
 // This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! The module that contains a big unsigned integer struct
-//! with user-defined fixed size and its methods.
+//! Provides a fixed-size big unsigned integer implementation
+//! with customizable bit-widths and associated methods.
 
 // #![warn(missing_docs)]
 // #![warn(rustdoc::missing_doc_code_examples)]
@@ -26,8 +26,12 @@ use std::marker::{ Send, Sync };
 use crate::number::{ SmallUInt, LongerUnion, SharedValues, SharedArrays, NumberErr };
 
 
-/// The trait `TraitsBigUInt<T>` is for the trait `T` of BigUInt<T, N>.
-/// Its contents can be implicitly changed in the future if necessary.
+/// A convenience alias for the collection of traits required by the internal
+/// storage type `T` in `BigUInt<T, N>`.
+/// 
+/// # Note
+/// These trait requirements are subject to change in future versions to 
+/// accommodate updates to the internal implementation.
 pub trait TraitsBigUInt<T>: SmallUInt + Copy + Clone + Display + Debug + ToString
                         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
                         + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
@@ -60,205 +64,91 @@ where T: SmallUInt + Copy + Clone + Display + Debug + ToString
 //         + BitXor<Output=T> + BitXorAssign + Not<Output=T>
 //         + PartialEq + PartialOrd = {};
 
-/// 256-bit unsigned integer implemented by `BigUInt<u128, 2>` made with two `u128`s
-#[allow(non_camel_case_types)] pub type U256_with_u128 = BigUInt<u128, 2>;
-
-/// 384-bit unsigned integer implemented by `BigUInt<u128, 3>` made with two `u128`s
-#[allow(non_camel_case_types)] pub type U384_with_u128 = BigUInt<u128, 3>;
-
-/// 512-bit unsigned integer implemented by `BigUInt<u128, 4>` made with four `u128`s
-#[allow(non_camel_case_types)] pub type U512_with_u128 = BigUInt<u128, 4>;
-
-/// 768-bit unsigned integer implemented by `BigUInt<u128, 6>` made with two `u128`s
-#[allow(non_camel_case_types)] pub type U768_with_u128 = BigUInt<u128, 6>;
-
-/// 1024-bit unsigned integer implemented by `BigUInt<u128, 8>` made with eight `u128`s
-#[allow(non_camel_case_types)] pub type U1024_with_u128 = BigUInt<u128, 8>;
-
-/// 2048-bit unsigned integer implemented by `BigUInt<u128, 4>` made with sixteen `u128`s
-#[allow(non_camel_case_types)] pub type U2048_with_u128 = BigUInt<u128, 16>;
-
-/// 3072-bit unsigned integer implemented by `BigUInt<u128, 4>` made with twenty-four `u128`s
-#[allow(non_camel_case_types)] pub type U3072_with_u128 = BigUInt<u128, 24>;
-
-/// 4096-bit unsigned integer implemented by `BigUInt<u128, 4>` made with thirty-two `u128`s
-#[allow(non_camel_case_types)] pub type U4096_with_u128 = BigUInt<u128, 32>;
-
-/// 5120-bit unsigned integer implemented by `BigUInt<u128, 4>` made with forty `u128`s
-#[allow(non_camel_case_types)] pub type U5120_with_u128 = BigUInt<u128, 40>;
-
-/// 6144-bit unsigned integer implemented by `BigUInt<u128, 4>` made with fory-eight `u128`s
-#[allow(non_camel_case_types)] pub type U6144_with_u128 = BigUInt<u128, 48>;
-
-/// 7168-bit unsigned integer implemented by `BigUInt<u128, 4>` made with fifty-six `u128`s
-#[allow(non_camel_case_types)] pub type U7168_with_u128 = BigUInt<u128, 56>;
-
-/// 8192-bit unsigned integer implemented by `BigUInt<u128, 4>` made with sixty-four `u128`s
-#[allow(non_camel_case_types)] pub type U8192_with_u128 = BigUInt<u128, 64>;
-
-/// 16384-bit unsigned integer implemented by `BigUInt<u128, 4>` made with one hundred twenty-eight `u128`s
-#[allow(non_camel_case_types)] pub type U16384_with_u128 = BigUInt<u128, 128>;
-
-
-/// 256-bit unsigned integer implemented by `BigUInt<u64, 4>` made with four `u64`s
-#[allow(non_camel_case_types)] pub type U256_with_u64 = BigUInt<u64, 4>;
-
-/// 384-bit unsigned integer implemented by `BigUInt<u64, 6>` made with four `u64`s
-#[allow(non_camel_case_types)] pub type U384_with_u64 = BigUInt<u64, 6>;
-
-/// 512-bit unsigned integer implemented by `BigUInt<u64, 8>` made with eight `u64`s
-#[allow(non_camel_case_types)] pub type U512_with_u64 = BigUInt<u64, 8>;
-
-/// 768-bit unsigned integer implemented by `BigUInt<u64, 12>` made with four `u64`s
-#[allow(non_camel_case_types)] pub type U768_with_u64 = BigUInt<u64, 12>;
-
-/// 1024-bit unsigned integer implemented by `BigUInt<u64, 16>` made with sixteen `u64`s
-#[allow(non_camel_case_types)] pub type U1024_with_u64 = BigUInt<u64, 16>;
-
-/// 2048-bit unsigned integer implemented by `BigUInt<u64, 32>` made with thirty-two `u64`s
-#[allow(non_camel_case_types)] pub type U2048_with_u64 = BigUInt<u64, 32>;
-
-/// 3072-bit unsigned integer implemented by `BigUInt<u64, 48>` made with fourty-eight `u64`s
-#[allow(non_camel_case_types)] pub type U3072_with_u64 = BigUInt<u64, 48>;
-
-/// 4096-bit unsigned integer implemented by `BigUInt<u64, 64>` made with sixty-four `u64`s
-#[allow(non_camel_case_types)] pub type U4096_with_u64 = BigUInt<u64, 64>;
-
-/// 5120-bit unsigned integer implemented by `BigUInt<u64, 80>` made with eighty `u64`s
-#[allow(non_camel_case_types)] pub type U5120_with_u64 = BigUInt<u64, 80>;
-
-/// 6144-bit unsigned integer implemented by `BigUInt<u64, 96>` made with ninety-six `u64`s
-#[allow(non_camel_case_types)] pub type U6144_with_u64 = BigUInt<u64, 96>;
-
-/// 7168-bit unsigned integer implemented by BigUInt<u64, 112> made with one hundred twelve `u64`s
-#[allow(non_camel_case_types)] pub type U7168_with_u64 = BigUInt<u64, 112>;
-
-/// 8192-bit unsigned integer implemented by `BigUInt<u64, 128>` made with two hundred twenty-eight `u64`s
-#[allow(non_camel_case_types)] pub type U8192_with_u64 = BigUInt<u64, 128>;
-
-/// 16384-bit unsigned integer implemented by `BigUInt<u64, 256>` made with two hundred fifty-six `u64`s
-#[allow(non_camel_case_types)] pub type U16384_with_u64 = BigUInt<u64, 256>;
-
-
-/// 256-bit unsigned integer implemented by `BigUInt<u32, 8>` made with eight `u32`s
-#[allow(non_camel_case_types)] pub type U256_with_u32 = BigUInt<u32, 8>;
-
-/// 384-bit unsigned integer implemented by `BigUInt<u32, 12>` made with eight `u32`s
-#[allow(non_camel_case_types)] pub type U384_with_u32 = BigUInt<u32, 12>;
-
-/// 512-bit unsigned integer implemented by `BigUInt<u32, 16>` made with sixteen `u32`s
-#[allow(non_camel_case_types)] pub type U512_with_u32 = BigUInt<u32, 16>;
-
-/// 768-bit unsigned integer implemented by `BigUInt<u32, 24>` made with eight `u32`s
-#[allow(non_camel_case_types)] pub type U768_with_u32 = BigUInt<u32, 24>;
-
-/// 1024-bit unsigned integer implemented by `BigUInt<u32, 32>` made with thirty-two `u32`s
-#[allow(non_camel_case_types)] pub type U1024_with_u32 = BigUInt<u32, 32>;
-
-/// 2048-bit unsigned integer implemented by `BigUInt<u32, 64>` made with sixty-four `u32`s
-#[allow(non_camel_case_types)] pub type U2048_with_u32 = BigUInt<u32, 64>;
-
-/// 3072-bit unsigned integer implemented by `BigUInt<u32, 96>` made with ninety-six `u32`s
-#[allow(non_camel_case_types)] pub type U3072_with_u32 = BigUInt<u32, 96>;
-
-/// 4096-bit unsigned integer implemented by `BigUInt<u32, 128>` made with one hundred twenty-eight `u32`s
-#[allow(non_camel_case_types)] pub type U4096_with_u32 = BigUInt<u32, 128>;
-
-/// 5120-bit unsigned integer implemented by `BigUInt<u32, 8>` made with one hundred sixty `u32`s
-#[allow(non_camel_case_types)] pub type U5120_with_u32 = BigUInt<u32, 160>;
-
-/// 6144-bit unsigned integer implemented by `BigUInt<u32, 192>` made with one hundred ninety-two `u32`s
-#[allow(non_camel_case_types)] pub type U6144_with_u32 = BigUInt<u32, 192>;
-
-/// 7168-bit unsigned integer implemented by `BigUInt<u32, 224>` made with two hundred twenty-four `u32`s
-#[allow(non_camel_case_types)] pub type U7168_with_u32 = BigUInt<u32, 224>;
-
-/// 8192-bit unsigned integer implemented by `BigUInt<u32, 256>` made with two hundred fifty-six `u32`s
-#[allow(non_camel_case_types)] pub type U8192_with_u32 = BigUInt<u32, 256>;
-
-/// 16384-bit unsigned integer implemented by `BigUInt<u32, 512>` made with five hundred twelve `u32`s
-#[allow(non_camel_case_types)] pub type U16384_with_u32 = BigUInt<u32, 512>;
-
-
-/// 256-bit unsigned integer implemented by `BigUInt<u16, 16>` made with sixteen `u16`s
-#[allow(non_camel_case_types)] pub type U256_with_u16 = BigUInt<u16, 16>;
-
-/// 256-bit unsigned integer implemented by `BigUInt<u16, 24>` made with sixteen `u16`s
-#[allow(non_camel_case_types)] pub type U384_with_u16 = BigUInt<u16, 24>;
-
-/// 512-bit unsigned integer implemented by `BigUInt<u16, 32>` made with thirty-two `u16`s
-#[allow(non_camel_case_types)] pub type U512_with_u16 = BigUInt<u16, 32>;
-
-/// 256-bit unsigned integer implemented by `BigUInt<u16, 48>` made with sixteen `u16`s
-#[allow(non_camel_case_types)] pub type U768_with_u16 = BigUInt<u16, 48>;
-
-/// 1024-bit unsigned integer implemented by `BigUInt<u16, 64>` made with sixty-four `u16`s
-#[allow(non_camel_case_types)] pub type U1024_with_u16 = BigUInt<u16, 64>;
-
-/// 2048-bit unsigned integer implemented by `BigUInt<u16, 128>` made with one hundred twenty-eight `u16`s
-#[allow(non_camel_case_types)] pub type U2048_with_u16 = BigUInt<u16, 128>;
-
-/// 3072-bit unsigned integer implemented by `BigUInt<u16, 192>` made with one hundred ninety-two `u16`s
-#[allow(non_camel_case_types)] pub type U3072_with_u16 = BigUInt<u16, 192>;
-
-/// 4096-bit unsigned integer implemented by `BigUInt<u16, 256>` made with two hundred fifty-six `u16`s
-#[allow(non_camel_case_types)] pub type U4096_with_u16 = BigUInt<u16, 256>;
-
-/// 5120-bit unsigned integer implemented by `BigUInt<u16, 320>` made with three hundred twenty `u16`s
-#[allow(non_camel_case_types)] pub type U5120_with_u16 = BigUInt<u16, 320>;
-
-/// 6144-bit unsigned integer implemented by `BigUInt<u16, 384>` made with three hundred eighty-four `u16`s
-#[allow(non_camel_case_types)] pub type U6144_with_u16 = BigUInt<u16, 384>;
-
-/// 7168-bit unsigned integer implemented by `BigUInt<u16, 448>` made with four hundred forty-eight `u16`s
-#[allow(non_camel_case_types)] pub type U7168_with_u16 = BigUInt<u16, 448>;
-
-/// 8192-bit unsigned integer implemented by `BigUInt<u16, 512>` made with five hundred twelve `u16`s
-#[allow(non_camel_case_types)] pub type U8192_with_u16 = BigUInt<u16, 512>;
-
-/// 16384-bit unsigned integer implemented by `BigUInt<u16, 1024>` made with one thousand twenty-four `u16`s
-#[allow(non_camel_case_types)] pub type U16384_with_u16 = BigUInt<u16, 1024>;
-
-
-/// 256-bit unsigned integer implemented by `BigUInt<u8, 32>` made with thirty-two `u8`s
-#[allow(non_camel_case_types)] pub type U256_with_u8 = BigUInt<u8, 32>;
-
-/// 256-bit unsigned integer implemented by `BigUInt<u8, 48>` made with thirty-two `u8`s
-#[allow(non_camel_case_types)] pub type U384_with_u8 = BigUInt<u8, 48>;
-
-/// 512-bit unsigned integer implemented by `BigUInt<u8, 64>` made with sixty-four `u8`s
-#[allow(non_camel_case_types)] pub type U512_with_u8 = BigUInt<u8, 64>;
-
-/// 256-bit unsigned integer implemented by `BigUInt<u8, 96>` made with thirty-two `u8`s
-#[allow(non_camel_case_types)] pub type U768_with_u8 = BigUInt<u8, 96>;
-
-/// 1024-bit unsigned integer implemented by `BigUInt<u8, 128>` made with one hundred twenty-eight `u8`s
-#[allow(non_camel_case_types)] pub type U1024_with_u8 = BigUInt<u8, 128>;
-
-/// 2048-bit unsigned integer implemented by `BigUInt<u8, 256>` made with two hundred fifty-six `u8`s
-#[allow(non_camel_case_types)] pub type U2048_with_u8 = BigUInt<u8, 256>;
-
-/// 3072-bit unsigned integer implemented by `BigUInt<u8, 384>` made with three hundred eighty-four `u8`s
-#[allow(non_camel_case_types)] pub type U3072_with_u8 = BigUInt<u8, 384>;
-
-/// 4096-bit unsigned integer implemented by `BigUInt<u8, 512>` made with five hundred twelve `u8`s
-#[allow(non_camel_case_types)] pub type U4096_with_u8 = BigUInt<u8, 512>;
-
-/// 5120-bit unsigned integer implemented by `BigUInt<u8, 640>` made with six hundred forty-eight `u8`s
-#[allow(non_camel_case_types)] pub type U5120_with_u8 = BigUInt<u8, 640>;
-
-/// 6144-bit unsigned integer implemented by `BigUInt<u8, 768>` made with seven hundred sixty-eight `u8`s
-#[allow(non_camel_case_types)] pub type U6144_with_u8 = BigUInt<u8, 768>;
-
-/// 7168-bit unsigned integer implemented by `BigUInt<u8, 896>` made with eight hundred ninety-six `u8`s
-#[allow(non_camel_case_types)] pub type U7168_with_u8 = BigUInt<u8, 896>;
-
-/// 8192-bit unsigned integer implemented by `BigUInt<u8, 1024>` made with one thousand twenty-four `u8`s
-#[allow(non_camel_case_types)] pub type U8192_with_u8 = BigUInt<u8, 1024>;
-
-/// 16384-bit unsigned integer implemented by `BigUInt<u8, 2048>` made with two thousand forty-eight `u8`s
-#[allow(non_camel_case_types)] pub type U16384_with_u8 = BigUInt<u8, 2048>;
-
+macro_rules! define_biguint_alias {
+    ($name:ident, $inner:ty, $len:expr, $bits:expr) => {
+        #[doc = concat!(
+            stringify!($bits), "-bit unsigned integer implemented as `BigUInt<", 
+            stringify!($inner), ", ", stringify!($len), ">` (comprising ", 
+            stringify!($len), " x `", stringify!($inner), "`)."
+        )]
+        #[allow(non_camel_case_types)]
+        pub type $name = BigUInt<$inner, $len>;
+    };
+}
+// --- u128 Variants ---
+define_biguint_alias!(U256_with_u128, u128, 2, 256);
+define_biguint_alias!(U384_with_u128, u128, 3, 384);
+define_biguint_alias!(U512_with_u128, u128, 4, 512);
+define_biguint_alias!(U768_with_u128, u128, 6, 768);
+define_biguint_alias!(U1024_with_u128, u128, 8, 1024);
+define_biguint_alias!(U2048_with_u128, u128, 16, 2048);
+define_biguint_alias!(U3072_with_u128, u128, 24, 3072);
+define_biguint_alias!(U4096_with_u128, u128, 32, 4096);
+define_biguint_alias!(U5120_with_u128, u128, 40, 5120);
+define_biguint_alias!(U6144_with_u128, u128, 48, 6144);
+define_biguint_alias!(U7168_with_u128, u128, 56, 7168);
+define_biguint_alias!(U8192_with_u128, u128, 64, 8192);
+define_biguint_alias!(U16384_with_u128, u128, 128, 16384);
+
+// --- u64 Variants ---
+define_biguint_alias!(U256_with_u64, u64, 4, 256);
+define_biguint_alias!(U384_with_u64, u64, 6, 384);
+define_biguint_alias!(U512_with_u64, u64, 8, 512);
+define_biguint_alias!(U768_with_u64, u64, 12, 768);
+define_biguint_alias!(U1024_with_u64, u64, 16, 1024);
+define_biguint_alias!(U2048_with_u64, u64, 32, 2048);
+define_biguint_alias!(U3072_with_u64, u64, 48, 3072);
+define_biguint_alias!(U4096_with_u64, u64, 64, 4096);
+define_biguint_alias!(U5120_with_u64, u64, 80, 5120);
+define_biguint_alias!(U6144_with_u64, u64, 96, 6144);
+define_biguint_alias!(U7168_with_u64, u64, 112, 7168);
+define_biguint_alias!(U8192_with_u64, u64, 128, 8192);
+define_biguint_alias!(U16384_with_u64, u64, 256, 16384);
+
+// --- u32 Variants ---
+define_biguint_alias!(U256_with_u32, u32, 8, 256);
+define_biguint_alias!(U384_with_u32, u32, 12, 384);
+define_biguint_alias!(U512_with_u32, u32, 16, 512);
+define_biguint_alias!(U768_with_u32, u32, 24, 768);
+define_biguint_alias!(U1024_with_u32, u32, 32, 1024);
+define_biguint_alias!(U2048_with_u32, u32, 64, 2048);
+define_biguint_alias!(U3072_with_u32, u32, 96, 3072);
+define_biguint_alias!(U4096_with_u32, u32, 128, 4096);
+define_biguint_alias!(U5120_with_u32, u32, 160, 5120);
+define_biguint_alias!(U6144_with_u32, u32, 192, 6144);
+define_biguint_alias!(U7168_with_u32, u32, 224, 7168);
+define_biguint_alias!(U8192_with_u32, u32, 256, 8192);
+define_biguint_alias!(U16384_with_u32, u32, 512, 16384);
+
+// --- u16 Variants ---
+define_biguint_alias!(U256_with_u16, u16, 16, 256);
+define_biguint_alias!(U384_with_u16, u16, 24, 384);
+define_biguint_alias!(U512_with_u16, u16, 32, 512);
+define_biguint_alias!(U768_with_u16, u16, 48, 768);
+define_biguint_alias!(U1024_with_u16, u16, 64, 1024);
+define_biguint_alias!(U2048_with_u16, u16, 128, 2048);
+define_biguint_alias!(U3072_with_u16, u16, 192, 3072);
+define_biguint_alias!(U4096_with_u16, u16, 256, 4096);
+define_biguint_alias!(U5120_with_u16, u16, 320, 5120);
+define_biguint_alias!(U6144_with_u16, u16, 384, 6144);
+define_biguint_alias!(U7168_with_u16, u16, 448, 7168);
+define_biguint_alias!(U8192_with_u16, u16, 512, 8192);
+define_biguint_alias!(U16384_with_u16, u16, 1024, 16384);
+
+// --- u8 Variants ---
+define_biguint_alias!(U256_with_u8, u8, 32, 256);
+define_biguint_alias!(U384_with_u8, u8, 48, 384);
+define_biguint_alias!(U512_with_u8, u8, 64, 512);
+define_biguint_alias!(U768_with_u8, u8, 96, 768);
+define_biguint_alias!(U1024_with_u8, u8, 128, 1024);
+define_biguint_alias!(U2048_with_u8, u8, 256, 2048);
+define_biguint_alias!(U3072_with_u8, u8, 384, 3072);
+define_biguint_alias!(U4096_with_u8, u8, 512, 4096);
+define_biguint_alias!(U5120_with_u8, u8, 640, 5120);
+define_biguint_alias!(U6144_with_u8, u8, 768, 6144);
+define_biguint_alias!(U7168_with_u8, u8, 896, 7168);
+define_biguint_alias!(U8192_with_u8, u8, 1024, 8192);
+define_biguint_alias!(U16384_with_u8, u8, 2048, 16384);
 
 
 /*** Macro Fuctions ***/
@@ -686,88 +576,91 @@ macro_rules! calc_rotate_assign
 
 
 //////////////////////////////////////////
-/// # Generic Big Unsigned Integer with Fixed Size
-/// The struct `BigUInt<T, const N: usize>` is a generic struct for which you
-/// can decide the type of elements and its number.
-/// 
+/// # A Generic Fixed-Size Big Unsigned Integer
+///
+/// `BigUInt<T, const N: usize>` is a generic structure providing high-precision 
+/// arithmetic with a fixed memory footprint.
+///
 /// # Generic Parameters
-/// - `T`: is supposed to be a _primitive unsigned integer_ type such as `u8`,
-///   `u16`, `u32`, `u64`, `u128` and `usize`. So, you are supposed to choose
-///   one of `u8`, `u16`, `u32`, `u64`, `u128` and `usize`.
-/// - `N`: is related with the length of the BigUInt. The total length of
-///   BigUInt is `size_of::<T>() * N`.
+/// - `T`: The underlying primitive unsigned integer type
+///   (`u8`, `u16`, `u32`, `u64`, `u128`, or `usize`).
+/// - `N`: The number of elements of type `T`.
+///   The total bit-width is calculated as `size_of::<T>() * N * 8`.
 /// 
-/// # Features
-/// It is Little-endian.
-/// - It consists of an array of type `T` with `N` elements and flags of type
-///   `u8`.
-/// - The same sized `BigUInt` can be made in several ways.
+/// # Internal Representation
+/// - **Endianness**: Data is stored in **little-endian** order.
+/// - **Storage**: It consists of an internal array `[T; N]`
+///   and a `u8` flag field.
+/// - **Flags**: Tracks states such as `OVERFLOW`, `UNDERFLOW`, `INFINITY`,
+///   `DIVIDED_BY_ZERO`, `UNDEFINED`, `LEFT_CARRY`, and `RIGHT_CARRY`.
+/// 
+/// # Panics & Safety
+/// - **Size Constraint**: If the total size (`size_of::<T>() * N`) is
+///   16 bytes (128 bits) or less, certain methods may panic or exhibit
+///   undefined behavior.
+/// 
+/// # Quick Start
+/// You can define custom bit-widths using type aliases.
+/// Although `u1024` is not a built-in Rust type,
+/// you can easily define it as follows:
+/// 
+/// ## Example 1
+/// ```rust
+/// use cryptocol::number::*;
+///
+/// // Define a 1024-bit integer using 8 x u128
+/// type u1024 = BigUInt<u128, 8>;
+/// ```
+/// Once defined, `u1024` can be used similarly to primitive types
+/// like `u8` or `u64`.
+/// 
+/// ## Example 2: Alternative Implementations
+/// ```rust
+/// use cryptocol::number::*;
+/// 
+/// // Define a 1024-bit integer using 16 x u64
+/// type u1024_Alt = BigUInt<u64, 16>;
+/// ```
+/// While `BigUInt<u64, 16>` and `BigUInt<u128, 8>` represent the same
+/// bit-width, they consist of different base components.
+/// You can even use `BigUInt<u8, 128>`.
+/// The choice of base type is flexible and depends on your requirements.
+/// 
+/// ## Performance Guide
+/// - The same size `BigUInt` can be made in several ways.
 ///   For example, a 1024-bit unsigned integer can be implemented with
 ///   either `BigUInt<u128, 8>`, `BigUInt<u64, 16>`, `BigUInt<u32, 32>`,
 ///   `BigUInt<u16, 64>`, or `BigUInt<u8, 128>`. They are all 1024-bit
 ///   unsigned integers, but their performance will be different from 
-///   one another depending on CPU.
-/// - flags are OVERFLOW, UNDERFLOW, INFINITY, DIVIDED_BY_ZERO, UNDEFINED,
-///   LEFT_CARRY, and RIGHT_CARRY.
+///   one another depending on the target CPU architecture.
+/// - The choice of base type `T` significantly impacts performance
+///   depending on the operation and the target CPU architecture:
+///
+/// | Operation      | Recommended Base Type (`T`) | Best Performance Context |
+/// |----------------|-----------------------------|--------------------------|
+/// | Addition       | `u128`                      | Debug & Release          |
+/// | Subtraction    | `u128`                      | Debug & Release          |
+/// | Multiplication | `u16`                       | Release mode             |
+/// | Division       | `u64`                       | Release mode             |
 /// 
-/// # Panics
-/// If `size_of::<T>() * N` <= `128`, some methods may panic
-/// or its behavior may be undefined though it may not panic.
+/// *Note: On 64-bit architectures, `u128` generally performs best
+/// in Debug mode across all operations.*
+///
+/// To find the optimal configuration for your specific hardware, refer to the 
+/// performance test code section below and run it on your machine.
 /// 
-/// # Quick Start
-/// It is generic data type. So, you can define 1024-bit unsigned integer
-/// as follows. Note that `u1024` is not keyword of Rust while `u128` is one
-/// of Rust keywords. So, you can use `u1024` as a user-defined datatype.
+/// ## Convenience Modules and Constructors
+/// For a more intuitive experience, it is recommended to import
+/// `std::str::FromStr` and the entire `cryptocol::number` module.
 /// 
-/// ## Example 1
-/// ```
-/// use cryptocol::number::*;
-/// type u1024 = BigUInt::<u128, 8>;
-/// ```
-/// Then, you can use `u1024` in the similar way to how to use `u8` or `u64`.
-/// And, `u1024` is composed of eight `u128`s.
-/// Of course, you can define the same `u1024` as follows.
-/// 
-/// ## Example 2
-/// ```
-/// use cryptocol::number::*;
-/// type u1024 = BigUInt::<u64, 16>;
-/// ```
-/// Then, it is composed of sixteen `u64`s though it is the same size of
-/// type `BigUInt::<u128, 8>`. As you've already understood, you can define
-/// `u1024` to be `BigUInt::<u8, 128>` too. It is totally up to you.
-/// 
-/// ## Performance
-/// However, in both release mode and debug mode, if you consider performance
-/// for addition and subtraction, you are highly encouraged to use
-/// `BigUInt::<u128, 8>` rather than `BigUInt::<u64, 16>` or
-/// `BigUInt::<u8, 128>` or any other ones.
-/// 
-/// And, in release mode, if you consider performance for multiplication and
-/// division, you are highly encouraged to use `BigUInt::<u16, 16>` for
-/// multiplication and `BigUInt::<u64, 4>` for division rather than
-/// `BigUInt::<u128, 16>` or `BigUInt::<u32, 128>` or any other ones.
-/// In debug mode, `BigUInt::<u128, 8>` showed the best performance.
-/// Later, you will see the performance test code, and you may want to run the
-/// performance test code on your own computer to compare your test results
-/// by yourself.
-/// 
-/// ## Modules and Constructors for Convenience
-/// If you use (import) `std::str::FromStr`, you can create BigUInt integer
-/// intuitively and conveniently. Of course, you have to use (import) the
-/// necessary stuffs in the module `cryptocol::number`. So, for your
-/// convenience, use (import) `cryptocol::number::*`. It is no harm for you.
-/// 
-/// Look into the following examples so that you may get some more ideas
-/// about how to use BigUInt.
-/// 
-/// ## Example 3
-/// ```
+/// ## Example 3: Basic Usage
+/// ```rust
 /// use std::str::FromStr;
 /// use cryptocol::number::*;
 /// 
 /// type U1024 = BigUInt::<u128, 8>;
 /// 
+/// // Create from an array
 /// let a_biguint = U1024::from([1_u128; 8]);
 /// println!("a_biguint = {:?}\nOverflow: {}\nUnderflow: {}\nInfiniity: {}\nUndefined: {}\nDivided_by_Zero: {}\nLeft_Carry: {}\nRight_Carry: {}", a_biguint.get_number(), a_biguint.is_overflow(), a_biguint.is_underflow(), a_biguint.is_infinity(), a_biguint.is_undefined(), a_biguint.is_divided_by_zero(), a_biguint.is_left_carry(), a_biguint.is_right_carry());
 /// assert_eq!(*a_biguint.get_number(), [1, 1, 1, 1, 1, 1, 1, 1]);
@@ -787,6 +680,7 @@ macro_rules! calc_rotate_assign
 /// let txt = format!("{:#x}", a_biguint);
 /// assert_eq!(txt, "0x100000000000000000000000000000001000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001");
 /// 
+/// // String formatting support
 /// let b_biguint = U1024::from_string("528294531135665246352339784916516606520399844128422231063109688515136405111986307932151574694014881104306146237268412201528404470859010781743924190173406846268890965642294205800438269168685095342047538166014444022988625525970748234723644093345682544597060157565694902273").unwrap();
 /// println!("b_biguint = {:?}\nOverflow: {}\nUnderflow: {}\nInfiniity: {}\nUndefined: {}\nDivided_by_Zero: {}\nLeft_Carry: {}\nRight_Carry: {}", b_biguint.get_number(), b_biguint.is_overflow(), b_biguint.is_underflow(), b_biguint.is_infinity(), b_biguint.is_undefined(), b_biguint.is_divided_by_zero(), b_biguint.is_left_carry(), b_biguint.is_right_carry());
 /// assert_eq!(*b_biguint.get_number(), [1, 1, 1, 1, 1, 1, 1, 1]);
@@ -801,6 +695,7 @@ macro_rules! calc_rotate_assign
 /// println!("b_biguint = {}", b_biguint);
 /// assert_eq!(b_biguint.to_string(), "528294531135665246352339784916516606520399844128422231063109688515136405111986307932151574694014881104306146237268412201528404470859010781743924190173406846268890965642294205800438269168685095342047538166014444022988625525970748234723644093345682544597060157565694902273");
 /// 
+/// // String formatting and Radix support
 /// println!("b_biguint = {:X}", b_biguint);
 /// assert_eq!(a_biguint.to_string_with_radix(16).unwrap(), "100000000000000000000000000000001000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001");
 /// 
@@ -809,6 +704,7 @@ macro_rules! calc_rotate_assign
 /// println!("c_biguint_biguint_biguint = {}", c_biguint);
 /// assert_eq!(c_biguint.to_string(), "1234567891234567879123456789111111111222222222333333333444444444555555555666666666777777777888888888999999999000000000");
 /// 
+/// // Basic Arithmetic (Note: Operators consume the operands)
 /// let mut d_biguint = b_biguint.clone() + c_biguint.clone();
 /// println!("b_biguint + c_biguint = {}", d_biguint);
 /// assert_eq!(d_biguint.to_string(), "528294531135665246352339784916516606520399844128422231063109688515136405111986307932151574694014881104306146237268412201528404470859010781743924190173408080836782200210173329257227380279796317564269871499347888467433181081526414901390421871123571433486060157564694902273");
@@ -854,28 +750,27 @@ macro_rules! calc_rotate_assign
 /// assert_eq!(e_uint, 3);
 /// ```
 /// 
-/// ## Operators and its Disadvantages for Performance
-/// If you use operators such as `+`, `-`, `*`, `/`, `%`, `+=`, `-=`, `*=`,
-/// `/=`, `%=`, `&`, `|`, `^`, `&=`, `|=`, `^=`, and `!`, they don't use
-/// `&self` and `&rhs` but `self` and `rhs` so that they may swallow (move)
-/// `self` and `rhs`. This means that you cannot use `self` and `rhs` again.
-/// In order to use `self` and `rhs` again, their `clones` were used by clone()
-/// methods in Example 3 shown above. It is a bit disadvantageous. So, you are
-/// highly encouraged to use methods instead of operators. See the following
-/// example. Example 4 is a better version of Example 3 in the viewpoint of
-/// performance though Example 4 looks less easy to read or uglier than
-/// Example 3.
+/// # Operators vs. Methods
+/// **Caution**: Standard operators (e.g., `+`, `-`, `*`, `/`, `%`, `+=`, `-=`,
+/// `*=`, `/=`, `%=`, `&`, `|`, `^`, `&=`, `|=`, `^=`, and `!`) use
+/// **move semantics** and consume the operands.
+/// To reuse variables, you must either `clone()` them or use the provided
+/// **wrapping** or **checked** methods (e.g., `.wrapping_add(&rhs)`). Using
+/// methods rather than operators is generally more performant as they
+/// operate on references.
 /// 
+/// See the following example. Example 4 is a better version of Example 3 in
+/// the viewpoint of performance though Example 4 looks less easy to read
+/// than Example 3.
+///  
 /// ## Predefined Datatypes for Convenience
-/// You can use predefiend datatypes such as `U256`, `U512`, `U1024`, etc.,
-/// or `UU32`, `UU64`, `UU128`, etc. All you have to do is to use (import)
-/// `cryptocol::define_utypes_with`, and use a `define_utypes_with!()` macro.
-/// The macro `define_utypes_with!()` requires base unsigned integer type such
-/// as `u128`, `u64`, `u32`, `u16`, and `u8`. `usize` is not supported as base
-/// type because `usize` and `isize` have different size according to
-/// CPU and operating system. So, Example 3 can be rewritten as Example 4.
+/// Common types like `U256`, `U512`, `U1024`, `UU32`, `UU64`, and `UU128` can
+/// be generated using the `define_utypes_with!()` macro.
+/// This macro supports `u8` through `u128` as base types.
+/// `usize` is not supported due to its platform-dependent size.
+/// So, Example 3 can be rewritten as Example 4.
 /// 
-/// ## Example 4
+/// ## Example 4: Using the Macro
 /// ```
 /// use std::str::FromStr;
 /// use cryptocol::define_utypes_with;
@@ -957,8 +852,9 @@ macro_rules! calc_rotate_assign
 /// However, if you want to use any datatypes that are not predefined
 /// such as `u136`, `U144`, `U192`, `U320`, `U384`, etc. or `UU17`, `UU18`,
 /// `UU24`, `UU40`, `UU48`, etc., you can define them for yourself as Example 5.
-/// 
-/// ## Example 5
+/// For non-standard widths (e.g., 136-bit, 192-bit), define them manually:
+///  
+/// ## Example 5: Custom Widths
 /// ```
 /// use cryptocol::number::*;
 /// type U136 = BigUInt::<u8, 17>;
@@ -973,26 +869,15 @@ macro_rules! calc_rotate_assign
 /// type UU48 = BigUInt::<u128, 3>;
 /// ```
 /// 
-/// ## Performance Test
-/// Which base type will achieve best performance? According to the result of
-/// performance test on author's 64-bit computer, `u128` as base type showed
-/// the best performannce for addition and subtraction in both release mode
-/// and debug mode all the time, while `u16` and `u64` as base type showed the
-/// best performannce for multiplication and division respectively in release
-/// mode most of the time. Rarely, however, `u32` as base type showed the best
-/// performannce for multiplication and/or division in release mode.
-/// In debug mode, `u128` as base type showed the best performannce for
-/// multiplication and division most of the time. More rarely than in release
-/// mode, however, `u32` as base type showed the best performannce for
-/// multiplication and division. The result is obtained from 64-bit machine.
-/// If the test was done on 32-bit machine, the result might be different.
-/// 
-/// | Operation      | Best base type in Release mode         | Best base type in Debug mode           |
-/// |----------------|----------------------------------------|----------------------------------------|
-/// | Addition       | `u128` most of the time / `u64` rarely | `u128` all the time                    |
-/// | Subtraction    | `u128` all the time                    | `u128` all the time                    |
-/// | Multiplication | `u16`  all the time                    | `u128` most of the time / `u64` rarely |
-/// | Division       | `u64` all the time                     | `u128` most of the time / `u64` rarely |
+/// ## Performance Test Results (Reference)
+/// The following table summarizes performance tests conducted on
+/// a **64-bit machine**. Results may vary on 32-bit architectures.
+/// | Operation      | Best base (Release)              | Best base (Debug)                |
+/// |----------------|----------------------------------|----------------------------------|
+/// | Addition       | `u128` (mostly) / `u64` (rarely) | `u128` (always)                  |
+/// | Subtraction    | `u128` (always)                  | `u128` (always)                  |
+/// | Multiplication | `u16`  (always)                  | `u128` (mostly) / `u64` (rarely) |
+/// | Division       | `u64` (always)                   | `u128` (mostly) / `u64` (rarely) |
 /// 
 /// The following is the code used for the Performance Test.
 /// performance!() is a macro. And, Rust Playground may not run this code
@@ -1001,7 +886,10 @@ macro_rules! calc_rotate_assign
 /// rather than on Rust Playground.
 /// 
 /// ## Performance Test Code
-/// ```
+/// Use the following macro and main function to benchmark `BigUInt` on your
+/// local environment. It is recommended to run this locally rather than
+/// in the Rust Playground for accurate results.
+/// ```rust
 /// macro_rules! performance
 /// {
 ///     ($t:ty, $b:expr, $ti:expr, $f:expr) => {
@@ -1109,11 +997,9 @@ macro_rules! calc_rotate_assign
 /// let a_biguint = U1024::new();
 /// ```
 /// 
-/// # Big-endian issue
-/// This struct BigUInt is just experimental for Big Endian CPUs.
-/// So, you are not encouraged to use this struct BigUInt for Big Endian CPUs
-/// for serious purpose. Only use this crate for Big-endian CPUs
-/// with your own full responsibility.
+/// # Endianness Warning
+/// This implementation is **experimental on Big-Endian CPUs**. 
+/// Use in production environments on Big-Endian architectures at your own risk.
 #[derive(Debug, Clone)]
 pub struct BigUInt<T, const N: usize>
 where T: TraitsBigUInt<T>
@@ -1515,7 +1401,7 @@ where T: TraitsBigUInt<T>
                 unsafe { share.src >>= U::u32_as_smalluint(size_t_bits); }
             }
         }
-        return me;
+        me
     }
 
     // pub const fn from_array(val: [T; N]) -> Self

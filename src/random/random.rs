@@ -1794,7 +1794,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     pub fn random_under_uint<T>(&mut self, ceiling: T) -> Option<T>
     where T: TraitsBigUInt<T>
     {
-        if ceiling != T::zero() { Some(self.random_under_uint_::<T>(ceiling)) } else {None}
+        if ceiling != T::zero() { Some(self.random_under_uint_::<T>(ceiling)) } else { None }
     }
 
     // pub fn random_under_uint_<T>(&mut self, ceiling: T) -> T
