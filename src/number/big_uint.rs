@@ -26,11 +26,11 @@ use std::marker::{ Send, Sync };
 use crate::number::{ SmallUInt, LongerUnion, SharedValues, SharedArrays, NumberErr };
 
 
-/// A convenience alias for the collection of traits required by the internal
+/// A trait alias for the collection of traits required by the internal
 /// storage type `T` in `BigUInt<T, N>`.
-/// 
+///
 /// # Note
-/// These trait requirements are subject to change in future versions to 
+/// These trait requirements are subject to change in future versions to
 /// accommodate updates to the internal implementation.
 pub trait TraitsBigUInt<T>: SmallUInt + Copy + Clone + Display + Debug + ToString
                         + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
@@ -75,6 +75,7 @@ macro_rules! define_biguint_alias {
         pub type $name = BigUInt<$inner, $len>;
     };
 }
+
 // --- u128 Variants ---
 define_biguint_alias!(U256_with_u128, u128, 2, 256);
 define_biguint_alias!(U384_with_u128, u128, 3, 384);
@@ -582,20 +583,20 @@ macro_rules! calc_rotate_assign
 /// arithmetic with a fixed memory footprint.
 ///
 /// # Generic Parameters
-/// - `T`: The underlying primitive unsigned integer type
+/// * `T`: The underlying primitive unsigned integer type
 ///   (`u8`, `u16`, `u32`, `u64`, `u128`, or `usize`).
-/// - `N`: The number of elements of type `T`.
+/// * `N`: The number of elements of type `T`.
 ///   The total bit-width is calculated as `size_of::<T>() * N * 8`.
 /// 
 /// # Internal Representation
-/// - **Endianness**: Data is stored in **little-endian** order.
-/// - **Storage**: It consists of an internal array `[T; N]`
+/// * **Endianness**: Data is stored in **little-endian** order.
+/// * **Storage**: It consists of an internal array `[T; N]`
 ///   and a `u8` flag field.
-/// - **Flags**: Tracks states such as `OVERFLOW`, `UNDERFLOW`, `INFINITY`,
+/// * **Flags**: Tracks states such as `OVERFLOW`, `UNDERFLOW`, `INFINITY`,
 ///   `DIVIDED_BY_ZERO`, `UNDEFINED`, `LEFT_CARRY`, and `RIGHT_CARRY`.
 /// 
 /// # Panics & Safety
-/// - **Size Constraint**: If the total size (`size_of::<T>() * N`) is
+/// * **Size Constraint**: If the total size (`size_of::<T>() * N`) is
 ///   16 bytes (128 bits) or less, certain methods may panic or exhibit
 ///   undefined behavior.
 /// 
@@ -627,13 +628,13 @@ macro_rules! calc_rotate_assign
 /// The choice of base type is flexible and depends on your requirements.
 /// 
 /// ## Performance Guide
-/// - The same size `BigUInt` can be made in several ways.
+/// * The same size `BigUInt` can be made in several ways.
 ///   For example, a 1024-bit unsigned integer can be implemented with
 ///   either `BigUInt<u128, 8>`, `BigUInt<u64, 16>`, `BigUInt<u32, 32>`,
 ///   `BigUInt<u16, 64>`, or `BigUInt<u8, 128>`. They are all 1024-bit
 ///   unsigned integers, but their performance will be different from 
 ///   one another depending on the target CPU architecture.
-/// - The choice of base type `T` significantly impacts performance
+/// * The choice of base type `T` significantly impacts performance
 ///   depending on the operation and the target CPU architecture:
 ///
 /// | Operation      | Recommended Base Type (`T`) | Best Performance Context |
@@ -1017,33 +1018,29 @@ where T: TraitsBigUInt<T>
 {
     /***** CONSTANTS FOR FLAGS *****/
 
-    /// A flag to represent whether or not overflow happened
-    /// during previous operations..
+    /// Indicates whether an overflow occurred during a previous operation.
     pub(super) const OVERFLOW: u8   = 0b0000_0001;
 
-    /// A flag to represent whether or not underflow happened
-    /// during previous operations.
+    /// Indicates whether an underflow occurred during a previous operation.
     pub(super) const UNDERFLOW: u8  = 0b0000_0010;
     
-    /// A flag to represent whether or not the value became extremely big
-    /// for some reasons such as `divided-by-zero` during previous operations.
+    /// Indicates that the value reached infinity, typically due to 
+    /// operations like division by zero.
     pub(super) const INFINITY: u8   = 0b0000_0100;
 
-    /// A flag to represent whether or not divided-by-zero happened during
-    /// previous operations.
+    /// Indicates whether a division-by-zero error occurred.
     pub(super) const DIVIDED_BY_ZERO: u8    = 0b0000_1000;
 
-    /// A flag to represent whether or not the value cannot be defined.
-    /// For example, the result of `0 / 0` will be undefined so that the flag
-    /// `UNDEFINED` will be set.
+    /// Indicates an undefined result. For example, this flag is set 
+    /// when performing an indeterminate operation such as `0 / 0`.
     pub(super) const UNDEFINED: u8  = 0b0001_0000;
 
-    /// A flag to represent whether or not a bit `1` is pushed out during
-    /// previous shift-left operations.
+    /// Indicates whether a bit was shifted out (carried) during 
+    /// a previous left-shift operation.
     pub(super) const LEFT_CARRY: u8 = 0b0010_0000;
 
-    /// A flag to represent whether or not a bit `1` is pushed out during
-    /// previous shift-right operations.
+    /// Indicates whether a bit was shifted out (carried) during 
+    /// a previous right-shift operation.
     pub(super) const RIGHT_CARRY: u8    = 0b0100_0000;
 
 
@@ -1078,14 +1075,11 @@ where T: TraitsBigUInt<T>
     /***** CONSTRUCTORS *****/
 
     // pub const fn new() -> Self
-    /// Constructs a new `BigUInt<T, N>`.
+    /// Constructs a new `BigUInt<T, N>` initialized to zero.
     /// 
-    /// # Output
-    /// A new object of `BigUInt<T, N>`.
-    /// 
-    /// # Initialization
-    /// All the attributes of the constructed object will be
-    /// initialized with `0`.
+    /// # Returns
+    /// A `BigUInt<T, N>` instance where all internal elements 
+    /// and flags are set to `0`.
     /// 
     /// # Example
     /// ```
@@ -1113,21 +1107,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub const fn zero() -> Self
-    /// Constructs a new `BigUInt<T, N>` which has the value of `0`.
+    /// Constructs a new `BigUInt<T, N>` with a value of zero.
     /// 
-    /// # Output
-    /// A new object of `BigUInt<T, N>` that represents `0`.
+    /// # Returns
+    /// A `BigUInt<T, N>` instance representing zero.
     /// 
-    /// # Features
-    /// This function calls `BigUInt<T, N>::new()`, so it is
-    /// virtually exactly the same as the function
-    /// `BigUInt<T, N>::new()`.
+    /// # Implementation Details
+    /// This is a convenience wrapper that calls [`Self::new()`]. 
+    /// Both methods are functionally identical.
     /// 
-    /// # Benefit
-    /// Your source code will be better readable if you use
-    /// `BigUInt<T, N>::zero()` instead of
-    /// `BigUInt<T, N>::new()` especially
-    /// when you create the big number zero.
+    /// # Usage Note
+    /// Using `zero()` instead of `new()` is recommended when you want 
+    /// to explicitly indicate that the variable is being initialized 
+    /// to the numeric value of zero, improving code readability.
     ///
     /// # Example
     /// ```
@@ -1152,16 +1144,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub const fn one() -> Self
-    /// Constructs a new `BigUInt<T, N>` which has the value of `1`.
+    /// Constructs a new `BigUInt<T, N>` with a value of one.
     /// 
-    /// # Output
-    /// A new object of `BigUInt<T, N>` that represents `1`.
+    /// # Returns
+    /// A `BigUInt<T, N>` instance representing one.
     /// 
-    /// # Benefit
-    /// Your source code will be better readable if you use
-    /// `BigUInt<T, N>::one()` instead of
-    /// `BigUInt<T, N>::new()` and then
-    /// `set_uint(1)` especially when you create the big number `1`.
+    /// # Usage Note
+    /// Using `one()` is a more readable and expressive alternative to 
+    /// creating a zeroed instance via `new()` and subsequently calling 
+    /// `set_uint(1)`.
     /// 
     /// # Example
     /// ```
@@ -1187,14 +1178,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub const fn max() -> Self
-    /// Constructs a new `BigUInt<T, N>` which has the value of
-    /// maximum.
+    /// Constructs a new `BigUInt<T, N>` with the maximum possible value.
     /// 
-    /// # Output
-    /// A new object of `BigUInt<T, N>` that represents maximum value.
+    /// # Returns
+    /// A `BigUInt<T, N>` instance where every bit is set to `1`.
     /// 
-    /// # Features
-    /// All bits are set to be `1`.
+    /// # Implementation Details
+    /// This represents the largest value that can be held by the current 
+    /// bit-width (`size_of::<T>() * N * 8`).
     /// 
     /// # Example
     /// ```
@@ -1222,18 +1213,17 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn submax(size_in_bits: usize) -> Self
-    /// Constructs a new `BigUInt<T, N>`-type object which has the
-    /// value of `size_in_bits`-bit long maximum value in which all bits are
-    /// set to be `1`.
+    /// Constructs a new `BigUInt<T, N>` where the first `size_in_bits`
+    /// are set to `1`.
     /// 
-    /// # Output
-    /// A new object of `BigUInt<T, N>` that represents
-    /// `size_in_bits`-bit long maximum value.
+    /// # Returns
+    /// A `BigUInt<T, N>` instance representing the maximum value attainable 
+    /// within the specified bit length.
     /// 
-    /// # Features
-    /// This method will make all the `size_in_bits` bits of `number[T;N]` of
-    /// `self` from LSB (Least Significant Bit) to be `1` and the rest of the
-    /// bits up to MSB (Most Significant Bit) to be `0`.
+    /// # Implementation Details
+    /// This method sets all bits from the Least Significant Bit (LSB) up to 
+    /// `size_in_bits` to `1`, while all remaining bits up to the Most 
+    /// Significant Bit (MSB) are initialized to `0`.
     /// 
     /// # Example
     /// ```
@@ -1261,17 +1251,17 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn halfmax() -> Self
-    /// Constructs a new `BigUInt<T, N>`-type object which has the
-    /// value of half-length maximum value in which all bits are set to be `1`.
-    /// 
-    /// # Output
-    /// A new object of `BigUInt<T, N>` that represents
+    /// Constructs a new `BigUInt<T, N>` representing
     /// a half-length maximum value.
     /// 
-    /// # Features
-    /// This method will make all the lower half bits of `number[T;N]` of
-    /// `self` from LSB (Least Significant Bit) to be `1` and the rest of the
-    /// bits up to MSB (Most Significant Bit) to be `0`.
+    /// # Returns
+    /// A `BigUInt<T, N>` instance
+    /// where the lower half of the bits are set to `1`.
+    /// 
+    /// # Implementation Details
+    /// This method sets all bits in the lower half (starting from
+    /// the Least Significant Bit) to `1`, while the remaining upper half bits
+    /// up to the Most Significant Bit are initialized to `0`.
     /// 
     /// # Example
     /// ```
@@ -1297,16 +1287,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn from_uint<U>(val: U) -> Self
-    /// Constructs a new `BigUInt<T, N>`-type object from an
-    /// unsigned integer such as `u8`, `u16`, `u32`, `u64`, `u128` and `usize`.
+    /// Constructs a new `BigUInt<T, N>` from a primitive unsigned integer.
+    /// Supported types include `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`.
     /// 
-    /// # Output
-    /// A new object of `BigUInt<T, N>` that represents the same
-    /// value of `val`.
+    /// # Returns
+    /// A `BigUInt<T, N>` instance representing the same value as `val`.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Panics & Safety
+    /// **Warning**: If the total internal storage size (`size_of::<T>() * N`)
+    /// is 128 bits (16 bytes) or less, this method may panic or exhibit
+    /// undefined behavior.
     /// 
     /// # Example
     /// ```
@@ -1405,15 +1395,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub const fn from_array(val: [T; N]) -> Self
-    /// Constructs a new `BigUInt<T, N>` from an array of type `T` with `N`
-    /// elements.
+    /// Constructs a new `BigUInt<T, N>` from an array of type `T`
+    /// with `N` elements.
     /// 
-    /// # Output
-    /// A new object of `BigUInt<T, N>` that represents the same value of array `val`.
+    /// # Returns
+    /// A `BigUInt<T, N>` instance representing the same value
+    /// as the input array `val`.
     /// 
-    /// # Counterpart Method
-    /// You can also use the method [from()](struct@BigUInt#impl-From<[T;+N]>-for-BigUInt<T,+N>)
-    /// implemented by implementation of trait `From<[T;N]>`.
+    /// # Alternatives
+    /// This is a direct equivalent to the [`From<[T; N]>`] trait implementation. 
+    /// You can also use [`BigUInt::from(val)`](#impl-From%3C%5BT%3B+N%3D%3E%5D-for-BigUInt%3CT%2C+N%3E).
     /// 
     /// # Example
     /// ```
@@ -1437,15 +1428,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn from_biguint<U, const M: usize>(biguint: &BigUInt<U, M>) -> Self
-    /// Constructs a new `BigUInt<T, N>` from another kind of `BigUInt<U, M>`.
+    /// Constructs a new `BigUInt<T, N>` from a `BigUInt<U, M>` with different
+    /// generic parameters.
     /// 
-    /// # Output
-    /// A new object of `BigUInt<T, N>` that represents the same value of another
-    /// kind of `BigUInt<U, M>`.
+    /// # Returns
+    /// A `BigUInt<T, N>` instance representing the same value as the provided
+    /// `biguint`.
     /// 
-    /// # Features
-    /// It copies not only long-bit integer but also current flags from another
-    /// kind of `BigUInt<U, M>`.
+    /// # Implementation Details
+    /// This method performs a deep copy of both the high-precision integer data
+    /// and the current operational flags from the source instance.
     /// 
     /// # Example 1 for the same length
     /// ```
@@ -1492,12 +1484,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn from_be(be: Self) -> Self
-    /// Converts a big unsigned integer from big endian to the target’s
-    /// endianness.
+    /// Converts a big unsigned integer from big-endian byte order to the 
+    /// target architecture's endianness.
     /// 
-    /// # Features
-    /// - On big endian machine, this is a no-op.
-    /// - On little endian machine, the bytes are swapped.
+    /// # Implementation Details
+    /// * On **big-endian** architectures, this is a no-op and returns the value
+    ///   unchanged.
+    /// * On **little-endian** architectures, the byte order is reversed
+    ///   (swapped) to match the internal little-endian representation.
     /// 
     /// # Example
     /// ```
@@ -1537,12 +1531,13 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn from_be_bytes(be_bytes: [T; N]) -> Self
-    /// Create a native endian unsigned integer value from its representation
-    /// as a byte array in big endian.
+    /// Creates a native-endian `BigUInt<T, N>` from an array in big-endian
+    /// byte order.
     /// 
-    /// # Features
-    /// - On big endian machine, this is a no-op.
-    /// - On little endian machine, the bytes are swapped.
+    /// # Implementation Details
+    /// * On **big-endian** architectures, the array is used as-is (no-op).
+    /// * On **little-endian** architectures, the byte order is reversed 
+    ///   to align with the internal little-endian storage format.
     /// 
     /// # Example
     /// ```
@@ -1579,12 +1574,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn from_le(le: Self) -> Self
-    /// Converts a big unsigned integer from little endian to the target’s
-    /// endianness.
+    /// Converts a big unsigned integer from little-endian byte order to the
+    /// target architecture's endianness.
     /// 
-    /// # Features
-    /// - On little endian this is a no-op.
-    /// - On big endian the bytes are swapped.
+    /// # Implementation Details
+    /// * On **little-endian** architectures, this is a no-op
+    ///   and returns the value unchanged.
+    /// * On **big-endian** architectures, the byte order is reversed (swapped)
+    ///   to match the target's native representation.
     /// 
     /// # Example
     /// ```
@@ -1624,11 +1621,13 @@ where T: TraitsBigUInt<T>
     }
     
     // pub fn from_le_bytes(le_bytes: [T; N]) -> Self
-    /// Create a native endian integer value from its representation
-    /// as a byte array in little endian.
+    /// Creates a native-endian `BigUInt<T, N>` from an array in little-endian
+    /// byte order.
     /// 
-    /// # Features
-    /// On little endian this is a no-op. On big endian the bytes are swapped.
+    /// # Implementation Details
+    /// * On **little-endian** architectures, the array is used as-is (no-op).
+    /// * On **big-endian** architectures, the byte order is reversed (swapped)
+    ///   to match the target's native representation.
     /// 
     /// # Example
     /// ```
@@ -1666,28 +1665,28 @@ where T: TraitsBigUInt<T>
     }
 
     //  pub fn from_string(txt: &str) -> Result<Self, NumberErr>
-    /// Constructs a new `BigUInt<T, N>` from a string of decimal number.
+    /// Constructs a new `BigUInt<T, N>` from a decimal string.
     /// 
-    /// # Output
-    /// The constructed object will be wrapped in `Ok(BigUInt<T, N>)` if it is
-    /// successfully created. Otherwise, this method returns one of
-    /// `Err(NumberErr::NotAlphaNumeric)`, `Err(NumberErr::NotFitToRadix)`,
-    /// and `Err(NumberErr::TooBigNumber)` according to its failure reason.
+    /// # Returns
+    /// Returns `Ok(BigUInt<T, N>)` if the string is successfully parsed. 
+    /// Otherwise, it returns a `NumberErr` indicating the cause of failure.
     /// 
-    /// # Delimiter _
-    /// In the number expression in a string, you can separate the digits with
-    /// '_' in order to make it more readable. So, "1_0000" and "10_000" are all
-    /// the same as"10000".
+    /// # Digit Separators
+    /// You can use the underscore (`_`) as a separator to improve readability.
+    /// For example, `"1_000_000"` and `"100_0000"` are
+    /// both treated as `"1000000"`.
     /// 
     /// # Errors
-    /// | priority | argument | value                                           | Caused Error                 |
-    /// |----------|----------|-------------------------------------------------|------------------------------|
-    /// | 1st      | `txt`    | contains any non-alphanumeric letter except '_' | `NumberErr::NotAlphaNumeric` |
-    /// | 2nd      | `txt`    | contains any letter other than number           | `NumberErr::NotFitToRadix`   |
-    /// | 3rd      | `txt`    | expresses bigger number than maximum value      | `NumberErr::TooBigNumber`    |
+    /// This method evaluates errors in the following order of priority:
     /// 
-    /// When multiple errors were caused, only the error with higher priority is
-    /// issued. `1st` is higher than `2nd`, and so on.
+    /// | Priority | Condition                                            | Error Type                   |
+    /// |:---------|:-----------------------------------------------------|:-----------------------------|
+    /// | 1st      | Contains non-alphanumeric characters (excluding `_`) | `NumberErr::NotAlphaNumeric` |
+    /// | 2nd      | Contains non-decimal digits (e.g., letters)          | `NumberErr::NotFitToRadix`   |
+    /// | 3rd      | The value exceeds the maximum capacity of the type   | `NumberErr::TooBigNumber`    |
+    /// 
+    /// If multiple error conditions are met,
+    /// only the one with the highest priority is returned.
     /// 
     /// # Example 1 for correct case
     /// ```
@@ -1722,66 +1721,35 @@ where T: TraitsBigUInt<T>
     }
 
     //  pub fn from_str_radix(txt: &str, radix: u32) -> Result<Self, NumberErr>
-    /// Constructs a new `BigUInt<T, N>` from a string with `radix`.
+    /// Constructs a new `BigUInt<T, N>` from a string with the given `radix`.
     /// 
-    /// # Output
-    /// The constructed object will be wrapped in `Ok(BigUInt<T, N>)` if it is
-    /// successfully created. Otherwise, this method returns one of
-    /// `Err(NumberErr::OutOfValidRadixRange)`, `Err(NumberErr::NotAlphaNumeric)`,
-    /// and `Err(NumberErr::NotFitToRadix)` according to its failure reason.
-    /// 
-    /// # Errors
-    /// - If the argument `txt` of this method includes any letters other than
-    /// alphanumeric letter(s),
-    /// it will return`Err(NumberErr::NotAlphaNumeric)`.
-    /// - If the argument `radix` of this method is out of the valid range from
-    /// `2` up to `62` inclusively,
-    /// it will return `Err(NumberErr::OutOfValidRadixRange)`.
-    /// - If the argument `txt` of this method includes any letter(s) out of
-    /// the valid letter range even if they are alphanumeric, it will return
-    /// `Err(NumberErr::NotFitToRadix)`. For example, in the case of hexadecimal
-    /// number system which means that the argument radix is `16`, if the
-    /// argument `txt` includes 'g',
-    /// it will return `Err(NumberErr::NotFitToRadix)`.
+    /// # Returns
+    /// Returns `Ok(BigUInt<T, N>)` if the string is successfully parsed. 
+    /// Otherwise, it returns a `NumberErr` indicating the cause of failure.
     /// 
     /// # Valid Radix Range
-    /// The radix can be from `2` up to `62` (= 10 + 26 + 26). Such radices that
-    /// are less than `2` or more than `62` are not available. In this case,
-    /// this method will return `Err(NumberErr::OutOfValidRadixRange)`.
+    /// The supported radix range is **2 to 62** (inclusive). 
+    /// * **Radix 2–36**: Case-insensitive. Letters `A`–`Z` (or `a`–`z`)
+    ///   represent values 10–35.
+    /// * **Radix 37–62**: Case-sensitive. `A`–`Z` represent 10–35,
+    ///   and `a`–`z` represent 36–61.
     /// 
-    /// # Radix more than `10` and less than `37`
-    /// If the radix is more than `10` and less than `37`, the digit bigger than
-    /// `9` will be expressed with alphabets. The avaiable alphabets are
-    /// _case-insensitive_. For example, in the case of hexadecimal number
-    /// system, the digit whose value is `10`, `11`, `12`, `13`, `14`, and `15`
-    /// are represented as `A` or `a`, `B` or `b`, `C` or `c`, `D` or `d`, `E`
-    /// or `e`, and `F` or `f`, respectively. And, in the case of 37-ary number
-    /// system, the values `16`, `35` and `36` are represented as `G` or `g`,
-    /// `Y` or `y`, and `Z` or `z`, respectively.
-    /// 
-    /// # Radix more than `36` and less than `63`
-    /// However, if the radix is more than `36` and less than `63`, the digit
-    /// bigger than `9` will be expressed with alphabets. The avaiable alphabets
-    /// are _case-sensitive_, so `A` is different from `a`. For instance, in the
-    /// case of 62-ary number system, the digit whose value is `10`, `11`, `35`,
-    /// `36`, `37`, `38`, `60` and `61` are represented as `A`, `B`, `Y`, `Z`,
-    /// `a`, `b`, `y` and `z`, respectively.
-    /// 
-    /// # Delimiter _
-    /// In the number expression in a string, you can separate the digits with
-    /// '_' in order to make it more readable. So, "10000" is the same as
-    /// "1_0000".
+    /// # Digit Separators
+    /// You can use the underscore (`_`) as a separator to improve readability.
+    /// For example, `"1_0000"` is treated the same as `"10000"`.
     /// 
     /// # Errors
-    /// | priority | argument | value                                           | Caused Error                      |
-    /// |----------|----------|-------------------------------------------------|-----------------------------------|
-    /// | 1st      | `radix`  | less than `2` or greater than `62`              | `NumberErr::OutOfValidRadixRange` |
-    /// | 2nd      | `txt`    | contains any non-alphanumeric letter except '_' | `NumberErr::NotAlphaNumeric`      |
-    /// | 3rd      | `txt`    | contains any letter or number out of `radix`    | `NumberErr::NotFitToRadix`        |
-    /// | 4th      | `txt`    | expresses bigger number than maximum value      | `NumberErr::TooBigNumber`         |
+    /// This method evaluates errors in the following order of priority:
     /// 
-    /// When multiple errors were caused, only the error with higher priority is
-    /// issued. `1st` is higher than `2nd`, and so on.
+    /// | Priority | Condition                                                  | Error Type                        |
+    /// |:---------|:-----------------------------------------------------------|:----------------------------------|
+    /// | 1st      | `radix` is less than `2` or greater than `62`              | `NumberErr::OutOfValidRadixRange` |
+    /// | 2nd      | `txt` contains non-alphanumeric characters (excluding `_`) | `NumberErr::NotAlphaNumeric`      |
+    /// | 3rd      | `txt` contains characters that exceed the given `radix`    | `NumberErr::NotFitToRadix`        |
+    /// | 4th      | The value exceeds the maximum capacity of the type         | `NumberErr::TooBigNumber`         |
+    /// 
+    /// If multiple error conditions are met,
+    /// only the one with the highest priority is returned.
     /// 
     /// # Example 1 for correct case
     /// ```
@@ -1865,20 +1833,20 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn generate_check_bits(bit_pos: u32) -> Option<Self>
-    /// Constucts a new `BigUInt<T, N>` which has the value zero and sets only
-    /// the bit specified by the argument bit_pos to be 1.
+    /// Constructs a new `BigUInt<T, N>` with only the bit at the specified 
+    /// position set to `1`.
     /// 
-    /// # Output
-    /// It returns a big unsigned integer `BigUInt<T, N>` whose bit specified
-    /// by the argument bit_posvalue is set to be 1, wrapped by enum
-    /// `Some(self)` of `Option<Self>` if the bit positon `bit_pos` is less
-    /// than `size_of::<T>() * N * 8`. It returns `None` if the bit positon
-    /// `bit_pos` is greater than or equal to `size_of::<T>() * N * 8`.
+    /// # Returns
+    /// * Returns `Some(BigUInt<T, N>)` if `bit_pos` is within the valid range 
+    ///   (less than the total bit-width).
+    /// * Returns `None` if `bit_pos` is greater than or equal to the total 
+    ///   bit-width (`size_of::<T>() * N * 8`).
     /// 
     /// # Bit Position
-    /// The bit positon bit_pos is zero-based and should be counted from LSB
-    /// (Least Significant Bit) reguardless endian. So, if the bit_pos is `0`,
-    /// only LSB is set to be `1` and all the other bits will be set to `0`.
+    /// The `bit_pos` argument uses zero-based indexing, starting from the 
+    /// Least Significant Bit (LSB) regardless of the architecture's endianness. 
+    /// For example, if `bit_pos` is `0`, only the LSB is set to `1`, and all 
+    /// other bits are set to `0`.
     /// 
     /// # Example 1
     /// ```
@@ -1908,23 +1876,23 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn generate_check_bits_(bit_pos: u32) -> Self
-    /// Constucts a new `BigUInt<T, N>` which has the value zero and sets only
-    /// the bit specified by the argument bit_pos to be 1.
+    /// Constructs a new `BigUInt<T, N>` with only the bit at the specified 
+    /// position set to `1`.
+    /// 
+    /// # Returns
+    /// Returns a `BigUInt<T, N>` instance where only the bit at `bit_pos` is `1`.
     /// 
     /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// - If the bit positon `bit_pos` is greater than or equal to
-    /// `size_of::<T>() * N * 8`, this method will panic.
-    /// 
-    /// # Output
-    /// It returns a big unsigned integer `BigUInt<T, N>` whose bit specified
-    /// by the argument bit_posvalue is set to be 1.
+    /// * **Out of Bounds**: Panics if `bit_pos` is greater than or equal to 
+    ///   the total bit-width (`size_of::<T>() * N * 8`).
+    /// * **Safety Warning**: If the internal storage size (`size_of::<T>() * N`) 
+    ///   is 128 bits or less, this method may exhibit undefined behavior or 
+    ///   panic depending on the context.
     /// 
     /// # Bit Position
-    /// The bit positon bit_pos is zero-based and should be counted from LSB
-    /// (Least Significant Bit) reguardless endian. So, if the bit_pos is `0`,
-    /// only LSB is set to be `1` and all the other bits will be set to `0`.
+    /// The `bit_pos` uses zero-based indexing, starting from the Least 
+    /// Significant Bit (LSB) regardless of the architecture's endianness. 
+    /// For example, if `bit_pos` is `0`, only the LSB is set to `1`.
     /// 
     /// # Example 1
     /// ```
@@ -1957,13 +1925,15 @@ where T: TraitsBigUInt<T>
     /***** METHODS TO GET SIZE BOTH IN BYTES AND BITS *****/
 
     // pub const fn size_in_bytes() -> u32
-    /// Returns how many bytes long the number `BigUInt` is.
+    /// Returns the total size of the `BigUInt` data in bytes.
     /// 
-    /// # Output
-    /// It returns its size in bytes.
+    /// # Returns
+    /// The number of bytes used for the internal high-precision integer storage.
     /// 
-    /// # Features
-    /// It does not count how many bytes are used for flags.
+    /// # Implementation Details
+    /// This value represents the raw data size (`size_of::<T>() * N`) and 
+    /// does not include any additional bytes used for internal flags or 
+    /// metadata.
     /// 
     /// # Examples
     /// ```
@@ -1980,13 +1950,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub const fn size_in_bits() -> u32
-    /// Returns how many bits long the number `BigUInt` is.
+    /// Returns the total storage capacity of the `BigUInt` in bits.
     /// 
-    /// # Output
-    /// It returns its size in bits.
+    /// # Returns
+    /// The number of bits available for high-precision integer data.
     /// 
-    /// # Features
-    /// It does not count how many bytes are used for flags.
+    /// # Implementation Details
+    /// This value represents the full bit-width (`size_of::<T>() * N * 8`) and 
+    /// does not include any internal flags or metadata used for state 
+    /// tracking.
     /// 
     /// # Examples
     /// ```
@@ -2003,15 +1975,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn length_in_bytes(&self) -> u32
-    /// Returns how many bytes long the number i.e. the object of
-    /// `BigUInt` is.
-    /// 
-    /// # Output
-    /// It returns its size in bytes.
-    /// 
-    /// # Features
-    /// It does not count how many bytes are used for flags.
-    /// 
+    /// Returns the size of the `BigUInt` instance in bytes.
+    ///
+    /// # Returns
+    /// The number of bytes allocated for storing the high-precision
+    /// integer value.
+    ///
+    /// # Implementation Details
+    /// This value reflects the static byte-width of the `BigUInt` and 
+    /// does not include space used for internal flags or metadata.
+    ///
     /// # Examples
     /// ```
     /// use cryptocol::define_utypes_with;
@@ -2028,15 +2001,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn length_in_bits(&self) -> u32
-    /// Returns how many bits long the number i.e. the object of
-    /// `BigUInt` is.
-    /// 
-    /// # Output
-    /// It returns its size in bits.
-    /// 
-    /// # Features
-    /// It does not count how many bytes are used for flags.
-    /// 
+    /// Returns the size of the `BigUInt` instance in bits.
+    ///
+    /// # Returns
+    /// The total bit-width allocated for storing the high-precision
+    /// integer value.
+    ///
+    /// # Implementation Details
+    /// This value reflects the static bit-width of the `BigUInt` and 
+    /// does not include space used for internal flags or metadata.
+    ///
     /// # Examples
     /// ```
     /// use cryptocol::define_utypes_with;
@@ -2057,21 +2031,24 @@ where T: TraitsBigUInt<T>
     /***** METHODS TO GET, SET, AND CHECK *****/
 
     // pub fn turn_check_bits(&mut self, bit_pos: u32)
-    /// Changes a `BigUInt<T, N>` to have the value zero and sets only
-    /// the bit specified by the argument `bit_pos` to be 1.
-    /// 
-    /// # Argumentss
-    /// The bit positon `bit_pos` is zero-based and should be counted from LSB
-    /// (Least Significant Bit) reguardless endian. So, if the `bit_pos` is `0`,
-    /// only LSB is set to be `1` and all the other bits will be set to `0`.
-    /// 
+    /// Resets the `BigUInt` instance to zero and sets only the specified bit
+    /// to 1.
+    ///
+    /// # Arguments
+    /// * `bit_pos`: The zero-based index of the bit to be set, counted from 
+    ///   the Least Significant Bit (LSB) regardless of the architecture's
+    ///   endianness.
+    ///
     /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// - If the bit positon `bit_pos` is greater than or equal to
-    /// `size_of::<T>() * N * 8`, this method will panic.
+    /// * Panics if `bit_pos` is greater than or equal to the total bit-width
+    ///   of the `BigUInt`.
+    ///
+    /// # Implementation Details
+    /// If the internal storage size is 128 bits or less, certain operations
+    /// may exhibit undefined behavior or result in a panic depending on the
+    /// environment.
     /// 
-    /// # Example 1
+    /// # Examples
     /// ```
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
@@ -2112,27 +2089,23 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_bit_set(&self, bit_pos: u32) -> Option<bool>
-    /// Check a `self` to know whether or not the bit specified by the argument
-    /// `bit_pos` to be 1.
+    /// Checks if the bit at the specified position is set to 1.
+    ///
+    /// # Arguments
+    /// * `bit_pos`: The zero-based index of the bit to check, counted from the
+    ///   Least Significant Bit (LSB) regardless of the architecture's
+    ///   endianness.
+    ///
+    /// # Returns
+    /// * `Some(true)` if the bit is 1.
+    /// * `Some(false)` if the bit is 0.
+    /// * `None` if `bit_pos` is out of the valid range for this `BigUInt`.
+    ///
+    /// # Implementation Details
+    /// For better performance in cases where the `bit_pos` is guaranteed to
+    /// be within range, consider using the unchecked variant `is_bit_set_()`.
     /// 
-    /// # Bit Position
-    /// The bit positon `bit_pos` is zero-based and should be counted from LSB
-    /// (Least Significant Bit) reguardless endianness. So, if the `bit_pos`
-    /// is `0`, only LSB is set to be `1` and all the other bits will be set
-    /// to `0`.
-    /// 
-    /// # Output
-    /// If the bit specified by `bit_pos` is set to be one, this method returns
-    /// `Some(true)` of enum `Option<bool>`. If the bit specified by `bit_pos`
-    /// is set to be zero, this method returns `Some(true)` of enum
-    /// `Option<bool>`. If the bit positon `bit_pos` is greater than or equal
-    /// to `size_of::<T>() * N * 8`, this method returns `None`.
-    /// 
-    /// # Counterpart method
-    /// If you are sure that `bit_pos` is less than `size_of::<T>() * N * 8`,
-    /// you can use the method `is_bit_set_()` for better performance.
-    /// 
-    /// # Example 1
+    /// # Examples
     /// ```
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
@@ -2170,34 +2143,28 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_bit_set_(&self, bit_pos: u32) -> bool
-    /// Check whether or not the bit specified by the argument
-    /// `bit_pos` in `self` to be 1.
-    /// 
+    /// Checks if the bit at the specified position is set to 1 without range
+    /// checking.
+    ///
+    /// # Arguments
+    /// * `bit_pos`: The zero-based index of the bit to check, counted from the
+    ///   Least Significant Bit (LSB) regardless of the architecture's
+    ///   endianness.
+    ///
+    /// # Returns
+    /// * `true` if the bit is 1.
+    /// * `false` if the bit is 0.
+    ///
     /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// - If the bit positon `bit_pos` is greater than or equal to
-    /// `size_of::<T>() * N * 8`, this method will panic. So, you are highly
-    /// recommended to use only when you are sure that `bit_pos` is neither
-    /// greater than nor equal to `size_of::<T>() * N * 8`. Otherwise, use
-    /// the method `is_bit_set()`.
+    /// * Panics if `bit_pos` is greater than or equal to the total bit-width
+    ///   of the `BigUInt`.
+    ///
+    /// # Implementation Details
+    /// This is a performance-oriented unchecked version of `is_bit_set()`. 
+    /// Use this method only when `bit_pos` is guaranteed to be within the 
+    /// valid range.
     /// 
-    /// # Bit Position
-    /// The bit positon `bit_pos` is zero-based and should be counted from LSB
-    /// (Least Significant Bit) reguardless endianness. So, if the `bit_pos`
-    ///  is `0`, only LSB is set to be `1` and all the other bits will be set
-    /// to `0`.
-    /// 
-    /// # Output
-    /// If the bit specified by `bit_pos` is set to be one, this method returns
-    /// `true`. If the bit specified by `bit_pos` is set to be zero, this
-    /// method returns `false`.
-    /// 
-    /// # Counterpart method
-    /// If you are not sure that `bit_pos` is less than `size_of::<T>() * N * 8`,
-    /// you are highly encouraged to use the method `is_bit_set()`.
-    /// 
-    /// # Example 1
+    /// # Examples
     /// ```
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
@@ -2218,21 +2185,22 @@ where T: TraitsBigUInt<T>
         self.get_num_(chunk_num as usize).is_bit_set_(piece_num)
     }
 
-    // pub fn get_upper_portion(portion: u32) -> Self
-    /// Get the non-zero upper portion (high order part) from `self`.
-    /// 
-    /// # Argument
-    /// The argument `portion` specifies the length of the high order part to
-    /// take in bits.
-    /// 
-    /// # Output
-    /// - If `portion` is bigger than or equal to the length of the non-zero
-    /// part of `self`, this method returns `self`. Here, non-zero part of
-    /// `00101100` is not `1011` but `101100` for example.
-    /// - If `portion` is less than the length of the non-zero part of `self`,
-    /// this method returns the high order part of `self` as many bits as
-    /// specified by `portion`. Here, non-zero part of `00101100` is not `1011`
-    /// but `101100` for example.
+    // pub fn get_upper_portion(&self, portion: u32) -> Self
+    /// Extracts the most significant bits of the non-zero part of the 
+    /// `BigUInt`.
+    ///
+    /// # Arguments
+    /// * `portion`: The number of high-order bits to extract from the non-zero 
+    ///   portion of the number.
+    ///
+    /// # Returns
+    /// A new `BigUInt` containing the requested upper portion. If `portion` 
+    /// exceeds the length of the non-zero part, a clone of `self` is returned.
+    ///
+    /// # Implementation Details
+    /// The "non-zero part" is defined as the range from the most significant 
+    /// non-zero bit down to the Least Significant Bit (LSB). For example, the 
+    /// non-zero part of `00101100` is `101100`.
     /// 
     /// # Example
     /// ```
@@ -2255,21 +2223,22 @@ where T: TraitsBigUInt<T>
             { self.shift_right(available - portion) }
     }
 
-    // pub fn get_lower_portion(portion: u32) -> Self
-    /// Get the lower portion (low order part) from `self`.
-    /// 
-    /// # Argument
-    /// The argument `portion` specifies the length of the low order part to
-    /// take in bits.
-    /// 
-    /// # Output
-    /// - If `portion` is bigger than or equal to the length of the non-zero
-    /// part of `self`, this method returns `self`. Here, non-zero part of
-    /// `00101100` is not `1011` but `101100` for example.
-    /// - If `portion` is less than the length of the non-zero part of `self`,
-    /// this method returns the low order part of `self` as many bits as
-    /// specified by `portion`. Here, non-zero part of `00101100` is not `1011`
-    /// but `101100` for example.
+    // pub fn get_lower_portion(&self, portion: u32) -> Self
+    /// Extracts the least significant bits of the non-zero part of the 
+    /// `BigUInt`.
+    ///
+    /// # Arguments
+    /// * `portion`: The number of low-order bits to extract from the non-zero 
+    ///   portion of the number.
+    ///
+    /// # Returns
+    /// A new `BigUInt` containing the requested lower portion. If `portion` 
+    /// is `0`, it returns `BigUInt::zero()`.
+    ///
+    /// # Implementation Details
+    /// The "non-zero part" is defined as the range from the most significant 
+    /// non-zero bit down to the Least Significant Bit (LSB). For example, the 
+    /// non-zero part of `00101100` is `101100`.
     /// 
     /// # Example
     /// ```
@@ -2310,22 +2279,21 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn get_num(&self, i: usize) -> Option<T>
-    /// Returns i-th element of its array of type `T` wrapped in Some
-    /// of enum Option if `i` < `N`. Otherwise, it returns `None`.
-    /// 
+    /// Returns the i-th internal storage element of type `T`.
+    ///
     /// # Arguments
-    /// - `i` is zero-based.
-    /// - 0-th element contains LSB (Least Significant Bit), while (N-1)-th
-    /// element contains MSB (Most Significant Bit) regardless endianness.
-    /// `BigUInt` have an array of type `T` in order to present long-sized
-    /// unsigned integer.
-    /// 
-    /// # Error
-    /// If `i` >= `N`, it returns `None`.
-    /// 
-    /// # Counterpart Method
-    /// When you are sure that `i` < `N`, you may want to use its counterpart
-    /// method [get_num_()](struct@BigUInt#method.get_num_) for performance.
+    /// * `i`: The zero-based index of the storage element. The element at index
+    ///   0 contains the Least Significant Bit (LSB), while index `N-1` contains
+    ///   the Most Significant Bit (MSB), regardless of the architecture's
+    ///   endianness.
+    ///
+    /// # Returns
+    /// * `Some(T)` if `i` is within the valid range (less than `N`).
+    /// * `None` if `i` is greater than or equal to `N`.
+    ///
+    /// # Implementation Details
+    /// For better performance in cases where the index `i` is guaranteed to 
+    /// be within range, consider using the unchecked variant `get_num_()`.
     /// 
     /// # Example 1
     /// ```
@@ -2361,26 +2329,25 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn get_num_(&self, i: usize) -> T
-    /// Returns i-th element of its array of type `T` if `i` < `N`.
-    /// Otherwise, it will panic.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// - This method is performance-oriented and does not care for safety.
-    /// So, if `i` >= `N`, it will panic.
-    /// 
+    /// Returns the i-th internal storage element of type `T` without range 
+    /// checking.
+    ///
     /// # Arguments
-    /// - `i` is zero-based.
-    /// - 0-th element contains LSB (Least Significant Bit), while (N-1)-th
-    /// element contains MSB (Most Significant Bit) regardless endianness.
-    /// `BigUInt` have an array of type `T` in order to present long-sized
-    /// unsigned integer.
-    /// 
-    /// # Counterpart Method
-    /// Use this method only when you are sure that `i` < `N`.
-    /// Otherwise, use its Counterpart method
-    /// [get_num()](struct@BigUInt#method.get_num) for safety.
+    /// * `i`: The zero-based index of the storage element. The element at index
+    ///   0 contains the Least Significant Bit (LSB), while index `N-1` contains
+    ///   the Most Significant Bit (MSB), regardless of the architecture's
+    ///   endianness.
+    ///
+    /// # Returns
+    /// The storage element of type `T` at the specified index.
+    ///
+    /// # Panics
+    /// Panics if the index `i` is greater than or equal to `N`.
+    ///
+    /// # Implementation Details
+    /// This is a performance-oriented unchecked version of `get_num()`. 
+    /// Use this method only when the index `i` is guaranteed to be within the 
+    /// valid range.
     /// 
     /// # Example 1
     /// ```
@@ -2403,27 +2370,20 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_num(&mut self, i: usize, val: T) -> bool
-    /// Sets i-th element of its array of type `T`, and return `true`
-    /// if `i` < `N`. Otherwise, it sets none of the elements of its
-    /// array of type `T`, and returns `false`.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    ///  
+    /// Sets the i-th internal storage element to the specified value.
+    ///
     /// # Arguments
-    /// - `i` is zero-based.
-    /// - 0-th element contains LSB (Least Significant Bit), while (N-1)-th
-    /// element contains MSB (Most Significant Bit) regardless endianess.
-    /// `BigUInt` have an array of type `T` in order to present long-sized
-    /// unsigned integer.
-    /// 
-    /// # Error
-    /// If `i` >= `N`, it will return `false`.
-    /// 
-    /// # Counterpart Method
-    /// When you are sure that `i` < `N`, you may want to use its Counterpart
-    /// method [set_num_()](struct@BigUInt#method.set_num_) for performance.
+    /// * `i`: The zero-based index of the storage element to set.
+    /// * `val`: The value of type `T` to be stored at the specified index.
+    ///
+    /// # Returns
+    /// * `true` if the index `i` is within the valid range (less than `N`) and
+    ///   the value was successfully set.
+    /// * `false` if `i` is greater than or equal to `N`.
+    ///
+    /// # Implementation Details
+    /// For better performance in cases where the index `i` is guaranteed to 
+    /// be within range, consider using the unchecked variant `set_num_()`.
     /// 
     /// # Example 1
     /// ```
@@ -2474,28 +2434,20 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_num_(&mut self, i: usize, val: T)
-    /// Sets i-th element of its array of type `T` if `i` < `N`.
-    /// Otherwise, it will panic.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// - If `i` >= `N`, it will panic.
-    /// 
+    /// Sets the i-th internal storage element to the specified value without 
+    /// range checking.
+    ///
     /// # Arguments
-    /// - `i` is zero-based.
-    /// - 0-th element contains LSB (Least Significant Bit), while (N-1)-th
-    /// element contains MSB (Most Significant Bit) regardless endianness.
-    /// `BigUInt` have an array of type `T` in order to present long-sized
-    /// unsigned integer.
-    /// 
-    /// # Counterpart Method
-    /// It is performance-oriented and does not care for safety.
-    /// It is virtually the same as the method set_num(). This method set_num_()
-    /// is considered to be slightly faster than the method set_num().
-    /// Use this method set_num_() only when you are sure that `i` < `N`.
-    /// Otherwise, use its Counterpart method
-    /// [set_num()](struct@BigUInt#method.set_num).
+    /// * `i`: The zero-based index of the storage element to set.
+    /// * `val`: The value of type `T` to be stored at the specified index.
+    ///
+    /// # Panics
+    /// Panics if the index `i` is greater than or equal to `N`.
+    ///
+    /// # Implementation Details
+    /// This is a performance-oriented unchecked version of `set_num()`. 
+    /// Use this method only when the index `i` is guaranteed to be within the 
+    /// valid range.
     /// 
     /// # Example 1
     /// ```
@@ -2538,12 +2490,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn get_number(&self) -> &[T; N]
-    /// Returns the reference of its array of `T`-type for borrowing instead
-    /// of giving its ownership. `BigUInt` has an array of `T` in order
-    /// to present long-sized unsigned integers.
-    /// 
-    /// # Features
-    /// The output of this method is immutable.
+    /// Returns an immutable reference to the internal storage array.
+    ///
+    /// # Returns
+    /// A reference to the underlying array of type `[T; N]`.
+    ///
+    /// # Implementation Details
+    /// This method provides read-only access to the internal data for 
+    /// borrowing without transferring ownership.
     /// 
     /// # Example
     /// ```
@@ -2563,13 +2517,15 @@ where T: TraitsBigUInt<T>
         &self.number
     }
 
-    // pub fn get_number_as_mut_ptr(&self) -> *mut T
-    /// Returns the mutable reference of its array of `T`-type for borrowing
-    /// instead of giving its ownership. `BigUInt` has an array of `T` in order
-    /// to present long-sized unsigned integers.
-    /// 
-    /// # Features
-    /// The output of this method is mutable.
+    // pub fn get_number_mut(&mut self) -> &mut [T; N]
+    /// Returns a mutable reference to the internal storage array.
+    ///
+    /// # Returns
+    /// A mutable reference to the underlying array of type `[T; N]`.
+    ///
+    /// # Implementation Details
+    /// This method provides direct mutable access to the internal storage,
+    /// allowing for in-place modifications of the raw data.
     /// 
     /// # Example
     /// ```
@@ -2589,9 +2545,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_number(&mut self, val: &[T; N])
-    /// Sets the contents of its array of `T`-type. The argument val is the
-    /// reference of array of type `T` with the length `N`. `BigUInt` have an
-    /// array of `T` in order to present long-sized unsigned integer.
+    /// Updates the internal storage with the contents of the provided array.
+    ///
+    /// # Arguments
+    /// * `val`: A reference to an array of type `[T; N]` containing the new 
+    ///   values to be stored.
+    ///
+    /// # Implementation Details
+    /// This method performs a bulk update of the entire storage array using 
+    /// slice copying. This operation does not modify the internal state flags.
     /// 
     /// # Example
     /// ```
@@ -2627,35 +2589,27 @@ where T: TraitsBigUInt<T>
     }
 
     // fn copy_within<R>(&mut self, src: R, dest: usize)
-    // /// Copies elements from one part of the slice `T`-array of BigUInt to
-    // /// another part of itself, using a memmove.
-    // /// 
-    // /// # Panics
-    // /// - If `size_of::<T>() * N` <= `128`, some methods may panic
-    // /// or its behavior may be undefined though it may not panic.
-    // /// - This method copy_within() will panic if either range exceeds the end
-    // /// of the slice, or if the end of src is before the start.
-    // /// 
-    // /// # Arguments
-    // /// - src is the range within self.number to copy from. Regardless
-    // /// endianness, the index is counted from LSB (Least Significant Bit) to MSB
-    // /// (Most Significant Bit). So, index 0 is LSB and index N-1 is MSB.
-    // /// - dest is the starting index of the range within self.number to copy to,
-    // /// which will have the same length as src.
-    // /// - The two ranges may overlap.
-    // /// - The ends of the two ranges must be less than or equal to self.len().
-    // /// 
-    // /// # Example
-    // /// ```
-    // /// use cryptocol::define_utypes_with;
-    // /// define_utypes_with!(u16);
-    // /// let mut a_biguint = U256::new();
-    // /// a_biguint.set_number(&[0_u16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);
-    // /// println!("a = {:?}", a_biguint);
-    // /// a_biguint.copy_within(3..10, 6);
-    // /// println!("a_biguint = {:?}", a_biguint);
-    // /// assert_eq!(a_biguint.get_number(), &[0, 1, 2, 3, 4, 5, 3, 4, 5, 6, 7, 8, 9, 13, 14, 15]);
-    // /// ```
+    /// Copies elements from one part of the internal storage array to another
+    /// using an efficient `memmove` operation.
+    ///
+    /// # Arguments
+    /// * `src`: The range of indices within the storage array to copy from. 
+    ///   Indices are counted from the Least Significant Bit (LSB) to the Most 
+    ///   Significant Bit (MSB), regardless of endianness.
+    /// * `dest`: The starting index where the source range will be copied to. 
+    ///   The destination range will have the same length as `src`.
+    ///
+    /// # Panics
+    /// * Panics if the internal storage bit-width is 128 bits or less, as 
+    ///   certain operations may result in undefined behavior or a panic in 
+    ///   specific environments.
+    /// * Panics if either the source or destination range exceeds the bounds 
+    ///   of the storage array, or if the end of `src` is before the start.
+    ///
+    /// # Implementation Details
+    /// The two ranges may overlap; the copy operation correctly handles 
+    /// overlapping regions. This method directly manipulates the underlying 
+    /// storage array.
     #[inline]
     fn copy_within<R>(&mut self, src: R, dest: usize)
     where R: RangeBounds<usize>
@@ -2687,7 +2641,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_zero(&mut self)
-    /// Sets `BigUInt` to be zero.
+    /// Resets the `BigUInt` instance to zero.
+    ///
+    /// # Implementation Details
+    /// This method sets all internal storage elements to zero and clears
+    /// all status flags.
     /// 
     /// # Example
     /// ```
@@ -2723,11 +2681,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_zero(&self) -> bool
-    /// Checks whether `BigUInt` to be zero and returns true if it is
-    /// zero and returns false if it is not zero.
-    /// 
-    /// # Output
-    /// It returns true if it is zero. Otherwise, it returns false.
+    /// Checks if the `BigUInt` instance is zero.
+    ///
+    /// # Returns
+    /// * `true` if all internal storage elements are zero.
+    /// * `false` if the number has a non-zero value.
+    ///
+    /// # Implementation Details
+    /// This method evaluates the numeric magnitude of the instance and does 
+    /// not consider internal status flags.
     /// 
     /// # Example 1
     /// ```
@@ -2760,7 +2722,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_one(&mut self)
-    /// Sets `BigUInt` to be one.
+    /// Sets the `BigUInt` instance to the value of one.
+    ///
+    /// # Implementation Details
+    /// This method resets all storage elements to zero and then sets the 
+    /// Least Significant Bit (LSB) to 1.
     /// 
     /// # Example
     /// ```
@@ -2797,11 +2763,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_one(&self) -> bool
-    /// Checks whether `BigUInt` to be one and returns true if it is
-    /// one, and returns false if it is not one.
-    /// 
-    /// # Output
-    /// It returns `true` if it is one. Otherwise, it returns `false`.
+    /// Checks if the `BigUInt` instance is equal to one.
+    ///
+    /// # Returns
+    /// * `true` if the magnitude of the number is exactly one.
+    /// * `false` if the number has any other value.
+    ///
+    /// # Implementation Details
+    /// This method evaluates the numeric magnitude and does not consider 
+    /// internal status flags.
     /// 
     /// # Example 1
     /// ```
@@ -2837,11 +2807,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_zero_or_one(&self) -> bool
-    /// Checks whether `BigUInt` to be either zero or one and returns true if it
-    /// is either zero or one. Otherwise, it returns false.
-    /// 
-    /// # Output
-    /// It returns true if it is either zero or one. Otherwise, it returns false.
+    /// Checks if the `BigUInt` instance is either zero or one.
+    ///
+    /// # Returns
+    /// * `true` if the magnitude of the number is 0 or 1.
+    /// * `false` if the magnitude is 2 or greater.
+    ///
+    /// # Implementation Details
+    /// This method is a shortcut for `self.is_zero() || self.is_one()`, 
+    /// optimized for checking small constants.
     /// 
     /// # Example 1
     /// ```
@@ -2878,8 +2852,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_max(&mut self)
-    /// Sets `self` to be maximum value in which all bits are
-    /// set to be `1`.
+    /// Sets the `BigUInt` instance to its maximum possible value.
+    ///
+    /// # Implementation Details
+    /// This method sets every bit in the internal storage to 1, effectively 
+    /// representing the largest value attainable for the current bit-width.
     /// 
     /// # Examples
     /// ```
@@ -2913,14 +2890,17 @@ where T: TraitsBigUInt<T>
             { self.set_num(i, T::max()); }
     }
 
-    // pub fn set_submax(&mut self, size_in_bits: usize)
-    /// Sets `set` to be `size_in_bits`-bit long maximum value
-    /// in which all bits are set to be `1`.
-    /// 
-    /// # Features
-    /// This method will make all the `size_in_bits` bits of `number[T;N]` of
-    /// `self` from LSB (Least Significant Bit) to be `1` and the rest of the
-    /// bits up to MSB (Most Significant Bit) to be `0`.
+    // pub fn set_submax(&mut self, size_in_bits: u32)
+    /// Sets the `BigUInt` instance to the maximum value that fits within the
+    /// specified number of bits.
+    ///
+    /// # Arguments
+    /// * `size_in_bits`: The number of low-order bits to set to 1.
+    ///
+    /// # Implementation Details
+    /// This method sets all bits from the Least Significant Bit (LSB) up to
+    /// `size_in_bits` to 1, while initializing all remaining bits up to the
+    /// Most Significant Bit (MSB) to 0.
     /// 
     /// # Examples
     /// ```
@@ -2976,13 +2956,12 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_halfmax(&mut self)
-    /// Sets `self` to be half long maximum value
-    /// in which all bits are set to be `1`.
-    /// 
-    /// # Features
-    /// This method will make all the half lower bits of `number[T;N]` of
-    /// `self` from LSB (Least Significant Bit) to be `1` and the rest of the
-    /// bits up to MSB (Most Significant Bit) to be `0`.
+    /// Sets the `BigUInt` instance to the maximum value of its lower-half 
+    /// bit-width.
+    ///
+    /// # Implementation Details
+    /// This method sets all bits in the lower half of the total bit-width to 1
+    /// and initializes the upper half to 0.
     /// 
     /// # Examples
     /// ```
@@ -3017,11 +2996,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_max(&self) -> bool
-    /// Checks whether or not `BigUInt`-type number to be maximum value.
-    /// 
-    /// # Output
-    /// It returns `true` if it has maxmum number.
-    /// Otherwise, it returns `false`.
+    /// Checks if the `BigUInt` instance is equal to its maximum possible 
+    /// value.
+    ///
+    /// # Returns
+    /// * `true` if every bit in the internal storage is set to 1.
+    /// * `false` otherwise.
+    ///
+    /// # Implementation Details
+    /// This method evaluates the numeric magnitude and does not consider 
+    /// internal status flags.
     /// 
     /// # Example 1
     /// ```
@@ -3046,7 +3030,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_msb(&mut self)
-    /// Sets the MSB (Most Significant Bit) of `BigUInt`-type number with `1`.
+    /// Sets the Most Significant Bit (MSB) of the `BigUInt` to 1.
+    ///
+    /// # Implementation Details
+    /// This method modifies only the highest bit of the internal storage 
+    /// array.
     /// 
     /// # Examples
     /// ```
@@ -3082,7 +3070,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn reset_msb(&mut self)
-    /// Sets the MSB (Most Significant Bit) of `BigUInt`-type number with `0`.
+    /// Resets the Most Significant Bit (MSB) of the `BigUInt` to 0.
+    ///
+    /// # Implementation Details
+    /// This method clears only the highest bit of the internal storage 
+    /// array.
     /// 
     /// # Examples
     /// ```
@@ -3118,7 +3110,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_lsb(&mut self)
-    /// Sets the LSB (Least Significant Bit) of `BigUInt`-type number with `1`.
+    /// Sets the Least Significant Bit (LSB) of the `BigUInt` to 1.
+    ///
+    /// # Implementation Details
+    /// This method modifies only the lowest bit of the internal storage 
+    /// array.
     /// 
     /// # Examples
     /// ```
@@ -3154,7 +3150,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn reset_lsb(&mut self)
-    /// Sets the LSB (Least Significant Bit) of `BigUInt`-type number with `1`.
+    /// Resets the Least Significant Bit (LSB) of the `BigUInt` to 0.
+    ///
+    /// # Implementation Details
+    /// This method clears only the lowest bit of the internal storage 
+    /// array.
     /// 
     /// # Examples
     /// ```
@@ -3171,7 +3171,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_left_carry(), false);
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// 
-    /// a_biguint.set_lsb();
+    /// a_biguint.reset_lsb();
     /// println!("a_biguint = {}", a_biguint);
     /// assert_eq!(a_biguint.to_string_with_radix_and_stride(2, 8).unwrap(), "0");
     /// assert_eq!(a_biguint.is_overflow(), false);
@@ -3190,16 +3190,21 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_uint<U>(&mut self, val: U)
-    /// Sets `BigUInt`-type number with `U`-type small value such as `u8`,
-    /// `u16`, `u32`, `u64`, and `u128` type value. This mathod set_uint()
-    /// is useful especially when you initialize `BigUInt`-type big
-    /// unsigned integer with a small value.
-    /// 
+    /// Sets the `BigUInt` instance to the value of a primitive unsigned 
+    /// integer.
+    ///
+    /// # Arguments
+    /// * `val`: The primitive unsigned integer value to set (e.g., `u8`, 
+    ///   `u16`, `u32`, `u64`, `u128`).
+    ///
     /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// - If `size_of::<T>() * N` < `size_of::<U>()`, this method may panic or
-    /// its behavior may be undefined though it may not panic.
+    /// * Panics if the bit-width of `U` is greater than the total bit-width
+    ///   of the `BigUInt`.
+    ///
+    /// # Implementation Details
+    /// This method is optimized for initializing a `BigUInt` with a small 
+    /// constant value. It clears the existing value and all status flags 
+    /// before setting the new value.
     /// 
     /// # Examples
     /// ```
@@ -3264,24 +3269,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_uint<U>(&self, val: U) -> bool
-    /// Check whether the `BigUInt`-type number is equal to `U`-type number.
-    /// It will return `true`, if it is equal to the `U`-type number. Otherwise,
-    /// it will return `false`.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// - If `size_of::<T>() * N` < `size_of::<U>()`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It will return `true`, if it is equal to val.
-    /// Otherwise, it will return `false`.
-    /// 
-    /// # Counterpart Method
-    /// This method is_uint() is virtually the same the method [eq_uint()](struct@BigUInt#method.eq_uint).
-    /// However, you may want to use this method is_uint() rather than [eq_uint()](struct@BigUInt#method.eq_uint),
-    /// if you know that this method is_uint() is a bit faster than [eq_uint()](struct@BigUInt#method.eq_uint),
+    /// Checks if the `BigUInt` instance is equal to a primitive unsigned 
+    /// integer.
+    ///
+    /// # Arguments
+    /// * `val`: The primitive unsigned integer value to compare against.
+    ///
+    /// # Returns
+    /// * `true` if the magnitude of the number is equal to `val`.
+    /// * `false` otherwise.
+    ///
+    /// # Implementation Details
+    /// This method is optimized for comparing a `BigUInt` with small 
+    /// constant values and provides similar functionality to `eq_uint()`.
     /// 
     /// # Examples
     /// ```
@@ -3344,10 +3344,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_odd(&self) -> bool
-    /// Checks whether the `BigUInt`-type number is an odd number.
-    /// 
-    /// # Output
-    /// It will return `true`, if it is odd. Otherwise, it will return `false`.
+    /// Checks if the `BigUInt` instance represents an odd number.
+    ///
+    /// # Returns
+    /// * `true` if the Least Significant Bit (LSB) is 1.
+    /// * `false` if the LSB is 0.
     /// 
     /// # Example 1
     /// ```
@@ -3372,10 +3373,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_even(&self) -> bool
-    /// Checks whether the `BigUInt`-type number is an even number.
-    /// 
-    /// # Output
-    /// It will return `true`, if it is even. Otherwise, it will return `false`.
+    /// Checks if the `BigUInt` instance represents an even number.
+    ///
+    /// # Returns
+    /// * `true` if the Least Significant Bit (LSB) is 0.
+    /// * `false` if the LSB is 1.
     /// 
     /// # Example 1
     /// ```
@@ -3400,12 +3402,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_msb_set(&self) -> bool
-    /// Checks whether the MSB (Most Segnificant Bit) of `self` is set to be
-    /// one.
-    /// 
-    /// # Output
-    /// It will return `true`, if the MSB of `self` is set to be one.
-    /// Otherwise, it will return `false`.
+    /// Checks if the Most Significant Bit (MSB) of the `BigUInt` is set to 1.
+    ///
+    /// # Returns
+    /// * `true` if the highest bit of the total bit-width is 1.
+    /// * `false` if the highest bit is 0.
     /// 
     /// # Example 1
     /// ```
@@ -3433,11 +3434,11 @@ where T: TraitsBigUInt<T>
     /***** METHODS TO CHECK BITS *****/
 
     // pub fn count_ones(&self) -> u32
-    /// Returns the number of ones in the binary representation
-    /// of the array `number[T;N]` of `self`.
+    /// Returns the number of ones in the binary representation of the 
+    /// `BigUInt`.
     /// 
-    /// # Output
-    /// It returns the total number of the bits that are set to be one.
+    /// # Returns
+    /// The total count of bits set to 1 across all internal storage elements.
     /// 
     /// # Example
     /// ```
@@ -3458,11 +3459,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn count_zeros(&self) -> u32
-    /// Returns the number of zeros in the binary representation
-    /// of the array `number[T;N]` of `self`.
+    /// Returns the number of zeros in the binary representation of the 
+    /// `BigUInt`.
     /// 
-    /// # Output
-    /// It returns the total number of the bits that are set to be zero.
+    /// # Returns
+    /// The total count of bits set to 0 across all internal storage elements.
     /// 
     /// # Examples
     /// ```
@@ -3482,11 +3483,12 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn leading_ones(&self) -> u32
-    /// Returns the number of leading ones in the binary representation
-    /// of the array `number[T;N]` of `self`.
+    /// Returns the number of leading ones in the binary representation of 
+    /// the `BigUInt`.
     /// 
-    /// # Output
-    /// It returns the total number of the leading bits that are set to be one.
+    /// # Returns
+    /// The count of consecutive bits set to 1 starting from the Most 
+    /// Significant Bit (MSB).
     /// 
     /// # Examples
     /// ```
@@ -3514,11 +3516,12 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn leading_zeros(&self) -> u32
-    /// Returns the number of leading zeros in the binary representation
-    /// of the array `number[T;N]` of `self`.
+    /// Returns the number of leading zeros in the binary representation of 
+    /// the `BigUInt`.
     /// 
-    /// # Output
-    /// It returns the total number of the leading bits that are set to be zero.
+    /// # Returns
+    /// The count of consecutive bits set to 0 starting from the Most 
+    /// Significant Bit (MSB).
     /// 
     /// # Examples
     /// ```
@@ -3545,11 +3548,12 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn trailing_ones(&self) -> u32
-    /// Returns the number of trailing ones in the binary representation
-    /// of the array `number[T;N]` of `self`.
+    /// Returns the number of trailing ones in the binary representation of 
+    /// the `BigUInt`.
     /// 
-    /// # Output
-    /// It returns the total number of the trailing bits that are set to be one.
+    /// # Returns
+    /// The count of consecutive bits set to 1 starting from the Least 
+    /// Significant Bit (LSB).
     /// 
     /// # Example
     /// ```
@@ -3580,11 +3584,12 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn trailing_zeros(&self) -> u32
-    /// Returns the number of trailing zeros in the binary representation
-    /// of the array `number[T;N]` of `self`.
+    /// Returns the number of trailing zeros in the binary representation of 
+    /// the `BigUInt`.
     /// 
-    /// # Output
-    /// It returns the total number of the trailing bits that are set to be zero.
+    /// # Returns
+    /// The count of consecutive bits set to 0 starting from the Least 
+    /// Significant Bit (LSB).
     /// 
     /// # Examples
     /// ```
@@ -3614,14 +3619,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn leading_max_elements(&self) -> u32
-    /// Returns the number of leading maximum elements in the binary
-    /// representation of the array `number[T;N]` of `self`.
-    /// Here, 'maximum element' means the element that has all bits to be one.
+    /// Returns the number of leading storage elements that are set to their 
+    /// maximum possible value.
     /// 
-    /// # Output
-    /// It returns the total number of the leading maximum elements
-    /// that has all bits set to be one.
-    /// Here, 'maximum element' means the element that has all bits to be one. 
+    /// # Returns
+    /// The count of consecutive elements of type `T` that have all bits set 
+    /// to 1, starting from the high-order end.
+    /// 
+    /// # Implementation Details
+    /// An element is considered "maximum" if it equals `T::max()`.
     /// 
     /// # Example
     /// ```
@@ -3651,12 +3657,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn leading_zero_elements(&self) -> u32
-    /// Returns the number of leading zero elements in the binary
-    /// representation of the array `number[T;N]` of `self`.
+    /// Returns the number of leading storage elements that are set to zero.
     /// 
-    /// # Output
-    /// It returns the total number of the leading zero elemments
-    /// that are set to be zero.
+    /// # Returns
+    /// The count of consecutive elements of type `T` that are set to 0, 
+    /// starting from the high-order end.
     /// 
     /// # Example
     /// ```
@@ -3686,14 +3691,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn trailing_max_elements(&self) -> u32
-    /// Returns the number of trailing maximum elements in the binary
-    /// representation of the array `number[T;N]` of `self`.
-    /// Here, 'maximum element' means the element that has all bits to be one.
+    /// Returns the number of trailing storage elements that are set to their 
+    /// maximum possible value.
     /// 
-    /// # Output
-    /// It returns the total number of the trailing maximum elemeents
-    /// that have all bits set to be one.
-    /// Here, 'maximum element' means the element that has all bits to be one.
+    /// # Returns
+    /// The count of consecutive elements of type `T` that have all bits set 
+    /// to 1, starting from the low-order end.
+    /// 
+    /// # Implementation Details
+    /// An element is considered "maximum" if it equals `T::max()`.
     /// 
     /// # Example
     /// ```
@@ -3718,11 +3724,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn trailing_zero_elements(&self) -> u32
-    /// Returns the number of trailing zeros in the binary representation
-    /// of the array `number[T;N]` of `self`.
+    /// Returns the number of trailing storage elements that are set to zero.
     /// 
-    /// # Output
-    /// It returns the total number of the trailing bits that are set to be zero.
+    /// # Returns
+    /// The count of consecutive elements of type `T` that are set to 0, 
+    /// starting from the low-order end.
     /// 
     /// # Example
     /// ```
@@ -3751,31 +3757,20 @@ where T: TraitsBigUInt<T>
     /***** METHODS FOR COMPARISON WITH UINT *****/
 
     // pub fn partial_cmp_uint<U>(&self, other: U) -> Option<Ordering>
-    /// Compares `self` and a value of type `U` and returns the
-    /// result of the comparison in the type `Option<Ordering>`.
-    /// However, if the datatype `U` is the same datatype `T`, it will be
-    /// more convenient for you to use the operators `<`, `>`, `<=`, `>=`,
-    /// `==`, and `!=`. Then, you don't have to use `partial_cmp_uint()`
-    /// directly. But, if the datatype `U` is not the same datatype `T`, you
-    /// can use the methods `lt_uint()`, `gt_uint()`, `le_uint()`,
-    /// `ge_uint()`, and `eq_uint()` for your convenience. Then, you don't
-    /// have to use `partial_cmp_uint()` directly too.
-    /// 
+    /// Compares the `BigUInt` instance with a primitive unsigned integer.
+    ///
     /// # Arguments
-    /// `rhs` is to be compared with `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns `Ordering::Greater` wrapped by `Some` of enum `Option`
-    /// if `self` is greater than `other`.
-    /// It returns `Ordering::Less` wrapped by `Some` of enum `Option`
-    /// if `self` is less than `other`.
-    /// It returns `Ordering::Equal` wrapped by `Some` of enum `Option`
-    /// if `self` is equal to `other`.
+    /// * `other`: The primitive unsigned integer value to compare against.
+    ///
+    /// # Returns
+    /// * `Some(Ordering::Greater)` if `self` is greater than `other`.
+    /// * `Some(Ordering::Less)` if `self` is less than `other`.
+    /// * `Some(Ordering::Equal)` if `self` is equal to `other`.
+    ///
+    /// # Implementation Details
+    /// This method is optimized for comparing with small constant values. 
+    /// For values of the same type `T`, using standard comparison operators 
+    /// (`<`, `>`, etc.) is recommended for better readability.
     /// 
     /// # Example 1
     /// ```
@@ -3830,19 +3825,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn lt_uint<U>(&self, other: U) -> bool
-    /// Compares `self` and `other` to find whether `self` is less than `other`.
+    /// Checks if the `BigUInt` instance is less than a primitive unsigned 
+    /// integer.
     /// 
     /// # Arguments
-    /// `rhs` is to be compared with `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    /// * `other`: The primitive unsigned integer value to compare against.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns `true` if `self` is less than `other`.
-    /// Otherwise, it returns `false`.
+    /// # Returns
+    /// * `true` if `self` is strictly less than `other`.
+    /// * `false` otherwise.
     /// 
     /// # Example 1
     /// ```
@@ -3869,20 +3860,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn gt_uint<U>(&self, other: U) -> bool
-    /// Compares `self` and `other` to find whether `self` is greater
-    /// than `other`.
+    /// Checks if the `BigUInt` instance is greater than a primitive unsigned 
+    /// integer.
     /// 
     /// # Arguments
-    /// `rhs` is to be compared with `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    /// * `other`: The primitive unsigned integer value to compare against.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns `true` if `self` is greater than `other`.
-    /// Otherwise, it returns `false`.
+    /// # Returns
+    /// * `true` if `self` is strictly greater than `other`.
+    /// * `false` otherwise.
     /// 
     /// # Example 1
     /// ```
@@ -3909,20 +3895,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn le_uint<U>(&self, other: U) -> bool
-    /// Compares `self` and `other` to find whether `self` is less than or
-    /// equal to `other`.
+    /// Checks if the `BigUInt` instance is less than or equal to a primitive 
+    /// unsigned integer.
     /// 
     /// # Arguments
-    /// `rhs` is to be compared with `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    /// * `other`: The primitive unsigned integer value to compare against.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns `true` if `self` is less than or equal to `other`.
-    /// Otherwise, it returns `false`.
+    /// # Returns
+    /// * `true` if `self` is less than or equal to `other`.
+    /// * `false` otherwise.
     /// 
     /// # Example 1
     /// ```
@@ -3949,20 +3930,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn ge_uint<U>(&self, other: U) -> bool 
-    /// Compares `self` and `other` to find whether `self` is greater than
-    /// or equal to `other`.
+    /// Checks if the `BigUInt` instance is greater than or equal to a 
+    /// primitive unsigned integer.
     /// 
     /// # Arguments
-    /// `rhs` is to be compared with `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    /// * `other`: The primitive unsigned integer value to compare against.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns `true` if `self` is greater than or equal to `other`.
-    /// Otherwise, it returns `false`.
+    /// # Returns
+    /// * `true` if `self` is greater than or equal to `other`.
+    /// * `false` otherwise.
     /// 
     /// # Example 1
     /// ```
@@ -3989,19 +3965,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn eq_uint<U>(&self, other: U) -> bool
-    /// Compares `self` and `other` to find whether `self` is equal to `other`.
+    /// Checks if the `BigUInt` instance is equal to a primitive unsigned 
+    /// integer.
     /// 
     /// # Arguments
-    /// `rhs` is to be compared with `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    /// * `other`: The primitive unsigned integer value to compare against.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Returns
+    /// * `true` if the magnitude of the number is equal to `other`.
+    /// * `false` otherwise.
     /// 
-    /// # Output
-    /// It returns `true` if `self` is equal to `other`.
-    /// Otherwise, it returns `false`.
+    /// # Implementation Details
+    /// This method is optimized for comparing a `BigUInt` with small 
+    /// constant values and provides functionality similar to `is_uint()`.
     /// 
     /// # Example 1
     /// ```
@@ -4029,24 +4005,16 @@ where T: TraitsBigUInt<T>
             { self.partial_cmp_uint(other).unwrap().is_eq() }
     }
 
-
-
-    /***** METHODS FOR COMPARISON WITH BIGUINT *****/
-
     // pub fn partial_cmp(&self, other: &Self) -> Option<Ordering>
-    /// Compares `self` and a value of `other` and returns the result of the
-    /// comparison in the type `Option<Ordering>`.
+    /// Compares two `BigUInt` instances.
     /// 
     /// # Arguments
-    /// `rhs` is to be compared with `self`, and is of `&Self` type.
+    /// * `other`: A reference to the `BigUInt` to compare against.
     /// 
-    /// # Output
-    /// It returns `Ordering::Greater` wrapped by `Some` of enum `Option`
-    /// if `self` is greater than `other`.
-    /// It returns `Ordering::Less` wrapped by `Some` of enum `Option`
-    /// if `self` is less than `other`.
-    /// It returns `Ordering::Equal` wrapped by `Some` of enum `Option`
-    /// if `self` is equal to `other`.
+    /// # Returns
+    /// * `Some(Ordering::Greater)` if `self` is greater than `other`.
+    /// * `Some(Ordering::Less)` if `self` is less than `other`.
+    /// * `Some(Ordering::Equal)` if `self` is equal to `other`.
     /// 
     /// # Example 1
     /// ```
@@ -4089,18 +4057,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn lt(&self, other: &Self) -> bool
-    /// Compares `self` and `other` to find whether `self` is less than `other`.
+    /// Checks if the `BigUInt` instance is less than another `BigUInt`.
     /// 
     /// # Arguments
-    /// `rhs` is to be compared with `self`, and is of `&Self` type.
+    /// * `other`: A reference to the `BigUInt` to compare against.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns `true` if `self` is less than `other`.
-    /// Otherwise, it returns `false`.
+    /// # Returns
+    /// * `true` if `self` is strictly less than `other`.
+    /// * `false` otherwise.
     /// 
     /// # Example 1
     /// ```
@@ -4127,19 +4091,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn gt(&self, other: &Self) -> bool
-    /// Compares `self` and `other` to find whether `self` is greater
-    /// than `other`.
+    /// Checks if the `BigUInt` instance is greater than another `BigUInt`.
     /// 
     /// # Arguments
-    /// `rhs` is to be compared with `self`, and is of `&Self` type.
+    /// * `other`: A reference to the `BigUInt` to compare against.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns `true` if `self` is greater than `other`.
-    /// Otherwise, it returns `false`.
+    /// # Returns
+    /// * `true` if `self` is strictly greater than `other`.
+    /// * `false` otherwise.
     /// 
     /// # Example 1
     /// ```
@@ -4166,19 +4125,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn le(&self, other: &Self) -> bool
-    /// Compares `self` and `other` to find whether `self` is less than or
-    /// equal to `other`.
+    /// Checks if the `BigUInt` instance is less than or equal to another 
+    /// `BigUInt`.
     /// 
     /// # Arguments
-    /// `rhs` is to be compared with `self`, and is of `&Self` type.
+    /// * `other`: A reference to the `BigUInt` to compare against.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns `true` if `self` is less than or equal to `other`.
-    /// Otherwise, it returns `false`.
+    /// # Returns
+    /// * `true` if `self` is less than or equal to `other`.
+    /// * `false` otherwise.
     /// 
     /// # Example 1
     /// ```
@@ -4205,19 +4160,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn ge(&self, other: &Self) -> bool
-    /// Compares `self` and `other` to find whether `self` is greater than
-    /// or equal to `other`.
+    /// Checks if the `BigUInt` instance is greater than or equal to another 
+    /// `BigUInt`.
     /// 
     /// # Arguments
-    /// `rhs` is to be compared with `self`, and is of `&Self` type.
+    /// * `other`: A reference to the `BigUInt` to compare against.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, some methods may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns `true` if `self` is greater than or equal to `other`.
-    /// Otherwise, it returns `false`.
+    /// # Returns
+    /// * `true` if `self` is greater than or equal to `other`.
+    /// * `false` otherwise.
     /// 
     /// # Example 1
     /// ```
@@ -4244,18 +4195,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn eq(&self, other: &Self) -> bool
-    /// Compare `self` with `other` to find whether `self` is equal to `other`.
+    /// Checks if the `BigUInt` instance is equal to another `BigUInt`.
     /// 
     /// # Arguments
-    /// `rhs` is to be compared with `self`, and is of `&Self` type.
+    /// * `other`: A reference to the `BigUInt` to compare against.
     /// 
-    /// # Output
-    /// It returns `true` if `self` is equal to `other`.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Returns
+    /// * `true` if all internal storage elements are equal.
+    /// * `false` otherwise.
     /// 
     /// # Example 1
     /// ```
@@ -4292,43 +4239,19 @@ where T: TraitsBigUInt<T>
     /*** ADDITION ***/
 
     // pub fn carrying_add_uint<U>(&self, rhs: U, carry: bool) -> (Self, bool)
-    /// Calculates `self` + `rhs` + `carry`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a tuple of an addition result `self` + `rhs` + `carry`
-    /// along with a carry-out bit.
-    /// 
+    /// Calculates `self + rhs + carry` and returns the result with a 
+    /// carry-out bit.
+    ///
     /// # Arguments
-    /// - `rhs` is to be added to `self`, and is of primitive unsigned
-    ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `carry` is of `bool` type so that `1` may be added to `self`
-    ///   if `carry` is `true`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Outputs
-    /// It returns a tuple containing the sum and the output carry. It performs
-    /// "ternary addition" of one `Self`-typed operand, a primitive unsigned
-    /// integer, and a carry-in bit, and returns an tuple of an addition result
-    /// in `Self` type and a carry-out bit.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) addition.
-    /// - This allows chaining together multiple additions to create even a
-    ///   wider addition. This can be thought of as a big integer
-    ///   "full adder", in the electronics sense.
-    /// - If the input carry is `false`, this method is equivalent to
-    ///   `overflowing_add_uint()`, and the output carry reflects current
-    ///   overflow.
-    /// - The output carry is equal to the `OVERFLOW` flag of the return value.
-    /// - If overflow happened, the flag `OVERFLOW` of the return value will
-    ///   be set.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [carrying_add()](struct@BigUInt#method.carrying_add)
-    /// is proper rather than this method.
+    /// * `rhs`: The primitive unsigned integer to add.
+    /// * `carry`: The carry-in bit to include in the addition.
+    ///
+    /// # Returns
+    /// A tuple `(Self, bool)` containing the sum and the carry-out bit.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping addition. The carry-out bit is also 
+    /// reflected in the `OVERFLOW` flag of the returned instance.
     /// 
     /// # Example 1
     /// ```
@@ -4361,44 +4284,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn carrying_add_assign_uint<U>(&mut self, rhs: U, carry: bool) -> bool
-    /// Calculates `self` + `rhs` + `carry`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns the addition result `self` + `rhs` + `carry` to `self` back,
-    /// and returns the resulting carry.
-    /// 
+    /// Calculates `self + rhs + carry` and assigns the result to `self`.
+    ///
     /// # Arguments
-    /// - `rhs` is to be added to `self`, and primitive unsigned integer
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `carry` is of `bool` type so that `1` may be added to `self`
-    ///   if `carry` is `true`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Outputs
-    /// It returns the output carry. It performs "ternary addition" of a
-    /// `Self`-typed operands, primitive unsigned integer, and a carry-in bit,
-    /// and returns a carry-out bit.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) addition.
-    /// - This allows chaining together multiple additions to create even a
-    ///   wider addition. This can be thought of as a big integer "full adder",
-    ///   in the electronics sense.
-    /// - If the input carry is false, this method is equivalent to
-    ///   `overflowing_add_assign_uint()`, and the output carry reflects current
-    ///   overflow.
-    /// - If overflow happened, the flag `OVERFLOW` of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an overflow
-    ///   occurred even once before this current operation or `OVERFLOW`
-    ///   flag is already set before this current operation, the `OVERFLOW` flag
-    ///   is not changed even if this current operation does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [carrying_add_assign()](struct@BigUInt#method.carrying_add_assign)
-    /// is proper rather than this method.
+    /// * `rhs`: The primitive unsigned integer to add.
+    /// * `carry`: The carry-in bit to include in the addition.
+    ///
+    /// # Returns
+    /// The carry-out bit resulting from the addition.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping addition. The `OVERFLOW` flag of `self` 
+    /// is updated to reflect the carry-out bit. Flags are cumulative and 
+    /// will remain set if they were set by a previous operation.
     /// 
     /// # Example 1
     /// ```
@@ -4463,42 +4361,17 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_add_uint<U>(&self, rhs: U) -> Self
-    /// Calculates `self` + `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns an addition result `self` + `rhs`.
-    /// 
+    /// Calculates `self + rhs` with wrapping at the type boundary.
+    ///
     /// # Arguments
-    /// `rhs` is to be added to `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns `self` + `rhs` with wrapping (modular) addition.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) addition.
-    /// - If overflow happened, the flag `OVERFLOW` of the return value
-    ///   will be set.
-    /// 
-    /// # Counterpart Methods
-    /// - If `rhs` is bigger tham `ui128`, the method
-    ///   [wrapping_add()](struct@BigUInt#method.wrapping_add)
-    ///   is proper rather than this method.
-    /// - You may be interested in extra addition methods.
-    ///   In order to use any one of
-    ///   [checked_add_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_add_uint),
-    ///   [saturating_add_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_add_uint), and
-    ///   [safe_add_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_add_uint),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_add_uint()](trait.BigUInt_Modular.html#tymethod.modular_add_uint),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_add_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_add_uint),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: The primitive unsigned integer to add.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the sum.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) addition. If the operation 
+    /// results in an overflow, the `OVERFLOW` flag of the result is set.
     /// 
     /// # Example 1
     /// ```
@@ -4535,42 +4408,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_add_assign_uint<U>(&mut self, rhs: U)
-    /// Calculates `self` + `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns the addition result `self` + `rhs` to `self` back.
-    /// 
+    /// Calculates `self + rhs` with wrapping and assigns the result to `self`.
+    ///
     /// # Arguments
-    /// `rhs` is to be added to `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) addition.
-    /// - If overflow happened, the flag `OVERFLOW` of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// - If `rhs` is bigger tham `u128`, the method
-    ///   [wrapping_add_assign()](struct@BigUInt#method.wrapping_add_assign)
-    ///   is proper rather than this method.
-    /// - You may be interested in extra addition methods.
-    ///   In order to use any one of 
-    ///   [saturating_add_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_add_assign_uint), and
-    ///   [safe_add_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_add_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_add_assign_uint()](trait.BigUInt_Modular.html#tymethod.modular_add_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_add_assign_uint()](trait.BigUInt_Modular.html#tymethod.panic_free_modular_add_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: The primitive unsigned integer to add.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) addition. If an overflow 
+    /// occurs, the `OVERFLOW` flag of `self` is set. Flags are cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -4610,35 +4455,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_add_uint<U>(&self, rhs: U) -> (Self, bool)
-    /// Calculates `self` + `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a tuple of the addition result `self` + `rhs` along with
-    /// a boolean indicating whether an arithmetic overflow would occur.
-    /// 
+    /// Calculates `self + rhs` and returns a tuple with the result and an 
+    /// overflow flag.
+    ///
     /// # Arguments
-    /// `rhs` is to be added to `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns a tuple of the addition `self` + `rhs` along with a boolean
-    /// indicating whether an arithmetic overflow would occur. If an overflow
-    /// would have occurred, then the wrapped (modular) value is returned.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) addition.
-    /// - If overflow happens, the second element of the output tuple will
-    ///   be true and the `OVERFLOW` flag of the return value will be set.
-    /// - The second element of the output tuple reflects only
-    ///   the current overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [overflowing_add()](struct@BigUInt#method.overflowing_add)
-    /// is proper rather than this method.
+    /// * `rhs`: The primitive unsigned integer to add.
+    ///
+    /// # Returns
+    /// A tuple `(Self, bool)` containing the sum and a boolean indicating 
+    /// whether an overflow occurred.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping addition. The boolean flag reflects 
+    /// only the overflow from the current operation.
     /// 
     /// # Example 1
     /// ```
@@ -4668,43 +4497,25 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_add_assign_uint<U>(&mut self, rhs: U) -> bool
-    /// Calculates `self` + `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns the addition result `self` + `rhs` to `self` back,
-    /// and returns a boolean indicating whether an arithmetic overflow
-    /// would occur.
-    /// 
+    /// Calculates `self + rhs` and assigns the result to `self`, returning 
+    /// an overflow flag.
+    ///
     /// # Arguments
-    /// `rhs` is to be added to `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    /// * `rhs`: The primitive unsigned integer to add.
+    ///
+    /// # Returns
+    /// `true` if an overflow occurred in this operation, `false` otherwise.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping addition. The returned flag reflects 
+    /// only the current operation, while the `OVERFLOW` flag of `self` 
+    /// remains cumulative.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns true if an arithmetic overflow would occur.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) addition.
-    /// - If overflow happened, the flag `OVERFLOW` of `self` will be set.
-    /// - If overflow did not happen in the current operation, the output
-    ///   will be false even if the `OVERFLOW` flag of `self` was already set
-    ///   because of previous operation of `self`.
-    /// - The output reflects only the current overflow.
-    /// - All the flags are historical, which means, for example, if an overflow
-    ///   occurred even once before this current operation or `OVERFLOW`
-    ///   flag is already set before this current operation, the `OVERFLOW` flag
-    ///   is not changed even if this current operation does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [overflowing_add_assign()](struct@BigUInt#method.overflowing_add_assign)
-    /// is proper rather than this method.
+    /// # Alternatives
+    /// For operands larger than 128 bits, use 
+    /// [`overflowing_add_assign()`](struct@BigUInt#method.overflowing_add_assign).
     /// 
     /// # Example 1
-    /// ```
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
@@ -4743,44 +4554,20 @@ where T: TraitsBigUInt<T>
     /*** SUBTRACTION ***/
 
     // pub fn borrowing_sub_uint<U>(&self, rhs: U, borrow: bool) -> (Self, bool)
-    /// Calculates `self` - `rhs` - `carry`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a tuple of a subtraction result `self` - `rhs` - `carry`
-    /// along with a borrow-out bit.
-    /// 
+    /// Calculates `self - rhs - borrow` and returns the result with a 
+    /// borrow-out bit.
+    ///
     /// # Arguments
-    /// - `rhs` is to be subtracted from `self`, and is of primitive unsigned
-    ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `borrow` is of `bool` type so that `1` may be subtracted from `self`
-    ///   if `borrow` is `true`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Outputs
-    /// It returns a tuple containing the subtraction result and the borrow-out
-    /// bit. It performs "ternary subtraction" of one `Self`-typed operand,
-    /// a primitive unsigned integer, and a borrow-in bit, and returns an tuple
-    /// of an subtraction result in `Self` type and a borrow-out bit.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) subtraction.
-    /// - This allows chaining together multiple subtraction to create even a
-    ///   wider subtraction. This can be thought of as a big integer
-    ///   "full subtracter", in the electronics sense.
-    /// - If the input borrow is `false`, this method is equivalent to
-    ///   `overflowing_sub_uint()`, and the output borrow reflects current
-    ///   underflow.
-    /// - The output borrow is equal to the `UNDERFLOW` flag
-    ///   of the return value.
-    /// - If underflow happened, the flag `UNDERFLOW` of the return value will
-    ///   be set.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [borrowing_sub()](struct@BigUInt#method.borrowing_sub)
-    /// is proper rather than this method.
+    /// * `rhs`: The primitive unsigned integer to subtract.
+    /// * `borrow`: The borrow-in bit to include in the subtraction.
+    ///
+    /// # Returns
+    /// A tuple `(Self, bool)` containing the difference and the borrow-out 
+    /// bit.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping subtraction. The borrow-out bit is also 
+    /// reflected in the `UNDERFLOW` flag of the returned instance.
     /// 
     /// # Example 1
     /// ```
@@ -4813,45 +4600,18 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn borrowing_sub_assign_uint<U>(&mut self, rhs: U, borrow: bool) -> bool
-    /// Calculates `self` - `rhs` - `carry`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns the subtraction result `self` - `rhs` - `carry`
-    /// to `self` back,
-    /// and return the resulting borrow.
-    /// 
+    /// Calculates `self - rhs - borrow` and assigns the result to `self`.
+    ///
     /// # Arguments
-    /// - `rhs` is to be subtracted from `self`, and is of primitive unsigned
-    ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `borrow` is of `bool` type so that `1` may be subtracted from `self`
-    ///   if `borrow` is `true`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Outputs
-    /// It returns the output borrow. It performs "ternary subtraction" of one
-    /// `Self`-typed operand, primitive unsigned integer, and a borrow-in bit,
-    /// and returns a borrow-out bit.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) subtraction.
-    /// - This allows chaining together multiple subtraction to create even a
-    ///   wider subtraction. This can be thought of as a big integer
-    ///   "full subtracter", in the electronics sense.
-    /// - If the input borrow is false, this method is equivalent to
-    ///   `overflowing_sub_assign_uint()`, and the output borrow reflects
-    ///   the current underflow.
-    /// - If underflow happened, the flag `UNDERFLOW` of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an underflow
-    ///   occurred even once before this current operation or `UNDERFLOW`
-    ///   flag is already set before this current operation, the `UNDERFLOW` flag
-    ///   is not changed even if this current operation does not cause underflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `ui128`, the method
-    /// [borrowing_sub_assign()](struct@BigUInt#method.borrowing_sub_assign)
-    /// is proper rather than this method.
+    /// * `rhs`: The primitive unsigned integer to subtract.
+    /// * `borrow`: The borrow-in bit to include in the subtraction.
+    ///
+    /// # Returns
+    /// The borrow-out bit resulting from the subtraction.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping subtraction. The `UNDERFLOW` flag of 
+    /// `self` is updated to reflect the borrow-out bit. Flags are cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -4915,31 +4675,23 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_sub_uint<U>(&self, rhs: U) -> Self
-    /// Calculates `self` - `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a subtraction result `self` - `rhs`.
-    /// 
+    /// Calculates `self - rhs` with wrapping at the type boundary.
+    ///
     /// # Arguments
-    /// `rhs` is to be subtracted from `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    /// * `rhs`: The primitive unsigned integer to subtract.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the difference.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) subtraction. If the operation 
+    /// results in an underflow, the `UNDERFLOW` flag of the result is set.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns `self` - `rhs` with wrapping (modular) subtraction.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) subtraction.
-    /// - If underflow happened, the flag `UNDERFLOW` of the return value
-    ///   will be set.
-    /// 
-    /// # Counterpart Method
-    /// - If `rhs` is bigger tham `ui128`, the method
+    /// # Alternatives
+    /// * If `rhs` is bigger tham `ui128`, the method
     ///   [wrapping_sub()](struct@BigUInt#method.wrapping_sub)
     ///   is proper rather than this method.
-    /// - You may be interested in extra subtraction methods.
+    /// * You may be interested in extra subtraction methods.
     ///   In order to use any one of
     ///   [checked_sub_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_sub_uint),
     ///   [unchecked_sub_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_sub_uint),
@@ -4988,41 +4740,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_sub_assign_uint<U>(&mut self, rhs: U)
-    /// Calculates `self` - `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns the subtraction result `self` - `rhs` to `self` back.
-    /// 
+    /// Calculates `self - rhs` with wrapping and assigns the result to `self`.
+    ///
     /// # Arguments
-    /// `rhs` is to be subtracted from `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) subtraction.
-    /// - If underflow happened, the flag `UNDERFLOW` of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an underflow
-    ///   occurred even once before this current operation or `UNDERFLOW`
-    ///   flag is already set before this current operation, the `UNDERFLOW` flag
-    ///   is not changed even if this current operation does not cause underflow.
-    /// 
-    /// # Counterpart Method
-    /// - If `rhs` is bigger tham `u128`, the method
-    ///   [wrapping_sub_assign()](struct@BigUInt#method.wrapping_sub_assign)
-    ///   is proper rather than this method.
-    /// - You may be interested in extra subtraction methods.
-    ///   In order to use any one of 
-    ///   [saturating_sub_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_sub_assign_uint), and
-    ///   [safe_sub_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_sub_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_sub_assign_uint()](trait.BigUInt_Modular.html#tymethod.modular_sub_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_sub_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_sub_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: The primitive unsigned integer to subtract.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) subtraction. If an underflow 
+    /// occurs, the `UNDERFLOW` flag of `self` is set. Flags are cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -5062,36 +4787,24 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_sub_uint<U>(&self, rhs: U) -> (Self, bool)
-    /// Calculates `self` - `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a tuple of the subtraction result `self` - `rhs` along with
-    /// a boolean indicating whether an arithmetic underflow would occur.
-    /// 
+    /// Calculates `self - rhs` and returns a tuple with the result and an 
+    /// underflow flag.
+    ///
     /// # Arguments
-    /// `rhs` is to be subtracted from `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    /// * `rhs`: The primitive unsigned integer to subtract.
+    ///
+    /// # Returns
+    /// A tuple `(Self, bool)` containing the difference and a boolean 
+    /// indicating whether an underflow occurred.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping subtraction. The boolean flag reflects 
+    /// only the underflow from the current operation. If underflow occurs, 
+    /// the `UNDERFLOW` flag of the result is set.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns a tuple of the subtraction `self` - `rhs` along with a
-    /// boolean indicating whether an arithmetic underflow would occur.
-    /// If an underflow would have occurred, then the wrapped (modular) value
-    /// is returned.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) subtraction.
-    /// - If underflow happens, the second element of the output tuple will
-    ///   be true and the `UNDERFLOW` flag of the return value will be set.
-    /// - The second element of the output tuple reflects only
-    ///   the current underflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [overflowing_sub()](struct@BigUInt#method.overflowing_sub)
-    /// is proper rather than this method.
+    /// # Alternatives
+    /// For divisors larger than 128 bits, use 
+    /// [`overflowing_sub()`](struct@BigUInt#method.overflowing_sub).
     /// 
     /// # Example 1
     /// ```
@@ -5120,41 +4833,24 @@ where T: TraitsBigUInt<T>
         biguint_overflowing_calc!(self, Self::overflowing_sub_assign_uint, rhs);
     }
 
-    // pub fn overflowing_add_assign_uint<U>(&mut self, rhs: U) -> bool
-    /// Calculates `self` - `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns the subtraction result `self` - `rhs` to `self` back,
-    /// and returns a boolean indicating whether an arithmetic underflow
-    /// would occur.
-    /// 
+    // pub fn overflowing_sub_assign_uint<U>(&mut self, rhs: U) -> bool
+    /// Calculates `self - rhs` and assigns the result to `self`, returning 
+    /// an underflow flag.
+    ///
     /// # Arguments
-    /// `rhs` is to be subtracted from `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    /// * `rhs`: The primitive unsigned integer to subtract.
+    ///
+    /// # Returns
+    /// `true` if an underflow occurred in this operation, `false` otherwise.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping subtraction. The returned flag reflects 
+    /// only the current operation, while the `UNDERFLOW` flag of `self` 
+    /// remains cumulative.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns true if an arithmetic underflow would occur.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) subtraction.
-    /// - If underflow happened, the flag `UNDERFLOW` of `self` will be set.
-    /// - If underflow did not happen in the current operation, the output
-    ///   will be false even if the `UNDERFLOW` flag of `self` was already set
-    ///   because of previous operation of `self`.
-    /// - The output reflects only the current underflow.
-    /// - All the flags are historical, which means, for example, if an underflow
-    ///   occurred even once before this current operation or `UNDERFLOW`
-    ///   flag is already set before this current operation, the `UNDERFLOW` flag
-    ///   is not changed even if this current operation does not cause underflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [overflowing_sub_assign()](struct@BigUInt#method.overflowing_sub_assign)
-    /// is proper rather than this method.
+    /// # Alternatives
+    /// For divisors larger than 128 bits, use 
+    /// [`overflowing_sub_assign()`](struct@BigUInt#method.overflowing_sub_assign).
     /// 
     /// # Example 1
     /// ```
@@ -5194,27 +4890,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn abs_diff_uint<U>(&self, other: U) -> Self
-    /// Calculates the absolute difference between `self` and `other`.
-    /// 
+    /// Calculates the absolute difference between `self` and a primitive 
+    /// unsigned integer.
+    ///
     /// # Arguments
-    /// `other` is to be compared to `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the absolute difference between `self` and `other`.
-    /// 
-    /// # Features
-    /// - It calculates the absolute difference between `self` and `other`.
-    /// - It does not change the flags either `OVERFLOW` or `UNDERFLOW`.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [abs_diff()](struct@BigUInt#method.abs_diff)
-    /// is proper rather than this method `abs_diff_uint()`.
+    /// * `other`: The primitive unsigned integer to compare against.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance representing the absolute difference 
+    /// `|self - other|`.
+    ///
+    /// # Implementation Details
+    /// This method does not modify status flags such as `OVERFLOW` or 
+    /// `UNDERFLOW`.
     /// 
     /// # Example 1
     /// ```
@@ -5260,52 +4948,22 @@ where T: TraitsBigUInt<T>
     /*** MULTIPLICATION ***/
 
     // pub fn carrying_mul_uint<U>(&self, rhs: U, carry: Self) -> (Self, Self)
-    /// Calculates `self` * `rhs` + `carry`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a tuple the low-order (wrapping) bits and the high-order
-    /// (overflow) bits of the result of the calculation
-    /// `self` * `rhs` + `carry`.
-    /// 
+    /// Calculates `self * rhs + carry` and returns the result as a tuple 
+    /// of (low, high) parts.
+    ///
     /// # Arguments
-    /// - `rhs` is to be multiplied to `self`, and is of primitive unsigned
-    ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `carry` is of `Self` type
-    ///   so that `carry` may be added to `self` * `rhs`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Outputs
-    /// It returns the multiplication result `self` * `rhs` + `carry` in the
-    /// form of a tuple of the low-order (wrapping) bits and the
-    /// high-order (overflow) bits of the result as two separate values,
-    /// in the order (`low`, `high`).
-    /// 
-    /// # Features
-    /// - It performs "long multiplication" which takes in an extra amount
-    ///   to add, and returns the result in a tuple containing a low-order
-    ///   part and a high-order part of it. This allows for chaining together
-    ///   multiple multiplications to create "bigger integers" which represent
-    ///   larger values.
-    /// - If the high-order part of the return value is not zero, the
-    ///   `OVERFLOW` flag of the low-order part will be set though the output
-    ///   tuple is free from overflow.
-    /// - If the input carry is `0`, this method is equivalent to
-    ///   `widening_mul_uint()`.
-    /// 
-    /// # Counterpart Methods
-    /// - If you don’t need the carry, then you can use
-    ///   [widening_mul_uint()](struct@BigUInt#method.widening_mul_uint) instead.
-    /// - The value of the first field in the returned tuple matches
-    ///   what you’d get by combining the methods
-    ///   [wrapping_mul_uint()](struct@BigUInt#method.wrapping_mul_uint) and
-    ///   [wrapping_add()](struct@BigUInt#method.wrapping_add):
-    ///   `self.wrapping_mul_uint(rhs).wrapping_add(carry)`. So,
-    ///   `self.carrying_mul_uint(rhs, carry).0` == `self.wrapping_mul_uint(rhs).wrapping_add(carry)`
-    /// - If `rhs` is bigger than `u128`, the method
-    ///   [widening_mul()](struct@BigUInt#method.widening_mul)
-    ///   is proper rather than this method `widening_mul_uint()`.
+    /// * `rhs`: The primitive unsigned integer to multiply by.
+    /// * `carry`: An additional `BigUInt` value to add to the product.
+    ///
+    /// # Returns
+    /// A tuple `(Self, Self)` representing the 512-bit result (for a 256-bit 
+    /// `BigUInt`), where the first element is the low-order part and the 
+    /// second is the high-order part.
+    ///
+    /// # Implementation Details
+    /// This method performs long multiplication. If the high-order part of 
+    /// the result is non-zero, the `OVERFLOW` flag of the low-order part 
+    /// instance will be set.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -5365,49 +5023,20 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn carrying_mul_assign_uint<U>(&mut self, rhs: U, carry: Self) -> Self
-    /// Calculates `self` * `rhs` + `carry`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns the low-order (wrapping) bits of the result
-    /// `self` * `rhs` + `carry` back to `self`,
-    /// and returns the high-order (overflow) bits of the result.
-    /// 
+    /// Calculates `self * rhs + carry` and assigns the low-order part to 
+    /// `self`, returning the high-order part.
+    ///
     /// # Arguments
-    /// - `rhs` is to be multiplied to `self`, and primitive unsigned integer
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// - `carry` is of `Self` type
-    ///   so that `carry` may be added to `self` * `rhs`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Outputs
-    /// It returns the high-order (overflow) bits of the result
-    /// `self` * `rhs` + `carry`.
-    /// 
-    /// # Features
-    /// - It performs "long multiplication" which takes in an extra amount
-    ///   to add, and assigns the low-order part the result to `self` back,
-    ///   and returns the high-order part of the result.
-    /// - If the return value which is the high-order part of the result is
-    ///   not zero, the `OVERFLOW` flag of `self` will be set
-    ///   though the result is free from overflow because the `OVERFLOW` flag
-    ///   is of `self`, and not of the result of the multiplication.
-    /// - If the input carry is `0`, this method is equivalent to
-    ///   `widening_mul_assign_uint()`.
-    /// 
-    /// # Counterpart Method
-    /// - If you don’t need the carry, then you can use
-    ///   [widening_mul_assign_uint()](struct@BigUInt#method.widening_mul_assign_uint)
-    ///   instead.
-    /// - The value of `self` after calculation matches what you’d get by
-    ///   combining the mehtods
-    ///   [wrapping_mul_uint()](struct@BigUInt#method.wrapping_mul_uint) and
-    ///   [wrapping_add_assign()](struct@BigUInt#method.wrapping_add_assign):
-    ///   `self.wrapping_mul_uint(rhs).wrapping_add_assign_uint(carry)`.
-    /// - If `rhs` is bigger than `u128`, the method
-    ///   [carrying_mul_assign()](struct@BigUInt#method.carrying_mul_assign)
-    ///   is proper rather than this method `carrying_mul_assign_uint()`.
+    /// * `rhs`: The primitive unsigned integer to multiply by.
+    /// * `carry`: An additional `BigUInt` value to add to the product.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance representing the high-order (overflow) bits 
+    /// of the calculation.
+    ///
+    /// # Implementation Details
+    /// This method performs long multiplication. If the returned high-order 
+    /// part is non-zero, the `OVERFLOW` flag of `self` will be set.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -5487,43 +5116,20 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn widening_mul_uint<U>(&self, rhs: U) -> (Self, Self)
-    /// Calculates `self` * `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a tuple the low-order (wrapping) bits and the high-order
-    /// (overflow) bits of the result of the calculation  `self` * `rhs`.
-    /// 
+    /// Calculates `self * rhs` and returns the result as a tuple of 
+    /// (low, high) parts.
+    ///
     /// # Arguments
-    /// - `rhs` is to be multiplied to `self`, and is of primitive unsigned
-    ///   integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Outputs
-    /// It returns the multiplication result `self` * `rhs` in the form of a
-    /// tuple of the low-order (wrapping) bits and the high-order
-    /// (overflow) bits of the result as two separate values,
-    /// in the order (`low`, `high`).
-    /// 
-    /// # Features
-    /// - It performs "long multiplication", and returns the result in a tuple
-    ///   containing a low-order part and a high-order part of it.
-    /// - If the high-order part of the return value is not zero, the
-    ///   `OVERFLOW` flag of the low-order part will be set though the output
-    ///   tuple is free from overflow.
-    /// 
-    /// # Counterpart Methods
-    /// - If you also need to add a carry to the wide result, then you want to
-    ///   use [carrying_mul_uint()](struct@BigUInt#method.carrying_mul_uint)
-    ///   instead.
-    /// - The value of the first field in the returned tuple matches what
-    ///   you’d get the method
-    ///   [wrapping_mul_uint()](struct@BigUInt#method.wrapping_mul_uint).
-    ///   `self.widening_mul_uint(rhs).0` == `self.wrapping_mul_uint(rhs)`.
-    /// - If `rhs` is bigger than `u128`, the method
-    ///   [widening_mul()](struct@BigUInt#method.widening_mul)
-    ///   is proper rather than this method `widening_mul_uint()`.
+    /// * `rhs`: The primitive unsigned integer to multiply by.
+    ///
+    /// # Returns
+    /// A tuple `(Self, Self)` representing the full product, where the first 
+    /// element is the low-order part and the second is the high-order part.
+    ///
+    /// # Implementation Details
+    /// This method performs long multiplication. If the high-order part of 
+    /// the result is non-zero, the `OVERFLOW` flag of the low-order part 
+    /// instance will be set.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -5564,42 +5170,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn widening_mul_assign_uint<U>(&mut self, rhs: U) -> Self
-    /// Calculates `self` * `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns the low-order (wrapping) bits of the result `self` * `rhs`,
-    /// and returns the high-order (overflow) bits of the result.
-    /// 
+    /// Calculates `self * rhs` and assigns the low-order part to `self`, 
+    /// returning the high-order part.
+    ///
     /// # Arguments
-    /// - `rhs` is to be multiplied to `self`, and primitive unsigned integer
-    ///   such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Outputs
-    /// It returns the high-order (overflow) bits of the result `self` * `rhs`.
-    /// 
-    /// # Features
-    /// - It performs "long multiplication",
-    ///   and assigns the low-order part the result to `self` back,
-    ///   and returns the high-order part of it.
-    /// - If the return value which is the high-order part of the result is
-    ///   not zero, the `OVERFLOW` flag of `self` will be set
-    ///   though the result is free from overflow because the `OVERFLOW` flag
-    ///   is of `self`, and not of the result of the multiplication.
-    /// 
-    /// # Counterpart Methods
-    /// - If you also need to add a carry to the wide result, then you want to
-    ///   use
-    ///   [carrying_mul_assign_uint()](struct@BigUInt#method.carrying_mul_assign_uint)
-    ///   instead.
-    /// - The value of `self` after calculation matches what you’d get the
-    ///   method [wrapping_mul_uint()](struct@BigUInt#method.wrapping_mul_uint)
-    ///   so `self` == `self.wrapping_mul_uint(rhs)`.
-    /// - If `rhs` is bigger than `u128`, the method 
-    ///   [widening_mul_assign()](struct@BigUInt#method.widening_mul_assign)
-    ///   is proper rather than this method `widening_mul_assign_uint()`.
+    /// * `rhs`: The primitive unsigned integer to multiply by.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance representing the high-order (overflow) bits 
+    /// of the product.
+    ///
+    /// # Implementation Details
+    /// This method performs long multiplication. If the returned high-order 
+    /// part is non-zero, the `OVERFLOW` flag of `self` will be set.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -5717,44 +5300,17 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_mul_uint<U>(&self, rhs: U) -> Self
-    /// Calculates `self` * `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a multiplication result `self` * `rhs`.
-    /// 
+    /// Calculates `self * rhs` with wrapping at the type boundary.
+    ///
     /// # Arguments
-    /// `rhs` is to be multiplied to `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the multiplication result `self` * `rhs` with wrapping
-    /// (modular) multiplication.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) multiplication.
-    /// - If overflow happened, the flag `OVERFLOW` of the return value
-    ///   will be set.
-    /// 
-    /// # Counterpart Method
-    /// - If `rhs` is bigger than `u128`, the method
-    ///   [wrapping_mul()](struct@BigUInt#method.wrapping_mul)
-    ///   is proper rather than this method `wrapping_mul_uint()`.
-    /// - You may be interested in extra multiplication methods,
-    ///   In order to use any one of 
-    ///   [checked_mul_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_mul_uint),
-    ///   [unchecked_mul_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_mul_uint),
-    ///   [saturating_mul_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_mul_uint), and
-    ///   [safe_mul_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_mul_uint),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_mul_uint()](trait.BigUInt_Modular.html#tymethod.modular_mul_uint),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_mul_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_mul_uint),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: The primitive unsigned integer to multiply by.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the product.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) multiplication. If the operation 
+    /// results in an overflow, the `OVERFLOW` flag of the result is set.
     /// 
     /// # Example 1
     /// ```
@@ -5784,42 +5340,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_mul_assign_uint<U>(&mut self, rhs: U)
-    /// Calculates `self` * `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns a multiplication result `self` * `rhs` to `self` back.
-    /// 
+    /// Calculates `self * rhs` with wrapping and assigns the result to `self`.
+    ///
     /// # Arguments
-    /// `rhs` is to be multiplied to `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) multiplication.
-    /// - If overflow happened, the flag `OVERFLOW` of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// - If `rhs` is bigger tham `u128`, the method
-    ///   [wrapping_mul_assign()](struct@BigUInt#method.wrapping_mul_assign)
-    ///   is proper rather than this method.
-    /// - You may be interested in extra multiplication methods
-    ///   In order to use any one of 
-    ///   [saturating_mul_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_mul_assign_uint), and
-    ///   [safe_mul_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.safe_mul_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_mul_assign_uint()](trait.BigUInt_Modular.html#tymethod.modular_mul_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_mul_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_mul_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: The primitive unsigned integer to multiply by.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) multiplication. If an overflow 
+    /// occurs, the `OVERFLOW` flag of `self` is set. Flags are cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -5919,36 +5447,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_mul_uint<U>(&self, rhs: U) -> (Self, bool)
-    /// Calculates `self` * `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a tuple of the multiplication result `self` * `rhs` along with
-    /// a boolean indicating whether an arithmetic overflow would occur.
-    /// 
+    /// Calculates `self * rhs` and returns a tuple with the result and an 
+    /// overflow flag.
+    ///
     /// # Arguments
-    /// `rhs` is to be multiplied to `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns a tuple of the multiplication result `self` * `rhs` along
-    /// with a boolean indicating whether an arithmetic overflow would
-    /// occur. If an overflow would have occurred,
-    /// then the wrapped (modular) value is returned.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) multiplication .
-    /// - If overflow happens, the second element of the output tuple will
-    ///   be true and the `OVERFLOW` flag of the return value will be set.
-    /// - The second element of the output tuple reflects only
-    ///   the current overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [overflowing_mul()](struct@BigUInt#method.overflowing_mul)
-    /// is proper rather than this method.
+    /// * `rhs`: The primitive unsigned integer to multiply by.
+    ///
+    /// # Returns
+    /// A tuple `(Self, bool)` containing the product and a boolean 
+    /// indicating whether an overflow occurred.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping multiplication. The boolean flag 
+    /// reflects only the overflow from the current operation.
     /// 
     /// # Example 1
     /// ```
@@ -5979,40 +5490,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_mul_assign_uint<U>(&mut self, rhs: U) -> bool
-    /// Calculates `self` * `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns the multiplication result `self` * `rhs` to `self` back,
-    /// and returns a boolean indicating whether an arithmetic overflow
-    /// would occur.
-    /// 
+    /// Calculates `self * rhs` and assigns the result to `self`, returning 
+    /// an overflow flag.
+    ///
     /// # Arguments
-    /// `rhs` is to be added to `self`, and primitive unsigned integer
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns true if an arithmetic overflow would occur.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) multiplication.
-    /// - If overflow happened, the flag `OVERFLOW` of `self` will be set.
-    /// - If overflow did not happen in the current operation, the output
-    ///   will be false even if the `OVERFLOW` flag of `self` was already set
-    ///   because of previous operation of `self`.
-    /// - The output reflects only the current overflow.
-    /// - All the flags are historical, which means, for example, if an overflow
-    ///   occurred even once before this current operation or `OVERFLOW`
-    ///   flag is already set before this current operation, the `OVERFLOW` flag
-    ///   is not changed even if this current operation does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [overflowing_mul_assign()](struct@BigUInt#method.overflowing_mul_assign)
-    /// is proper rather than this method.
+    /// * `rhs`: The primitive unsigned integer to multiply by.
+    ///
+    /// # Returns
+    /// `true` if an overflow occurred in this operation, `false` otherwise.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping multiplication. The returned flag 
+    /// reflects only the current operation, while the `OVERFLOW` flag of 
+    /// `self` remains cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -6121,34 +5611,20 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn divide_fully_uint<U>(&self, rhs: U) -> (Self, U)
-    /// Divides `self` by `rhs`,
-    /// and returns a tuple of a quotient and a remainder.
-    /// 
+    /// Divides `self` by a primitive unsigned integer and returns both the 
+    /// quotient and the remainder.
+    ///
     /// # Arguments
-    /// `rhs` divides `self`, and is of primitive unsigned integral data type
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
-    /// 
-    /// # Output
-    /// It returns tuple of a quotient and a remainder.
-    /// The quotient is of `Self` type, and the remainder is of the primitive
-    /// unsigned integral data type such as `u8`, `u16`, `u32`, `u64`,
-    /// and `u128`.
-    /// 
-    /// # Features
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - If `rhs` is zero, this method will panic.
-    /// - This function is the base function for all the methods *_div_uint(),
-    ///   *_div_assign_uint(), *_rem_uint(), and *_rem_assign_uint().
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger than `u128`, the method
-    /// [divide_fully()](struct@BigUInt#method.divide_fully)
-    /// is proper rather than this method `divide_fully_uint()`.
+    /// * `rhs`: The primitive unsigned integer divisor.
+    ///
+    /// # Returns
+    /// A tuple `(Self, U)` where the first element is the quotient of type 
+    /// `BigUInt` and the second is the remainder of type `U`.
+    ///
+    /// # Implementation Details
+    /// This method is the fundamental building block for other division and 
+    /// remainder operations with primitive integers. It handles the 
+    /// multi-precision division logic internally.
     /// 
     /// # Example 1
     /// ```
@@ -6181,44 +5657,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_div_uint<U>(&self, rhs: U) -> Self
-    /// Divides `self` by `rhs`, and returns the quotient.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of primitive unsigned integral data type
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
+    /// Divides `self` by a primitive unsigned integer and returns the 
+    /// quotient.
     ///
-    /// # Output
-    /// It returns a quotient of `BigUInt` type,
-    /// and the quotient would never overflow.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - If `rhs` is zero, this method will panic.
-    /// - This function exists, so that all operations are accounted for
-    ///   in the wrapping operations.
-    /// 
-    /// # Counterpart Method
-    /// - If `rhs` is bigger than `u128`, the method
-    ///   [wrapping_div()](struct@BigUInt#method.wrapping_div)
-    ///   is proper rather than this method `wrapping_div_uint()`.
-    /// - You may be interested in extra division methods,
-    ///   In order to use any one of 
-    ///   [checked_div_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_div_uint),
-    ///   [unchecked_div_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_div_uint), and
-    ///   [saturating_div_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_div_uint),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_div_uint()](trait.BigUInt_Modular.html#tymethod.modular_div_uint),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_div_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_div_uint),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// # Arguments
+    /// * `rhs`: The primitive unsigned integer divisor.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the quotient.
+    ///
+    /// # Implementation Details
+    /// Since division between `BigUInt` types does not overflow, this method 
+    /// provides standard division behavior consistent with other "wrapping" 
+    /// methods.
     /// 
     /// # Example 1
     /// ```
@@ -6249,43 +5700,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_div_assign_uint<U>(&mut self, rhs: U)
-    /// Divides `self` by `rhs`, and assigns the quotient to `self` back..
-    /// 
+    /// Divides `self` by a primitive unsigned integer and assigns the 
+    /// quotient to `self`.
+    ///
     /// # Arguments
-    /// `rhs` divides `self`, and is of primitive unsigned integral data type
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - If `rhs` is zero, this method will panic.
-    /// - This function exists, so that all operations are accounted for
-    ///   in the wrapping operations.
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// - If `rhs` is bigger than `u128`, the method
-    ///   [wrapping_div_assign()](struct@BigUInt#method.wrapping_div_assign)
-    ///   is proper rather than this method `wrapping_div_assign_uint()`.
-    /// - You may be interested in extra division methods
-    ///   In order to use
-    ///   [saturating_div_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_div_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_div_assign_uint()](trait.BigUInt_Modular.html#tymethod.modular_div_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_div_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_div_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: The primitive unsigned integer divisor.
+    ///
+    /// # Implementation Details
+    /// This method performs in-place division. Status flags are cumulative 
+    /// and will remain set if they were set by a previous operation.
     /// 
     /// # Example 1
     /// ```
@@ -6324,36 +5747,21 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_div_uint<U>(&self, rhs: U) -> (Self, bool)
-    /// Divides `self` by `rhs`,
-    /// and returns a tuple of the quotient of `self` / `rhs` along with
-    /// a boolean indicating whether an arithmetic overflow would occur.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of primitive unsigned integral data type
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
-    /// 
-    /// # Output
-    /// It returns a tuple of the quotient of `BigUInt` type as a result of
-    /// `self` / `rhs` along with a boolean indicating whether an arithmetic
-    /// overflow would occur. But the quotient would never overflow.
-    /// So, the second element of the output tuple is always `false`.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - The quotient would never overflow.
-    /// - The second element of the output tuple reflects only
-    ///   the current overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [overflowing_div()](struct@BigUInt#method.overflowing_div)
-    /// is proper rather than this method.
+    /// Divides `self` by a primitive unsigned integer and returns a tuple 
+    /// with the quotient and an overflow flag.
     ///
+    /// # Arguments
+    /// * `rhs`: The primitive unsigned integer divisor.
+    ///
+    /// # Returns
+    /// A tuple `(Self, bool)` containing the quotient and a boolean 
+    /// indicating whether an overflow occurred.
+    ///
+    /// # Implementation Details
+    /// Since division between `BigUInt` types does not overflow, the returned 
+    /// boolean flag is always `false`. This method is provided for 
+    /// consistency with other overflowing operations.
+    /// 
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
@@ -6383,41 +5791,20 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_div_assign_uint<U>(&mut self, rhs: U) -> bool
-    /// Divides `self` by `rhs`,
-    /// and assigns the quotient of `self` / `rhs` to `self` back,
-    /// and returns a boolean indicating whether an arithmetic overflow
-    /// would occur.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of primitive unsigned integral data type
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
-    /// 
-    /// # Output
-    /// It returns true if an arithmetic overflow would occur.
-    /// But the quotient would never overflow.
-    /// So, it always returns `false`.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - The quotient would never overflow.
-    /// - The output will be `false` even if the `OVERFLOW` flag of `self`
-    ///   was already set because of previous operation of `self`.
-    /// - The output reflects only the current overflow.
-    /// - All the flags are historical, which means, for example, if an overflow
-    ///   occurred even once before this current operation or `OVERFLOW`
-    ///   flag is already set before this current operation, the `OVERFLOW` flag
-    ///   is not changed even if this current operation does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [overflowing_div_assign()](struct@BigUInt#method.overflowing_div_assign)
-    /// is proper rather than this method.
+    /// Divides `self` by a primitive unsigned integer and assigns the 
+    /// quotient to `self`, returning an overflow flag.
     ///
+    /// # Arguments
+    /// * `rhs`: The primitive unsigned integer divisor.
+    ///
+    /// # Returns
+    /// `true` if an overflow occurred in this operation, `false` otherwise.
+    ///
+    /// # Implementation Details
+    /// Since division between `BigUInt` types does not overflow, this method 
+    /// always returns `false`. This method is provided for consistency with 
+    /// other overflowing operations.
+    /// 
     /// # Example 1
     /// ```
     /// use std::str::FromStr;
@@ -6456,45 +5843,20 @@ where T: TraitsBigUInt<T>
         biguint_overflowing_calc_assign!(self, Self::wrapping_div_assign_uint, rhs);
     }
 
-    // pub fn wrapping_rem_uint<U>(&self, rhs: U) -> Self
-    /// Divides `self` by `rhs`, and returns the remainder.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of primitive unsigned integral data type
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
+    // pub fn wrapping_rem_uint<U>(&self, rhs: U) -> U
+    /// Divides `self` by a primitive unsigned integer and returns the 
+    /// remainder.
     ///
-    /// # Output
-    /// It returns a remainder of `BigUInt` type,
-    /// and the remainder would never overflow.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - If `rhs` is zero, this method will panic.
-    /// - This function exists, so that all operations are accounted for
-    ///   in the wrapping operations.
-    /// 
-    /// # Counterpart Method
-    /// - If `rhs` is bigger than `u128`, the method
-    ///   [wrapping_rem()](struct@BigUInt#method.wrapping_rem)
-    ///   is proper rather than this method `wrapping_rem_uint()`.
-    /// - You may be interested in extra division methods,
-    ///   In order to use any one of 
-    ///   [checked_rem_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.checked_rem_uint),
-    ///   [unchecked_rem_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.unchecked_rem_uint), and
-    ///   [saturating_rem_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_rem_uint),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_rem_uint()](trait.BigUInt_Modular.html#tymethod.modular_rem_uint),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_rem_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_rem_uint),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// # Arguments
+    /// * `rhs`: The primitive unsigned integer divisor.
+    ///
+    /// # Returns
+    /// The remainder of type `U` resulting from the division.
+    ///
+    /// # Implementation Details
+    /// Since the remainder of a division by a primitive integer `U` always 
+    /// fits within `U`, this method returns the result as a primitive type 
+    /// rather than a `BigUInt`.
     /// 
     /// # Example 1
     /// ```
@@ -6517,44 +5879,17 @@ where T: TraitsBigUInt<T>
         biguint_calc_assign_to_calc_rem!(self, Self::divide_fully_uint, rhs);
     }
 
-    // pub fn wrapping_rem_assign_uint(&mut self, rhs: U)
-    /// Divides `self` by `rhs`, and assigns the remainder to `self` back..
-    /// 
+    // pub fn wrapping_rem_assign_uint<U>(&mut self, rhs: U)
+    /// Divides `self` by a primitive unsigned integer and assigns the 
+    /// remainder to `self`.
+    ///
     /// # Arguments
-    /// `rhs` divides `self`, and is of primitive unsigned integral data type
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - If `rhs` is zero, this method will panic.
-    /// - This function exists, so that all operations are accounted for
-    ///   in the wrapping operations.
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// - If `rhs` is bigger than `u128`, the method
-    ///   [wrapping_rem_assign()](struct@BigUInt#method.wrapping_rem_assign)
-    ///   is proper rather than this method `wrapping_rem_assign_uint()`.
-    /// - You may be interested in extra division methods
-    ///   In order to use any one of 
-    ///   [saturating_rem_assign_uint()](trait_big_uint_more/trait.BigUInt_More.html#tymethod.saturating_rem_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_rem_assign_uint()](trait.BigUInt_Modular.html#tymethod.modular_rem_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_rem_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_rem_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: The primitive unsigned integer divisor.
+    ///
+    /// # Implementation Details
+    /// After the calculation, `self` will be updated to store the remainder 
+    /// as its new value. Status flags are cumulative and will remain set if 
+    /// they were set by a previous operation.
     /// 
     /// # Example 1
     /// ```
@@ -6596,36 +5931,21 @@ where T: TraitsBigUInt<T>
         self.set_all_flags(flags);
     }
 
-    // pub fn overflowing_rem_uint<U>(&self, rhs: U) -> (Self, bool)
-    /// Divides `self` by `rhs`,
-    /// and returns a tuple of the remainder of `self` / `rhs` along with
-    /// a boolean indicating whether an arithmetic overflow would occur.
-    /// 
+    // pub fn overflowing_rem_uint<U>(&self, rhs: U) -> (U, bool)
+    /// Divides `self` by a primitive unsigned integer and returns a tuple 
+    /// with the remainder and an overflow flag.
+    ///
     /// # Arguments
-    /// `rhs` divides `self`, and is of primitive unsigned integral data type
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
-    /// 
-    /// # Output
-    /// It returns a tuple of the remainder of `BigUInt` type as a result of
-    /// `self` % `rhs` along with a boolean indicating whether an arithmetic
-    /// overflow would occur. But the remainder would never overflow.
-    /// So, the second element of the output tuple is always `false`.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - The remainder would never overflow.
-    /// - The second element of the output tuple reflects only
-    ///   the current overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [overflowing_rem()](struct@BigUInt#method.overflowing_rem)
-    /// is proper rather than this method.
+    /// * `rhs`: The primitive unsigned integer divisor.
+    ///
+    /// # Returns
+    /// A tuple `(U, bool)` containing the remainder and a boolean indicating 
+    /// whether an overflow occurred.
+    ///
+    /// # Implementation Details
+    /// Since division between `BigUInt` types does not overflow, the returned 
+    /// boolean flag is always `false`. This method is provided for 
+    /// consistency with other overflowing operations.
     /// 
     /// # Example 1
     /// ```
@@ -6650,40 +5970,23 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_rem_assign_uint<U>(&mut self, rhs: U) -> bool
-    /// Divides `self` by `rhs`,
-    /// and assigns the remainder of `self` / `rhs` to `self` back,
-    /// and returns a boolean indicating whether an arithmetic overflow
-    /// would occur.
-    /// 
+    /// Divides `self` by a primitive unsigned integer and assigns the 
+    /// remainder to `self`, returning an overflow flag.
+    ///
     /// # Arguments
-    /// `rhs` divides `self`, and is of primitive unsigned integral data type
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    /// * `rhs`: The primitive unsigned integer divisor.
+    ///
+    /// # Returns
+    /// `true` if an overflow occurred in this operation, `false` otherwise.
+    ///
+    /// # Implementation Details
+    /// Since division between `BigUInt` types does not overflow, this method 
+    /// always returns `false`. This method is provided for consistency with 
+    /// other overflowing operations. Status flags are cumulative.
     /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
-    /// 
-    /// # Output
-    /// It returns true if an arithmetic overflow would occur.
-    /// But the remainder would never overflow.
-    /// So, it always returns `false`.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - The remainder would never overflow.
-    /// - The output will be `false` even if the `OVERFLOW` flag of `self`
-    ///   was already set because of previous operation of `self`.
-    /// - The output reflects only the current overflow.
-    /// - All the flags are historical, which means, for example, if an overflow
-    ///   occurred even once before this current operation or `OVERFLOW`
-    ///   flag is already set before this current operation, the `OVERFLOW` flag
-    ///   is not changed even if this current operation does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `rhs` is bigger tham `ui128`, the method
-    /// [overflowing_rem_assign()](struct@BigUInt#method.overflowing_rem_assign)
-    /// is proper rather than this method.
+    /// # Alternatives
+    /// For divisors larger than 128 bits, use 
+    /// [`overflowing_rem_assign()`](struct@BigUInt#method.overflowing_rem_assign).
     /// 
     /// # Example 1
     /// ```
@@ -6729,36 +6032,19 @@ where T: TraitsBigUInt<T>
     /***** METHODS FOR EXPONENTIATION AND LOGARITHM WITH UINT *****/
 
     // pub fn pow_uint<U>(&self, exp: U) -> Self
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`,
-    /// and returns the result. The type `U` has the trait `SmallUInt`.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is a primitive unsigned
-    /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    /// Raises `self` to the power of `exp`.
     ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Output
-    /// It returns the result of `self` raised to the power of `exp`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - It calls wrapping_pow_uint() internally.
-    /// - If overflowing happens, the `OVERFLOW` flag of the return value will
-    ///   be set.
-    /// 
-    /// # Counterpart Method
-    /// - If `exp` is bigger than `u128`, the method
-    ///   [pow()](struct@BigUInt#method.pow)
-    ///   is proper rather than this method `pow_uint()`.
-    /// - If you need to know whether or not overflow occurs, use the method
-    ///   [overflowing_pow_uint()](struct@BigUInt#method.overflowing_pow_uint).
+    /// # Arguments
+    /// * `exp`: The primitive unsigned integer exponent.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the result of `self` raised to the 
+    /// power of `exp`.
+    ///
+    /// # Implementation Details
+    /// This method uses the binary exponentiation (exponentiation by 
+    /// squaring) algorithm for efficient calculation. The operation performs 
+    /// wrapping multiplication.
     /// 
     /// # Example 1 for normal exponentiation
     /// ```
@@ -6787,39 +6073,15 @@ where T: TraitsBigUInt<T>
         biguint_calc_assign_to_calc!(self, Self::pow_assign_uint, exp);
     }
 
-    // pub fn pow_assign_uint<U>(&self, exp: U) -> Self
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`,
-    /// and assign the result to `self` back.
-    /// The type `U` has the trait `SmallUInt`.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is a primitive unsigned
-    /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    // pub fn pow_assign_uint<U>(&mut self, exp: U)
+    /// Raises `self` to the power of `exp` and assigns the result to `self`.
     ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - It calls wrapping_pow_assign() internally.
-    /// - If overflowing happens, the `OVERFLOW` flag of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// - If `exp` is bigger than `u128`, the method
-    ///   [pow_assign()](struct@BigUInt#method.pow_assign)
-    ///   is proper rather than this method `pow_assign_uint()`.
-    /// - If you need to know whether or not overflow occurs, use the method
-    ///   [overflowing_pow_assign_uint()](struct@BigUInt#method.overflowing_pow_assign_uint).
+    /// # Arguments
+    /// * `exp`: The primitive unsigned integer exponent.
+    ///
+    /// # Implementation Details
+    /// This method performs in-place binary exponentiation. The operation 
+    /// uses wrapping multiplication. Status flags are cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -6858,47 +6120,18 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_pow_uint<U>(&self, exp: U) -> Self
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`,
-    /// and returns the result. The type `U` has the trait `SmallUInt`.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is a primitive unsigned
-    /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    /// Raises `self` to the power of `exp` with wrapping at the type boundary.
     ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Output
-    /// It returns the result of `self` raised to the power of `exp`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - If overflowing happens, the `OVERFLOW` flag of the return value will
-    ///   be set.
-    /// 
-    /// # Counterpart Method
-    /// - If `exp` is bigger than `u128`, the method
-    ///   [wrapping_pow()](struct@BigUInt#method.wrapping_pow)
-    ///   is proper rather than this method `wrapping_pow_uint()`.
-    /// - If you need to know whether or not overflow occurs, use the method
-    ///   [overflowing_pow_uint()](struct@BigUInt#method.overflowing_pow_uint).
-    /// - You may be interested in extra exponentiation methods,
-    ///   In order to use any one of 
-    ///   [checked_pow_uint()](trait_big_more/trait.BigUInt_More.html#tymethod.checked_pow_uint),
-    ///   [unchecked_pow_uint()](trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_pow_uint), and
-    ///   [saturating_pow_uint()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_pow_uint),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_pow_uint()](trait.BigUInt_Modular.html#tymethod.modular_pow_uint),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_pow_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_pow_uint),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// # Arguments
+    /// * `exp`: The primitive unsigned integer exponent.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the result.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) exponentiation. If the 
+    /// operation results in an overflow, the `OVERFLOW` flag of the result 
+    /// is set.
     /// 
     /// # Example 1
     /// ```
@@ -6927,48 +6160,17 @@ where T: TraitsBigUInt<T>
         biguint_calc_assign_to_calc!(self, Self::wrapping_pow_assign_uint, exp);
     }
 
-    // pub fn wrapping_pow_assign_uint<U>(&self, exp: U)
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`,
-    /// and assign the result to `self` back.
-    /// The type `U` has the trait `SmallUInt`.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is a primitive unsigned
-    /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    // pub fn wrapping_pow_assign_uint<U>(&mut self, exp: U)
+    /// Raises `self` to the power of `exp` with wrapping and assigns the 
+    /// result to `self`.
     ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - If overflowing happens, the `OVERFLOW` flag of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// - If `exp` is bigger than `u128`, the method
-    ///   [wrapping_pow_assign()](struct@BigUInt#method.wrapping_pow_assign)
-    ///   is proper rather than this method `wrapping_pow_assign_uint()`.
-    /// - If you need to know whether or not overflow occurs, use the method
-    ///   [overflowing_pow_assign_uint()](struct@BigUInt#method.overflowing_pow_assign_uint).
-    /// - You may be interested in extra exponentiation methods
-    ///   In order to use 
-    ///   [saturating_pow_assign_uint()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_pow_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_pow_assign_uint()](trait.BigUInt_Modular.html#tymethod.modular_pow_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_pow_assign_uint()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_pow_assign_uint),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// # Arguments
+    /// * `exp`: The primitive unsigned integer exponent.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) exponentiation in-place. If 
+    /// an overflow occurs, the `OVERFLOW` flag of `self` is set. Flags are 
+    /// cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -7035,42 +6237,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_pow_uint<U>(&self, exp: U) -> (Self, bool)
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring, 
-    /// wrapping around at the boundary of the
-    /// type `Self`, and returns a tuple of the result along with
-    /// a boolean indicating whether an overflow would occur.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is a primitive unsigned
-    /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    /// Raises `self` to the power of `exp` and returns a tuple with the 
+    /// result and an overflow flag.
     ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Output
-    /// It returns the result of `self` raised to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`,  along with
-    /// a boolean indicating whether an arithmetic overflow would occur.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - If overflowing happens, the `OVERFLOW` flag of the return value will
-    ///   be set.
-    /// - If overflowing did not happen in the current operation, the second
-    ///   element of the output tuple will be false even if the `OVERFLOW` flag
-    ///   of `self` was already set because of previous operation of `self`.
-    /// 
-    /// # Counterpart Method
-    /// - If `exp` is bigger than `u128`, the method
-    ///   [overflowing_pow()](struct@BigUInt#method.overflowing_pow)
-    ///   is proper rather than this method `overflowing_pow_uint()`.
-    /// - If you do not need to know whether or not overflow occurs, use the
-    ///   method [wrapping_pow_uint()](struct@BigUInt#method.wrapping_pow_uint).
+    /// # Arguments
+    /// * `exp`: The primitive unsigned integer exponent.
+    ///
+    /// # Returns
+    /// A tuple `(Self, bool)` containing the result and a boolean indicating 
+    /// whether an overflow occurred.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping multiplication. The boolean flag 
+    /// reflects only the overflow from the current operation.
     /// 
     /// # Example 1
     /// ```
@@ -7101,45 +6280,19 @@ where T: TraitsBigUInt<T>
     }
     
     // pub fn overflowing_pow_assign_uint<U>(&mut self, exp: U) -> bool
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring, 
-    /// wrapping around at the boundary of the type `Self`, and
-    /// assigns the result to `self` back, and
-    /// returns a boolean indicating whether an overflow would occur.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is a primitive unsigned
-    /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
+    /// Raises `self` to the power of `exp` and assigns the result to `self`, 
+    /// returning an overflow flag.
     ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Output
-    /// - It returns a bool indicating whether or not an overflow happened.
-    /// - It is the current overflow which has nothing to do with historical
-    ///   ovrerflow of `self`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - If overflowing happens, the `OVERFLOW` flag of `self` will be set.
-    /// - If overflowing did not happen in the current operation, the output
-    ///   will be false even if the `OVERFLOW` flag of `self` was already set
-    ///   because of previous operation of `self`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// - If `exp` is bigger than `u128`, the method
-    ///   [overflowing_pow_assign()](struct@BigUInt#method.overflowing_pow_assign)
-    ///   is proper rather than this method `overflowing_pow_assign_uint()`.
-    /// - If you do not need to know whether or not overflow occurs, use the
-    ///   method [wrapping_pow_assign_uint()](struct@BigUInt#method.wrapping_pow_assign_uint).
+    /// # Arguments
+    /// * `exp`: The primitive unsigned integer exponent.
+    ///
+    /// # Returns
+    /// `true` if an overflow occurred in this operation, `false` otherwise.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping multiplication in-place. The returned 
+    /// flag reflects only the current operation, while the `OVERFLOW` flag 
+    /// of `self` remains cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -7179,33 +6332,17 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn iroot_uint<U>(&self, exp: U) -> Self
-    /// Calculates the `exp`-th root of `self`, rounded down,
-    /// and returns the result value.
-    ///
+    /// Calculates the integer n-th root of `self`.
+    /// 
     /// # Arguments
-    /// `exp` is the power of the root of `self` and is a primitive
-    /// unsigned integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `exp` is `0`, it will panic.
+    /// * `exp`: The primitive unsigned integer root to calculate.
     /// 
-    /// # Output
-    /// If the exact value of `exp`-th root of `self` can be expressed with
-    /// `Self`-typed unsigned integer, it will be returned.
-    /// Otherwise, the `Self`-typed biggest unsigned integer that is
-    /// less than the exact value of `exp`-th root of `self` will be returned.
+    /// # Returns
+    /// A new `BigUInt` instance containing the integer n-th root.
     /// 
-    /// # Features
-    /// If `exp` is greater than zero and `self` is greater than 1,
-    /// the result of this method is never greater than `self`.
-    /// So, this method never causes overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `exp` is bigger than `u128`, the method
-    /// [iroot()](struct@BigUInt#method.iroot)
-    /// is proper rather than this method.
+    /// # Implementation Details
+    /// This method calculates the largest integer `x` such that `x^exp <= self`. 
+    /// The operation is guaranteed not to overflow.
     /// 
     /// # Example 1
     /// ```
@@ -7236,37 +6373,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn iroot_assign_uint<U>(&mut self, exp: U)
-    /// Calculates the `exp`-th root of `self`, rounded down,
-    /// and assigns the result back to `self`.
-    ///
+    /// Calculates the integer n-th root of `self` and assigns it to `self`.
+    /// 
     /// # Arguments
-    /// `exp` is the power of the root of `self` and is a primitive
-    /// unsigned integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `exp` is `0`, it will panic.
+    /// * `exp`: The primitive unsigned integer root to calculate.
     /// 
-    /// # Features
-    /// - If the exact value of `exp`-th root of `self` can be expressed with
-    ///   `Self`-typed unsigned integer, it will be assigned to `self`.
-    ///   Otherwise, the `Self`-typed biggest unsigned integer that is less
-    ///   than the exact value of `exp`-th root of `self` will be assigned
-    ///   to `self`.
-    /// - If `exp` is greater than zero and `self` is greater than 1,
-    ///   the result of this method is never greater than `self`.
-    ///   So, this method never causes overflow.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// If `exp` is bigger than `u128`, the method
-    /// [iroot_assign()](struct@BigUInt#method.iroot_assign)
-    /// is proper rather than this method.
+    /// # Implementation Details
+    /// This method calculates the largest integer `x` such that `x^exp <= self` 
+    /// and performs an in-place update. The operation is guaranteed not to 
+    /// overflow. Status flags are cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -7371,30 +6486,17 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn ilog_uint<U>(&self, base: U) -> Self
-    /// Calculates the logarithm of the number with respect to `base`,
-    /// rounded down, and returns the result.
-    ///
+    /// Calculates the integer logarithm of `self` with the specified base.
+    /// 
     /// # Arguments
-    /// `base` is the base of logarithm of `self`, and is a primitive unsigned
-    /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// `base` should be greater than 1.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - This function will panic if `self` is zero.
-    /// - This function will panic if `base` is zero or one.
+    /// * `base`: The primitive unsigned integer base for the logarithm. 
+    ///   Must be greater than 1.
     /// 
-    /// # Output
-    /// It returns the logarithm of the number with respect to `base`,
-    /// rounded down.
+    /// # Returns
+    /// A new `BigUInt` instance containing the floor of the logarithm.
     /// 
-    /// # Counterpart Methods
-    /// This method might not be optimized owing to implementation details.
-    /// [ilog2()](struct@BigUInt#method.ilog2)
-    /// can produce results more efficiently for base 2, and
-    /// [ilog10()](struct@BigUInt#method.ilog10)
-    /// can produce results more efficiently for base 10.
+    /// # Implementation Details
+    /// This method calculates the largest integer `x` such that `base^x <= self`.
     /// 
     /// # Example 1
     /// ```
@@ -7425,26 +6527,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn ilog_assign_uint<U>(&mut self, base: U)
-    /// Calculates the logarithm of the number with respect to `base`,
-    /// rounded down, and assigns the result back to `self`.
-    ///
+    /// Calculates the integer logarithm of `self` with the specified base 
+    /// and assigns the result to `self`.
+    /// 
     /// # Arguments
-    /// `base` is the base of logarithm of `self`, and is a primitive unsigned
-    /// integer such as `u8`, `u16`, `u32`, `u64`, and `u128`.
-    /// `base` should be greater than 1.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - This function will panic if `self` is zero.
-    /// - This function will panic if `base` is zero or one.
-    ///
-    /// # Counterpart Methods
-    /// This method might not be optimized owing to implementation details.
-    /// [ilog2_assign()](struct@BigUInt#method.ilog2_assign)
-    /// can produce results more efficiently for base 2, and
-    /// [ilog10_assign()](struct@BigUInt#method.ilog10_assign)
-    /// can produce results more efficiently for base 10.
+    /// * `base`: The primitive unsigned integer base for the logarithm. 
+    ///   Must be greater than 1.
+    /// 
+    /// # Implementation Details
+    /// This method calculates the largest integer `x` such that `base^x <= self` 
+    /// and performs an in-place update. Status flags are cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -7497,44 +6589,19 @@ where T: TraitsBigUInt<T>
     /*** ADDITION ***/
 
     // pub fn carrying_add(&self, rhs: &Self, carry: bool) -> (Self, bool)
-    /// Calculates `self` + `rhs` + `carry`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a tuple of an addition result `self` + `rhs` + `carry`
-    /// along with a carry-out bit.
-    /// 
+    /// Calculates `self + rhs + carry` and returns the result with a 
+    /// carry-out bit.
+    ///
     /// # Arguments
-    /// - `rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `carry` is of `bool` type so that `1` may be added to `self`
-    ///   if `carry` is `true`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Outputs
-    /// It returns a tuple containing the sum and the output carry. It performs
-    /// "ternary addition" of two `Self`-typed operands and a carry-in bit, and
-    /// returns an tuple of an addition result in `Self` type and a carry-out bit.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) addition.
-    /// - This allows chaining together multiple additions to create even a
-    ///   wider addition. This can be thought of as a big integer
-    ///   "full adder", in the electronics sense.
-    /// - If the input carry is `false`, this method is equivalent to
-    ///   `overflowing_add()`, and the output carry reflects current
-    ///   overflow.
-    /// - The output carry is equal to the `OVERFLOW` flag of the return value.
-    /// - If overflow happened, the flag `OVERFLOW` of the return value will
-    ///   be set.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [carrying_add_uint()](struct@BigUInt#method.carrying_add_uint)
-    /// is a bit faster than this method `carrying_add()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, you are highly encouraged to use the method
-    /// [carrying_add_uint()](struct@BigUInt#method.carrying_add_uint).
+    /// * `rhs`: A reference to the `BigUInt` to add.
+    /// * `carry`: The carry-in bit to include in the addition.
+    ///
+    /// # Returns
+    /// A tuple `(Self, bool)` containing the sum and the carry-out bit.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping addition. The carry-out bit is also 
+    /// reflected in the `OVERFLOW` flag of the returned instance.
     /// 
     /// # Example 1
     /// ```
@@ -7578,47 +6645,20 @@ where T: TraitsBigUInt<T>
         carrying_calc!(self, Self::carrying_add_assign, rhs, carry);
     }
 
-    // pub fn carrying_add_assign(&self, rhs: &Self, carry: bool) -> bool
-    /// Calculates `self` + `rhs` + `carry`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assign the addition result `self` + `rhs` + `carry` to `self` back,
-    /// and return the resulting carry.
-    /// 
+    // pub fn carrying_add_assign(&mut self, rhs: &Self, carry: bool) -> bool
+    /// Calculates `self + rhs + carry` and assigns the result to `self`.
+    ///
     /// # Arguments
-    /// - `rhs` is to be added to `self`, and is of `&Self` type.
-    /// - `carry` is of `bool` type so that `1` may be added to `self`
-    ///   if `carry` is `true`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the output carry. It performs "ternary addition" of two
-    /// `Self`-typed operands and a carry-in bit, and returns a carry-out bit.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) addition.
-    /// - This allows chaining together multiple additions to create even a
-    ///   wider addition. This can be thought of as a big integer "full adder",
-    ///   in the electronics sense.
-    /// - If the input carry is `false`, this method is equivalent to
-    ///   `overflowing_add_assign()`, and the output carry reflect current
-    ///   overflow.
-    /// - If overflow happened, the flag `OVERFLOW` of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [carrying_add_assign_uint()](struct@BigUInt#method.carrying_add_assign_uint)
-    /// is a bit faster than this method `carrying_add_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, you are highly encouraged to use the method
-    /// [carrying_add_assign_uint()](struct@BigUInt#method.carrying_add_assign_uint).
+    /// * `rhs`: A reference to the `BigUInt` to add.
+    /// * `carry`: The carry-in bit to include in the addition.
+    ///
+    /// # Returns
+    /// The carry-out bit resulting from the addition.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping addition. The `OVERFLOW` flag of `self` 
+    /// is updated to reflect the carry-out bit. Flags are cumulative and 
+    /// will remain set if they were set by a previous operation.
     /// 
     /// # Example 1
     /// ```
@@ -7739,45 +6779,17 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_add(&self, rhs: &Self) -> Self
-    /// Calculates `self` + `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns an addition result `self` + `rhs`.
-    /// 
+    /// Calculates `self + rhs` with wrapping at the type boundary.
+    ///
     /// # Arguments
-    /// `rhs` is to be added to `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns `self` + `rhs` with wrapping (modular) addition.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) addition.
-    /// - If overflow happened, the flag `OVERFLOW` of the return value
-    ///   will be set.
-    /// 
-    /// # Counterpart Method
-    /// - The method
-    ///   [wrapping_add_uint()](struct@BigUInt#method.wrapping_add_uint)
-    ///   is a bit faster than this method `wrapping_add()`.
-    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    ///   u32, u64, and u128, use the method
-    ///   [wrapping_add_uint()](struct@BigUInt#method.wrapping_add_uint).
-    /// - You may be interested in extra addition methods,
-    ///   In order to use any one of 
-    ///   [checked_add()](trait_big_more/trait.BigUInt_More.html#tymethod.checked_add),
-    ///   [unchecked_add()](trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_add),
-    ///   [saturating_add()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_add), and
-    ///   [safe_add()](trait_big_more/trait.BigUInt_More.html#tymethod.safe_add),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_add()](trait.BigUInt_Modular.html#tymethod.modular_add),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_add()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_add),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: A reference to the `BigUInt` to add.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the sum.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) addition. If the operation 
+    /// results in an overflow, the `OVERFLOW` flag of the result is set.
     /// 
     /// # Example 1
     /// ```
@@ -7807,44 +6819,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_add_assign(&mut self, rhs: &Self)
-    /// Calculates `self` + `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assign the addition result `self` + `rhs` to `self` back.
-    /// 
+    /// Calculates `self + rhs` with wrapping and assigns the result to `self`.
+    ///
     /// # Arguments
-    /// `rhs` is to be added to `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) addition.
-    /// - If overflow happened, the flag `OVERFLOW` of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// - The method
-    ///   [wrapping_add_assign_uint()](struct@BigUInt#method.wrapping_add_assign_uint)
-    ///   is a bit faster than this method `wrapping_add_assign()`.
-    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    ///   u32, u64, and u128, use the method
-    ///   [wrapping_add_assign_uint()](struct@BigUInt#method.wrapping_add_assign_uint).
-    /// - You may be interested in extra addition methods
-    ///   In order to use any one of 
-    ///   [saturating_add_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_add_assign), and
-    ///   [safe_add_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.safe_add_assign),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_add_assign()](trait.BigUInt_Modular.html#tymethod.modular_add_assign),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_add_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_add_assign),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: A reference to the `BigUInt` to add.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) addition. If an overflow 
+    /// occurs, the `OVERFLOW` flag of `self` is set. Flags are cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -7883,37 +6865,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_add(&self, rhs: &Self) -> (Self, bool)
-    /// Calculates `self` + `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a tuple of the addition result `self` + `rhs` along with
-    /// a boolean indicating whether an arithmetic overflow would occur.
-    /// 
+    /// Calculates `self + rhs` and returns a tuple with the result and an 
+    /// overflow flag.
+    ///
     /// # Arguments
-    /// `rhs` is to be added to `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns a tuple of the addition `self` + `rhs` along with a boolean
-    /// indicating whether an arithmetic overflow would occur. If an overflow
-    /// would have occurred, then the wrapped (modular) value is returned.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) addition.
-    /// - If overflow happens, the second element of the output tuple will
-    ///   be true and the `OVERFLOW` flag of the return value will be set.
-    /// - The second element of the output tuple reflects only
-    ///   the current overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [overflowing_add_uint()](struct@BigUInt#method.overflowing_add_uint)
-    /// is a bit faster than this method `overflowing_add()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [overflowing_add_uint()](struct@BigUInt#method.overflowing_add_uint).
+    /// * `rhs`: A reference to the `BigUInt` to add.
+    ///
+    /// # Returns
+    /// A tuple `(Self, bool)` containing the sum and a boolean indicating 
+    /// whether an overflow occurred.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping addition. The boolean flag reflects 
+    /// only the overflow from the current operation.
     /// 
     /// # Example 1
     /// ```
@@ -7943,43 +6907,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_add_assign(&mut self, rhs: &Self) -> bool
-    /// Calculates `self` + `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns the addition result `self` + `rhs` to `self` back,
-    /// and returns a boolean indicating whether an arithmetic overflow
-    /// would occur.
-    /// 
+    /// Calculates `self + rhs` and assigns the result to `self`, returning 
+    /// an overflow flag.
+    ///
     /// # Arguments
-    /// `rhs` is to be added to `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns true if an arithmetic overflow would occur.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) addition.
-    /// - If overflow happened, the flag `OVERFLOW` of `self` will be set.
-    /// - If overflow did not happen in the current operation, the output
-    ///   will be false even if the `OVERFLOW` flag of `self` was already set
-    ///   because of previous operation of `self`.
-    /// - The output overflow reflects only the current overflow.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [overflowing_add_assign_uint()](struct@BigUInt#method.overflowing_add_assign_uint)
-    /// is a bit faster than this method `overflowing_add_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [overflowing_add_assign_uint()](struct@BigUInt#method.overflowing_add_assign_uint).
+    /// * `rhs`: A reference to the `BigUInt` to add.
+    ///
+    /// # Returns
+    /// `true` if an overflow occurred in this operation, `false` otherwise.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping addition. The returned flag reflects 
+    /// only the current operation, while the `OVERFLOW` flag of `self` 
+    /// remains cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -8022,45 +6962,20 @@ where T: TraitsBigUInt<T>
     /*** SUBTRACTION ***/
 
     // pub fn borrowing_sub(&self, rhs: &Self, borrow: bool) -> (Self, bool)
-    /// Calculates `self` - `rhs` - `carry`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a tuple of a subtraction result `self` - `rhs` - `carry`
-    /// along with a borrow-out bit.
-    /// 
+    /// Calculates `self - rhs - borrow` and returns the result with a 
+    /// borrow-out bit.
+    ///
     /// # Arguments
-    /// - `rhs` is to be subtracted from `self`, and is of `&Self` type.
-    /// - `borrow` is of `bool` type so that `1` may be subtracted from `self`
-    ///   if `borrow` is `true`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Outputs
-    /// It returns a tuple containing the subtraction result and the borrow-out
-    /// bit. It performs "ternary subtraction" of one `Self`-typed operand,
-    /// a primitive unsigned integer, and a borrow-in bit, and returns an tuple
-    /// of an subtraction result in `Self` type and a borrow-out bit.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) subtraction.
-    /// - This allows chaining together multiple subtraction to create even a
-    ///   wider subtraction. This can be thought of as a big integer
-    ///   "full subtracter", in the electronics sense.
-    /// - If the input borrow is `false`, this method is equivalent to
-    ///   `overflowing_sub()`, and the output borrow reflects current underflow.
-    /// - The output borrow is equal to the `UNDERFLOW` flag
-    ///   of the return value.
-    /// - If underflow happened, the flag `UNDERFLOW` of the return value will
-    ///   be set.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [borrowing_sub_uint()](struct@BigUInt#method.borrowing_sub_uint)
-    /// is a bit faster than this method `borrowing_sub()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, you are highly encouraged to use the method
-    /// [borrowing_sub_uint()](struct@BigUInt#method.borrowing_sub_uint).
+    /// * `rhs`: A reference to the `BigUInt` to subtract.
+    /// * `borrow`: The borrow-in bit to include in the subtraction.
+    ///
+    /// # Returns
+    /// A tuple `(Self, bool)` containing the difference and the borrow-out 
+    /// bit.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping subtraction. The borrow-out bit is also 
+    /// reflected in the `UNDERFLOW` flag of the returned instance.
     /// 
     /// # Example 1
     /// ```
@@ -8105,48 +7020,19 @@ where T: TraitsBigUInt<T>
         carrying_calc!(self, Self::borrowing_sub_assign, rhs, borrow);
     }
 
-    // pub fn borrowing_sub_assign(&self, rhs: &Self, borrow: bool) -> bool
-    /// Calculates `self` - `rhs` - `carry`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assign the subtraction result `self` - `rhs` - `carry`
-    /// to `self` back,
-    /// and return the resulting borrow.
-    /// 
+    // pub fn borrowing_sub_assign(&mut self, rhs: &Self, borrow: bool) -> bool
+    /// Calculates `self - rhs - borrow` and assigns the result to `self`.
+    ///
     /// # Arguments
-    /// - `rhs` is to be subtracted from `self`, and is of `&Self` type.
-    /// - `borrow` is of `bool` type so that `1` may be subtracted from `self`
-    ///   if `borrow` is `true`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the output borrow. It performs "ternary subtraction" of two
-    /// `Self`-typed operands, and a borrow-in bit,
-    /// and returns a borrow-out bit.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) subtraction.
-    /// - This allows chaining together multiple subtraction to create even a
-    ///   wider subtraction. This can be thought of as a big integer
-    ///   "full subtracter", in the electronics sense.
-    /// - If the input borrow is false, this method is equivalent to
-    ///   `overflowing_sub_assign()`, and the output borrow reflects
-    ///   the current underflow.
-    /// - If underflow happened, the flag `UNDERFLOW` of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an underflow
-    ///   occurred even once before this current operation or `UNDERFLOW`
-    ///   flag is already set before this current operation, the `UNDERFLOW` flag
-    ///   is not changed even if this current operation does not cause underflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [carrying_sub_assign_uint()](struct@BigUInt#method.carrying_sub_assign_uint)
-    /// is a bit faster than this method `carrying_sub_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, you are highly encouraged to use the method
-    /// [carrying_sub_assign_uint()](struct@BigUInt#method.carrying_sub_assign_uint).
+    /// * `rhs`: A reference to the `BigUInt` to subtract.
+    /// * `borrow`: The borrow-in bit to include in the subtraction.
+    ///
+    /// # Returns
+    /// The borrow-out bit resulting from the subtraction.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping subtraction. The `UNDERFLOW` flag of 
+    /// `self` is updated to reflect the borrow-out bit. Flags are cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -8209,45 +7095,17 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_sub(&self, rhs: &Self) -> Self
-    /// Calculates `self` - `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a subtraction result `self` - `rhs`.
-    /// 
+    /// Calculates `self - rhs` with wrapping at the type boundary.
+    ///
     /// # Arguments
-    /// `rhs` is to be subtracted from `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns `self` - `rhs` with wrapping (modular) subtraction.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) subtraction.
-    /// - If underflow happened, the flag `UNDERFLOW` of the return value
-    ///   will be set.
-    /// 
-    /// # Counterpart Method
-    /// - The method
-    ///   [wrapping_sub_uint()](struct@BigUInt#method.wrapping_sub_uint)
-    ///   is a bit faster than this method `wrapping_sub()`.
-    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    ///   u32, u64, and u128, use the method
-    ///   [wrapping_sub_uint()](struct@BigUInt#method.wrapping_sub_uint).
-    /// - You may be interested in extra subtraction methods,
-    ///   In order to use any one of 
-    ///   [checked_sub()](trait_big_more/trait.BigUInt_More.html#tymethod.checked_sub),
-    ///   [unchecked_sub()](trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_sub),
-    ///   [saturating_sub()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_sub), and
-    ///   [safe_sub()](trait_big_more/trait.BigUInt_More.html#tymethod.safe_sub),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_sub()](trait.BigUInt_Modular.html#tymethod.modular_sub),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_sub()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_sub),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: A reference to the `BigUInt` to subtract.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the difference.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) subtraction. If the operation 
+    /// results in an underflow, the `UNDERFLOW` flag of the result is set.
     /// 
     /// # Example 1
     /// ```
@@ -8276,43 +7134,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_sub_assign(&mut self, rhs: &Self)
-    /// Calculates `self` - `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assign the subtraction result `self` - `rhs` to `self` back.
-    /// 
+    /// Calculates `self - rhs` with wrapping and assigns the result to `self`.
+    ///
     /// # Arguments
-    /// `rhs` is to be subtracted from `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) subtraction.
-    /// - If underflow happened, the flag `UNDERFLOW` of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an underflow
-    ///   occurred even once before this current operation or `UNDERFLOW`
-    ///   flag is already set before this current operation, the `UNDERFLOW` flag
-    ///   is not changed even if this current operation does not cause underflow.
-    /// 
-    /// # Counterpart Method
-    /// - The method
-    ///   [wrapping_sub_assign_uint()](struct@BigUInt#method.wrapping_sub_assign_uint)
-    ///   is a bit faster than this method `wrapping_sub_assign()`.
-    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    ///   u32, u64, and u128, use the method
-    ///   [wrapping_sub_assign_uint()](struct@BigUInt#method.wrapping_sub_assign_uint).
-    /// - You may be interested in extra subtraction methods
-    ///   In order to use any one of 
-    ///   [saturating_sub_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_sub_assign), and
-    ///   [safe_sub_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.safe_sub_assign),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_sub_assign()](trait.BigUInt_Modular.html#tymethod.modular_sub_assign),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_sub_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_sub_assign),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: A reference to the `BigUInt` to subtract.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) subtraction. If an underflow 
+    /// occurs, the `UNDERFLOW` flag of `self` is set. Flags are cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -8350,38 +7179,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_sub(&self, rhs: &Self) -> (Self, bool)
-    /// Calculates `self` - `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a tuple of the subtraction result `self` - `rhs` along with
-    /// a boolean indicating whether an arithmetic underflow would occur.
-    /// 
+    /// Calculates `self - rhs` and returns a tuple with the result and an 
+    /// underflow flag.
+    ///
     /// # Arguments
-    /// `rhs` is to be added to `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns a tuple of the subtraction `self` - `rhs` along with a
-    /// boolean indicating whether an arithmetic underflow would occur.
-    /// If an underflow would have occurred, then the wrapped (modular) value
-    /// is returned.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) subtraction.
-    /// - If underflow happens, the second element of the output tuple will
-    ///   be true and the `UNDERFLOW` flag of the return value will be set.
-    /// - The second element of the output tuple reflects only
-    ///   the current underflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [overflowing_sub_uint()](struct@BigUInt#method.overflowing_sub_uint)
-    /// is a bit faster than this method `overflowing_sub()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [overflowing_sub_uint()](struct@BigUInt#method.overflowing_sub_uint).
+    /// * `rhs`: A reference to the `BigUInt` to subtract.
+    ///
+    /// # Returns
+    /// A tuple `(Self, bool)` containing the difference and a boolean 
+    /// indicating whether an underflow occurred.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping subtraction. The boolean flag reflects 
+    /// only the underflow from the current operation.
     /// 
     /// # Example 1
     /// ```
@@ -8410,42 +7220,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_sub_assign(&mut self, rhs: &Self) -> bool
-    /// Calculates `self` - `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns the subtraction result `self` - `rhs` to `self` back,
-    /// and returns a boolean indicating whether an arithmetic underflow
-    /// would occur.
-    /// 
+    /// Calculates `self - rhs` and assigns the result to `self`, returning 
+    /// an underflow flag.
+    ///
     /// # Arguments
-    /// `rhs` is to be subtracted from `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns true if an arithmetic underflow would occur.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) subtraction.
-    /// - If underflow happened, the flag `UNDERFLOW` of `self` will be set.
-    /// - If underflow did not happen in the current operation, the output
-    ///   will be false even if the `UNDERFLOW` flag of `self` was already set
-    ///   because of previous operation of `self`.
-    /// - The output reflects only the current underflow.
-    /// - All the flags are historical, which means, for example, if an underflow
-    ///   occurred even once before this current operation or `UNDERFLOW`
-    ///   flag is already set before this current operation, the `UNDERFLOW` flag
-    ///   is not changed even if this current operation does not cause underflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [overflowing_sub_assign_uint()](struct@BigUInt#method.overflowing_sub_assign_uint)
-    /// is a bit faster than this method `overflowing_sub_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [overflowing_sub_assign_uint()](struct@BigUInt#method.overflowing_sub_assign_uint).
+    /// * `rhs`: A reference to the `BigUInt` to subtract.
+    ///
+    /// # Returns
+    /// `true` if an underflow occurred in this operation, `false` otherwise.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping subtraction. The returned flag reflects 
+    /// only the current operation, while the `UNDERFLOW` flag of `self` 
+    /// remains cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -8483,30 +7270,21 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn abs_diff(&self, other: &Self) -> Self
-    /// Calculates the absolute difference between `self` and `other`.
-    /// 
+    /// Calculates the absolute difference between `self` and another 
+    /// `BigUInt`.
+    ///
     /// # Arguments
-    /// `other` is to be compared to `self`, and is of `&Self` type.
+    /// * `other`: A reference to the `BigUInt` to compare against.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance representing the absolute difference 
+    /// `|self - other|`.
+    ///
+    /// # Implementation Details
+    /// This method does not modify status flags such as `OVERFLOW` or 
+    /// `UNDERFLOW`.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the absolute difference between `self` and `other`.
-    /// 
-    /// # Features
-    /// - It calculates the absolute difference between `self` and `other`.
-    /// - It does not change the flags either `OVERFLOW` or `UNDERFLOW`.
-    /// 
-    /// # Counterpart Method
-    /// The method [abs_diff_uint()](struct@BigUInt#method.abs_diff_uint)
-    /// is a bit faster than this method `abs_diff()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [abs_diff_uint()](struct@BigUInt#method.abs_diff_uint).
-    /// 
-    /// # Example
+    /// # Example 1
     /// ```
     /// use std::str::FromStr;
     /// use cryptocol::number::BigUInt;
@@ -8550,54 +7328,27 @@ where T: TraitsBigUInt<T>
     /*** MULTIPLICATION ***/
 
     // pub fn carrying_mul(&self, rhs: &Self, carry: Self) -> (Self, Self)
-    /// Calculates `self` + `rhs` + `carry`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a tuple the low-order (wrapping) bits and the high-order
-    /// (overflow) bits of the result of the calculation
-    /// `self` * `rhs` + `carry`.
-    /// 
+    /// Calculates `self * rhs + carry` and returns the result as a tuple 
+    /// of (low, high) parts.
+    ///
     /// # Arguments
-    /// - `rhs` is to be multiplied to `self`, and is of `&Self` type.
-    /// - `carry` is of `Self` type
-    ///   so that `carry` may be added to `self` * `rhs`.
+    /// * `rhs`: A reference to the `BigUInt` to multiply by.
+    /// * `carry`: An additional `BigUInt` value to add to the product.
+    ///
+    /// # Returns
+    /// A tuple `(Self, Self)` representing the full double-width result, 
+    /// where the first element is the low-order part and the second is the 
+    /// high-order part.
+    ///
+    /// # Implementation Details
+    /// This method performs multi-precision multiplication. If the high-order 
+    /// part of the result is non-zero, the `OVERFLOW` flag of the low-order 
+    /// part instance will be set.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # 
-    /// It returns the multiplication result `self` * `rhs` + `carry` in the
-    /// form of a tuple of the low-order (wrapping) bits and the
-    /// high-order (overflow) bits of the result as two separate values,
-    /// in the order (`low`, `high`).
-    /// 
-    /// # Features
-    /// - It performs "long multiplication" which takes in an extra amount
-    ///   to add, and returns the result in a tuple containing a low-order
-    ///   part and a high-order part of it. This allows for chaining together
-    ///   multiple multiplications to create "bigger integers" which represent
-    ///   larger values.
-    /// - If the high-order part of the return value is not zero, the
-    ///   `OVERFLOW` flag of the low-order part will be set though the output
-    ///   tuple is free from overflow.
-    /// - If the input carry is `0`, this method is equivalent to
-    ///   `widening_mul()`.
-    /// 
-    /// # Counterpart Methods
-    /// - If you don’t need the carry, then you can use
-    ///   [widening_mul()](struct@BigUInt#method.widening_mul) instead.
-    /// - The value of the first field in the returned tuple matches
-    ///   what you’d get by combining the methods
-    ///   [wrapping_mul()](struct@BigUInt#method.wrapping_mul) and
-    ///   [wrapping_add()](struct@BigUInt#method.wrapping_add):
-    ///   `self.wrapping_mul(rhs).wrapping_add(carry)`. So,
-    ///   `self.carrying_mul(rhs, carry).0` == `self.wrapping_mul(rhs).wrapping_add(carry)`
-    /// - The method
-    ///   [carrying_mul_uint()](struct@BigUInt#method.carrying_mul_uint)
-    ///   is a bit faster than this method `carrying_mul()`. If `rhs` is
-    ///   primitive unsigned integral data type such as u8, u16, u32, u64, and
-    ///   u128, use the method
-    ///   [carrying_mul_uint()](struct@BigUInt#method.carrying_mul_uint).
+    /// # Alternatives
+    /// For operands larger than 128 bits, use 
+    /// [`carrying_mul_uint()`](struct@BigUInt#method.carrying_mul_uint) 
+    /// for better performance.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -8656,57 +7407,26 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn carrying_mul_assign(&mut self, rhs: &Self, carry: Self) -> Self
-    /// Calculates `self` + `rhs` + `carry`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns the low-order (wrapping) bits of the result
-    /// `self` * `rhs` + `carry` back to `self`,
-    /// and returns the high-order (overflow) bits of the result.
-    /// 
+    /// Calculates `self * rhs + carry` and assigns the low-order part to 
+    /// `self`, returning the high-order part.
+    ///
     /// # Arguments
-    /// - `rhs` is to be multiplied to `self`, and is of `&Self` type.
-    /// - `carry` is of `Self` type
-    ///   so that `carry` may be added to `self` * `rhs`.
+    /// * `rhs`: A reference to the `BigUInt` to multiply by.
+    /// * `carry`: An additional `BigUInt` value to add to the product.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance representing the high-order (overflow) bits 
+    /// of the calculation.
+    ///
+    /// # Implementation Details
+    /// This method performs multi-precision multiplication. If the returned 
+    /// high-order part is non-zero, the `OVERFLOW` flag of `self` will be set. 
+    /// Status flags are cumulative.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the high-order (overflow) bits of the result
-    /// `self` * `rhs` + `carry`.
-    /// 
-    /// # Features
-    /// - It performs "long multiplication" which takes in an extra amount
-    ///   to add, and assigns the low-order part the result to `self` back,
-    ///   and returns the high-order part of the result.
-    /// - If the return value which is the high-order part of the result is
-    ///   not zero, the `OVERFLOW` flag of `self` will be set
-    ///   though the result is free from overflow because the `OVERFLOW` flag
-    ///   is of `self`, and not of the result of the multiplication.
-    /// - If the input carry is `0`, this method is equivalent to
-    ///   `widening_mul_assign()`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Methods
-    /// - If you don’t need the carry, then you can use
-    ///   [widening_mul_assign()](struct@BigUInt#method.widening_mul_assign)
-    ///   instead.
-    /// - The value of `self` after calculation matches what you’d get by
-    ///   combining the mehtods
-    ///   [wrapping_mul()](struct@BigUInt#method.wrapping_mul) and
-    ///   [wrapping_add_assign()](struct@BigUInt#method.wrapping_add_assign_uint):
-    ///   `self.wrapping_mul(rhs).wrapping_add_assign(carry)`.
-    /// - The method
-    ///   [carrying_mul_assign_uint()](struct@BigUInt#method.carrying_mul_assign_uint)
-    ///   is a bit faster than this method `carrying_mul_assign()`.
-    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    ///   u32, u64, and u128,
-    ///   use the method
-    ///   [carrying_mul_assign_uint()](struct@BigUInt#method.carrying_mul_assign_uint).
+    /// # Alternatives
+    /// For operands larger than 128 bits, use 
+    /// [`carrying_mul_assign_uint()`](struct@BigUInt#method.carrying_mul_assign_uint) 
+    /// for better performance.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -8785,45 +7505,21 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn widening_mul(&self, rhs: &Self) -> (Self, Self)
-    /// Calculates `self` * `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a tuple the low-order (wrapping) bits and the high-order
-    /// (overflow) bits of the result of the calculation  `self` * `rhs`.
-    /// 
+    /// Calculates `self * rhs` and returns the full product as a tuple 
+    /// of (low, high) parts.
+    ///
     /// # Arguments
-    /// - `rhs` is to be added to `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Outputs
-    /// It returns the multiplication result `self` * `rhs` in the form of a
-    /// tuple of the low-order (wrapping) bits and the high-order
-    /// (overflow) bits of the result as two separate values,
-    /// in the order (`low`, `high`).
-    /// 
-    /// # Features
-    /// - It performs "long multiplication", and returns the result in a tuple
-    ///   containing a low-order part and a high-order part of it.
-    /// - If the high-order part of the return value is not zero, the
-    ///   `OVERFLOW` flag of the low-order part will be set though the output
-    ///   tuple is free from overflow.
-    /// 
-    /// # Counterpart Methods
-    /// - If you also need to add a carry to the wide result, then you want to
-    ///   use [carrying_mul()](struct@BigUInt#method.carrying_mul)
-    ///   instead.
-    /// - The value of the first field in the returned tuple matches what
-    ///   you’d get the method
-    ///   [wrapping_mul()](struct@BigUInt#method.wrapping_mul).
-    ///   `self.widening_mul(rhs).0` == `self.wrapping_mul(rhs)`.
-    /// - The method
-    ///   [widening_mul_uint()](struct@BigUInt#method.widening_mul_uint)
-    ///   is a bit faster than this method `widening_mul()`.
-    ///   So, if `rhs` is primitive unsigned integral data type such as u8,
-    ///   u16, u32, u64, and u128, use the method
-    ///   [widening_mul_uint()](struct@BigUInt#method.widening_mul_uint).
+    /// * `rhs`: A reference to the `BigUInt` to multiply by.
+    ///
+    /// # Returns
+    /// A tuple `(Self, Self)` representing the full double-width product, 
+    /// where the first element is the low-order part and the second is the 
+    /// high-order part.
+    ///
+    /// # Implementation Details
+    /// This method performs multi-precision multiplication. If the high-order 
+    /// part of the result is non-zero, the `OVERFLOW` flag of the low-order 
+    /// part instance will be set.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -8864,44 +7560,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn widening_mul_assign(&mut self, rhs: &Self) -> Self
-    /// Calculates `self` * `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns the low-order (wrapping) bits of the result `self` * `rhs`,
-    /// and returns the high-order (overflow) bits of the result.
-    /// 
+    /// Calculates `self * rhs` and assigns the low-order part to `self`, 
+    /// returning the high-order part.
+    ///
     /// # Arguments
-    /// - `rhs` is to be added to `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the high-order (overflow) bits of the result `self` * `rhs`.bit.
-    /// 
-    /// # Features
-    /// - It performs "long multiplication",
-    ///   and assigns the low-order part the result to `self` back,
-    ///   and returns the high-order part of it.
-    /// - If the return value which is the high-order part of the result is
-    ///   not zero, the `OVERFLOW` flag of `self` will be set
-    ///   though the result is free from overflow because the `OVERFLOW` flag
-    ///   is of `self`, and not of the result of the multiplication.
-    /// 
-    /// # Counterpart Methods
-    /// - If you also need to add a carry to the wide result, then you want to
-    ///   use
-    ///   [carrying_mul_assign()](struct@BigUInt#method.carrying_mul_assign)
-    ///   instead.
-    /// - The value of `self` after calculation matches what you’d get the
-    ///   method [wrapping_mul()](struct@BigUInt#method.wrapping_mul)
-    ///   so `self` == `self.wrapping_mul(rhs)`.
-    /// - The method
-    ///   [widening_mul_assign_uint()](struct@BigUInt#method.widening_mul_assign_uint)
-    ///   is a bit faster than this method `widening_mul_assign()`.
-    ///   If `rhs` is primitive unsigned integral data type such as u8, u16,
-    ///   u32, u64, and u128, use the method
-    ///   [widening_mul_assign_uint()](struct@BigUInt#method.widening_mul_assign_uint).
+    /// * `rhs`: A reference to the `BigUInt` to multiply by.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance representing the high-order (overflow) bits 
+    /// of the product.
+    ///
+    /// # Implementation Details
+    /// This method performs multi-precision multiplication. If the returned 
+    /// high-order part is non-zero, the `OVERFLOW` flag of `self` will be set.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -9068,46 +7739,18 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_mul(&self, rhs: &Self) -> Self
-    /// Calculates `self` * `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a multiplication result `self` * `rhs`.
-    /// 
+    /// Calculates `self * rhs` with wrapping at the type boundary.
+    ///
     /// # Arguments
-    /// `rhs` is to be added to `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the multiplication result `self` * `rhs` with wrapping
-    /// (modular) multiplication.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) multiplication.
-    /// - If overflow happened, the flag `OVERFLOW` of the return value
-    ///   will be set.
-    /// 
-    /// # Counterpart Method
-    /// - The method
-    ///   [wrapping_mul_uint()](struct@BigUInt#method.wrapping_mul_uint)
-    ///   is a bit faster than this method `wrapping_mul()`.
-    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    ///   u32, u64, and u128, use the method
-    ///   [wrapping_mul_uint()](struct@BigUInt#method.wrapping_mul_uint).
-    /// - You may be interested in extra multiplication methods,
-    ///   In order to use any one of 
-    ///   [checked_mul()](trait_big_more/trait.BigUInt_More.html#tymethod.checked_mul),
-    ///   [unchecked_mul()](trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_mul),
-    ///   [saturating_mul()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_mul), and
-    ///   [safe_mul()](trait_big_more/trait.BigUInt_More.html#tymethod.safe_mul),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_mul()](trait.BigUInt_Modular.html#tymethod.modular_mul),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_mul()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_mul),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: A reference to the `BigUInt` to multiply by.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the product.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) multiplication. If the 
+    /// operation results in an overflow, the `OVERFLOW` flag of the result 
+    /// is set.
     /// 
     /// # Example 1
     /// ```
@@ -9136,44 +7779,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_mul_assign(&mut self, rhs: &Self)
-    /// Calculates `self` * `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns a multiplication result `self` * `rhs` to `self` back.
-    /// 
+    /// Calculates `self * rhs` with wrapping and assigns the result to `self`.
+    ///
     /// # Arguments
-    /// `rhs` is to be added to `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) multiplication.
-    /// - If overflow happened, the flag `OVERFLOW` of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// - The method
-    ///   [wrapping_mul_assign_uint()](struct@BigUInt#method.wrapping_mul_assign_uint)
-    ///   is a bit faster than this method `wrapping_mul_assign()`.
-    ///   So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    ///   u32, u64, and u128, use the method
-    ///   [wrapping_mul_assign_uint()](struct@BigUInt#method.wrapping_mul_assign_uint).
-    /// - You may be interested in extra multiplication methods
-    ///   In order to use any one of 
-    ///   [saturating_mul_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_mul_assign), and
-    ///   [safe_mul_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.safe_mul_assign),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_mul_assign()](trait.BigUInt_Modular.html#tymethod.modular_mul_assign),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_mul_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_mul_assign),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: A reference to the `BigUInt` to multiply by.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) multiplication in-place. If 
+    /// an overflow occurs, the `OVERFLOW` flag of `self` is set. Flags are 
+    /// cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -9330,38 +7944,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_mul(&self, rhs: &Self) -> (Self, bool)
-    /// Calculates `self` * `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and returns a tuple of the multiplication result `self` * `rhs` along with
-    /// a boolean indicating whether an arithmetic overflow would occur.
-    /// 
+    /// Calculates `self * rhs` and returns a tuple with the result and an 
+    /// overflow flag.
+    ///
     /// # Arguments
-    /// `rhs` is to be multiplied to `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns a tuple of the multiplication result `self` * `rhs` along
-    /// with a boolean indicating whether an arithmetic overflow would
-    /// occur. If an overflow would have occurred,
-    /// then the wrapped (modular) value is returned.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) multiplication .
-    /// - If overflow happens, the second element of the output tuple will
-    ///   be true and the `OVERFLOW` flag of the return value will be set.
-    /// - The second element of the output tuple reflects only
-    ///   the current overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [overflowing_mul_uint()](struct@BigUInt#method.overflowing_mul_uint)
-    /// is a bit faster than this method `overflowing_mul()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [overflowing_mul_uint()](struct@BigUInt#method.overflowing_mul_uint).
+    /// * `rhs`: A reference to the `BigUInt` to multiply by.
+    ///
+    /// # Returns
+    /// A tuple `(Self, bool)` containing the product and a boolean 
+    /// indicating whether an overflow occurred.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping multiplication. The boolean flag 
+    /// reflects only the overflow from the current operation.
     /// 
     /// # Example 1
     /// ```
@@ -9391,43 +7986,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_mul_assign(&mut self, rhs: &Self) -> bool
-    /// Calculates `self` * `rhs`,
-    /// wrapping around at the boundary of the `Self` type,
-    /// and assigns the multiplication result `self` * `rhs` to `self` back,
-    /// and returns a boolean indicating whether an arithmetic overflow
-    /// would occur.
-    /// 
+    /// Calculates `self * rhs` and assigns the result to `self`, returning 
+    /// an overflow flag.
+    ///
     /// # Arguments
-    /// `rhs` is to be multiplied to `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns true if an arithmetic overflow would occur.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) multiplication.
-    /// - If overflow happened, the flag `OVERFLOW` of `self` will be set.
-    /// - If overflow did not happen in the current operation, the output
-    ///   will be false even if the `OVERFLOW` flag of `self` was already set
-    ///   because of previous operation of `self`.
-    /// - The output reflects only the current overflow.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [overflowing_mul_assign_uint()](struct@BigUInt#method.overflowing_mul_assign_uint)
-    /// is a bit faster than this method `overflowing_mul_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [overflowing_mul_assign_uint()](struct@BigUInt#method.overflowing_mul_assign_uint).
+    /// * `rhs`: A reference to the `BigUInt` to multiply by.
+    ///
+    /// # Returns
+    /// `true` if an overflow occurred in this operation, `false` otherwise.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping multiplication in-place. The returned 
+    /// flag reflects only the current operation, while the `OVERFLOW` flag 
+    /// of `self` remains cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -9467,38 +8038,20 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn expanding_mul<const M: usize>(&self, rhs: &Self) -> BigUInt<T, M>
-    /// Calculates `self` * `rhs`,
-    /// and returns a BigUInt<T, M\> of a different size.
-    /// 
+    /// Calculates `self * rhs` and returns the product as a `BigUInt` of a 
+    /// different specified size.
+    ///
     /// # Arguments
-    /// - `rhs` is to be added to `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Outputs
-    /// It returns the multiplication result `self` * `rhs` in the form of
-    /// `BigUInt<T, M\>` of a different size of the result.
-    /// 
-    /// # Features
-    /// It performs "long multiplication", and returns the result in
-    /// `BigUInt<T, M\>` of a different size of the result.
-    /// 
-    /// # Counterpart Methods
-    /// - If you also need to add a carry to the wide result, then you want to
-    ///   use [carrying_mul()](struct@BigUInt#method.carrying_mul)
-    ///   instead.
-    /// - The value of the first field in the returned tuple matches what
-    ///   you’d get the method
-    ///   [wrapping_mul()](struct@BigUInt#method.wrapping_mul).
-    ///   `self.widening_mul(rhs).0` == `self.wrapping_mul(rhs)`.
-    /// - The method
-    ///   [widening_mul_uint()](struct@BigUInt#method.widening_mul_uint)
-    ///   is a bit faster than this method `widening_mul()`.
-    ///   So, if `rhs` is primitive unsigned integral data type such as u8,
-    ///   u16, u32, u64, and u128, use the method
-    ///   [widening_mul_uint()](struct@BigUInt#method.widening_mul_uint).
+    /// * `rhs`: A reference to the `BigUInt` to multiply by.
+    ///
+    /// # Returns
+    /// A new `BigUInt<T, M>` instance containing the full or truncated 
+    /// product.
+    ///
+    /// # Implementation Details
+    /// This method performs multi-precision multiplication and fits the 
+    /// result into a target width `M`. If the product exceeds the capacity 
+    /// of `BigUInt<T, M>`, the `OVERFLOW` flag will be set.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -9603,34 +8156,19 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn divide_fully(&self, rhs: &Self) -> (Self, Self)
-    /// Divides `self` by `rhs`,
-    /// and returns a tuple of a quotient and a remainder.
-    /// 
+    /// Divides `self` by another `BigUInt` and returns both the quotient and 
+    /// the remainder.
+    ///
     /// # Arguments
-    /// `rhs` divides `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
-    /// 
-    /// # Output
-    /// It returns a tuple of a quotient and a remainder.
-    /// Both the quotient and the remainder are of `BigUInt` type.
-    /// 
-    /// # Features
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - If `rhs` is zero, this method will panic.
-    /// - This function is the base function for all the methods *_div(),
-    ///   *_div_assign(), *_rem(), and *_rem_assign().
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [divide_fully_uint()](struct@BigUInt#method.divide_fully_uint)
-    /// is a bit faster than this method `divide_fully()`.
-    /// If `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [divide_fully_uint()](struct@BigUInt#method.divide_fully_uint).
+    /// * `rhs`: A reference to the `BigUInt` divisor.
+    ///
+    /// # Returns
+    /// A tuple `(Self, Self)` where the first element is the quotient and the 
+    /// second is the remainder.
+    ///
+    /// # Implementation Details
+    /// This method is the core building block for other division and 
+    /// remainder operations. It handles full multi-precision division logic.
     /// 
     /// # Example 1
     /// ```
@@ -9671,46 +8209,18 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_div(&self, rhs: &Self) -> Self
-    /// Divides `self` by `rhs`, and returns the quotient.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
+    /// Divides `self` by another `BigUInt` and returns the quotient.
     ///
-    /// # Output
-    /// It returns a quotient of `BigUInt` type,
-    /// and the quotient would never overflow. 
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - If `rhs` is zero, this method will panic.
-    /// - This function exists, so that all operations are accounted for
-    ///   in the wrapping operations.
-    /// 
-    /// # Counterpart Method
-    /// - The method
-    ///   [wrapping_div_uint()](struct@BigUInt#method.wrapping_div_uint)
-    ///   is a bit faster than this method `wrapping_div()`.
-    ///   If `rhs` is primitive unsigned integral data type such as u8, u16,
-    ///   u32, u64, and u128, use the method
-    ///   [wrapping_div_uint()](struct@BigUInt#method.wrapping_div_uint).
-    /// - You may be interested in extra division methods,
-    ///   In order to use any one of 
-    ///   [checked_div()](trait_big_more/trait.BigUInt_More.html#tymethod.checked_div),
-    ///   [unchecked_div()](trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_div), and
-    ///   [saturating_div()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_div),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_div()](trait.BigUInt_Modular.html#tymethod.modular_div),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_div()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_div),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// # Arguments
+    /// * `rhs`: A reference to the `BigUInt` divisor.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the quotient.
+    ///
+    /// # Implementation Details
+    /// Since division between `BigUInt` types does not overflow, this method 
+    /// provides standard division behavior consistent with other "wrapping" 
+    /// methods.
     /// 
     /// # Example 1
     /// ```
@@ -9740,45 +8250,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_div_assign(&mut self, rhs: &Self)
-    /// Divides `self` by `rhs`, and assigns the quotient to `self` back.
-    /// 
+    /// Divides `self` by another `BigUInt` and assigns the quotient to `self`.
+    ///
     /// # Arguments
-    /// `rhs` divides `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - If `rhs` is zero, this method will panic.
-    /// - This function exists, so that all operations are accounted for
-    ///   in the wrapping operations.
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// - The method
-    ///   [wrapping_div_assign_uint()](struct@BigUInt#method.wrapping_div_assign_uint)
-    ///   is a bit faster than this method `wrapping_div_assign()`.
-    ///   If `rhs` is primitive unsigned integral data type such as u8, u16,
-    ///   u32, u64, and u128, use the method
-    ///   [wrapping_div_assign_uint()](struct@BigUInt#method.wrapping_div_assign_uint).
-    /// - You may be interested in extra division methods
-    ///   In order to use 
-    ///   [saturating_div_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_div_assign),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_div_assign()](trait.BigUInt_Modular.html#tymethod.modular_div_assign),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_div_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_div_assign),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: A reference to the `BigUInt` divisor.
+    ///
+    /// # Implementation Details
+    /// This method performs in-place division. Status flags are cumulative 
+    /// and will remain set if they were set by a previous operation.
     /// 
     /// # Example 1
     /// ```
@@ -9815,37 +8294,20 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_div(&self, rhs: &Self) -> (Self, bool)
-    /// Divides `self` by `rhs`,
-    /// and returns a tuple of the quotient of `self` / `rhs` along with
-    /// a boolean indicating whether an arithmetic overflow would occur.
-    /// 
+    /// Divides `self` by another `BigUInt` and returns a tuple with the 
+    /// quotient and an overflow flag.
+    ///
     /// # Arguments
-    /// `rhs` divides `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
-    /// 
-    /// # Output
-    /// It returns a tuple of the quotient of `BigUInt` type as a result of
-    /// `self` / `rhs` along with a boolean indicating whether an arithmetic
-    /// overflow would occur. But the quotient would never overflow.
-    /// So, the second element of the output tuple is always `false`.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - The quotient would never overflow.
-    /// - The second element of the output tuple reflects only
-    ///   the current overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [overflowing_div_uint()](struct@BigUInt#method.overflowing_div_uint)
-    /// is a bit faster than this method `overflowing_div()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [overflowing_div_uint()](struct@BigUInt#method.overflowing_div_uint).
+    /// * `rhs`: A reference to the `BigUInt` divisor.
+    ///
+    /// # Returns
+    /// A tuple `(Self, bool)` containing the quotient and a boolean 
+    /// indicating whether an overflow occurred.
+    ///
+    /// # Implementation Details
+    /// Since division between `BigUInt` types does not overflow, the returned 
+    /// boolean flag is always `false`. This method is provided for 
+    /// consistency with other overflowing operations.
     /// 
     /// # Example 1
     /// ```
@@ -9876,42 +8338,23 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_div_assign(&mut self, rhs: &Self) -> bool
-    /// Divides `self` by `rhs`,
-    /// and assigns the quotient of `self` / `rhs` to `self` back,
-    /// and returns a boolean indicating whether an arithmetic overflow
-    /// would occur.
-    /// 
+    /// Divides `self` by another `BigUInt` and assigns the result to 
+    /// `self`, returning an overflow flag.
+    ///
     /// # Arguments
-    /// `rhs` divides `self`, and is of `&Self` type.
+    /// * `rhs`: A reference to the `BigUInt` divisor.
+    ///
+    /// # Returns
+    /// `true` if an overflow occurred in this operation, `false` otherwise.
+    ///
+    /// # Implementation Details
+    /// Since division between `BigUInt` types does not overflow, this method 
+    /// always returns `false`. This method is provided for consistency with 
+    /// other overflowing operations. Status flags are cumulative.
     /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
-    /// 
-    /// # Output
-    /// It returns true if an arithmetic overflow would occur.
-    /// But the quotient would never overflow.
-    /// So, it always returns `false`.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - The quotient would never overflow.
-    /// - The output will be `false` even if the `OVERFLOW` flag of `self`
-    ///   was already set because of previous operation of `self`.
-    /// - The output reflects only the current overflow.
-    /// - All the flags are historical, which means, for example, if an overflow
-    ///   occurred even once before this current operation or `OVERFLOW`
-    ///   flag is already set before this current operation, the `OVERFLOW` flag
-    ///   is not changed even if this current operation does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [overflowing_div_assign_uint()](struct@BigUInt#method.overflowing_div_assign_uint)
-    /// is a bit faster than this method `overflowing_div_assign_uint()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [overflowing_div_assign_uint()](struct@BigUInt#method.overflowing_div_assign_uint).
+    /// # Alternatives
+    /// For divisors larger than 128 bits, use 
+    /// [`overflowing_div_assign()`](struct@BigUInt#method.overflowing_div_assign).
     /// 
     /// # Example 1
     /// ```
@@ -9951,46 +8394,18 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_rem(&self, rhs: &Self) -> Self
-    /// Divides `self` by `rhs`, and returns the remainder.
-    /// 
-    /// # Arguments
-    /// `rhs` divides `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
+    /// Divides `self` by another `BigUInt` and returns the remainder.
     ///
-    /// # Output
-    /// It returns a remainder of `BigUInt` type,
-    /// and the remainder would never overflow. 
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - If `rhs` is zero, this method will panic.
-    /// - This function exists, so that all operations are accounted for
-    ///   in the wrapping operations.
-    /// 
-    /// # Counterpart Method
-    /// - The method
-    ///   [wrapping_rem_uint()](struct@BigUInt#method.wrapping_rem_uint)
-    ///   is a bit faster than this method `wrapping_rem()`.
-    ///   If `rhs` is primitive unsigned integral data type such as u8, u16,
-    ///   u32, u64, and u128, use the method
-    ///   [wrapping_rem_uint()](struct@BigUInt#method.wrapping_rem_uint).
-    /// - You may be interested in extra division methods,
-    ///   In order to use any one of 
-    ///   [checked_rem()](trait_big_more/trait.BigUInt_More.html#tymethod.checked_rem),
-    ///   [unchecked_rem()](trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_rem), and
-    ///   [saturating_rem()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_rem),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_rem()](trait.BigUInt_Modular.html#tymethod.modular_rem),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_rem()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_rem),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// # Arguments
+    /// * `rhs`: A reference to the `BigUInt` divisor.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the remainder.
+    ///
+    /// # Implementation Details
+    /// Since division between `BigUInt` types does not overflow, this method 
+    /// provides standard remainder behavior consistent with other "wrapping" 
+    /// methods.
     /// 
     /// # Example 1
     /// ```
@@ -10020,45 +8435,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_rem_assign(&mut self, rhs: &Self)
-    /// Divides `self` by `rhs`, and assigns the remainder to `self` back.
-    /// 
+    /// Divides `self` by another `BigUInt` and assigns the remainder to `self`.
+    ///
     /// # Arguments
-    /// `rhs` divides `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - There’s no way wrapping could ever happen unless `rhs` is zero.
-    /// - If `rhs` is zero, this method will panic.
-    /// - This function exists, so that all operations are accounted for
-    ///   in the wrapping operations.
-    /// - All the flags are historical, which means, for example, if an
-    ///   divided_by_zero occurred even once before this current operation or
-    ///   `DIVIDED_BY_ZERO` flag is already set before this current operation,
-    ///   the `DIVIDED_BY_ZERO` flag is not changed even if this current operation
-    ///   does not cause divided_by_zero.
-    /// 
-    /// # Counterpart Method
-    /// - The method
-    ///   [wrapping_rem_assign_uint()](struct@BigUInt#method.wrapping_rem_assign_uint)
-    ///   is a bit faster than this method `wrapping_rem_assign()`.
-    ///   If `rhs` is primitive unsigned integral data type such as u8, u16,
-    ///   u32, u64, and u128, use the method
-    ///   [wrapping_rem_assign_uint()](struct@BigUInt#method.wrapping_rem_assign_uint).
-    /// - You may be interested in extra division methods
-    ///   In order to use
-    ///   [saturating_rem_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_rem_assign),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_rem_assign()](trait.BigUInt_Modular.html#tymethod.modular_rem_assign),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_rem_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_rem_assign),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// * `rhs`: A reference to the `BigUInt` divisor.
+    ///
+    /// # Implementation Details
+    /// This method performs in-place calculation of the remainder. Status 
+    /// flags are cumulative and will remain set if they were set by a 
+    /// previous operation.
     /// 
     /// # Example 1
     /// ```
@@ -10097,37 +8482,20 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_rem(&self, rhs: &Self) -> (Self, bool)
-    /// Divides `self` by `rhs`,
-    /// and returns a tuple of the remainder of `self` / `rhs` along with
-    /// a boolean indicating whether an arithmetic overflow would occur.
-    /// 
+    /// Divides `self` by another `BigUInt` and returns a tuple with the 
+    /// remainder and an overflow flag.
+    ///
     /// # Arguments
-    /// `rhs` divides `self`, and is of `&Self` type.
-    /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
-    /// 
-    /// # Output
-    /// It returns a tuple of the remainder of `BigUInt` type as a result of
-    /// `self` % `rhs` along with a boolean indicating whether an arithmetic
-    /// overflow would occur. But the remainder would never overflow.
-    /// So, the second element of the output tuple is always `false`.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - The remainder would never overflow.
-    /// - The second element of the output tuple reflects only
-    ///   the current overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [overflowing_rem_uint()](struct@BigUInt#method.overflowing_rem_uint)
-    /// is a bit faster than this method `overflowing_rem()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [overflowing_rem_uint()](struct@BigUInt#method.overflowing_rem_uint).
+    /// * `rhs`: A reference to the `BigUInt` divisor.
+    ///
+    /// # Returns
+    /// A tuple `(Self, bool)` containing the remainder and a boolean 
+    /// indicating whether an overflow occurred.
+    ///
+    /// # Implementation Details
+    /// Since division between `BigUInt` types does not overflow, the returned 
+    /// boolean flag is always `false`. This method is provided for 
+    /// consistency with other overflowing operations.
     /// 
     /// # Example 1
     /// ```
@@ -10158,42 +8526,24 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn overflowing_rem_assign(&mut self, rhs: &Self) -> bool
-    /// Divides `self` by `rhs`,
-    /// and assigns the remainder of `self` / `rhs` to `self` back,
-    /// and returns a boolean indicating whether an arithmetic overflow
-    /// would occur.
-    /// 
+    /// Divides `self` by another `BigUInt` and assigns the remainder to 
+    /// `self`, returning an overflow flag.
+    ///
     /// # Arguments
-    /// `rhs` divides `self`, and is of `&Self` type.
+    /// * `rhs`: A reference to the `BigUInt` divisor.
+    ///
+    /// # Returns
+    /// `true` if an overflow occurred in this operation, `false` otherwise.
+    ///
+    /// # Implementation Details
+    /// Since division between `BigUInt` types does not overflow, this method 
+    /// always returns `false`. This method is provided for consistency with 
+    /// other overflowing operations. Status flags are cumulative.
     /// 
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `rhs` is zero, this method will panic.
-    /// 
-    /// # Output
-    /// It returns true if an arithmetic overflow would occur.
-    /// But the remainder would never overflow.
-    /// So, it always returns `false`.
-    /// 
-    /// # Features
-    /// - Wrapped division on `BigUInt` types is just normal division.
-    /// - The remainder would never overflow.
-    /// - The output will be `false` even if the `OVERFLOW` flag of `self`
-    ///   was already set because of previous operation of `self`.
-    /// - The output reflects only the current overflow.
-    /// - All the flags are historical, which means, for example, if an overflow
-    ///   occurred even once before this current operation or `OVERFLOW`
-    ///   flag is already set before this current operation, the `OVERFLOW` flag
-    ///   is not changed even if this current operation does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [overflowing_rem_assign_uint()](struct@BigUInt#method.overflowing_rem_assign_uint)
-    /// is a bit faster than this method `overflowing_rem_assign_uint()`.
-    /// So, if `rhs` is primitive unsigned integral data type such as u8, u16,
-    /// u32, u64, and u128, use the method
-    /// [overflowing_rem_assign_uint()](struct@BigUInt#method.overflowing_rem_assign_uint).
+    /// # Alternatives
+    /// For divisors larger than 128 bits, use 
+    /// [`overflowing_rem_assign_uint()`](struct@BigUInt#method.overflowing_rem_assign_uint) 
+    /// for better performance if the divisor fits in a primitive type.
     /// 
     /// # Example 1
     /// ```
@@ -10239,17 +8589,12 @@ where T: TraitsBigUInt<T>
     // pub fn next_power_of_two(&self) -> Self
     /// Returns the smallest power of two greater than or equal to `self`.
     /// 
-    /// # Output
-    /// It returns the smallest power of two greater than or equal to `self`.
+    /// # Returns
+    /// A new `BigUInt` instance representing the next power of two.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// When the return value overflows
-    /// (i.e., `self > (1 << (size_of::<T>() * N - 1))`),
-    /// it returns the value wrapped to `zero`.
+    /// # Implementation Details
+    /// If the resulting value overflows the current bit-width, it returns zero. 
+    /// The `OVERFLOW` flag will be set in such cases.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -10278,19 +8623,13 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn next_power_of_two_assign(&mut self)
-    /// Finds the smallest power of two greater than or equal to `self`,
-    /// and assigns the result to `self` back.
+    /// Finds the smallest power of two greater than or equal to `self` 
+    /// and assigns the result to `self`.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - When the result overflows
-    ///   (i.e., `self > (1 << (size_of::<T>() * N - 1))`),
-    ///   it `self` will be the value wrapped to `zero`.
-    /// - It assigns to `self` the smallest power of two greater than
-    ///   or equal to `self`.
+    /// # Implementation Details
+    /// If the resulting value overflows the current bit-width, `self` is 
+    /// reset to zero and the `OVERFLOW` flag is set. Status flags are 
+    /// cumulative.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -10340,11 +8679,15 @@ where T: TraitsBigUInt<T>
     }
     
     // pub fn is_power_of_two(&self) -> bool
-    /// Returns true if and only if self == 2 ** k for some k.
+    /// Checks if the `BigUInt` instance is a power of two.
+    /// 
+    /// # Returns
+    /// * `true` if the number is exactly a power of two (e.g., 1, 2, 4, 8...).
+    /// * `false` otherwise.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Implementation Details
+    /// Zero is not considered a power of two. This method evaluates the 
+    /// magnitude and does not consider status flags.
     /// 
     /// # Example 1 for Normal case
     /// ```
@@ -10366,38 +8709,20 @@ where T: TraitsBigUInt<T>
         self.count_ones() <= 1
     }
 
-    // pub fn pow(&mut self, exp: &Self) -> Self
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`,
-    /// and returns the result.
-    /// 
-    /// # Arguments.
-    /// `exp` is the power to raise `self` to, and is of `&Self` type.
+    // pub fn pow(&self, exp: &Self) -> Self
+    /// Raises `self` to the power of `exp`.
     ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Output
-    /// It returns the result of `self` raised to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - It calls wrapping_pow() internally.
-    /// - If overflowing happens, the `OVERFLOW` flag of the return value will
-    ///   be set.
-    /// 
-    /// # Counterpart Method
-    /// The method [pow_uint()](struct@BigUInt#method.pow_uint) is more
-    /// efficient than this method `pow()` when the exponent `exp` is primitive
-    /// unsigned integral data type such as u8, u16, u32, u64, and u128.
-    /// If `rhs` is the primitive unsigned integral data type number,
-    /// use the method [pow_uint()](struct@BigUInt#method.pow_uint).
+    /// # Arguments
+    /// * `exp`: A reference to the `BigUInt` exponent.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the result of `self` raised to the 
+    /// power of `exp`.
+    ///
+    /// # Implementation Details
+    /// This method uses the binary exponentiation (exponentiation by 
+    /// squaring) algorithm for efficient calculation. The operation performs 
+    /// wrapping multiplication.
     /// 
     /// # Example 1 for normal exponentiation
     /// ```
@@ -10425,38 +8750,15 @@ where T: TraitsBigUInt<T>
         biguint_calc_assign_to_calc!(self, Self::pow_assign, exp);
     }
 
-    // pub fn pow_assign(&mut self, exp: &Self) -> Self
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`,
-    /// and assign the result to `self` back.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is of `&Self` type.
+    // pub fn pow_assign(&mut self, exp: &Self)
+    /// Raises `self` to the power of `exp` and assigns the result to `self`.
     ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - It calls wrapping_pow_assign() internally.
-    /// - If overflowing happens, the `OVERFLOW` flag of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method [pow_assign_uint()](struct@BigUInt#method.pow_assign_uint)
-    /// is more efficient than this method `pow_assign()` when the exponent
-    /// `exp` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `rhs` is the primitive unsigned integral data type number, use
-    /// the method [pow_assign_uint()](struct@BigUInt#method.pow_assign_uint).
+    /// # Arguments
+    /// * `exp`: A reference to the `BigUInt` exponent.
+    ///
+    /// # Implementation Details
+    /// This method performs in-place binary exponentiation. The operation 
+    /// uses wrapping multiplication. Status flags are cumulative.
     /// 
     /// # Example 1 for normal exponentiation
     /// ```
@@ -10493,50 +8795,22 @@ where T: TraitsBigUInt<T>
         general_pow_assign!(self, Self::common_pow_assign, exp);
     }
 
-    // pub fn wrapping_pow(&mut self, exp: &Self) -> Self
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`,
-    /// and returns the result.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is of `&Self` type.
+    // pub fn wrapping_pow(&self, exp: &Self) -> Self
+    /// Raises `self` to the power of `exp` with wrapping at the type boundary.
     ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Output
-    /// It returns the result of `self` raised to the power of `exp`.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - If overflowing happens, the `OVERFLOW` flag of the return value will
-    ///   be set.
-    /// 
-    /// # Counterpart Method
-    /// - The method [wrapping_pow_uint()](struct@BigUInt#method.wrapping_pow_uint)
-    ///   is more efficient than this method `wrapping_pow()` when the exponent
-    ///   `exp` is primitive unsigned integral data type
-    ///   such as u8, u16, u32, u64, and u128.
-    ///   If `exp` is the primitive unsigned integral data type number,
-    ///   use the method [wrapping_pow_uint()](struct@BigUInt#method.wrapping_pow_uint).
-    /// - You may be interested in extra exponentiation methods,
-    ///   In order to use any one of 
-    ///   [checked_pow()](trait_big_more/trait.BigUInt_More.html#tymethod.checked_pow),
-    ///   [unchecked_pow()](trait_big_more/trait.BigUInt_More.html#tymethod.unchecked_pow), and
-    ///   [saturating_pow()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_pow),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_pow()](trait.BigUInt_Modular.html#tymethod.modular_pow),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_pow()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_pow),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// # Arguments
+    /// * `exp`: A reference to the `BigUInt` exponent.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the result.
+    ///
+    /// # Implementation Details
+    /// This method performs wrapping (modular) exponentiation. If the 
+    /// operation results in an overflow, the `OVERFLOW` flag of the result 
+    /// is set.
     /// 
     /// # Example 1 for normal exponentiation
+/// # Example 1 for normal exponentiation
     /// ```
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
@@ -10563,630 +8837,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_pow_assign(&mut self, exp: &Self)
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self`,
-    /// and assign the result to `self` back.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is of `&Self` type.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - It calls wrapping_pow() internally.
-    /// - If overflowing happens, the `OVERFLOW` flag of `self` will be set.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// - The method [wrapping_pow_assign_uint()](struct@BigUInt#method.wrapping_pow_assign_uint)
-    ///   is more efficient than this method `wrapping_pow_assign()` when the
-    ///   exponent `exp` is primitive unsigned integral data type
-    ///   such as u8, u16, u32, u64, and u128.
-    ///   If `exp` is the primitive unsigned integral data type number, use
-    ///   the method [wrapping_pow_assign_uint()](struct@BigUInt#method.wrapping_pow_assign_uint).
-    /// - You may be interested in extra exponentiation methods
-    ///   In order to use 
-    ///   [saturating_pow_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_pow_assign),
-    ///   you need to import (use) the trait `BigUInt_More`.
-    ///   In order to use any one of
-    ///   [modular_pow_assign()](trait.BigUInt_Modular.html#tymethod.modular_pow_assign),
-    ///   you need to import (use) the trait `BigUInt_Modular`.
-    ///   In order to use any one of
-    ///   [panic_free_modular_pow_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_pow_assign),
-    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
-    /// 
-    /// # Example 1 for normal exponentiation
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u64);
-    /// 
-    /// let mut a_biguint = U256::from_uint(10_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let exp = U256::from_uint(30_u8);
-    /// a_biguint.wrapping_pow_assign(&exp);
-    /// println!("After a_biguint.wrapping_pow_assign({}), a_biguint = {}", exp, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.wrapping_pow_assign)
-    pub fn wrapping_pow_assign(&mut self, exp: &Self)
-    {
-        general_pow_assign!(self, Self::common_pow_assign, exp);
-    }
-
-    pub(super) fn common_pow_assign(&mut self, exp: &Self)
-    {
-        if self.is_zero_or_one()
-            { return; }
-
-        let multiplier = self.clone();
-        self.set_one();
-        if exp.is_zero()
-            { return; }
-
-        let mut bit_check = Self::one();
-        bit_check.shift_left_assign(exp.length_in_bits() - exp.leading_zeros() - 1);
-        if !bit_check.is_zero()
-        {
-            self.wrapping_mul_assign(&multiplier); 
-            bit_check.shift_right_assign(1_u8);
-        }
-        while !bit_check.is_zero()
-        {
-            *self = self.wrapping_mul(self);
-            if !(bit_check.and(exp).is_zero())
-                { self.wrapping_mul_assign(&multiplier); }
-            bit_check.shift_right_assign(1_u8);
-        }
-    }
-
-    // pub fn overflowing_pow(&self, exp: &Self) -> (Self, bool)
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring, 
-    /// wrapping around at the boundary of the
-    /// type `Self`, and returns a tuple of the result along with
-    /// a boolean indicating whether an overflow would occur.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is of `&Self` type.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Output
-    /// It returns a tuple of the result of raising `self` to the power of `exp`,
-    /// using exponentiation of type `BigUInt` by squaring,
-    /// wrapping around at the boundary of the type `Self` along with a boolean
-    /// indicating whether an arithmetic overflow would occur.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - If overflowing happens, the `OVERFLOW` flag of the return value will
-    ///   be set.
-    /// - If overflowing did not happen in the current operation, the second
-    ///   element of the output tuple will be false even if the `OVERFLOW` flag
-    ///   of `self` was already set because of previous operation of `self`.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [overflowing_pow_uint()](struct@BigUInt#method.overflowing_pow_uint)
-    /// is a bit faster than this method `overflowing_pow()` when the
-    /// exponent `exp` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `exp` is the primitive unsigned integral data type number,
-    /// use the method
-    /// [overflowing_pow_uint()](struct@BigUInt#method.overflowing_pow_uint).
-    /// 
-    /// # Example 1 for normal exponentiation
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u128);
-    /// 
-    /// let a_biguint = UU32::from_uint(10_u8);
-    /// let exp = UU32::from_uint(30_u8);
-    /// let (res, overflow) = a_biguint.overflowing_pow(&exp);
-    /// println!("{} ** {} = {}, {}", a_biguint, exp, res, overflow);
-    /// assert_eq!(overflow, false);
-    /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow)
-    pub fn overflowing_pow(&self, exp: &Self) -> (Self, bool)
-    {
-        biguint_overflowing_calc!(self, Self::overflowing_pow_assign, exp);
-    }
-
-    // pub fn overflowing_pow_assign(&mut self, exp: &Self) -> bool
-    /// Raises `BigUInt` type number to the power of `exp`, using
-    /// exponentiation of type `BigUInt` by squaring, 
-    /// wrapping around at the boundary of the type `Self`, and
-    /// assigns the result to `self` back, and
-    /// returns a boolean indicating whether an overflow would occur.
-    /// 
-    /// # Arguments
-    /// `exp` is the power to raise `self` to, and is of `&Self` type.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If both `self` and `exp` are zero, the result is mathematically
-    ///   undefined, so this method will panic.
-    /// 
-    /// # Output
-    /// It returns bool indicating whether an overflow happened.
-    /// It returns `true` if overflow happened. Otherwise, it returns `false`.
-    /// 
-    /// # Argument
-    /// The argument `exp` is of `&Self` type.
-    /// 
-    /// # Features
-    /// - Wrapping (modular) exponentiation.
-    /// - If overflowing happens, the `OVERFLOW` flag of `self` will be set.
-    /// - If overflowing did not happen in the current operation, the output
-    ///   will be false even if the `OVERFLOW` flag of `self` was already set
-    ///   because of previous operation of `self`.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [overflow_pow_assign_uint()](struct@BigUInt#method.overflow_pow_assign_uint)
-    /// is a bit faster than this method `overflow_pow_assign()` when the
-    /// exponent `exp` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128.
-    /// If `exp` is the primitive unsigned integral data type number,
-    /// use the method
-    /// [overflow_pow_assign_uint()](struct@BigUInt#method.overflow_pow_assign_uint).
-    /// 
-    /// # Example 1 for normal exponentiation
-    /// ```
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let mut a_biguint = U256::from_uint(10_u8);
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let exp = U256::from_uint(30_u8);
-    /// let overflow = a_biguint.overflowing_pow_assign(&exp);
-    /// println!("After a_biguint.overflowing_pow_assign({}), a_biguint = {}, {}", exp, a_biguint, overflow);
-    /// assert_eq!(overflow, false);
-    /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow_assign)
-    pub fn overflowing_pow_assign(&mut self, exp: &Self) -> bool
-    {
-        biguint_overflowing_calc_assign!(self, Self::pow_assign, exp);
-    }
-
-    // pub fn iroot(&self, exp: &Self) -> Self
-    /// Calculates the `exp`-th root of `self`, rounded down,
-    /// and returns the result value.
+    /// Raises `self` to the power of `exp` with wrapping and assigns the 
+    /// result to `self`.
     ///
     /// # Arguments
-    /// `exp` is the power of the root of `self`, and is of `&Self` type.
+    /// * `exp`: A reference to the `BigUInt` exponent.
     ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `exp` is `0`, it will panic.
-    /// 
-    /// # Output
-    /// If the exact value of `exp`-th root of `self` can be expressed with
-    /// `Self`-typed unsigned integer, it will be returned.
-    /// Otherwise, the `Self`-typed biggest unsigned integer that is
-    /// less than the exact value of `exp`-th root of `self` will be returned.
-    /// 
-    /// # Features
-    /// If `exp` is greater than zero and `self` is greater than 1,
-    /// the result of this method is never greater than `self`.
-    /// So, this method never causes overflow.
-    /// 
-    /// # Counterpart Method
-    /// The method
-    /// [iroot_uint()](struct@BigUInt#method.iroot_uint)
-    /// is a bit faster than this method `iroot()`.
-    /// So, if `rhs` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128, use the method
-    /// [iroot_uint()](struct@BigUInt#method.iroot_uint).
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
-    /// let exp = U256::from_uint(8_u8);
-    /// let res = a_biguint.iroot(&exp);
-    /// println!("The {}-th root of {} is {}.", exp, a_biguint, res);
-    /// assert_eq!(res.to_string(), "100000000");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_pow)
-    pub fn iroot(&self, exp: &Self) -> Self
-    {
-        general_calc_iroot!(self, Self::common_iroot, exp);
-    }
-
-    // pub fn iroot_assign(&mut self, exp: &Self)
-    /// Calculates the `exp`-th root of `self`, rounded down,
-    /// and assigns the result back to `self`.
-    ///
-    /// # Arguments
-    /// `exp` is the power of the root of `self`, and is of `&Self` type.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - If `exp` is `0`, it will panic.
-    /// 
-    /// # Features
-    /// - If the exact value of `exp`-th root of `self` can be expressed with
-    ///   `Self`-typed unsigned integer, it will be assigned to `self`.
-    ///   Otherwise, the `Self`-typed biggest unsigned integer that is less
-    ///   than the exact value of `exp`-th root of `self` will be assigned
-    ///   to `self`.
-    /// - If `exp` is greater than zero and `self` is greater than 1,
-    ///   the result of this method is never greater than `self`.
-    ///   So, this method never causes overflow.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Counterpart Method
-    /// [iroot_assign_uint()](struct@BigUInt#method.iroot_assign_uint)
-    /// is a bit faster than this method `iroot_assign()`.
-    /// So, if `rhs` is primitive unsigned integral data type
-    /// such as u8, u16, u32, u64, and u128, use the method
-    /// [iroot_assign_uint()](struct@BigUInt#method.iroot_assign_uint).
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let mut a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let exp = U256::from_uint(8_u8);
-    /// a_biguint.iroot_assign(&exp);
-    /// println!("After a_biguint.iroot_assign({}), a_biguint = {}.", exp, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "100000000");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.iroot_assign)
-    pub fn iroot_assign(&mut self, exp: &Self)
-    {
-        biguint_calc_to_calc_assign!(self, Self::iroot, exp);
-    }
-
-    pub(super) fn common_iroot(&self, exp: &Self) -> Self
-    {
-        if exp.gt_uint(u128::MAX)
-            { Self::one() }
-        else
-            { self.common_iroot_uint(exp.into_u128()) }
-    }
-
-    // pub fn isqrt(&self) -> Self
-    /// Calculates the square root of `self`, rounded down,
-    /// and returns the result value.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// If the exact value of the square root of `self` can be expressed with
-    /// `Self`-typed unsigned integer, it will be returned.
-    /// Otherwise, the `Self`-typed biggest unsigned integer that is
-    /// less than the exact value of the square root of `self` will be returned.
-    /// 
-    /// # Features
-    /// The result of this method is never greater than `self`.
-    /// So, this method never causes overflow.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
-    /// let res = a_biguint.isqrt();
-    /// println!("The square root of {} is {}.", a_biguint, res);
-    /// assert_eq!(res.to_string_with_radix_and_stride(10, 4).unwrap(), "1_0000_0000_0000_0000_0000_0000_0000_0000");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.isqrt)
-    pub fn isqrt(&self) -> Self
-    {
-        if self.is_zero()
-            { Self::zero() }
-        else if self.is_one()
-            { Self::one() }
-        else
-            { self.common_iroot_uint(2_u8) }
-    }
-
-    // pub fn isqrt_assign(&mut self)
-    /// Calculates the square root of `self`, rounded down,
-    /// and assigns the result back to `self`.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - If the exact value of the square root of `self` can be expressed with
-    ///   `Self`-typed unsigned integer, it will be assigned to `self`.
-    ///   Otherwise, the `Self`-typed biggest unsigned integer that is less
-    ///   than the exact value of the second root of `self` will be assigned
-    ///   to `self`.
-    /// - The result of this method is never greater than `self`.
-    ///   So, this method never causes overflow.
-    /// - All the flags are historical, which means, for example, if an
-    ///   overflow occurred even once before this current operation or
-    ///   `OVERFLOW` flag is already set before this current operation,
-    ///   the `OVERFLOW` flag is not changed even if this current operation
-    ///   does not cause overflow.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u32);
-    /// 
-    /// let mut a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// a_biguint.isqrt_assign();
-    /// println!("After a_biguint.isqrt_assign(), a_biguint = {}.", a_biguint);
-    /// assert_eq!(a_biguint.to_string_with_radix_and_stride(10, 4).unwrap(), "1_0000_0000_0000_0000_0000_0000_0000_0000");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.isqrt_assign)
-    pub fn isqrt_assign(&mut self)
-    {
-        biguint_calc_to_calc_assign!(self, Self::isqrt);
-    }
-
-    // pub fn ilog(&self, base: &Self) -> Self
-    /// Calculates the logarithm of the number with respect to `base`,
-    /// rounded down, and returns the result.
-    ///
-    /// # Arguments
-    /// `base` is the base of logarithm of `self`, and is of `Self` type.
-    /// `base` should be greater than 1.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - This function will panic if `self` is zero.
-    /// - This function will panic if `base` is zero or one.
-    ///
-    /// # Output
-    /// It returns the logarithm of the number with respect to `base`,
-    /// rounded down.
-    ///
-    /// # Counterpart Methods
-    /// This method might not be optimized owing to implementation details.
-    /// [ilog2()](struct@BigUInt#method.ilog2)
-    /// can produce results more efficiently for base 2, and
-    /// [ilog10()](struct@BigUInt#method.ilog10)
-    /// can produce results more efficiently for base 10.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u8);
-    /// 
-    /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
-    /// let base = U256::from_uint(1_0000_0000_0000_0000_0000_0000_0000_0000_u128);
-    /// let res = a_biguint.ilog(&base);
-    /// println!("The logarithm of {} with respect to {} is {}.", a_biguint, base, res);
-    /// assert_eq!(res.to_string(), "2");
-    /// assert_eq!(res.is_overflow(), false);
-    /// assert_eq!(res.is_underflow(), false);
-    /// assert_eq!(res.is_infinity(), false);
-    /// assert_eq!(res.is_undefined(), false);
-    /// assert_eq!(res.is_divided_by_zero(), false);
-    /// assert_eq!(res.is_left_carry(), false);
-    /// assert_eq!(res.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog)
-    pub fn ilog(&self, base: &Self) -> Self
-    {
-        general_calc_ilog!(self, Self::common_ilog, base);
-    }
-
-    // pub fn ilog_assign(&mut self, base: &Self)
-    /// Calculates the logarithm of the number with respect to `base`,
-    /// rounded down, and assigns the result back to `self`.
-    ///
-    /// # Arguments
-    /// `base` is the base of logarithm of `self`, and is of `Self` type.
-    /// `base` should be greater than 1.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - This function will panic if `self` is zero.
-    /// - This function will panic if `base` is zero or one.
-    ///
-    /// # Counterpart Methods
-    /// This method might not be optimized owing to implementation details.
-    /// [ilog2_assign()](struct@BigUInt#method.ilog2_assign)
-    /// can produce results more efficiently for base 2, and
-    /// [ilog10_assign()](struct@BigUInt#method.ilog10_assign)
-    /// can produce results more efficiently for base 10.
-    /// 
-    /// # Example 1
-    /// ```
-    /// use std::str::FromStr;
-    /// use cryptocol::define_utypes_with;
-    /// define_utypes_with!(u16);
-    /// 
-    /// let mut a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
-    /// println!("Originally, a_biguint = {}", a_biguint);
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// 
-    /// let base = U256::from_uint(1_0000_0000_0000_0000_0000_0000_0000_0000_u128);
-    /// a_biguint.ilog_assign(&base);
-    /// println!("After a_biguint.ilog_assign({}), a_biguint = {}.", base, a_biguint);
-    /// assert_eq!(a_biguint.to_string(), "2");
-    /// assert_eq!(a_biguint.is_overflow(), false);
-    /// assert_eq!(a_biguint.is_underflow(), false);
-    /// assert_eq!(a_biguint.is_infinity(), false);
-    /// assert_eq!(a_biguint.is_undefined(), false);
-    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
-    /// assert_eq!(a_biguint.is_left_carry(), false);
-    /// assert_eq!(a_biguint.is_right_carry(), false);
-    /// ```
-    /// 
-    /// # For more examples,
-    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog_assign)
-    pub fn ilog_assign(&mut self, base: &Self)
-    {
-        biguint_calc_to_calc_assign!(self, Self::ilog, base);
-    }
-
-    pub(super) fn common_ilog(&self, base: &Self) -> Self
-    {
-        general_calc_common_ilog!(self, Self::wrapping_div_assign, base);
-    }
-
-    // pub fn ilog2(&self) -> Self
-    /// Returns the base 2 logarithm of the number, rounded down.
-    ///
-    /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - This function will panic if `self` is zero.
-    /// 
-    /// # Output
-    /// It returns the base 2 logarithm of the number, rounded down.
-    /// 
-    /// # Counterpart Methods
-    /// This method is optimized for base 2;
-    /// [ilog_uint()](struct@BigUInt#method.ilog_uint)
-    /// can produce results of the base other than 2, and
-    /// [ilog10()](struct@BigUInt#method.ilog10)
-    /// can produce results more efficiently for base 10.
+    /// # Implementation Details
+    /// This method performs wrapping (modular) exponentiation in-place. If 
+    /// an overflow occurs, the `OVERFLOW` flag of `self` is set. Flags are 
+    /// cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -11216,20 +8876,25 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn ilog2_assign(&mut self)
-    /// Calculates the base 2 logarithm of the number, rounded down,
-    /// and assigns back to `self`.
+    /// Calculates the base 2 logarithm of the `BigUInt` instance, rounded down,
+    /// and assigns the result to `self`.
     ///
     /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    ///   or its behavior may be undefined though it may not panic.
-    /// - This function will panic if `self` is zero.
+    /// * Panics if the internal storage bit-width is 128 bits or less, as 
+    ///   certain operations may result in undefined behavior or a panic in 
+    ///   specific environments.
+    /// * Panics if the magnitude of the number is zero, as the logarithm of 
+    ///   zero is undefined.
+    ///
+    /// # Implementation Details
+    /// After the calculation, `self` is updated to store the floor of the 
+    /// base 2 logarithm. Status flags are cumulative.
     /// 
-    /// # Counterpart Methods
-    /// This method is optimized for base 2;
-    /// [ilog_assign_uint()](struct@BigUInt#method.ilog_assign_uint)
-    /// can produce results of the base other than 2, and
-    /// [ilog10_assign()](struct@BigUInt#method.ilog10_assign)
-    /// can produce results more efficiently for base 10.
+    /// # Alternatives
+    /// This method is highly optimized for base 2. For other bases, use 
+    /// [`ilog_assign_uint()`](struct@BigUInt#method.ilog_assign_uint). For 
+    /// base 10 specifically, [`ilog10_assign()`](struct@BigUInt#method.ilog10_assign) 
+    /// provides better performance.
     /// 
     /// # Example 1
     /// ```
@@ -11266,22 +8931,26 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn ilog10(&self) -> Self
-    /// Returns the base 10 logarithm of the number, rounded down.
+    /// Returns the base 10 logarithm of the `BigUInt` instance, rounded down.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the floor of the base 10 logarithm.
     ///
     /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// - This function will panic if `self` is zero.
+    /// * Panics if the internal storage bit-width is 128 bits or less, as 
+    ///   certain operations may result in undefined behavior or a panic in 
+    ///   specific environments.
+    /// * Panics if the magnitude of the number is zero, as the logarithm of 
+    ///   zero is undefined.
+    ///
+    /// # Implementation Details
+    /// This method calculates the largest integer `x` such that `10^x <= self`.
     /// 
-    /// # Output
-    /// It returns the base 10 logarithm of the number, rounded down.
-    /// 
-    /// # Counterpart Methods
-    /// This method is optimized for base 10;
-    /// [ilog_uint()](struct@BigUInt#method.ilog_uint)
-    /// can produce results of the base other than 10, and
-    /// [ilog2()](struct@BigUInt#method.ilog2)
-    /// can produce results more efficiently for base 10.
+    /// # Alternatives
+    /// This method is highly optimized for base 10. For other bases, use 
+    /// [`ilog_uint()`](struct@BigUInt#method.ilog_uint). For base 2 
+    /// specifically, [`ilog2()`](struct@BigUInt#method.ilog2) provides 
+    /// better performance.
     /// 
     /// # Example 1
     /// ```
@@ -11310,21 +8979,25 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn ilog10_assign(&mut self)
-    /// Calculates the base 10 logarithm of the number, rounded down,
-    /// and assigns back to `self`.
+    /// Calculates the base 10 logarithm of the `BigUInt` instance, rounded down,
+    /// and assigns the result to `self`.
     ///
     /// # Panics
-    /// - If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// - This function will panic if `self` is zero.
+    /// * Panics if the internal storage bit-width is 128 bits or less, as 
+    ///   certain operations may result in undefined behavior or a panic in 
+    ///   specific environments.
+    /// * Panics if the magnitude of the number is zero, as the logarithm of 
+    ///   zero is undefined.
+    ///
+    /// # Implementation Details
+    /// After the calculation, `self` is updated to store the floor of the 
+    /// base 10 logarithm. Status flags are cumulative.
     /// 
-    /// # Counterpart Methods
-    /// This method is not optimized for base 10 but provides convenience
-    /// for base 10;
-    /// [ilog_assign_uint()](struct@BigUInt#method.ilog_assign_uint)
-    /// can produce results of the base other than 10, and
-    /// [ilog2_assign()](struct@BigUInt#method.ilog2_assign)
-    /// can produce results more efficiently for base 2.
+    /// # Alternatives
+    /// This method is provided for convenience. For other bases, use 
+    /// [`ilog_assign_uint()`](struct@BigUInt#method.ilog_assign_uint). For 
+    /// base 2 specifically, [`ilog2_assign()`](struct@BigUInt#method.ilog2_assign) 
+    /// provides better performance.
     /// 
     /// # Example 1
     /// ```
@@ -11371,29 +9044,18 @@ where T: TraitsBigUInt<T>
     /***** METHODS FOR BIT OPERATION *****/
 
     // pub fn shift_left<U>(&self, n: U) -> Self
-    /// Shift left the field `number: [T;N]` to the left by `n`,
-    /// and returns the result.
-    /// 
-    /// # Arguments
-    /// `n` indicates how many bits this method shift `self` left by,
-    /// and is a primitive unsigned integer such as `u8`, `u16`, `u32`,
-    /// `u64`, and `u128`.
-    /// 
-    /// # Features
-    /// 'Shift left' means 'move left all bits'. So, if `10011010` is shifted
-    /// left by 2, it will be `01101000`, for example.
-    /// 
-    /// # Output
-    /// It returns the left-shifted version of `self`, which is shifted to the
-    /// left by `n` bits.
-    /// 
-    /// # Left Carry
-    /// 'A left-carry occurs' means that a bit `1` is pushed out
-    /// during shift-left operation.
+    /// Shifts the bits of the `BigUInt` to the left by `n` positions.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Arguments
+    /// * `n`: The number of bit positions to shift to the left.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the left-shifted value.
+    ///
+    /// # Implementation Details
+    /// Bits shifted out from the Most Significant Bit (MSB) are lost. If any 
+    /// non-zero bits are shifted out, the `LEFT_CARRY` flag of the result 
+    /// will be set.
     /// 
     /// # Example 1
     /// ```
@@ -11423,25 +9085,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn shift_left_assign<U>(&mut self, n: U)
-    /// shifts the field `number: [T;N]` to the left by `n`,
-    /// and assigns the result to `self` back.
-    /// 
-    /// # Arguments
-    /// `n` indicates how many bits this method shift `self` left by,
-    /// and is a primitive unsigned integer such as `u8`, `u16`, `u32`,
-    /// `u64`, and `u128`.
-    /// 
-    /// # Features
-    /// 'Shift left' means 'move left all bits'. So, if `10011010` is shifted
-    /// left by 2, it will be `01101000`, for example.
-    /// 
-    /// # Left Carry
-    /// 'A left-carry occurs' means that a bit `1` is pushed out
-    /// during shift-left operation.
+    /// Shifts the bits of the `BigUInt` to the left by `n` positions 
+    /// in-place.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Arguments
+    /// * `n`: The number of bit positions to shift to the left.
+    ///
+    /// # Implementation Details
+    /// Bits shifted out from the Most Significant Bit (MSB) are lost. If any 
+    /// non-zero bits are shifted out, the `LEFT_CARRY` flag of `self` 
+    /// will be set. Status flags are cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -11525,29 +9178,18 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn shift_right<U>(&self, n: U) -> Self
-    /// Shift right the field `number: [T;N]` to the right by `n`,
-    /// and returns the result.
-    /// 
-    /// # Arguments
-    /// `n` indicates how many bits this method shift `self` left by,
-    /// and is a primitive unsigned integer such as `u8`, `u16`, `u32`,
-    /// `u64`, and `u128`.
-    /// 
-    /// # Features
-    /// 'Shift right' means 'move right all bits'. So, if `10011010` is shifted
-    /// right by 2, it will be `00100110`, for example.
-    /// 
-    /// # Output
-    /// It returns the right-shifted version of `self`. which is shifted to the
-    /// right by `n` bits.
-    /// 
-    /// # Right Carry
-    /// 'A right-carry occurs' means that a bit `1` is pushed out
-    /// during shift-right operation.
+    /// Shifts the bits of the `BigUInt` to the right by `n` positions.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Arguments
+    /// * `n`: The number of bit positions to shift to the right.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the right-shifted value.
+    ///
+    /// # Implementation Details
+    /// Bits shifted out from the Least Significant Bit (LSB) are lost. If any 
+    /// non-zero bits are shifted out, the `RIGHT_CARRY` flag of the result 
+    /// will be set.
     /// 
     /// # Example 1
     /// ```
@@ -11577,25 +9219,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn shift_right_assign<U>(&mut self, n: U)
-    /// shifts the field `number: [T;N]` to the right by `n`,
-    /// and assigns the result to `self` back.
-    /// 
-    /// # Arguments
-    /// `n` indicates how many bits this method shift `self` left by,
-    /// and is a primitive unsigned integer such as `u8`, `u16`, `u32`,
-    /// `u64`, and `u128`.
-    /// 
-    /// # Features
-    /// 'Shift right' means 'move right all bits'. So, if `10011010` is shifted
-    /// right by 2, it will be `00100110`, for example.
-    /// 
-    /// # Right Carry
-    /// 'A right-carry occurs' means that a bit `1` is pushed out
-    /// during shift-right operation.
+    /// Shifts the bits of the `BigUInt` to the right by `n` positions 
+    /// in-place.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Arguments
+    /// * `n`: The number of bit positions to shift to the right.
+    ///
+    /// # Implementation Details
+    /// Bits shifted out from the Least Significant Bit (LSB) are lost. If any 
+    /// non-zero bits are shifted out, the `RIGHT_CARRY` flag of `self` 
+    /// will be set. Status flags are cumulative.
     /// 
     /// # Example 1
     /// ```
@@ -11684,22 +9317,18 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn rotate_left<U>(&self, n: U) -> Self
-    /// Rotates the field `number: [T;N]` to the left by `n`,
-    /// and returns the result.
-    /// 
-    /// # Features
-    /// - 'Rotate left' means 'shift left' with filling the left-pushed-out bits
-    ///   to the empty rightmost bits. So, if `10011010` is rotated left by 2,
-    ///   it will be `01101010`, for example.
-    /// - This method does not set `LEFT_CARRY`.
-    /// 
-    /// # Output
-    /// It returns the left-rotated version of `self`. which is rotated to the
-    /// left by `n` bits.
+    /// Rotates the bits of the `BigUInt` to the left by `n` positions.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Arguments
+    /// * `n`: The number of bit positions to rotate to the left.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the left-rotated value.
+    ///
+    /// # Implementation Details
+    /// Unlike shifting, rotation fills the vacated bit positions with the 
+    /// bits that were pushed out from the other end. This operation does not 
+    /// modify status flags.
     /// 
     /// # Example 1
     /// ```
@@ -11730,23 +9359,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn rotate_left_assign<U>(&mut self, n: U)
-    /// Rotates the field `number: [T;N]` to the left by `n`,
-    /// and assigns the result to `self` back.
-    /// 
-    /// # Arguments
-    /// `n` indicates how many bits this method shift `self` left by,
-    /// and is a primitive unsigned integer such as `u8`, `u16`, `u32`,
-    /// `u64`, and `u128`.
-    /// 
-    /// # Features
-    /// - 'Rotate left' means 'shift left' with filling the left-pushed-out bits
-    ///   to the empty rightmost bits. So, if `10011010` is rotated left by 2,
-    ///   it will be `01101010`, for example.
-    /// - This method does not set `LEFT_CARRY`.
+    /// Rotates the bits of the `BigUInt` to the left by `n` positions 
+    /// in-place.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Arguments
+    /// * `n`: The number of bit positions to rotate to the left.
+    ///
+    /// # Implementation Details
+    /// Unlike shifting, rotation fills the vacated bit positions with the 
+    /// bits that were pushed out from the other end. This operation does not 
+    /// modify status flags.
     /// 
     /// # Example 1
     /// ```
@@ -11786,27 +9408,18 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn rotate_right<U>(&self, n: U) -> Self
-    /// Rotates the field `number: [T;N]` to the right by `n`,
-    /// and returns the result.
-    /// 
-    /// # Arguments
-    /// `n` indicates how many bits this method shift `self` left by,
-    /// and is a primitive unsigned integer such as `u8`, `u16`, `u32`,
-    /// `u64`, and `u128`.
-    /// 
-    /// # Features
-    /// - 'Rotate right' means 'shift right' with filling the right-pushed-out
-    ///   bits to the empty leftmost bits. So, if `10011010` is rotated right
-    ///   by 2, it will be `10100110`, for example.
-    /// - This method does not set `RIGHT_CARRY`.
-    /// 
-    /// # Output
-    /// It returns the right-rotated version of `self`. which is rotated to the
-    /// right by `n` bits.
+    /// Rotates the bits of the `BigUInt` to the right by `n` positions.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Arguments
+    /// * `n`: The number of bit positions to rotate to the right.
+    ///
+    /// # Returns
+    /// A new `BigUInt` instance containing the right-rotated value.
+    ///
+    /// # Implementation Details
+    /// Unlike shifting, rotation fills the vacated bit positions with the 
+    /// bits that were pushed out from the other end. This operation does not 
+    /// modify status flags.
     /// 
     /// # Example 1
     /// ```
@@ -11837,23 +9450,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn rotate_right_assign<U>(&mut self, n: U)
-    /// Rotates the field `number: [T;N]` to the right by `n`,
-    /// and assigns the result to `self` back.
-    /// 
-    /// # Arguments
-    /// `n` indicates how many bits this method shift `self` left by,
-    /// and is a primitive unsigned integer such as `u8`, `u16`, `u32`,
-    /// `u64`, and `u128`.
-    /// 
-    /// # Features
-    /// - 'Rotate right' means 'shift right' with filling the right-pushed-out
-    ///   bits to the empty leftmost bits. So, if `10011010` is rotated right
-    ///   by 2, it will be `10100110`, for example.
-    /// - This method does not set `RIGHT_CARRY`.
+    /// Rotates the bits of the `BigUInt` to the right by `n` positions 
+    /// in-place.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Arguments
+    /// * `n`: The number of bit positions to rotate to the right.
+    ///
+    /// # Implementation Details
+    /// Unlike shifting, rotation fills the vacated bit positions with the 
+    /// bits that were pushed out from the other end. This operation does not 
+    /// modify status flags.
     /// 
     /// # Example 1
     /// ```
@@ -11893,19 +9499,18 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn and(&self, rhs: &Self) -> Self
-    /// Performs the bitwise AND (&) operation, and then returns the result.
+    /// Performs a bitwise AND operation between `self` and `rhs`.
     /// 
     /// # Arguments
-    /// - `rhs` is the reference of another object that AND (&) operation is
-    ///   performed with.
-    /// - `rhs` is of `&Self` type.
+    /// * `rhs`: A reference to the `BigUInt` to perform the AND operation 
+    ///   with.
     /// 
-    /// # Output
-    /// It returns the result after applying the bitwise AND operation.
+    /// # Returns
+    /// A new `BigUInt` instance containing the result of the bitwise AND.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Implementation Details
+    /// This method performs the operation element-wise across the internal 
+    /// storage array. Status flags are not modified.
     /// 
     /// # Example 1
     /// ```
@@ -11935,17 +9540,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn and_assign(&mut self, rhs: &Self)
-    /// Performs the bitwise AND (&) operation,
-    /// and then assigns the result to `self` back.
+    /// Performs a bitwise AND operation between `self` and `rhs` in-place.
     /// 
     /// # Arguments
-    /// - `rhs` is the reference to another object that the AND (&) operation
-    ///   is performed with.
-    /// - `rhs` is of `&Self` type.
+    /// * `rhs`: A reference to the `BigUInt` to perform the AND operation 
+    ///   with.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Implementation Details
+    /// This method performs the operation element-wise across the internal 
+    /// storage array and assigns the result to `self`. Status flags are not 
+    /// modified.
     /// 
     /// # Example 1
     /// ```
@@ -11982,20 +9586,19 @@ where T: TraitsBigUInt<T>
         bitcalc!(self, &, rhs);
     }
 
-    // pub fn or(self, rhs: &Self) -> Self
-    /// Performs the bitwise OR (|) operation, and then returns the result.
+    // pub fn or(&self, rhs: &Self) -> Self
+    /// Performs a bitwise OR operation between `self` and `rhs`.
     /// 
     /// # Arguments
-    /// - `rhs` is the reference of another object that OR (|) operation is
-    ///   performed with.
-    /// - `rhs` is of `&Self` type.
+    /// * `rhs`: A reference to the `BigUInt` to perform the OR operation 
+    ///   with.
     /// 
-    /// # Output
-    /// It returns the result after applying the bitwise OR (|) operation.
+    /// # Returns
+    /// A new `BigUInt` instance containing the result of the bitwise OR.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Implementation Details
+    /// This method performs the operation element-wise across the internal 
+    /// storage array. Status flags are not modified.
     /// 
     /// # Example 1
     /// ```
@@ -12025,17 +9628,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn or_assign(&mut self, rhs: &Self)
-    /// Performs the bitwise OR (|) operation,
-    /// and then assigns the result to `self` back.
+    /// Performs a bitwise OR operation between `self` and `rhs` in-place.
     /// 
     /// # Arguments
-    /// - `rhs` is the reference to another object that the OR (|) operation
-    ///   is performed with.
-    /// - `rhs` is of `&Self` type.
+    /// * `rhs`: A reference to the `BigUInt` to perform the OR operation 
+    ///   with.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Implementation Details
+    /// This method performs the operation element-wise across the internal 
+    /// storage array and assigns the result to `self`. Status flags are not 
+    /// modified.
     /// 
     /// # Example 1
     /// ```
@@ -12072,21 +9674,19 @@ where T: TraitsBigUInt<T>
         bitcalc!(self, |, rhs);
     }
 
-    // pub fn xor(self, rhs: &Self) -> Self
-    /// Performs the bitwise XOR (^) operation,
-    /// and then assigns the result to `self` back.
+    // pub fn xor(&self, rhs: &Self) -> Self
+    /// Performs a bitwise XOR operation between `self` and `rhs`.
     /// 
     /// # Arguments
-    /// - `rhs` is the reference to another object that the AND (&) operation
-    ///   is performed with.
-    /// - `rhs` is of `&Self` type.
+    /// * `rhs`: A reference to the `BigUInt` to perform the XOR operation 
+    ///   with.
     /// 
-    /// # Output
-    /// It returns the result after applying the bitwise XOR (^) operation.
+    /// # Returns
+    /// A new `BigUInt` instance containing the result of the bitwise XOR.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Implementation Details
+    /// This method performs the operation element-wise across the internal 
+    /// storage array. Status flags are not modified.
     /// 
     /// # Example 1
     /// ```
@@ -12114,17 +9714,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn xor_assign(&mut self, rhs: &Self)
-    /// Performs the bitwise XOR (^) operation,
-    /// and then assigns the result to `self` back.
+    /// Performs a bitwise XOR operation between `self` and `rhs` in-place.
     /// 
     /// # Arguments
-    /// - `rhs` is the reference to another object that the AND (&) operation
-    ///   is performed with.
-    /// - `rhs` is of `&Self` type.
+    /// * `rhs`: A reference to the `BigUInt` to perform the XOR operation 
+    ///   with.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Implementation Details
+    /// This method performs the operation element-wise across the internal 
+    /// storage array and assigns the result to `self`. Status flags are not 
+    /// modified.
     /// 
     /// # Example 1
     /// ```
@@ -12162,14 +9761,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn flip(&self) -> Self
-    /// Performs the bitwise NOT (!) operation, and then returns the result.
+    /// Performs a bitwise NOT operation on the `BigUInt`.
     /// 
-    /// # Output
-    /// It returns the result after applying the bitwise NOT operation.
+    /// # Returns
+    /// A new `BigUInt` instance with every bit flipped (inverted).
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Implementation Details
+    /// This method performs the operation element-wise across the internal 
+    /// storage array. Status flags are not modified.
     /// 
     /// # Example 1
     /// ```
@@ -12199,12 +9798,12 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn flip_assign(&mut self)
-    /// Performs the bitwise NOT (!) operation,
-    /// and then assigns the result to `self` back.
+    /// Performs a bitwise NOT operation on the `BigUInt` in-place.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Implementation Details
+    /// This method performs the operation element-wise across the internal 
+    /// storage array and assigns the result to `self`. Status flags are not 
+    /// modified.
     /// 
     /// # Example 1
     /// ```
@@ -12241,20 +9840,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn reverse_bits(&self) -> Self
-    /// Reverses the order of bits of the field `number` [T; N] of `self`,
-    /// and then returns the result.
+    /// Returns a new `BigUInt` with the order of all bits reversed.
     /// 
-    /// # Output
-    /// It returns the reversed order of bits in the field `number` [T; N]
-    /// of `self`.
-    /// 
-    /// # Features
-    /// The least significant bit becomes the most significant bit,
-    /// second least-significant bit becomes second most-significant bit, etc.
+    /// # Returns
+    /// A new `BigUInt` instance where the Least Significant Bit (LSB) becomes 
+    /// the Most Significant Bit (MSB), and vice versa.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Implementation Details
+    /// This method reverses the bits within each storage element and also 
+    /// reverses the order of the elements themselves. Status flags are 
+    /// not modified.
     /// 
     /// # Example 1
     /// ```
@@ -12284,16 +9879,12 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn reverse_bits_assign(&mut self)
-    /// Reverses the order of bits of the field `number` [T; N] of `self`,
-    /// and assigns the result to `self` back.
+    /// Reverses the order of all bits in the `BigUInt` in-place.
     /// 
-    /// # Features
-    /// The least significant bit becomes the most significant bit,
-    /// second least-significant bit becomes second most-significant bit, etc.
-    ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Implementation Details
+    /// This method reverses the bits within each storage element and also 
+    /// reverses the order of the elements themselves. Status flags are 
+    /// not modified.
     /// 
     /// # Example 1
     /// ```
@@ -12340,20 +9931,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn swap_bytes(&self) -> Self
-    /// Reverses the byte order of the field `number` [T; N] of `self`,
-    /// and then returns the result.
+    /// Returns a new `BigUInt` with the order of all bytes reversed.
     /// 
-    /// # Output
-    /// It returns the reversed byte order of the field `number` [T; N]
-    /// of `self`.
+    /// # Returns
+    /// A new `BigUInt` instance where the byte order is reversed across 
+    /// the entire bit-width.
     /// 
-    /// # Features
-    /// The least significant byte becomes the most significant byte,
-    /// second least-significant byte becomes second most-significant byte, etc.
-    ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Implementation Details
+    /// This method reverses the byte order within each storage element and 
+    /// also reverses the order of the elements themselves. Status flags are 
+    /// not modified.
     /// 
     /// # Example 1
     /// ```
@@ -12383,16 +9970,12 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn swap_bytes_assign(&mut self)
-    /// Reverses the byte order of the field `number` [T; N] of `self`,
-    /// and assigns the result to `self` back.
+    /// Reverses the order of all bytes in the `BigUInt` in-place.
     /// 
-    /// # Features
-    /// The least significant byte becomes the most significant byte,
-    /// second least-significant byte becomes second most-significant byte, etc.
-    ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Implementation Details
+    /// This method reverses the byte order within each storage element and 
+    /// also reverses the order of the elements themselves. Status flags are 
+    /// not modified.
     /// 
     /// # Example 1
     /// ```
@@ -12438,23 +10021,16 @@ where T: TraitsBigUInt<T>
     /***** METHODS FOR CONVERTING INTO OTHER TYPES WITH/WITHOUT LOSS *****/
 
     // pub fn into_biguint<U, const M: usize>(&self) -> BigUInt<U, M>
-    /// Converts `self` into another kind of `BigUInt<U, M>`.
+    /// Converts `self` into a `BigUInt` of a different storage type and size.
+    /// 
+    /// # Returns
+    /// A new `BigUInt<U, M>` instance containing the value of `self`, 
+    /// truncated or zero-extended as necessary.
     ///
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// It copies the contents of its field `number[T;N]` to the field
-    /// `number: [U;M]` of `BigUInt<U, M>`. If the size of `number: [T;N]`
-    /// of `self` is bigger than the size of `number: [U;M]` of `BigUInt<U, M>`,
-    /// that is, `size_of::<T>() * N` > `size_of::<U>() * M`, it is lossy
-    /// conversion. Otherwise, no contents of the field `number: [T;N]` of
-    /// `self` is lost. Always, the field `flag` is not copied.
-    /// 
-    /// # Output
-    /// It returns another kind of `BigUInt<U, M>` with keeping the contents
-    /// of the field `number: [T;N]` as much as possible.
+    /// # Implementation Details
+    /// This method copies the numeric magnitude. If the target bit-width is 
+    /// smaller than the current one, the higher-order bits are truncated. 
+    /// Internal status flags are not copied.
     /// 
     /// # Example 1
     /// ```
@@ -12516,25 +10092,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn into_uint<U>(&self) -> U
-    /// Converts `self` into `U`-type small value
-    /// such as `u8`, `u16`, `u32`, `u64`, and `u128` type value,
-    /// and returns the `U`-type small unsigned integer.
-    /// This mathod into_uint() is useful especially when `self` has `U`-type
-    /// small unsigned integer sized value and you want to cast `self` into
-    /// `U`-type small unsigned integer with a small value.
+    /// Converts the `BigUInt` instance into a primitive unsigned integer.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Returns
+    /// The primitive unsigned integer of type `U` representing the value of 
+    /// `self`.
     /// 
-    /// # Output
-    /// It returns the `U`-type-casted small unsigned integer.
-    /// 
-    /// # Features
-    /// If the size of the value that `self` has is bigger than
-    /// the size of `U`, the higher-bit portion will be truncated.
-    /// It is usually lossy conversion.
-    /// Always, the field `flag` is not copied.
+    /// # Implementation Details
+    /// If the magnitude of `self` exceeds the capacity of type `U`, the 
+    /// higher-order bits are truncated. Internal status flags are not copied.
     /// 
     /// # Example 1
     /// ```
@@ -12582,26 +10148,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn into_u128(&self) -> u128
-    /// Converts `self` into `u128`,
-    /// and returns the `u128`-type small unsigned integer.
-    /// This mathod into_u128() is useful especially when `self` has `u128`
-    /// type unsigned integer sized value and you want to cast `self` into
-    /// `u128` type unsigned integer.
+    /// Converts the `BigUInt` instance into a primitive `u128`.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Returns
+    /// The lowest 128 bits of the `BigUInt` as a `u128`.
     /// 
-    /// # Output
-    /// It returns the lowest sixteen bytes of `self` as `u128`.
-    /// 
-    /// # Features
-    /// It takes the lowest `u128`-sized bytes, that is, the lowest sixteen
-    /// bytes from `self`, and return then as `u128` data type.
-    /// If the size of the value that `self` has is bigger than
-    /// the size of `u128`, the higher-bit portion will be truncated.
-    /// It is usually lossy conversion.
-    /// Always, the field `flag` is not copied.
+    /// # Implementation Details
+    /// If the magnitude of `self` exceeds 128 bits, the higher-order bits are 
+    /// truncated. Internal status flags are not copied.
     /// 
     /// # Example 1
     /// ```
@@ -12644,24 +10198,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn into_u64(&self) -> u64
-    /// Converts `self` into `u64`,
-    /// and returns the `u64`-type small unsigned integer.
-    /// This mathod into_u64() is useful especially when `self` has `u64`
-    /// type unsigned integer sized value and you want to cast `self` into
-    /// `u64` type unsigned integer.
+    /// Converts the `BigUInt` instance into a primitive `u64`.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Returns
+    /// The lowest 64 bits of the `BigUInt` as a `u64`.
     /// 
-    /// # Output
-    /// It returns the lowest eight bytes of `self` as `u64`.
-    /// 
-    /// # Features
-    /// It takes the lowest `u64`-sized bytes, that is, the lowest eight
-    /// bytes from `self`, and return then as `u64` data type.
-    /// It is usually lossy conversion.
-    /// Always, the field `flag` is not copied.
+    /// # Implementation Details
+    /// If the magnitude of `self` exceeds 64 bits, the higher-order bits are 
+    /// truncated. Internal status flags are not copied.
     /// 
     /// # Example 1
     /// ```
@@ -12701,24 +10245,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn into_u32(&self) -> u32
-    /// Converts `self` into `u32`,
-    /// and returns the `u32`-type small unsigned integer.
-    /// This mathod into_u32() is useful especially when `self` has `u32`
-    /// type unsigned integer sized value and you want to cast `self` into
-    /// `u32` type unsigned integer.
+    /// Converts the `BigUInt` instance into a primitive `u32`.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Returns
+    /// The lowest 32 bits of the `BigUInt` as a `u32`.
     /// 
-    /// # Output
-    /// It returns the lowest four bytes of `self` as `u32`.
-    /// 
-    /// # Features
-    /// It takes the lowest `u32`-sized bytes, that is, the lowest four
-    /// bytes from `self`, and return then as `u32` data type.
-    /// It is usually lossy conversion.
-    /// Always, the field `flag` is not copied.
+    /// # Implementation Details
+    /// If the magnitude of `self` exceeds 32 bits, the higher-order bits are 
+    /// truncated. Internal status flags are not copied.
     /// 
     /// # Example 1
     /// ```
@@ -12755,24 +10289,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn into_u16(&self) -> u16
-    /// Converts `self` into `u16`,
-    /// and returns the `u16`-type small unsigned integer.
-    /// This mathod into_u16() is useful especially when `self` has `u16`
-    /// type unsigned integer sized value and you want to cast `self` into
-    /// `u16` type unsigned integer.
+    /// Converts the `BigUInt` instance into a primitive `u16`.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Returns
+    /// The lowest 16 bits of the `BigUInt` as a `u16`.
     /// 
-    /// # Output
-    /// It returns the lowest two bytes of `self` as `u16`.
-    /// 
-    /// # Features
-    /// It takes the lowest `u16`-sized bytes, that is, the lowest two
-    /// bytes from `self`, and return then as `u16` data type.
-    /// It is usually lossy conversion.
-    /// Always, the field `flag` is not copied.
+    /// # Implementation Details
+    /// If the magnitude of `self` exceeds 16 bits, the higher-order bits are 
+    /// truncated. Internal status flags are not copied.
     /// 
     /// # Example 1
     /// ```
@@ -12806,24 +10330,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn into_u8(&self) -> u8
-    /// Converts `self` into `u8`,
-    /// and returns the `u8`-type small unsigned integer.
-    /// This mathod into_u8() is useful especially when `self` has `u8`
-    /// type unsigned integer sized value and you want to cast `self` into
-    /// `u8` type unsigned integer.
+    /// Converts the `BigUInt` instance into a primitive `u8`.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Returns
+    /// The lowest 8 bits of the `BigUInt` as a `u8`.
     /// 
-    /// # Output
-    /// It returns the lowest one byte of `self` as `u32`.
-    /// 
-    /// # Features
-    /// It takes the lowest `u8`-sized byte, that is, the lowest one
-    /// byte from `self`, and return it as `u8` data type.
-    /// It is usually lossy conversion.
-    /// Always, the field `flag` is not copied.
+    /// # Implementation Details
+    /// If the magnitude of `self` exceeds 8 bits, the higher-order bits are 
+    /// truncated. Internal status flags are not copied.
     /// 
     /// # Example 1
     /// ```
@@ -12846,24 +10360,15 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn into_usize(&self) -> usize
-    /// Converts `self` into `usize`,
-    /// and returns the `usize`-type small unsigned integer.
-    /// This mathod into_usize() is useful especially when `self` has `usize`
-    /// type unsigned integer sized value and you want to cast `self` into
-    /// `usize` type unsigned integer.
+    /// Converts the `BigUInt` instance into a primitive `usize`.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Returns
+    /// The lowest `usize` bits of the `BigUInt` as a `usize`.
     /// 
-    /// # Output
-    /// It returns the lowest `usize` long part of `self` as `usize`.
-    /// 
-    /// # Features
-    /// It takes the lowest `usize`-sized bytes from `self`,
-    /// and then returns them as `usize` data type.
-    /// It is usually lossy conversion.
-    /// Always, the field `flag` is not copied.
+    /// # Implementation Details
+    /// If the magnitude of `self` exceeds the pointer bit-width of the target 
+    /// architecture, the higher-order bits are truncated. Internal status 
+    /// flags are not copied.
     /// 
     /// # Example 1
     /// ```
@@ -12890,20 +10395,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn to_be(&self) -> Self
-    /// Converts `self` to big endian expression from the target's endianness,
-    /// and returns the result.
+    /// Converts the `BigUInt` instance to big-endian byte order.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the converted `self` to big endian expression
-    /// from the target's endianness.
-    /// 
-    /// # Features
-    /// - On big endian machine, this is a no-op.
-    /// - On little endian machine, the bytes are swapped.
+    /// # Returns
+    /// A new `BigUInt` instance in big-endian representation.
+    ///
+    /// # Implementation Details
+    /// On a big-endian architecture, this is a no-op. On a little-endian 
+    /// architecture, every byte in the internal storage is swapped.
     /// 
     /// # Example 1
     /// ```
@@ -12933,16 +10432,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn to_be_assign(&mut self)
-    /// Converts `self` to big endian expression from the target's endianness,
-    /// and assigns the result to `self` back.
+    /// Converts the `BigUInt` instance to big-endian byte order in-place.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - On big endian machine, this is a no-op.
-    /// - On little endian machine, the bytes are swapped.
+    /// # Implementation Details
+    /// On a big-endian architecture, this is a no-op. On a little-endian 
+    /// architecture, every byte in the internal storage is swapped.
     /// 
     /// # Example 1
     /// ```
@@ -12981,20 +10475,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn to_be_bytes(&self) -> [T; N]
-    /// Return the memory representation of this integer as a byte array
-    /// in big-endian (network) byte order.
+    /// Returns the memory representation of the `BigUInt` as a big-endian 
+    /// byte array.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the converted number of `self` to big endian expression
-    /// from the target's endianness.
-    /// 
-    /// # Features
-    /// - On big endian machine, this is a no-op.
-    /// - On little endian machine, the bytes are swapped.
+    /// # Returns
+    /// An array of type `[T; N]` in big-endian (network) byte order.
+    ///
+    /// # Implementation Details
+    /// On a big-endian architecture, this returns a clone of the internal 
+    /// storage. On a little-endian architecture, the bytes are swapped 
+    /// before returning.
     /// 
     /// # Example 1
     /// ```
@@ -13025,20 +10515,14 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn to_le(&self) -> Self
-    /// Converts `self` to little endian from the target’s endianness,
-    /// and returns the result.
+    /// Converts the `BigUInt` instance to little-endian byte order.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns the converted `self` to little endian expression
-    /// from the target's endianness.
-    /// 
-    /// # Features
-    /// - On little endian machine, this is a no-op.
-    /// - On big endian machine, the bytes are swapped.
+    /// # Returns
+    /// A new `BigUInt` instance in little-endian representation.
+    ///
+    /// # Implementation Details
+    /// On a little-endian architecture, this is a no-op. On a big-endian 
+    /// architecture, every byte in the internal storage is swapped.
     /// 
     /// # Example 1
     /// ```
@@ -13067,16 +10551,11 @@ where T: TraitsBigUInt<T>
         biguint_calc_assign_to_calc!(self, Self::to_le_assign);
     }
     // pub fn to_le_assign(&mut self)
-    /// Converts `self` to little endian from the target’s endianness,
-    /// and assigns the result to `self` back.
+    /// Converts the `BigUInt` instance to little-endian byte order in-place.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - On little endian machine, this is a no-op.
-    /// - On big endian machine, the bytes are swapped.
+    /// # Implementation Details
+    /// On a little-endian architecture, this is a no-op. On a big-endian 
+    /// architecture, every byte in the internal storage is swapped.
     /// 
     /// # Example 1
     /// ```
@@ -13115,16 +10594,16 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn to_le_bytes(&self) -> [T; N]
-    /// Return the memory representation of this integer as a byte array
-    /// in little-endian byte order, and returns the result.
+    /// Returns the memory representation of the `BigUInt` as a little-endian 
+    /// byte array.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Features
-    /// - On little endian machine, this is a no-op.
-    /// - On big endian machine, the bytes are swapped.
+    /// # Returns
+    /// An array of type `[T; N]` in little-endian byte order.
+    ///
+    /// # Implementation Details
+    /// On a little-endian architecture, this returns a clone of the internal 
+    /// storage. On a big-endian architecture, the bytes are swapped 
+    /// before returning.
     /// 
     /// # Example 1
     /// ```
@@ -13155,65 +10634,23 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn to_string_with_radix_and_stride_and_delimiter(&self, radix: usize, stride: usize, delimiter: &str) -> Result<String, NumberErr>
-    /// Reads the value of `BigUInt<T, N>`, and writes it into String
-    /// in `radix`-ary system with a delimiter indicated by `delimiter`
-    /// every `stride` digits.
+    /// Converts the `BigUInt` into a string with a specified radix, stride, 
+    /// and custom delimiter.
     /// 
     /// # Arguments
-    /// - `radix` is the numerical system, and is of `usize` type.
-    /// - `delimiter` is the delimiter to separate digits.
-    /// - `stride` is the number of digits.
-    ///   The delimiter `delimiter` is marked every `stride` digits.
+    /// * `radix`: The base for the string representation (2 to 62).
+    /// * `stride`: The number of digits between delimiters.
+    /// * `delimiter`: The string used to separate digit groups.
     /// 
+    /// # Returns
+    /// * `Ok(String)` containing the formatted numeric string.
+    /// * `Err(NumberErr::OutOfValidRadixRange)` if the radix is not 
+    ///   between 2 and 62.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
-    /// 
-    /// # Output
-    /// It returns a `String`-typed sring that shows the value of
-    /// `BigUInt<T, N>` in `radix`-ary system with a delimiter indicated
-    /// by `delimiter` every `stride` digits.
-    /// 
-    /// # Valid Radix Range
-    /// The radix can be from `2` up to `62` (= 10 + 26 + 26). Such radices that
-    /// are less than `2` or more than `62` are not available. In this case,
-    /// this method will return `Err(NumberErr::OutOfValidRadixRange)`.
-    /// 
-    /// # Radix more than `10` and less than `37`
-    /// If the radix is more than `10` and less than `37`, the digit bigger than
-    /// `9` will be expressed with alphabets. The avaiable alphabets are
-    /// _case-insensitive_. For example, in the case of hexadecimal number
-    /// system, the digit whose value is `10`, `11`, `12`, `13`, `14`, and `15`
-    /// are represented as `A` or `a`, `B` or `b`, `C` or `c`, `D` or `d`, `E`
-    /// or `e`, and `F` or `f`, respectively. And, in the case of 37-ary number
-    /// system, the values `16`, `35` and `36` are represented as `G` or `g`,
-    /// `Y` or `y`, and `Z` or `z`, respectively.
-    /// 
-    /// # Radix more than `36` and less than `63`
-    /// However, if the radix is more than `36` and less than `63`, the digit
-    /// bigger than `9` will be expressed with alphabets. The avaiable alphabets
-    /// are _case-sensitive_, so `A` is different from `a`. For instance, in the
-    /// case of 62-ary number system, the digit whose value is `10`, `11`, `35`,
-    /// `36`, `37`, `38`, `60` and `61` are represented as `A`, `B`, `Y`, `Z`,
-    /// `a`, `b`, `y` and `z`, respectively.
-    /// 
-    /// # Stride
-    /// In the number expression in a string, you can separate the digits every
-    /// certain number of digits which is called stride. For example, if
-    /// `stride` is 4, the delimeter will be added every four digits. So,
-    /// `100000000` will be written as "1_0000_0000".
-    /// 
-    /// # Replaceable Delimiter
-    /// In the number expression in a string, you can replace the default
-    /// delimiter with any `str` such as "," or "--" in order to make it more
-    /// readable. So, `100000000` will be written as "1,0000,0000" or
-    /// "1--0000--0000", for example.
-    /// 
-    /// # Error
-    /// | argument | value                              | Caused Error                      |
-    /// |----------|------------------------------------|-----------------------------------|
-    /// | `radix`  | less than `2` or greater than `62` | `NumberErr::OutOfValidRadixRange` |
+    /// # Implementation Details
+    /// For bases up to 36, digits 10-35 are represented as 'A'-'Z' or 
+    /// 'a'-'z' (case-insensitive). For bases 37-62, case sensitivity is 
+    /// used ('A'-'Z' for 10-35, 'a'-'z' for 36-61).
     /// 
     /// # Example 1
     /// ```
@@ -13240,59 +10677,22 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn to_string_with_radix_and_stride(&self, radix: usize, stride: usize) -> Result<String, NumberErr>
-    /// Reads the value of `BigUInt<T, N>` and write it into String
-    /// in `radix`-ary system with delimiter '_' every `stride` digits.
+    /// Converts the `BigUInt` into a string with a specified radix and 
+    /// stride, using '_' as the default delimiter.
     /// 
     /// # Arguments
-    /// - `radix` is the numerical system, and is of `usize` type.
-    /// - `stride` is the number of digits.
-    ///   The delimiter '_' is marked every `stride` digits.
+    /// * `radix`: The base for the string representation (2 to 62).
+    /// * `stride`: The number of digits between '_' delimiters.
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Returns
+    /// * `Ok(String)` containing the formatted numeric string.
+    /// * `Err(NumberErr::OutOfValidRadixRange)` if the radix is not 
+    ///   between 2 and 62.
     /// 
-    /// # Output
-    /// It returns a sring that shows the value of `BigUInt<T, N>`.
-    /// 
-    /// # Valid Radix Range
-    /// The radix can be from `2` up to `62` (= 10 + 26 + 26). Such radices that
-    /// are less than `2` or more than `62` are not available. In this case,
-    /// this method will return `Err(NumberErr::OutOfValidRadixRange)`.
-    /// 
-    /// # Radix more than `10` and less than `37`
-    /// If the radix is more than `10` and less than `37`, the digit bigger than
-    /// `9` will be expressed with alphabets. The avaiable alphabets are
-    /// _case-insensitive_. For example, in the case of hexadecimal number
-    /// system, the digit whose value is `10`, `11`, `12`, `13`, `14`, and `15`
-    /// are represented as `A` or `a`, `B` or `b`, `C` or `c`, `D` or `d`, `E`
-    /// or `e`, and `F` or `f`, respectively. And, in the case of 37-ary number
-    /// system, the values `16`, `35` and `36` are represented as `G` or `g`,
-    /// `Y` or `y`, and `Z` or `z`, respectively.
-    /// 
-    /// # Radix more than `36` and less than `63`
-    /// However, if the radix is more than `36` and less than `63`, the digit
-    /// bigger than `9` will be expressed with alphabets. The avaiable alphabets
-    /// are _case-sensitive_, so `A` is different from `a`. For instance, in the
-    /// case of 62-ary number system, the digit whose value is `10`, `11`, `35`,
-    /// `36`, `37`, `38`, `60` and `61` are represented as `A`, `B`, `Y`, `Z`,
-    /// `a`, `b`, `y` and `z`, respectively.
-    /// 
-    /// # Stride
-    /// In the number expression in a string, you can separate the digits every
-    /// certain number of digits which is called stride. For example, if
-    /// `stride` is 4, the delimeter will be added every four digits. So,
-    /// `100000000` will be written as "1_0000_0000".
-    /// 
-    /// # Default Delimiter _
-    /// In the number expression in a string, you can separate the digits with
-    /// the default delimiter '_' in order to make it more readable. So, "10000"
-    /// is the same as "1_0000".
-    /// 
-    /// # Error
-    /// | argument | value                              | Caused Error                      |
-    /// |----------|------------------------------------|-----------------------------------|
-    /// | `radix`  | less than `2` or greater than `62` | `NumberErr::OutOfValidRadixRange` |
+    /// # Implementation Details
+    /// Grouping with '_' is applied every `stride` digits to improve 
+    /// readability. For more details on character mapping for large bases, 
+    /// see `to_string_with_radix_and_stride_and_delimiter()`.
     /// 
     /// # Example 1
     /// ```
@@ -13350,47 +10750,20 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn to_string_with_radix(&self, radix: usize) -> Result<String, NumberErr>
-    /// Reads the value of `BigUInt<T, N>` and write it into String
-    /// in `radix`-ary system.
+    /// Converts the `BigUInt` into a string with a specified radix.
     /// 
     /// # Arguments
-    /// `radix` is the numerical system, and is of `usize` type.
+    /// * `radix`: The base for the string representation (2 to 62).
     /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// # Returns
+    /// * `Ok(String)` containing the numeric string without any delimiters.
+    /// * `Err(NumberErr::OutOfValidRadixRange)` if the radix is not 
+    ///   between 2 and 62.
     /// 
-    /// # Output
-    /// It returns a `String`-typed sring
-    /// that shows the value of `BigUInt<T, N>` in `radix`-ary system.
-    /// 
-    /// # Valid Radix Range
-    /// The radix can be from `2` up to `62` (= 10 + 26 + 26). Such radices that
-    /// are less than `2` or more than `62` are not available. In this case,
-    /// this method will return `Err(NumberErr::OutOfValidRadixRange)`.
-    /// 
-    /// # Radix more than `10` and less than `37`
-    /// If the radix is more than `10` and less than `37`, the digit bigger than
-    /// `9` will be expressed with alphabets. The avaiable alphabets are
-    /// _case-insensitive_. For example, in the case of hexadecimal number
-    /// system, the digit whose value is `10`, `11`, `12`, `13`, `14`, and `15`
-    /// are represented as `A` or `a`, `B` or `b`, `C` or `c`, `D` or `d`, `E`
-    /// or `e`, and `F` or `f`, respectively. And, in the case of 37-ary number
-    /// system, the values `16`, `35` and `36` are represented as `G` or `g`,
-    /// `Y` or `y`, and `Z` or `z`, respectively.
-    /// 
-    /// # Radix more than `36` and less than `63`
-    /// However, if the radix is more than `36` and less than `63`, the digit
-    /// bigger than `9` will be expressed with alphabets. The avaiable alphabets
-    /// are _case-sensitive_, so `A` is different from `a`. For instance, in the
-    /// case of 62-ary number system, the digit whose value is `10`, `11`, `35`,
-    /// `36`, `37`, `38`, `60` and `61` are represented as `A`, `B`, `Y`, `Z`,
-    /// `a`, `b`, `y` and `z`, respectively.
-    /// 
-    /// # Error
-    /// | argument | value                              | Caused Error                      |
-    /// |----------|------------------------------------|-----------------------------------|
-    /// | `radix`  | less than `2` or greater than `62` | `NumberErr::OutOfValidRadixRange` |
+    /// # Implementation Details
+    /// This method provides a plain numeric string representation. For more 
+    /// details on character mapping for large bases, see 
+    /// `to_string_with_radix_and_stride_and_delimiter()`.
     /// 
     /// # Example 1
     /// ```
@@ -13439,19 +10812,23 @@ where T: TraitsBigUInt<T>
     /***** FLAG MANIPULATION *****/
 
     // pub(super) fn set_flag_bit(&mut self, flag: u8)
-    /// Sets flag bits that `flag` indicates to be `1`.
-    /// 
+    /// Enables the status flags specified by the `flag` bitmask.
+    ///
     /// # Arguments
-    /// `flag` idicates which flag will be set, and is one of `OVERFLOW`,
-    /// `UNDERFLOW`, `INFINITY`, `DIVIDED_BY_ZERO`, and `UNDEFINED`,
-    /// or the 'OR' combination of them. `flag` is of `u8` type.
-    /// 
-    /// # Features
-    /// This method does not reset any flags.
-    /// 
+    /// * `flag`: A bitmask representing the flags to be enabled. It can be a 
+    ///   single flag (e.g., `OVERFLOW`, `UNDERFLOW`, `INFINITY`, 
+    ///   `DIVIDED_BY_ZERO`, `UNDEFINED`) or a bitwise OR combination of 
+    ///   multiple flags.
+    ///
     /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// * Panics if the internal storage bit-width is 128 bits or less, as 
+    ///   certain operations may result in undefined behavior or a panic in 
+    ///   specific environments.
+    ///
+    /// # Implementation Details
+    /// This method performs a bitwise OR operation on the internal flag 
+    /// register. It only enables the specified flags and does not reset 
+    /// any existing status indicators.
     #[inline]
     pub(super) fn set_flag_bit(&mut self, flag: u8)
     {
@@ -13479,7 +10856,7 @@ where T: TraitsBigUInt<T>
     /// Checks whether or not the flag bits
     /// that `flag` indicates are set to be `1.
     /// 
-    /// # Output
+    /// # Returns
     /// It returns `true` if the flag bits that `flag` indicates are set.
     /// Otherwise, it returns `false`.
     /// 
@@ -13495,7 +10872,7 @@ where T: TraitsBigUInt<T>
     // pub(super) fn get_all_flags(&self) -> u8
     /// Gets all the flag bits.
     ///
-    /// # Output
+    /// # Returns
     /// It returns all the flag bits in the way of the 'OR' combination of them.
     /// The output is of `u8` type.
     /// 
@@ -13653,11 +11030,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_overflow(&mut self)
-    /// Sets `OVERFLOW` flag.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Sets the `OVERFLOW` status flag.
+    ///
+    /// # Implementation Details
+    /// This method updates the internal state to indicate that an arithmetic 
+    /// overflow has occurred in a previous operation.
     /// 
     /// # Example
     /// ```
@@ -13694,11 +11071,10 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn reset_overflow(&mut self)
-    /// Resets `OVERFLOW` flag.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Resets the `OVERFLOW` status flag.
+    ///
+    /// # Implementation Details
+    /// This method clears the internal indicator for arithmetic overflow.
     /// 
     /// # Example
     /// ```
@@ -13746,15 +11122,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_overflow(&self) -> bool
-    /// Checks whether or not `OVERFLOW` flag is set.
-    /// 
-    /// # Output
-    /// It returns `true` if the `OVERFLOW` flag is set.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Checks if the `OVERFLOW` status flag is set.
+    ///
+    /// # Returns
+    /// * `true` if an arithmetic overflow has occurred.
+    /// * `false` otherwise.
     /// 
     /// # Example
     /// ```
@@ -13791,11 +11163,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_underflow(&mut self)
-    /// Sets `UNDERFLOW` flag.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Sets the `UNDERFLOW` status flag.
+    ///
+    /// # Implementation Details
+    /// This method updates the internal state to indicate that an arithmetic 
+    /// underflow has occurred in a previous operation.
     /// 
     /// # Example
     /// ```
@@ -13832,11 +11204,10 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn reset_underflow(&mut self)
-    /// Reets `UNDERFLOW` flag.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Resets the `UNDERFLOW` status flag.
+    ///
+    /// # Implementation Details
+    /// This method clears the internal indicator for arithmetic underflow.
     /// 
     /// # Example
     /// ```
@@ -13884,15 +11255,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_underflow(&self) -> bool
-    /// Checks whether or not `UNDERFLOW` flag is set.
-    /// 
-    /// # Output
-    /// It returns `true` if the `UNDERFLOW` flag is set.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Checks if the `UNDERFLOW` status flag is set.
+    ///
+    /// # Returns
+    /// * `true` if an arithmetic underflow has occurred.
+    /// * `false` otherwise.
     /// 
     /// # Example
     /// ```
@@ -13929,11 +11296,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_infinity(&mut self)
-    /// Sets `INFINITY` flag.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Sets the `INFINITY` status flag.
+    ///
+    /// # Implementation Details
+    /// This method updates the internal state to indicate that a value has 
+    /// reached or exceeded representable infinity.
     /// 
     /// # Example
     /// ```
@@ -13970,11 +11337,10 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn reset_infinity(&mut self)
-    /// Resets infinity flag.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Resets the `INFINITY` status flag.
+    ///
+    /// # Implementation Details
+    /// This method clears the internal indicator for infinite values.
     /// 
     /// # Example
     /// ```
@@ -14022,15 +11388,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_infinity(&self) -> bool
-    /// Checks whether or not `INFINITY` flag is set.
-    /// 
-    /// # Output
-    /// It returns `true` if the `INFINITY` flag is set.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Checks if the `INFINITY` status flag is set.
+    ///
+    /// # Returns
+    /// * `true` if the value is infinite.
+    /// * `false` otherwise.
     /// 
     /// # Example
     /// ```
@@ -14067,11 +11429,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_divided_by_zero(&mut self)
-    /// Sets `DIVIDED_BY_ZERO` flag.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Sets the `DIVIDED_BY_ZERO` status flag.
+    ///
+    /// # Implementation Details
+    /// This method updates the internal state to indicate that a division 
+    /// by zero has been attempted.
     /// 
     /// # Example
     /// ```
@@ -14108,11 +11470,10 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn reset_divided_by_zero(&mut self)
-    /// Resets `DIVIDED_BY_ZERO` flag.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Resets the `DIVIDED_BY_ZERO` status flag.
+    ///
+    /// # Implementation Details
+    /// This method clears the internal indicator for division by zero.
     /// 
     /// # Example
     /// ```
@@ -14160,15 +11521,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_divided_by_zero(&self) -> bool
-    /// Checks whether or not `DIVIDED_BY_ZERO` flag is set.
-    /// 
-    /// # Output
-    /// It returns `true` if the `DIVIDED_BY_ZERO` flag is set.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Checks if the `DIVIDED_BY_ZERO` status flag is set.
+    ///
+    /// # Returns
+    /// * `true` if a division by zero has occurred.
+    /// * `false` otherwise.
     /// 
     /// # Example
     /// ```
@@ -14205,11 +11562,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_undefined(&mut self)
-    /// Sets `UNDEFINED` flag.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Sets the `UNDEFINED` status flag.
+    ///
+    /// # Implementation Details
+    /// This method updates the internal state to indicate that the result of 
+    /// an operation is mathematically undefined.
     /// 
     /// # Example
     /// ```
@@ -14246,11 +11603,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn reset_undefined(&mut self)
-    /// Resets `UNDEFINED` flag.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Resets the `UNDEFINED` status flag.
+    ///
+    /// # Implementation Details
+    /// This method clears the internal indicator for mathematically 
+    /// undefined results.
     /// 
     /// # Example
     /// ```
@@ -14298,15 +11655,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_undefined(&self) -> bool
-    /// Checks whether or not `UNDEFINED` flag is set.
-    /// 
-    /// # Output
-    /// It returns `true` if the `UNDEFINED` flag is set.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Checks if the `UNDEFINED` status flag is set.
+    ///
+    /// # Returns
+    /// * `true` if the result is mathematically undefined.
+    /// * `false` otherwise.
     /// 
     /// # Example
     /// ```
@@ -14343,11 +11696,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_left_carry(&mut self)
-    /// Sets `LEFT_CARRY` flag.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Sets the `LEFT_CARRY` status flag.
+    ///
+    /// # Implementation Details
+    /// This method updates the internal state to indicate a carry-out from 
+    /// the most significant end of an operation.
     /// 
     /// # Example
     /// ```
@@ -14384,11 +11737,10 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn reset_left_carry(&mut self)
-    /// Resets `LEFT_CARRY` flag.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Resets the `LEFT_CARRY` status flag.
+    ///
+    /// # Implementation Details
+    /// This method clears the internal indicator for left-side carry bits.
     /// 
     /// # Example
     /// ```
@@ -14436,15 +11788,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_left_carry(&self) -> bool
-    /// Checks whether or not `LEFT_CARRY` flag is set.
-    /// 
-    /// # Output
-    /// It returns `true` if the `LEFT_CARRY` flag is set.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Checks if the `LEFT_CARRY` status flag is set.
+    ///
+    /// # Returns
+    /// * `true` if a left-side carry has occurred.
+    /// * `false` otherwise.
     /// 
     /// # Example
     /// ```
@@ -14481,11 +11829,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn set_right_carry(&mut self)
-    /// Sets `RIGHT_CARRY` flag.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Sets the `RIGHT_CARRY` status flag.
+    ///
+    /// # Implementation Details
+    /// This method updates the internal state to indicate a carry-in from 
+    /// the least significant end of an operation.
     /// 
     /// # Example
     /// ```
@@ -14522,11 +11870,10 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn reset_right_carry(&mut self)
-    /// Resets `RIGHT_CARRY` flag.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Resets the `RIGHT_CARRY` status flag.
+    ///
+    /// # Implementation Details
+    /// This method clears the internal indicator for right-side carry bits.
     /// 
     /// # Example
     /// ```
@@ -14574,15 +11921,11 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn is_right_carry(&self) -> bool
-    /// Checks whether or not `RIGHT_CARRY` flag is set.
-    /// 
-    /// # Output
-    /// It returns `true` if the `RIGHT_CARRY` flag is set.
-    /// Otherwise, it returns `false`.
-    /// 
-    /// # Panics
-    /// If `size_of::<T>() * N` <= `128`, this method may panic
-    /// or its behavior may be undefined though it may not panic.
+    /// Checks if the `RIGHT_CARRY` status flag is set.
+    ///
+    /// # Returns
+    /// * `true` if a right-side carry has occurred.
+    /// * `false` otherwise.
     /// 
     /// # Example
     /// ```
