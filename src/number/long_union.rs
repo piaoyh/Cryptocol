@@ -1,4 +1,4 @@
-// Copyright 2023, 2024 PARK Youngho.
+// Copyright 2023, 2024, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -6,9 +6,8 @@
 // This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! The module that contains unions of primitive signed/unsigned integral
-//! data types used in a lot of modules of the crate Cryptocol.
-//! __These unions are for segmentation.__
+//! Provides a 64-bit integer union for efficient memory sharing and byte-level
+//! manipulation between different integer types and arrays.
 
 // #![warn(missing_docs)]
 // #![warn(rustdoc::missing_doc_code_examples)]
@@ -26,35 +25,24 @@ use std::fmt::{ self, Alignment, Error, Formatter, Display, Debug, Pointer,
 use crate::number::{ SmallUInt, ShortUnion, IntUnion, LongerUnion, SizeUnion };
 use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_with_exponent };
 
-/// # Introduction
-/// This union `LongUnion` is for slicing `u64` into two `u32`s, two `i32`s,
-/// four `u16`s, four `i16`s, eight `u8`s and/or eight `i8`s.
+/// A 64-bit integer union that enables bit-level slicing and seamless 
+/// conversion between various primitive types, including `u64`, `i64`, 
+/// `u32`, `i32`, `u16`, `i16`, `u8`, and `i8`.
 /// 
-/// Sometimes, for example, we need to slice `u62` data into two `u32` pieces
-/// which include a higher four-byte word and a lower four-byte word, and/or
-/// into  four `u16` pieces which include a first two-byte word, a second
-/// two-byte word, a third two-byte word and a fourth two-byte word.
-/// In that case, `LongUnion` will be very helpful.
+/// # Introduction
+/// `LongUnion` provides efficient, bit-level access to 64-bit values. 
+/// It allows manipulating the underlying memory as a single 64-bit word, 
+/// two 32-bit words, four 16-bit bytes, or eight 8-bit bytes
+/// in both signed and unsigned formats.
 /// 
 /// # Quick Start
-/// In order to use this union, you have to import (use)
-/// `cryptocol::number::LongUnion` as follows.
+/// To use this union, import `cryptocol::number::LongUnion` 
+/// as follows.
 /// 
 /// ## Example 1
 /// ```
 /// use cryptocol::number::LongUnion;
 /// ```
-/// You can use the methods `get()`, `get_signed()`, `get_ulong()`, and
-/// `get_slong()` in order to obtain the data of `u64` in various types.
-/// And, you can also slice the data of `u64` into two `u32` type data by
-/// using the methods `get_uint()`, `get_sint()`, `get_uint_()`, and
-/// `get_sint_()`. Or, you can also slice the data of `u64` into four `u16`
-/// type data by using the methods `get_ushort()`, `get_sshort()`,
-/// `get_ushort_()`, and `get_sshort_()`. Or, you can also slice the data
-/// of `u64` into eight `u8` type data by using the methods `get_ubyte()`,
-/// `get_sbyte()`, `get_ubyte_()`, and `get_sbyte_()`. If your machine is
-/// not 8-bit, 16-bit, or 32-bit machine, `LongUnion` does not have the
-/// method `get_usize()` nor `get_ssize()`.
 /// 
 /// ## Example 2
 /// ```
@@ -171,12 +159,16 @@ use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_
 ///     assert_eq!(a.get_sbyte_(7), -1_isize);
 /// }
 /// ```
-/// You can use `ShortUnion` as if you used `u16`. You can perform all kinds of
-/// arithmetic operations such as addition, subtraction, multiplication, and
-/// division (div and rem), and other operations which are available for
-/// `u16`. If you use `ShortUnion` with the help of `SmallUInt`, it will be
-/// even more powerful and convenient. In this case, you don't even have to
-/// import (use) `cryptocol::number::ShortUnion`.
+/// 
+/// Note that `get_usize()` and `get_ssize()` (including their indexed 
+/// variants) are available only on architectures with supported pointer 
+/// widths, such as 64-bit, 32-bit, 16-bit, or 8-bit systems.
+/// 
+/// `LongUnion` can be used just like a `u64`, supporting all standard 
+/// arithmetic operations, including addition, subtraction, 
+/// multiplication, and division. Integrating it with `SmallUInt` 
+/// provides enhanced functionality and convenience, often eliminating 
+/// the need for an explicit `LongUnion` import.
 /// 
 /// ## Example 3
 /// ```
@@ -244,89 +236,80 @@ use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_
 /// println!("{} % {} = {}", c_longunion, 10_u64.into_longunion(), g_longunion);
 /// assert_eq!(g_longunion.get(), 9_u64);
 /// ```
-/// 
-/// # Big-endian issue
-/// It is just experimental for Big Endian CPUs. So, you are not encouraged
-/// to use it for serious purpose. Only use this crate for Big-endian CPUs
-/// with your own full responsibility.
+///  
+/// # Big-endian Support
+/// Support for Big-Endian architectures is currently experimental and not 
+/// recommended for production environments. Users assume all 
+/// responsibility for any issues that may arise when using this crate 
+/// on Big-Endian systems.
 #[derive(Copy, Clone)]
 #[allow(dead_code)]
 pub union LongUnion
 {
-    /// The biggest unsigned element for compatibility with other unions
+    /// The 64-bit unsigned representation (for compatibility).
     this: u64,
 
-    /// The biggest signed element for compatibility with other unions
+    /// The 64-bit signed representation (for compatibility).
     that: i64,
 
-    /// The biggest unsigned element which is 64-bit unsigned integer
+    /// The primary 64-bit unsigned integer field.
     ulong: u64,
 
-    /// The biggest signed element which is 64-bit unsigned integer
+    /// The primary 64-bit signed integer field.
     slong: i64,
 
-    /// The secondly biggest unsigned element array whose elements are
-    /// 32-bit unsigned integer
+    /// Array of two 32-bit unsigned integers.
     uint: [u32; 2],
 
-    /// The secondly biggest signed element array whose elements are
-    /// 32-bit unsigned integer
+    /// Array of two 32-bit signed integers.
     sint: [i32; 2],
 
-    /// The thirdly biggest unsigned element array whose elements are
-    /// 16-bit unsigned integer
+    /// Array of four 16-bit unsigned integers.
     ushort: [u16; 4],
 
-    /// The thirdly biggest signed element array whose elements are
-    /// 16-bit unsigned integer
+    /// Array of four 16-bit signed integers.
     sshort: [i16; 4],
 
-    /// The fourthly biggest unsigned element array whose elements are
-    /// 8-bit unsigned integer
+    /// Array of eight 8-bit unsigned integers.
     ubyte: [u8; 8],
 
-    /// The fourthly biggest unsigned element array whose elements are
-    /// 8-bit signed integer
+    /// Array of eight 8-bit signed integers.
     sbyte: [i8; 8],
 
-    /// The usize type element whose size is the same as the LongUnion
+    /// Pointer-sized unsigned representation (64-bit architectures).
     #[cfg(target_pointer_width = "64")] u_size: usize,
 
-    /// The isize type element whose size is the same as the LongUnion
+    /// Pointer-sized signed representation (64-bit architectures).
     #[cfg(target_pointer_width = "64")] s_size: isize,
 
-    /// The usize type array whose elements's size is 32-bit size
+    /// Array of two pointer-sized unsigned integers (32-bit architectures).
     #[cfg(target_pointer_width = "32")] u_size: [usize; 2],
 
-    /// The isize type array whose elements's size is 32-bit size
+    /// Array of two pointer-sized signed integers (32-bit architectures).
     #[cfg(target_pointer_width = "32")] s_size: [isize; 2],
 
-    /// The usize type array whose elements's size is 16-bit size
+    /// Array of four pointer-sized unsigned integers (16-bit architectures).
     #[cfg(target_pointer_width = "16")] u_size: [usize; 4],
 
-    /// The isize type array whose elements's size is 16-bit size
+    /// Array of four pointer-sized signed integers (16-bit architectures).
     #[cfg(target_pointer_width = "16")] s_size: [isize; 4],
 
-    // /// The usize type array whose elements's size is 8-bit size
+    // / Array of eight pointer-sized unsigned integers (8-bit architectures).
     // #[cfg(target_pointer_width = "8")] u_size: [usize; 8],
 
-    // /// The isize type array whose elements's size is 8-bit size
+    // / Array of eight pointer-sized signed integers (8-bit architectures).
     // #[cfg(target_pointer_width = "8")] s_size: [isize; 8],
 }
 
 impl LongUnion
 {
     // pub const fn new() -> Self
-    /// Constructs a new `LongUnion`.
+    /// Constructs a new `LongUnion` with all fields initialized to zero.
     /// 
-    /// # Output
-    /// A new object of `LongUnion`.
+    /// # Returns
+    /// A new `LongUnion` instance.
     /// 
-    /// # Initialization
-    /// All the fields of the constructed object will be
-    /// initialized with `0`.
-    /// 
-    /// # Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::LongUnion;    
     /// let a = LongUnion::new();
@@ -336,15 +319,15 @@ impl LongUnion
     #[inline] pub const fn new() -> Self    { Self { ulong: 0 } }
 
     // pub const fn new_with(ulong: u64) -> Self
-    /// Constructs a new `LongUnion` with initializing it with `ulong`.
+    /// Constructs a new `LongUnion` initialized with the given `u64` value.
     /// 
-    /// # Output
-    /// A new object of `LongUnion` initialized with the value `ulong`.
+    /// # Arguments
+    /// * `ulong`: The 64-bit unsigned integer value to initialize the union.
+    ///
+    /// # Returns
+    /// A new `LongUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with `ulong`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::LongUnion;    
     /// let a = LongUnion::new_with(12345678909876456_u64);
@@ -354,15 +337,15 @@ impl LongUnion
     #[inline] pub const fn new_with(ulong: u64) -> Self { Self { ulong } }
 
     // pub const fn new_with_signed(slong: i64) -> Self
-    /// Constructs a new `LongUnion` with initializing it with `slong`.
+    /// Constructs a new `LongUnion` initialized with the given `i64` value.
     /// 
-    /// # Output
-    /// A new object of `LongUnion` initialized with the value `slong`.
+    /// # Arguments
+    /// * `slong`: The 64-bit signed integer value to initialize the union.
+    ///
+    /// # Returns
+    /// A new `LongUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with `slong`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::LongUnion;    
     /// let a = LongUnion::new_with_signed(-12345678909876456_i64);
@@ -372,15 +355,15 @@ impl LongUnion
     #[inline] pub const fn new_with_signed(slong: i64) -> Self  { Self { slong } }
 
     // pub const fn new_with_ubytes(ubyte: [u8; 8]) -> Self
-    /// Constructs a new `LongUnion` with initializing it with `ubyte`.
+    /// Constructs a new `LongUnion` initialized with the given byte array.
     /// 
-    /// # Output
-    /// A new object of `LongUnion` initialized with the value `ubyte`.
+    /// # Arguments
+    /// * `ubyte`: An array of eight 8-bit unsigned integers.
+    ///
+    /// # Returns
+    /// A new `LongUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with `ubyte`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::LongUnion;
     /// let arr = [131_u8, 21_u8, 104_u8, 195_u8, 42_u8, 157_u8, 251_u8, 255_u8];
@@ -390,16 +373,16 @@ impl LongUnion
     /// ```
     #[inline] pub const fn new_with_ubytes(ubyte: [u8; 8]) -> Self  { Self { ubyte } }
 
-    // pub const fn new_with_ushorts(ushort: [u16; 2]) -> Self
-    /// Constructs a new `LongUnion` with initializing it with `ushort`.
+    // pub const fn new_with_ushorts(ushort: [u16; 4]) -> Self
+    /// Constructs a new `LongUnion` initialized with the given 16-bit word array.
     /// 
-    /// # Output
-    /// A new object of `LongUnion` initialized with the value `ushort`.
+    /// # Arguments
+    /// * `ushort`: An array of four 16-bit unsigned integers.
+    ///
+    /// # Returns
+    /// A new `LongUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with `ushort`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::LongUnion;
     /// let a = LongUnion::new_with_ushorts([5507_u16, 50024_u16, 40234_u16, 65531_u16]);
@@ -409,15 +392,15 @@ impl LongUnion
     #[inline] pub const fn new_with_ushorts(ushort: [u16; 4])  -> Self  { Self { ushort } }
 
     // pub const fn new_with_uints(uint: [u32; 2]) -> Self
-    /// Constructs a new `LongUnion` with initializing it with `uint`.
+    /// Constructs a new `LongUnion` initialized with the given 32-bit word array.
     /// 
-    /// # Output
-    /// A new object of `LongUnion` initialized with the value `uint`.
+    /// # Arguments
+    /// * `uint`: An array of two 32-bit unsigned integers.
+    ///
+    /// # Returns
+    /// A new `LongUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with `uint`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::LongUnion;
     /// let a = LongUnion::new_with_uints([3278378371_u32, 4294679850_u32]);
@@ -427,18 +410,16 @@ impl LongUnion
     #[inline] pub const fn new_with_uints(uint: [u32; 2]) -> Self   { Self { uint } }
 
     // pub const fn new_with_u128(num: u128) -> Self
-    /// Constructs a new `LongUnion` with initializing it with the lower
-    /// 64-bit part of `num`.
+    /// Constructs a new `LongUnion` initialized with the lowest 64 bits of
+    /// the given `u128` value.
     /// 
-    /// # Output
-    /// A new object of `LongUnion` initialized with the value of
-    /// the lower 64-bit part of `num`.
+    /// # Arguments
+    /// * `num`: The 128-bit unsigned integer to initialize from.
+    ///
+    /// # Returns
+    /// A new `LongUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with
-    /// the value of the lower 64-bit part of `num`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::LongUnion;
     /// let a = LongUnion::new_with_u128(18445509505818563971_u128);
@@ -451,19 +432,16 @@ impl LongUnion
     #[inline] pub const fn new_with_u128(num: u128) -> Self { Self { ulong: num as u64 } }
 
     // pub const fn new_with_bool(b: bool) -> Self
-    /// Constructs a new `LongUnion` with initializing it
-    /// with the value of `b`.
+    /// Constructs a new `LongUnion` initialized based on the given boolean 
+    /// value.
     /// 
-    /// # Output
-    /// A new object of `LongUnion` initialized with the value of `b`
+    /// # Arguments
+    /// * `b`: The boolean value. `true` becomes `1`, and `false` becomes `0`.
+    ///
+    /// # Returns
+    /// A new `LongUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with
-    /// the value of `b`.
-    /// If `b` is `true`, `self` will have the value `1`.
-    /// If `b` is `false`, `self` will have the value `0`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::LongUnion;
     /// let a = LongUnion::new_with_bool(true);
@@ -476,12 +454,12 @@ impl LongUnion
     #[inline] pub const fn new_with_bool(b: bool) -> Self   { Self { ulong: b as u64 } }
 
     // pub fn get(self) -> u64
-    /// Returns its value as `u64`.
+    /// Returns the union's value as a 64-bit unsigned integer.
     /// 
-    /// # Output
-    /// Its value as `u64`
+    /// # Returns
+    /// The 64-bit unsigned integer representation.
     /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::LongUnion;    
     /// let a = LongUnion::new_with(654321987654321_u64);
@@ -491,9 +469,12 @@ impl LongUnion
     #[inline] pub fn get(self) -> u64           { unsafe { self.this } }
 
     // pub fn set(&mut self, val: u64)
-    /// Sets its value with `val` of type `u64`
+    /// Sets the union's value from a 64-bit unsigned integer.
     /// 
-    /// Example
+    /// # Arguments
+    /// * `val`: The 64-bit unsigned integer value to set.
+    /// 
+    /// # Examples
     /// ```
     /// use cryptocol::number::LongUnion;    
     /// let mut a = LongUnion::new();
@@ -504,12 +485,12 @@ impl LongUnion
     #[inline] pub fn set(&mut self, val: u64)   { self.this = val; }
 
     // pub fn get_signed(self) -> i64
-    /// Returns its value as `i64`.
+    /// Returns the union's value as a 64-bit signed integer.
     /// 
-    /// # Output
-    /// Its value as `i64`
+    /// # Returns
+    /// The 64-bit signed integer representation.
     /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::LongUnion;    
     /// let a = LongUnion::new_with(12345678909876456789_u64);
@@ -519,9 +500,12 @@ impl LongUnion
     #[inline] pub fn get_signed(self) -> i64    { unsafe { self.that } }
 
     // pub fn set_signed(&mut self, val: i64)
-    /// Sets its value with `val` of type `i64`
+    /// Sets the union's value from a 64-bit signed integer.
     /// 
-    /// Example
+    /// # Arguments
+    /// * `val`: The 64-bit signed integer value to set.
+    /// 
+    /// # Examples
     /// ```
     /// use cryptocol::number::LongUnion;    
     /// let mut a = LongUnion::new();
@@ -547,11 +531,34 @@ impl LongUnion
     crate::number::integer_union_methods!(u64);
 
     // pub fn as_ptr(&self) -> *const u64
-    /// Returns its pointer as *const u64
+    /// Returns a raw pointer to the union's memory as a `u64`.
+    /// 
+    /// # Returns
+    /// A `*const u64` pointer to the underlying memory.
+    /// 
+    /// # Examples
+    /// ```
+    /// use cryptocol::number::LongUnion;
+    /// let a = LongUnion::new_with(0x1234567887654321_u64);
+    /// let ptr = a.as_ptr();
+    /// unsafe { assert_eq!(*ptr, 0x1234567887654321_u64); }
+    /// ```
     #[inline] pub fn as_ptr(&self) -> *const u64 { unsafe { self.ubyte.as_ptr() as *const u64 } }
 
-    // pub fn as_mut_ptr(&self) -> *mut u64
-    /// Returns its pointer as *mut u64
+    // pub fn as_mut_ptr(&mut self) -> *mut u64
+    /// Returns a mutable raw pointer to the union's memory as a `u64`.
+    /// 
+    /// # Returns
+    /// A `*mut u64` pointer to the underlying memory.
+    /// 
+    /// # Examples
+    /// ```
+    /// use cryptocol::number::LongUnion;
+    /// let mut a = LongUnion::new();
+    /// let ptr = a.as_mut_ptr();
+    /// unsafe { *ptr = 0x8765432112345678_u64; }
+    /// assert_eq!(a.get(), 0x8765432112345678_u64);
+    /// ```
     #[inline] pub fn as_mut_ptr(&mut self) -> *mut u64 { unsafe { self.ubyte.as_mut_ptr() as *mut u64 } }
 }
 
@@ -586,14 +593,22 @@ crate::number::format_for_integer_unions_impl! { LongUnion }
 
 impl Debug for LongUnion
 {
-    /// Formats the value using the given formatter.
+    // fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result
+    /// Formats the value using the given formatter for debugging purposes.
     /// 
-    /// # Features
-    /// When used with format specifier :?, the output is printed for debug.
-    /// When used with the alternate format specifier #?, the output is
-    /// pretty-printed.
+    /// # Arguments
+    /// * `f`: The formatter.
+    /// 
+    /// # Returns
+    /// A `fmt::Result` indicating the outcome of the operation.
+    /// 
+    /// # Formatting Options
+    /// The `:?` format specifier provides standard debug output, while the 
+    /// alternate `:#?` specifier produces pretty-printed output for 
+    /// enhanced readability.
     /// 
     /// # Example for the format specifier :?
+    /// Using the format specifier `:?` for debug output:
     /// ```
     /// use cryptocol::number::*;
     /// let a_long = LongUnion::new_with_signed(-1234567890123456789_i64);
@@ -602,6 +617,7 @@ impl Debug for LongUnion
     /// ```
     /// 
     /// # Example for the format specifier :#?
+    /// Using the alternate format specifier `:#?` for pretty-printed debug output:
     /// ```
     /// use cryptocol::number::*;
     /// let a_long = LongUnion::new_with_signed(-1234567890123456789_i64);
@@ -656,21 +672,14 @@ impl Debug for LongUnion
     /// }"#);
     /// ```
     /// 
-    /// # Plagiarism in descryption
-    /// This method works exactly the same way as the normal method fmt() of
-    /// Debug. So, all the description of this method is mainly the
-    /// same as that of the implementation of the method fmt() of Debug for the
-    /// primitive unsigned integer types except example codes. Confer to the
-    /// descryptions that are linked to in the section _Reference_. This
-    /// plagiarism is not made maliciously but is made for the reason of
-    /// effectiveness and efficiency so that users may understand better and
-    /// easily how to use this method with simiilarity to the method
-    /// Debug() of implementation for the primitive unsigned integer
-    /// types.
+    /// # Note
+    /// This method follows the standard implementation of `fmt()` for the 
+    /// `Debug` trait, providing a consistent experience for users familiar 
+    /// with primitive integer types. For more details, refer to the official 
+    /// Rust documentation linked in the References section.
     /// 
     /// # References
-    /// - If you want to know about the method of Debug for the primitive type,
-    /// read [here](https://doc.rust-lang.org/std/fmt/trait.Debug.html).
+    /// - [Rust `fmt::Debug` documentation](https://doc.rust-lang.org/std/fmt/trait.Debug.html)
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result
     {
         let mut ff = f.debug_struct("LongUnion");

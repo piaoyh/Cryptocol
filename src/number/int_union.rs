@@ -1,4 +1,4 @@
-// Copyright 2023, 2024 PARK Youngho.
+// Copyright 2023, 2024, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -6,9 +6,8 @@
 // This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! The module that contains unions of primitive signed/unsigned integral
-//! data types used in a lot of modules of the crate Cryptocol.
-//! __These unions are for segmentation.__
+//! Provides a 32-bit integer union for efficient memory sharing and byte-level
+//! manipulation between different integer types and arrays.
 
 // #![warn(missing_docs)]
 // #![warn(rustdoc::missing_doc_code_examples)]
@@ -26,32 +25,30 @@ use std::fmt::{ self, Alignment, Error, Formatter, Display, Debug, Pointer,
 use crate::number::{ SmallUInt, ShortUnion, LongUnion, LongerUnion, SizeUnion };
 use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_with_exponent };
 
-/// # Introduction
-/// This union `IntUnion` is for slicing `u32` into two `u16`s, two `i16`,
-/// four `u8`s, and/or four `i8`.
+/// A 32-bit integer union that enables bit-level slicing and seamless 
+/// conversion between various primitive types, including `u32`, `i32`, 
+/// `u16`, `i16`, `u8`, and `i8`.
 /// 
-/// Sometimes, for example, we need to slice `u32` data into two `u16` pieces
-/// which include a higher two-byte word and a lower two-byte word, and/or
-/// into four `u8` pieces which include a first byte, a second byte, a third
-/// byte and a fourth. In that case, `IntUnion` will be very helpful.
+/// # Introduction
+/// `IntUnion` provides efficient, bit-level access to 32-bit values. 
+/// It allows manipulating the underlying memory as a single 32-bit word, 
+/// two 16-bit words, or four 8-bit bytes, in both signed and unsigned formats.
 /// 
 /// # Quick Start
-/// In order to use this union, you have to import (use)
-/// `cryptocol::number::IntUnion` as follows.
+/// To use this union, import `cryptocol::number::IntUnion` 
+/// as follows.
 /// 
 /// ## Example 1
 /// ```
 /// use cryptocol::number::IntUnion;
 /// ```
-/// You can use the methods `get()`, `get_signed()`, `get_uint()`, and
-/// `get_sint()` in order to obtain the data of `u32` in various types.
-/// And, you can also slice the data of `u32` into two `u16` type data by
-/// using the methods `get_ushort()`, `get_sshort()`, `get_ushort_()`, and
-/// `get_sshort_()`, Or, you can also slice the data of `u32` into four 
-/// `u8` type data by using the methods `get_ubyte()`, `get_sbyte()`,
-/// `get_ubyte_()`, and `get_sbyte_()`. If your machine is neither 8-bit,
-/// 16-bit, nor 32-bit machine, `IntUnion` does not have the method
-/// `get_usize()` nor `get_ssize()`.
+/// 
+/// Use methods such as `get()`, `get_signed()`, `get_uint()`, and 
+/// `get_sint()` to retrieve the underlying 32-bit value in various 
+/// integer formats. You can also slice the data into two `u16` 
+/// values using `get_ushort()` and `get_sshort()` (including their 
+/// indexed variants), or into four `u8` values using `get_ubyte()` 
+/// and `get_sbyte()`.
 /// 
 /// ## Example 2
 /// ```
@@ -123,12 +120,16 @@ use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_
 ///     assert_eq!(a.get_ssize(), -454688546_i32);
 /// }
 /// ```
-/// You can use `IntUnion` as if you used `u32`. You can perform all kinds of
-/// arithmetic operations such as addition, subtraction, multiplication, and
-/// division (div and rem), and other operations which are available for
-/// `u32`. If you use `IntUnion` with the help of `SmallUInt`, it will be
-/// even more powerful and convenient. In this case, you don't even have to
-/// import (use) `cryptocol::number::IntUnion`.
+/// 
+/// Note that `get_usize()` and `get_ssize()` (including their indexed 
+/// variants) are available only on architectures with supported pointer 
+/// widths, such as 32-bit, 16-bit, or 8-bit systems.
+/// 
+/// `IntUnion` can be used just like a `u32`, supporting all standard 
+/// arithmetic operations, including addition, subtraction, 
+/// multiplication, and division. Integrating it with `SmallUInt` 
+/// provides enhanced functionality and convenience, often eliminating 
+/// the need for an explicit `IntUnion` import.
 /// 
 /// ## Example 3
 /// ```
@@ -177,52 +178,49 @@ use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_
 /// assert_eq!(g_intunion.get(), 9_u32);
 /// ```
 ///  
-/// # Big-endian issue
-/// It is just experimental for Big Endian CPUs. So, you are not encouraged
-/// to use it for serious purpose. Only use this crate for Big-endian CPUs
-/// with your own full responsibility.
+/// # Big-endian Support
+/// Support for Big-Endian architectures is currently experimental and not 
+/// recommended for production environments. Users assume all 
+/// responsibility for any issues that may arise when using this crate 
+/// on Big-Endian systems.
 #[derive(Copy, Clone)]
 #[allow(dead_code)]
 pub union IntUnion
 {
-    /// The biggest unsigned element for compatibility with other unions
+    /// The 32-bit unsigned representation (for compatibility).
     this: u32,
 
-    /// The biggest signed element for compatibility with other unions
+    /// The 32-bit signed representation (for compatibility).
     that: i32,
 
-    /// The biggest unsigned element which is 32-bit unsigned integer
+    /// The primary 32-bit unsigned integer field.
     uint: u32,
 
-    /// The biggest signed element which is 32-bit unsigned integer
+    /// The primary 32-bit signed integer field.
     sint: i32,
 
-    /// The secondly biggest unsigned element array whose elements are
-    /// 16-bit unsigned integer
+    /// Array of two 16-bit unsigned integers.
     ushort: [u16; 2],
 
-    /// The secondly biggest signed element array whose elements are
-    /// 16-bit unsigned integer
+    /// Array of two 16-bit signed integers.
     sshort: [i16; 2],
 
-    /// The thirdly biggest unsigned element array whose elements are
-    /// 8-bit unsigned integer
+    /// Array of four 8-bit unsigned integers.
     ubyte: [u8; 4],
 
-    /// The thirdly biggest signed element array whose elements are
-    /// 8-bit unsigned integer
+    /// Array of four 8-bit signed integers.
     sbyte: [i8; 4],
 
-    /// The usize type element whose size is the same as the IntUnion
+    /// Pointer-sized unsigned representation (for compatibility).
     #[cfg(target_pointer_width = "32")] pub u_size: usize,
 
-    /// The isize type element whose size is the same as the IntUnion
+    /// Pointer-sized signed representation (for compatibility).
     #[cfg(target_pointer_width = "32")] pub s_size: isize,
 
-    /// The usize type array whose elements's size is 16-bit size
+    /// Array of two pointer-sized unsigned integers (for compatibility).
     #[cfg(target_pointer_width = "16")] pub u_size: [usize; 2],
 
-    /// The isize type array whose elements's size is 16-bit size
+    /// Array of two pointer-sized signed integers (for compatibility).
     #[cfg(target_pointer_width = "16")] pub s_size: [isize; 2],
 
     // /// The usize type array whose elements's size is 8-bit size
@@ -233,19 +231,16 @@ pub union IntUnion
 }
 
 
+
 impl IntUnion
 {
     // pub const fn new() -> Self
-    /// Constructs a new `IntUnion`.
+    /// Constructs a new `IntUnion` with all fields initialized to zero.
     /// 
-    /// # Output
-    /// A new object of `IntUnion`.
+    /// # Returns
+    /// A new `IntUnion` instance.
     /// 
-    /// # Initialization
-    /// All the fields of the constructed object will be
-    /// initialized with `0`.
-    /// 
-    /// # Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::IntUnion;    
     /// let a = IntUnion::new();
@@ -255,15 +250,15 @@ impl IntUnion
     #[inline] pub const fn new() -> Self    { Self { uint: 0 } }
 
     // pub const fn new_with(uint: u32) -> Self
-    /// Constructs a new `IntUnion` with initializing it with `uint`.
+    /// Constructs a new `IntUnion` initialized with the given `u32` value.
     /// 
-    /// # Output
-    /// A new object of `IntUnion` initialized with the value `uint`.
+    /// # Arguments
+    /// * `uint`: The 32-bit unsigned integer value to initialize the union.
+    ///
+    /// # Returns
+    /// A new `IntUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with `uint`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::IntUnion;    
     /// let a = IntUnion::new_with(1234567890_u32);
@@ -273,15 +268,15 @@ impl IntUnion
     #[inline] pub const fn new_with(uint: u32) -> Self  { Self { uint } }
 
     // pub const fn new_with_signed(sint: i32) -> Self
-    /// Constructs a new `IntUnion` with initializing it with `sint`.
+    /// Constructs a new `IntUnion` initialized with the given `i32` value.
     /// 
-    /// # Output
-    /// A new object of `IntUnion` initialized with the value `sint`.
+    /// # Arguments
+    /// * `sint`: The 32-bit signed integer value to initialize the union.
+    ///
+    /// # Returns
+    /// A new `IntUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with `sint`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::IntUnion;    
     /// let a = IntUnion::new_with_signed(-1234567890_i32);
@@ -291,15 +286,15 @@ impl IntUnion
     #[inline] pub const fn new_with_signed(sint: i32) -> Self   { Self { sint } }
 
     // pub const fn new_with_ubytes(ubyte: [u8; 4]) -> Self
-    /// Constructs a new `IntUnion` with initializing it with `ubyte`.
+    /// Constructs a new `IntUnion` initialized with the given byte array.
     /// 
-    /// # Output
-    /// A new object of `IntUnion` initialized with the value `ubyte`.
+    /// # Arguments
+    /// * `ubyte`: An array of four 8-bit unsigned integers.
+    ///
+    /// # Returns
+    /// A new `IntUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with `ubyte`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::IntUnion;
     /// let a = IntUnion::new_with_ubytes([222_u8, 0_u8, 230_u8, 228_u8]);
@@ -309,15 +304,15 @@ impl IntUnion
     #[inline] pub const fn new_with_ubytes(ubyte: [u8; 4]) -> Self  { Self { ubyte } }
 
     // pub const fn new_with_ushorts(ushort: [u16; 2]) -> Self
-    /// Constructs a new `IntUnion` with initializing it with `ushort`.
+    /// Constructs a new `IntUnion` initialized with the given 16-bit word array.
     /// 
-    /// # Output
-    /// A new object of `IntUnion` initialized with the value `ushort`.
+    /// # Arguments
+    /// * `ushort`: An array of two 16-bit unsigned integers.
+    ///
+    /// # Returns
+    /// A new `IntUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with `ushort`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::IntUnion;
     /// let a = IntUnion::new_with_ushorts([222_u16, 58598_u16]);
@@ -327,18 +322,16 @@ impl IntUnion
     #[inline] pub const fn new_with_ushorts(ushort: [u16; 2]) -> Self   { Self { ushort } }
 
     // pub const fn new_with_u128(num: u128) -> Self
-    /// Constructs a new `IntUnion` with initializing it with the lowest
-    /// 32-bit part of `num`.
+    /// Constructs a new `IntUnion` initialized with the lowest 32 bits of
+    /// the given `u128` value.
     /// 
-    /// # Output
-    /// A new object of `IntUnion` initialized with the value of
-    /// the lowest 32-bit part of `num`.
+    /// # Arguments
+    /// * `num`: The 128-bit unsigned integer to initialize from.
+    ///
+    /// # Returns
+    /// A new `IntUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with
-    /// the value of the lowest 32-bit part of `num`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::IntUnion;
     /// let a = IntUnion::new_with_u128(3840278750_u128);
@@ -351,19 +344,15 @@ impl IntUnion
     #[inline] pub const fn new_with_u128(num: u128) -> Self { Self { uint: num as u32 } }
 
     // pub const fn new_with_bool(b: bool) -> Self
-    /// Constructs a new `IntUnion` with initializing it
-    /// with the value of `b`.
+    /// Constructs a new `IntUnion` initialized based on the given boolean value.
     /// 
-    /// # Output
-    /// A new object of `IntUnion` initialized with the value of `b`
+    /// # Arguments
+    /// * `b`: The boolean value. `true` becomes `1`, and `false` becomes `0`.
+    ///
+    /// # Returns
+    /// A new `IntUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with
-    /// the value of `b`.
-    /// If `b` is `true`, `self` will have the value `1`.
-    /// If `b` is `false`, `self` will have the value `0`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::IntUnion;
     /// let a = IntUnion::new_with_bool(true);
@@ -376,12 +365,12 @@ impl IntUnion
     #[inline] pub const fn new_with_bool(b: bool) -> Self   { Self { uint: b as u32 } }
 
     // pub fn get(self) -> u32
-    /// Returns its value as `u32`.
+    /// Returns the union's value as a 32-bit unsigned integer.
     /// 
-    /// # Output
-    /// Its value as `u32`
+    /// # Returns
+    /// The 32-bit unsigned integer representation.
     /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::IntUnion;    
     /// let a = IntUnion::new_with(987654321_u32);
@@ -391,9 +380,12 @@ impl IntUnion
     #[inline] pub fn get(self) -> u32           { unsafe { self.this } }
 
     // pub fn set(&mut self, val: u32)
-    /// Sets its value with `val` of type `u32`
+    /// Sets the union's value from a 32-bit unsigned integer.
     /// 
-    /// Example
+    /// # Arguments
+    /// * `val`: The 32-bit unsigned integer value to set.
+    /// 
+    /// # Examples
     /// ```
     /// use cryptocol::number::IntUnion;    
     /// let mut a = IntUnion::new();
@@ -404,12 +396,12 @@ impl IntUnion
     #[inline] pub fn set(&mut self, val: u32)   { self.this = val; }
 
     // pub fn get_signed(self) -> i32
-    /// Returns its value as `i32`.
+    /// Returns the union's value as a 32-bit signed integer.
     /// 
-    /// # Output
-    /// Its value as `i32`
+    /// # Returns
+    /// The 32-bit signed integer representation.
     /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::IntUnion;    
     /// let a = IntUnion::new_with(2345678901_u32);
@@ -419,9 +411,12 @@ impl IntUnion
     #[inline] pub fn get_signed(self) -> i32    { unsafe { self.that } }
 
     // pub fn set_signed(&mut self, val: i32)
-    /// Sets its value with `val` of type `i32`
+    /// Sets the union's value from a 32-bit signed integer.
     /// 
-    /// Example
+    /// # Arguments
+    /// * `val`: The 32-bit signed integer value to set.
+    /// 
+    /// # Examples
     /// ```
     /// use cryptocol::number::IntUnion;    
     /// let mut a = IntUnion::new();
@@ -444,11 +439,34 @@ impl IntUnion
     crate::number::integer_union_methods!(u32);
 
     // pub fn as_ptr(&self) -> *const u32
-    /// Returns its pointer as *const u32
+    /// Returns a raw pointer to the union's memory as a `u32`.
+    /// 
+    /// # Returns
+    /// A `*const u32` pointer to the underlying memory.
+    /// 
+    /// # Examples
+    /// ```
+    /// use cryptocol::number::IntUnion;
+    /// let a = IntUnion::new_with(0x12345678);
+    /// let ptr = a.as_ptr();
+    /// unsafe { assert_eq!(*ptr, 0x12345678); }
+    /// ```
     #[inline] pub fn as_ptr(&self) -> *const u32 { unsafe { self.ubyte.as_ptr() as *const u32 } }
 
-    // pub fn as_mut_ptr(&self) -> *mut u32
-    /// Returns its pointer as *mut u32
+    // pub fn as_mut_ptr(&mut self) -> *mut u32
+    /// Returns a mutable raw pointer to the union's memory as a `u32`.
+    /// 
+    /// # Returns
+    /// A `*mut u32` pointer to the underlying memory.
+    /// 
+    /// # Examples
+    /// ```
+    /// use cryptocol::number::IntUnion;
+    /// let mut a = IntUnion::new();
+    /// let ptr = a.as_mut_ptr();
+    /// unsafe { *ptr = 0x87654321; }
+    /// assert_eq!(a.get(), 0x87654321);
+    /// ```
     #[inline] pub fn as_mut_ptr(&mut self) -> *mut u32 { unsafe { self.ubyte.as_mut_ptr() as *mut u32 } }
 }
 
@@ -482,27 +500,38 @@ crate::number::format_for_integer_unions_impl! { IntUnion }
 
 impl Debug for IntUnion
 {
-    /// Formats the value using the given formatter.
+    // fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result
+    /// Formats the value using the given formatter for debugging purposes.
     /// 
-    /// # Features
-    /// When used with format specifier :?, the output is printed for debug.
-    /// When used with the alternate format specifier #?, the output is
-    /// pretty-printed.
+    /// # Arguments
+    /// * `f`: The formatter.
+    /// 
+    /// # Returns
+    /// A `fmt::Result` indicating the outcome of the operation.
+    /// 
+    /// # Formatting Options
+    /// The `:?` format specifier provides standard debug output, while the 
+    /// alternate `:#?` specifier produces pretty-printed output for 
+    /// enhanced readability.
     /// 
     /// # Example for the format specifier :?
+    /// Using the format specifier `:?` for debug output:
     /// ```
     /// use cryptocol::number::*;
     /// let a_int = IntUnion::new_with_signed(-1234567890_i32);
     /// println!("a_int = {:?}", a_int);
-    /// #[cfg(target_pointer_width = "64")] assert_eq!(format!("{a_int:?}"), "IntUnion { this: 3060399406, that: -1234567890, uint: 3060399406, sint: -1234567890, ushort: [64814, 46697], sshort: [-722, -18839], ubyte: [46, 253, 105, 182], sbyte: [46, -3, 105, -74] }");
+    /// #[cfg(target_pointer_width = "64")]
+    /// assert_eq!(format!("{a_int:?}"), "IntUnion { this: 3060399406, that: -1234567890, uint: 3060399406, sint: -1234567890, ushort: [64814, 46697], sshort: [-722, -18839], ubyte: [46, 253, 105, 182], sbyte: [46, -3, 105, -74] }");
     /// ```
     /// 
     /// # Example for the format specifier :#?
+    /// Using the alternate format specifier `:#?` for pretty-printed debug output:
     /// ```
     /// use cryptocol::number::*;
     /// let a_int = IntUnion::new_with_signed(-1234567890_i32);
     /// println!("a_int = {:#?}", a_int);
-    /// #[cfg(target_pointer_width = "64")] assert_eq!(format!("{a_int:#?}"), r#"IntUnion {
+    /// #[cfg(target_pointer_width = "64")]
+    /// assert_eq!(format!("{a_int:#?}"), r#"IntUnion {
     ///     this: 3060399406,
     ///     that: -1234567890,
     ///     uint: 3060399406,
@@ -530,21 +559,14 @@ impl Debug for IntUnion
     /// }"#);
     /// ```
     /// 
-    /// # Plagiarism in descryption
-    /// This method works exactly the same way as the normal method fmt() of
-    /// Debug. So, all the description of this method is mainly the
-    /// same as that of the implementation of the method fmt() of Debug for the
-    /// primitive unsigned integer types except example codes. Confer to the
-    /// descryptions that are linked to in the section _Reference_. This
-    /// plagiarism is not made maliciously but is made for the reason of
-    /// effectiveness and efficiency so that users may understand better and
-    /// easily how to use this method with simiilarity to the method
-    /// Debug() of implementation for the primitive unsigned integer
-    /// types.
+    /// # Note
+    /// This method follows the standard implementation of `fmt()` for the
+    /// `Debug` trait, providing a consistent experience for users familiar 
+    /// with primitive integer types. For more details, refer to the official 
+    /// Rust documentation linked in the References section.
     /// 
     /// # References
-    /// - If you want to know about the method of Debug for the primitive type,
-    /// read [here](https://doc.rust-lang.org/std/fmt/trait.Debug.html).
+    /// - [Rust `fmt::Debug` documentation](https://doc.rust-lang.org/std/fmt/trait.Debug.html)
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result
     {
         let mut ff = f.debug_struct("IntUnion");

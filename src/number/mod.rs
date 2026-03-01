@@ -1,4 +1,4 @@
-// Copyright 2023, 2024, 2025 PARK Youngho.
+// Copyright 2023, 2024, 2025, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -6,144 +6,106 @@
 // This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! various numbers such as small fixed-sized unsigned integers, small
-//! fixed-sized signed integers, small fixed-sized integer unions,
-//! big fixed-sized unsigned integers, big fixed-sized signed integers,
-//! and large variable-sized signed integers
+//! Provides various number types, including small primitive-based integers,
+//! memory-sharing integer unions, and fixed-size big integers.
 //!
 //! # Introduction
-//! This module contains a few sub-modules to define various numbers such as:
-//! - small fixed-sized unsigned integers smaller than or same as 128-bit size,
-//! - small fixed-sized signed integers smaller than or same as 128-bit size,
-//! - small fixed-sized integer unions smaller than or same as 128-bit size,
-//! - big fixed-sized unsigned integers bigger than 128-bit size,
-//! - big fixed-sized signed integers bigger than 128-bit size, and
-//! - large variable-sized signed integers bigger than 128-bit size.
-//! 
-//! # Background
-//! 
-//! ## Generic Programming of Primitive Data Types
-//! When you write any code in Rust, you will find that it is tricky to write
-//! generic code for primitive data types such as `u8`, `u16`, `u32`, `u64`,
-//! `u128`, `usize`, `i8`, `i16`, `i32`, `i64`, `i128`, `isize`, etc. Writing
-//! generic code in Rust is not as straightforward as C++.
-//! You have to do so-called 'trait control' in order to write generic code for
-//! primitive data types in Rust. The traits `SmallUInt` and `SmallSInt` are
-//! written for you who would like to write generic code.
-//! 
-//! ## Additional Useful Methods for Primitive Data Types
-//! There are plenty of or even more than enough of methods prepared for
-//! primitive data types. However, what if you need some more methods that
-//! are not provided? `SmallUInt` and `SmallSInt` provide additional methods
-//! for primitive data types. Of course, you can add your own methods that is
-//! fit to your purposes if you write your own traits and their implementation.
-//! `SmallUInt` and `SmallSInt` will give you hints about how to write your own
-//! traits and their implementation to add your own methods to primitive data
+//!
+//! This module defines the foundational numeric types used throughout the
+//! `cryptocol` ecosystem, categorized by their size and intended use:
+//!
+//! - **Small Numbers:** Primitive-sized integers (up to 128-bit) and specialized
+//!   unions for bit manipulation.
+//! - **Big Numbers:** High-precision, fixed-size unsigned integers designed for
+//!   cryptographic operations.
+//!
+//! # Architectural Background
+//!
+//! ## Generic Programming for Primitives
+//!
+//! Rust lacks a unified trait for all primitive numeric types (e.g., `u8`
+//! through `u128`, `usize`). The [`SmallUInt`] trait provides this abstraction,
+//! enabling the implementation of generic algorithms across unsigned primitive
 //! types.
-//! 
-//! ## Arithmatic Operations of Big Numbers
-//! Most of the modern programming languages do not support big numbers
-//! such as 256-bit, 512-bit, and 1024-bit integers or even bigger integers.
-//! Rust supports up to 128-bit integers such as `u128` and `i128` but not
-//! bigger-sized numbers than those. However, in some areas such as
-//! cryptography, it is required to calculate 1024-bit or even bigger-sized
-//! bit integers especially for such as RSA cryptographic alogorithm.
-//! Then, we need special algorithms to calculate such big numbers.
-//! This module provides the ability for such special purposes.
-//! 
-//! # Documentation
-//! In many cases, a lot of parts of the documentations of this module were made
-//! by taking (or copying and pasting) from pre-existing documentation for
-//! standard crates of Rust and tweacking them, espeically when the methods that
-//! this crate provides are very similar to the pre-existing ones in terms of
-//! their interfaces, functionalities and purposes, for example, operators `+`,
-//! `<<`, etc., and methods `from_str()`, `to_be()`, etc.
-//! Please don't think they are malicious plagiarism for those cases.
-//! 
-//! # Two kinds of small-sized bit integers
-//! This module provides two kinds of small-sized bit integers:
-//! SmallUInt, and SmallSInt.
-//! - `SmallUInt` --- a small-sized _unsigned_ integer.
-//! [Read more](trait@SmallUInt)
-//! - `SmallSInt` --- a small-sized _signed_ integer.
-//! 
-//! # Five kinds of small-sized bit integer unions
-//! This module provides four kinds of small-sized bit integer unions:
-//! ShortUnion, IntUnion, LongUnion and LongerUnion.
-//! - `ShortUnion` --- a union that `u16`, `i16`, `[u8; 2]`, and `[i8; 2]`
-//! share with one another for type conversion and picking specific data
-//! [Read more](union@ShortUnion)
-//! - `IntUnion` --- a union that `u32`, `i32`, `[u16; 2]`, `[i16; 2]`,
-//! `[u8; 4]`, and `[i8; 4]` share with one another for type conversion
-//! and picking specific data [Read more](union@IntUnion)
-//! - `LongUnion` --- a union that `u64`, `i64`, `[u32; 2]`, `[i32; 2]`,
-//! `[u16; 4]`, `[i16; 4]`, `[u8; 8]`, and `[i8; 8]` share with one
-//! another for type conversion and picking specific data
-//! [Read more](union@LongUnion)
-//! - `LongerUnion` --- a union that `u128`, `i128`, `[u64; 2]`, and
-//! `[i64; 2]`, `[u32; 4]`, `[i32; 4]`, `[u16; 8]`, `[i16; 8]`, `[u8; 16]`,
-//! and `[i8; 16]` share with one another for type conversion and picking
-//! specific data [Read more](union@LongerUnion)
-//! - `SizeUnion` --- a union that `usize`, `isize`, `[u32; 2]`, and
-//! `[i32; 2]`, `[u16; 4]`, `[i16; 4]`, `[u8; 8]`, and `[i8; 8]` share with
-//! one another for type conversion and picking specific data in the case of
-//! 64-bit machine for example [Read more](union@SizeUnion)
-//! - `SharedValues` --- a union that source primitive data type and destination data
-//! type share memory with each other. You can use this union to convert data
-//! from one data type to another data type by truncating (if destination data
-//! type is smaller than source data type) or by filling zeros (if destination
-//! data type is bigger than source data type).  [Read more](union@SharedValues)
-//! - `SharedArrays` --- a union that the array of source primitive data type and
-//! the array of destination data type share memory with each other. You can
-//! use this union to convert array data from one array of a certain data type
-//! to another array of another data type by truncating (if the total size of
-//! array of destination data type is smaller than the total size of array of
-//! source data type) or by filling zeros (the total size of array of
-//! destination data type is smaller than the total size of array of source
-//! data type).  [Read more](union@SharedArrays)
-//! 
-//! # Three kinds of big-sized bit integers
-//! This module provides three kinds of long bit integers: BigUInt, BigInt,
-//! and LargeInt.
-//! - `BigUInt` --- a big-sized _unsigned_ integer with user-defined _fixed_ size.
-//!   [Read more](struct@BigUInt)
-//! - `BigUInt_More` --- an auxiliary big-sized _unsigned_ integer with
-//!   user-defined _fixed_ size. It includes extra methods
-//!   [Read more](trait@BigUInt_More)
-//! - `BigUInt_Modular` --- an auxiliary big-sized _unsigned_ integer with
-//!   user-defined _fixed_ size. It includes modular-related methods
-//!   [Read more](trait@BigUInt_Modular)
-//! - `BigUInt_Panic_Free` --- an auxiliary big-sized _unsigned_ integer with
-//!   user-defined _fixed_ size. It includes panic-free-related methods
-//!   [Read more](trait@BigUInt_Panic_Free)
-//! - `BigUInt_Prime` --- an auxiliary big-sized _unsigned_ integer with
-//!   user-defined _fixed_ size. It includes prime number-related methods
-//!   [Read more](trait@BigUInt_Prime)
-//! - `BigSInt` --- a big-sized _signed_ integer with user-defined _fixed_ size.
-//! - `LargeInt` --- a big-sized _signed_ integer with _variable_ size.
-//! 
-//! # Predefined big unsigned integer data types
-//! There are provided predefined data types: `U256`, `U512`, `U1024`, `U2048`,
-//! `U3072`, `U4096`, `U5120`, `U6144`, `U7168`, `U8192`, and `U16384`.
-//! And their synonyms are also provided such as `UU32` (= `U256`),
-//! `UU64` (= `U512`), `UU128` (= `U1024`), `UU256` (= `U2048`),
-//! `UU384` (= `U3072`), `UU512` (= `U4096`), `UU640` (= `U5120`),
-//! `UU768` (= `U6144`), `UU896` (= `U7168`), `UU1024` (= `U8192`),
-//! and `UU2048` (= `U16384`). You can further define more data types.
-//! 
-//! # QUICK START
-//! - For `SmallUInt`, read [here](trait@SmallUInt#quick-start).
-// ! - For `SmallSInt`, read [here](trait@SmallSInt#quick-start).
-//! - For `ShortUnion`, read [here](union@ShortUnion#quick-start).
-//! - For `IntUnion`, read [here](union@IntUnion#quick-start).
-//! - For `LongUnion`, read [here](union@LongUnion#quick-start).
-//! - For `LongUnion`, read [here](union@LongerUnion#quick-start).
-//! - For `SizeUnion`, read [here](union@SizeUnion#quick-start).
-//! - For `SharedValues`, read [here](union@SharedValues#quick-start).
-//! - For `SharedArrays`, read [here](union@SharedArrays#quick-start).
-//! - For `BigUInt`, read [here](struct@BigUInt#quick-start).
-// ! - For `BigSInt`, read [here](struct@BigSInt#quick-start).
-// ! - For `LargeInt`, read [here](struct@LargeInt#quick-start).
+//!
+//! ## Extended Primitive Functionality
+//!
+//! Beyond standard arithmetic, [`SmallUInt`] introduces auxiliary methods for
+//! common cryptographic and low-level tasks not natively provided by Rust
+//! primitives.
+//!
+//! ## Arithmetic for Big Numbers
+//!
+//! Cryptographic algorithms, such as RSA, require integers far exceeding the
+//! 128-bit limit of standard types. This module provides highly optimized
+//! algorithms for calculating 256-bit, 1024-bit, and even larger integers.
+//!
+//! # Documentation Policy
+//!
+//! Parts of the documentation for this module are adapted from the Rust
+//! standard library. This applies specifically to methods that implement
+//! standard operations (e.g., arithmetic operators, `from_str`, `to_be`) to
+//! maintain consistency with familiar interfaces and semantics.
+//!
+//! # 1. Small Numbers
+//! _Foundational types for Big Numbers and other cryptographic modules._
+//!
+//! - **[`SmallUInt`]**: Trait providing a generic interface and additional
+//!   methods for unsigned primitive integers.
+// ! - [ ] **`SmallSInt` Trait**: (Planned) Core implementation for primitive
+// !       signed data types. -- `SmallSInt`
+// !       ===> Moved to Roadmap for ver. 2.0
+//!
+//! ## Integer Unions
+//!
+//! Unions designed for efficient type conversion and byte-level manipulation
+//! between different integer sizes and arrays.
+//!
+//! - **[`ShortUnion`]**: Interop between `u16`, `i16`, `[u8; 2]`, and `[i8; 2]`.
+//! - **[`IntUnion`]**: Interop between `u32`, `i32`, and 16/8-bit components.
+//! - **[`LongUnion`]**: Interop between `u64`, `i64`, and 32/16/8-bit components.
+//! - **[`LongerUnion`]**: Interop between `u128`, `i128`, and 64/32/16/8-bit
+//!   components.
+//! - **[`SizeUnion`]**: Interop between `usize`, `isize`, and platform-dependent
+//!   components.
+//! - **[`SharedValues`]**: Memory-sharing for cross-type truncation or
+//!   zero-filling.
+//! - **[`SharedArrays`]**: Memory-sharing for cross-type array conversions.
+//!
+//! # 2. Big Numbers
+//! _Essential for Asymmetric-Key Algorithms and high-precision calculations._
+//!
+//! - **[`BigUInt`]**: Fixed-size big unsigned integers with user-defined
+//!   bit-widths.
+//! - **[`BigUInt_More`]**: Auxiliary methods for advanced calculations.
+//! - **[`BigUInt_Modular`]**: Specialized modular arithmetic operations.
+//! - **[`BigUInt_Panic_Free`]**: Safe, non-panicking arithmetic operations.
+//! - **[`BigUInt_Prime`]**: Methods for primality testing and generation.
+// ! - [ ] **Fixed-Size Big Signed Integers**: (Planned) Standard operations
+// !       for large signed integers. -- `BigSInt`
+// !       ===> Moved to Roadmap for ver. 2.0
+// ! - [ ] **Variable-Size Big Signed Integers**: (Planned) Standard operations
+// !       for large signed integers. -- `LargeInt`
+// !       ===> Moved to Roadmap for ver. 2.0 or higher
+//!
+//! ## Predefined Big Unsigned Types
+//!
+//! Commonly used bit-widths are available as aliases:
+//! - `U256`, `U512`, `U1024`, `U2048`, `U3072`, `U4096`, `U5120`, `U6144`,
+//!   `U7168`, `U8192`, and `U16384`.
+//! - Synonyms like `UU32` (256-bit) through `UU2048` (16384-bit) are also
+//!   provided.
+//!
+//! # Quick Start
+//!
+//! - For `SmallUInt`, see [here](trait@SmallUInt#quick-start).
+// ! - For `SmallSInt`, see [here](trait@SmallSInt#quick-start).
+//! - For integer unions, see their respective `#quick-start` sections (e.g.,
+//!   [`ShortUnion#quick-start`](union@ShortUnion#quick-start)).
+//! - For `BigUInt`, see [here](struct@BigUInt#quick-start).
+// ! - For `BigSInt`, see [here](struct@BigSInt#quick-start).
+// ! - For `LargeInt`, see [here](struct@LargeInt#quick-start).
+
 
 
 mod small_uint;

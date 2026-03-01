@@ -1,4 +1,4 @@
-// Copyright 2023, 2024 PARK Youngho.
+// Copyright 2023, 2024, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -6,9 +6,8 @@
 // This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! The module that contains unions of primitive signed/unsigned integral
-//! data types used in a lot of modules of the crate Cryptocol.
-//! __These unions are for segmentation.__
+//! Provides a 16-bit integer union for efficient memory sharing and byte-level
+//! manipulation between different integer types and arrays.
 
 // #![warn(missing_docs)]
 // #![warn(rustdoc::missing_doc_code_examples)]
@@ -26,28 +25,23 @@ use std::fmt::{ self, Alignment, Error, Formatter, Display, Debug, Pointer,
 use crate::number::{ SmallUInt, IntUnion, LongUnion, LongerUnion, SizeUnion };
 use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_with_exponent };
 
-/// # Introduction
-/// This union `ShortUnion` is for slicing `u16` into two `u8`s,
-/// and/or two `i8`.
+/// A 16-bit integer union that enables bit-level slicing and seamless 
+/// conversion between various primitive types, including `u16`, `i16`, 
+/// `u8`, and `i8`.
 /// 
-/// Sometimes, for example, we need to slice `u16` data into two `u8`
-/// pieces which include a higher byte and a lower byte.
-/// In such case, `ShortUnion` will be very helpful.
+/// # Introduction
+/// `ShortUnion` provides efficient, bit-level access to 16-bit values. 
+/// It allows manipulating the underlying memory as a single 16-bit word, 
+/// or two 8-bit bytes, in both signed and unsigned formats.
 /// 
 /// # Quick Start
-/// In order to use this union, you have to import (use)
-/// `cryptocol::number::ShortUnion` as follows.
+/// To use this union, import `cryptocol::number::ShortUnion` 
+/// as follows.
 /// 
 /// ## Example 1
 /// ```
 /// use cryptocol::number::ShortUnion;
 /// ```
-/// You can use the methods `get()`, `get_signed()`, `get_ushort()`, and
-/// `get_sshort()` in order to obtain the data of `u16` in various types.
-/// And, you can also slice the data of `u16` into two `u8` type data by
-/// using the methods `get_ubyte()`, `get_sbyte()`, `get_ubyte_()`, and
-/// `get_sbyte_()`. If your machine is not either 8-bit nor 16-bit machine,
-/// `ShortUnion` does not have the method `get_usize()` nor `get_ssize()`.
 /// 
 /// ## Example 2
 /// ```
@@ -91,12 +85,16 @@ use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_
 ///     assert_eq!(a.get_ssize(), -10068_i16);
 /// }
 /// ```
-/// You can use `ShortUnion` as if you used `u16`. You can perform all kinds of
-/// arithmetic operations such as addition, subtraction, multiplication, and
-/// division (div and rem), and other operations which are available for
-/// `u16`. If you use `ShortUnion` with the help of `SmallUInt`, it will be
-/// even more powerful and convenient. In this case, you don't even have to
-/// import (use) `cryptocol::number::ShortUnion`.
+/// 
+/// Note that `get_usize()` and `get_ssize()` (including their indexed 
+/// variants) are available only on architectures with supported pointer 
+/// widths, such as 16-bit or 8-bit systems.
+/// 
+/// `ShortUnion` can be used just like a `u16`, supporting all standard 
+/// arithmetic operations, including addition, subtraction, 
+/// multiplication, and division. Integrating it with `SmallUInt` 
+/// provides enhanced functionality and convenience, often eliminating 
+/// the need for an explicit `ShortUnion` import.
 /// 
 /// ## Example 3
 /// ```
@@ -133,44 +131,43 @@ use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_
 /// assert_eq!(g_shortunion.get(), 5_u16);
 /// ```
 /// 
-/// # Big-endian issue
-/// It is just experimental for big-endian CPUs. So, you are not encouraged
-/// to use it for big-endian CPUs for serious purpose.
-/// Only use this crate for big-endian CPUs with your own full responsibility.
+/// # Big-endian Support
+/// Support for Big-Endian architectures is currently experimental and not 
+/// recommended for production environments. Users assume all 
+/// responsibility for any issues that may arise when using this crate 
+/// on Big-Endian systems.
 #[derive(Copy, Clone)]
 #[allow(dead_code)]
 pub union ShortUnion
 {
-    /// The biggest unsigned element for compatibility with other unions
+    /// The 16-bit unsigned representation (for compatibility).
     this: u16,
 
-    /// The biggest signed element for compatibility with other unions
+    /// The 16-bit signed representation (for compatibility).
     that: i16,
 
-    /// The biggest unsigned element which is 16-bit unsigned integer
+    /// The primary 16-bit unsigned integer field.
     ushort: u16,
 
-    /// The biggest signed element which is 16-bit unsigned integer
+    /// The primary 16-bit signed integer field.
     sshort: i16,
 
-    /// The secondly biggest unsigned element array whose elements are
-    /// 8-bit unsigned integer
+    /// Array of two 8-bit unsigned integers.
     ubyte: [u8; 2],
 
-    /// The secondly biggest signed element array whose elements are
-    /// 8-bit unsigned integer
+    /// Array of two 8-bit signed integers.
     sbyte: [i8; 2],
 
-    /// The usize type element whose size is the same as the ShortUnion
+    /// Pointer-sized unsigned representation (16-bit architectures).
     #[cfg(target_pointer_width = "16")] u_size: usize,
 
-    /// The isize type element whose size is the same as the ShortUnion
+    /// Pointer-sized signed representation (16-bit architectures).
     #[cfg(target_pointer_width = "16")] s_size: isize,
 
-    // / The usize type array whose elements's size is 8-bit size
+    // / Array of two pointer-sized unsigned integers (8-bit architectures).
     // #[cfg(target_pointer_width = "8")] u_size: [usize; 2],
 
-    // / The isize type array whose elements's size is 8-bit size
+    // / Array of two pointer-sized signed integers (8-bit architectures).
     // #[cfg(target_pointer_width = "8")] s_size: [isize; 2],
 }
 
@@ -178,16 +175,12 @@ pub union ShortUnion
 impl ShortUnion
 {
     // pub const fn new() -> Self
-    /// Constructs a new `ShortUnion`.
+    /// Constructs a new `ShortUnion` with all fields initialized to zero.
     /// 
-    /// # Output
-    /// A new object of `ShortUnion`.
+    /// # Returns
+    /// A new `ShortUnion` instance.
     /// 
-    /// # Initialization
-    /// All the fields of the constructed object will be
-    /// initialized with `0`.
-    /// 
-    /// # Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::ShortUnion;    
     /// let a = ShortUnion::new();
@@ -197,15 +190,15 @@ impl ShortUnion
     #[inline] pub const fn new() -> Self    { Self { ushort: 0 } }
 
     // pub const fn new_with(ushort: u16) -> Self
-    /// Constructs a new `ShortUnion` with initializing it with `ushort`.
+    /// Constructs a new `ShortUnion` initialized with the given `u16` value.
     /// 
-    /// # Output
-    /// A new object of `ShortUnion` initialized with the value `ushort`.
+    /// # Arguments
+    /// * `ushort`: The 16-bit unsigned integer value to initialize the union.
+    ///
+    /// # Returns
+    /// A new `ShortUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with `ushort`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::ShortUnion;    
     /// let a = ShortUnion::new_with(1234_u16);
@@ -215,33 +208,33 @@ impl ShortUnion
     #[inline] pub const fn new_with(ushort: u16) -> Self    { Self { ushort } }
 
     // pub const fn new_with_signed(sshort: i16) -> Self
-    /// Constructs a new `ShortUnion` with initializing it with `sshort`.
+    /// Constructs a new `ShortUnion` initialized with the given `i16` value.
     /// 
-    /// # Output
-    /// A new object of `ShortUnion` initialized with the value `sshort`.
+    /// # Arguments
+    /// * `sshort`: The 16-bit signed integer value to initialize the union.
+    ///
+    /// # Returns
+    /// A new `ShortUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with `sshort`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::ShortUnion;    
     /// let a = ShortUnion::new_with_signed(-1234_i16);
-    /// println!("a = {}", a.get_signed());
+    /// println!("a.get_signed() = {}", a.get_signed());
     /// assert_eq!(a.get_signed(), -1234_i16);
     /// ```
     #[inline] pub const fn new_with_signed(sshort: i16) -> Self { Self { sshort } }
 
     // pub const fn new_with_ubytes(ubyte: [u8; 2]) -> Self
-    /// Constructs a new `ShortUnion` with initializing it with `ubyte`.
+    /// Constructs a new `ShortUnion` initialized with the given byte array.
     /// 
-    /// # Output
-    /// A new object of `ShortUnion` initialized with the value `ubyte`.
+    /// # Arguments
+    /// * `ubyte`: An array of two 8-bit unsigned integers.
+    ///
+    /// # Returns
+    /// A new `ShortUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with `ubyte`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::ShortUnion;
     /// let a = ShortUnion::new_with_ubytes([172_u8, 216_u8]);
@@ -251,18 +244,16 @@ impl ShortUnion
     #[inline] pub const fn new_with_ubytes(ubyte: [u8; 2]) -> Self  { Self { ubyte } }
 
     // pub const fn new_with_u128(num: u128) -> Self
-    /// Constructs a new `ShortUnion` with initializing it with the lowest
-    /// 16-bit part of `num`.
+    /// Constructs a new `ShortUnion` initialized with the lowest 16 bits of
+    /// the given `u128` value.
     /// 
-    /// # Output
-    /// A new object of `ShortUnion` initialized with the value of
-    /// the lowest 16-bit part of `num`.
+    /// # Arguments
+    /// * `num`: The 128-bit unsigned integer to initialize from.
+    ///
+    /// # Returns
+    /// A new `ShortUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with
-    /// the value of the lowest 16-bit part of `num`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::ShortUnion;
     /// let a = ShortUnion::new_with_u128(55468_u128);
@@ -275,19 +266,16 @@ impl ShortUnion
     #[inline] pub const fn new_with_u128(num: u128) -> Self { Self { ushort: num as u16 } }
 
     // pub const fn new_with_bool(b: bool) -> Self
-    /// Constructs a new `ShortUnion` with initializing it
-    /// with the value of `b`.
+    /// Constructs a new `ShortUnion` initialized based on the given boolean 
+    /// value.
     /// 
-    /// # Output
-    /// A new object of `ShortUnion` initialized with the value of `b`
+    /// # Arguments
+    /// * `b`: The boolean value. `true` becomes `1`, and `false` becomes `0`.
+    ///
+    /// # Returns
+    /// A new `ShortUnion` instance.
     /// 
-    /// # Initialization
-    /// The field of the constructed object will be initialized with
-    /// the value of `b`.
-    /// If `b` is `true`, `self` will have the value `1`.
-    /// If `b` is `false`, `self` will have the value `0`.
-    /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::ShortUnion;
     /// let a = ShortUnion::new_with_bool(true);
@@ -300,12 +288,12 @@ impl ShortUnion
     #[inline] pub const fn new_with_bool(b: bool) -> Self   { Self { ushort: b as u16 } }
 
     // pub fn get(self) -> u16
-    /// Returns its value as `u16`.
+    /// Returns the union's value as a 16-bit unsigned integer.
     /// 
-    /// # Output
-    /// Its value as `u16`
+    /// # Returns
+    /// The 16-bit unsigned integer representation.
     /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::ShortUnion;
     /// let a = ShortUnion::new_with(55468_u16);
@@ -315,9 +303,12 @@ impl ShortUnion
     #[inline] pub fn get(self) -> u16   { unsafe { self.this } }
 
     // pub fn set(&mut self, val: u16)
-    /// Sets its value with `val` of type `u16`.
+    /// Sets the union's value from a 16-bit unsigned integer.
     /// 
-    /// Example
+    /// # Arguments
+    /// * `val`: The 16-bit unsigned integer value to set.
+    /// 
+    /// # Examples
     /// ```
     /// use cryptocol::number::ShortUnion;    
     /// let mut a = ShortUnion::new();
@@ -328,12 +319,12 @@ impl ShortUnion
     #[inline] pub fn set(&mut self, val: u16)   { self.this = val; }
 
     // pub fn get_signed(self) -> i16
-    /// Returns its value as `i16`.
+    /// Returns the union's value as a 16-bit signed integer.
     /// 
-    /// # Output
-    /// Its value as `i16`
+    /// # Returns
+    /// The 16-bit signed integer representation.
     /// 
-    /// Example
+    /// # Examples
     /// ```
     /// use cryptocol::number::ShortUnion;    
     /// let a = ShortUnion::new_with(54321_u16);
@@ -343,9 +334,12 @@ impl ShortUnion
     #[inline] pub fn get_signed(self) -> i16    { unsafe { self.that } }
 
     // pub fn set_signed(&mut self, val: i16)
-    /// Sets its value with `val` of type `i16`.
+    /// Sets the union's value from a 16-bit signed integer.
     /// 
-    /// Example
+    /// # Arguments
+    /// * `val`: The 16-bit signed integer value to set.
+    /// 
+    /// # Examples
     /// ```
     /// use cryptocol::number::ShortUnion;    
     /// let mut a = ShortUnion::new();
@@ -365,11 +359,34 @@ impl ShortUnion
     crate::number::integer_union_methods!(u16);
 
     // pub fn as_ptr(&self) -> *const u16
-    /// Returns its pointer as *const u16
+    /// Returns a raw pointer to the union's memory as a `u16`.
+    /// 
+    /// # Returns
+    /// A `*const u16` pointer to the underlying memory.
+    /// 
+    /// # Examples
+    /// ```
+    /// use cryptocol::number::ShortUnion;
+    /// let a = ShortUnion::new_with(0x1234_u16);
+    /// let ptr = a.as_ptr();
+    /// unsafe { assert_eq!(*ptr, 0x1234_u16); }
+    /// ```
     #[inline] pub fn as_ptr(&self) -> *const u16 { unsafe { self.ubyte.as_ptr() as *const u16 } }
 
-    // pub fn as_mut_ptr(&self) -> *mut u16
-    /// Returns its pointer as *mut u16
+    // pub fn as_mut_ptr(&mut self) -> *mut u16
+    /// Returns a mutable raw pointer to the union's memory as a `u16`.
+    /// 
+    /// # Returns
+    /// A `*mut u16` pointer to the underlying memory.
+    /// 
+    /// # Examples
+    /// ```
+    /// use cryptocol::number::ShortUnion;
+    /// let mut a = ShortUnion::new();
+    /// let ptr = a.as_mut_ptr();
+    /// unsafe { *ptr = 0x8765_u16; }
+    /// assert_eq!(a.get(), 0x8765_u16);
+    /// ```
     #[inline] pub fn as_mut_ptr(&mut self) -> *mut u16 { unsafe { self.ubyte.as_mut_ptr() as *mut u16 } }
 }
 
@@ -403,12 +420,13 @@ crate::number::format_for_integer_unions_impl! { ShortUnion }
 
 impl Debug for ShortUnion
 {
-    /// Formats the value using the given formatter.
+    // fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result
+    /// Formats the value using the given formatter for debugging purposes.
     /// 
-    /// # Features
-    /// When used with format specifier :?, the output is printed for debug.
-    /// When used with the alternate format specifier #?, the output is
-    /// pretty-printed.
+    /// # Formatting Options
+    /// The `:?` format specifier provides standard debug output, while the 
+    /// alternate `:#?` specifier produces pretty-printed output for 
+    /// enhanced readability.
     /// 
     /// # Example for the format specifier :?
     /// ```
@@ -439,21 +457,14 @@ impl Debug for ShortUnion
     /// }"#);
     /// ```
     /// 
-    /// # Plagiarism in descryption
-    /// This method works exactly the same way as the normal method fmt() of
-    /// Debug. So, all the description of this method is mainly the
-    /// same as that of the implementation of the method fmt() of Debug for the
-    /// primitive unsigned integer types except example codes. Confer to the
-    /// descryptions that are linked to in the section _Reference_. This
-    /// plagiarism is not made maliciously but is made for the reason of
-    /// effectiveness and efficiency so that users may understand better and
-    /// easily how to use this method with simiilarity to the method
-    /// Debug() of implementation for the primitive unsigned integer 
-    /// types.
+    /// # Note
+    /// This method follows the standard implementation of `fmt()` for the 
+    /// `Debug` trait, providing a consistent experience for users familiar 
+    /// with primitive integer types. For more details, refer to the official 
+    /// Rust documentation linked in the References section.
     /// 
     /// # References
-    /// - If you want to know about the method of Debug for the primitive type,
-    /// read [here](https://doc.rust-lang.org/std/fmt/trait.Debug.html).
+    /// - [Rust `fmt::Debug` documentation](https://doc.rust-lang.org/std/fmt/trait.Debug.html)
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result
     {
         let mut ff = f.debug_struct("ShortUnion");
