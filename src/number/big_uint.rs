@@ -8795,6 +8795,32 @@ where T: TraitsBigUInt<T>
         general_pow_assign!(self, Self::common_pow_assign, exp);
     }
 
+    pub(super) fn common_pow_assign(&mut self, exp: &Self)
+    {
+        if self.is_zero_or_one()
+            { return; }
+
+        let multiplier = self.clone();
+        self.set_one();
+        if exp.is_zero()
+            { return; }
+
+        let mut bit_check = Self::one();
+        bit_check.shift_left_assign(exp.length_in_bits() - exp.leading_zeros() - 1);
+        if !bit_check.is_zero()
+        {
+            self.wrapping_mul_assign(&multiplier); 
+            bit_check.shift_right_assign(1_u8);
+        }
+        while !bit_check.is_zero()
+        {
+            *self = self.wrapping_mul(self);
+            if !(bit_check.and(exp).is_zero())
+                { self.wrapping_mul_assign(&multiplier); }
+            bit_check.shift_right_assign(1_u8);
+        }
+    }
+
     // pub fn wrapping_pow(&self, exp: &Self) -> Self
     /// Raises `self` to the power of `exp` with wrapping at the type boundary.
     ///
@@ -8810,7 +8836,6 @@ where T: TraitsBigUInt<T>
     /// is set.
     /// 
     /// # Example 1 for normal exponentiation
-/// # Example 1 for normal exponentiation
     /// ```
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
@@ -8837,16 +8862,604 @@ where T: TraitsBigUInt<T>
     }
 
     // pub fn wrapping_pow_assign(&mut self, exp: &Self)
-    /// Raises `self` to the power of `exp` with wrapping and assigns the 
-    /// result to `self`.
+    /// Raises `BigUInt` type number to the power of `exp`, using
+    /// exponentiation of type `BigUInt` by squaring,
+    /// wrapping around at the boundary of the type `Self`,
+    /// and assign the result to `self` back.
+    /// 
+    /// # Arguments
+    /// `exp` is the power to raise `self` to, and is of `&Self` type.
+    ///
+    /// # Panics
+    /// - If `size_of::<T>() * N` <= `128`, this method may panic
+    ///   or its behavior may be undefined though it may not panic.
+    /// - If both `self` and `exp` are zero, the result is mathematically
+    ///   undefined, so this method will panic.
+    /// 
+    /// # Features
+    /// - Wrapping (modular) exponentiation.
+    /// - It calls wrapping_pow() internally.
+    /// - If overflowing happens, the `OVERFLOW` flag of `self` will be set.
+    /// - All the flags are historical, which means, for example, if an
+    ///   overflow occurred even once before this current operation or
+    ///   `OVERFLOW` flag is already set before this current operation,
+    ///   the `OVERFLOW` flag is not changed even if this current operation
+    ///   does not cause overflow.
+    /// 
+    /// # Counterpart Method
+    /// - The method [wrapping_pow_assign_uint()](struct@BigUInt#method.wrapping_pow_assign_uint)
+    ///   is more efficient than this method `wrapping_pow_assign()` when the
+    ///   exponent `exp` is primitive unsigned integral data type
+    ///   such as u8, u16, u32, u64, and u128.
+    ///   If `exp` is the primitive unsigned integral data type number, use
+    ///   the method [wrapping_pow_assign_uint()](struct@BigUInt#method.wrapping_pow_assign_uint).
+    /// - You may be interested in extra exponentiation methods
+    ///   In order to use 
+    ///   [saturating_pow_assign()](trait_big_more/trait.BigUInt_More.html#tymethod.saturating_pow_assign),
+    ///   you need to import (use) the trait `BigUInt_More`.
+    ///   In order to use any one of
+    ///   [modular_pow_assign()](trait.BigUInt_Modular.html#tymethod.modular_pow_assign),
+    ///   you need to import (use) the trait `BigUInt_Modular`.
+    ///   In order to use any one of
+    ///   [panic_free_modular_pow_assign()](trait.BigUInt_Panic_Free.html#tymethod.panic_free_modular_pow_assign),
+    ///   you need to import (use) the trait `BigUInt_Panic_Free`.
+    /// 
+    /// # Example 1 for normal exponentiation
+    /// ```
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u64);
+    /// 
+    /// let mut a_biguint = U256::from_uint(10_u8);
+    /// println!("Originally, a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
+    /// let exp = U256::from_uint(30_u8);
+    /// a_biguint.wrapping_pow_assign(&exp);
+    /// println!("After a_biguint.wrapping_pow_assign({}), a_biguint = {}", exp, a_biguint);
+    /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.wrapping_pow_assign)
+    pub fn wrapping_pow_assign(&mut self, exp: &Self)
+    {
+        general_pow_assign!(self, Self::common_pow_assign, exp);
+    }
+
+    // pub fn overflowing_pow(&self, exp: &Self) -> (Self, bool)
+    /// Raises `BigUInt` type number to the power of `exp`, using
+    /// exponentiation of type `BigUInt` by squaring, 
+    /// wrapping around at the boundary of the
+    /// type `Self`, and returns a tuple of the result along with
+    /// a boolean indicating whether an overflow would occur.
+    /// 
+    /// # Arguments
+    /// `exp` is the power to raise `self` to, and is of `&Self` type.
+    ///
+    /// # Panics
+    /// - If `size_of::<T>() * N` <= `128`, this method may panic
+    ///   or its behavior may be undefined though it may not panic.
+    /// - If both `self` and `exp` are zero, the result is mathematically
+    ///   undefined, so this method will panic.
+    /// 
+    /// # Output
+    /// It returns a tuple of the result of raising `self` to the power of `exp`,
+    /// using exponentiation of type `BigUInt` by squaring,
+    /// wrapping around at the boundary of the type `Self` along with a boolean
+    /// indicating whether an arithmetic overflow would occur.
+    /// 
+    /// # Features
+    /// - Wrapping (modular) exponentiation.
+    /// - If overflowing happens, the `OVERFLOW` flag of the return value will
+    ///   be set.
+    /// - If overflowing did not happen in the current operation, the second
+    ///   element of the output tuple will be false even if the `OVERFLOW` flag
+    ///   of `self` was already set because of previous operation of `self`.
+    /// 
+    /// # Counterpart Method
+    /// The method
+    /// [overflowing_pow_uint()](struct@BigUInt#method.overflowing_pow_uint)
+    /// is a bit faster than this method `overflowing_pow()` when the
+    /// exponent `exp` is primitive unsigned integral data type
+    /// such as u8, u16, u32, u64, and u128.
+    /// If `exp` is the primitive unsigned integral data type number,
+    /// use the method
+    /// [overflowing_pow_uint()](struct@BigUInt#method.overflowing_pow_uint).
+    /// 
+    /// # Example 1 for normal exponentiation
+    /// ```
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u128);
+    /// 
+    /// let a_biguint = UU32::from_uint(10_u8);
+    /// let exp = UU32::from_uint(30_u8);
+    /// let (res, overflow) = a_biguint.overflowing_pow(&exp);
+    /// println!("{} ** {} = {}, {}", a_biguint, exp, res, overflow);
+    /// assert_eq!(overflow, false);
+    /// assert_eq!(res.to_string(), "1000000000000000000000000000000");
+    /// assert_eq!(res.is_overflow(), false);
+    /// assert_eq!(res.is_underflow(), false);
+    /// assert_eq!(res.is_infinity(), false);
+    /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow)
+    pub fn overflowing_pow(&self, exp: &Self) -> (Self, bool)
+    {
+        biguint_overflowing_calc!(self, Self::overflowing_pow_assign, exp);
+    }
+
+    // pub fn overflowing_pow_assign(&mut self, exp: &Self) -> bool
+    /// Raises `BigUInt` type number to the power of `exp`, using
+    /// exponentiation of type `BigUInt` by squaring, 
+    /// wrapping around at the boundary of the type `Self`, and
+    /// assigns the result to `self` back, and
+    /// returns a boolean indicating whether an overflow would occur.
+    /// 
+    /// # Arguments
+    /// `exp` is the power to raise `self` to, and is of `&Self` type.
+    ///
+    /// # Panics
+    /// - If `size_of::<T>() * N` <= `128`, this method may panic
+    ///   or its behavior may be undefined though it may not panic.
+    /// - If both `self` and `exp` are zero, the result is mathematically
+    ///   undefined, so this method will panic.
+    /// 
+    /// # Output
+    /// It returns bool indicating whether an overflow happened.
+    /// It returns `true` if overflow happened. Otherwise, it returns `false`.
+    /// 
+    /// # Argument
+    /// The argument `exp` is of `&Self` type.
+    /// 
+    /// # Features
+    /// - Wrapping (modular) exponentiation.
+    /// - If overflowing happens, the `OVERFLOW` flag of `self` will be set.
+    /// - If overflowing did not happen in the current operation, the output
+    ///   will be false even if the `OVERFLOW` flag of `self` was already set
+    ///   because of previous operation of `self`.
+    /// - All the flags are historical, which means, for example, if an
+    ///   overflow occurred even once before this current operation or
+    ///   `OVERFLOW` flag is already set before this current operation,
+    ///   the `OVERFLOW` flag is not changed even if this current operation
+    ///   does not cause overflow.
+    /// 
+    /// # Counterpart Method
+    /// The method
+    /// [overflow_pow_assign_uint()](struct@BigUInt#method.overflow_pow_assign_uint)
+    /// is a bit faster than this method `overflow_pow_assign()` when the
+    /// exponent `exp` is primitive unsigned integral data type
+    /// such as u8, u16, u32, u64, and u128.
+    /// If `exp` is the primitive unsigned integral data type number,
+    /// use the method
+    /// [overflow_pow_assign_uint()](struct@BigUInt#method.overflow_pow_assign_uint).
+    /// 
+    /// # Example 1 for normal exponentiation
+    /// ```
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let mut a_biguint = U256::from_uint(10_u8);
+    /// println!("Originally, a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
+    /// let exp = U256::from_uint(30_u8);
+    /// let overflow = a_biguint.overflowing_pow_assign(&exp);
+    /// println!("After a_biguint.overflowing_pow_assign({}), a_biguint = {}, {}", exp, a_biguint, overflow);
+    /// assert_eq!(overflow, false);
+    /// assert_eq!(a_biguint.to_string(), "1000000000000000000000000000000");
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.overflowing_pow_assign)
+    pub fn overflowing_pow_assign(&mut self, exp: &Self) -> bool
+    {
+        biguint_overflowing_calc_assign!(self, Self::pow_assign, exp);
+    }
+
+    // pub fn iroot(&self, exp: &Self) -> Self
+    /// Calculates the `exp`-th root of `self`, rounded down,
+    /// and returns the result value.
     ///
     /// # Arguments
-    /// * `exp`: A reference to the `BigUInt` exponent.
+    /// `exp` is the power of the root of `self`, and is of `&Self` type.
     ///
-    /// # Implementation Details
-    /// This method performs wrapping (modular) exponentiation in-place. If 
-    /// an overflow occurs, the `OVERFLOW` flag of `self` is set. Flags are 
-    /// cumulative.
+    /// # Panics
+    /// - If `size_of::<T>() * N` <= `128`, this method may panic
+    ///   or its behavior may be undefined though it may not panic.
+    /// - If `exp` is `0`, it will panic.
+    /// 
+    /// # Output
+    /// If the exact value of `exp`-th root of `self` can be expressed with
+    /// `Self`-typed unsigned integer, it will be returned.
+    /// Otherwise, the `Self`-typed biggest unsigned integer that is
+    /// less than the exact value of `exp`-th root of `self` will be returned.
+    /// 
+    /// # Features
+    /// If `exp` is greater than zero and `self` is greater than 1,
+    /// the result of this method is never greater than `self`.
+    /// So, this method never causes overflow.
+    /// 
+    /// # Counterpart Method
+    /// The method
+    /// [iroot_uint()](struct@BigUInt#method.iroot_uint)
+    /// is a bit faster than this method `iroot()`.
+    /// So, if `rhs` is primitive unsigned integral data type
+    /// such as u8, u16, u32, u64, and u128, use the method
+    /// [iroot_uint()](struct@BigUInt#method.iroot_uint).
+    /// 
+    /// # Example 1
+    /// ```
+    /// use std::str::FromStr;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
+    /// let exp = U256::from_uint(8_u8);
+    /// let res = a_biguint.iroot(&exp);
+    /// println!("The {}-th root of {} is {}.", exp, a_biguint, res);
+    /// assert_eq!(res.to_string(), "100000000");
+    /// assert_eq!(res.is_overflow(), false);
+    /// assert_eq!(res.is_underflow(), false);
+    /// assert_eq!(res.is_infinity(), false);
+    /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_pow)
+    pub fn iroot(&self, exp: &Self) -> Self
+    {
+        general_calc_iroot!(self, Self::common_iroot, exp);
+    }
+
+    // pub fn iroot_assign(&mut self, exp: &Self)
+    /// Calculates the `exp`-th root of `self`, rounded down,
+    /// and assigns the result back to `self`.
+    ///
+    /// # Arguments
+    /// `exp` is the power of the root of `self`, and is of `&Self` type.
+    ///
+    /// # Panics
+    /// - If `size_of::<T>() * N` <= `128`, this method may panic
+    ///   or its behavior may be undefined though it may not panic.
+    /// - If `exp` is `0`, it will panic.
+    /// 
+    /// # Features
+    /// - If the exact value of `exp`-th root of `self` can be expressed with
+    ///   `Self`-typed unsigned integer, it will be assigned to `self`.
+    ///   Otherwise, the `Self`-typed biggest unsigned integer that is less
+    ///   than the exact value of `exp`-th root of `self` will be assigned
+    ///   to `self`.
+    /// - If `exp` is greater than zero and `self` is greater than 1,
+    ///   the result of this method is never greater than `self`.
+    ///   So, this method never causes overflow.
+    /// - All the flags are historical, which means, for example, if an
+    ///   overflow occurred even once before this current operation or
+    ///   `OVERFLOW` flag is already set before this current operation,
+    ///   the `OVERFLOW` flag is not changed even if this current operation
+    ///   does not cause overflow.
+    /// 
+    /// # Counterpart Method
+    /// [iroot_assign_uint()](struct@BigUInt#method.iroot_assign_uint)
+    /// is a bit faster than this method `iroot_assign()`.
+    /// So, if `rhs` is primitive unsigned integral data type
+    /// such as u8, u16, u32, u64, and u128, use the method
+    /// [iroot_assign_uint()](struct@BigUInt#method.iroot_assign_uint).
+    /// 
+    /// # Example 1
+    /// ```
+    /// use std::str::FromStr;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
+    /// println!("Originally, a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
+    /// let exp = U256::from_uint(8_u8);
+    /// a_biguint.iroot_assign(&exp);
+    /// println!("After a_biguint.iroot_assign({}), a_biguint = {}.", exp, a_biguint);
+    /// assert_eq!(a_biguint.to_string(), "100000000");
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.iroot_assign)
+    pub fn iroot_assign(&mut self, exp: &Self)
+    {
+        biguint_calc_to_calc_assign!(self, Self::iroot, exp);
+    }
+
+    pub(super) fn common_iroot(&self, exp: &Self) -> Self
+    {
+        if exp.gt_uint(u128::MAX)
+            { Self::one() }
+        else
+            { self.common_iroot_uint(exp.into_u128()) }
+    }
+
+    // pub fn isqrt(&self) -> Self
+    /// Calculates the square root of `self`, rounded down,
+    /// and returns the result value.
+    ///
+    /// # Panics
+    /// - If `size_of::<T>() * N` <= `128`, this method may panic
+    ///   or its behavior may be undefined though it may not panic.
+    /// 
+    /// # Output
+    /// If the exact value of the square root of `self` can be expressed with
+    /// `Self`-typed unsigned integer, it will be returned.
+    /// Otherwise, the `Self`-typed biggest unsigned integer that is
+    /// less than the exact value of the square root of `self` will be returned.
+    /// 
+    /// # Features
+    /// The result of this method is never greater than `self`.
+    /// So, this method never causes overflow.
+    /// 
+    /// # Example 1
+    /// ```
+    /// use std::str::FromStr;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
+    /// let res = a_biguint.isqrt();
+    /// println!("The square root of {} is {}.", a_biguint, res);
+    /// assert_eq!(res.to_string_with_radix_and_stride(10, 4).unwrap(), "1_0000_0000_0000_0000_0000_0000_0000_0000");
+    /// assert_eq!(res.is_overflow(), false);
+    /// assert_eq!(res.is_underflow(), false);
+    /// assert_eq!(res.is_infinity(), false);
+    /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.isqrt)
+    pub fn isqrt(&self) -> Self
+    {
+        if self.is_zero()
+            { Self::zero() }
+        else if self.is_one()
+            { Self::one() }
+        else
+            { self.common_iroot_uint(2_u8) }
+    }
+
+    // pub fn isqrt_assign(&mut self)
+    /// Calculates the square root of `self`, rounded down,
+    /// and assigns the result back to `self`.
+    ///
+    /// # Panics
+    /// - If `size_of::<T>() * N` <= `128`, this method may panic
+    ///   or its behavior may be undefined though it may not panic.
+    /// 
+    /// # Features
+    /// - If the exact value of the square root of `self` can be expressed with
+    ///   `Self`-typed unsigned integer, it will be assigned to `self`.
+    ///   Otherwise, the `Self`-typed biggest unsigned integer that is less
+    ///   than the exact value of the second root of `self` will be assigned
+    ///   to `self`.
+    /// - The result of this method is never greater than `self`.
+    ///   So, this method never causes overflow.
+    /// - All the flags are historical, which means, for example, if an
+    ///   overflow occurred even once before this current operation or
+    ///   `OVERFLOW` flag is already set before this current operation,
+    ///   the `OVERFLOW` flag is not changed even if this current operation
+    ///   does not cause overflow.
+    /// 
+    /// # Example 1
+    /// ```
+    /// use std::str::FromStr;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u32);
+    /// 
+    /// let mut a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
+    /// println!("Originally, a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
+    /// a_biguint.isqrt_assign();
+    /// println!("After a_biguint.isqrt_assign(), a_biguint = {}.", a_biguint);
+    /// assert_eq!(a_biguint.to_string_with_radix_and_stride(10, 4).unwrap(), "1_0000_0000_0000_0000_0000_0000_0000_0000");
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.isqrt_assign)
+    pub fn isqrt_assign(&mut self)
+    {
+        biguint_calc_to_calc_assign!(self, Self::isqrt);
+    }
+
+    // pub fn ilog(&self, base: &Self) -> Self
+    /// Calculates the logarithm of the number with respect to `base`,
+    /// rounded down, and returns the result.
+    ///
+    /// # Arguments
+    /// `base` is the base of logarithm of `self`, and is of `Self` type.
+    /// `base` should be greater than 1.
+    ///
+    /// # Panics
+    /// - If `size_of::<T>() * N` <= `128`, this method may panic
+    ///   or its behavior may be undefined though it may not panic.
+    /// - This function will panic if `self` is zero.
+    /// - This function will panic if `base` is zero or one.
+    ///
+    /// # Output
+    /// It returns the logarithm of the number with respect to `base`,
+    /// rounded down.
+    ///
+    /// # Counterpart Methods
+    /// This method might not be optimized owing to implementation details.
+    /// [ilog2()](struct@BigUInt#method.ilog2)
+    /// can produce results more efficiently for base 2, and
+    /// [ilog10()](struct@BigUInt#method.ilog10)
+    /// can produce results more efficiently for base 10.
+    /// 
+    /// # Example 1
+    /// ```
+    /// use std::str::FromStr;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u8);
+    /// 
+    /// let a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
+    /// let base = U256::from_uint(1_0000_0000_0000_0000_0000_0000_0000_0000_u128);
+    /// let res = a_biguint.ilog(&base);
+    /// println!("The logarithm of {} with respect to {} is {}.", a_biguint, base, res);
+    /// assert_eq!(res.to_string(), "2");
+    /// assert_eq!(res.is_overflow(), false);
+    /// assert_eq!(res.is_underflow(), false);
+    /// assert_eq!(res.is_infinity(), false);
+    /// assert_eq!(res.is_undefined(), false);
+    /// assert_eq!(res.is_divided_by_zero(), false);
+    /// assert_eq!(res.is_left_carry(), false);
+    /// assert_eq!(res.is_right_carry(), false);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog)
+    pub fn ilog(&self, base: &Self) -> Self
+    {
+        general_calc_ilog!(self, Self::common_ilog, base);
+    }
+
+    // pub fn ilog_assign(&mut self, base: &Self)
+    /// Calculates the logarithm of the number with respect to `base`,
+    /// rounded down, and assigns the result back to `self`.
+    ///
+    /// # Arguments
+    /// `base` is the base of logarithm of `self`, and is of `Self` type.
+    /// `base` should be greater than 1.
+    ///
+    /// # Panics
+    /// - If `size_of::<T>() * N` <= `128`, this method may panic
+    ///   or its behavior may be undefined though it may not panic.
+    /// - This function will panic if `self` is zero.
+    /// - This function will panic if `base` is zero or one.
+    ///
+    /// # Counterpart Methods
+    /// This method might not be optimized owing to implementation details.
+    /// [ilog2_assign()](struct@BigUInt#method.ilog2_assign)
+    /// can produce results more efficiently for base 2, and
+    /// [ilog10_assign()](struct@BigUInt#method.ilog10_assign)
+    /// can produce results more efficiently for base 10.
+    /// 
+    /// # Example 1
+    /// ```
+    /// use std::str::FromStr;
+    /// use cryptocol::define_utypes_with;
+    /// define_utypes_with!(u16);
+    /// 
+    /// let mut a_biguint = U256::from_str("1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000").unwrap();
+    /// println!("Originally, a_biguint = {}", a_biguint);
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// 
+    /// let base = U256::from_uint(1_0000_0000_0000_0000_0000_0000_0000_0000_u128);
+    /// a_biguint.ilog_assign(&base);
+    /// println!("After a_biguint.ilog_assign({}), a_biguint = {}.", base, a_biguint);
+    /// assert_eq!(a_biguint.to_string(), "2");
+    /// assert_eq!(a_biguint.is_overflow(), false);
+    /// assert_eq!(a_biguint.is_underflow(), false);
+    /// assert_eq!(a_biguint.is_infinity(), false);
+    /// assert_eq!(a_biguint.is_undefined(), false);
+    /// assert_eq!(a_biguint.is_divided_by_zero(), false);
+    /// assert_eq!(a_biguint.is_left_carry(), false);
+    /// assert_eq!(a_biguint.is_right_carry(), false);
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.ilog_assign)
+    pub fn ilog_assign(&mut self, base: &Self)
+    {
+        biguint_calc_to_calc_assign!(self, Self::ilog, base);
+    }
+
+    pub(super) fn common_ilog(&self, base: &Self) -> Self
+    {
+        general_calc_common_ilog!(self, Self::wrapping_div_assign, base);
+    }
+
+    // pub fn ilog2(&self) -> Self
+    /// Returns the base 2 logarithm of the number, rounded down.
+    ///
+    /// # Panics
+    /// - If `size_of::<T>() * N` <= `128`, this method may panic
+    ///   or its behavior may be undefined though it may not panic.
+    /// - This function will panic if `self` is zero.
+    /// 
+    /// # Output
+    /// It returns the base 2 logarithm of the number, rounded down.
+    /// 
+    /// # Counterpart Methods
+    /// This method is optimized for base 2;
+    /// [ilog_uint()](struct@BigUInt#method.ilog_uint)
+    /// can produce results of the base other than 2, and
+    /// [ilog10()](struct@BigUInt#method.ilog10)
+    /// can produce results more efficiently for base 10.
     /// 
     /// # Example 1
     /// ```

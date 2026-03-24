@@ -135,9 +135,10 @@ use crate::asymmetric::{ OAEP, RSA_Generic };
 impl<const N: usize, T, const MR: usize> RSA_Generic<N, T, MR>
 where T: TraitsBigUInt<T>
 {
-    fn MGF1()
+    fn MGF1<const L: usize, const M: usize>(seed: [u8; M]) -> [u8; L]
     {
-        
+        // let mut counter = 
+        [0u8; L]
     }
 }
 
@@ -205,13 +206,13 @@ where T: TraitsBigUInt<T>
 {
     /// fn mgf1<S, U, const M: usize>(&self, seed: [S; M], hash: U, length: u64)
     /// where S: TraitsBigUInt<S>, U: Random_Engine
-    /// 
+    ///
     /// # Arguments
     /// - seed: is desirable that `S::size_in_bytes() * M` is greater than or
     ///   equal to the output length of the hash function used in this method,
     ///   and the security level is the best when `S::size_in_bytes() * M`
     ///   is equal to the output length of the hash function.
-    /// - 
+    /// -
     fn mgf1<S, const M: usize, U, O, const L: usize>(&self, seed: [S; M], hash: U) -> [O; L]
     where S: TraitsBigUInt<S>, U: Random_Engine, O: TraitsBigUInt<O>
     {

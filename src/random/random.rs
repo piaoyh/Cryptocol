@@ -3859,5 +3859,17 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     {
         &NUM_STR
     }
+
+    // pub fn shuffle(&self, slice: &mut [T])
+    /// Shuffles an array slice.
+    pub fn shuffle<T>(&mut self, slice: &mut [T])
+    {
+        let len = slice.len();
+        for n in (2..len).rev()
+        {
+            let m = self.random_under_uint_(n);
+            slice.swap(m, n-1);
+        }
+    }
 }
 
