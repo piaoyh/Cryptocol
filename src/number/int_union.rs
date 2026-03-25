@@ -1,4 +1,4 @@
-// Copyright 2023, 2024, 2026 PARK Youngho.
+// Copyright 2023, 2024, 2025, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -183,7 +183,7 @@ use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_
 /// recommended for production environments. Users assume all 
 /// responsibility for any issues that may arise when using this crate 
 /// on Big-Endian systems.
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Eq)]
 #[allow(dead_code)]
 pub union IntUnion
 {

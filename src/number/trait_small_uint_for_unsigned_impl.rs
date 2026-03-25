@@ -1,4 +1,4 @@
-// Copyright 2023, 2024 PARK Youngho.
+// Copyright 2023, 2024, 2025, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -17,70 +17,17 @@ use crate::number::{ SmallUInt, ShortUnion, IntUnion, LongUnion, LongerUnion, Si
 
 macro_rules! SmallUInt_methods_for_uint_impl
 {
-    (u128) => {
-        impl SmallUInt for u128
-        {
-            const BITS: u32 = u128::BITS;
-            const MIN: Self = u128::MIN;
-            const MAX: Self = u128::MAX;
-            const ONE: Self = 1_u128;
-            SmallUInt_methods_for_uint_impl_!(u128);
-        }
-    };
-
-    (u64) => {
-        impl SmallUInt for u64
-        {
-            const BITS: u32 = u64::BITS;
-            const MIN: Self = u64::MIN;
-            const MAX: Self = u64::MAX;
-            const ONE: Self = 1_u64;
-            SmallUInt_methods_for_uint_impl_!(u64);
-        }
-    };
-
-    (u32) => {
-        impl SmallUInt for u32
-        {
-            const BITS: u32 = u32::BITS;
-            const MIN: Self = u32::MIN;
-            const MAX: Self = u32::MAX;
-            const ONE: Self = 1_u32;
-            SmallUInt_methods_for_uint_impl_!(u32);
-        }
-    };
-
-    (u16) => {
-        impl SmallUInt for u16
-        {
-            const BITS: u32 = u16::BITS;
-            const MIN: Self = u16::MIN;
-            const MAX: Self = u16::MAX;
-            const ONE: Self = 1_u16;
-            SmallUInt_methods_for_uint_impl_!(u16);
-        }
-    };
-
-    (u8) => {
-        impl SmallUInt for u8
-        {
-            const BITS: u32 = u8::BITS;
-            const MIN: Self = u8::MIN;
-            const MAX: Self = u8::MAX;
-            const ONE: Self = 1_u8;
-            SmallUInt_methods_for_uint_impl_!(u8);
-        }
-    };
-    
-    (usize) => {
-        impl SmallUInt for usize
-        {
-            const BITS: u32 = usize::BITS;
-            const MIN: Self = usize::MIN;
-            const MAX: Self = usize::MAX;
-            const ONE: Self = 1_usize;
-            SmallUInt_methods_for_uint_impl_!(usize);
-        }
+    ($($t:ty),*) => {
+        $(
+            impl SmallUInt for $t
+            {
+                const BITS: u32 = <$t>::BITS;
+                const MIN: Self = <$t>::MIN;
+                const MAX: Self = <$t>::MAX;
+                const ONE: Self = 1 as $t;
+                SmallUInt_methods_for_uint_impl_!($t);
+            }
+        )*
     };
 }
 
@@ -1213,9 +1160,4 @@ macro_rules! SmallUInt_methods_for_uint_impl_ {
 }
 
 
-SmallUInt_methods_for_uint_impl! { u8 }
-SmallUInt_methods_for_uint_impl! { u16 }
-SmallUInt_methods_for_uint_impl! { u32 }
-SmallUInt_methods_for_uint_impl! { u64 }
-SmallUInt_methods_for_uint_impl! { u128 }
-SmallUInt_methods_for_uint_impl! { usize }
+SmallUInt_methods_for_uint_impl! { u8, u16, u32, u64, u128, usize }

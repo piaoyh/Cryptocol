@@ -1,4 +1,4 @@
-// Copyright 2023, 2024 PARK Youngho.
+// Copyright 2023, 2024, 2025, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -148,7 +148,7 @@ use crate::number::{ ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
 /// It is just experimental for big-endian CPUs. So, you are not encouraged
 /// to use it for big-endian CPUs for serious purpose.
 /// Only use this crate for big-endian CPUs with your own full responsibility.
-pub trait SmallUInt: Copy + Clone + Sized //+ Display + Debug + ToString
+pub trait SmallUInt: Eq + PartialEq + Copy + Clone + Sized //+ Display + Debug + ToString
 {
     /// The data type size of the corresponding actual data type.
     const BITS: u32;

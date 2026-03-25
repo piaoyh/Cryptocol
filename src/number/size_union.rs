@@ -1,4 +1,4 @@
-// Copyright 2023, 2024, 2026 PARK Youngho.
+// Copyright 2023, 2024, 2025, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -279,7 +279,7 @@ use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_
 /// responsibility for any issues that may arise when using this crate 
 /// on Big-Endian systems.
 #[cfg(target_pointer_width = "128")]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Eq)]
 #[allow(dead_code)]
 pub union SizeUnion
 {
@@ -509,7 +509,7 @@ pub union SizeUnion
 /// responsibility for any issues that may arise when using this crate 
 /// on Big-Endian systems.
 #[cfg(target_pointer_width = "64")]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Eq)]
 #[allow(dead_code)]
 pub union SizeUnion
 {
@@ -684,7 +684,7 @@ pub union SizeUnion
 /// responsibility for any issues that may arise when using this crate 
 /// on Big-Endian systems.
 #[cfg(target_pointer_width = "32")]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Eq)]
 #[allow(dead_code)]
 pub union SizeUnion
 {
@@ -827,7 +827,7 @@ pub union SizeUnion
 /// responsibility for any issues that may arise when using this crate 
 /// on Big-Endian systems.
 #[cfg(target_pointer_width = "16")]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Eq)]
 #[allow(dead_code)]
 #[allow(non_camel_case_types)]
 pub union SizeUnion
@@ -944,7 +944,7 @@ pub union SizeUnion
 /// responsibility for any issues that may arise when using this crate 
 /// on Big-Endian systems.
 #[cfg(target_pointer_width = "8")]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Eq)]
 #[allow(dead_code)]
 #[allow(non_camel_case_types)]
 pub union SizeUnion

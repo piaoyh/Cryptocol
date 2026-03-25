@@ -1,4 +1,4 @@
-// Copyright 2023, 2024 PARK Youngho.
+// Copyright 2023, 2024, 2025, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -22,58 +22,26 @@ use crate::number::{ SmallUInt, ShortUnion, IntUnion, LongUnion, LongerUnion, Si
 
 macro_rules! SmallUInt_methods_for_integer_unions_impl
 {
-    (LongerUnion) => {
-        impl SmallUInt for LongerUnion
-        {
-            const BITS: u32 = u128::BITS;
-            const MIN: Self = LongerUnion::new();
-            const MAX: Self = LongerUnion::new_with(u128::MAX);
-            const ONE: Self = LongerUnion::new_with(1);
-            SmallUInt_methods_for_integer_unions_impl_!(LongerUnion, u128);
-        }
+    ($($u:ident),*) => {
+        $(
+            SmallUInt_methods_for_integer_unions_impl!(@a $u);
+        )*
     };
 
-    (LongUnion) => {
-        impl SmallUInt for LongUnion
-        {
-            const BITS: u32 = u64::BITS;
-            const MIN: Self = LongUnion::new();
-            const MAX: Self = LongUnion::new_with(u64::MAX);
-            const ONE: Self = LongUnion::new_with(1);
-            SmallUInt_methods_for_integer_unions_impl_!(LongUnion, u64);
-        }
-    };
+    (@a LongerUnion) => { SmallUInt_methods_for_integer_unions_impl!(@b LongerUnion, u128); };
+    (@a LongUnion) => { SmallUInt_methods_for_integer_unions_impl!(@b LongUnion, u64); };
+    (@a IntUnion) => { SmallUInt_methods_for_integer_unions_impl!(@b IntUnion, u32); };
+    (@a ShortUnion) => { SmallUInt_methods_for_integer_unions_impl!(@b ShortUnion, u16); };
+    (@a SizeUnion) => { SmallUInt_methods_for_integer_unions_impl!(@b SizeUnion, usize); };
 
-    (IntUnion) => {
-        impl SmallUInt for IntUnion
+    (@b $u:ident, $t:ty) => {
+        impl SmallUInt for $u
         {
-            const BITS: u32 = u32::BITS;
-            const MIN: Self = IntUnion::new();
-            const MAX: Self = IntUnion::new_with(u32::MAX);
-            const ONE: Self = IntUnion::new_with(1);
-            SmallUInt_methods_for_integer_unions_impl_!(IntUnion, u32);
-        }
-    };
-
-    (ShortUnion) => {
-        impl SmallUInt for ShortUnion
-        {
-            const BITS: u32 = u16::BITS;
-            const MIN: Self = ShortUnion::new();
-            const MAX: Self = ShortUnion::new_with(u16::MAX);
-            const ONE: Self = ShortUnion::new_with(1);
-            SmallUInt_methods_for_integer_unions_impl_!(ShortUnion, u16);
-        }
-    };
-    
-    (SizeUnion) => {
-        impl SmallUInt for SizeUnion
-        {
-            const BITS: u32 = usize::BITS;
-            const MIN: Self = SizeUnion::new();
-            const MAX: Self = SizeUnion::new_with(usize::MAX);
-            const ONE: Self = SizeUnion::new_with(1);
-            SmallUInt_methods_for_integer_unions_impl_!(SizeUnion, usize);
+            const BITS: u32 = <$t>::BITS;
+            const MIN: Self = $u::new();
+            const MAX: Self = $u::new_with(<$t>::MAX);
+            const ONE: Self = $u::new_with(1);
+            SmallUInt_methods_for_integer_unions_impl_!($u, $t);
         }
     };
 }
